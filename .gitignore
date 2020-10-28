@@ -32,11 +32,11 @@ target/
 
 
 # eclipse
-.settings/
+#.settings/
 bin/
 gen/
-.classpath
-.project
+#.classpath
+#.project
 .DS_Store
 
 .metadata
@@ -45,7 +45,6 @@ tmp/
 *.bak
 *.swp
 *~.nib
-.settings/
 .loadpath
 .recommenders
 
