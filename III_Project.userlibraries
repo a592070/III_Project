@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <eclipse-userlibraries>
-  <library name="Maven: org.hamcrest:hamcrest-core:1.3">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" />
+  <library name="Maven: antlr:antlr:2.7.7">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/antlr/antlr/2.7.7/antlr-2.7.7.jar" />
   </library>
-  <library name="Maven: junit:junit:4.11">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/junit/junit/4.11/junit-4.11.jar" />
-  </library>
-  <library name="Maven: org.apache.tomcat:tomcat-websocket-api:9.0.37">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-websocket-api/9.0.37/tomcat-websocket-api-9.0.37.jar" />
-  </library>
-  <library name="Maven: org.apache.tomcat:tomcat-juli:9.0.37">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-juli/9.0.37/tomcat-juli-9.0.37.jar" />
-  </library>
-  <library name="Maven: org.apache.tomcat:tomcat-websocket:9.0.37">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-websocket/9.0.37/tomcat-websocket-9.0.37.jar" />
-  </library>
-  <library name="Maven: org.apache.tomcat:tomcat-util:9.0.37">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-util/9.0.37/tomcat-util-9.0.37.jar" />
-  </library>
-  <library name="Maven: com.oracle.database.jdbc:ojdbc8:19.7.0.0">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/oracle/database/jdbc/ojdbc8/19.7.0.0/ojdbc8-19.7.0.0.jar" />
-  </library>
-  <library name="Maven: javax.servlet:servlet-api:2.5">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar" />
+  <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.2">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/fasterxml/jackson/core/jackson-annotations/2.11.2/jackson-annotations-2.11.2.jar" />
   </library>
   <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.2">
     <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/fasterxml/jackson/core/jackson-core/2.11.2/jackson-core-2.11.2.jar" />
   </library>
-  <library name="Maven: javax.servlet.jsp:javax.servlet.jsp-api:2.3.3">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/servlet/jsp/javax.servlet.jsp-api/2.3.3/javax.servlet.jsp-api-2.3.3.jar" />
+  <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.2">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/fasterxml/jackson/core/jackson-databind/2.11.2/jackson-databind-2.11.2.jar" />
   </library>
-  <library name="Maven: org.apache.commons:commons-dbcp2:2.7.0">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/commons/commons-dbcp2/2.7.0/commons-dbcp2-2.7.0.jar" />
+  <library name="Maven: com.fasterxml:classmate:1.5.1">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar" />
   </library>
-  <library name="Maven: org.apache.tomcat:tomcat-servlet-api:9.0.37">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-servlet-api/9.0.37/tomcat-servlet-api-9.0.37.jar" />
+  <library name="Maven: com.oracle.database.jdbc:ojdbc8:19.7.0.0">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/oracle/database/jdbc/ojdbc8/19.7.0.0/ojdbc8-19.7.0.0.jar" />
+  </library>
+  <library name="Maven: com.sun.istack:istack-commons-runtime:3.0.7">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/sun/istack/istack-commons-runtime/3.0.7/istack-commons-runtime-3.0.7.jar" />
+  </library>
+  <library name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.15">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/sun/xml/fastinfoset/FastInfoset/1.2.15/FastInfoset-1.2.15.jar" />
   </library>
   <library name="Maven: commons-logging:commons-logging:1.2">
     <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" />
   </library>
-  <library name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.5">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/taglibs/taglibs-standard-impl/1.2.5/taglibs-standard-impl-1.2.5.jar" />
+  <library name="Maven: javax.activation:javax.activation-api:1.2.0">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar" />
+  </library>
+  <library name="Maven: javax.annotation:javax.annotation-api:1.3.2">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar" />
+  </library>
+  <library name="Maven: javax.persistence:javax.persistence-api:2.2">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/persistence/javax.persistence-api/2.2/javax.persistence-api-2.2.jar" />
+  </library>
+  <library name="Maven: javax.servlet.jsp.jstl:jstl-api:1.2">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/servlet/jsp/jstl/jstl-api/1.2/jstl-api-1.2.jar" />
+  </library>
+  <library name="Maven: javax.servlet.jsp:javax.servlet.jsp-api:2.3.3">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/servlet/jsp/javax.servlet.jsp-api/2.3.3/javax.servlet.jsp-api-2.3.3.jar" />
   </library>
   <library name="Maven: javax.servlet.jsp:jsp-api:2.1">
     <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/servlet/jsp/jsp-api/2.1/jsp-api-2.1.jar" />
@@ -48,20 +48,128 @@
   <library name="Maven: javax.servlet:javax.servlet-api:4.0.1">
     <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar" />
   </library>
-  <library name="Maven: javax.servlet.jsp.jstl:jstl-api:1.2">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/servlet/jsp/jstl/jstl-api/1.2/jstl-api-1.2.jar" />
+  <library name="Maven: javax.servlet:servlet-api:2.5">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar" />
   </library>
   <library name="Maven: javax.websocket:javax.websocket-api:1.1">
     <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/websocket/javax.websocket-api/1.1/javax.websocket-api-1.1.jar" />
   </library>
-  <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.2">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/fasterxml/jackson/core/jackson-annotations/2.11.2/jackson-annotations-2.11.2.jar" />
+  <library name="Maven: javax.xml.bind:jaxb-api:2.3.1">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar" />
   </library>
-  <library name="Maven: org.apache.commons:commons-pool2:2.8.1">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/commons/commons-pool2/2.8.1/commons-pool2-2.8.1.jar" />
+  <library name="Maven: junit:junit:4.12">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/junit/junit/4.12/junit-4.12.jar" />
   </library>
-  <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.2">
-    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/fasterxml/jackson/core/jackson-databind/2.11.2/jackson-databind-2.11.2.jar" />
+  <library name="Maven: net.bytebuddy:byte-buddy:1.10.10">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/net/bytebuddy/byte-buddy/1.10.10/byte-buddy-1.10.10.jar" />
+  </library>
+  <library name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.5">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/taglibs/taglibs-standard-impl/1.2.5/taglibs-standard-impl-1.2.5.jar" />
+  </library>
+  <library name="Maven: org.apache.tomcat:tomcat-juli:9.0.37">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-juli/9.0.37/tomcat-juli-9.0.37.jar" />
+  </library>
+  <library name="Maven: org.apache.tomcat:tomcat-servlet-api:9.0.37">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-servlet-api/9.0.37/tomcat-servlet-api-9.0.37.jar" />
+  </library>
+  <library name="Maven: org.apache.tomcat:tomcat-util:9.0.37">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-util/9.0.37/tomcat-util-9.0.37.jar" />
+  </library>
+  <library name="Maven: org.apache.tomcat:tomcat-websocket-api:9.0.37">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-websocket-api/9.0.37/tomcat-websocket-api-9.0.37.jar" />
+  </library>
+  <library name="Maven: org.apache.tomcat:tomcat-websocket:9.0.37">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/apache/tomcat/tomcat-websocket/9.0.37/tomcat-websocket-9.0.37.jar" />
+  </library>
+  <library name="Maven: org.aspectj:aspectjweaver:1.9.6">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar" />
+  </library>
+  <library name="Maven: org.dom4j:dom4j:2.1.3">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/dom4j/dom4j/2.1.3/dom4j-2.1.3.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jaxb:jaxb-runtime:2.3.1">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/glassfish/jaxb/jaxb-runtime/2.3.1/jaxb-runtime-2.3.1.jar" />
+  </library>
+  <library name="Maven: org.glassfish.jaxb:txw2:2.3.1">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/glassfish/jaxb/txw2/2.3.1/txw2-2.3.1.jar" />
+  </library>
+  <library name="Maven: org.hamcrest:hamcrest-core:1.3">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" />
+  </library>
+  <library name="Maven: org.hibernate.common:hibernate-commons-annotations:5.1.0.Final">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/hibernate/common/hibernate-commons-annotations/5.1.0.Final/hibernate-commons-annotations-5.1.0.Final.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-core:5.4.22.Final">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/hibernate/hibernate-core/5.4.22.Final/hibernate-core-5.4.22.Final.jar" />
+  </library>
+  <library name="Maven: org.javassist:javassist:3.24.0-GA">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/javassist/javassist/3.24.0-GA/javassist-3.24.0-GA.jar" />
+  </library>
+  <library name="Maven: org.jboss.logging:jboss-logging:3.3.2.Final">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.1.1.Final">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/jboss/spec/javax/transaction/jboss-transaction-api_1.2_spec/1.1.1.Final/jboss-transaction-api_1.2_spec-1.1.1.Final.jar" />
+  </library>
+  <library name="Maven: org.jboss:jandex:2.1.3.Final">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/jboss/jandex/2.1.3.Final/jandex-2.1.3.Final.jar" />
+  </library>
+  <library name="Maven: org.jvnet.staxex:stax-ex:1.8">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/jvnet/staxex/stax-ex/1.8/stax-ex-1.8.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-aop:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-aop/5.2.9.RELEASE/spring-aop-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-beans:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-beans/5.2.9.RELEASE/spring-beans-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-context:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-context/5.2.9.RELEASE/spring-context-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-core:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-core/5.2.9.RELEASE/spring-core-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-expression:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-expression/5.2.9.RELEASE/spring-expression-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-jcl:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-jcl/5.2.9.RELEASE/spring-jcl-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-jdbc:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-jdbc/5.2.9.RELEASE/spring-jdbc-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-orm:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-orm/5.2.9.RELEASE/spring-orm-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-tx:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-tx/5.2.9.RELEASE/spring-tx-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-web:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-web/5.2.9.RELEASE/spring-web-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: org.springframework:spring-webmvc:5.2.9.RELEASE">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/springframework/spring-webmvc/5.2.9.RELEASE/spring-webmvc-5.2.9.RELEASE.jar" />
+  </library>
+  <library name="Maven: com.mchange:c3p0:0.9.5.5">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/mchange/c3p0/0.9.5.5/c3p0-0.9.5.5.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-c3p0:5.4.22.Final">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/hibernate/hibernate-c3p0/5.4.22.Final/hibernate-c3p0-5.4.22.Final.jar" />
+  </library>
+  <library name="Maven: log4j:log4j:1.2.17">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/log4j/log4j/1.2.17/log4j-1.2.17.jar" />
+  </library>
+  <library name="Maven: com.mchange:mchange-commons-java:0.2.19">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/com/mchange/mchange-commons-java/0.2.19/mchange-commons-java-0.2.19.jar" />
+  </library>
+  <library name="Maven: org.slf4j:slf4j-api:1.7.25">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar" />
+  </library>
+  <library name="Maven: net.sf.ehcache:ehcache:2.10.6">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/net/sf/ehcache/ehcache/2.10.6/ehcache-2.10.6.jar" />
+  </library>
+  <library name="Maven: org.hibernate:hibernate-ehcache:5.4.22.Final">
+    <archive path="C:/Environments/apache-maven-3.6.3/maven-repo/org/hibernate/hibernate-ehcache/5.4.22.Final/hibernate-ehcache-5.4.22.Final.jar" />
   </library>
 </eclipse-userlibraries>
 
