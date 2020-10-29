@@ -9,7 +9,48 @@
   - 有衝突必須馬上解決
   - 解決衝突後必須測試，測試有問題，立刻po上群
   
+---
+
+## 專案配置
+
+### 結構
+
+```
+src
+|-main
+|	|-java
+|	|	|-global	//公用配置(IndexController起始頁面、filter、listener...)
+|	|	|-utils		//工具類
+|	|	|-個人package
+|	|		|-xxx.java
+|	|
+|	|-resources
+|	|	|-springmvc.servlet.xml	//主要spring配置文件
+|	|	|-sqlBeans.xml			//ORM相關配置
+|	|	|-個人Beans.xml		   //個人spring配置文件(import進入springmvc.servlet.xml)
+|	|	|
+|	|	|-hibernate.cfg.xml		//hibernate配置文件，datasource:C3P0
+|	|	|-log4j.properties		//log4j配置文件
+|	|
+|	|-webapp
+|		|-WEB-INF
+|			|-web.xml
+|			|-admin
+|				|-index.jsp		//首頁
+|				|-fragment		//navbar
+|				|	|-header.jsp
+|				|	|-sidebar.jsp
+|				|	|-ref.jsp
+|				|-個人頁面
+|					|-xxx.jsp
+|-test	//Junit
+-pom.xml
+```
+
+
+
 ## 分工
+
 - 謝詠嘉：主頁面，套裝行程，客制化行程，關鍵字搜尋，評價系統，推薦系統
 - 高之軒：登入 註冊 會員資料維護 店家資料填寫 查詢會員訂單
 - 陳宇河：論壇->旅遊心得分享、廠商寫手業配置入、套裝行程使用回饋、二手旅遊商品刊登、會員已發佈文章查詢
