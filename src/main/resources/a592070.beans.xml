@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="attractionDao" class="a592070.dao.AttractionDAOImpl" lazy-init="true" scope="session"/>
+    <bean id="attractionViewDao" class="a592070.dao.AttractionViewDAOImpl" lazy-init="true" scope="session"/>
+    <bean id="carViewDao" class="a592070.dao.CarViewDAOImpl" lazy-init="true" scope="session"/>
+    <bean id="hotelViewDao" class="a592070.dao.HotelViewDAOImpl" lazy-init="true" scope="session"/>
+    <bean id="restaurantViewDao" class="a592070.dao.RestaurantViewDAOImpl" lazy-init="true" scope="session"/>
+    <bean id="regionDao" class="a592070.dao.RegionDAOImpl" lazy-init="true" scope="session"/>
+    <bean id="travelSetDao" class="a592070.dao.TravelSetDAOImpl" lazy-init="true" scope="session"/>
+
+    <bean id="attractionService" class="a592070.service.AttractionServiceImpl" lazy-init="true" scope="session"/>
+    <bean id="travelSetService" class="a592070.service.TravelSetServiceImpl" lazy-init="true" scope="session"/>
+    <bean id="viewService" class="a592070.service.ViewServiceImpl" lazy-init="true" scope="session"/>
+</beans>
