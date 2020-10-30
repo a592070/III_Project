@@ -17,9 +17,9 @@ public interface TravelSetDAO {
 
     List<TravelEleRestaurantDO> getRestaurantSetByID(int id);
 
-    void addTravelSet(TravelSetDO travelSetDO);
+    TravelSetDO addTravelSet(TravelSetDO travelSetDO);
 
-    void updateTravelSet(TravelSetDO travelSetDO);
+    TravelSetDO updateTravelSet(TravelSetDO travelSetDO);
 
-    void setTravelSetUnavailable(int sn);
+    boolean setTravelSetUnavailable(int sn);
 }

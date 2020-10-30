@@ -100,18 +100,33 @@ public class AttractionDAOImpl implements AttractionDAO{
     }
 
     @Override
-    public void insert(AttractionDO ele) {
-        sessionFactory.getCurrentSession().save(ele);
+    public AttractionDO insert(AttractionDO ele) {
+        try{
+            sessionFactory.getCurrentSession().save(ele);
+            return ele;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
-    public void update(AttractionDO ele) {
-        sessionFactory.getCurrentSession().merge(ele);
+    public AttractionDO update(AttractionDO ele) {
+        try{
+            sessionFactory.getCurrentSession().merge(ele);
+            return ele;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
-    public void delete(AttractionDO ele) {
-        sessionFactory.getCurrentSession().delete(ele);
+    public AttractionDO delete(AttractionDO ele) {
+        try{
+            sessionFactory.getCurrentSession().delete(ele);
+            return ele;
+        }catch (Exception e){
+            return null;
+        }
     }
 
 }

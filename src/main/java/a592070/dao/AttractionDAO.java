@@ -12,7 +12,7 @@ public interface AttractionDAO {
     int getSizeByRegion(String region);
     List<AttractionDO> listByRownum(int firstIndex, int resultSize, String region);
 
-    void insert(AttractionDO ele);
-    void update(AttractionDO ele);
-    void delete(AttractionDO ele);
+    AttractionDO insert(AttractionDO ele);
+    AttractionDO update(AttractionDO ele);
+    AttractionDO delete(AttractionDO ele);
 }
