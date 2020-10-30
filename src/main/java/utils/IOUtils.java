@@ -3,6 +3,11 @@ package utils;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialClob;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.SQLException;
@@ -17,6 +22,50 @@ public class IOUtils {
         }
         byte[] bytes = buffer.toByteArray();
         buffer.close();
+        return bytes;
+    }
+
+    public static byte[] urlToByteArray(String url) throws Exception {
+        url = StringUtil.urlEncode(url, "UTF-8");
+
+        HttpURLConnection conn = null;
+        BufferedInputStream in = null;
+        ByteArrayOutputStream buffer = null;
+        byte[] bytes = null;
+        try {
+            SslUtil.ignoreSSL();
+            conn = (HttpURLConnection) new URL(url).openConnection();
+
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36");
+            //Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+
+
+            in = new BufferedInputStream(conn.getInputStream());
+            buffer = new ByteArrayOutputStream();
+
+            int len;
+            byte[] buf = new byte[4 * 1024 * 1024]; //4MB
+            while ((len = in.read(buf)) != -1) {
+                buffer.write(buf, 0, len);
+            }
+            bytes = buffer.toByteArray();
+
+            buffer.close();
+            in.close();
+            conn.disconnect();
+
+        }catch (Exception e){
+            if(buffer != null) {
+                bytes = buffer.toByteArray();
+                buffer.close();
+            }
+            if(in != null) in.close();
+            if(conn != null) conn.disconnect();
+            throw e;
+        }
         return bytes;
     }
     public static Blob fileToBlob(String imageFilePath) throws IOException, SQLException {

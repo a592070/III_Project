@@ -9,6 +9,8 @@ import utils.StringUtil;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @JsonDeserialize(using = AttractionJsonDeserializer.class)
 @JsonSerialize(using = AttractionJsonSerializer.class)
@@ -32,6 +34,7 @@ public class AttractionDO {
     @Column(name = "OPENTIME")
     private String openTime;
     private String picture;
+    private byte[] pic;
     @Column(name = "TICKETINFO")
     private String ticketInfo;
     @Column(name = "TRAVELLINGINFO")
@@ -41,8 +44,6 @@ public class AttractionDO {
     private BigDecimal rating;
     private String region;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attraction", cascade = CascadeType.ALL)
-//    private Set<TravelEleAttractionDO> travelEleAttractions = new HashSet<>();
 
     public AttractionDO() {
     }
@@ -206,11 +207,11 @@ public class AttractionDO {
         this.picture = picture;
     }
 
-//    public Set<TravelEleAttractionDO> getTravelEleAttractions() {
-//        return travelEleAttractions;
-//    }
-//
-//    public void setTravelEleAttractions(Set<TravelEleAttractionDO> travelEleAttractions) {
-//        this.travelEleAttractions = travelEleAttractions;
-//    }
+    public byte[] getPic() {
+        return pic;
+    }
+
+    public void setPic(byte[] pic) {
+        this.pic = pic;
+    }
 }
