@@ -25,9 +25,9 @@ src
 |	|		|-xxx.java
 |	|
 |	|-resources
-|	|	|-springmvc.servlet.xml	//主要spring配置文件
+|	|	|-springmvc.servlet.xml		//主要spring配置文件
 |	|	|-sqlBeans.xml			//ORM相關配置
-|	|	|-個人Beans.xml		   //個人spring配置文件(import進入springmvc.servlet.xml)
+|	|	|-個人Beans.xml		      //個人spring配置文件(import進入springmvc.servlet.xml)
 |	|	|
 |	|	|-hibernate.cfg.xml		//hibernate配置文件，datasource:C3P0
 |	|	|-log4j.properties		//log4j配置文件
@@ -46,8 +46,10 @@ src
 |-test	//Junit
 -pom.xml
 ```
+- **個人Beans配置請設定在 xxxBeans.xml (只有基本id(urlpattern), class, scope...等基本屬性，不配置field、constructor)**
+- 重要配置設定在springmvc.servlet.xml裡面
 
-
+---
 
 ## 分工
 
