@@ -17,7 +17,8 @@ public class Test {
 		beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
 
 		RestaurantDAO rDao = beans.getBean("restaurantDAO", RestaurantDAO.class);
-		List<Show_RView> result = rDao.nameRestaurant("牛");
+		List<Show_RView> result = rDao.totalRestaurant();
+		System.out.println(result);
 		for (Show_RView rView : result) {
 			System.out.println(rView.getName());
 		}

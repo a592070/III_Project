@@ -22,8 +22,8 @@ public class Show_RView {
 	private String name;
 	@Column(name = "ADDRESS")
 	private String address;
-	@Column(name = "RATING")
-	private BigDecimal rating;
+	@Column(name = "REGION")
+	private BigDecimal region;
 	@Column(name = "USERNAME")
 	private String username;
 	@Column(name = "STATUS")
@@ -53,12 +53,12 @@ public class Show_RView {
 		this.address = address;
 	}
 
-	public BigDecimal getRating() {
-		return rating;
+	public BigDecimal getRegion() {
+		return region;
 	}
 
-	public void setRating(BigDecimal rating) {
-		this.rating = rating;
+	public void setRegion(BigDecimal region) {
+		this.region = region;
 	}
 
 	public String getUsername() {

@@ -17,9 +17,7 @@
                         
         
         <property name="context-root" value="III_Project"/>
-                        
-        
-        <property name="java-output-path" value="/new/target/classes"/>
+        <property name="java-output-path" value="/III_Project/target/classes"/>
                     
     
     </wb-module>
