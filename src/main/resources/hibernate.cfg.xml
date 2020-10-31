@@ -40,6 +40,8 @@
 		<mapping class="a592070.pojo.TravelEleHotelDO"/>
 		<mapping class="a592070.pojo.TravelEleCarDO"/>
 		<mapping class="a592070.pojo.TravelSetDO"/>
+		
+		<mapping class="iring29.model.Show_RView"/>
 
 	</session-factory>
 </hibernate-configuration>

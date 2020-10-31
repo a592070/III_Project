@@ -17,11 +17,28 @@ public class Test {
 		beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
 
 		RestaurantDAO rDao = beans.getBean("restaurantDAO", RestaurantDAO.class);
-		List<Show_RView> result = rDao.totalRestaurant();
-		System.out.println(result);
+		
+//		List<Show_RView> result = rDao.totalRestaurant();
+//		for (Show_RView rView : result) {
+//			System.out.println(rView.getName());
+//		}
+		
+//		List<Show_RView> result = rDao.regionRestaurant("台中");
+//		for (Show_RView rView : result) {
+//		System.out.println(rView.getName());
+//	}	
+
+//		List<Show_RView> result = rDao.nameRestaurant("牛");
+//		for (Show_RView rView : result) {
+//			System.out.println(rView.getName());
+//		}	
+		
+		//fail
+		List<Show_RView> result = rDao.userRestaurant("i");
 		for (Show_RView rView : result) {
-			System.out.println(rView.getName());
-		}
+			System.out.println(rView.getR_sn());
+		}	
+		
 		((ConfigurableApplicationContext) beans).close();
 	}
 
