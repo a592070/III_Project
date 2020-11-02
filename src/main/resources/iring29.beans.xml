@@ -7,6 +7,8 @@
 
 	<bean id="restaurantDAO" class="iring29.model.RestaurantDAO" />
 	<bean id="restaurantService" class="iring29.model.RestaurantService" />
+	<bean id="ModifyDAO" class="iring29.model.ModifyDAO" />
+	<bean id="ModifyService" class="iring29.model.ModifyService" />
 	<bean id="restaurantController" name="/Restaurant.controller" class="iring29.controller.RestaurantController"></bean>
 
 </beans>

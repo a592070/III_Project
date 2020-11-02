@@ -181,25 +181,18 @@ p{
 			
 			
 			<div>
-				<h2 class="title">${r_hp.name}</h2>
-				<div class="top">
-					<!-- <div class="booking">訂位</div>
-					<div class="info">資訊</div>
-					<div class="comment">評論</div> -->
-				</div> 
-				<FORM action="<c:url value='/iring29/ModifyImg.jsp'/>"
-					method="POST">
+				<h2 class="title">${rBean.name}</h2>
+				<div class="top"> </div> 
+				<FORM action="<c:url value='/iring29/ModifyImg.jsp'/>" method="POST">
 				<p class="modify-img">
 					<button class="btn btn-light">修改</button>
 				</p>
 				<div class="div_img">
-					<img src="${r_hp.picture}">
+					<img src="${rBean.pic}">
 				</div>
 				
 				</FORM>
-				<%-- <div class="div-1">
-					<h3>${r_hp.name}</h3>
-				</div> --%>
+				
 				
 				<FORM action="<c:url value='/iring29/Modify_Location.jsp'/>"
 					method="POST">
@@ -212,14 +205,13 @@ p{
 
 					<div>
 						<h4 class="res_result">地址</h4>
-						<p class="p_result">${r_hp.address}</p>
+						<p class="p_result">${rBean.address}</p>
 					</div>
 					<div>
 						<h4 class="res_result">交通方式</h4>
-						<pre><p class="p_result">${r_hp.transportation}</p></pre>
+						<pre><p class="p_result">${rBean.transportation}</p></pre>
 					</div>
-					<Input type='hidden' name='rBean' value='${r_hp}'> <Input
-						type='hidden' name='roBean' value='${roBean}'>
+					
 				</FORM>
 
 				<FORM action="<c:url value='/iring29/Modify_Type.jsp'/>"
@@ -232,13 +224,15 @@ p{
 					</div>
 					<div>
 						<h4 class="res_result">適合聚餐類型</h4>
-						<p class="p_result">${r_hp.serviceinfo}</p>
+						<p class="p_result">${rBean.serviceinfo}</p>
 					</div>
 					<div>
 						<h4 class="res_result">料理種類</h4>
-						<p class="p_result">${r_hp.type}</p>
+						<p class="p_result">${rBean.type}</p>
 					</div>
 				</FORM>
+				
+				
 				<FORM action="<c:url value='/iring29/Modify_Info.jsp'/>"
 					method="POST">
 					<div>
@@ -249,30 +243,24 @@ p{
 					</div>
 					<div>
 						<h4 class="res_result">營業時間</h4>
-						<pre><p class="p_result">${r_hp.opentime}</p></pre>
+						<pre><p class="p_result">${rBean.opentime}</p></pre>
 					</div>
 					<div>
 						<h4 class="res_result">餐廳描述</h4>
-						<p class="p_result">${r_hp.description}</p>
+						<p class="p_result">${rBean.description}</p>
 					</div>
 				</FORM>
 				
 			</div>
 
 		</div>
-		<Input type='hidden' name='rBean' value='${r_hp}'> <Input
-			type='hidden' name='rBean' value='${roBean}'>
 
 
 
 
-	</div>
-				
-				
+				</div>
 			</div>
-
-
-		</div>
+ 		</div>
 	</div>
 
 

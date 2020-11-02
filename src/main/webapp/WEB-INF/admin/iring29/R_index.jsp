@@ -74,7 +74,7 @@ td{
 				<div class="box">
 					<div class="search" class="form-group col-md-2">
 					<form:form action="regionSearch" method="POST" modelAttribute="rBean">
-						<span class="sp_search">餐廳地區</span> 
+						<span class="sp_search"><form:label path="region">餐廳地區</form:label></span> 
 						<form:select path="region" name="region_name" id="inputState" class="form-control">
 							<form:option value="">請選擇地區</form:option>
 							<form:option value="基隆">基隆</form:option>
@@ -103,7 +103,7 @@ td{
 					</div>
 					<div class="search">
 					<form:form action="nameSearch" method="POST" modelAttribute="rBean">
-						<span class="sp_search">餐廳名稱</span> 
+						<span class="sp_search"><form:label path="name">餐廳名稱</form:label></span> 
 						<form:input path="name" type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>
 						<form:button type="button" class="btn btn-primary">Search</form:button>
 					</form:form>
@@ -111,7 +111,7 @@ td{
 
 					<div class="search">
 					<form:form action="usernameSearch" method="POST" modelAttribute="rBean">
-						<span class="sp_search">會員帳號</span> 
+						<span class="sp_search"><form:label path="username">會員帳號</form:label></span> 
 						<form:input path="username" type="text" name="username" placeholder="請輸入會員帳號" />
 						<form:button type="button" class="btn btn-primary">Search</form:button>
 					</form:form>
@@ -132,14 +132,16 @@ td{
 						</thead>
 						<tbody>
 						<c:forEach var="r" items="${rBean}">
+						<form:form action="DisplayRestaurant" method="POST" modelAttribute="rBean">
 							<tr>
 								<td>${r.r_sn}</td>
 								<td>${r.name}</td>
 								<td>${r.address}</td>
 								<td>${r.region}</td>
 								<td>${r.username}</td>
-								<td><button>Modify</button></td>
+								<td><form:button>Modify</form:button></td>
 							</tr>
+						</form:form>
 						</c:forEach>
 						
 						</tbody>

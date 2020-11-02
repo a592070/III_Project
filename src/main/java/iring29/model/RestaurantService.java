@@ -1,5 +1,6 @@
 package iring29.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,9 @@ public class RestaurantService {
 	@Transactional(rollbackFor = { Throwable.class })
 	public List<Show_RView> userRestaurant(String username) {
 		return rDao.userRestaurant(username);
+	}
+	
+	public Restaurant restaurantInfo(BigDecimal r_sn) {
+		return rDao.restaurantInfo(r_sn);
 	}
 }
