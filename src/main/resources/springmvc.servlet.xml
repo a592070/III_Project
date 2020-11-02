@@ -10,8 +10,8 @@
        http://www.springframework.org/schema/mvc
        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<import resource="classpath:sqlBeans.xml" />
-	<import resource="classpath:exampleBeans.xml" />
+	<import resource="classpath:sqlBeans.xml"/>
+	<import resource="classpath:exampleBeans.xml"/>
 	<import resource="classpath:a592070.beans.xml"/>
 	<import resource="classpath:iring29.beans.xml"/>
 
