@@ -12,10 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import utils.StringUtil;
 
 @Entity
 @Table(name = "RESTAURANT")
+@DynamicUpdate
 public class Restaurant {
 
 	@Id @Column(name = "R_SN")

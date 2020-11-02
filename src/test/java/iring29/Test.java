@@ -18,10 +18,10 @@ public class Test {
 
 		RestaurantDAO rDao = beans.getBean("restaurantDAO", RestaurantDAO.class);
 		
-//		List<Show_RView> result = rDao.totalRestaurant();
-//		for (Show_RView rView : result) {
-//			System.out.println(rView.getName());
-//		}
+		List<Show_RView> result = rDao.totalRestaurant();
+		for (Show_RView rView : result) {
+			System.out.println(rView.getName());
+		}
 		
 //		List<Show_RView> result = rDao.regionRestaurant("台中");
 //		for (Show_RView rView : result) {
@@ -34,10 +34,10 @@ public class Test {
 //		}	
 		
 		//fail
-		List<Show_RView> result = rDao.userRestaurant("i");
-		for (Show_RView rView : result) {
-			System.out.println(rView.getR_sn());
-		}	
+//		List<Show_RView> result = rDao.userRestaurant("i");
+//		for (Show_RView rView : result) {
+//			System.out.println(rView.getR_sn());
+//		}	
 		
 		((ConfigurableApplicationContext) beans).close();
 	}

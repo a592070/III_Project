@@ -6,5 +6,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<bean id="restaurantDAO" class="iring29.model.RestaurantDAO" />
+	<bean id="restaurantController" name="/Restaurant.controller" class="iring29.controller.RestaurantController"></bean>
 
 </beans>
