@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Student
@@ -35,7 +37,7 @@ input {
 }
 
 select {
-	
+	float: left;
 }
 
 #inputState.form-control {
@@ -68,8 +70,9 @@ h2 {
 			<div class="content-wrapper">
 				<div class="box">
 					<div class="search" class="form-group col-md-2">
-						<span class="sp_search">餐廳地區</span> <select name="region_name"
-							id="inputState" class="form-control">
+					<form:form action="regionSearch" method="POST" modelAttribute="restaurants">
+						<span class="sp_search">餐廳地區</span> 
+						<select name="region_name" id="inputState" class="form-control">
 							<option value="">請選擇地區</option>
 							<option value="基隆">基隆</option>
 							<option value="新北">新北</option>
@@ -92,15 +95,23 @@ h2 {
 							<option value="金門">金門</option>
 							<option value="連江">連江</option>
 						</select>
+						<button type="button" class="btn btn-primary">Search</button>
+						</form:form>
 					</div>
 					<div class="search">
+					<form:form action="nameSearch" method="POST" modelAttribute="restaurants">
 						<span class="sp_search">餐廳名稱</span> <input type="text"
 							name="restaurant_name" placeholder="請輸入關鍵字">
+						<button type="button" class="btn btn-primary">Search</button>
+					</form:form>
 					</div>
 
 					<div class="search">
+					<form:form action="usernameSearch" method="POST" modelAttribute="restaurants">
 						<span class="sp_search">會員帳號</span> <input type="text"
-							name="restaurant_name" placeholder="請輸入會員帳號">
+							name="username" placeholder="請輸入會員帳號">
+						<button type="button" class="btn btn-primary">Search</button>
+					</form:form>
 					</div>
 				</div>
 				<h2>餐廳列表</h2>
@@ -117,24 +128,17 @@ h2 {
 							</tr>
 						</thead>
 						<tbody>
+						<c:forEach var="r" items="${rBean}">
 							<tr>
-								<td>1,001</td>
-								<td>Lorem</td>
-								<td>ipsum</td>
-								<td>dolor</td>
-								<td>sit</td>
+								<td>${r.r_sn}</td>
+								<td>${r.name}</td>
+								<td>${r.address}</td>
+								<td>${r.region}</td>
+								<td>${r.username}</td>
 								<td><button>Modify</button></td>
 							</tr>
-							<tr>
-								<td>1,002</td>
-								<td>amet</td>
-								<td>consectetur</td>
-								<td>adipiscing</td>
-								<td>elit</td>
-								<td><button>Modify</button></td>
-							</tr>
-
-
+						</c:forEach>
+						
 						</tbody>
 					</table>
 				</div>

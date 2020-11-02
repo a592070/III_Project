@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
+import org.springframework.transaction.annotation.Transactional;
+
 public class PictureSupport {
 
     /**
