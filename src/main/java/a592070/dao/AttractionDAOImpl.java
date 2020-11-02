@@ -1,10 +1,14 @@
 package a592070.dao;
 
 import a592070.pojo.AttractionDO;
+import com.fasterxml.jackson.databind.util.ClassUtil;
+import net.sf.ehcache.hibernate.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cache.ehcache.internal.HibernateEhcacheUtils;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.objenesis.instantiator.util.ClassUtils;
 import utils.StringUtil;
 
 import java.util.List;
