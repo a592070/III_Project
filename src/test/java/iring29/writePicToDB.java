@@ -31,7 +31,7 @@ public class writePicToDB {
 	public static void main(String[] args) {
 		beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
 
-		String hql = "from Restaurant where (pic is null) and (pic_url is not null) and r_sn = 64";
+		String hql = "from Restaurant where (pic is null) and (pic_url is not null)";
 		sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
