@@ -5,10 +5,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="restaurantDAO" class="iring29.model.RestaurantDAO" />
-	<bean id="restaurantService" class="iring29.model.RestaurantService" />
-	<bean id="ModifyDAO" class="iring29.model.ModifyDAO" />
-	<bean id="ModifyService" class="iring29.model.ModifyService" />
-	<bean id="restaurantController" name="/Restaurant.controller" class="iring29.controller.RestaurantController"></bean>
+	<bean id="restaurantDAO" class="iring29.model.RestaurantDAO" scope="session" />
+	<bean id="restaurantService" class="iring29.model.RestaurantService"  scope="session" />
+	<bean id="ModifyDAO" class="iring29.model.ModifyDAO" scope="session" />
+	<bean id="ModifyService" class="iring29.model.ModifyService" scope="session"/>
+	<bean id="restaurantController" name="/Restaurant.controller" class="iring29.controller.RestaurantController" scope="session"></bean>
 
 </beans>

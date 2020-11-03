@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Title</title>
+<title>Restaurant</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style>
@@ -73,48 +73,48 @@ td{
 			<div class="content-wrapper">
 				<div class="box">
 					<div class="search" class="form-group col-md-2">
-					<form:form action="regionSearch" method="POST" modelAttribute="rBean">
-						<span class="sp_search"><form:label path="region">餐廳地區</form:label></span> 
-						<form:select path="region" name="region_name" id="inputState" class="form-control">
-							<form:option value="">請選擇地區</form:option>
-							<form:option value="基隆">基隆</form:option>
-							<form:option value="新北">新北</form:option>
-							<form:option value="台北">台北</form:option>
-							<form:option value="桃園">桃園</form:option>
-							<form:option value="新竹">新竹</form:option>
-							<form:option value="苗栗">苗栗</form:option>
-							<form:option value="台中">台中</form:option>
-							<form:option value="彰化">彰化</form:option>
-							<form:option value="南投">南投</form:option>
-							<form:option value="雲林">雲林</form:option>
-							<form:option value="嘉義">嘉義</form:option>
-							<form:option value="台南">台南</form:option>
-							<form:option value="高雄">高雄</form:option>
-							<form:option value="屏東">屏東</form:option>
-							<form:option value="宜蘭">宜蘭</form:option>
-							<form:option value="花蓮">花蓮</form:option>
-							<form:option value="台東">台東</form:option>
-							<form:option value="澎湖">澎湖</form:option>
-							<form:option value="金門">金門</form:option>
-							<form:option value="連江">連江</form:option>
-						</form:select>
-						<form:button type="button" class="btn btn-primary">Search</form:button>
-						</form:form>
-					</div>
-					<div class="search">
-					<form:form action="nameSearch" method="POST" modelAttribute="rBean">
-						<span class="sp_search"><form:label path="name">餐廳名稱</form:label></span> 
-						<form:input path="name" type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>
-						<form:button type="button" class="btn btn-primary">Search</form:button>
-					</form:form>
-					</div>
+  					<form action="<%=application.getContextPath()%>/regionSearch" method="POST">
+						<span class="sp_search">餐廳地區</span> 
+						<select name="region_name" id="inputState" class="form-control">
+							<option value="">請選擇地區</option>
+							<option value="基隆">基隆</option>
+							<option value="新北">新北</option>
+							<option value="台北">台北</option>
+							<option value="桃園">桃園</option>
+							<option value="新竹">新竹</option>
+							<option value="苗栗">苗栗</option>
+							<option value="台中">台中</option>
+							<option value="彰化">彰化</option>
+							<option value="南投">南投</option>
+							<option value="雲林">雲林</option>
+							<option value="嘉義">嘉義</option>
+							<option value="台南">台南</option>
+							<option value="高雄">高雄</option>
+							<option value="屏東">屏東</option>
+							<option value="宜蘭">宜蘭</option>
+							<option value="花蓮">花蓮</option>
+							<option value="台東">台東</option>
+							<option value="澎湖">澎湖</option>
+							<option value="金門">金門</option>
+							<option value="連江">連江</option>
+						</select>
+						<button type="submit" class="btn btn-primary">Search</button>
+						</form>   
+					</div> 
+ 					<div class="search">
+ 						<form action="<%=application.getContextPath()%>/nameSearch" method="POST"> 
+ 						<span class="sp_search">餐廳名稱</span>  
+						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>  
+ 						<button type="submit" class="btn btn-primary">Search</button>  
+ 						</form>  
+					</div> 
 
-					<div class="search">
-					<form:form action="usernameSearch" method="POST" modelAttribute="rBean">
-						<span class="sp_search"><form:label path="username">會員帳號</form:label></span> 
-						<form:input path="username" type="text" name="username" placeholder="請輸入會員帳號" />
-						<form:button type="button" class="btn btn-primary">Search</form:button>
-					</form:form>
+ 					<div class="search">
+ 					<form action="<%=application.getContextPath()%>/usernameSearch" method="POST" > 
+ 						<span class="sp_search">會員帳號</span> 
+ 						<input type="text" name="username" placeholder="請輸入會員帳號" /> 
+ 						<button type="submit" class="btn btn-primary">Search</button> 
+ 					</form> 
 					</div>
 				</div>
 				<h2>餐廳列表</h2>
@@ -132,16 +132,22 @@ td{
 						</thead>
 						<tbody>
 						<c:forEach var="r" items="${rBean}">
-						<form:form action="DisplayRestaurant" method="POST" modelAttribute="rBean">
+						
 							<tr>
 								<td>${r.r_sn}</td>
 								<td>${r.name}</td>
 								<td>${r.address}</td>
 								<td>${r.region}</td>
 								<td>${r.username}</td>
-								<td><form:button>Modify</form:button></td>
+								<td>
+									<form action="<%=application.getContextPath()%>/DisplayRestaurant" method="POST">
+									<button type="submit" class="btn btn-primary">Modify</button>
+									<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+									</form>
+								</td>
 							</tr>
-						</form:form>
+						
+						
 						</c:forEach>
 						
 						</tbody>

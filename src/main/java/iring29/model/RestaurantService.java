@@ -30,7 +30,7 @@ public class RestaurantService {
 
 	@Transactional(rollbackFor = { Throwable.class })
 	public List<Show_RView> nameRestaurant(String name) {
-		return nameRestaurant(name);
+		return rDao.nameRestaurant(name);
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
@@ -38,6 +38,7 @@ public class RestaurantService {
 		return rDao.userRestaurant(username);
 	}
 	
+	@Transactional(rollbackFor = { Throwable.class })
 	public Restaurant restaurantInfo(BigDecimal r_sn) {
 		return rDao.restaurantInfo(r_sn);
 	}

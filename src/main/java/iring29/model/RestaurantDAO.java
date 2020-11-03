@@ -24,7 +24,6 @@ public class RestaurantDAO {
 	
 	@Transactional(rollbackFor = {Throwable.class})
 	public List<Show_RView> totalRestaurant() {
-		System.out.println("in");
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery("from Show_RView order by r_sn", Show_RView.class);
 		return query.list();
 	}
