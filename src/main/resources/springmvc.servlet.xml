@@ -15,11 +15,13 @@
 	<import resource="classpath:a592070.beans.xml"/>
 	<import resource="classpath:iring29.beans.xml"/>
 	<import resource="classpath:azaz4498.beans.xml"/>
+	<import resource="classpath:rambo0021.beans.xml" />
+
 
 	<context:annotation-config />
-	<context:component-scan base-package="global"/>
+	<context:component-scan base-package="global" />
 	<mvc:default-servlet-handler />
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven />
 
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->

@@ -6,26 +6,26 @@
 	<session-factory>
 
 		<property name="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</property>
-<!-- 
-		<property name="hibernate.connection.datasource">java:comp/env/HibernateService</property>  -->
-		
+		<!-- <property name="hibernate.connection.datasource">java:comp/env/HibernateService</property> -->
+
 		<property name="hibernate.connection.url">jdbc:oracle:thin:@//localhost:1521/XEPDB1</property>
 		<property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
 		<property name="hibernate.connection.username">iii_team_dba</property>
-		<property name="hibernate.connection.password">iiidba</property>  
+		<property name="hibernate.connection.password">iiidba</property>
 		<property name="hibernate.c3p0.min_size">5</property>
 		<property name="hibernate.c3p0.max_size">20</property>
 		<property name="hibernate.c3p0.timeout">300</property>
 		<property name="hibernate.c3p0.max_statements">50</property>
-		<property name="hibernate.c3p0.idle_test_period">3000</property> 
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
 
-<!--		<property name="current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property>-->
- 		<property name="current_session_context_class">thread</property>
+		<!-- <property name="current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property> -->
+		<property name="current_session_context_class">thread</property>
 
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 
 		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+
 
 <!--		<mapping class="example.pojo.User" />-->
 
@@ -40,12 +40,19 @@
 		<mapping class="a592070.pojo.TravelEleHotelDO"/>
 		<mapping class="a592070.pojo.TravelEleCarDO"/>
 		<mapping class="a592070.pojo.TravelSetDO"/>
-		
 		<mapping class="iring29.model.Show_RView"/>
 		<mapping class="iring29.model.Restaurant"/>
 		<mapping class="azaz4498.model.Article"/>
 		<mapping class="azaz4498.model.ArticleType"/>
 		<mapping class="azaz4498.model.Comment"/>
+		<mapping class="rambo.pojo.AccountBean" />
+		<mapping class="rambo.pojo.IdentityBean" />
+
+
+
+
+
+
 
 	</session-factory>
 </hibernate-configuration>
