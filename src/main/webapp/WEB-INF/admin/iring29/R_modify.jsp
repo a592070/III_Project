@@ -188,7 +188,7 @@ p{
 					<button class="btn btn-light">修改</button>
 				</p>
 				<div class="div_img">
-					<img src="${rBean.pic}">
+					<img  src="<%=application.getContextPath()%>/ShowPic">
 				</div>
 				
 				</FORM>

@@ -105,19 +105,19 @@ td{
 			<div class="content-wrapper">
 
 <div class="wrapper">
-	<FORM id="formL" name="formL" action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_HPServlet" method="POST">
+	<FORM id="formL" name="formL" action="<%=pageContext.getServletContext().getContextPath()%>/ModifyInfo" method="POST">
 	
         <div class="container">
-            <h2>修改${r_hp.name}資訊</h2>
+            <h2>修改${rBean.name}資訊</h2>
             <div class="">
                 <div class="div-1">
                     <label for="r-name">營業時間</label> 
-                    <textarea name="opentime" id="" cols="40" rows="5" placeholder="${r_hp.opentime}"></textarea>
+                    <textarea name="opentime" id="" cols="40" rows="5" placeholder="${rBean.opentime}"></textarea>
                 </div>
 
                 <div class="div-1">
                     <label for="r-date">餐廳描述</label> 
-                    <textarea name="description" id="" cols="40" rows="5" placeholder="${r_hp.description}"></textarea>
+                    <textarea name="description" id="" cols="40" rows="5" placeholder="${rBean.description}"></textarea>
                 </div>
 
             </div>
@@ -125,8 +125,7 @@ td{
         
         <input type="hidden" id="finalDecision" name="finalDecision" value=""> 
         	<!-- 隱藏資訊 -->
-        	<Input type='hidden' name='rBean' value='${r_hp}'>
-        	<Input type='hidden' name='roBean' value='${roBean}'>
+        	<Input type='hidden' name='rBean' value='${rBean}'>
         	
         <div class="div-btn">
        		<input type="button" class="btn btn-primary" name="confirm" value="confrim" onclick="confirmL()"> 
