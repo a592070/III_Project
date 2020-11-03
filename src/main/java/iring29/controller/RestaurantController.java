@@ -75,22 +75,19 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/DisplayRestaurant", method = RequestMethod.POST)
-	public String RestaurantDetail(@RequestParam("r_sn") BigDecimal r_sn, Model m)
-			throws IOException {
+	public String RestaurantDetail(@RequestParam("r_sn") BigDecimal r_sn, Model m) throws IOException {
 		Restaurant rBean = rs.restaurantInfo(r_sn);
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";
 	}
-	
+
 	@RequestMapping(path = "/ShowPic")
-	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("rBean") Restaurant r){
-		System.out.println("in pic");
-		System.out.println("name" + r.getName());
-		
+	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("rBean") Restaurant r) {
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
-		
-		return new ResponseEntity<byte[]>(r.getPic(),headers, HttpStatus.OK);
+
+		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 
 //	@RequestMapping(path = "/ModifyPic", method = RequestMethod.POST)
@@ -102,20 +99,32 @@ public class RestaurantController {
 //
 //	}
 
+	@RequestMapping(path = "/InModifyInfo", method = RequestMethod.POST)
+	public String InModifyInfo() {
+		return "iring29/Modify_Info";
+	}
+
 	@RequestMapping(path = "/ModifyInfo", method = RequestMethod.POST)
-	public String ModifyPic(@RequestParam("rBean") Restaurant r, @RequestParam("opentime") String opentime,
-			@RequestParam("description") String description, Model m) {
+	public String ModifyPic(@ModelAttribute("rBean") Restaurant r, @RequestParam("opentime") String opentime,
+			@RequestParam("description") String description, @RequestParam("finalDecision") String decision, Model m) {
+		System.out.println("r.getop = " + r.getOpentime());
+		System.out.println("r.getdes = " + r.getDescription());
 		String op = opentime;
+		System.out.println("op = " + op);
 		String des = description;
-		if (op == "") {
-			op = r.getOpentime();
+		System.out.println("des = " + des);
+		Restaurant rBean = r;
+		if (decision.equals("confirmI")) {
+			if (op == "") {
+				op = r.getOpentime();
+			}
+			if (des == "") {
+				des = r.getDescription();
+			}
+			rBean = ms.R_Info(op, des, r.getR_sn());
 		}
-		if (des == "") {
-			des = r.getDescription();
-		}
-		Restaurant rBean = ms.R_Info(op, des, r.getR_sn());
 		m.addAttribute("rBean", rBean);
-		return "R_modify";
+		return "iring29/R_modify";
 	}
 
 }

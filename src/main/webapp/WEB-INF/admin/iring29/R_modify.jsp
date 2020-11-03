@@ -97,6 +97,7 @@ h2 {
 	/* font-size: 15px; */
 	/* font-weight: 400; */
 	border-top: 1px solid gray;
+	/* height:55px; */
 }
 
 .res_result {
@@ -105,6 +106,7 @@ h2 {
 
 .p_result {
 	padding: 10px 30px;
+	color:black;
 }
 
 .rating {
@@ -118,16 +120,6 @@ h2 {
 	line-height: 35px;
 }
 
-.book-btn {
-	/* background-color: #ec7551; */
-	border-radius: 4px;
-	color: #000000;
-	padding: 8px 0;
-	text-align: center;
-	cursor: pointer;
-	width: 400px;
-	margin: auto;
-}
 
 h3 {
 	padding: 10px 30px;
@@ -150,6 +142,9 @@ h3 {
 	margin-left:30px;
 	margin-bottom: 20px;
 }
+.btn.btn-light{
+	height:35px;
+}
 .div-1{
 	padding: 5px;
 	margin-left:10px;
@@ -161,6 +156,13 @@ h3 {
 p{
 	font-size:16px;
 }
+pre {
+    border-left: 0;
+    padding: 0; 
+    background: rgba(0, 0, 0, 0);
+    border-radius: 0;
+}
+
 </style>
 
 </head>
@@ -233,8 +235,7 @@ p{
 				</FORM>
 				
 				
-				<FORM action="<c:url value='/iring29/Modify_Info.jsp'/>"
-					method="POST">
+				 <FORM action="<%=application.getContextPath()%>/InModifyInfo" method="POST"> 
 					<div>
 						<p class="modify">
 							<button class="btn btn-light">修改</button>
@@ -249,7 +250,7 @@ p{
 						<h4 class="res_result">餐廳描述</h4>
 						<p class="p_result">${rBean.description}</p>
 					</div>
-				</FORM>
+				 </FORM> 
 				
 			</div>
 

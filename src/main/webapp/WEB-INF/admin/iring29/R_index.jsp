@@ -55,7 +55,7 @@ h2 {
 	padding-top: 50px;
 }
 td{
-	text-color: black
+	color: black;
 }
 </style>
 

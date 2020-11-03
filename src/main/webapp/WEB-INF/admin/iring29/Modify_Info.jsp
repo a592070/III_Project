@@ -112,20 +112,21 @@ td{
             <div class="">
                 <div class="div-1">
                     <label for="r-name">營業時間</label> 
-                    <textarea name="opentime" id="" cols="40" rows="5" placeholder="${rBean.opentime}"></textarea>
+                    <textarea name="opentime" id="opentime" cols="40" rows="5" placeholder="${rBean.opentime}" ></textarea>
                 </div>
 
                 <div class="div-1">
                     <label for="r-date">餐廳描述</label> 
-                    <textarea name="description" id="" cols="40" rows="5" placeholder="${rBean.description}"></textarea>
+                    <textarea name="description" id="description" cols="40" rows="5" placeholder="${rBean.description}"></textarea>
                 </div>
 
             </div>
         </div>
         
         <input type="hidden" id="finalDecision" name="finalDecision" value=""> 
+        <input type="hidden" id="r_sn" name="r_sn" value="${rBean.r_sn}"> 
         	<!-- 隱藏資訊 -->
-        	<Input type='hidden' name='rBean' value='${rBean}'>
+        	<%-- <Input type='hidden' name='rBean' value='${rBean}'> --%>
         	
         <div class="div-btn">
        		<input type="button" class="btn btn-primary" name="confirm" value="confrim" onclick="confirmL()"> 
@@ -135,13 +136,22 @@ td{
 	</FORM>
 	
 	<script type="text/javascript">
+	
 function confirmL(){
 	if (confirm("確定送出修改 ? ") ) {
+		let opentime = document.getElementById("opentime").value;
+		let description = document.getElementById("description").value; 
 		console.log(document.forms["formL"]);
 		console.log(document.forms["formL"].finalDecision.value);
 		document.forms["formL"].finalDecision.value = "confirmI";
 		console.log(document.forms["formL"].finalDecision.value);
-		document.forms["formL"].action="<%=application.getContextPath()%>/Restaurant_HPServlet";
+		if(opentime === ""){
+			document.getElementById("opentime").value = "${rBean.opentime}";
+			}
+		if(description === ""){
+			document.getElementById("description").value = "${rBean.description}";
+			}
+		document.forms["formL"].action="<%=application.getContextPath()%>/ModifyInfo";
 		document.forms["formL"].method="POST";
 		document.forms["formL"].submit();
 		return;
@@ -155,9 +165,10 @@ function cancelL(){
 		console.log(document.forms["formL"].finalDecision.value);
 		document.forms["formL"].finalDecision.value = "cancel";
 		console.log(document.forms["formL"].finalDecision.value);
-		document.forms["formL"].action="<%=application.getContextPath()%>/Restaurant_HPServlet";
+		document.forms["formL"].action="<%=application.getContextPath()%>/DisplayRestaurant";
 		document.forms["formL"].method="POST";
 		document.forms["formL"].submit();
+		
 		return;
 	} else {
 		return;
