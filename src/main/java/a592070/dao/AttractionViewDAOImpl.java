@@ -1,5 +1,6 @@
 package a592070.dao;
 
+import a592070.pojo.AttractionDO;
 import a592070.pojo.AttractionVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,34 +36,26 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
         }else {
             keyWords = "%"+keyWords+"%";
         }
-        String hql = "select count(*) from AttractionDO where name like ?1 or toldescribe like ?2 or description like ?3 or address like ?4 or keywords like ?5 ";
+        String hql = "select count(*) from AttractionDO " +
+                "where name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword ";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter(1, keyWords);
-        query.setParameter(2, keyWords);
-        query.setParameter(3, keyWords);
-        query.setParameter(4, keyWords);
-        query.setParameter(5, keyWords);
+        query.setParameter("keyword", keyWords);
 
         return query.uniqueResult().intValue();
     }
-
     @Override
-    public List<AttractionVO> listByKeywords(int firstIndex, int resultSize, String keyWords) {
-        if(StringUtil.isEmpty(keyWords)) {
-            keyWords="";
-        }else {
-            keyWords = "%"+keyWords+"%";
-        }
+    public List<AttractionVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled) {
+        keyWords = "%"+keyWords+"%";
 
-        String hql = "select vo from AttractionDO do , AttractionVO vo where (do.sn=vo.sn) and (do.name like ?1 or do.toldescribe like ?2 or do.description like ?3 or do.address like ?4 or do.keywords like ?5 ) order by vo.picture, vo.sn";
+        String hql = "select vo from AttractionDO do , AttractionVO vo " +
+                "where (do.sn=vo.sn) and " +
+                "(do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                "order by vo."+orderFiled;
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
-        query.setParameter(1, keyWords);
-        query.setParameter(2, keyWords);
-        query.setParameter(3, keyWords);
-        query.setParameter(4, keyWords);
-        query.setParameter(5, keyWords);
+        query.setParameter("keyword", keyWords);
+
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
 
@@ -70,32 +63,37 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     }
 
     @Override
-    public int getSizeByRegion(String region) {
-        if(StringUtil.isEmpty(region)){
-            region = "";
-        }else {
-            region = "%" + region + "%";
-        }
-        String hql = "select count(*) from AttractionDO where region like ?1 ";
+    public int getSizeByFiled(String filedName, String filedValue) {
+        filedValue = "%" + filedValue + "%";
+
+        String hql = "select count(*) from AttractionDO where "+filedName+" like ?1 ";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter(1, region);
+        query.setParameter(1, filedValue);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public List<AttractionVO> listByRownum(int firstIndex, int resultSize, String region){
-        if(StringUtil.isEmpty(region)){
-            region = "";
-        }else {
-            region = "%" + region + "%";
-        }
+    public List<AttractionVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled){
+        filedValue = "%" + filedValue + "%";
 
-        String hql = "select vo from AttractionDO do, AttractionVO vo where (do.sn=vo.sn) and (do.region like ?1 ) order by vo.picture, vo.sn";
+        String hql = "select vo from AttractionDO do, AttractionVO vo where (do.sn=vo.sn) and (do."+filedName+" like ?1 ) order by vo."+orderFiled;
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
-        query.setParameter(1, region);
+        query.setParameter(1, filedValue);
+
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+
+        return query.list();
+    }
+
+    @Override
+    public List<AttractionVO> listByRownum(int firstIndex, int resultSize, String orderFiled){
+
+        String hql = "from AttractionVO order by "+orderFiled;
+        Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
 
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);

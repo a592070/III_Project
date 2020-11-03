@@ -18,9 +18,17 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(rollbackFor = {Throwable.class})
     public void doSomething() {
-        dao.insert(new User(7, "test trans6", "trans"));
-        dao.insert(new User(6, "test trans", "trans"));
-        List<User> list = dao.select();
+//        dao.insert(new User(9, "test transA", "trans"));
+//        dao.insert(new User(7, "test trans", "trans"));
+        List<User> list = dao.select("NAME");
+        System.out.println(list);
+    }
+    @Override
+    @Transactional(rollbackFor = {Throwable.class})
+    public void doSomething(String orderFiled) {
+//        dao.insert(new User(9, "test transA", "trans"));
+//        dao.insert(new User(7, "test trans", "trans"));
+        List<User> list = dao.selectSort(orderFiled);
         System.out.println(list);
     }
 }

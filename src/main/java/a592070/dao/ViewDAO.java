@@ -8,9 +8,13 @@ public interface ViewDAO<T> {
 
     int getSize();
     T getEle(int id);
+
     int getSizeByKeywords(String keyWords);
-    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords);
-    int getSizeByRegion(String region);
-    List<T> listByRownum(int firstIndex, int resultSize, String region);
+    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled);
+
+    int getSizeByFiled(String filedName, String filedValue);
+    List<T> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled);
+
+    List<T> listByRownum(int firstIndex, int resultSize, String orderFiled);
 
 }

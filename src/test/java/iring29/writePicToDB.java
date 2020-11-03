@@ -5,10 +5,13 @@ import iring29.model.Restaurant;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import utils.IOUtils;
@@ -22,17 +25,18 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:springmvc.servlet.xml")
 public class writePicToDB {
 	private static ApplicationContext beans;
 	@Autowired
 	private static SessionFactory sessionFactory;
 
 	public static void main(String[] args) {
-		beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
+//		beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
+//		sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
 
 		String hql = "from Restaurant where (pic is null) and (pic_url is not null) and r_sn = 64";
-		sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		Query<Restaurant> query = session.createQuery(hql, Restaurant.class);
