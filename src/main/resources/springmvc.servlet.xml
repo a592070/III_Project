@@ -10,10 +10,13 @@
        http://www.springframework.org/schema/mvc
        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<import resource="classpath:sqlBeans.xml"/>
-	<import resource="classpath:exampleBeans.xml"/>
+	<import resource="classpath:sqlBeans.xml" />
+	<import resource="classpath:exampleBeans.xml" />
 	<import resource="classpath:a592070.beans.xml"/>
 	<import resource="classpath:iring29.beans.xml"/>
+	<import resource="classpath:azaz4498.beans.xml"/>
+	<import resource="classpath:rambo0021.beans.xml" />
+
 
 	<context:annotation-config />
 	<context:component-scan base-package="global"/>
