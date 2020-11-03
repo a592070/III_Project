@@ -1,14 +1,9 @@
 package a592070.dao;
 
 import a592070.pojo.AttractionDO;
-import com.fasterxml.jackson.databind.util.ClassUtil;
-import net.sf.ehcache.hibernate.HibernateUtil;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cache.ehcache.internal.HibernateEhcacheUtils;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.objenesis.instantiator.util.ClassUtils;
 import utils.StringUtil;
 
 import java.util.List;
@@ -34,37 +29,31 @@ public class AttractionDAOImpl implements AttractionDAO{
 
     @Override
     public int getSizeByKeywords(String keyWords) {
-        if(StringUtil.isEmpty(keyWords)) {
-            keyWords="";
-        }else {
-            keyWords = "%"+keyWords+"%";
-        }
-        String hql = "select count(sn) from AttractionDO where name like ?1 or toldescribe like ?2 or description like ?3 or address like ?4 or keywords like ?5 ";
+        keyWords = "%"+keyWords+"%";
+
+        String hql = "select count(sn) from AttractionDO where name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword ";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter(1, keyWords);
-        query.setParameter(2, keyWords);
-        query.setParameter(3, keyWords);
-        query.setParameter(4, keyWords);
-        query.setParameter(5, keyWords);
+        query.setParameter("keyword", keyWords);
+//        query.setParameter(2, keyWords);
+//        query.setParameter(3, keyWords);
+//        query.setParameter(4, keyWords);
+//        query.setParameter(5, keyWords);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public List<AttractionDO> listByKeywords(int firstIndex, int resultSize, String keyWords) {
-        if(StringUtil.isEmpty(keyWords)) {
-            keyWords="";
-        }else {
-            keyWords = "%"+keyWords+"%";
-        }
-        String hql = "from AttractionDO where name like ?1 or toldescribe like ?2 or description like ?3 or address like ?4 or keywords like ?5 order by picture, sn";
+    public List<AttractionDO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled) {
+        keyWords = "%"+keyWords+"%";
+
+        String hql = "from AttractionDO where name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword order by "+orderFiled;
 
         Query<AttractionDO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionDO.class);
-        query.setParameter(1, keyWords);
-        query.setParameter(2, keyWords);
-        query.setParameter(3, keyWords);
-        query.setParameter(4, keyWords);
-        query.setParameter(5, keyWords);
+        query.setParameter("keyword", keyWords);
+//        query.setParameter(2, keyWords);
+//        query.setParameter(3, keyWords);
+//        query.setParameter(4, keyWords);
+//        query.setParameter(5, keyWords);
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
 
@@ -72,30 +61,34 @@ public class AttractionDAOImpl implements AttractionDAO{
     }
 
     @Override
-    public int getSizeByRegion(String region) {
-        if(StringUtil.isEmpty(region)){
-            region = "";
-        }else {
-            region = "%" + region + "%";
-        }
-        String hql = "select count(sn) from AttractionDO where region like ?1 ";
+    public int getSizeByFiled(String filedName, String filedValue) {
+        filedValue = "%" + filedValue + "%";
+
+        String hql = "select count(sn) from AttractionDO where "+filedName+" like ?1 ";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter(1, region);
+        query.setParameter(1, filedValue);
 
         return query.uniqueResult().intValue();
     }
+    @Override
+    public List<AttractionDO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled){
+        filedValue = "%" + filedValue + "%";
+
+        String hql = "from AttractionDO where "+filedName+" like ?1  order by "+orderFiled;
+        Query<AttractionDO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionDO.class);
+        query.setParameter(1, filedValue);
+
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+
+        return query.list();
+    }
 
     @Override
-    public List<AttractionDO> listByRownum(int firstIndex, int resultSize, String region){
-        if(StringUtil.isEmpty(region)){
-            region = "";
-        }else {
-            region = "%" + region + "%";
-        }
+    public List<AttractionDO> listByRownum(int firstIndex, int resultSize, String orderFiled){
 
-        String hql = "from AttractionDO where region like ?1  order by picture, sn ";
+        String hql = "from AttractionDO order by "+orderFiled;
         Query<AttractionDO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionDO.class);
-        query.setParameter(1, region);
 
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);

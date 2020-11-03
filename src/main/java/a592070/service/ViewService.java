@@ -1,4 +1,4 @@
 package a592070.service;
 
-public interface ViewService {
+public interface ViewService<T> {
 }

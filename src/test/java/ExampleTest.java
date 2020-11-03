@@ -1,3 +1,4 @@
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:springmvc.servlet.xml")
 public class ExampleTest {
     private static ApplicationContext beans;
+//    private Logger logger = Logger.getLogger("org.hibernate.type.descriptor.sql.BasicBinder");
 //    @BeforeClass
 //    public static void init(){
 //        beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
@@ -28,6 +30,6 @@ public class ExampleTest {
     @Test
     public void test2(){
 //        UserService service = beans.getBean("userService", UserService.class);
-        service.doSomething();
+        service.doSomething("ID");
     }
 }
