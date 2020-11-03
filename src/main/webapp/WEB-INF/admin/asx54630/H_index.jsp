@@ -1,0 +1,159 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%--
+  Created by IntelliJ IDEA.
+  User: Student
+  Date: 2020/10/29
+  Time: 上午 09:28
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<html>
+<head>
+<title>Title</title>
+
+<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+
+</head>
+
+
+<body class="sidebar-fixed sidebar-dark header-light header-fixed"
+	id="body">
+	<div class="mobile-sticky-body-overlay"></div>
+
+	<div class="wrapper">
+		<c:import url="/WEB-INF/admin/fragment/sidebar.jsp" />
+		<div class="page-wrapper">
+			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
+ <%-- -- <div class="content-wrapper"></div>  -------------------------------以下為個人內容-------------------------- --%>
+<!-- 			   <div class="container"> -->
+        <h2>飯店</h2>
+        <div class="mx-auto my-3" style="width: 1100px">
+            <form class="form-inline" action="hotelselect" method="GET">
+                <div class="form-group mb-2">
+                  <h5>輸入關鍵字:</h5>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                  <label for="inputKeyword" class="sr-only">keyword</label>
+                  <input type="text" class="form-control"  name="keyword" placeholder="Search..">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputState">地區:</label>
+                    <select id="inputState" class="form-control" placeholder="地區" name="regionkeywd">
+                        <option value="">請選擇..</option>
+                        <option value="基隆市">基隆市</option>
+                        <option value="新北市">新北市</option>
+                        <option value="臺北市">臺北市</option>
+                        <option value="桃園市">桃園市</option>
+                        <option value="新竹市">新竹市</option>
+                        <option value="新竹縣">新竹縣</option>
+                        <option value="苗栗縣">苗栗縣</option>
+                        <option value="宜蘭縣">宜蘭縣</option>
+                        <option value="臺中市">臺中市</option>
+                        <option value="彰化縣">彰化縣</option>
+                        <option value="南投縣">南投縣</option>
+                        <option value="雲林縣">雲林縣</option>
+                        <option value="嘉義市">嘉義市</option>
+                        <option value="嘉義縣">嘉義縣</option>
+                        <option value="臺南市">臺南市</option>
+                        <option value="高雄市">高雄市</option>
+                        <option value="屏東縣">屏東縣</option>
+                        <option value="花蓮縣">花蓮縣</option>
+                        <option value="臺東縣">臺東縣</option>
+                        <option value="澎湖縣">澎湖縣</option>
+                        <option value="金門縣">金門縣</option>
+                        <option value="連江縣">連江縣</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="inputState">類型:</label>
+                    <select id="inputState" class="form-control" placeholder="住宿類型" name="typekeywd">
+                      <option value="">請選擇..</option>
+                      <option value="飯店">飯店</option>
+                      <option value="民宿">民宿</option>
+                      <option value="汽車旅館">汽車旅館</option>
+                    </select>
+                  </div>      
+                <button type="submit" class="btn btn-primary mb-2" value="search" name="search">搜尋</button>
+              </form>
+            </div>
+  <!--------------------------------------------以上為搜尋列----------------------------------------------------------->  
+  <!--------------------------------------------以下為飯店內容--------------------------------------------------------->
+        <br>
+        <table class="table">
+            <thead>
+            <tr>
+<!--             	<th>圖片</th> -->
+                <th>名稱</th>
+                <th>地區</th>
+                <th>地址</th>
+                <th>電話</th>                
+                <th>雙人房價格</th>                
+                <th>四人房價格</th>                
+                <th>介紹</th>                
+                <th>營業時間</th>                
+                <th>住宿類型</th>
+                <th>修改</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="hotels" items="${hoteldata}">
+            <tr>
+<!--             	<td></td> -->
+                <td>${hotels.NAME}</td>
+                <td>${hotels.REGION}</td>
+                <td>${hotels.ADDRESS}</td>
+                <td>${hotels.TEL}</td>
+                <td>${hotels.DOUBLE_ROOM}</td>
+                <td>${hotels.QUADRUPLE_ROOM}</td>
+                <td>${hotels.DESCRIPTION}</td>
+                <td>${hotels.OPENTIME}</td>
+                <td>${hotels.TYPE}</td>
+                <td><button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" >修改</button></td>
+            </tr>
+            
+          	 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+           	 <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">${hotels.NAME}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="hotelselect" method="GET">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">房型:</label><br>
+                      <input type="checkbox" value="doubleroom">雙人房
+                      <input type="text" >間<br>
+                      <input type="checkbox" value="quadrupleroom">四人房
+                      <input type="text">間<br>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="t1">入住日期:</label>
+                        <input type="date" name="checkin"><br>
+                        <label for="" class="t1">退房日期:</label>
+                        <input type="date" name="checkout">
+                      </div>
+               		 <div class="form-group">
+                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                 	 <button type="submit" class="btn btn-primary">確認</button>
+               		 </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+           </c:forEach>    
+            </tbody>
+        </table>
+
+
+
+<!--         </div>  --------------------------------------end----------------------------------------------------   -->
+		</div>
+	</div>
+
+
+</body>
+</html>
