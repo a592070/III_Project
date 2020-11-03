@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  已建立檔案 - 星期一-十一月-02-2020   version:02
+--  已建立檔案 - 星期一-十一月-02-2020   version:03
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence RESTAURANT_SEQ
@@ -513,3 +513,8 @@ ALTER TRIGGER "III_TEAM_DBA"."RESTAURANT_TRG" ENABLE;
 
   ALTER TABLE "III_TEAM_DBA"."RESTAURANT" ADD CONSTRAINT "RESTAURANT_FK1" FOREIGN KEY ("USERNAME")
 	  REFERENCES "III_TEAM_DBA"."ACCOUNT" ("USERNAME") ENABLE;
+--------------------------------------------------------
+--  Create VIEW Table SHOW_RVIEW
+--------------------------------------------------------	    
+create view SHOW_RVIEW as
+select R_SN, NAME, ADDRESS, REGION, USERNAME, STATUS from RESTAURANT;
