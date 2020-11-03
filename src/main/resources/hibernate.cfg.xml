@@ -43,6 +43,9 @@
 		
 		<mapping class="iring29.model.Show_RView"/>
 		<mapping class="iring29.model.Restaurant"/>
+		<mapping class="azaz4498.model.Article"/>
+		<mapping class="azaz4498.model.ArticleType"/>
+		<mapping class="azaz4498.model.Comment"/>
 
 	</session-factory>
 </hibernate-configuration>

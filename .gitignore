@@ -52,3 +52,6 @@ tmp/
 
 /other/react-reduction-master/
 /other/react-reduction/
+.settings/org.eclipse.wst.validation.prefs
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.jdt.core.prefs
