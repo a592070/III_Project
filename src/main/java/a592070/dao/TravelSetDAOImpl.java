@@ -78,20 +78,35 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public void addTravelSet(TravelSetDO travelSetDO){
-        travelSetDO.setAvailable(1);
-        sessionFactory.getCurrentSession().save(travelSetDO);
+    public TravelSetDO addTravelSet(TravelSetDO travelSetDO){
+        try {
+            travelSetDO.setAvailable(1);
+            sessionFactory.getCurrentSession().save(travelSetDO);
+            return travelSetDO;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
-    public void updateTravelSet(TravelSetDO travelSetDO) {
+    public TravelSetDO updateTravelSet(TravelSetDO travelSetDO) {
         travelSetDO.setAvailable(1);
-        sessionFactory.getCurrentSession().merge(travelSetDO);
+        try{
+            sessionFactory.getCurrentSession().update(travelSetDO);
+            return travelSetDO;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
-    public void setTravelSetUnavailable(int sn) {
-        TravelSetDO travelSetDO = sessionFactory.getCurrentSession().get(TravelSetDO.class, sn);
-        travelSetDO.setAvailable(0);
+    public boolean setTravelSetUnavailable(int sn) {
+        try {
+            TravelSetDO travelSetDO = sessionFactory.getCurrentSession().get(TravelSetDO.class, sn);
+            travelSetDO.setAvailable(0);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

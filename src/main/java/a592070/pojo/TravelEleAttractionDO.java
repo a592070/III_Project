@@ -1,7 +1,10 @@
 package a592070.pojo;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "TRAVEL_ELE_A")
@@ -10,6 +13,8 @@ public class TravelEleAttractionDO {
     private Integer sn;
 
     private Timestamp time;
+//    @Column(name = "time")@Temporal(TemporalType.TIMESTAMP)
+//    private Date utilTime;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "A_ID", referencedColumnName = "SN")

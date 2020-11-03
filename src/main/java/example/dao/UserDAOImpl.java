@@ -1,6 +1,8 @@
 package example.dao;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import example.pojo.User;
 
@@ -17,6 +19,21 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public List<User> select(){
         return sessionFactory.getCurrentSession().createQuery("from User ", User.class).list();
+    }
+    @Override
+    public List<User> selectSort(String orderFiled){
+
+        Query<User> query = sessionFactory.getCurrentSession().createQuery("from User order by "+orderFiled, User.class);
+//        query.setParameter(1, orderFiled);
+        return query.list();
+    }
+    @Override
+    public List<User> select(String username){
+        username = "%"+username+"%";
+        Session session = sessionFactory.getCurrentSession();
+        Query<User> query = session.createQuery("from User where name like :keyword or password like :keyword ", User.class);
+        query.setParameter("keyword", username);
+        return query.list();
     }
     @Override
     public void insert(User user){

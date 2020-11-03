@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -14,12 +15,27 @@
 	<import resource="classpath:exampleBeans.xml" />
 	<import resource="classpath:a592070.beans.xml"/>
 	<import resource="classpath:iring29.beans.xml"/>
+	<import resource="classpath:azaz4498.beans.xml"/>
+	<import resource="classpath:rambo0021.beans.xml" />
 	<import resource="classpath:asx54630.beans.xml"/>
 
 	<context:annotation-config />
 	<context:component-scan base-package="global"/>
 	<mvc:default-servlet-handler />
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="utf-8"/>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+						<property name="failOnEmptyBeans" value="false"/>
+					</bean>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->
