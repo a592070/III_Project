@@ -12,6 +12,8 @@
     <bean id="carRentalCompanyService" class="innocence741.service.CarRentalCompanyService" lazy-init="true" scope="session"/>
     <bean id="carRentalCompanyViewService" class="innocence741.service.CarRentalCompanyViewService" lazy-init="true" scope="session"/>
     
+    <bean id="carRentalCompanyController" class="innocence741.controller.CarRentalCompanyController" scope="session"></bean>
+    
     
             
     
