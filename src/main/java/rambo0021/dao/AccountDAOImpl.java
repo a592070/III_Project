@@ -18,7 +18,7 @@ public class AccountDAOImpl implements AcountDAO {
 	@Override
 	public List<AccountBean> userList() {
 		Session session = sessionFactory.getCurrentSession();
-        String hql="From AccountBean order by Modify_Date DESC";
+		String hql = "From AccountBean order by Modify_Date DESC";
 		Query<AccountBean> query = session.createQuery(hql, AccountBean.class);
 		List<AccountBean> list = query.list();
 		return list;
@@ -27,7 +27,17 @@ public class AccountDAOImpl implements AcountDAO {
 	@Override
 	public AccountBean userDetail(String username) {
 		Session session = sessionFactory.getCurrentSession();
-          return session.get(AccountBean.class, username);
+		return session.get(AccountBean.class, username);
+	}
+
+	@Override
+	public AccountBean updateAccImg(byte[] img,String username) {
+		Session session = sessionFactory.getCurrentSession();
+        AccountBean aBean = session.get(AccountBean.class, username);
+	    if (aBean !=null) {
+	    	aBean.setPicture(img);
+	    	return aBean;
+	    }
+	    return aBean;
 	}
 }
-

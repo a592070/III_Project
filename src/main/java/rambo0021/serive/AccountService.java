@@ -8,4 +8,5 @@ public interface AccountService {
 
 	List<AccountBean> userList();
 	AccountBean userDetail(String username);
+	AccountBean updateAccImg(byte[] img,String username);
 }
