@@ -11,18 +11,23 @@ import rambo0021.pojo.AccountBean;
 
 @Transactional
 public class AccountServiceImpl implements AccountService {
-    @Autowired 
-    @Qualifier("accountDao")
+	@Autowired
+	@Qualifier("accountDao")
 	private AcountDAO dao;
-	
-	
+
 	@Override
 	public List<AccountBean> userList() {
 		return dao.userList();
 	}
+
 	@Override
 	public AccountBean userDetail(String username) {
 		return dao.userDetail(username);
+	}
+
+	@Override
+   public AccountBean updateAccImg(byte[] img,String username) {
+		return dao.updateAccImg(img, username);
 	}
 
 }
