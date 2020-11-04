@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "HIGHSPEEDRAIL")
-@Component("highSpeedRail")
 public class HighSpeedRail {
 	@Id
 	@Column(name = "SN_SCHEDULE")

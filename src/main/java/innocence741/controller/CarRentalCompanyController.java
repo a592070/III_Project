@@ -31,6 +31,11 @@ public class CarRentalCompanyController {
 	@Autowired
 	CarRentalCompanyService carRentalCompanyService;
 
+	@RequestMapping(path = "/Tindex.controller", method = RequestMethod.POST)
+	public String hahaIndex() {
+		return "innocence741/BackEnd_CarRentalCompany";
+	}
+	
 	@RequestMapping(path = "/carrentalcompany.controller", method = RequestMethod.POST)
 	public @ResponseBody List<CarRentalCompanyVO> processAction1() throws SQLException {
 		List<CarRentalCompanyVO> list = new ArrayList<CarRentalCompanyVO>();

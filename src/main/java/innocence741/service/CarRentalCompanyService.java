@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import innocence741.model.CarRentalCompany;
 import innocence741.model.CarRentalCompanyDAO;
 
-@Service("CarRentalCompanyService")
 public class CarRentalCompanyService {
 
 	@Autowired
