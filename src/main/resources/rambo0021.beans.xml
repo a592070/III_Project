@@ -8,5 +8,5 @@
     <bean id="accountDao" class="rambo0021.dao.AccountDAOImpl" lazy-init="true" scope="session"/>
 
     <bean id="accountService" class="rambo0021.serive.AccountServiceImpl" lazy-init="true" scope="session"/>
-   
+   	<context:component-scan base-package="rambo0021.controller"/>
 </beans>
