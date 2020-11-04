@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 
 
-@Repository("carRentalCompanyViewDao")
 public class CarRentalCompanyViewDAO {
 	
 	private SessionFactory sessionFacory;

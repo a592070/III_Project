@@ -28,7 +28,6 @@ import rambo0021.pojo.AccountBean;
 //大訂單的Bean
 @Entity
 @Table(name="ORDER_TABLE")
-@Component("orderTable")
 public class OrderTableBean {
 
 	@Id

@@ -85,7 +85,12 @@ public class AccountBean {
 	public String getModify_DateString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		sdf.setLenient(false);
-		String Date = sdf.format(modify_Date);
+		String Date;
+		if(modify_Date ==null) {
+			Date="未知";
+		}else {
+			Date = sdf.format(modify_Date);
+		}
 		return Date;
 	}
 
@@ -106,7 +111,12 @@ public class AccountBean {
 	public String getRegisterString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		sdf.setLenient(false);
-		String Date2 = sdf.format(register);
+		String Date2;
+		if(modify_Date ==null) {
+			Date2="未知";
+		}else {
+			Date2 = sdf.format(modify_Date);
+		}
 		return Date2;
 	}
 

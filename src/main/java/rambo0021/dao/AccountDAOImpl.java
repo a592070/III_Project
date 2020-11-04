@@ -18,9 +18,16 @@ public class AccountDAOImpl implements AcountDAO {
 	@Override
 	public List<AccountBean> userList() {
 		Session session = sessionFactory.getCurrentSession();
-
-		Query<AccountBean> query = session.createQuery("From AccountBean order by Modify_Date DESC", AccountBean.class);
+        String hql="From AccountBean order by Modify_Date DESC";
+		Query<AccountBean> query = session.createQuery(hql, AccountBean.class);
 		List<AccountBean> list = query.list();
 		return list;
 	}
+
+	@Override
+	public AccountBean userDetail(String username) {
+		Session session = sessionFactory.getCurrentSession();
+          return session.get(AccountBean.class, username);
+	}
 }
+
