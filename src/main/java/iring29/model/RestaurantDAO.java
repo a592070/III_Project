@@ -1,5 +1,6 @@
 package iring29.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -23,8 +24,7 @@ public class RestaurantDAO {
 	
 	@Transactional(rollbackFor = {Throwable.class})
 	public List<Show_RView> totalRestaurant() {
-		System.out.println("in");
-		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery("from Show_RView", Show_RView.class);
+		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery("from Show_RView order by r_sn", Show_RView.class);
 		return query.list();
 	}
 
@@ -50,5 +50,13 @@ public class RestaurantDAO {
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
 		query.setParameter(1, "%" + username + "%");
 		return query.list();
+	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public Restaurant restaurantInfo(BigDecimal r_sn) {
+		String hql = "from Restaurant where r_sn = ?1";
+		Query<Restaurant> query = sessionFactory.getCurrentSession().createQuery(hql, Restaurant.class);
+		query.setParameter(1, r_sn);
+		return query.uniqueResult();
 	}
 }
