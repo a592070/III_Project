@@ -113,21 +113,22 @@ td{
             <div class="">
                 <div class="div-1">
                     <label for="r-name">適合聚餐類型</label> 
-                    <textarea name="serviceinfo" id="" cols="40" rows="5" placeholder="${r_hp.serviceinfo}"></textarea>
+                    <textarea name="serviceinfo" id="serviceinfo" cols="40" rows="5" placeholder="${rBean.serviceinfo}"></textarea>
                 </div>
 
                 <div class="div-1">
                     <label for="r-date">料理種類</label> 
-                    <textarea name="type" id="" cols="40" rows="5" placeholder="${r_hp.type}"></textarea>
+                    <textarea name="type" id="type" cols="40" rows="5" placeholder="${rBean.type}"></textarea>
                 </div>
 
             </div>
         </div>
         
         <input type="hidden" id="finalDecision" name="finalDecision" value=""> 
+        <input type="hidden" id="r_sn" name="r_sn" value="${rBean.r_sn}"> 
         	<!-- 隱藏資訊 -->
-        	<Input type='hidden' name='rBean' value='${r_hp}'>
-        	<Input type='hidden' name='roBean' value='${roBean}'>
+<%--         	<Input type='hidden' name='rBean' value='${r_hp}'> --%>
+<%--         	<Input type='hidden' name='roBean' value='${roBean}'> --%>
         	
         <div class="div-btn">
        		<input type="button" class="btn btn-primary" name="confirm" value="confrim" onclick="confirmL()"> 
@@ -139,11 +140,17 @@ td{
 	<script type="text/javascript">
 function confirmL(){
 	if (confirm("確定送出修改 ? ") ) {
-		console.log(document.forms["formL"]);
-		console.log(document.forms["formL"].finalDecision.value);
+		let serviceinfo = document.getElementById("serviceinfo").value;
+		let type = document.getElementById("type").value; 
 		document.forms["formL"].finalDecision.value = "confirmT";
 		console.log(document.forms["formL"].finalDecision.value);
-		document.forms["formL"].action="<%=application.getContextPath()%>/Restaurant_HPServlet";
+		if(serviceinfo === ""){
+			document.getElementById("serviceinfo").value = "${rBean.serviceinfo}";
+			}
+		if(type === ""){
+			document.getElementById("type").value = "${rBean.type}";
+			}
+		document.forms["formL"].action="<%=application.getContextPath()%>/ModifyType";
 		document.forms["formL"].method="POST";
 		document.forms["formL"].submit();
 		return;
@@ -157,7 +164,7 @@ function cancelL(){
 		console.log(document.forms["formL"].finalDecision.value);
 		document.forms["formL"].finalDecision.value = "cancel";
 		console.log(document.forms["formL"].finalDecision.value);
-		document.forms["formL"].action="<%=application.getContextPath()%>/Restaurant_HPServlet";
+		document.forms["formL"].action="<%=application.getContextPath()%>/DisplayRestauran";
 		document.forms["formL"].method="POST";
 		document.forms["formL"].submit();
 		return;

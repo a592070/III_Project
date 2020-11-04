@@ -107,26 +107,27 @@ td{
 
 <div class="wrapper">
 
-	<FORM id="formL" name="formL" action="<c:url value='Restaurant_HPServlet'/>" method="POST">
+	<FORM id="formL" name="formL" action="<%=pageContext.getServletContext().getContextPath()%>/InModifyLocation" method="POST">
 	
         <div class="container">
             <h2>修改${r_hp.name}地點資訊</h2>
             <div class="">
                 <div class="div-1">
-                    <label for="r-name">地址</label> <textarea name="address" id="" cols="40" rows="5" placeholder="${r_hp.address}"></textarea>
+                    <label for="r-name">地址</label> <textarea name="address" id="address" cols="40" rows="5" placeholder="${rBean.address}"></textarea>
                 </div>
 
                 <div class="div-1">
-                    <label for="r-date">交通方式</label> <textarea name="transportation" id="" cols="40" rows="5" placeholder="${r_hp.transportation}"></textarea>
+                    <label for="r-date">交通方式</label> <textarea name="transportation" id="transportation" cols="40" rows="5" placeholder="${rBean.transportation}"></textarea>
                 </div>
 
             </div>
         </div>
         
         <input type="hidden" id="finalDecision" name="finalDecision" value=""> 
+        <input type="hidden" id="r_sn" name="r_sn" value="${rBean.r_sn}"> 
         	<!-- 隱藏資訊 -->
-        	<Input type='hidden' name='rBean' value='${r_hp}'>
-        	<Input type='hidden' name='roBean' value='${roBean}'>
+<%--         	<Input type='hidden' name='rBean' value='${r_hp}'> --%>
+<%--         	<Input type='hidden' name='roBean' value='${roBean}'> --%>
         
         <div class="div-btn">
        	<!--	<button  name="confirm-location" value="confirm" class="btn btn-primary">確認</button> -->
@@ -141,11 +142,17 @@ td{
 <script type="text/javascript">
 function confirmL(){
 	if (confirm("確定送出修改 ? ") ) {
-		console.log(document.forms["formL"]);
-		console.log(document.forms["formL"].finalDecision.value);
+		let address = document.getElementById("address").value;
+		let transportation = document.getElementById("transportation").value;
 		document.forms["formL"].finalDecision.value = "confirmL";
 		console.log(document.forms["formL"].finalDecision.value);
-		document.forms["formL"].action="<%=application.getContextPath()%>/Restaurant_HPServlet";
+		if(address === ""){
+			document.getElementById("address").value = "${rBean.address}";
+			}
+		if(transportation === ""){
+			document.getElementById("transportation").value = "${rBean.transportation}";
+			}		
+		document.forms["formL"].action="<%=application.getContextPath()%>/ModifyLocation";
 		document.forms["formL"].method="POST";
 		document.forms["formL"].submit();
 		return;
@@ -159,7 +166,7 @@ function cancelL(){
 		console.log(document.forms["formL"].finalDecision.value);
 		document.forms["formL"].finalDecision.value = "cancel";
 		console.log(document.forms["formL"].finalDecision.value);
-		document.forms["formL"].action="<%=application.getContextPath()%>/Restaurant_HPServlet";
+		document.forms["formL"].action="<%=application.getContextPath()%>/DisplayRestaurant";
 		document.forms["formL"].method="POST";
 		document.forms["formL"].submit();
 		return;

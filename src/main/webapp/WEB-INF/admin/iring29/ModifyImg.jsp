@@ -112,7 +112,7 @@ td{
             <h2>修改${r_hp.name}圖片資訊</h2>
             <div class="">
                 <div class="div-1">
-                    <label for="r-name">請提供圖片網址</label> 
+                    <label for="r-name">請上傳圖片</label> 
                     <textarea name="picture" id="newimg" cols="40" rows="5" placeholder="http://" onblur='checkimg1()' ></textarea>
                 </div>
 	

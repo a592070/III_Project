@@ -107,12 +107,8 @@ public class RestaurantController {
 	@RequestMapping(path = "/ModifyInfo", method = RequestMethod.POST)
 	public String ModifyPic(@ModelAttribute("rBean") Restaurant r, @RequestParam("opentime") String opentime,
 			@RequestParam("description") String description, @RequestParam("finalDecision") String decision, Model m) {
-		System.out.println("r.getop = " + r.getOpentime());
-		System.out.println("r.getdes = " + r.getDescription());
 		String op = opentime;
-		System.out.println("op = " + op);
 		String des = description;
-		System.out.println("des = " + des);
 		Restaurant rBean = r;
 		if (decision.equals("confirmI")) {
 			if (op == "") {
@@ -122,6 +118,54 @@ public class RestaurantController {
 				des = r.getDescription();
 			}
 			rBean = ms.R_Info(op, des, r.getR_sn());
+		}
+		m.addAttribute("rBean", rBean);
+		return "iring29/R_modify";
+	}
+	
+	@RequestMapping(path = "/InModifyLocation", method = RequestMethod.POST)
+	public String InModifyLocation() {
+		return "iring29/Modify_Location";
+	}
+	
+	@RequestMapping(path = "/ModifyInfo", method = RequestMethod.POST)
+	public String ModifyInfo(@ModelAttribute("rBean") Restaurant r, @RequestParam("address") String address,
+			@RequestParam("transportation") String transportation, @RequestParam("finalDecision") String decision, Model m) {
+		String add = address;
+		String trans = transportation;
+		Restaurant rBean = r;
+		if (decision.equals("confirmL")) {
+			if (add == "") {
+				add = r.getAddress();
+			}
+			if (trans == "") {
+				trans = r.getTransportation();
+			}
+			rBean = ms.R_Info(add, trans, r.getR_sn());
+		}
+		m.addAttribute("rBean", rBean);
+		return "iring29/R_modify";
+	}
+	
+	@RequestMapping(path = "/InModifyType", method = RequestMethod.POST)
+	public String InModifyType() {
+		return "iring29/Modify_Type";
+	}
+	
+	@RequestMapping(path = "/ModifyType", method = RequestMethod.POST)
+	public String ModifyType(@ModelAttribute("rBean") Restaurant r, @RequestParam("serviceinfo") String serviceinfo,
+			@RequestParam("type") String type, @RequestParam("finalDecision") String decision, Model m) {
+		String ser = serviceinfo;
+		String ty = type;
+		Restaurant rBean = r;
+		if (decision.equals("confirmT")) {
+			if (ser == "") {
+				ser = r.getServiceinfo();
+			}
+			if (ty == "") {
+				ty = r.getType();
+			}
+			rBean = ms.R_Info(ser, ty, r.getR_sn());
 		}
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";
