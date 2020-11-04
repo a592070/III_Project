@@ -20,5 +20,9 @@ public class AccountServiceImpl implements AccountService {
 	public List<AccountBean> userList() {
 		return dao.userList();
 	}
+	@Override
+	public AccountBean userDetail(String username) {
+		return dao.userDetail(username);
+	}
 
 }

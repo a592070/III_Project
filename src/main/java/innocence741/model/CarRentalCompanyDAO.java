@@ -1,3 +1,4 @@
+
 package innocence741.model;
 
 import java.util.List;
@@ -79,3 +80,4 @@ public class CarRentalCompanyDAO {
 		
 	}
 }
+

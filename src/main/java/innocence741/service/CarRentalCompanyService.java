@@ -16,8 +16,10 @@ public class CarRentalCompanyService {
 	public boolean updateCarRentalCompany(CarRentalCompany cBean) {
 		return carRentalCompanyDAO.updateCarRentalCompany(cBean);
 	}
+
 	
 	public boolean updateCarRentalCompanyWithoutPic(CarRentalCompany cBean) {
 		return carRentalCompanyDAO.updateCarRentalCompanyWithoutPic(cBean);
 	}
 }
+

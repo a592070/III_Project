@@ -141,7 +141,7 @@ td{
 								<td>${r.username}</td>
 								<td>
 									<form action="<%=application.getContextPath()%>/DisplayRestaurant" method="POST">
-									<button type="submit" class="btn btn-warning">Modify</button>
+									<button type="submit" class="btn btn-warning">修改</button>
 									<Input type='hidden' name='r_sn' value='${r.r_sn}'>
 									</form>
 								</td>
