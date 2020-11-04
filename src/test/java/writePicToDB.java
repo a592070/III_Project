@@ -2,14 +2,10 @@ import a592070.pojo.AttractionDO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utils.IOUtils;
@@ -17,9 +13,6 @@ import utils.PictureSupport;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,7 +32,7 @@ public class writePicToDB {
 //    }
     @Test
     public void addPic(){
-        String hql = "from AttractionDO where (pic is null) and (picture is not null) ";
+        String hql = "from AttractionDO where (picture is null) and (pictureUrl is not null) ";
 //        sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -67,7 +60,7 @@ public class writePicToDB {
     }
     @Test
     public void delPic(){
-        String hql = "from AttractionDO where picture like 'http://%'";
+        String hql = "from AttractionDO where pictureUrl like 'http://%'";
 //        sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -75,7 +68,7 @@ public class writePicToDB {
         List<AttractionDO> list = query.list();
         try {
             for (AttractionDO ele : list) {
-                ele.setPic(null);
+                ele.setPicture(null);
             }
             session.getTransaction().commit();
         }catch (Exception e){
@@ -93,8 +86,8 @@ public class writePicToDB {
         List<AttractionDO> list = query.list();
         try {
             for (AttractionDO ele : list) {
-                String replace = ele.getPicture().replace("https://", "http://");
-                ele.setPicture(replace);
+                String replace = ele.getPictureUrl().replace("https://", "http://");
+                ele.setPictureUrl(replace);
             }
             session.getTransaction().commit();
         }catch (Exception e){

@@ -5,9 +5,10 @@ import a592070.fieldenum.RestaurantFieldName;
 import a592070.pojo.RestaurantVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Transactional(rollbackFor = {Exception.class})
 public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     @Autowired@Qualifier("restaurantViewDao")
     private ViewDAO<RestaurantVO> viewDAO;

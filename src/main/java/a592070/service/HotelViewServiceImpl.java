@@ -5,9 +5,10 @@ import a592070.fieldenum.HotelFieldName;
 import a592070.pojo.HotelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Transactional(rollbackFor = {Exception.class})
 public class HotelViewServiceImpl implements ViewService<HotelVO>{
     @Autowired@Qualifier("hotelViewDao")
     private ViewDAO<HotelVO> viewDAO;

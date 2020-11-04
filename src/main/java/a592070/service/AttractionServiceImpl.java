@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+@Transactional(rollbackFor = {Exception.class})
 public class AttractionServiceImpl implements AttractionService{
     @Autowired@Qualifier("attractionDao")
     private AttractionDAO dao;

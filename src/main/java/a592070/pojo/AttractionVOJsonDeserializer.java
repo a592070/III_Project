@@ -21,7 +21,6 @@ public class AttractionVOJsonDeserializer extends JsonDeserializer<AttractionVO>
         attraction.setDescription(node.get("description").textValue());
         attraction.setAddress(node.get("address").textValue());
 
-        attraction.setPicture(node.get("picture").textValue());
         attraction.setTicketInfo(node.get("ticketInfo").textValue());
 
         return attraction;

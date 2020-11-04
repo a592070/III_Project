@@ -14,7 +14,6 @@ public class AttractionVOJsonSerializer extends JsonSerializer<AttractionVO> {
         gen.writeStringField("name", value.getName());
         gen.writeStringField("description", value.getDescription());
         gen.writeStringField("address", value.getAddress());
-        gen.writeStringField("picture", value.getPicture());
         gen.writeStringField("ticketInfo", value.getTicketInfo());
 
         gen.writeEndObject();

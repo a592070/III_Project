@@ -1,0 +1,10 @@
+{
+  "type": "entity/list/...",
+  "data": [
+    {
+      "id": "id",
+      "name": "name",...
+    }, ...
+  ],
+  other
+}

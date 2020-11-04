@@ -8,9 +8,11 @@ import a592070.pojo.CarVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.Nullable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional(rollbackFor = {Exception.class})
 public class CarViewServiceImpl implements ViewService<CarVO>{
     @Autowired@Qualifier("carViewDao")
     private ViewDAO<CarVO> viewDAO;
