@@ -31,3 +31,4 @@ public class ArticleTypeDAO {
 		return list;
 	}
 }
+

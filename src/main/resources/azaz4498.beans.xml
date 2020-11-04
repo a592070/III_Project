@@ -20,6 +20,5 @@
 		scope="session" />
 	<context:component-scan
 		base-package="azaz4498.controller" />
-	
 
 </beans>
