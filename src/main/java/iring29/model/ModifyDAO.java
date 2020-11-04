@@ -19,7 +19,7 @@ public class ModifyDAO {
 		this.sessionFactory = sessionFactory;
 	}
 
-	@Transactional(rollbackFor = {Throwable.class})
+//	@Transactional(rollbackFor = {Throwable.class})
 	// modify location
 	public Restaurant R_Address(String address, String transportation, BigDecimal r_sn) {
 		Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
@@ -31,7 +31,7 @@ public class ModifyDAO {
 		return result;
 	}
 
-	@Transactional(rollbackFor = {Throwable.class})
+//	@Transactional(rollbackFor = {Throwable.class})
 	// modify Type
 	public Restaurant R_Type(String serviceinfo, String type, BigDecimal r_sn) {
 		Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
@@ -43,7 +43,7 @@ public class ModifyDAO {
 		return result;
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+//	@Transactional(rollbackFor = {Throwable.class})
 	// modify Info
 	public Restaurant R_Info(String opentime, String description, BigDecimal r_sn) {
 		Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
@@ -56,7 +56,7 @@ public class ModifyDAO {
 
 	}
 
-	@Transactional(rollbackFor = {Throwable.class})
+//	@Transactional(rollbackFor = {Throwable.class})
 	// modify Img
 	public Restaurant R_Img(byte[] pic, BigDecimal r_sn) {
 		Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
