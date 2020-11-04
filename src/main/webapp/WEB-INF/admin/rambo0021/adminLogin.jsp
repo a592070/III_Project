@@ -53,9 +53,7 @@
 
 	<script>
 		function checkusr() {
-			let theUsrObjVal = document.getElementById("userName").value;
-			// let disable = document.getElementById("submit").disabled;
-
+			let theUsrObjVal = document.getElementById("userName").value
 			let sp = document.getElementById("idsp");
 			let theUsrlen = theUsrObjVal.length;
 

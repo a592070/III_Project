@@ -22,4 +22,8 @@ org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
 org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures=warning
 org.eclipse.jdt.core.compiler.release=disabled
 org.eclipse.jdt.core.compiler.source=11
+<<<<<<< HEAD
+>>>>>>> branch 'master' of https://github.com/a592070/III_Project.git
+=======
+
 >>>>>>> branch 'master' of https://github.com/a592070/III_Project.git
