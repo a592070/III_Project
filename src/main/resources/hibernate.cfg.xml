@@ -53,10 +53,9 @@
 		<mapping class="innocence741.model.HighSpeedRail" />
 		<mapping class="innocence741.model.OrderTableBean" />
 		<mapping class="innocence741.model.T_Order_List" />
+		<mapping class="asx54630.model.Hotel"/>
 		
 		
-		
-
 
 
 
