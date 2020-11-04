@@ -5,10 +5,13 @@ import org.hibernate.query.Query;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utils.IOUtils;
 import utils.PictureSupport;
 
@@ -19,22 +22,25 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:springmvc.servlet.xml")
 public class writePicToDB {
     private static ApplicationContext beans;
+    @Autowired
     private static SessionFactory sessionFactory;
-    @BeforeClass
-    public static void init(){
-        beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
-    }
-
-    @AfterClass
-    public static void close(){
-        ((ConfigurableApplicationContext)beans).close();
-    }
+//    @BeforeClass
+//    public static void init(){
+//        beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
+//    }
+//
+//    @AfterClass
+//    public static void close(){
+//        ((ConfigurableApplicationContext)beans).close();
+//    }
     @Test
     public void addPic(){
         String hql = "from AttractionDO where (pic is null) and (picture is not null) ";
-        sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
+//        sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query<AttractionDO> query = session.createQuery(hql, AttractionDO.class);
@@ -62,7 +68,7 @@ public class writePicToDB {
     @Test
     public void delPic(){
         String hql = "from AttractionDO where picture like 'http://%'";
-        sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
+//        sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query<AttractionDO> query = session.createQuery(hql, AttractionDO.class);
@@ -80,7 +86,7 @@ public class writePicToDB {
     @Test
     public void setPictureUrl(){
         String hql = "from AttractionDO where picture like 'https://travel.nantou.gov.tw/manasystem%' ";
-        sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
+//        sessionFactory = beans.getBean("sessionFactory", SessionFactory.class);
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query<AttractionDO> query = session.createQuery(hql, AttractionDO.class);

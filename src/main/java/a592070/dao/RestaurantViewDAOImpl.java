@@ -37,49 +37,44 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
         }else {
             keyWords = "%"+keyWords+"%";
         }
-        String hql = "select count(sn) from RestaurantVO where name like ?1 or type like ?2 or address like ?3 or description like ?4";
+        String hql = "select count(sn) from RestaurantVO " +
+                "where name like :keyword or type like :keyword or address like :keyword or description like :keyword ";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter(1, keyWords);
-        query.setParameter(2, keyWords);
-        query.setParameter(3, keyWords);
-        query.setParameter(4, keyWords);
+        query.setParameter("keyword", keyWords);
+
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords) {
-        if(StringUtil.isEmpty(keyWords)) {
-            keyWords="";
-        }else {
-            keyWords = "%"+keyWords+"%";
-        }
-        String hql = "select count(sn) from RestaurantVO where name like ?1 or type like ?2 or address like ?3 or description like ?4 order by sn";
+    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled) {
+        keyWords = "%"+keyWords+"%";
+
+        String hql = "from RestaurantVO " +
+                "where name like :keyword or type like :keyword or address like :keyword or description like :keyword order by "+orderFiled;
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
-        query.setParameter(1, keyWords);
-        query.setParameter(2, keyWords);
-        query.setParameter(3, keyWords);
-        query.setParameter(4, keyWords);
+        query.setParameter("keyword", keyWords);
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
         return query.list();
     }
 
     @Override
-    public int getSizeByRegion(String region){
-        if(StringUtil.isEmpty(region)){
-            region = "";
-        }else {
-            region = "%" + region + "%";
-        }
+    public int getSizeByFiled(String filedName, String filedValue){
+        filedValue = "%" + filedValue + "%";
 
         String hql = "select count(sn) from RestaurantVO where region like ?1";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter(1, region);
+        query.setParameter(1, filedValue);
 
         return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public List<RestaurantVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled) {
+        return null;
     }
 
     @Override
