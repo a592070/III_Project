@@ -108,14 +108,15 @@
                 <td>${hotels.DESCRIPTION}</td>
                 <td>${hotels.OPENTIME}</td>
                 <td>${hotels.TYPE}</td>
-                <td><button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" >修改</button></td>
+                <td><button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" onclick="clickdetail(${hotels.SN})">修改</button></td>
             </tr>
-            
+            </c:forEach> 
+            <c:forEach var="hotels" items="${hoteldata}">
           	 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
            	 <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">${hotels.NAME}</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">${hotels.SN}</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -124,17 +125,16 @@
                   <form action="hotelselect" method="GET">
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label">房型:</label><br>
-                      <input type="checkbox" value="doubleroom">雙人房
-                      <input type="text" >間<br>
-                      <input type="checkbox" value="quadrupleroom">四人房
-                      <input type="text">間<br>
+                	  名稱:<input type="text" value="${hotels.NAME}"><br>
+                 	  地區:<input type="text" value="${hotels.REGION}"><br>
+					  地址:<input type="text" value="${hotels.ADDRESS}"><br>
+					 電話:<input type="text" value="${hotels.TEL}"><br>
+					  雙人房價格:<input type="text" value="${hotels.DOUBLE_ROOM}"><br>
+					  四人房價格:<input type="text" value="${hotels.QUADRUPLE_ROOM}"><br>
+					  介紹:<input type="text" value="${hotels.DESCRIPTION}"><br>
+					 營業時間:<input type="text" value="${hotels.OPENTIME}"><br>
+					 住宿類型:<input type="text" value="${hotels.TYPE}"><br>
                     </div>
-                    <div class="form-group">
-                        <label for="" class="t1">入住日期:</label>
-                        <input type="date" name="checkin"><br>
-                        <label for="" class="t1">退房日期:</label>
-                        <input type="date" name="checkout">
-                      </div>
                		 <div class="form-group">
                   	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                  	 <button type="submit" class="btn btn-primary">確認</button>
@@ -144,8 +144,8 @@
               </div>
             </div>
           </div>
-           </c:forEach>    
-            </tbody>
+          </c:forEach>    
+         </tbody>
         </table>
 
 
