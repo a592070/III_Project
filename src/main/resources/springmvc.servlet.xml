@@ -17,7 +17,8 @@
 	<import resource="classpath:azaz4498.beans.xml"/>
 	<import resource="classpath:rambo0021.beans.xml" />
 	<import resource="classpath:innocence741.beans.xml" />
-	
+	<import resource="classpath:asx54630.beans.xml"/>
+
 
 
 	<context:annotation-config />
@@ -48,7 +49,5 @@
 		<!--後綴 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
-
-
 
 </beans>

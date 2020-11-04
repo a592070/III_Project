@@ -97,6 +97,7 @@ h2 {
 	/* font-size: 15px; */
 	/* font-weight: 400; */
 	border-top: 1px solid gray;
+	/* height:55px; */
 }
 
 .res_result {
@@ -105,6 +106,7 @@ h2 {
 
 .p_result {
 	padding: 10px 30px;
+	color:black;
 }
 
 .rating {
@@ -118,16 +120,6 @@ h2 {
 	line-height: 35px;
 }
 
-.book-btn {
-	/* background-color: #ec7551; */
-	border-radius: 4px;
-	color: #000000;
-	padding: 8px 0;
-	text-align: center;
-	cursor: pointer;
-	width: 400px;
-	margin: auto;
-}
 
 h3 {
 	padding: 10px 30px;
@@ -150,6 +142,9 @@ h3 {
 	margin-left:30px;
 	margin-bottom: 20px;
 }
+.btn.btn-light{
+	height:35px;
+}
 .div-1{
 	padding: 5px;
 	margin-left:10px;
@@ -161,6 +156,13 @@ h3 {
 p{
 	font-size:16px;
 }
+pre {
+    border-left: 0;
+    padding: 0; 
+    background: rgba(0, 0, 0, 0);
+    border-radius: 0;
+}
+
 </style>
 
 </head>
@@ -181,27 +183,20 @@ p{
 			
 			
 			<div>
-				<h2 class="title">${r_hp.name}</h2>
-				<div class="top">
-					<!-- <div class="booking">訂位</div>
-					<div class="info">資訊</div>
-					<div class="comment">評論</div> -->
-				</div> 
-				<FORM action="<c:url value='/iring29/ModifyImg.jsp'/>"
-					method="POST">
+				<h2 class="title">${rBean.name}</h2>
+				<div class="top"> </div> 
+				<FORM action="<%=application.getContextPath()%>/InModifyImg" method="POST">
 				<p class="modify-img">
 					<button class="btn btn-light">修改</button>
 				</p>
 				<div class="div_img">
-					<img src="${r_hp.picture}">
+					<img  src="<%=application.getContextPath()%>/ShowPic">
 				</div>
 				
 				</FORM>
-				<%-- <div class="div-1">
-					<h3>${r_hp.name}</h3>
-				</div> --%>
 				
-				<FORM action="<c:url value='/iring29/Modify_Location.jsp'/>"
+				
+				<FORM action="<%=application.getContextPath()%>/InModifyLocation"
 					method="POST">
 					<div>
 						<p class="modify">
@@ -212,17 +207,16 @@ p{
 
 					<div>
 						<h4 class="res_result">地址</h4>
-						<p class="p_result">${r_hp.address}</p>
+						<p class="p_result">${rBean.address}</p>
 					</div>
 					<div>
 						<h4 class="res_result">交通方式</h4>
-						<pre><p class="p_result">${r_hp.transportation}</p></pre>
+						<pre><p class="p_result">${rBean.transportation}</p></pre>
 					</div>
-					<Input type='hidden' name='rBean' value='${r_hp}'> <Input
-						type='hidden' name='roBean' value='${roBean}'>
+					
 				</FORM>
 
-				<FORM action="<c:url value='/iring29/Modify_Type.jsp'/>"
+				<FORM action="<%=application.getContextPath()%>/InModifyType"
 					method="POST">
 					<div>
 						<p class="modify">
@@ -232,15 +226,16 @@ p{
 					</div>
 					<div>
 						<h4 class="res_result">適合聚餐類型</h4>
-						<p class="p_result">${r_hp.serviceinfo}</p>
+						<p class="p_result">${rBean.serviceinfo}</p>
 					</div>
 					<div>
 						<h4 class="res_result">料理種類</h4>
-						<p class="p_result">${r_hp.type}</p>
+						<p class="p_result">${rBean.type}</p>
 					</div>
 				</FORM>
-				<FORM action="<c:url value='/iring29/Modify_Info.jsp'/>"
-					method="POST">
+				
+				
+				 <FORM action="<%=application.getContextPath()%>/InModifyInfo" method="POST"> 
 					<div>
 						<p class="modify">
 							<button class="btn btn-light">修改</button>
@@ -249,30 +244,24 @@ p{
 					</div>
 					<div>
 						<h4 class="res_result">營業時間</h4>
-						<pre><p class="p_result">${r_hp.opentime}</p></pre>
+						<pre><p class="p_result">${rBean.opentime}</p></pre>
 					</div>
 					<div>
 						<h4 class="res_result">餐廳描述</h4>
-						<p class="p_result">${r_hp.description}</p>
+						<p class="p_result">${rBean.description}</p>
 					</div>
-				</FORM>
+				 </FORM> 
 				
 			</div>
 
 		</div>
-		<Input type='hidden' name='rBean' value='${r_hp}'> <Input
-			type='hidden' name='rBean' value='${roBean}'>
 
 
 
 
-	</div>
-				
-				
+				</div>
 			</div>
-
-
-		</div>
+ 		</div>
 	</div>
 
 
