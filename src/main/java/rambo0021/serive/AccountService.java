@@ -6,5 +6,6 @@ import rambo0021.pojo.AccountBean;
 
 public interface AccountService {
 
-	public List<AccountBean> userList();
+	List<AccountBean> userList();
+	AccountBean userDetail(String username);
 }
