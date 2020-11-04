@@ -32,12 +32,12 @@ public class ModifyService {
 	@Transactional(rollbackFor = { Throwable.class })
 	// modify Info
 	public Restaurant R_Info(String opentime, String description, BigDecimal r_sn) {
-		return R_Info(opentime, description, r_sn);
+		return mDao.R_Info(opentime, description, r_sn);
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
 	// modify Img
 	public Restaurant R_Img(byte[] pic, BigDecimal r_sn) {
-		return R_Img(pic, r_sn);
+		return mDao.R_Img(pic, r_sn);
 	}
 }
