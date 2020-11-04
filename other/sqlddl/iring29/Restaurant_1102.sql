@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  已建立檔案 - 星期一-十一月-02-2020   version:04
+--  已建立檔案 - 星期一-十一月-02-2020   version:05 UPDATE: 2020/11/04
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence RESTAURANT_SEQ
@@ -608,6 +608,47 @@ ALTER TRIGGER "R_ORDER_LIST_TRG" ENABLE;
 	  REFERENCES "ORDER_TABLE" ("ORDER_ID") ENABLE;
   ALTER TABLE "R_ORDER_LIST" ADD CONSTRAINT "R_ORDER_LIST_FK2" FOREIGN KEY ("R_SN")
 	  REFERENCES "RESTAURANT" ("R_SN") ENABLE;	  
+	  
+--------------------------------------------------------
+--  DDL for Table R_COMMENT
+--------------------------------------------------------
+
+  CREATE TABLE "R_COMMENT" 
+   (	"COM_ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  ORDER  NOCYCLE  NOKEEP  NOSCALE , 
+	"COM_CONTENT" VARCHAR2(255 BYTE), 
+	"R_SN" NUMBER, 
+	"COM_USER_ID" VARCHAR2(255 BYTE), 
+	"COM_DATE" TIMESTAMP (6), 
+	"RATING" NUMBER
+   ) SEGMENT CREATION DEFERRED 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  TABLESPACE "USERS" ;
+REM INSERTING into R_COMMENT
+SET DEFINE OFF;
+--------------------------------------------------------
+--  DDL for Index R_COMMENT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "R_COMMENT_PK" ON "R_COMMENT" ("COM_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  Constraints for Table R_COMMENT
+--------------------------------------------------------
+
+  ALTER TABLE "R_COMMENT" MODIFY ("COM_ID" NOT NULL ENABLE);
+  ALTER TABLE "R_COMMENT" ADD CONSTRAINT "R_COMMENT_PK" PRIMARY KEY ("COM_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table R_COMMENT
+--------------------------------------------------------
+
+  ALTER TABLE "R_COMMENT" ADD CONSTRAINT "R_COMMENT_FK1" FOREIGN KEY ("COM_USER_ID")
+	  REFERENCES "ACCOUNT" ("USERNAME") ENABLE;
+  ALTER TABLE "R_COMMENT" ADD CONSTRAINT "R_COMMENT_FK2" FOREIGN KEY ("R_SN")
+	  REFERENCES "RESTAURANT" ("R_SN") ENABLE;
 	  
 --------------------------------------------------------
 --  Create VIEW Table SHOW_RVIEW
