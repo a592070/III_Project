@@ -46,7 +46,7 @@ public class RestaurantDAO {
 	
 	@Transactional(rollbackFor = {Throwable.class})
 	public List<Show_RView> userRestaurant(String username) {
-		String hql = "from Show_RView where username =?1 order by r_sn";
+		String hql = "from Show_RView where username like ?1 order by r_sn";
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
 		query.setParameter(1, "%" + username + "%");
 		return query.list();
