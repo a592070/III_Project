@@ -20,8 +20,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-
-
 @Entity
 @Table(name = "F_ARTICLE")
 public class Article implements Serializable {
@@ -38,8 +36,10 @@ public class Article implements Serializable {
 	private int artTypeId;
 	private String artTitle;
 	private byte[] artPic;
+	private String artPicUrl;
 	private List<Comment> comments = new ArrayList<Comment>();
 	private ArticleType articleType;
+
 	public Article() {
 	}
 
@@ -126,6 +126,14 @@ public class Article implements Serializable {
 	public void setArtPic(byte[] artPic) {
 		this.artPic = artPic;
 	}
+	@Column(name = "ART_PIC_URL")
+	public String getArtPicUrl() {
+		return artPicUrl;
+	}
+
+	public void setArtPicUrl(String artPicUrl) {
+		this.artPicUrl = artPicUrl;
+	}
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
@@ -145,7 +153,5 @@ public class Article implements Serializable {
 	public void setArticleType(ArticleType articleType) {
 		this.articleType = articleType;
 	}
-	
-	
 
 }

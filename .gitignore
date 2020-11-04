@@ -56,3 +56,5 @@ tmp/
 .settings/org.eclipse.jdt.core.prefs
 .settings/org.eclipse.wst.validation.prefs
 
+.classpath
+.settings/org.eclipse.wst.common.component
