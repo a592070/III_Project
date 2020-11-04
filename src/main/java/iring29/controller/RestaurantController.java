@@ -105,7 +105,7 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/ModifyInfo", method = RequestMethod.POST)
-	public String ModifyPic(@ModelAttribute("rBean") Restaurant r, @RequestParam("opentime") String opentime,
+	public String ModifyInfo(@ModelAttribute("rBean") Restaurant r, @RequestParam("opentime") String opentime,
 			@RequestParam("description") String description, @RequestParam("finalDecision") String decision, Model m) {
 		String op = opentime;
 		String des = description;
@@ -128,8 +128,8 @@ public class RestaurantController {
 		return "iring29/Modify_Location";
 	}
 	
-	@RequestMapping(path = "/ModifyInfo", method = RequestMethod.POST)
-	public String ModifyInfo(@ModelAttribute("rBean") Restaurant r, @RequestParam("address") String address,
+	@RequestMapping(path = "/ModifyLocation", method = RequestMethod.POST)
+	public String ModifyLocation(@ModelAttribute("rBean") Restaurant r, @RequestParam("address") String address,
 			@RequestParam("transportation") String transportation, @RequestParam("finalDecision") String decision, Model m) {
 		String add = address;
 		String trans = transportation;
@@ -141,7 +141,7 @@ public class RestaurantController {
 			if (trans == "") {
 				trans = r.getTransportation();
 			}
-			rBean = ms.R_Info(add, trans, r.getR_sn());
+			rBean = ms.R_Address(add, trans, r.getR_sn());
 		}
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";
@@ -156,6 +156,7 @@ public class RestaurantController {
 	public String ModifyType(@ModelAttribute("rBean") Restaurant r, @RequestParam("serviceinfo") String serviceinfo,
 			@RequestParam("type") String type, @RequestParam("finalDecision") String decision, Model m) {
 		String ser = serviceinfo;
+		System.out.println("ser = " + ser);
 		String ty = type;
 		Restaurant rBean = r;
 		if (decision.equals("confirmT")) {
@@ -165,7 +166,7 @@ public class RestaurantController {
 			if (ty == "") {
 				ty = r.getType();
 			}
-			rBean = ms.R_Info(ser, ty, r.getR_sn());
+			rBean = ms.R_Type(ser, ty, r.getR_sn());
 		}
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";

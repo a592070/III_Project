@@ -109,7 +109,7 @@ td{
 	<FORM id="formL" name="formL" action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_HPServlet" method="POST">
 	
         <div class="container">
-            <h2>修改${r_hp.name}菜色介紹資訊</h2>
+            <h2>修改${rBean.name}菜色介紹資訊</h2>
             <div class="">
                 <div class="div-1">
                     <label for="r-name">適合聚餐類型</label> 

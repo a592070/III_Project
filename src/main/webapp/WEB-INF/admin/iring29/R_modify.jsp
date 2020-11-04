@@ -196,7 +196,7 @@ pre {
 				</FORM>
 				
 				
-				<FORM action="<c:url value='/iring29/Modify_Location.jsp'/>"
+				<FORM action="<%=application.getContextPath()%>/InModifyLocation"
 					method="POST">
 					<div>
 						<p class="modify">
@@ -216,7 +216,7 @@ pre {
 					
 				</FORM>
 
-				<FORM action="<c:url value='/iring29/Modify_Type.jsp'/>"
+				<FORM action="<%=application.getContextPath()%>/InModifyType"
 					method="POST">
 					<div>
 						<p class="modify">
