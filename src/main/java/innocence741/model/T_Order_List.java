@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "T_ORDER_LIST")
-@Component("t_Order_List")
 public class T_Order_List {
 	@Id
 	@Column(name = "SN_ORDER")
