@@ -18,8 +18,10 @@
 		<property name="hibernate.c3p0.max_statements">50</property>
 		<property name="hibernate.c3p0.idle_test_period">3000</property>
 
+
 		<property name="current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property> 
 <!-- 		<property name="current_session_context_class">thread</property>  -->
+
 
 <!--		<property name="hibernate.show_sql">true</property>-->
 <!--		<property name="hibernate.format_sql">true</property>-->
@@ -47,7 +49,15 @@
 		<mapping class="azaz4498.model.Comment"/>
 		<mapping class="rambo0021.pojo.AccountBean" />
 		<mapping class="rambo0021.pojo.IdentityBean" />
-
+		<mapping class="innocence741.model.CarRentalCompany" />
+		<mapping class="innocence741.model.CarRentalCompanyVO" />
+		<mapping class="innocence741.model.CarType" />
+		<mapping class="innocence741.model.HighSpeedRail" />
+		<mapping class="innocence741.model.OrderTableBean" />
+		<mapping class="innocence741.model.T_Order_List" />
+		<mapping class="asx54630.model.Hotel"/>
+		
+		
 
 
 

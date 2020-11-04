@@ -20,7 +20,6 @@ import org.springframework.stereotype.Repository;
 import rambo0021.pojo.AccountBean;
 
 
-@Repository("t_Order_ListDAO")
 public class T_Order_ListDAO {
 	private Session session;
 

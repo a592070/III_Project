@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "CARRENTALCOMPANY")
-@Component("carRentalCompanyVO")
 public class CarRentalCompanyVO {
 
 	@Id

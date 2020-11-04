@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import azaz4498.model.Article;
 import azaz4498.model.ArticleDAO;
 
-@Service("articleService")
+
 public class ArticleService {
 	@Autowired
 	private ArticleDAO aDao;

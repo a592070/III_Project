@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <bean id="carRentalCompanyDao" class="innocence741.model.CarRentalCompanyDAO" lazy-init="true" scope="session"/>
+    <bean id="carRentalCompanyViewDao" class="innocence741.model.CarRentalCompanyViewDAO" lazy-init="true" scope="session"/>
+    <bean id="highSpeedRailDao" class="innocence741.model.HighSpeedRailDAO" lazy-init="true" scope="session"/>
+    <bean id="t_Order_ListDAO" class="innocence741.model.T_Order_ListDAO" lazy-init="true" scope="session"/>
+    
+    <bean id="carRentalCompanyService" class="innocence741.service.CarRentalCompanyService" lazy-init="true" scope="session"/>
+    <bean id="carRentalCompanyViewService" class="innocence741.service.CarRentalCompanyViewService" lazy-init="true" scope="session"/>
+    
+	<context:component-scan base-package="innocence741.controller"></context:component-scan>    
+    
+            
+    
+    
+</beans>
