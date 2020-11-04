@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import iring29.model.ModifyService;
 import iring29.model.Restaurant;
@@ -93,27 +94,27 @@ public class RestaurantController {
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/InModifyImg", method = RequestMethod.POST)
-	public String InModifyImg() {
-		return "iring29/ModifyImg";
-	}
+//	@RequestMapping(path = "/InModifyImg", method = RequestMethod.POST)
+//	public String InModifyImg() {
+//		return "iring29/ModifyImg";
+//	}
 
 	@RequestMapping(path = "/ModifyImg", method = RequestMethod.POST)
-	public String ModifyImg(@ModelAttribute("rBean") Restaurant r, @RequestParam("picture") byte[] img, Model m) {
-		
-		Restaurant rBean = r;
-		ByteArrayInputStream in = new ByteArrayInputStream(img);
-		r.setPic(in.readAllBytes());
+	public String ModifyImg(@ModelAttribute("rBean") Restaurant rBean, @RequestParam("Rpicture") MultipartFile img,  Model m) throws Exception {
+		System.out.println("In iMG");
+		System.out.println(img);
+		rBean.setPic(img.getInputStream().readAllBytes());
+		ms.R_Img(rBean.getPic(), rBean.getR_sn());
 		
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";
 
 	}
 
-	@RequestMapping(path = "/InModifyInfo", method = RequestMethod.POST)
-	public String InModifyInfo() {
-		return "iring29/Modify_Info";
-	}
+//	@RequestMapping(path = "/InModifyInfo", method = RequestMethod.POST)
+//	public String InModifyInfo() {
+//		return "iring29/Modify_Info";
+//	}
 
 	@RequestMapping(path = "/ModifyInfo", method = RequestMethod.POST)
 	public String ModifyInfo(@ModelAttribute("rBean") Restaurant r, @RequestParam("opentime") String opentime,
@@ -134,10 +135,10 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
-	@RequestMapping(path = "/InModifyLocation", method = RequestMethod.POST)
-	public String InModifyLocation() {
-		return "iring29/Modify_Location";
-	}
+//	@RequestMapping(path = "/InModifyLocation", method = RequestMethod.POST)
+//	public String InModifyLocation() {
+//		return "iring29/Modify_Location";
+//	}
 
 	@RequestMapping(path = "/ModifyLocation", method = RequestMethod.POST)
 	public String ModifyLocation(@ModelAttribute("rBean") Restaurant r, @RequestParam("address") String address,
@@ -159,10 +160,10 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
-	@RequestMapping(path = "/InModifyType", method = RequestMethod.POST)
-	public String InModifyType() {
-		return "iring29/Modify_Type";
-	}
+//	@RequestMapping(path = "/InModifyType", method = RequestMethod.POST)
+//	public String InModifyType() {
+//		return "iring29/Modify_Type";
+//	}
 
 	@RequestMapping(path = "/ModifyType", method = RequestMethod.POST)
 	public String ModifyType(@ModelAttribute("rBean") Restaurant r, @RequestParam("serviceinfo") String serviceinfo,
