@@ -185,7 +185,7 @@ pre {
 			<div>
 				<h2 class="title">${rBean.name}</h2>
 				<div class="top"> </div> 
-				<FORM action="<c:url value='/iring29/ModifyImg.jsp'/>" method="POST">
+				<FORM action="<%=application.getContextPath()%>/InModifyImg" method="POST">
 				<p class="modify-img">
 					<button class="btn btn-light">修改</button>
 				</p>

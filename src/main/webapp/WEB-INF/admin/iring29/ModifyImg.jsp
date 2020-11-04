@@ -106,20 +106,21 @@ td{
 
 
 <div class="wrapper">
-	<FORM id="formL" name="formL" action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_HPServlet" method="POST">
+	<FORM id="formL" name="formL" action="<%=pageContext.getServletContext().getContextPath()%>/ModifyImg" method="POST">
 	
         <div class="container">
             <h2>修改${r_hp.name}圖片資訊</h2>
             <div class="">
                 <div class="div-1">
-                    <label for="r-name">請上傳圖片</label> 
-                    <textarea name="picture" id="newimg" cols="40" rows="5" placeholder="http://" onblur='checkimg1()' ></textarea>
+                    <label for="r-name">請選擇欲上傳圖片</label> 
+                    <input type="file" id="picture" name="picture" accept="image/*">
+<!--                     <textarea name="picture" id="newimg" cols="40" rows="5" placeholder="http://" onblur='checkimg1()' ></textarea> -->
                 </div>
 	
-				<div class="div-1">
-				<label for="r-name">顯示圖片如下：</label> 
-				<img src="${r_hp.picture}" alt="" id="img_id"/>
-				</div>
+<!-- 				<div class="div-1"> -->
+<!-- 				<label for="r-name">顯示圖片如下：</label>  -->
+<%-- 				<img src="${r_hp.picture}" alt="" id="img_id"/> --%>
+<!-- 				</div> -->
             </div>
         </div>
         
@@ -155,7 +156,7 @@ td{
             document.forms["formL"].finalDecision.value = "confirmL";
             console.log(document.forms["formL"].finalDecision.value);
             // $("#finalDecision").val("confirm-img");
-            document.forms["formL"].action="<%=application.getContextPath()%>/Restaurant_HPServlet";
+            document.forms["formL"].action="<%=application.getContextPath()%>/ModifyImg";
             document.forms["formL"].method="POST";
             document.forms["formL"].submit();
             return;
@@ -169,7 +170,7 @@ td{
             console.log(document.forms["formL"].finalDecision.value);
             document.forms["formL"].finalDecision.value = "cancel";
             console.log(document.forms["formL"].finalDecision.value);
-            document.forms["formL"].action="<%=application.getContextPath()%>/Restaurant_HPServlet";
+            document.forms["formL"].action="<%=application.getContextPath()%>/DisplayRestaurant";
             document.forms["formL"].method="POST";
             document.forms["formL"].submit();
             return;

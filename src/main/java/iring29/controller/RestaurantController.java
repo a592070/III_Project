@@ -1,6 +1,8 @@
 package iring29.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,6 +27,7 @@ import iring29.model.ModifyService;
 import iring29.model.Restaurant;
 import iring29.model.RestaurantService;
 import iring29.model.Show_RView;
+import utils.IOUtils;
 
 @Controller
 @SessionAttributes(names = { "rBean" })
@@ -90,14 +93,22 @@ public class RestaurantController {
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 
-//	@RequestMapping(path = "/ModifyPic", method = RequestMethod.POST)
-//	public String ModifyPic( Model m) {
-//		Restaurant rBean = ms.R_Img();
-//		
-//		m.addAttribute("rBean", rBean);
-//		return "ring29/R_modify";
-//
-//	}
+	@RequestMapping(path = "/InModifyImg", method = RequestMethod.POST)
+	public String InModifyImg() {
+		return "iring29/ModifyImg";
+	}
+
+	@RequestMapping(path = "/ModifyImg", method = RequestMethod.POST)
+	public String ModifyImg(@ModelAttribute("rBean") Restaurant r, @RequestParam("picture") byte[] img, Model m) {
+		
+		Restaurant rBean = r;
+		ByteArrayInputStream in = new ByteArrayInputStream(img);
+		r.setPic(in.readAllBytes());
+		
+		m.addAttribute("rBean", rBean);
+		return "iring29/R_modify";
+
+	}
 
 	@RequestMapping(path = "/InModifyInfo", method = RequestMethod.POST)
 	public String InModifyInfo() {
@@ -122,15 +133,16 @@ public class RestaurantController {
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";
 	}
-	
+
 	@RequestMapping(path = "/InModifyLocation", method = RequestMethod.POST)
 	public String InModifyLocation() {
 		return "iring29/Modify_Location";
 	}
-	
+
 	@RequestMapping(path = "/ModifyLocation", method = RequestMethod.POST)
 	public String ModifyLocation(@ModelAttribute("rBean") Restaurant r, @RequestParam("address") String address,
-			@RequestParam("transportation") String transportation, @RequestParam("finalDecision") String decision, Model m) {
+			@RequestParam("transportation") String transportation, @RequestParam("finalDecision") String decision,
+			Model m) {
 		String add = address;
 		String trans = transportation;
 		Restaurant rBean = r;
@@ -146,12 +158,12 @@ public class RestaurantController {
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";
 	}
-	
+
 	@RequestMapping(path = "/InModifyType", method = RequestMethod.POST)
 	public String InModifyType() {
 		return "iring29/Modify_Type";
 	}
-	
+
 	@RequestMapping(path = "/ModifyType", method = RequestMethod.POST)
 	public String ModifyType(@ModelAttribute("rBean") Restaurant r, @RequestParam("serviceinfo") String serviceinfo,
 			@RequestParam("type") String type, @RequestParam("finalDecision") String decision, Model m) {
