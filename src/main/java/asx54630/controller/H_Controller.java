@@ -1,5 +1,6 @@
 package asx54630.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,11 @@ public class H_Controller {
 	private H_Service hService;
 		
 	@RequestMapping(path = "/hotelindex", method = RequestMethod.GET)
-	public String processHotelPage() {
+	public String processHotelPage(Model m) {
+		
+		List<Hotel> hoteldata = hService.selectAll("","","");
+		m.addAttribute("hoteldata", hoteldata);
+		
 		return "asx54630/H_index";
 		}
 
@@ -30,6 +35,16 @@ public class H_Controller {
 		
 		List<Hotel> hoteldata = hService.selectAll(keyword, regionkeywd,typekeywd);
 		m.addAttribute("hoteldata", hoteldata);
+		
+		return "asx54630/H_index";
+		}
+	
+	@RequestMapping(path = "/hotelupdate", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8")
+	public String processHotelUpdate(@RequestParam(name = "detailsn") String detailsn, Model m) {
+		BigDecimal detsn = new BigDecimal(detailsn);
+		
+		Hotel hotelupdate = hService.hotelDetail(detsn);
+		m.addAttribute("hotelupdate", hotelupdate);
 		
 		return "asx54630/H_index";
 		}

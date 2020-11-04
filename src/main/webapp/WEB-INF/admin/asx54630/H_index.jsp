@@ -108,46 +108,53 @@
                 <td>${hotels.DESCRIPTION}</td>
                 <td>${hotels.OPENTIME}</td>
                 <td>${hotels.TYPE}</td>
-                <td><button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" onclick="clickdetail(${hotels.SN})">修改</button></td>
+                <td><button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" data-whatever="NMSL">修改</button></td>
             </tr>
             </c:forEach> 
-            <c:forEach var="hotels" items="${hoteldata}">
-          	 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+<!--             <script type="text/javascript"> -->
+<!--  			function clickdetail(sn){ -->
+			
+<%-- 				document.location.href="${pageContext.servletContext.contextPath}/hotelupdate?detailsn="+sn; --%>
+<!--  			} -->
+<!--  			</script> --> 
+            
+         </tbody>
+        </table>
+
+			 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
            	 <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">${hotels.SN}</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">${hotelupdate.SN}</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form action="hotelselect" method="GET">
+                  <form>
+                  <table>
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">房型:</label><br>
-                	  名稱:<input type="text" value="${hotels.NAME}"><br>
-                 	  地區:<input type="text" value="${hotels.REGION}"><br>
-					  地址:<input type="text" value="${hotels.ADDRESS}"><br>
-					 電話:<input type="text" value="${hotels.TEL}"><br>
-					  雙人房價格:<input type="text" value="${hotels.DOUBLE_ROOM}"><br>
-					  四人房價格:<input type="text" value="${hotels.QUADRUPLE_ROOM}"><br>
-					  介紹:<input type="text" value="${hotels.DESCRIPTION}"><br>
-					 營業時間:<input type="text" value="${hotels.OPENTIME}"><br>
-					 住宿類型:<input type="text" value="${hotels.TYPE}"><br>
+                      <label for="recipient-name" class="col-form-label"></label>
+                	  名稱:<input type="text" value="${hotelupdate.NAME}"><br>
+                 	  地區:<input type="text" value="${hotelupdate.REGION}"><br>
+					  地址:<input type="text" value="${hotelupdate.ADDRESS}"><br>
+					 電話:<input type="text" value="${hotelupdate.TEL}"><br>
+					  雙人房價格:<input type="text" value="${hotelupdate.DOUBLE_ROOM}"><br>
+					  四人房價格:<input type="text" value="${hotelupdate.QUADRUPLE_ROOM}"><br>
+					  介紹:<input type="text" value="${hotelupdate.DESCRIPTION}"><br>
+					 營業時間:<input type="text" value="${hotelupdate.OPENTIME}"><br>
+					 住宿類型:<input type="text" value="${hotelupdate.TYPE}"><br>
                     </div>
                		 <div class="form-group">
                   	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                  	 <button type="submit" class="btn btn-primary">確認</button>
                		 </div>
-                  </form>
+                  </form>            
                 </div>
               </div>
             </div>
           </div>
-          </c:forEach>    
-         </tbody>
-        </table>
-
 
 
 <!--         </div>  --------------------------------------end----------------------------------------------------   -->
