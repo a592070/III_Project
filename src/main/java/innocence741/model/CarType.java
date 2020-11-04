@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "CARTYPE")
-@Component("carType")
 public class CarType {
 
 	@Id

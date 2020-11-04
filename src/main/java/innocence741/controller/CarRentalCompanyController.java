@@ -9,6 +9,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +23,7 @@ import innocence741.model.CarRentalCompanyVO;
 import innocence741.model.CarRentalCompanyViewDAO;
 import innocence741.service.CarRentalCompanyViewService;
 
-@Controller
+@Controller @Lazy
 public class CarRentalCompanyController {
 	
 	@Autowired
@@ -31,6 +32,11 @@ public class CarRentalCompanyController {
 	@Autowired
 	CarRentalCompanyService carRentalCompanyService;
 
+	@RequestMapping(path = "/Tindex.controller", method = RequestMethod.GET)
+	public String hahaIndex() {
+		return "innocence741/BackEnd_CarRentalCompany";
+	}
+	
 	@RequestMapping(path = "/carrentalcompany.controller", method = RequestMethod.POST)
 	public @ResponseBody List<CarRentalCompanyVO> processAction1() throws SQLException {
 		List<CarRentalCompanyVO> list = new ArrayList<CarRentalCompanyVO>();

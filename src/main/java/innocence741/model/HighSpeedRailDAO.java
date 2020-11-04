@@ -11,7 +11,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 
-@Repository("highSpeedRailDao")
 public class HighSpeedRailDAO {
 
 
@@ -128,4 +127,3 @@ public class HighSpeedRailDAO {
 
 
 }
-

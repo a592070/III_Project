@@ -113,11 +113,13 @@ td{
             <h2>修改${r_hp.name}地點資訊</h2>
             <div class="">
                 <div class="div-1">
-                    <label for="r-name">地址</label> <textarea name="address" id="address" cols="40" rows="5" placeholder="${rBean.address}"></textarea>
+                    <label for="r-name">地址</label> 
+                    <textarea name="address" id="address" cols="40" rows="5" placeholder="${rBean.address}"></textarea>
                 </div>
 
                 <div class="div-1">
-                    <label for="r-date">交通方式</label> <textarea name="transportation" id="transportation" cols="40" rows="5" placeholder="${rBean.transportation}"></textarea>
+                    <label for="r-date">交通方式</label> 
+                    <textarea name="transportation" id="transportation" cols="40" rows="5" placeholder="${rBean.transportation}"></textarea>
                 </div>
 
             </div>

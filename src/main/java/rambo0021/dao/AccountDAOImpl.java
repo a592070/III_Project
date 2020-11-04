@@ -23,9 +23,11 @@ public class AccountDAOImpl implements AcountDAO {
 		List<AccountBean> list = query.list();
 		return list;
 	}
+
 	@Override
 	public AccountBean userDetail(String username) {
 		Session session = sessionFactory.getCurrentSession();
           return session.get(AccountBean.class, username);
 	}
 }
+
