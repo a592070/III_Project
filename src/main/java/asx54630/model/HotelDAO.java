@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import asx54630.model.Hotel;
 
+
 @Repository("hotelDao")
 public class HotelDAO {
 
@@ -56,6 +57,15 @@ public class HotelDAO {
 			return bean;
 		}
 		return null;
+	}
+	
+	public Hotel update(int sn,String Name) { //修改
+		Session session = sessionFactory.getCurrentSession();
+		Hotel result = session.get(Hotel.class, sn);
+		if(result == null) {
+			result.setNAME(Name);
+		}
+		return result;
 	}
 
 }
