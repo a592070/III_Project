@@ -28,12 +28,12 @@ public class AttractionController {
 
     @PostMapping("/admin/attraction/${page}")
     public void attractionList(@PathVariable int page){
-        PageSupport pageSupport = new PageSupport();
-        pageSupport.setPageSize(PAGE_SIZE);
-        pageSupport.setTotalCount(service.getSize());
-        pageSupport.setCurrentPage(page);
-
-        List<AttractionDO> list = service.list(pageSupport.getCurrentPage(), pageSupport.getPageSize(), AttractionFiledName.ATTRACTION_ID);
+//        PageSupport pageSupport = new PageSupport();
+//        pageSupport.setPageSize(PAGE_SIZE);
+//        pageSupport.setTotalCount(service.getSize());
+//        pageSupport.setCurrentPage(page);
+//
+//        List<AttractionDO> list = service.list(pageSupport.getCurrentPage(), pageSupport.getPageSize(), AttractionFiledName.ATTRACTION_ID);
 
     }
 }

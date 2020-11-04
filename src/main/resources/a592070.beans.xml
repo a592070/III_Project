@@ -13,6 +13,10 @@
     <bean id="travelSetDao" class="a592070.dao.TravelSetDAOImpl" lazy-init="true" scope="session"/>
 
     <bean id="attractionService" class="a592070.service.AttractionServiceImpl" lazy-init="true" scope="session"/>
+    <bean id="attractionViewService" class="a592070.service.AttractionViewServiceImpl" lazy-init="true" scope="session"/>
+    <bean id="carViewService" class="a592070.service.CarViewServiceImpl" lazy-init="true" scope="session"/>
+    <bean id="hotelViewService" class="a592070.service.HotelViewServiceImpl" lazy-init="true" scope="session"/>
+    <bean id="restaurantViewService" class="a592070.service.RestaurantViewServiceImpl" lazy-init="true" scope="session"/>
+
     <bean id="travelSetService" class="a592070.service.TravelSetServiceImpl" lazy-init="true" scope="session"/>
-    <bean id="viewService" class="a592070.service.ViewServiceImpl" lazy-init="true" scope="session"/>
 </beans>

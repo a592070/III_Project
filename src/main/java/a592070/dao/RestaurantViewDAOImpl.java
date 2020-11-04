@@ -3,6 +3,7 @@ package a592070.dao;
 import a592070.pojo.RestaurantVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.View;
@@ -28,6 +29,19 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     @Override
     public RestaurantVO getEle(int id) {
         return sessionFactory.getCurrentSession().get(RestaurantVO.class, id);
+    }
+
+    @Override
+    public byte[] getPicture(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        NativeQuery nativeQuery = session.createNativeQuery("select picture from restaurant where r_sn = ?1");
+        nativeQuery.setParameter(1, id);
+        Object o = nativeQuery.uniqueResult();
+        if(o != null) {
+            return (byte[])o;
+        }else{
+            return null;
+        }
     }
 
     @Override
@@ -64,7 +78,7 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     public int getSizeByFiled(String filedName, String filedValue){
         filedValue = "%" + filedValue + "%";
 
-        String hql = "select count(sn) from RestaurantVO where region like ?1";
+        String hql = "select count(sn) from RestaurantVO where "+filedName+" like ?1";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter(1, filedValue);
@@ -74,20 +88,21 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
 
     @Override
     public List<RestaurantVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled) {
-        return null;
+        filedValue = "%"+filedValue+"%";
+
+        String hql = "from RestaurantVO where "+filedName+" like ?1 order by "+orderFiled;
+
+        Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
+        query.setParameter(1, filedValue);
+
+        return query.list();
     }
 
     @Override
-    public List<RestaurantVO> listByRownum(int startIndex, int endIndex, String region) {
-        if(StringUtil.isEmpty(region)){
-            region = "";
-        }else {
-            region = "%" + region + "%";
-        }
-        String hql = "from RestaurantVO where region like ?1 order by sn";
+    public List<RestaurantVO> listByRownum(int startIndex, int endIndex, String orderFiled) {
+        String hql = "from RestaurantVO order by "+orderFiled;
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
-        query.setParameter(1, region);
 
         query.setFirstResult(startIndex);
         query.setMaxResults(endIndex);

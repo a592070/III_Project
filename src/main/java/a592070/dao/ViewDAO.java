@@ -9,6 +9,8 @@ public interface ViewDAO<T> {
     int getSize();
     T getEle(int id);
 
+    byte[] getPicture(int id);
+
     int getSizeByKeywords(String keyWords);
     List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled);
 

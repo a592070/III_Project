@@ -30,6 +30,6 @@ public class ExampleTest {
     @Test
     public void test2(){
 //        UserService service = beans.getBean("userService", UserService.class);
-        service.doSomething("ID");
+        service.doSomething2(5);
     }
 }
