@@ -125,6 +125,7 @@ td{
                 <div id="carRentalCompany"></div>
 
 
+                <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
                 <script>
                     $(document).ready(function(){
@@ -191,12 +192,12 @@ td{
                                     // console.log(formData.get('name_company'));
             
                                     //------------------------correct method-----------------------------
-                                    var form1 = $(".updateData").eq(1).parents('form');
-                                    var formData = new FormData(form1[0]);
-                                    console.log(formData.get('sn_rentalcompany'));
-                                    console.log(formData.get('name_company'));
-                                    if(formData.get('pic_rentalcompany').size != 0)
-                                        console.log(formData.get('pic_rentalcompany'));
+                                    // var form1 = $(".updateData").eq(1).parents('form');
+                                    // var formData = new FormData(form1[0]);
+                                    // console.log(formData.get('sn_rentalcompany'));
+                                    // console.log(formData.get('name_company'));
+                                    // if(formData.get('pic_rentalcompany').size != 0)
+                                    //     console.log(formData.get('pic_rentalcompany'));
             
                                  },
             
@@ -218,52 +219,11 @@ td{
                     $("#carRentalCompany").on("click", ".updateData", function(){
                         var form1 = $(this).parents('form');
                         var formData = new FormData(form1[0]);
-                        console.log("why")
+                        strCookies = formData.get('sn_rentalcompany');
+                        Cookies.set('CRC', strCookies);
+                        window.location="\THomepageindex.controller";
             
-                                $.ajax({
-                                    
-                                 type:"POST",                    //指定http參數傳輸格式為POST
-                                 url: "update.carrentalcompany.controller",        //請求目標的url，可在url內加上GET參數，如 www.xxxx.com?xx=yy&xxx=yyy
-                                 data: formData, //要傳給目標的data為id=formId的Form其序列化(serialize)為的值，之
-                                 processData : false, 
-                                 contentType : false,
-                                 dataType: "json",               //目標url處理完後回傳的值之type，此列為一個JSON Object
-            
-                                 success : (response) => {
-                                    console.log("haha");
-                                    // console.log(response["check"]);
-                                    //  if(response["check"] === "rederict"){
-                                    //     window.location="../rambo0021/login.jsp"
-                                    //  }
-            
-                                    // console.log($(this).parent().parent().children("td.snCol").text())
-            
-                                    // if(response["check"]==="success"){
-                                    //     if($(this).parent().parent().siblings("tr").length===0){
-                                    //         // $(this).parent().parent().siblings().remove();
-                                    //         $(this).parent().parent().siblings().remove();
-                                    //         $(this).parent().parent().remove();
-                                    //     }else{
-                                    //         $(this).parent().parent().remove();
-                                    //     }
-                                    //     alert("取消成功");
-                                    // }else{
-                                    //     alert("刪除失敗")
-                                    // }
-            
-            
-                                 },
-            
-                                 //Ajax失敗後要執行的function，此例為印出錯誤訊息
-            
-                                 error:function(xhr, ajaxOptions, thrownError){
-            
-                                     console.log(xhr.status+"\n"+thrownError);
-                                 }
-            
-                             });
-            
-                        })
+                    })
             
             
                 </script>

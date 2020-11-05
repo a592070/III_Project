@@ -24,19 +24,19 @@ public class HotelDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+
 	public Hotel hotelDetail(BigDecimal sn) { //查詢飯店詳細資料
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Hotel.class, sn);
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+
 	public Hotel hotelHomePage(String account) { //查詢飯店業者擁有的資料
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Hotel.class, account);
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+
 	public List<Hotel> selectAll(String name, String region, String type){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
 		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", Hotel.class);
@@ -47,7 +47,7 @@ public class HotelDAO {
 		return list;
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+
 	public Hotel insert(Hotel bean) { //新增
 		Session session = sessionFactory.getCurrentSession();
 		Hotel result = session.get(Hotel.class, bean.getSN());

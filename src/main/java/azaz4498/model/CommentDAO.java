@@ -4,14 +4,18 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 public class CommentDAO {
-	private Session session;
+	@Autowired
+	private SessionFactory sessionFactory;
+	Session session = sessionFactory.getCurrentSession();
+	
 
-	public CommentDAO(Session session) {
-		this.session = session;
-	}
+	
 
 	public CommentDAO() {
 
@@ -19,6 +23,7 @@ public class CommentDAO {
 
 	// 依文章顯示評論
 	public List<Comment> showCommentsByArticle(int articleId) throws SQLException {
+		
 		Query<Comment> query = session.createQuery("From Comment where COM_ART_ID=?1 Order by COM_DATE DESC",
 				Comment.class);
 		query.setParameter(1, articleId);
@@ -36,7 +41,6 @@ public class CommentDAO {
 		comment.setComDate(new java.sql.Timestamp(new java.util.Date().getTime()));
 		comment.setComContent(content);
 		comment.setComUserId(userid);
-		comment.setComPic(null);
 		article.setArtId(articleId);
 		comment.setArticle(article);
 		session.save(comment);

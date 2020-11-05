@@ -33,14 +33,27 @@ public class CarRentalCompanyController {
 	CarRentalCompanyService carRentalCompanyService;
 
 	@RequestMapping(path = "/Tindex.controller", method = RequestMethod.GET)
-	public String hahaIndex() {
-		return "innocence741/BackEnd_CarRentalCompany";
+	public String Tindex() {
+		return "innocence741/CarIndex";
+	}
+	
+	@RequestMapping(path = "/THomepageindex.controller", method = RequestMethod.GET)
+	public String THomepageindex() {
+		return "innocence741/CarHomepage";
 	}
 	
 	@RequestMapping(path = "/carrentalcompany.controller", method = RequestMethod.POST)
 	public @ResponseBody List<CarRentalCompanyVO> processAction1() throws SQLException {
 		List<CarRentalCompanyVO> list = new ArrayList<CarRentalCompanyVO>();
 		list = carRentalCompanyViewService.getCarRentalCompanysList();
+        System.out.println(list);
+        return list;
+	}
+	
+	@RequestMapping(path = "/carrentalcompanyHomepage.controller", method = RequestMethod.POST)
+	public @ResponseBody List<CarRentalCompanyVO> carrentalcompanyHomepage(@RequestParam(name = "sn_rentalcompany") BigDecimal sn_rentalcompany) throws SQLException {
+		List<CarRentalCompanyVO> list = new ArrayList<CarRentalCompanyVO>();
+		list = carRentalCompanyViewService.getCarRentalCompanysHomepageList(sn_rentalcompany);
         System.out.println(list);
         return list;
 	}
@@ -57,6 +70,9 @@ public class CarRentalCompanyController {
 											 @RequestParam(name = "pic_rentalcompany") MultipartFile pic_rentalcompany_tmp,
 											 @RequestParam(name = "accessible_carrentalcompany") int accessible_carrentalcompany) 
 	throws SQLException, IOException {
+		
+		boolean flag = false;
+
 		CarRentalCompany cBean = new CarRentalCompany();
 		cBean.setSn_rentalcompany(sn_rentalcompany);
 		cBean.setName_company(name_company);
@@ -68,9 +84,11 @@ public class CarRentalCompanyController {
 		cBean.setPic_rentalcompany(pic_rentalcompany_tmp.getInputStream().readAllBytes());
 		cBean.setAccessible_carrentalcompany(accessible_carrentalcompany);
 		
-		System.out.println("cBean.getAccessible_carrentalcompany(): "+cBean.getAccessible_carrentalcompany());
 		
-		boolean flag = carRentalCompanyService.updateCarRentalCompany(cBean);
+		if(pic_rentalcompany_tmp.getSize() != 0)
+			flag = carRentalCompanyService.updateCarRentalCompany(cBean);
+		else
+			flag = carRentalCompanyService.updateCarRentalCompanyWithoutPic(cBean);
 		System.out.println(flag);
 //		System.out.println(description.length()==0);	//true
 		String check = "{\"check\" : \"success\"}";

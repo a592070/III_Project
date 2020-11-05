@@ -1,5 +1,6 @@
 package innocence741.model;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class CarRentalCompanyViewDAO {
 	
 	private SessionFactory sessionFacory;
 	private static List<CarRentalCompanyVO> carRentalCompanyVOs;
+	private List<CarRentalCompanyVO> carRentalCompanyHomepageVOs;
+
 
 	
 	@Autowired 
@@ -30,7 +33,13 @@ public class CarRentalCompanyViewDAO {
 		return carRentalCompanyVOs;
 	}
 	
-
+	public List<CarRentalCompanyVO> getCarRentalCompanysHomepageList(BigDecimal sn_rentalcompany) throws SQLException {
+		Session session = sessionFacory.getCurrentSession();
+		Query<CarRentalCompanyVO> query = session.createQuery("From CarRentalCompanyVO c where c.sn_rentalcompany=?0", CarRentalCompanyVO.class);
+		query.setParameter(0,sn_rentalcompany);
+		carRentalCompanyHomepageVOs = query.list();
+		return carRentalCompanyHomepageVOs;
+	}
 	
 	
 }

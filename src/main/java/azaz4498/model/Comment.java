@@ -27,7 +27,6 @@ public class Comment implements Serializable{
 	private int comArtId;
 	private String comUserId;
 	private Timestamp comDate;
-	private byte[] comPic;
 	private Article article;
 	public Comment() {
 		
@@ -75,14 +74,7 @@ public class Comment implements Serializable{
 	public void setComDate(Timestamp comDate) {
 		this.comDate = comDate;
 	}
-	@Column(name = "COM_PIC")
-	public byte[] getComPic() {
-		return comPic;
-	}
-
-	public void setComPic(byte[] comPic) {
-		this.comPic = comPic;
-	}
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "COM_ART_ID")
 	public Article getArticle() {
