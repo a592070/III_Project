@@ -17,10 +17,15 @@ public class RestaurantService {
 	public RestaurantService(RestaurantDAO rDao) {
 		this.rDao = rDao;
 	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public int getSize() {
+		return rDao.getSize();
+	}
 
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> totalRestaurant() {
-		return rDao.totalRestaurant();
+	public List<Show_RView> totalRestaurant(int first, int count) {
+		return rDao.totalRestaurant(first,count);
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })

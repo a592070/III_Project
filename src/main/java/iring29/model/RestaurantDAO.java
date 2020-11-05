@@ -22,9 +22,18 @@ public class RestaurantDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	public int getSize() {
+        String hql = "select count(r_sn) from Show_RView";
+        return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();	
+	}
+	
 //	@Transactional(rollbackFor = {Throwable.class})
-	public List<Show_RView> totalRestaurant() {
+	public List<Show_RView> totalRestaurant(int first, int count) {
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery("from Show_RView order by r_sn", Show_RView.class);
+		//找第幾筆
+		query.setFirstResult(first);
+		//從第幾筆開始count筆
+		query.setMaxResults(count);
 		return query.list();
 	}
 

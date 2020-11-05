@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import iring29.model.ModifyService;
+import iring29.model.Page;
 import iring29.model.Restaurant;
 import iring29.model.RestaurantService;
 import iring29.model.Show_RView;
@@ -45,17 +46,32 @@ public class RestaurantController {
 //	}
 
 	@RequestMapping(path = "/Restaurant", method = RequestMethod.GET)
-	public String RestaurantDisplay(Model m) {
-		List<Show_RView> rBean = rs.totalRestaurant();
+	public String RestaurantDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+			Model m) {
+		int size = rs.getSize();
+		int start = 0;
+		Page page = new Page();
+		page.setTotalCount(size);
+		System.out.println("currentPage = " + currentPage);
+		if (currentPage == 1) {
+			currentPage = 1;
+		} else {
+			start = (currentPage - 1 ) * 8;
+		}
+		int pageSize = page.getPageSize();
+		int totalPage = page.getTotalPageCount();
+		List<Show_RView> rBean = rs.totalRestaurant(start, pageSize);
 		m.addAttribute("rBean", rBean);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("totalPage", totalPage);
+
 		return "iring29/R_index";
 	}
 
 	@RequestMapping(path = "/regionSearch", method = RequestMethod.POST)
 	public String R_RegionDisplay(@RequestParam("region_name") String region_name, Model m) {
 		if (region_name == null || region_name.equals("")) {
-			List<Show_RView> rBean = rs.totalRestaurant();
-			m.addAttribute("rBean", rBean);
+			return "iring29/R_index";
 		} else {
 			List<Show_RView> rBean = rs.regionRestaurant(region_name);
 			m.addAttribute("rBean", rBean);
@@ -94,14 +110,14 @@ public class RestaurantController {
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 
-
 	@RequestMapping(path = "/ModifyImg", method = RequestMethod.POST)
-	public String ModifyImg(@ModelAttribute("rBean") Restaurant rBean, @RequestParam("Rpicture") MultipartFile img,  Model m) throws Exception {
+	public String ModifyImg(@ModelAttribute("rBean") Restaurant rBean, @RequestParam("Rpicture") MultipartFile img,
+			Model m) throws Exception {
 		System.out.println("In iMG");
 		System.out.println(img);
 		rBean.setPic(img.getInputStream().readAllBytes());
 		ms.R_Img(rBean.getPic(), rBean.getR_sn());
-		
+
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";
 
@@ -126,7 +142,6 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
-
 	@RequestMapping(path = "/ModifyLocation", method = RequestMethod.POST)
 	public String ModifyLocation(@ModelAttribute("rBean") Restaurant r, @RequestParam("address") String address,
 			@RequestParam("transportation") String transportation, @RequestParam("finalDecision") String decision,
@@ -146,7 +161,6 @@ public class RestaurantController {
 		m.addAttribute("rBean", rBean);
 		return "iring29/R_modify";
 	}
-
 
 	@RequestMapping(path = "/ModifyType", method = RequestMethod.POST)
 	public String ModifyType(@ModelAttribute("rBean") Restaurant r, @RequestParam("serviceinfo") String serviceinfo,
