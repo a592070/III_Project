@@ -90,19 +90,20 @@ img {
 							<div class="top"></div>
 							<form action="<%=application.getContextPath()%>/udAccountImg" method="POST" enctype="multipart/form-data">
 								<p class="modify-img">
-									<button type="button" name="udpwd" class="btn btn-light">修改密碼</button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">修改密碼</button>
 									<input type="file" id="Apicture" name="Apicture"
-										accept="image/*" style="display: none">
+										accept="image/*" style="display: none" onchange="picsumit.click()">
 									<button type="button" onclick="Apicture.click()"
-										onchange="picsumit.click()">上傳圖片</button>
+										class="btn btn-light" >上傳圖片</button>
 									<button type="submit" id="picsumit" name="picsumit"
 										class="btn btn-light" style="display: none"></button>
 									<button type="button" name="rmimg" class="btn btn-light">改為預設圖片</button>
 								</p>
+								</form>
 								<div class="div_img">
 									<img src="<%=application.getContextPath()%>/ShowAccountPic">
 								</div>
-							</form>
+							
 							<div class="middle">
 								<h4 class="account_result">身分</h4>
 								<p class="p_result">${userDetail.identityBean.name}</p>

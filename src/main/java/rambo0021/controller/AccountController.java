@@ -2,6 +2,7 @@ package rambo0021.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -33,11 +34,15 @@ public class AccountController {
 	private AccountService service;
 	@Autowired
 	private ServletContext servletContext;
-
 	@RequestMapping(path = "/accountPage")
 	public String AccountPage(Model m) {
 		List<AccountBean> userList = service.userList();
 		m.addAttribute("userList", userList);
+		for (AccountBean accountBean : userList) {
+			System.out.println(accountBean.hashCode());
+		}
+			
+		
 		return "rambo0021/account_index";
 	}
 
@@ -45,7 +50,7 @@ public class AccountController {
 	public String DisplayAccount(@RequestParam("username") String username, Model m) throws IOException {
 		AccountBean userDetail = service.userDetail(username);
 		m.addAttribute("userDetail", userDetail);
-
+        
 		return "rambo0021/account_detail";
 	}
 	@RequestMapping(path = "/ShowAccountPic")
@@ -62,7 +67,7 @@ public class AccountController {
 		return new ResponseEntity<byte[]>(b, headers, HttpStatus.OK);
 	}
 	@RequestMapping(path = "/udAccountImg")
-	public String udAccountImg(@ModelAttribute("userDetail") AccountBean userDetail, @RequestParam("Rpicture") MultipartFile img,Model m) throws IOException {
+	public String udAccountImg(@ModelAttribute("userDetail") AccountBean userDetail, @RequestParam("Apicture") MultipartFile img,Model m) throws IOException {
 		userDetail.setPicture(img.getInputStream().readAllBytes());
 		
 		m.addAttribute("userDetail", userDetail);
