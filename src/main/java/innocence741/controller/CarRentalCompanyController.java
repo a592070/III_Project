@@ -33,14 +33,27 @@ public class CarRentalCompanyController {
 	CarRentalCompanyService carRentalCompanyService;
 
 	@RequestMapping(path = "/Tindex.controller", method = RequestMethod.GET)
-	public String hahaIndex() {
-		return "innocence741/BackEnd_CarRentalCompany";
+	public String Tindex() {
+		return "innocence741/CarIndex";
+	}
+	
+	@RequestMapping(path = "/THomepageindex.controller", method = RequestMethod.GET)
+	public String THomepageindex() {
+		return "innocence741/CarHomepage";
 	}
 	
 	@RequestMapping(path = "/carrentalcompany.controller", method = RequestMethod.POST)
 	public @ResponseBody List<CarRentalCompanyVO> processAction1() throws SQLException {
 		List<CarRentalCompanyVO> list = new ArrayList<CarRentalCompanyVO>();
 		list = carRentalCompanyViewService.getCarRentalCompanysList();
+        System.out.println(list);
+        return list;
+	}
+	
+	@RequestMapping(path = "/carrentalcompanyHomepage.controller", method = RequestMethod.POST)
+	public @ResponseBody List<CarRentalCompanyVO> carrentalcompanyHomepage(@RequestParam(name = "sn_rentalcompany") BigDecimal sn_rentalcompany) throws SQLException {
+		List<CarRentalCompanyVO> list = new ArrayList<CarRentalCompanyVO>();
+		list = carRentalCompanyViewService.getCarRentalCompanysHomepageList(sn_rentalcompany);
         System.out.println(list);
         return list;
 	}
