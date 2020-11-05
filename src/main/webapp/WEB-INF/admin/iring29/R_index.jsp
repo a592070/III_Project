@@ -57,6 +57,12 @@ h2 {
 td {
 	color: black;
 }
+.pages{
+	width: 1140px;
+	margin-left:50px ;
+	margin-bottom:50px ;
+}
+
 </style>
 
 </head>
@@ -160,8 +166,13 @@ td {
 				</div>
 			</div>
 
+
+		<div class="pages">
 			<nav aria-label="...">
 				<ul class="pagination">
+				<c:if test="${currentPage == 1}">
+					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}" tabindex="-1">Previous</a></li>
+				</c:if>
 				<c:if test="${currentPage > 1}">
 					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}" tabindex="-1">Previous</a></li>
 				</c:if>
@@ -172,8 +183,12 @@ td {
 				<c:if test="${currentPage != totalPage}">
 					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">Next</a></li>
 				</c:if>
+				<c:if test="${currentPage == totalPage}">
+					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">Next</a></li>
+				</c:if>
 				</ul>
 			</nav>
+		</div>
 
 
 
