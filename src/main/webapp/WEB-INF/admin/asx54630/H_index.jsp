@@ -108,25 +108,52 @@
                 <td>${hotels.DESCRIPTION}</td>
                 <td>${hotels.OPENTIME}</td>
                 <td>${hotels.TYPE}</td>
-                <td><button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" data-whatever="NMSL">修改</button></td>
+                <td><button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" onclick="clickdetail(${hotels.NAME},
+                																															${hotels.REGION},
+                																															${hotels.ADDRESS},
+                																															${hotels.TEL},
+                																															${hotels.DOUBLE_ROOM},
+                																															${hotels.QUADRUPLE_ROOM},
+                																															${hotels.DESCRIPTION},
+                																															${hotels.OPENTIME},
+                																															${hotels.TYPE})">修改</button></td>
             </tr>
             </c:forEach> 
             
-<!--             <script type="text/javascript"> -->
-<!--  			function clickdetail(sn){ -->
-			
-<%-- 				document.location.href="${pageContext.servletContext.contextPath}/hotelupdate?detailsn="+sn; --%>
-<!--  			} -->
-<!--  			</script> --> 
+
             
          </tbody>
         </table>
+        
+        <script type="text/javascript">
+		function clickdetail(name,region,address,tel,dbroom,qdroom,description,opentime,type){
+
+				var hname = name.val();
+			
+			if(name != null)
+		    {
+				document.getElementById( 'dataName' ).value = hname;
+				document.getElementById( 'dataRegion' ).value = region;
+				document.getElementById( 'dataAddress' ).value = address;
+				document.getElementById( 'dataTel' ).value = tel;
+				document.getElementById( 'dataDbroom' ).value = dbroom;
+				document.getElementById( 'dataQdroom' ).value = qdroom;
+				document.getElementById( 'dataDescription' ).value = description;
+				document.getElementById( 'dataOpentime' ).value = opentime;
+				document.getElementById( 'dataType' ).value = type;
+		    }
+
+		}
+		
+		</script>
+        
+        
 
 			 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
            	 <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">${hotelupdate.SN}</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">${hotels.SN}</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -136,15 +163,15 @@
                   <table>
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label"></label>
-                	  名稱:<input type="text" value="${hotelupdate.NAME}"><br>
-                 	  地區:<input type="text" value="${hotelupdate.REGION}"><br>
-					  地址:<input type="text" value="${hotelupdate.ADDRESS}"><br>
-					 電話:<input type="text" value="${hotelupdate.TEL}"><br>
-					  雙人房價格:<input type="text" value="${hotelupdate.DOUBLE_ROOM}"><br>
-					  四人房價格:<input type="text" value="${hotelupdate.QUADRUPLE_ROOM}"><br>
-					  介紹:<input type="text" value="${hotelupdate.DESCRIPTION}"><br>
-					 營業時間:<input type="text" value="${hotelupdate.OPENTIME}"><br>
-					 住宿類型:<input type="text" value="${hotelupdate.TYPE}"><br>
+                	  名稱:<input type="text" id = "dataName" value="1"><br>
+                 	  地區:<input type="text" id = "dataRegion" value="1"><br>
+					  地址:<input type="text" id = "dataAddress" value="1"><br>
+					 電話:<input type="text" id = "dataTel" value="1"><br>
+					  雙人房價格:<input type="text" id = "dataDbroom" value="1"><br>
+					  四人房價格:<input type="text" id = "dataQdroom" value="1"><br>
+					  介紹:<input type="text" id = "dataDescription" value="1"><br>
+					 營業時間:<input type="text" id = "dataOpentime" value="1"><br>
+					 住宿類型:<input type="text" id = "dataType" value="1"><br>
                     </div>
                		 <div class="form-group">
                   	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
