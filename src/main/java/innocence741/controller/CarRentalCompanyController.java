@@ -5,8 +5,9 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -40,13 +41,18 @@ public class CarRentalCompanyController {
 	CarRentalCompanyService carRentalCompanyService;
 
 	@RequestMapping(path = "/Tindex.controller", method = RequestMethod.GET)
-	public String Tindex() {
+	public String tIndex() {
 		return "innocence741/CarIndex";
 	}
 	
 	@RequestMapping(path = "/THomepageindex.controller", method = RequestMethod.GET)
-	public String THomepageindex() {
+	public String tHomepageindex() {
 		return "innocence741/CarHomepage";
+	}
+	
+	@RequestMapping(path = "/CreateCarRentalCompany.controller", method = RequestMethod.GET)
+	public String createCarRentalCompanyIndex() {
+		return "innocence741/CreateCarRentalCompany";
 	}
 	
 	@RequestMapping(path = "/carrentalcompany.controller", method = RequestMethod.POST)
@@ -72,6 +78,19 @@ public class CarRentalCompanyController {
 		headers.setContentType(MediaType.IMAGE_PNG);
 		CarRentalCompany carRentalCompany = carRentalCompanyService.getCarRentalCompanyBean(sn_rentalcompany);
 		return new ResponseEntity<byte[]>(carRentalCompany.getPic_rentalcompany(), headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(path = "/delCarRentalCompany")
+	public @ResponseBody Map<String, String> delCarRentalCompany(@RequestParam(name = "sn_rentalcompany") BigDecimal sn_rentalcompany) {
+		Map<String, String> checkMap = new HashMap<String, String>();
+		String check = "fail";
+		checkMap.put("check", check);
+		boolean flag = carRentalCompanyService.delCarRentalCompany(sn_rentalcompany);
+		if(flag = true) {
+			check = "success";
+			checkMap.put("check", check);
+		}
+		return checkMap;
 	}
 	
 	
@@ -105,6 +124,37 @@ public class CarRentalCompanyController {
 			flag = carRentalCompanyService.updateCarRentalCompany(cBean);
 		else
 			flag = carRentalCompanyService.updateCarRentalCompanyWithoutPic(cBean);
+		System.out.println(flag);
+//		System.out.println(description.length()==0);	//true
+		String check = "{\"check\" : \"success\"}";
+        return check;
+	}
+	
+	
+	@RequestMapping(path = "/create.carrentalcompany.controller", method = RequestMethod.POST)
+	public @ResponseBody String createAction(
+											 @RequestParam(name = "name_company") String name_company,
+											 @RequestParam(name = "address") String address,
+											 @RequestParam(name = "description") String description,
+											 @RequestParam(name = "oprnHours") String oprnHours,
+											 @RequestParam(name = "tel") String tel,
+											 @RequestParam(name = "compantAccount") String compantAccount,
+											 @RequestParam(name = "pic_rentalcompany") MultipartFile pic_rentalcompany_tmp,
+											 @RequestParam(name = "accessible_carrentalcompany") int accessible_carrentalcompany) 
+	throws SQLException, IOException {
+		
+		boolean flag = false;
+		System.out.println("------------------------hahahahahahhahaha------------------------");
+		CarRentalCompany cBean = new CarRentalCompany();
+		cBean.setName_company(name_company);
+		cBean.setAddress(address);
+		cBean.setDescription(description);
+		cBean.setOprnHours(oprnHours);
+		cBean.setTel(tel);
+		cBean.setCompantAccount(compantAccount);
+		cBean.setPic_rentalcompany(pic_rentalcompany_tmp.getInputStream().readAllBytes());
+		cBean.setAccessible_carrentalcompany(accessible_carrentalcompany);
+		flag = carRentalCompanyService.createCarRentalCompany(cBean);
 		System.out.println(flag);
 //		System.out.println(description.length()==0);	//true
 		String check = "{\"check\" : \"success\"}";
