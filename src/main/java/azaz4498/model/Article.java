@@ -144,7 +144,7 @@ public class Article implements Serializable {
 		this.comments = comments;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ART_TYPE_ID")
 	public ArticleType getArticleType() {
 		return articleType;
