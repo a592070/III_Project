@@ -31,5 +31,9 @@ public class CarRentalCompanyService {
 	public boolean delCarRentalCompany(BigDecimal sn_rentalcompany) {
 		return carRentalCompanyDAO.delCarRentalCompany(sn_rentalcompany);
 	}
+	
+	public boolean createCarRentalCompany(CarRentalCompany carRentalCompany) {
+		return carRentalCompanyDAO.createCarRentalCompany(carRentalCompany);
+	}
 }
 
