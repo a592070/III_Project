@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "F_COMMENT")
 public class Comment implements Serializable{
@@ -50,6 +53,7 @@ public class Comment implements Serializable{
 	public void setComContent(String comContent) {
 		this.comContent = comContent;
 	}
+	@JsonIgnore
 	@Transient
 	public int getComArtId() {
 		return comArtId;
@@ -74,7 +78,7 @@ public class Comment implements Serializable{
 	public void setComDate(Timestamp comDate) {
 		this.comDate = comDate;
 	}
-	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "COM_ART_ID")
 	public Article getArticle() {

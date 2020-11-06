@@ -61,6 +61,8 @@ h2 {
 
 <body class="sidebar-fixed sidebar-dark header-light header-fixed"
 	id="body">
+
+
 	<div class="mobile-sticky-body-overlay"></div>
 
 	<div class="wrapper">
@@ -97,7 +99,7 @@ h2 {
 								<c:forEach var="Type" items="${typeBean}">
 									<option value="${Type.typeId}">${Type.typeName }</option>
 								</c:forEach>
-								
+
 							</select>
 							<br />
 							<button type="submit" class="btn btn-primary btn-sm m-2">Search</button>
@@ -105,6 +107,32 @@ h2 {
 					</div>
 				</div>
 				<h2>文章列表</h2>
+				<script>
+					$(document).ready(function(){
+						$.ajax({
+							
+							type:"GET",
+							url:"Article.controller.json",
+							success:function(response){
+								
+								console.log(response[0]);
+
+								for(let i=0; i<response.length; i++){
+									
+
+
+									}
+								
+
+								}
+							
+							});
+						});
+
+
+
+				</script>
+
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
@@ -141,6 +169,9 @@ h2 {
 		</div>
 	</div>
 
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
+  
 </body>
+
 </html>
