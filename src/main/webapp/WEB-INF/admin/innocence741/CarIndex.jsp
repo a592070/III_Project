@@ -114,23 +114,30 @@ td{
 					</div> 
 
  					<div class="search">
- 					<form action="<%=application.getContextPath()%>/usernameSearch" method="POST" > 
- 						<span class="sp_search">會員帳號</span> 
- 						<input type="text" name="username" placeholder="請輸入會員帳號" /> 
- 						<button type="submit" class="btn btn-primary">Search</button> 
- 					</form> 
-					</div>
-				</div>
+ 					    <form action="<%=application.getContextPath()%>/usernameSearch" method="POST" > 
+ 						    <span class="sp_search">會員帳號</span> 
+ 						    <input type="text" name="username" placeholder="請輸入會員帳號" /> 
+ 						    <button type="submit" class="btn btn-primary">Search</button> 
+                        </form> 
+                    </div>
+
+                     <div class="search">
+                        <form action="CreateCarRentalCompany.controller" method="GET" > 
+                            <button type="submit" class="btn btn-primary">增加租車行</button> 
+                        </form> 
+                    </div>
+
+			    </div>
 				<h2>租車公司列表</h2>
                 <div id="carRentalCompany"></div>
 
 
 
 
-			</div>
+		    </div>
 
 
-		</div>
+	    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script>

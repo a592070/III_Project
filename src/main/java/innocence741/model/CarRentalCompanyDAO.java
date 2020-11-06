@@ -97,5 +97,18 @@ public class CarRentalCompanyDAO {
 		}
 		return flag;
 	}
+	
+	public boolean createCarRentalCompany(CarRentalCompany carRentalCompany) {
+		System.out.println("---------------------------------hahahaha---------------------------------");
+		boolean flag = false;
+		Session session = sessionFacory.getCurrentSession();
+		try {
+			session.save(carRentalCompany);
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }
 
