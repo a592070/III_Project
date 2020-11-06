@@ -86,5 +86,16 @@ public class CarRentalCompanyDAO {
 		CarRentalCompany carRentalCompany = session.get(CarRentalCompany.class, sn_rentalcompany);
 		return carRentalCompany;
 	}
+	
+	public boolean delCarRentalCompany(BigDecimal sn_rentalcompany) {
+		boolean flag = false;
+		Session session = sessionFacory.getCurrentSession();
+		CarRentalCompany carRentalCompany = session.get(CarRentalCompany.class, sn_rentalcompany);
+		if(carRentalCompany != null) {
+			session.delete(carRentalCompany);
+			flag = true;
+		}
+		return flag;
+	}
 }
 
