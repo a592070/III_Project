@@ -10,7 +10,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +28,7 @@ import innocence741.service.CarRentalCompanyService;
 import innocence741.model.CarRentalCompanyVO;
 import innocence741.model.CarRentalCompanyViewDAO;
 import innocence741.service.CarRentalCompanyViewService;
+import rambo0021.pojo.AccountBean;
 
 @Controller @Lazy
 public class CarRentalCompanyController {
@@ -56,6 +63,15 @@ public class CarRentalCompanyController {
 		list = carRentalCompanyViewService.getCarRentalCompanysHomepageList(sn_rentalcompany);
         System.out.println(list);
         return list;
+	}
+	
+	@RequestMapping(path = "/ShowCarRentalCompanyPic")
+	public ResponseEntity<byte[]> ShowAccountPic(@CookieValue(value  = "CRC") BigDecimal sn_rentalcompany) throws IOException{
+		System.out.println("------------------hahahahaha------------------");
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		CarRentalCompany carRentalCompany = carRentalCompanyService.getCarRentalCompanyBean(sn_rentalcompany);
+		return new ResponseEntity<byte[]>(carRentalCompany.getPic_rentalcompany(), headers, HttpStatus.OK);
 	}
 	
 	

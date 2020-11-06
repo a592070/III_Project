@@ -193,7 +193,7 @@ pre {
                         <input type="file" id="pic_rentalcompany" name="pic_rentalcompany" >
                     </p>
                     <div class="div_img">                               
-                        <img id="preview_pic_rentalcompany"  src="#">
+                        <img id="preview_pic_rentalcompany"  src="ShowCarRentalCompanyPic">
                     </div>
 				
 				
@@ -242,9 +242,9 @@ pre {
 
 		</div>
 
-		<FORM id="RHome" name="RHome" action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant" method="GET">		 
+		<FORM id="RHome" name="RHome" action="Tindex.controller" method="GET">		 
             <div class="div-btn">
-                <button type="submit" class="btn btn-primary">回餐廳首頁</button>
+                <button type="submit" class="btn btn-primary">回租車公司首頁</button>
             </div>
         </FORM>
 				 
