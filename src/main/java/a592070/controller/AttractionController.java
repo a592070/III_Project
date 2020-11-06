@@ -36,9 +36,19 @@ public class AttractionController {
 
     @RequestMapping("/admin/attraction")
     public void attractionMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionInfo.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionInfo02.jsp").forward(request, response);
     }
 
+    @RequestMapping("/admin/attraction/list/{page}")
+    public List<AttractionVO> getAttractionList(@PathVariable("page") int page){
+        PageSupport pageSupport = new PageSupport();
+        pageSupport.setPageSize(PAGE_SIZE);
+        pageSupport.setTotalCount(viewService.getSize());
+        pageSupport.setCurrentPage(page);
+
+        List<AttractionVO> list = viewService.list(pageSupport.getCurrentPage(), pageSupport.getPageSize());
+        return list;
+    }
     @RequestMapping("/admin/attraction/list/region/{page}/{region}")
     public List<AttractionVO> getAttractionListByRegion(@PathVariable("page") int page, @PathVariable("region") String region){
         PageSupport pageSupport = new PageSupport();

@@ -12,14 +12,16 @@
     <title>Title</title>
 
 
-<%--    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>--%>
+    <%--    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>--%>
     <script src="//vuejs.org/js/vue.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css">
-    <script src="//unpkg.com/view-design/dist/iview.min.js"></script>
-    <script src="//unpkg.com/view-design/dist/locale/en-US.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<%--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>--%>
+    <script src="//unpkg.com/element-ui"></script>
+    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+
     <script>
-        iview.lang('en-US');
+        ELEMENT.locale(ELEMENT.lang.en)
     </script>
     <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
 
@@ -53,22 +55,23 @@
                             <div class="card-body pt-0 pb-5">
                                 <div class="row justify-content-between">
                                     <%--地區選擇--%>
-                                        <dropdown style="margin-left: 20px">
-                                            <i-button type="primary">
-                                                選擇地區
-                                                <i-con type="ios-arrow-down"></i-con>
-                                            </i-button>
-                                            <dropdown-menu slot="list" v-bind:region="region">
-                                                <dropdown-item disabled>--請選擇--</dropdown-item>
-                                                <dropdown-item v-for="ele in region" :key="ele">{{ele}}</dropdown-item>
-                                            </dropdown-menu>
-                                        </dropdown>
+                                        <el-header style="text-align: left; font-size: 12px">
+                                            <el-dropdown justify="start" >
+                                                <el-button type="primary">
+                                                    選擇地區<i class="el-icon-arrow-down el-icon--right"></i>
+                                                </el-button>
+                                                <el-dropdown-menu slot="dropdown" >
+                                                    <el-dropdown-item disabled>--請選擇--</el-dropdown-item>
+                                                    <el-dropdown-item v-for="ele in region" v-bind:key="ele" @click.native="handleSelectRegion(ele)">{{ele}}</el-dropdown-item>
+                                                </el-dropdown-menu>
+                                            </el-dropdown>
+                                        </el-header>
 
 
                                     <%--搜尋框--%>
                                     <div class="search-form d-none d-lg-inline-block col-4">
                                         <div class="input-group">
-                                            <i-button shape="circle" icon="ios-search">資料庫搜尋</i-button>
+                                            <el-button icon="el-icon-search" v-on:click="handleSearch()">資料庫搜尋</el-button>
                                             <input type="text" name="query" id="search-input" class="form-control"
                                                    autofocus autocomplete="off"
                                                    v-model="search"
@@ -79,21 +82,60 @@
 
 
                                 <%--表格內容--%>
-                                <i-table height="550"
-                                         :columns="tableColumns"
-                                         :data="tableData.filter(ele => (
-                                            !search ||
-                                            ele.sn.toString().toLowerCase().includes(search.toLowerCase()) ||
-                                            ele.name.toString().toLowerCase().includes(search.toLowerCase()) ||
-                                            ele.address.toString().toLowerCase().includes(search.toLowerCase())
-                                            ))"></i-table>
+                                <el-table
+                                        :data="tableData.filter(ele => (
+                                        !search ||
+                                        ele.name.toString().toLowerCase().includes(search.toLowerCase()) ||
+                                        ele.sn.toString().toLowerCase().includes(search.toLowerCase()) ||
+                                        ele.address.toString().toLowerCase().includes(search.toLowerCase())
+                                        ))"
+                                        style="width: 100%">
+                                    <el-table-column
+                                            label="ID"
+                                            prop="sn">
+                                    </el-table-column>
+                                    <el-table-column
+                                            label="Name"
+                                            prop="name">
+                                    </el-table-column>
+                                    <el-table-column
+                                            label="Address"
+                                            prop="address">
+                                    </el-table-column>
+                                    <el-table-column
+                                            label="TicketInfo"
+                                            prop="ticketInfo">
+                                    </el-table-column>
+                                    <el-table-column
+                                            align="right">
+                                        <template slot-scope="scope">
+                                            <el-button
+                                                    size="mini"
+                                                    type="primary" round
+                                                    @click="handleEdit(scope.$index, scope.row)">Edit
+                                            </el-button>
+                                            <el-button
+                                                    size="mini"
+                                                    type="danger" icon="el-icon-delete"
+                                                    @click="handleDelete(scope.$index, scope.row)"></el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
                             </div>
 
 
                             <%--分頁--%>
                             <div style="margin: 10px;overflow: hidden">
                                 <div style="float: right;">
-                                    <page :total="pageData.totalSize" :current.sync="pageData.currentPage" :page-size="pageData.pageSize" show-elevator show-total ></page>
+                                    <el-pagination
+                                            background
+                                            :current-page.sync="pageData.currentPage"
+                                            :page-size="pageData.pageSize"
+                                            :total="pageData.totalSize"
+                                            layout="total, prev, pager, next, jumper"
+                                            @size-change="handleSizeChange"
+                                            @current-change="handleCurrentChange">
+                                    </el-pagination>
                                 </div>
                             </div>
 
@@ -113,6 +155,7 @@
         el: '#app',
         data: {
             search: '',
+            selectRegion: 'null',
             region: ["全部", "臺北市", "新北市", "桃園市", "臺中市", "高雄市"],
             pageData: {
                 currentPage: 2,
@@ -219,6 +262,26 @@
                     }
                 }
             ]
+        },
+        methods: {
+            handleSizeChange(val) {
+                console.log(`每頁 \${val} 條`);
+            },
+            handleCurrentChange(val) {
+                console.log(`當前頁: \${val}`);
+            },
+            handleEdit(index, row) {
+                console.log(index, row);
+            },
+            handleDelete(index, row) {
+                console.log(index, row);
+            },
+            handleSearch(){
+                console.log(vm.search);
+            },
+            handleSelectRegion(region){
+                console.log(region);
+            }
         }
 
     });

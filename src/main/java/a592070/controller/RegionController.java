@@ -7,16 +7,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller@Lazy
+@RestController
+@Lazy
 public class RegionController {
     @Autowired@Qualifier("regionService")
     private RegionService service;
 
     @RequestMapping("/admin/list.Region")
-    public void listRegion(){
+    public List<RegionDO> listRegion(){
         List<RegionDO> list = service.list();
+        return list;
     }
 }
