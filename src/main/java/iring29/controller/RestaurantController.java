@@ -56,7 +56,7 @@ public class RestaurantController {
 		if (currentPage == 1) {
 			currentPage = 1;
 		} else {
-			start = (currentPage - 1 ) * 8;
+			start = (currentPage - 1) * 8;
 		}
 		int pageSize = page.getPageSize();
 		int totalPage = page.getTotalPageCount();
@@ -69,28 +69,74 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/regionSearch", method = RequestMethod.POST)
-	public String R_RegionDisplay(@RequestParam("region_name") String region_name, Model m) {
+	public String R_RegionDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+			@RequestParam("region_name") String region_name, Model m) {
 		if (region_name == null || region_name.equals("")) {
 			return "iring29/R_index";
 		} else {
-			List<Show_RView> rBean = rs.regionRestaurant(region_name);
+			int size = rs.getSize();
+			int start = 0;
+			Page page = new Page();
+			page.setTotalCount(size);
+			System.out.println("currentPage = " + currentPage);
+			if (currentPage == 1) {
+				currentPage = 1;
+			} else {
+				start = (currentPage - 1) * 8;
+			}
+			int pageSize = page.getPageSize();
+			int totalPage = page.getTotalPageCount();
+			List<Show_RView> rBean = rs.regionRestaurant(start, pageSize, region_name);
 			m.addAttribute("rBean", rBean);
+			m.addAttribute("currentPage", currentPage);
+			m.addAttribute("totalPage", totalPage);
 		}
 		return "iring29/R_index";
 	}
 
 	@RequestMapping(path = "/nameSearch", method = RequestMethod.POST)
-	public String R_NameDisplay(@RequestParam("restaurant_name") String name, Model m) {
+	public String R_NameDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+			@RequestParam("restaurant_name") String name, Model m) {
 		String rname = name.trim();
-		List<Show_RView> rBean = rs.nameRestaurant(rname);
+		int size = rs.getSize();
+		int start = 0;
+		Page page = new Page();
+		page.setTotalCount(size);
+		System.out.println("currentPage = " + currentPage);
+		if (currentPage == 1) {
+			currentPage = 1;
+		} else {
+			start = (currentPage - 1) * 8;
+		}
+		int pageSize = page.getPageSize();
+		int totalPage = page.getTotalPageCount();
+		System.out.println("totalPage = " + totalPage);
+		List<Show_RView> rBean = rs.nameRestaurant(start, pageSize, rname);
 		m.addAttribute("rBean", rBean);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("totalPage", totalPage);
 		return "iring29/R_index";
 	}
 
 	@RequestMapping(path = "/usernameSearch", method = RequestMethod.POST)
-	public String userDisplay(@RequestParam("username") String username, Model m) {
-		List<Show_RView> rBean = rs.userRestaurant(username);
+	public String userDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+			@RequestParam("username") String username, Model m) {
+		int size = rs.getSize();
+		int start = 0;
+		Page page = new Page();
+		page.setTotalCount(size);
+		System.out.println("currentPage = " + currentPage);
+		if (currentPage == 1) {
+			currentPage = 1;
+		} else {
+			start = (currentPage - 1) * 8;
+		}
+		int pageSize = page.getPageSize();
+		int totalPage = page.getTotalPageCount();
+		List<Show_RView> rBean = rs.userRestaurant(start, pageSize, username);
 		m.addAttribute("rBean", rBean);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("totalPage", totalPage);
 		return "iring29/R_index";
 	}
 
