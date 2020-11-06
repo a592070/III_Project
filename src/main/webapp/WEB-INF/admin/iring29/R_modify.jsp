@@ -192,8 +192,29 @@ pre {
 					<button type="submit" class="btn btn-light">修改</button>
 				</p>
 				<div class="div_img">
-					<img  src="<%=application.getContextPath()%>/ShowPic">
+					<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic">
 				</div>
+<!-- 					<p class="modify-img"> -->
+<!--                         <label for="r-name">請選擇欲修改圖片上傳</label>  -->
+<!--                         <input type="file" id="pic_rentalcompany" name="pic_rentalcompany" > -->
+<!--                     </p> -->
+<!-- 				<div class="div_img">                                -->
+<!--                         <img id="preview_pic_rentalcompany"  src="ShowCarRentalCompanyPic"> -->
+<!--                     </div> -->
+<script>
+$("#Rpicture").change(function(){
+    readURL(this);
+});
+function readURL(input){
+   if(input.files && input.files[0]){
+       var reader = new FileReader();
+       reader.onload = function (e) {
+           $("preview_Rpic").attr('src', e.target.result);
+       }
+       reader.readAsDataURL(input.files[0]);
+   }
+}
+</script>
 				
 				</FORM>
 				

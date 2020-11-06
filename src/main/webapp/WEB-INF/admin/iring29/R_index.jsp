@@ -23,7 +23,7 @@
 }
 
 .search {
-	padding-right: 30px;
+	padding-right: 20px;
 }
 
 input {
@@ -128,7 +128,7 @@ td {
 					<div class="search">
 						<form action="<%=application.getContextPath()%>/Restaurant"
 							method="GET">
-							<button type="submit" class="btn btn-primary">全部查詢</button>
+							<button type="submit" class="btn btn-primary">重新查詢</button>
 						</form>
 					</div>
 				</div>
