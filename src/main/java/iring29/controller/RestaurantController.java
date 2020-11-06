@@ -1,13 +1,8 @@
 package iring29.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +23,6 @@ import iring29.model.Page;
 import iring29.model.Restaurant;
 import iring29.model.RestaurantService;
 import iring29.model.Show_RView;
-import utils.IOUtils;
 
 @Controller
 @SessionAttributes(names = { "rBean" })
@@ -72,9 +65,25 @@ public class RestaurantController {
 	public String R_RegionDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
 			@RequestParam("region_name") String region_name, Model m) {
 		if (region_name == null || region_name.equals("")) {
+			int size = rs.getSize();
+			int start = 0;
+			Page page = new Page();
+			page.setTotalCount(size);
+			System.out.println("currentPage = " + currentPage);
+			if (currentPage == 1) {
+				currentPage = 1;
+			} else {
+				start = (currentPage - 1) * 8;
+			}
+			int pageSize = page.getPageSize();
+			int totalPage = page.getTotalPageCount();
+			List<Show_RView> rBean = rs.totalRestaurant(start, pageSize);
+			m.addAttribute("rBean", rBean);
+			m.addAttribute("currentPage", currentPage);
+			m.addAttribute("totalPage", totalPage);
 			return "iring29/R_index";
 		} else {
-			int size = rs.getSize();
+			int size = rs.getRegionSize(region_name);
 			int start = 0;
 			Page page = new Page();
 			page.setTotalCount(size);
@@ -94,34 +103,35 @@ public class RestaurantController {
 		return "iring29/R_index";
 	}
 
-	@RequestMapping(path = "/nameSearch", method = RequestMethod.POST)
-	public String R_NameDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+	@RequestMapping(path = "/nameSearch", method = RequestMethod.GET)
+	public String R_NameDisplay(@RequestParam(value = "currentNPage", defaultValue = "1") Integer currentNPage,
 			@RequestParam("restaurant_name") String name, Model m) {
 		String rname = name.trim();
-		int size = rs.getSize();
+		int size = rs.getNameSize(rname);
 		int start = 0;
 		Page page = new Page();
 		page.setTotalCount(size);
-		System.out.println("currentPage = " + currentPage);
-		if (currentPage == 1) {
-			currentPage = 1;
+		System.out.println("currentNPage = " + currentNPage);
+		if (currentNPage == 1) {
+			currentNPage = 1;
 		} else {
-			start = (currentPage - 1) * 8;
+			start = (currentNPage - 1) * 8;
 		}
 		int pageSize = page.getPageSize();
-		int totalPage = page.getTotalPageCount();
-		System.out.println("totalPage = " + totalPage);
+		int totalNPage = page.getTotalPageCount();
+		System.out.println("totalNPage = " + totalNPage);
 		List<Show_RView> rBean = rs.nameRestaurant(start, pageSize, rname);
 		m.addAttribute("rBean", rBean);
-		m.addAttribute("currentPage", currentPage);
-		m.addAttribute("totalPage", totalPage);
+		m.addAttribute("restaurant_name", rname);
+		m.addAttribute("currentNPage", currentNPage);
+		m.addAttribute("totalNPage", totalNPage);
 		return "iring29/R_index";
 	}
 
 	@RequestMapping(path = "/usernameSearch", method = RequestMethod.POST)
 	public String userDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
 			@RequestParam("username") String username, Model m) {
-		int size = rs.getSize();
+		int size = rs.getUserSize(username);
 		int start = 0;
 		Page page = new Page();
 		page.setTotalCount(size);

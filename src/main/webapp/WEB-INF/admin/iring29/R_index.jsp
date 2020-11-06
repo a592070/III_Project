@@ -110,7 +110,7 @@ td {
 					</div>
 					<div class="search">
 						<form action="<%=application.getContextPath()%>/nameSearch"
-							method="POST">
+							method="GET">
 							<span class="sp_search">餐廳名稱</span> <input type="text"
 								name="restaurant_name" placeholder="請輸入關鍵字" />
 							<button type="submit" class="btn btn-primary">Search</button>
@@ -123,6 +123,12 @@ td {
 							<span class="sp_search">會員帳號</span> <input type="text"
 								name="username" placeholder="請輸入會員帳號" />
 							<button type="submit" class="btn btn-primary">Search</button>
+						</form>
+					</div>
+					<div class="search">
+						<form action="<%=application.getContextPath()%>/Restaurant"
+							method="GET">
+							<button type="submit" class="btn btn-primary">全部查詢</button>
 						</form>
 					</div>
 				</div>
@@ -170,22 +176,41 @@ td {
 		<div class="pages">
 			<nav aria-label="...">
 				<ul class="pagination">
+			<c:if test="${currentPage != null}">
 				<c:if test="${currentPage == 1}">
 					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}" tabindex="-1">Previous</a></li>
 				</c:if>
 				<c:if test="${currentPage > 1}">
 					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}" tabindex="-1">Previous</a></li>
 				</c:if>
-<%-- 					<li class="page-item"><a class="page-link" href="#">${}</a></li> --%>
 					<li class="page-item active"><a class="page-link" href="#">${currentPage}
 					<span class="sr-only">(current)</span></a></li>
-<%-- 					<li class="page-item"><a class="page-link" href="#">${}</a></li> --%>
-				<c:if test="${currentPage != totalPage}">
+				<c:if test="${currentPage != totalPage && currentPage != ''}">
 					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">Next</a></li>
 				</c:if>
-				<c:if test="${currentPage == totalPage}">
+				<c:if test="${currentPage == totalPage && currentPage != ''}">
 					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">Next</a></li>
 				</c:if>
+			</c:if>
+
+			<c:if test="${currentNPage != null}">
+				<c:if test="${currentNPage == 1}">
+					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/nameSearch?currentNPage=${currentNPage-1}" tabindex="-1">Previous</a></li>
+				</c:if>
+				<c:if test="${currentNPage > 1}">
+					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/nameSearch?currentNPage=${currentNPage-1}&restaurant_name=${restaurant_name}" tabindex="-1">Previous</a></li>
+				</c:if>
+					<li class="page-item active"><a class="page-link" href="#">${currentNPage}
+					<span class="sr-only">(current)</span></a></li>
+				<c:if test="${currentNPage != totalNPage}">
+					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/nameSearch?currentNPage=${currentNPage+1}&restaurant_name=${restaurant_name}">Next</a></li>
+				</c:if>
+				<c:if test="${currentNPage == totalNPage}">
+					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/nameSearch?currentNPage=${currentNPage+1}">Next</a></li>
+				</c:if>
+			</c:if>
+			
+			
 				</ul>
 			</nav>
 		</div>
