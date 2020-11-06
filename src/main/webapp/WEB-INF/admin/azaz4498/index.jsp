@@ -125,7 +125,7 @@ h2 {
 									<td><a class="text-dark" href=""> ${article.artTitle}</a></td>
 									<td>${article.artCreTime}</td>
 									<td><a class="text-dark" href="">${article.artUserId}</a></td>
-									<td>${article.articleType.typeId}</td>
+									<td>${article.articleType.typeName}</td>
 									<td><button>Edit</button></td>
 									<td><button>Delete</button></td>
 

@@ -1,6 +1,7 @@
 
 package innocence741.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -78,6 +79,36 @@ public class CarRentalCompanyDAO {
 		
 		return flag;	
 		
+	}
+	
+	public CarRentalCompany getCarRentalCompanyBean(BigDecimal sn_rentalcompany) {
+		Session session = sessionFacory.getCurrentSession();
+		CarRentalCompany carRentalCompany = session.get(CarRentalCompany.class, sn_rentalcompany);
+		return carRentalCompany;
+	}
+	
+	public boolean delCarRentalCompany(BigDecimal sn_rentalcompany) {
+		boolean flag = false;
+		Session session = sessionFacory.getCurrentSession();
+		CarRentalCompany carRentalCompany = session.get(CarRentalCompany.class, sn_rentalcompany);
+		if(carRentalCompany != null) {
+			session.delete(carRentalCompany);
+			flag = true;
+		}
+		return flag;
+	}
+	
+	public boolean createCarRentalCompany(CarRentalCompany carRentalCompany) {
+		System.out.println("---------------------------------hahahaha---------------------------------");
+		boolean flag = false;
+		Session session = sessionFacory.getCurrentSession();
+		try {
+			session.save(carRentalCompany);
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
 	}
 }
 
