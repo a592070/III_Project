@@ -5,8 +5,9 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -72,6 +73,19 @@ public class CarRentalCompanyController {
 		headers.setContentType(MediaType.IMAGE_PNG);
 		CarRentalCompany carRentalCompany = carRentalCompanyService.getCarRentalCompanyBean(sn_rentalcompany);
 		return new ResponseEntity<byte[]>(carRentalCompany.getPic_rentalcompany(), headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(path = "/delCarRentalCompany")
+	public @ResponseBody Map<String, String> delCarRentalCompany(@RequestParam(name = "sn_rentalcompany") BigDecimal sn_rentalcompany) {
+		Map<String, String> checkMap = new HashMap<String, String>();
+		String check = "fail";
+		checkMap.put("check", check);
+		boolean flag = carRentalCompanyService.delCarRentalCompany(sn_rentalcompany);
+		if(flag = true) {
+			check = "success";
+			checkMap.put("check", check);
+		}
+		return checkMap;
 	}
 	
 	

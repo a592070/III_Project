@@ -27,5 +27,9 @@ public class CarRentalCompanyService {
 	public CarRentalCompany getCarRentalCompanyBean(BigDecimal sn_rentalcompany) {
 		return carRentalCompanyDAO.getCarRentalCompanyBean(sn_rentalcompany);
 	}
+	
+	public boolean delCarRentalCompany(BigDecimal sn_rentalcompany) {
+		return carRentalCompanyDAO.delCarRentalCompany(sn_rentalcompany);
+	}
 }
 

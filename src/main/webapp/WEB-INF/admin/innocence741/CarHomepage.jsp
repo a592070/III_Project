@@ -187,7 +187,6 @@ pre {
                     <input type="text" id="sn_rentalcompany" name="sn_rentalcompany" readonly>
                     <input type="text" id="name_company" name="name_company" >
                     <div class="top"> </div> 
-                    <!--//晚點補預覽圖片 -->
                     <p class="modify-img">
                         <label for="r-name">請選擇欲修改圖片上傳</label> 
                         <input type="file" id="pic_rentalcompany" name="pic_rentalcompany" >
@@ -265,11 +264,11 @@ pre {
         $(document).ready(function(){
             $.ajax({
 
-                     type:"POST",                    //指定http參數傳輸格式為POST
+                     type:"POST",  
 
-                     url: "carrentalcompanyHomepage.controller",        //請求目標的url，可在url內加上GET參數，如 www.xxxx.com?xx=yy&xxx=yyy
+                     url: "carrentalcompanyHomepage.controller", 
                      data: "sn_rentalcompany="+sn_rentalcompany,
-                     dataType: "json",               //目標url處理完後回傳的值之type，此列為一個JSON Object
+                     dataType: "json", 
 
                      success : function(response){
                         // $("#sn_rentalcompany").attr("value",response[0]["sn_rentalcompany"])
@@ -292,7 +291,6 @@ pre {
                         $("#accessible_carrentalcompany")[0].value=(response[0]["accessible_carrentalcompany"])
                      },
 
-                     //Ajax失敗後要執行的function，此例為印出錯誤訊息
 
                      error:function(xhr, ajaxOptions, thrownError){
 
@@ -314,39 +312,18 @@ pre {
 
                     $.ajax({
                         
-                     type:"POST",                    //指定http參數傳輸格式為POST
-                     url: "update.carrentalcompany.controller",        //請求目標的url，可在url內加上GET參數，如 www.xxxx.com?xx=yy&xxx=yyy
-                     data: formData, //要傳給目標的data為id=formId的Form其序列化(serialize)為的值，之
+                     type:"POST",
+                     url: "update.carrentalcompany.controller",
+                     data: formData, 
                      processData : false, 
                      contentType : false,
-                     dataType: "json",               //目標url處理完後回傳的值之type，此列為一個JSON Object
+                     dataType: "json",
 
                      success : (response) => {
                         console.log("haha");
-                        // console.log(response["check"]);
-                        //  if(response["check"] === "rederict"){
-                        //     window.location="../rambo0021/login.jsp"
-                        //  }
-
-                        // console.log($(this).parent().parent().children("td.snCol").text())
-
-                        // if(response["check"]==="success"){
-                        //     if($(this).parent().parent().siblings("tr").length===0){
-                        //         // $(this).parent().parent().siblings().remove();
-                        //         $(this).parent().parent().siblings().remove();
-                        //         $(this).parent().parent().remove();
-                        //     }else{
-                        //         $(this).parent().parent().remove();
-                        //     }
-                        //     alert("取消成功");
-                        // }else{
-                        //     alert("刪除失敗")
-                        // }
-
+                        alert("修改成功");
 
                      },
-
-                     //Ajax失敗後要執行的function，此例為印出錯誤訊息
 
                      error:function(xhr, ajaxOptions, thrownError){
 

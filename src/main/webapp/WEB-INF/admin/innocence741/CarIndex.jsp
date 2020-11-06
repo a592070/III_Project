@@ -125,114 +125,152 @@ td{
                 <div id="carRentalCompany"></div>
 
 
-                <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
-                <script>
-                    $(document).ready(function(){
-                        $.ajax({
-            
-                                 type:"POST",                    //指定http參數傳輸格式為POST
-            
-                                 url: "carrentalcompany.controller",        //請求目標的url，可在url內加上GET參數，如 www.xxxx.com?xx=yy&xxx=yyy
-            
-                                 dataType: "json",               //目標url處理完後回傳的值之type，此列為一個JSON Object
-            
-                                 success : function(response){
-                                    // console.log(response.length)
-                                    // console.log(response[0]["name_company"])
-                                    for(let i=0; i<response.length; i++){
-                                        var div = $('<div></div>').addClass('carRentalCompanyDiv');
-                                        var form = $('<form></form>').addClass('carRentalCompanyForm').attr("enctype","multipart/form-data").attr("name","myform").attr("method","POST");        
-            
-                                        data = [];
-                                        data.push(
-                                            $("<table></table>").addClass('table table-striped table-sm').append(
-                                                $("<tr></tr>").append(
-                                                    $("<td></td>").append(
-                                                        $("<input>").attr("value",response[i]["sn_rentalcompany"]).attr("name","sn_rentalcompany").attr("readonly","true").attr("size",6)
-                                                   ),
-                                                   $("<td></td>").append(
-                                                       $("<input>").attr("value",response[i]["name_company"]).attr("name","name_company").attr("readonly","true").attr("size",30)
-                                                   ),
-                                                   $("<td></td>").append(
-                                                       $("<input>").attr("value",response[i]["address"]).attr("name","address").attr("readonly","true").attr("size",45)
-                                                   ),
-                                                    $("<td></td>").append(
-                                                        $("<input>").attr("value",response[i]["compantAccount"]).attr("name","compantAccount").attr("readonly","true")
-                                                    ),
-                                                    $("<td></td>").append(
-                                                        $("<input>").attr("value","修改").attr("type","button").addClass('updateData')
-                                                    ),
-                                                    $("<td></td>").append(
-                                                        $("<input>").attr("value","刪除").attr("type","button").addClass('dropData')
-                                                    )
-                                                )
-                                            )
-                                        );
-                                        $("#carRentalCompany").append(div);
-                                        $(".carRentalCompanyDiv").eq(i).append(form);
-                                        $(".carRentalCompanyForm").eq(i).append(data);
-            
-                                    }
-                                    //------------------------correct method-----------------------------
-                                    // var form1 = $('form');
-                                    // var formData = new FormData(form1[0]);
-                                    // // var form1 = document.querySelectorAll('form');
-                                    // // var formData = new FormData(form1[0]);
-                                    // console.log(formData.get('sn_rentalcompany'));
-                                    // console.log(formData.get('name_company'));
-            
-            
-                                    //------------------------correct method-----------------------------
-                                    // var form1 = $('form')[0];
-                                    // var formData = new FormData(form1);
-                                    // // var form1 = document.querySelectorAll('form');
-                                    // // var formData = new FormData(form1[0]);
-                                    // console.log(formData.get('sn_rentalcompany'));
-                                    // console.log(formData.get('name_company'));
-            
-                                    //------------------------correct method-----------------------------
-                                    // var form1 = $(".updateData").eq(1).parents('form');
-                                    // var formData = new FormData(form1[0]);
-                                    // console.log(formData.get('sn_rentalcompany'));
-                                    // console.log(formData.get('name_company'));
-                                    // if(formData.get('pic_rentalcompany').size != 0)
-                                    //     console.log(formData.get('pic_rentalcompany'));
-            
-                                 },
-            
-                                 //Ajax失敗後要執行的function，此例為印出錯誤訊息
-            
-                                 error:function(xhr, ajaxOptions, thrownError){
-            
-                                     console.log(xhr.status+"\n"+thrownError);
-                                 }
-            
-                             });
-            
-            
-            
-            
-                    })
-            
-            
-                    $("#carRentalCompany").on("click", ".updateData", function(){
-                        var form1 = $(this).parents('form');
-                        var formData = new FormData(form1[0]);
-                        strCookies = formData.get('sn_rentalcompany');
-                        Cookies.set('CRC', strCookies);
-                        window.location="\THomepageindex.controller";
-            
-                    })
-            
-            
-                </script>
+
 			</div>
 
 
 		</div>
-	</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.ajax({
 
+                     type:"POST",                    
+
+                     url: "carrentalcompany.controller",  
+
+                     dataType: "json", 
+
+                     success : function(response){
+                        // console.log(response.length)
+                        // console.log(response[0]["name_company"])
+                        for(let i=0; i<response.length; i++){
+                            var div = $('<div></div>').addClass('carRentalCompanyDiv');
+                            var form = $('<form></form>').addClass('carRentalCompanyForm').attr("enctype","multipart/form-data").attr("name","myform").attr("method","POST");        
+
+                            data = [];
+                            data.push(
+                                $("<table></table>").addClass('table table-striped table-sm').append(
+                                    $("<tr></tr>").append(
+                                        $("<td></td>").append(
+                                            $("<input>").attr("value",response[i]["sn_rentalcompany"]).attr("name","sn_rentalcompany").attr("readonly","true").attr("size",6)
+                                       ),
+                                       $("<td></td>").append(
+                                           $("<input>").attr("value",response[i]["name_company"]).attr("name","name_company").attr("readonly","true").attr("size",30)
+                                       ),
+                                       $("<td></td>").append(
+                                           $("<input>").attr("value",response[i]["address"]).attr("name","address").attr("readonly","true").attr("size",45)
+                                       ),
+                                        $("<td></td>").append(
+                                            $("<input>").attr("value",response[i]["compantAccount"]).attr("name","compantAccount").attr("readonly","true")
+                                        ),
+                                        $("<td></td>").append(
+                                            $("<input>").attr("value","修改").attr("type","button").addClass('updateData')
+                                        ),
+                                        $("<td></td>").append(
+                                            $("<input>").attr("value","刪除").attr("type","button").addClass('dropData')
+                                        )
+                                    )
+                                )
+                            );
+                            $("#carRentalCompany").append(div);
+                            $(".carRentalCompanyDiv").eq(i).append(form);
+                            $(".carRentalCompanyForm").eq(i).append(data);
+
+                        }
+                        //------------------------correct method-----------------------------
+                        // var form1 = $('form');
+                        // var formData = new FormData(form1[0]);
+                        // // var form1 = document.querySelectorAll('form');
+                        // // var formData = new FormData(form1[0]);
+                        // console.log(formData.get('sn_rentalcompany'));
+                        // console.log(formData.get('name_company'));
+
+
+                        //------------------------correct method-----------------------------
+                        // var form1 = $('form')[0];
+                        // var formData = new FormData(form1);
+                        // // var form1 = document.querySelectorAll('form');
+                        // // var formData = new FormData(form1[0]);
+                        // console.log(formData.get('sn_rentalcompany'));
+                        // console.log(formData.get('name_company'));
+
+                        //------------------------correct method-----------------------------
+                        // var form1 = $(".updateData").eq(1).parents('form');
+                        // var formData = new FormData(form1[0]);
+                        // console.log(formData.get('sn_rentalcompany'));
+                        // console.log(formData.get('name_company'));
+                        // if(formData.get('pic_rentalcompany').size != 0)
+                        //     console.log(formData.get('pic_rentalcompany'));
+
+                     },
+
+                     //Ajax失敗後要執行的function，此例為印出錯誤訊息
+
+                     error:function(xhr, ajaxOptions, thrownError){
+
+                         console.log(xhr.status+"\n"+thrownError);
+                     }
+
+                 });
+
+
+
+
+        })
+
+
+        $("#carRentalCompany").on("click", ".updateData", function(){
+            var form1 = $(this).parents('form');
+            var formData = new FormData(form1[0]);
+            strCookies = formData.get('sn_rentalcompany');
+            Cookies.set('CRC', strCookies);
+            window.location="\THomepageindex.controller";
+
+        })
+
+        $("#carRentalCompany").on("click", ".dropData", function(){
+            var form1 = $(this).parents('form');
+            var formData = new FormData(form1[0]);
+            $.ajax({
+        
+                type:"POST",   
+                url: "delCarRentalCompany",        
+                data: formData,
+                processData : false, 
+                contentType : false,
+                dataType: "json",   
+
+                success : (response) => {
+                    console.log("haha")
+                    console.log(response["check"]);
+                        if(response["check"] === "rederict"){
+
+                        }
+
+                    if(response["check"]==="success"){
+                        var table1 = $(this).parents('table').remove();
+                        window.location="\Tindex.controller";
+                        alert("取消成功");
+                    }else{
+                        alert("刪除失敗")
+                    }
+
+
+                },
+
+                error:function(xhr, ajaxOptions, thrownError){
+
+                    console.log(xhr.status+"\n"+thrownError);
+                }
+
+            });
+        })
+
+
+    </script>
 
 </body>
 </html>
