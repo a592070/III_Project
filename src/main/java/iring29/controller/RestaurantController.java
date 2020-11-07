@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import iring29.model.ModifyService;
 import iring29.model.Page;
 import iring29.model.Restaurant;
-import iring29.model.RestaurantService;
 import iring29.model.Show_RView;
+import iring29.service.ModifyService;
+import iring29.service.RestaurantService;
 
 @Controller
 @SessionAttributes(names = { "rBean" })

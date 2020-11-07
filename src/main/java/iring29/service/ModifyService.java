@@ -1,9 +1,12 @@
-package iring29.model;
+package iring29.service;
 
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import iring29.model.ModifyDAO;
+import iring29.model.Restaurant;
 
 public class ModifyService {
 	@Autowired
