@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.IdentityBean;
 
 public class AccountDAOImpl implements AcountDAO {
 	@Autowired
@@ -31,13 +32,41 @@ public class AccountDAOImpl implements AcountDAO {
 	}
 
 	@Override
-	public AccountBean updateAccImg(byte[] img,String username) {
+	public AccountBean updateAccImg(byte[] img, String username) {
 		Session session = sessionFactory.getCurrentSession();
-        AccountBean aBean = session.get(AccountBean.class, username);
-	    if (aBean !=null) {
-	    	aBean.setPicture(img);
-	    	return aBean;
-	    }
-	    return aBean;
+		AccountBean aBean = session.get(AccountBean.class, username);
+		if (aBean != null) {
+			aBean.setPicture(img);
+			return aBean;
+		}
+		return aBean;
+	}
+	@Override
+	public String updateAccPwd(String username, String pwd) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			aBean.setPassword(pwd);
+			return "修改密碼成功";
+		}
+		return "修改失敗";
+	}
+	@Override
+	public String updateAccIdentity(String username, int identity) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			IdentityBean iBean = sessionFactory.getCurrentSession().get(IdentityBean.class, identity);
+			aBean.setIdentityBean(iBean);
+			return "修改身分成功";
+		}
+		return "修改失敗";
+	}
+	@Override
+	public String updateAccEmail(String username, String email) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			aBean.setEmail(email);
+			return "新增成功";
+		}
+		return "新增失敗";
 	}
 }
