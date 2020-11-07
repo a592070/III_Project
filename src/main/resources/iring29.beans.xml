@@ -9,6 +9,7 @@
 	<bean id="restaurantService" class="iring29.service.RestaurantService"  scope="session" />
 	<bean id="ModifyDAO" class="iring29.model.ModifyDAO" scope="session" />
 	<bean id="ModifyService" class="iring29.service.ModifyService" scope="session"/>
+	<bean id="Page" class="iring29.model.Page" scope="session"/>
 	<bean id="restaurantController" name="/Restaurant.controller" class="iring29.controller.RestaurantController" scope="session"></bean>
 
 </beans>

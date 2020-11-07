@@ -31,6 +31,10 @@ public class RestaurantController {
 	private RestaurantService rs;
 	@Autowired
 	private ModifyService ms;
+	@Autowired
+	private Page page;
+	
+	private int start = 0;
 
 //	@ModelAttribute("rBean")
 //	public Show_RView Restaurant() {
@@ -42,8 +46,6 @@ public class RestaurantController {
 	public String RestaurantDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
 			Model m) {
 		int size = rs.getSize();
-		int start = 0;
-		Page page = new Page();
 		page.setTotalCount(size);
 		System.out.println("currentPage = " + currentPage);
 		if (currentPage == 1) {
@@ -66,8 +68,6 @@ public class RestaurantController {
 			@RequestParam("region_name") String region_name, Model m) {
 		if (region_name == null || region_name.equals("")) {
 			int size = rs.getSize();
-			int start = 0;
-			Page page = new Page();
 			page.setTotalCount(size);
 			System.out.println("currentPage = " + currentPage);
 			if (currentPage == 1) {
@@ -85,7 +85,6 @@ public class RestaurantController {
 		} else {
 			int size = rs.getRegionSize(region_name);
 			int start = 0;
-			Page page = new Page();
 			page.setTotalCount(size);
 			System.out.println("currentPage = " + currentPage);
 			if (currentPage == 1) {
@@ -108,7 +107,6 @@ public class RestaurantController {
 			@RequestParam("restaurant_name") String name, Model m) {
 		String rname = name.trim();
 		int size = rs.getNameSize(rname);
-		int start = 0;
 		Page page = new Page();
 		page.setTotalCount(size);
 		System.out.println("currentNPage = " + currentNPage);
@@ -132,8 +130,6 @@ public class RestaurantController {
 	public String userDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
 			@RequestParam("username") String username, Model m) {
 		int size = rs.getUserSize(username);
-		int start = 0;
-		Page page = new Page();
 		page.setTotalCount(size);
 		System.out.println("currentPage = " + currentPage);
 		if (currentPage == 1) {
