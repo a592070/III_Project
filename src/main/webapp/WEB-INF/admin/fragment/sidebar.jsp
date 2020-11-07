@@ -69,7 +69,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <a class="sidenav-item-link" href="Tindex.controller">
                             <i class="mdi mdi-car"></i>
                             <span class="nav-text">租車</span>
                         </a>
