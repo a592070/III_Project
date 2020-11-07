@@ -192,8 +192,29 @@ pre {
 					<button type="submit" class="btn btn-light">修改</button>
 				</p>
 				<div class="div_img">
-					<img  src="<%=application.getContextPath()%>/ShowPic">
+					<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic">
 				</div>
+<!-- 					<p class="modify-img"> -->
+<!--                         <label for="r-name">請選擇欲修改圖片上傳</label>  -->
+<!--                         <input type="file" id="pic_rentalcompany" name="pic_rentalcompany" > -->
+<!--                     </p> -->
+<!-- 				<div class="div_img">                                -->
+<!--                         <img id="preview_pic_rentalcompany"  src="ShowCarRentalCompanyPic"> -->
+<!--                     </div> -->
+<script>
+$("#Rpicture").change(function(){
+    readURL(this);
+});
+function readURL(input){
+   if(input.files && input.files[0]){
+       var reader = new FileReader();
+       reader.onload = function (e) {
+           $("preview_Rpic").attr('src', e.target.result);
+       }
+       reader.readAsDataURL(input.files[0]);
+   }
+}
+</script>
 				
 				</FORM>
 				
@@ -222,6 +243,29 @@ pre {
 					
 				</FORM>
 
+<script type="text/javascript">				
+function confirmL(){
+	if (confirm("確定送出修改 ? ") ) {
+		let address = document.getElementById("address").value;
+		let transportation = document.getElementById("transportation").value;
+		document.forms["formL"].finalDecision.value = "confirmL";
+		console.log(document.forms["formL"].finalDecision.value);
+		if(address === ""){
+			document.getElementById("address").value = "${rBean.address}";
+			}
+		if(transportation === ""){
+			document.getElementById("transportation").value = "${rBean.transportation}";
+			}		
+		document.forms["formL"].action="<%=application.getContextPath()%>/ModifyLocation";
+		document.forms["formL"].method="POST";
+		document.forms["formL"].submit();
+		return;
+	} else {
+		return;
+	}
+}
+</script>				
+
 				<FORM id="formT" name="formT" action="<%=pageContext.getServletContext().getContextPath()%>/ModifyType" method="POST">
 					<div>
 						<p class="modify">
@@ -242,9 +286,29 @@ pre {
 					
 					<input type="hidden" id="finalDecision" name="finalDecision" value=""> 
         			<input type="hidden" id="r_sn" name="r_sn" value="${rBean.r_sn}"> 
-					
 				</FORM>
-				
+<script type="text/javascript">
+function confirmT(){
+	if (confirm("確定送出修改 ? ") ) {
+		let serviceinfo = document.getElementById("serviceinfo").value;
+		let type = document.getElementById("type").value; 
+		document.forms["formT"].finalDecision.value = "confirmT";
+		console.log(document.forms["formT"].finalDecision.value);
+		if(serviceinfo === ""){
+			document.getElementById("serviceinfo").value = "${rBean.serviceinfo}";
+			}
+		if(type === ""){
+			document.getElementById("type").value = "${rBean.type}";
+			}
+		document.forms["formT"].action="<%=application.getContextPath()%>/ModifyType";
+		document.forms["formT"].method="POST";
+		document.forms["formT"].submit();
+		return;
+	} else {
+		return;
+	}
+}
+</script>				
 				
 				 <FORM id="formI" name="formI" action="<%=pageContext.getServletContext().getContextPath()%>/ModifyInfo" method="POST"> 
 					<div>
@@ -268,63 +332,7 @@ pre {
         			<input type="hidden" id="r_sn" name="r_sn" value="${rBean.r_sn}"> 
 					
 				 </FORM> 
-				 
-
-				
-			</div>
-
-		</div>
-
-		<FORM id="RHome" name="RHome" action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant" method="GET">		 
-		<div class="div-btn">
-			<button type="submit" class="btn btn-primary">回餐廳首頁</button>
-        </div>
-        </FORM>
-				 
 <script type="text/javascript">
-
-function confirmL(){
-	if (confirm("確定送出修改 ? ") ) {
-		let address = document.getElementById("address").value;
-		let transportation = document.getElementById("transportation").value;
-		document.forms["formL"].finalDecision.value = "confirmL";
-		console.log(document.forms["formL"].finalDecision.value);
-		if(address === ""){
-			document.getElementById("address").value = "${rBean.address}";
-			}
-		if(transportation === ""){
-			document.getElementById("transportation").value = "${rBean.transportation}";
-			}		
-		document.forms["formL"].action="<%=application.getContextPath()%>/ModifyLocation";
-		document.forms["formL"].method="POST";
-		document.forms["formL"].submit();
-		return;
-	} else {
-		return;
-	}
-}
-
-function confirmT(){
-	if (confirm("確定送出修改 ? ") ) {
-		let serviceinfo = document.getElementById("serviceinfo").value;
-		let type = document.getElementById("type").value; 
-		document.forms["formT"].finalDecision.value = "confirmT";
-		console.log(document.forms["formT"].finalDecision.value);
-		if(serviceinfo === ""){
-			document.getElementById("serviceinfo").value = "${rBean.serviceinfo}";
-			}
-		if(type === ""){
-			document.getElementById("type").value = "${rBean.type}";
-			}
-		document.forms["formT"].action="<%=application.getContextPath()%>/ModifyType";
-		document.forms["formT"].method="POST";
-		document.forms["formT"].submit();
-		return;
-	} else {
-		return;
-	}
-}
-
 function confirmI(){
 	if (confirm("確定送出修改 ? ") ) {
 		let opentime = document.getElementById("opentime").value;
@@ -347,8 +355,20 @@ function confirmI(){
 		return;
 	}
 }
+</script>				 
 
-</script>
+				
+			</div>
+
+		</div>
+
+		<FORM id="RHome" name="RHome" action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant" method="GET">		 
+		<div class="div-btn">
+			<button type="submit" class="btn btn-primary">回餐廳首頁</button>
+        </div>
+        </FORM>
+				 
+
 
 
 				</div>
