@@ -38,6 +38,11 @@ public class AttractionController {
     public void attractionMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionInfo02.jsp").forward(request, response);
     }
+    @RequestMapping("/admin/attraction/detail")
+    public void attractionDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionDetail.jsp").forward(request, response);
+    }
+
 
     @RequestMapping("/admin/attraction/list/{page}")
     public List<AttractionVO> getAttractionList(@PathVariable("page") int page){
@@ -74,6 +79,7 @@ public class AttractionController {
         AttractionDO ele = service.getEle(id);
         return ele;
     }
+
 
     @RequestMapping("/admin/attraction/pic/{id}")
     public ResponseEntity<byte[]> getPicture(@PathVariable(name = "id") int id){
