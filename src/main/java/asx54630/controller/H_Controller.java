@@ -39,7 +39,7 @@ public class H_Controller {
 		return "asx54630/H_index";
 		}
 	
-	@RequestMapping(path = "/hotelupdate", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //修改
+	@RequestMapping(path = "/hotelupdate", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //修改
 	public String processHotelUpdate(@RequestParam(name = "upId") String updateSn,
 									 @RequestParam(name = "upName") String updateName,
 									 @RequestParam(name = "upRegion") String updateRegion,
