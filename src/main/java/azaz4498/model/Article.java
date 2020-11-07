@@ -20,6 +20,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "F_ARTICLE")
 public class Article implements Serializable {
@@ -99,7 +103,7 @@ public class Article implements Serializable {
 	public void setArtId(int artId) {
 		this.artId = artId;
 	}
-
+	@JsonIgnore
 	@Transient
 	public int getArtTypeId() {
 		return artTypeId;
@@ -134,8 +138,8 @@ public class Article implements Serializable {
 	public void setArtPicUrl(String artPicUrl) {
 		this.artPicUrl = artPicUrl;
 	}
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -143,13 +147,13 @@ public class Article implements Serializable {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ART_TYPE_ID")
 	public ArticleType getArticleType() {
 		return articleType;
 	}
-
+	
 	public void setArticleType(ArticleType articleType) {
 		this.articleType = articleType;
 	}
