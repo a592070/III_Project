@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import asx54630.model.Hotel;
 
 
+
 @Repository("hotelDao")
 public class HotelDAO {
 
@@ -24,19 +25,19 @@ public class HotelDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+
 	public Hotel hotelDetail(BigDecimal sn) { //查詢飯店詳細資料
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Hotel.class, sn);
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+
 	public Hotel hotelHomePage(String account) { //查詢飯店業者擁有的資料
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Hotel.class, account);
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+
 	public List<Hotel> selectAll(String name, String region, String type){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
 		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", Hotel.class);
@@ -47,7 +48,7 @@ public class HotelDAO {
 		return list;
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
+
 	public Hotel insert(Hotel bean) { //新增
 		Session session = sessionFactory.getCurrentSession();
 		Hotel result = session.get(Hotel.class, bean.getSN());
@@ -59,13 +60,32 @@ public class HotelDAO {
 		return null;
 	}
 	
-	public Hotel update(int sn,String Name) { //修改
+	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type) { //修改
 		Session session = sessionFactory.getCurrentSession();
 		Hotel result = session.get(Hotel.class, sn);
-		if(result == null) {
+		if(result != null) {
 			result.setNAME(Name);
+			result.setREGION(Region);
+			result.setADDRESS(Address);
+			result.setTEL(Tel);
+			result.setDOUBLE_ROOM(Dbroom);
+			result.setQUADRUPLE_ROOM(Qdroom);
+			result.setDESCRIPTION(Description);
+			result.setOPENTIME(Opentime);
+			result.setTYPE(Type);
 		}
 		return result;
+	}
+	
+	public boolean delete(BigDecimal sn) { //刪除
+		Session session = sessionFactory.getCurrentSession();
+		Hotel result = session.get(Hotel.class, sn);
+		if(result != null) {
+			session.delete(result);
+			return true;
+		}
+		return false;
+		
 	}
 
 }

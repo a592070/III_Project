@@ -61,6 +61,8 @@ h2 {
 
 <body class="sidebar-fixed sidebar-dark header-light header-fixed"
 	id="body">
+
+
 	<div class="mobile-sticky-body-overlay"></div>
 
 	<div class="wrapper">
@@ -68,38 +70,68 @@ h2 {
 		<div class="page-wrapper">
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
-				<div class="box">
-					<div class="search" class="form-group">
-						<form:form action="artTypeSearch" method="GET">
-							<span class="sp_search">文章類型</span>
-							<select name="articleType" id="inputState" class="form-control">
-								<option value="">選擇類型</option>
-								<option value="旅遊">旅遊</option>
-								<option value="美食">美食</option>
-								<option value="住宿">住宿</option>
-							</select>
-							<button type="button" class="btn btn-primary">Search</button>
-						</form:form>
-					</div>
+				<div class="box ">
+
 					<div class="search">
-						<form:form action="titleSearch" method="POST"
+						<form:form action="titleSearch" method="GET" class="mr-5"
 							modelAttribute="articles">
-							<span class="sp_search">文章標題</span>
-							<input class="form-control mr-sm-2" type="search" placeholder="Search" >
-							<button type="button" class="btn btn-primary">Search</button>
+							<div class="sp_search">文章標題</div>
+							<input class="form-control" type="search" placeholder="請輸入文章標題"
+								name="title">
+							<button type="submit" class="btn btn-primary btn-sm m-2">Search</button>
 						</form:form>
 					</div>
 
 					<div class="search">
-						<form:form action="searchByUserId" method="GET"
-							>
+						<form:form action="searchByUserId" method="GET" class="mr-5">
 							<span class="sp_search">作者</span>
-							<input class="form-control " type="search" placeholder="Search" name="userid">
-							<button type="button" class="btn btn-primary" >Search</button>
+							<input class="form-control" type="search" placeholder="請輸入用戶名稱"
+								name="userid" />
+							<button type="submit" class="btn btn-primary btn-sm m-2">Search</button>
+						</form:form>
+					</div>
+					<div class="search">
+						<form:form action="artTypeSearch" method="GET" class="mr-5">
+							<span class="sp_search">文章類型</span>
+							<br />
+							<select name="articleType" id="inputType" class="form-control">
+								<option value="">選擇類型</option>
+								<c:forEach var="Type" items="${typeBean}">
+									<option value="${Type.typeId}">${Type.typeName }</option>
+								</c:forEach>
+
+							</select>
+							<br />
+							<button type="submit" class="btn btn-primary btn-sm m-2">Search</button>
 						</form:form>
 					</div>
 				</div>
 				<h2>文章列表</h2>
+				<script>
+					$(document).ready(function(){
+						$.ajax({
+							
+							type:"GET",
+							url:"Article.controller.json",
+							success:function(response){
+								console.log(obj);
+
+								for(let i=0; i<response.length; i++){
+									
+
+
+									}
+								
+
+								}
+							
+							});
+						});
+
+
+
+				</script>
+
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
@@ -118,9 +150,9 @@ h2 {
 								<tr>
 									<td>${article.artId}</td>
 									<td><a class="text-dark" href=""> ${article.artTitle}</a></td>
-									<td>${article.artCreDate}</td>
+									<td>${article.artCreTime}</td>
 									<td><a class="text-dark" href="">${article.artUserId}</a></td>
-									<td>${article.artType}</td>
+									<td>${article.articleType.typeName}</td>
 									<td><button>Edit</button></td>
 									<td><button>Delete</button></td>
 
@@ -136,6 +168,9 @@ h2 {
 		</div>
 	</div>
 
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
+  
 </body>
+
 </html>

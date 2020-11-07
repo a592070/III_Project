@@ -1,5 +1,6 @@
 package innocence741.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,5 +19,9 @@ public class CarRentalCompanyViewService {
 	
 	public List<CarRentalCompanyVO> getCarRentalCompanysList() throws SQLException {
 		return carRentalCompanyViewDAO.getCarRentalCompanysList();
+	}
+	
+	public List<CarRentalCompanyVO> getCarRentalCompanysHomepageList(BigDecimal sn_rentalcompany) throws SQLException {
+		return carRentalCompanyViewDAO.getCarRentalCompanysHomepageList(sn_rentalcompany);
 	}
 }

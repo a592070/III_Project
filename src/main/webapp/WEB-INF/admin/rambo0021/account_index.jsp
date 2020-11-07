@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>用戶清單</title>
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 </head>
 <body class="sidebar-fixed sidebar-dark header-light header-fixed"
@@ -18,7 +18,7 @@
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
 			<div>
-				<h2>用戶</h2>
+				<h2>用戶清單</h2>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
@@ -27,6 +27,7 @@
 								<th>身分</th>
 								<th>email</th>
 								<th>註冊日期</th>
+								<th>修改日期</th>
 								<th>狀態</th>
 							</tr>
 						</thead>
@@ -36,8 +37,15 @@
 									<td>${a.userName}</td>
 									<td>${a.identityBean.name}</td>
 									<td>${a.email}</td>
+									<td>${a.registerString}</td>
 									<td>${a.modify_DateString}</td>
 									<td>${a.status}</td>
+									<td>
+									<form action="<%=application.getContextPath()%>/displayAccount" method="POST">
+									<button type="submit" class="btn btn-warning">Modify</button>
+									<Input type='hidden' name='username' value='${a.userName}'>
+									</form>
+								</td>
 								</tr>
 							</c:forEach>
 							</tbody>
