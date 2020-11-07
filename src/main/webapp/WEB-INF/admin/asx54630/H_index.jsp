@@ -93,6 +93,7 @@
                 <th>營業時間</th>                
                 <th>住宿類型</th>
                 <th>修改</th>
+                <th>刪除</th>
             </tr>
             </thead>
             <tbody>
@@ -108,54 +109,107 @@
                 <td>${hotels.DESCRIPTION}</td>
                 <td>${hotels.OPENTIME}</td>
                 <td>${hotels.TYPE}</td>
-                <td><button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" data-whatever="NMSL">修改</button></td>
+                <td><button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal" onclick="clickdetail('${hotels.SN}',
+                																															'${hotels.NAME}',
+                																															'${hotels.REGION}',
+                																															'${hotels.ADDRESS}',
+                																															'${hotels.TEL}',
+                																															'${hotels.DOUBLE_ROOM}',
+                																															'${hotels.QUADRUPLE_ROOM}',
+                																															'${hotels.DESCRIPTION}',
+                																															'${hotels.OPENTIME}',
+                																															'${hotels.TYPE}')">修改</button></td>
+               <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
             </tr>
             </c:forEach> 
-            
-<!--             <script type="text/javascript"> -->
-<!--  			function clickdetail(sn){ -->
-			
-<%-- 				document.location.href="${pageContext.servletContext.contextPath}/hotelupdate?detailsn="+sn; --%>
-<!--  			} -->
-<!--  			</script> --> 
-            
+
          </tbody>
         </table>
+        
+        <script type="text/javascript"> 
+		function clickdetail(id,name,region,address,tel,dbroom,qdroom,description,opentime,type){
+
+			$("#dataId").val(id);
+			$("#dataName").val(name);
+			$("#dataRegion").val(region);
+			$("#dataAddress").val(address);
+			$("#dataTel").val(tel);
+			$("#dataDbroom").val(dbroom);
+			$("#dataQdroom").val(qdroom);
+			$("#dataDescription").val(description);
+			$("#dataOpentime").val(opentime);
+			$("#dataType").val(type);
+
+		}
+
+		function clickdelete(id){
+
+			$("#deleteId").val(id);
+		}
+		</script> 
 
 			 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
            	 <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">${hotelupdate.SN}</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">修改資料</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form>
+                 <form action="hotelupdate" method="GET">
                   <table>
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label"></label>
-                	  名稱:<input type="text" value="${hotelupdate.NAME}"><br>
-                 	  地區:<input type="text" value="${hotelupdate.REGION}"><br>
-					  地址:<input type="text" value="${hotelupdate.ADDRESS}"><br>
-					 電話:<input type="text" value="${hotelupdate.TEL}"><br>
-					  雙人房價格:<input type="text" value="${hotelupdate.DOUBLE_ROOM}"><br>
-					  四人房價格:<input type="text" value="${hotelupdate.QUADRUPLE_ROOM}"><br>
-					  介紹:<input type="text" value="${hotelupdate.DESCRIPTION}"><br>
-					 營業時間:<input type="text" value="${hotelupdate.OPENTIME}"><br>
-					 住宿類型:<input type="text" value="${hotelupdate.TYPE}"><br>
+                      <input type="hidden" id = "dataId" value="" name="upId">
+                	  名稱:<input class="form-control" type="text" id = "dataName" value="" name="upName"><br>
+                 	  地區:<input class="form-control" type="text" id = "dataRegion" value="" name="upRegion"><br>
+	   				  地址:<input class="form-control" type="text" id = "dataAddress" value="" name="upAddress"><br>
+	   				 電話:<input class="form-control" type="text" id = "dataTel" value="" name="upTel"><br>
+	   				  雙人房價格:<input class="form-control" type="text" id = "dataDbroom" value="" name="upDBroom"><br>
+	   				  四人房價格:<input class="form-control" type="text" id = "dataQdroom" value="" name="upQDroom"><br>
+	   				  介紹:<input class="form-control" id = "dataDescription" value="" name="upDescription"><br>
+	   				 營業時間:<input class="form-control" type="text" id = "dataOpentime" value="" name="upOpentime"><br>
+	   				 住宿類型:<input class="form-control" type="text" id = "dataType" value="" name="upType"><br>
                     </div>
-               		 <div class="form-group">
-                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                 	 <button type="submit" class="btn btn-primary">確認</button>
+               		 <div class="modal-footer">
+                  		<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                 	 	<button type="submit" class="btn btn-primary">確認</button>
                		 </div>
+               		 </table>
                   </form>            
                 </div>
               </div>
             </div>
           </div>
-
+		
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalCenterTitle">刪除</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+                <form action="hoteldelete" method="POST">
+                  <table>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label"></label>
+                      <input type="hidden" id = "deleteId" value="" name="deleteId">
+                      <h4>是否確認刪除?</h4>
+                    </div>
+               		 <div class="modal-footer">
+                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                 	 <button type="submit" class="btn btn-primary">確認</button>
+               		 </div>
+                  </form> 
+             </div>
+           </div>
+         </div>
+       </div>
 
 <!--         </div>  --------------------------------------end----------------------------------------------------   -->
 		</div>
