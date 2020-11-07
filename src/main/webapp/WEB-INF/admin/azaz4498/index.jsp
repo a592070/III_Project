@@ -114,8 +114,7 @@ h2 {
 							type:"GET",
 							url:"Article.controller.json",
 							success:function(response){
-								
-								console.log(response[0]);
+								console.log(obj);
 
 								for(let i=0; i<response.length; i++){
 									

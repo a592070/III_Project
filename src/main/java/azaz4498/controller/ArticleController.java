@@ -44,6 +44,13 @@ public class ArticleController {
 		return artList;
 
 	}
+	@RequestMapping(path="Article.controller", method = RequestMethod.GET)
+	public String showArticleList(Model m){
+		m.addAttribute("artBean",articleService.showAllArticles());
+		
+		return "azaz4498/index";
+		
+	}
 
 	@RequestMapping(path = "/searchByUserId", method = RequestMethod.GET)
 	public String DisplayById(@RequestParam(name = "userid") String userid, Model m) {
