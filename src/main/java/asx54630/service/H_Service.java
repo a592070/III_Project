@@ -36,5 +36,15 @@ public class H_Service {
 	public Hotel insert(Hotel bean) {
 		return hotelDao.insert(bean);
 	}
-
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type) {
+		return hotelDao.update(sn, Name, Region, Address, Tel, Dbroom, Qdroom, Description, Opentime, Type);
+	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public boolean delete(BigDecimal sn) {
+		return hotelDao.delete(sn);
+		
+	}
 }

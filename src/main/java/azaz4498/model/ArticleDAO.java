@@ -7,8 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
-
+@Lazy
 public class ArticleDAO {
 	@Autowired
 	private SessionFactory sessionFactory;

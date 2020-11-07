@@ -184,15 +184,14 @@ pre {
 			
 			<div>
                 <FORM method="POST" enctype="multipart/form-data" >
-                    <input type="text" id="sn_rentalcompany" name="sn_rentalcompany" readonly>
-                    <input type="text" id="name_company" name="name_company" >
+                    請輸入公司名稱:<input type="text" id="name_company" name="name_company" >
                     <div class="top"> </div> 
                     <p class="modify-img">
                         <label for="r-name">請選擇欲修改圖片上傳</label> 
                         <input type="file" id="pic_rentalcompany" name="pic_rentalcompany" >
                     </p>
                     <div class="div_img">                               
-                        <img id="preview_pic_rentalcompany"  src="ShowCarRentalCompanyPic">
+                        <img id="preview_pic_rentalcompany"  src="#">
                     </div>
 				
 				
@@ -229,10 +228,10 @@ pre {
                     
                     <div>
                         <h4 class="res_result">帳號狀態</h4>
-                        <p class="p_result"><textarea name="accessible_carrentalcompany" id="accessible_carrentalcompany" cols="80" rows="5"></textarea></p>
+                        <p class="p_result"><textarea name="accessible_carrentalcompany" id="accessible_carrentalcompany" cols="80" rows="5">1</textarea></p>
                     </div>
                     
-                    <input value="確認修改" type="button" class="updateData" id="updateData">
+                    <input value="確認新增" type="button" class="updateData" id="updateData">
 				 </FORM> 
 				 
 
@@ -258,54 +257,10 @@ pre {
 
     <script>
         
-        let sn_rentalcompany = Cookies.get("CRC");
-
 
         $(document).ready(function(){
-            $.ajax({
 
-                     type:"POST",  
-
-                     url: "carrentalcompanyHomepage.controller", 
-                     data: "sn_rentalcompany="+sn_rentalcompany,
-                     dataType: "json", 
-
-                     success : function(response){
-                        // $("#sn_rentalcompany").attr("value",response[0]["sn_rentalcompany"])
-                        // $("#name_company").attr("value",response[0]["name_company"])
-                        // $("#address").attr("value",response[0]["address"])
-                        // $("#description").attr("value",response[0]["description"])
-                        // $("#oprnHours").attr("value",response[0]["oprnHours"])
-                        // $("#tel").attr("value",response[0]["tel"])
-                        // $("#compantAccount>").attr("value",response[0]["compantAccount"])
-                        // $("#accessible_carrentalcompany").attr("value",response[0]["accessible_carrentalcompany"])
-
-                        $("#sn_rentalcompany")[0].value=(response[0]["sn_rentalcompany"])
-                        $("#name_company")[0].value=(response[0]["name_company"])
-                        $("#address")[0].value=(response[0]["address"])
-                        $("#description")[0].value=(response[0]["description"])
-                        $("#oprnHours")[0].value=(response[0]["oprnHours"])
-                        $("#tel")[0].value=(response[0]["tel"])
-                        if(response[0]["compantAccount"]!=null)
-                            $("#compantAccount>")[0].value=(response[0]["compantAccount"])
-                        $("#accessible_carrentalcompany")[0].value=(response[0]["accessible_carrentalcompany"])
-                     },
-
-
-                     error:function(xhr, ajaxOptions, thrownError){
-
-                         console.log(xhr.status+"\n"+thrownError);
-                     }
-
-                 });
-
-
-
-
-        })
-
-
-        $("#updateData").click(function(event){
+            $("#updateData").click(function(event){
             var form1 = $(this).parents('form');
             var formData = new FormData(form1[0]);
             console.log("why")
@@ -313,7 +268,7 @@ pre {
                     $.ajax({
                         
                      type:"POST",
-                     url: "update.carrentalcompany.controller",
+                     url: "create.carrentalcompany.controller",
                      data: formData, 
                      processData : false, 
                      contentType : false,
@@ -322,7 +277,7 @@ pre {
                      success : (response) => {
                         console.log("haha");
                         alert("修改成功");
-
+                        window.location="\Tindex.controller";
                      },
 
                      error:function(xhr, ajaxOptions, thrownError){
@@ -333,6 +288,13 @@ pre {
                  });
 
             })
+
+
+
+        })
+
+
+
 
 
             $("#pic_rentalcompany").change(function(){
