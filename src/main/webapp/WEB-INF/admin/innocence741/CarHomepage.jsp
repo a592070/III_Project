@@ -185,7 +185,7 @@ pre {
 			<div>
                 <FORM method="POST" enctype="multipart/form-data" >
                     <input type="text" id="sn_rentalcompany" name="sn_rentalcompany" readonly>
-                    <input type="text" id="name_company" name="name_company" >
+                    車行名稱<input type="text" id="name_company" name="name_company" >
                     <div class="top"> </div> 
                     <p class="modify-img">
                         <label for="r-name">請選擇欲修改圖片上傳</label> 
@@ -287,7 +287,7 @@ pre {
                         $("#oprnHours")[0].value=(response[0]["oprnHours"])
                         $("#tel")[0].value=(response[0]["tel"])
                         if(response[0]["compantAccount"]!=null)
-                            $("#compantAccount>")[0].value=(response[0]["compantAccount"])
+                            $("#compantAccount")[0].value=(response[0]["compantAccount"])
                         $("#accessible_carrentalcompany")[0].value=(response[0]["accessible_carrentalcompany"])
                      },
 
@@ -310,29 +310,29 @@ pre {
             var formData = new FormData(form1[0]);
             console.log("why")
 
-                    $.ajax({
-                        
-                     type:"POST",
-                     url: "update.carrentalcompany.controller",
-                     data: formData, 
-                     processData : false, 
-                     contentType : false,
-                     dataType: "json",
+            $.ajax({
+                    
+                 type:"POST",
+                 url: "update.carrentalcompany.controller",
+                 data: formData, 
+                 processData : false, 
+                 contentType : false,
+                 dataType: "json",
 
-                     success : (response) => {
-                        console.log("haha");
-                        alert("修改成功");
+                 success : (response) => {
+                    console.log("haha");
+                    alert("修改成功");
 
-                     },
+                 },
 
-                     error:function(xhr, ajaxOptions, thrownError){
+                 error:function(xhr, ajaxOptions, thrownError){
 
-                         console.log(xhr.status+"\n"+thrownError);
-                     }
+                     console.log(xhr.status+"\n"+thrownError);
+                 }
 
-                 });
+             });
 
-            })
+        })
 
 
             $("#pic_rentalcompany").change(function(){
