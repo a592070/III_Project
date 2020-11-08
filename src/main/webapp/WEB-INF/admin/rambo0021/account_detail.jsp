@@ -256,20 +256,27 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style="width: auto;">
 					<!-- datetimepicker -->
-					<div class="container">
+					<div class="container" >
 						<div class="row">
-						   <div class='col-sm-6'>
-							  <div class="form-group">
-								 <div class='input-group date' id='datetimepicker1'>
-									<input type='text' class="form-control" />
+						   <div class='col-sm-6' >
+							  <div class="form-group" >  
+								 <div class='input-group date' id='datetimepicker1' >
+									<input type='text' class="form-control" id="register"/>
 									<span class="input-group-addon">
 									<span class="glyphicon glyphicon-calendar"></span>
 									</span>
 								 </div>
 							  </div>
 						   </div>
+						   <script type="text/javascript">
+							  $(function () {
+								  $('#datetimepicker1').datetimepicker();
+							  });
+						   </script>
+						</div>
+					 </div>
 
 				</div>
 				<div class="modal-footer">
@@ -358,7 +365,7 @@
 		})
 		//registerAjax
 		$('#rsubmit').click(function () {
-			var register =  $('#datetimepicker1').datetimepicker()
+			var register =  $('#register').val()
 			console.log(register)
 			// $.ajax(
 			// 	{
