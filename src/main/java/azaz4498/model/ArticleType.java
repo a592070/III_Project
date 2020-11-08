@@ -25,7 +25,7 @@ public class ArticleType implements Serializable{
 	private String typeName;
 	private List<Article> articles = new ArrayList<Article>();
 	
-	@Id@Column(name = "TYPE_ID")
+	@Id@Column(name = "TYPE_ID", updatable=false)
 	public int getTypeId() {
 		return typeId;
 	}

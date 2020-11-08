@@ -94,11 +94,14 @@ h2 {
 						<form:form action="artTypeSearch" method="GET" class="mr-5">
 							<span class="sp_search">文章類型</span>
 							<br />
-							<select name="articleType" id="inputType" class="form-control">
-								<option value="">選擇類型</option>
-								<c:forEach var="Type" items="${typeBean}">
-									<option value="${Type.typeId}">${Type.typeName }</option>
-								</c:forEach>
+							<select name="articleType" id="Type" class="form-control">
+								
+								<option value="0">選擇類型</option>
+								<option value="1">旅遊</option>
+								<option value="2">住宿</option>
+								<option value="3">美食</option>
+								<option value="4">景點</option>
+								
 
 							</select>
 							<br />
@@ -136,11 +139,11 @@ h2 {
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
-								<th>ID</th>
-								<th>Title</th>
-								<th>Create Time</th>
-								<th>Author</th>
-								<th>Type</th>
+								<th><span class="mdi mdi-key		"></span>ID</th>
+								<th><span class="mdi mdi-tag-text-outline"></span>Title</th>
+								<th><span class="mdi mdi-calendar-clock"></span>Create Time</th>
+								<th><span class="mdi mdi-account-edit"></span>Author</th>
+								<th><span class="mdi mdi-directions-fork"></span>Type</th>
 
 
 							</tr>
@@ -153,8 +156,17 @@ h2 {
 									<td>${article.artCreTime}</td>
 									<td><a class="text-dark" href="">${article.artUserId}</a></td>
 									<td>${article.articleType.typeName}</td>
-									<td><button>Edit</button></td>
-									<td><button>Delete</button></td>
+									<td>
+											<form action =editPage.controller method="GET">
+												<button name = "artId" value = "${article.artId}"   ><span class="mdi mdi-pencil-box-outline"></span>Edit</button>
+											</form>
+									</td>
+									
+									<td>
+									<form id="delete" name="delete"  method="POST">
+									<button name="artId" value = "${article.artId}"  onclick="confirmDelete()"><span class="mdi mdi-delete"></span>Delete</button>
+									</form>
+									</td>
 
 								</tr>
 							</c:forEach>
@@ -167,7 +179,18 @@ h2 {
 
 		</div>
 	</div>
+<script type="text/javascript">
+function confirmDelete(){
+	var desicion = confirm("確定要刪除此筆資料?");
+	if(desicion){
+		document.forms["delete"].action="delete.controller";
+		document.forms["delete"].submit();
+		}else{
+			return;
+			}
+	}
 
+</script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
   
