@@ -1,5 +1,6 @@
 package rambo0021.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -15,6 +16,7 @@ public class AccountDAOImpl implements AcountDAO {
 	@Autowired
 	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
+	
 
 	@Override
 	public List<AccountBean> userList() {
@@ -81,4 +83,56 @@ public class AccountDAOImpl implements AcountDAO {
 		}
 		return "新增失敗";
 	}
+	@Override
+	public String udAccountRegister(String username, Date register) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+   
+		if (aBean != null) {
+			aBean.setRegister(register);
+			return "新增成功";
+		}
+		return "新增失敗";
+	}
+
+	@Override
+	public String udAccountModify(String username, Date modify) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		   
+		if (aBean != null) {
+			aBean.setModify_Date(modify);
+			return "新增成功";
+		}
+		return "新增失敗";
+	}
+
+	@Override
+	public String delAccountPic(String username) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+		    aBean.setPicture(null);
+			return "設定成功";
+		    }
+		return "設定失敗";
+	}
+
+	@Override
+	public String enableAccount(String username,String status) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+		    aBean.setStatus(status);
+			return "啟用成功";
+		    }
+		return "啟用失敗";
+	}
+
+	@Override
+	public String disableAccount(String username,String status) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+		    aBean.setStatus(status);
+			return "禁用成功";
+		    }
+		return "禁用失敗";
+	}
+
 }
