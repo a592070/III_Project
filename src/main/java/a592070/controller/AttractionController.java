@@ -15,18 +15,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import utils.IOUtils;
 import utils.PageSupport;
 import utils.StringUtil;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController@Lazy
 public class AttractionController {
+
+    @Autowired
+    private ServletContext context;
+
     private static final int PAGE_SIZE = 10;
 
     @Autowired@Qualifier("attractionService")
@@ -41,6 +49,10 @@ public class AttractionController {
     @RequestMapping("/admin/attraction/detail")
     public void attractionDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionDetail.jsp").forward(request, response);
+    }
+    @RequestMapping("/admin/attraction/detail/{id}")
+    public AttractionDO attractionDetail(@PathVariable("id") int id) {
+        return service.getEle(id);
     }
 
 
@@ -81,7 +93,7 @@ public class AttractionController {
     }
 
 
-    @RequestMapping("/admin/attraction/pic/{id}")
+    @GetMapping("/admin/attraction/pic/{id}")
     public ResponseEntity<byte[]> getPicture(@PathVariable(name = "id") int id){
         byte[] picture = viewService.getPicture(id);
 
@@ -90,6 +102,13 @@ public class AttractionController {
         ResponseEntity<byte[]> responseEntity = new ResponseEntity(picture, httpHeaders, HttpStatus.OK);
 
         return responseEntity;
+    }
+
+    @GetMapping("/admin/attraction/posts/{id}")
+    public void uploadPicture(@PathVariable(name = "id") int id, @RequestParam("file")MultipartFile multipartFile) throws IOException {
+        String filename = multipartFile.getOriginalFilename();
+        String savePath = context.getContextPath()+"/"+id+"/"+filename;
+        multipartFile.transferTo(new File(savePath));
     }
 
 
