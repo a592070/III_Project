@@ -102,7 +102,7 @@ public class ArticleController {
 		return "azaz4498/F_index";
 	}
 
-	@RequestMapping(path = "delete.controller", method = RequestMethod.POST)
+	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
 	public String Delete(@RequestParam(name = "artId") int articleId,Model m) {
 		articleService.deleteArticleByAdmin(articleId);
 		m.addAttribute("artBean", articleService.showAllArticles());
