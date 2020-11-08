@@ -41,4 +41,9 @@ public class AccountServiceImpl implements AccountService {
 	public String updateAccEmail(String username, String email) {
 		return dao.updateAccEmail(username, email);
 	}
+
+	@Override
+	public String udAccountNickname(String username, String nickname) {
+		return dao.udAccountNickname(username, nickname);
+	}
 }

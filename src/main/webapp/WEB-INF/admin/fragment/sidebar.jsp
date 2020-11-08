@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <aside class="left-sidebar bg-sidebar">
         <div id="sidebar" class="sidebar sidebar-with-footer">
             <!-- Aplication Brand -->
@@ -53,7 +54,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/Restaurant">
                             <i class="mdi mdi-silverware-variant"></i>
                             <span class="nav-text">餐廳</span>
                         </a>
@@ -61,7 +62,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/hotelindex">
                             <i class="mdi mdi-hotel"></i>
                             <span class="nav-text">旅館</span>
                         </a>
@@ -69,7 +70,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <a class="sidenav-item-link" href="Tindex.controller">
                             <i class="mdi mdi-car"></i>
                             <span class="nav-text">租車</span>
                         </a>

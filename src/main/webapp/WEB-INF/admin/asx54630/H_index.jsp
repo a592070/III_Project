@@ -158,7 +158,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                 <form action="hotelupdate" method="GET">
+                 <form action="hotelupdate" method="POST">
                   <table>
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label"></label>
@@ -214,7 +214,6 @@
 <!--         </div>  --------------------------------------end----------------------------------------------------   -->
 		</div>
 	</div>
-
 
 </body>
 </html>

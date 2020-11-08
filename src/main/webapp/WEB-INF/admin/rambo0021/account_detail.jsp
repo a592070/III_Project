@@ -120,13 +120,13 @@
 							</div>
 							<div class="middle">
 								<h4 class="account_result">Email</h4>
-								<p class="p_result">${userDetail.email}</p>
+								<p class="p_result" id="emailData">${userDetail.email}</p>
 								<button type="button" class="btn btn-warning" data-toggle="modal"
 									data-target="#changeEmail">修改email</button>
 							</div>
 							<div class="middle">
 								<h4 class="account_result">暱稱</h4>
-								<p class="p_result">${userDetail.nickName}</p>
+								<p class="p_result" id="nData">${userDetail.nickName}</p>
 								<button type="button" class="btn btn-warning" data-toggle="modal"
 									data-target="#changeNickname">修改email</button>
 							</div>
@@ -145,8 +145,8 @@
 							<div class="middle">
 								<h4 class="account_result">狀態</h4>
 								<p class="p_result">${userDetail.status}</p>
-								<button type="button" name="" class="btn btn-success">帳號啟用</button>
-								<button type="button" name="" class="btn btn-danger">帳號禁用</button>
+								<button type="button" name="sEnable" class="btn btn-success">帳號啟用</button>
+								<button type="button" name="sDisable" class="btn btn-danger">帳號禁用</button>
 							</div>
 						</div>
 					</div>
@@ -231,8 +231,8 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="nNameModalLabel">修改身分</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Nclose">
+					<h5 class="modal-title" id="nNameModalLabel">修改暱稱</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="nClose">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -246,13 +246,52 @@
 			</div>
 		</div>
 	</div>
+	<!-- 	ModalRegister-->
+	<div class="modal fade" id="changeRegister" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="registerModalLabel">修改註冊日期</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="rClose">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" style="width: auto;">
+					<!-- datetimepicker -->
+					<div class="container" >
+						<div class="row">
+						   <div class='col-sm-6' >
+							  <div class="form-group" >  
+								 <div class='input-group date' id='datetimepicker1' >
+									<input type='text' class="form-control" id="register"/>
+									<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								 </div>
+							  </div>
+						   </div>
+						   <script type="text/javascript">
+							  $(function () {
+								  $('#datetimepicker1').datetimepicker();
+							  });
+						   </script>
+						</div>
+					 </div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="rsubmit">儲存</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script>
 		var username = $("#username").text()
 		//passwordAjax
 		$('#pwdsubmit').click(function () {
 			var pwd = $('#password').val()
-			console.log("密碼")
 			$.ajax(
 				{
 					type: 'POST',
@@ -299,10 +338,49 @@
 					success: function (response) {
 						alert(response)
 						$("#eClose").trigger('click');
+						$("#emailData").text(email);
 					}
 
 				}
 			)
+		})
+		//nicknameAjax
+		$('#emailsubmit').click(function () {
+			var nickname = $('#nickName').val()
+			console.log(nickname)
+			$.ajax(
+				{
+					type: 'POST',
+					data: { "username": username, "nickname": nickname },
+					url: '${pageContext.servletContext.contextPath}/udAccountNickname',
+					dataType: 'text',
+					success: function (response) {
+						alert(response)
+						$("#nClose").trigger('click')
+						$("#nData").text(nickname)
+					}
+
+				}
+			)
+		})
+		//registerAjax
+		$('#rsubmit').click(function () {
+			var register =  $('#register').val()
+			console.log(register)
+			// $.ajax(
+			// 	{
+			// 		type: 'POST',
+			// 		data: { "username": username, "nickname": nickname },
+			// 		url: '${pageContext.servletContext.contextPath}/udAccountRegister',
+			// 		dataType: 'text',
+			// 		success: function (response) {
+			// 			alert(response)
+			// 			$("#nClose").trigger('click')
+			// 			$("#nData").text(nickname)
+			// 		}
+
+			// 	}
+			// )
 		})
 	</script>
 </body>
