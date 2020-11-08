@@ -78,7 +78,7 @@ td{
 				<div class="box">
 					<div class="search" class="form-group col-md-2">
   					<form action="<%=application.getContextPath()%>/regionSearch" method="POST">
-						<span class="sp_search">餐廳地區</span> 
+						<span class="sp_search">車行地區</span> 
 						<select name="region_name" id="inputState" class="form-control">
 							<option value="">請選擇地區</option>
 							<option value="基隆">基隆</option>
@@ -107,7 +107,7 @@ td{
 					</div> 
  					<div class="search">
  						<form action="<%=application.getContextPath()%>/nameSearch" method="POST"> 
- 						<span class="sp_search">餐廳名稱</span>  
+ 						<span class="sp_search">車行名稱</span>  
 						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>  
  						<button type="submit" class="btn btn-primary">Search</button>  
  						</form>  
