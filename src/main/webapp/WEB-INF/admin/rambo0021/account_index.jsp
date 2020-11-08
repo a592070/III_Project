@@ -42,7 +42,7 @@
 									<td>${a.status}</td>
 									<td>
 									<form action="<%=application.getContextPath()%>/displayAccount" method="POST">
-									<button type="submit" class="btn btn-warning">Modify</button>
+									<button type="submit" class="btn btn-warning">修改</button>
 									<Input type='hidden' name='username' value='${a.userName}'>
 									</form>
 								</td>
