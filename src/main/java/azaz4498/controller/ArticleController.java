@@ -15,28 +15,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import azaz4498.model.Article;
 import azaz4498.service.ArticleService;
 import azaz4498.service.ArticleTypeService;
 
-@Controller@Lazy
-@SessionAttributes(names = { "artBean","typeBean" })
+@Controller
+@Lazy
+@SessionAttributes(names = { "artBean", "typeBean" })
 public class ArticleController {
-	@Autowired@Qualifier("ArticleService")
+	@Autowired
+	@Qualifier("ArticleService")
 	ArticleService articleService;
-	@Autowired@Qualifier("ArticleTypeService")
+	@Autowired
+	@Qualifier("ArticleTypeService")
 	ArticleTypeService articleTypeService;
-	
-	
-	@RequestMapping(path = "/ArticleHomePage.controller")
-	public String ForumEntry( ) {
-		
-		return "azaz4498/index";
+
+	@RequestMapping(path = "/Forum")
+	public String ForumEntry() {
+
+		return "azaz4498/F_index";
 
 	}
-	
-	@RequestMapping(path = "/Article.controller.json",method = RequestMethod.GET,produces = { "application/json; charset=UTF-8" })
+
+	@RequestMapping(path = "/Article.controller.json", method = RequestMethod.GET, produces = {
+			"application/json; charset=UTF-8" })
 	public @ResponseBody List<Article> showArticles() {
 		List<Article> artList = articleService.showAllArticles();
 //		Map<String, Object> map = new HashMap<>();
@@ -44,32 +48,67 @@ public class ArticleController {
 		return artList;
 
 	}
-	@RequestMapping(path="Article.controller", method = RequestMethod.GET)
-	public String showArticleList(Model m){
-		m.addAttribute("artBean",articleService.showAllArticles());
-		
-		return "azaz4498/index";
-		
+
+
+	@RequestMapping(path = "Article.controller", method = RequestMethod.GET)
+	public String showArticleList(Model m) {
+		m.addAttribute("artBean", articleService.showAllArticles());
+
+		return "azaz4498/F_index";
+
 	}
+
 
 	@RequestMapping(path = "/searchByUserId", method = RequestMethod.GET)
 	public String DisplayById(@RequestParam(name = "userid") String userid, Model m) {
-		
+
 		m.addAttribute("artBean", articleService.searchByUserId(userid));
-		return "azaz4498/index";
+		return "azaz4498/F_index";
 	}
-	
+
 	@RequestMapping(path = "/titleSearch")
 	public String DisplayByTitle(@RequestParam(name = "title") String title, Model m) {
-		m.addAttribute("artBean",articleService.searchByTitle(title));
-		return "azaz4498/index";
+		m.addAttribute("artBean", articleService.searchByTitle(title));
+		return "azaz4498/F_index";
 	}
+
 	@RequestMapping(path = "/artTypeSearch")
-	public String DisplayByType(@RequestParam(name ="articleType" )int typeId,Model m) throws SQLException {
-		m.addAttribute("artBean",articleService.showArticlesByType(typeId));
-		m.addAttribute("typeBean",articleTypeService.showAllType());
-		return "azaz4498/index";
+	public String DisplayByType(@RequestParam(name = "articleType") int typeId, Model m) throws SQLException {
+		m.addAttribute("artBean", articleService.showArticlesByType(typeId));
+		m.addAttribute("typeBean", articleTypeService.showAllType());
+		return "azaz4498/F_index";
+
+	}
+
+	@RequestMapping(path = "/editPage.controller")
+	public String EditPage(@RequestParam(name = "artId") int articleId, Model m) throws SQLException {
+		m.addAttribute("artBean", articleService.showArticleById(articleId));
+
+		return "azaz4498/editPage";
+	}
+
+	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
+	public String Edit(@RequestParam(name = "articleTitle") String title,
+			@RequestParam(name = "articleContent") String content, 
+			@RequestParam(name = "artId") int articleId,
+			@RequestParam(name = "userid") String userid,
+			@RequestParam(name = "typeSelect") int typeId, 
+			Model m)
+			throws SQLException {
+
+		articleService.articleEdit(title, content, articleId, userid, typeId);
+		m.addAttribute("artBean", articleService.showAllArticles());
+
+		return "azaz4498/F_index";
+	}
+
+	@RequestMapping(path = "delete.controller", method = RequestMethod.POST)
+	public String Delete(@RequestParam(name = "artId") int articleId,Model m) {
+		articleService.deleteArticleByAdmin(articleId);
+		m.addAttribute("artBean", articleService.showAllArticles());
 		
+		return "azaz4498/F_index";
+
 	}
 
 }
