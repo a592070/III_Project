@@ -80,4 +80,8 @@ public class AccountController {
     public @ResponseBody String udAccountEmail(@RequestParam("username") String username,@RequestParam("email") String email) {
 		return service.updateAccEmail(username, email);
 	}
+	@PostMapping("/udAccountNickname")
+    public @ResponseBody String udAccountNickname(@RequestParam("username") String username,@RequestParam("email") String email) {
+		return service.udAccountNickname(username, email);
+	}
 }

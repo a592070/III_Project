@@ -12,4 +12,5 @@ public interface AccountService {
 	String updateAccPwd(String username, String pwd);
 	String updateAccIdentity(String username, int identity);
 	String updateAccEmail(String username, String email);
+	String udAccountNickname(String username, String nickname);
 }
