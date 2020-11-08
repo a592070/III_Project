@@ -100,12 +100,12 @@
 									<button type="button" onclick="Apicture.click()" class="btn btn-light">上傳圖片</button>
 									<button type="submit" id="picsumit" name="picsumit" class="btn btn-light"
 										style="display: none"></button>
-									<button type="button" name="delImg" class="btn btn-light">改為預設圖片</button>
+									<button type="button" id="delImg" class="btn btn-light">改為預設圖片</button>
 								</p>
 							</form>
 							<div class="div_img">
 								<c:if test="${!empty userDetail.picture}">
-									<img class="img-circle" src="<%=application.getContextPath()%>/ShowAccountPic">
+									<img class="img-circle" id="userPic" src="<%=application.getContextPath()%>/ShowAccountPic">
 								</c:if>
 								<c:if test="${empty userDetail.picture}">
 									<img src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
@@ -128,25 +128,25 @@
 								<h4 class="account_result">暱稱</h4>
 								<p class="p_result" id="nData">${userDetail.nickName}</p>
 								<button type="button" class="btn btn-warning" data-toggle="modal"
-									data-target="#changeNickname">修改email</button>
+									data-target="#changeNickname">修改暱稱</button>
 							</div>
 							<div class="middle">
 								<h4 class="account_result">註冊日期</h4>
-								<p class="p_result">${userDetail.registerString}</p>
+								<p class="p_result" id="rData">${userDetail.registerString}</p>
 								<button type="button" class="btn btn-warning" data-toggle="modal"
 									data-target="#changeRegister">修改註冊日期</button>
 							</div>
 							<div class="middle">
-								<h4 class="account_result">修改日期</h4>
-								<p class="p_result">${userDetail.modify_DateString}</p>
+								<h4 class="account_result">修改最後修改日期</h4>
+								<p class="p_result" id="mData">${userDetail.modify_DateString}</p>
 								<button type="button" class="btn btn-warning" data-toggle="modal"
-									data-target="#changeRegister">修改日期</button>
+									data-target="#changeModify">修改最後修改日期</button>
 							</div>
 							<div class="middle">
 								<h4 class="account_result">狀態</h4>
-								<p class="p_result">${userDetail.status}</p>
-								<button type="button" name="sEnable" class="btn btn-success">帳號啟用</button>
-								<button type="button" name="sDisable" class="btn btn-danger">帳號禁用</button>
+								<p class="p_result" id="sData" >${userDetail.status}</p>
+								<button type="button" id="sEnable" class="btn btn-success">帳號啟用</button>
+								<button type="button" id="sDisable" class="btn btn-danger">帳號禁用</button>
 							</div>
 						</div>
 					</div>
@@ -258,25 +258,25 @@
 				</div>
 				<div class="modal-body" style="width: auto;">
 					<!-- datetimepicker -->
-					<div class="container" >
+					<div class="container">
 						<div class="row">
-						   <div class='col-sm-6' >
-							  <div class="form-group" >  
-								 <div class='input-group date' id='datetimepicker1' >
-									<input type='text' class="form-control" id="register"/>
-									<span class="input-group-addon">
-									<span class="glyphicon glyphicon-calendar"></span>
-									</span>
-								 </div>
-							  </div>
-						   </div>
-						   <script type="text/javascript">
-							  $(function () {
-								  $('#datetimepicker1').datetimepicker();
-							  });
-						   </script>
+							<div class='col-sm-6'>
+								<div class="form-group">
+									<div class='input-group date' id='datetimepicker1'>
+										<input type='text' class="form-control" id="register" />
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$(function () {
+									$('#datetimepicker1').datetimepicker();
+								});
+							</script>
 						</div>
-					 </div>
+					</div>
 
 				</div>
 				<div class="modal-footer">
@@ -286,8 +286,57 @@
 			</div>
 		</div>
 	</div>
+	<!-- 	ModalModify-->
+	<div class="modal fade" id="changeModify" tabindex="-1" aria-labelledby="ModifyModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ModifyModalLabel">修改最後修改日期</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="mClose">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- datetimepicker -->
+					<div class="container">
+						<div class="row">
+							<div class='col-sm-6'>
+								<div class="form-group">
+									<div class='input-group date' id='datetimepicker2' style="width: auto;">
+										<input type='text' class="form-control" id="modify" />
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$(function () {
+									$('#datetimepicker2').datetimepicker();
+								});
+							</script>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="msubmit">儲存</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script>
+		$(document).ready(function () {
+		var status = $("#sData").text()
+			if("啟用"==status){
+                $("#sEnable").hide();
+			}else{
+				$("#sDisable").hide();
+			}
+		
+		});
 		var username = $("#username").text()
 		//passwordAjax
 		$('#pwdsubmit').click(function () {
@@ -345,7 +394,7 @@
 			)
 		})
 		//nicknameAjax
-		$('#emailsubmit').click(function () {
+		$('#nNamesubmit').click(function () {
 			var nickname = $('#nickName').val()
 			console.log(nickname)
 			$.ajax(
@@ -365,22 +414,100 @@
 		})
 		//registerAjax
 		$('#rsubmit').click(function () {
-			var register =  $('#register').val()
+			var register = $('#register').val()
 			console.log(register)
-			// $.ajax(
-			// 	{
-			// 		type: 'POST',
-			// 		data: { "username": username, "nickname": nickname },
-			// 		url: '${pageContext.servletContext.contextPath}/udAccountRegister',
-			// 		dataType: 'text',
-			// 		success: function (response) {
-			// 			alert(response)
-			// 			$("#nClose").trigger('click')
-			// 			$("#nData").text(nickname)
-			// 		}
+			$.ajax(
+				{
+					type: 'POST',
+					data: { "username": username, "register": register },
+					url: '${pageContext.servletContext.contextPath}/udAccountRegister',
+					dataType: 'text',
+					success: function (response) {
+						alert(response)
+						$("#rClose").trigger('click')
+						$("#rData").text(register)
+					}
 
-			// 	}
-			// )
+				}
+			)
+		})
+		//ModifyAjax
+		$('#msubmit').click(function () {
+			var modify = $('#modify').val()
+			console.log(modify)
+			$.ajax(
+				{
+					type: 'POST',
+					data: { "username": username, "modify": modify },
+					url: '${pageContext.servletContext.contextPath}/udAccountModify',
+					dataType: 'text',
+					success: function (response) {
+						alert(response)
+						$("#mClose").trigger('click')
+						$("#mData").text(modify);
+					}
+
+				}
+			)
+		})
+		//delImgAjax
+		$("#delImg").click(function () {
+			console.log("設定預設圖片")
+			$.ajax(
+				{
+					type: 'POST',
+					data: { "username": username},
+					url: '${pageContext.servletContext.contextPath}/delAccountPic',
+					dataType: 'text',
+					success: function (response) {
+						alert(response)
+						$("#userPic").attr("src","<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png")
+					}
+
+				}
+			)
+		})
+		//enableAjax
+		$("#sEnable").click(function(){
+			console.log("啟用帳號")
+			var status ="啟用"
+            $.ajax(
+				{
+					type: 'POST',
+					data: { "username": username,"status":status},
+					url: '${pageContext.servletContext.contextPath}/enableAccount',
+					dataType: 'text',
+					success: function (response) {
+						alert(response)
+						$("#sData").text(status);
+						$("#sEnable").hide();
+						$("#sDisable").show();
+					}
+
+				}
+			)
+
+		})
+		//disableAjax
+		$("#sDisable").click(function(){
+			console.log("禁用帳號")
+			var status ="禁用"
+            $.ajax(
+				{
+					type: 'POST',
+					data: { "username": username,"status":status},
+					url: '${pageContext.servletContext.contextPath}/disableAccount',
+					dataType: 'text',
+					success: function (response) {
+						alert(response)
+						$("#sData").text(status);
+						$("#sEnable").show();
+						$("#sDisable").hide();
+					}
+
+				}
+			)
+
 		})
 	</script>
 </body>

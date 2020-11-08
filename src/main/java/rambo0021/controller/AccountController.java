@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import rambo0021.dao.SHA2DAO;
 import rambo0021.pojo.AccountBean;
 import rambo0021.serive.AccountService;
+import rambo0021.serive.DateService;
+
 
 @Controller
 @Lazy
@@ -31,6 +33,10 @@ public class AccountController {
 	@Autowired
 	@Qualifier("accountService")
 	private AccountService service;
+	
+	@Autowired
+	@Qualifier("dateService")
+	private DateService dService;
 //	@Autowired
 //	private ServletContext servletContext;
 	@RequestMapping(path = "/accountPage")
@@ -81,7 +87,29 @@ public class AccountController {
 		return service.updateAccEmail(username, email);
 	}
 	@PostMapping("/udAccountNickname")
-    public @ResponseBody String udAccountNickname(@RequestParam("username") String username,@RequestParam("email") String email) {
-		return service.udAccountNickname(username, email);
+    public @ResponseBody String udAccountNickname(@RequestParam("username") String username,@RequestParam("nickname") String nickname) {
+		return service.udAccountNickname(username, nickname);
+	}
+	@PostMapping("/udAccountRegister")
+    public @ResponseBody String udAccountRegister(@RequestParam("username") String username,@RequestParam("register") String register) {
+		return service.udAccountRegister(username,dService.StringtoDate(register));
+		
+	}
+	@PostMapping("/udAccountModify")
+	public @ResponseBody String udAccountModify(@RequestParam("username") String username,@RequestParam("modify") String modify) {
+		return service.udAccountModify(username,dService.StringtoDate(modify));
+		
+	}
+	@PostMapping("delAccountPic")
+	public @ResponseBody String delAccountPic(@RequestParam("username") String username) {
+		return service.delAccountPic(username);
+	}
+	@PostMapping("enableAccount")
+	public @ResponseBody String enableAccount(@RequestParam("username") String username,@RequestParam String status) {
+		return service.enableAccount(username,status);
+	}
+	@PostMapping("disableAccount")
+	public @ResponseBody String disableAccount(@RequestParam("username") String username,@RequestParam String status) {
+		return service.disableAccount(username,status);
 	}
 }

@@ -1,5 +1,6 @@
 package rambo0021.serive;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,30 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public String udAccountNickname(String username, String nickname) {
 		return dao.udAccountNickname(username, nickname);
+	}
+
+	@Override
+	public String udAccountRegister(String username, Date register) {
+		return dao.udAccountRegister(username, register);
+	}
+
+	@Override
+	public String udAccountModify(String username, Date modify) {
+		return dao.udAccountModify(username, modify);
+	}
+
+	@Override
+	public String delAccountPic(String username) {
+		return dao.delAccountPic(username);
+	}
+
+	@Override
+	public String enableAccount(String username,String status) {
+		return dao.enableAccount(username,status);
+	}
+
+	@Override
+	public String disableAccount(String username,String status) {
+		return dao.disableAccount(username,status);
 	}
 }
