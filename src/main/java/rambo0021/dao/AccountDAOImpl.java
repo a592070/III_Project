@@ -41,6 +41,7 @@ public class AccountDAOImpl implements AcountDAO {
 		}
 		return aBean;
 	}
+
 	@Override
 	public String updateAccPwd(String username, String pwd) {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
@@ -50,6 +51,7 @@ public class AccountDAOImpl implements AcountDAO {
 		}
 		return "修改失敗";
 	}
+
 	@Override
 	public String updateAccIdentity(String username, int identity) {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
@@ -60,11 +62,21 @@ public class AccountDAOImpl implements AcountDAO {
 		}
 		return "修改失敗";
 	}
+
 	@Override
 	public String updateAccEmail(String username, String email) {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
 		if (aBean != null) {
 			aBean.setEmail(email);
+			return "新增成功";
+		}
+		return "新增失敗";
+	}
+	@Override
+	public String udAccountNickname(String username, String nickname) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			aBean.setNickName(nickname);
 			return "新增成功";
 		}
 		return "新增失敗";
