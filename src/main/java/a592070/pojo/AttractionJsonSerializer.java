@@ -20,7 +20,6 @@ public class AttractionJsonSerializer extends JsonSerializer<AttractionDO> {
         gen.writeNumberField("px", value.getPx());
         gen.writeNumberField("py", value.getPy());
         gen.writeStringField("openTime", value.getOpenTime());
-        gen.writeStringField("picture", value.getPicture());
         gen.writeStringField("ticketInfo", value.getTicketInfo());
         gen.writeStringField("travellingInfo", value.getTravellingInfo());
         gen.writeStringField("keywords", value.getKeywords());

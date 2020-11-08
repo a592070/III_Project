@@ -9,8 +9,6 @@ import utils.StringUtil;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 @JsonDeserialize(using = AttractionJsonDeserializer.class)
 @JsonSerialize(using = AttractionJsonSerializer.class)
@@ -33,8 +31,9 @@ public class AttractionDO {
     private BigDecimal py;
     @Column(name = "OPENTIME")
     private String openTime;
-    private String picture;
-    private byte[] pic;
+    @Column(name = "PICTURE_URL")
+    private String pictureUrl;
+    private byte[] picture;
     @Column(name = "TICKETINFO")
     private String ticketInfo;
     @Column(name = "TRAVELLINGINFO")
@@ -199,19 +198,19 @@ public class AttractionDO {
         this.region = region;
     }
 
-    public String getPicture() {
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String picture_url) {
+        this.pictureUrl = picture_url;
+    }
+
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
-    }
-
-    public byte[] getPic() {
-        return pic;
-    }
-
-    public void setPic(byte[] pic) {
-        this.pic = pic;
     }
 }

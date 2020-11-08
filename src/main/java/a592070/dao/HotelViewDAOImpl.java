@@ -28,6 +28,17 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
         return sessionFactory.getCurrentSession().get(HotelVO.class, id);
     }
 
+    /**
+     * NOT USING
+     * @param id
+     * @return
+     */
+    @Deprecated
+    @Override
+    public byte[] getPicture(int id) {
+        return null;
+    }
+
     @Override
     public int getSizeByKeywords(String keyWords) {
         keyWords = "%"+keyWords+"%";
@@ -68,7 +79,7 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
     public List<HotelVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled) {
         filedValue = "%" + filedValue + "%";
 
-        String hql = "from HotelVO where "+filedName+" like ?1 ) order by "+orderFiled;
+        String hql = "from HotelVO where "+filedName+" like ?1  order by "+orderFiled;
 
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
         query.setParameter(1, filedValue);

@@ -31,6 +31,17 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
         return sessionFactory.getCurrentSession().get(CarVO.class, id);
     }
 
+    /**
+     * NOT USING
+     * @param id
+     * @return
+     */
+    @Deprecated
+    @Override
+    public byte[] getPicture(int id) {
+        return null;
+    }
+
     @Override
     public int getSizeByKeywords(String keyWords) {
         if(StringUtil.isEmpty(keyWords)) {

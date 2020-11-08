@@ -17,7 +17,6 @@ public class AttractionVO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
     private String name;
-    private String picture;
     private String address;
     private String ticketInfo;
     private String description;
@@ -41,13 +40,6 @@ public class AttractionVO {
         this.name = name;
     }
 
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
 
     public String getAddress() {
         if(StringUtil.isEmpty(address)) return "暫時不提供資訊";
@@ -81,7 +73,6 @@ public class AttractionVO {
         return "AttractionVO{" +
                 "sn=" + sn +
                 ", name='" + name + '\'' +
-                ", picture='" + picture + '\'' +
                 ", address='" + address + '\'' +
                 ", ticketInfo='" + ticketInfo + '\'' +
                 ", description='" + description + '\'' +

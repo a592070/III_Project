@@ -85,13 +85,14 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse"
+                        <a class="sidenav-item-link" role="button" href="javascript:void(0)" data-toggle="collapse"
                            data-target="#order"
-                           aria-expanded="false" aria-controls="order">
+                           aria-expanded="false"
+                            aria-controls="order">
                             <i class="mdi mdi-book-open-page-variant"></i>
                             <span class="nav-text">訂單管理</span> <b class="caret"></b>
                         </a>
-                        <ul class="collapse show" id="order"
+                        <ul class="collapse" id="order"
                             data-parent="#sidebar-menu">
                             <div class="sub-menu">
 

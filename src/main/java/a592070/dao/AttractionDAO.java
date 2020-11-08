@@ -4,20 +4,11 @@ import a592070.pojo.AttractionDO;
 
 import java.util.List;
 
-public interface AttractionDAO {
+public abstract class AttractionDAO implements ModifyDAO<AttractionDO>{
 
-    int getSize();
-    AttractionDO getEle(int id);
+//    public abstract AttractionDO insert(AttractionDO attractionDO);
+//    public abstract AttractionDO update(AttractionDO attractionDO);
+//    public abstract AttractionDO delete(AttractionDO attractionDO);
 
-    int getSizeByKeywords(String keyWords);
-    List<AttractionDO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled);
-
-    int getSizeByFiled(String filedName, String filedValue);
-    List<AttractionDO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled);
-
-    List<AttractionDO> listByRownum(int firstIndex, int resultSize, String orderFiled);
-
-    AttractionDO insert(AttractionDO ele);
-    AttractionDO update(AttractionDO ele);
-    AttractionDO delete(AttractionDO ele);
+    public abstract  AttractionDO getEle(int id);
 }

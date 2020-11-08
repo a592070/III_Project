@@ -30,6 +30,15 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     }
 
     @Override
+    public byte[] getPicture(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "select picture from AttractionDO where sn = ?1";
+        Query<byte[]> query = session.createQuery(hql, byte[].class);
+        query.setParameter(1, id);
+        return query.uniqueResult();
+    }
+
+    @Override
     public int getSizeByKeywords(String keyWords) {
         if(StringUtil.isEmpty(keyWords)) {
             keyWords="";
