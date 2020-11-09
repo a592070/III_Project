@@ -19,6 +19,9 @@
 <link href="${pageContext.request.contextPath}/assets/plugins/ladda/ladda.min.css" rel="stylesheet"/>
 <link href="${pageContext.request.contextPath}/assets/plugins/select2/css/select2.min.css" rel="stylesheet"/>
 <link href="${pageContext.request.contextPath}/assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/assets/plugins/bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/assets/plugins/bootstrap/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/assets/plugins/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
 <!-- SLEEK CSS -->
 <link id="sleek-css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/sleek.css"/>
 <!-- FAVICON -->
@@ -26,6 +29,9 @@
 <%--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn8TFXGg17HAUcNpkwtxxyT9Io9B_NcM" defer></script>--%>
 <script src="${pageContext.request.contextPath}/assets/plugins/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/bootstrap/js/bootstrap-datetimepicker.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/toaster/toastr.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/sleek.js"></script>
+

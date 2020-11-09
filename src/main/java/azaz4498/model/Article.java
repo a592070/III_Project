@@ -20,10 +20,15 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "F_ARTICLE")
+@DynamicUpdate
 public class Article implements Serializable {
 	/**
 	 * 
@@ -38,8 +43,10 @@ public class Article implements Serializable {
 	private int artTypeId;
 	private String artTitle;
 	private byte[] artPic;
+	private String artPicUrl;
 	private List<Comment> comments = new ArrayList<Comment>();
 	private ArticleType articleType;
+
 	public Article() {
 	}
 
@@ -99,7 +106,7 @@ public class Article implements Serializable {
 	public void setArtId(int artId) {
 		this.artId = artId;
 	}
-
+	@JsonIgnore
 	@Transient
 	public int getArtTypeId() {
 		return artTypeId;
@@ -126,7 +133,15 @@ public class Article implements Serializable {
 	public void setArtPic(byte[] artPic) {
 		this.artPic = artPic;
 	}
+	@Column(name = "ART_PIC_URL")
+	public String getArtPicUrl() {
+		return artPicUrl;
+	}
 
+	public void setArtPicUrl(String artPicUrl) {
+		this.artPicUrl = artPicUrl;
+	}
+	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
 		return comments;
@@ -135,17 +150,15 @@ public class Article implements Serializable {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ART_TYPE_ID")
 	public ArticleType getArticleType() {
 		return articleType;
 	}
-
+	
 	public void setArticleType(ArticleType articleType) {
 		this.articleType = articleType;
 	}
-	
-	
 
 }

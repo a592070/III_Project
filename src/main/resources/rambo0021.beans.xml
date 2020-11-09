@@ -5,5 +5,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <bean id="accountDao" class="rambo0021.dao.AccountDAOImpl" lazy-init="true" scope="session"/>
+    <bean id="dateDao" class="rambo0021.dao.DateDAOImpl" lazy-init="true" scope="session"/>
 
+    <bean id="accountService" class="rambo0021.serive.AccountServiceImpl" lazy-init="true" scope="session"/>
+    <bean id="dateService" class="rambo0021.serive.DateServiceImpl" lazy-init="true" scope="session"/>
+   	<context:component-scan base-package="rambo0021.controller"/>
 </beans>
+

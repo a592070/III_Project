@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "F_ART_TYPE")
 public class ArticleType implements Serializable{
@@ -23,7 +25,7 @@ public class ArticleType implements Serializable{
 	private String typeName;
 	private List<Article> articles = new ArrayList<Article>();
 	
-	@Id@Column(name = "TYPE_ID")
+	@Id@Column(name = "TYPE_ID", updatable=false)
 	public int getTypeId() {
 		return typeId;
 	}
@@ -39,6 +41,7 @@ public class ArticleType implements Serializable{
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
+	@JsonManagedReference
 	@OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL ,mappedBy = "articleType")
 	public List<Article> getArticles() {
 		return articles;
