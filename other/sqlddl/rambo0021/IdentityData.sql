@@ -4,6 +4,7 @@
 --------------------------------------------------------
 --  DDL for Table IDENTITY
 --------------------------------------------------------
+DROP TABLE "III_TEAM_DBA"."IDENTITY" cascade constraints;
 
   CREATE TABLE "III_TEAM_DBA"."IDENTITY" 
    (	"ID" NUMBER(1,0), 

@@ -2,6 +2,7 @@ package example.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import example.pojo.User;
@@ -36,6 +37,15 @@ public class UserDAOImpl implements UserDAO{
         return query.list();
     }
     @Override
+    public String getUserPassword(int id){
+        Session session = sessionFactory.getCurrentSession();
+        NativeQuery query = session.createNativeQuery("select password from MYBATISUSER where id = ?1");
+//        Query<String> query = session.createQuery("select password from MYBATISUSER where id = ?1", String.class);
+        query.setParameter(1, id);
+        return query.uniqueResult().toString();
+    }
+
+    @Override
     public void insert(User user){
         sessionFactory.getCurrentSession().save(user);
     }
@@ -45,6 +55,16 @@ public class UserDAOImpl implements UserDAO{
     }
     @Override
     public void delete(User user){
-        sessionFactory.getCurrentSession().delete(user);
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(user);
+    }
+    @Override
+    public void delete2(User user){
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(user);
+    }
+    @Override
+    public User selectById(int id) {
+        return sessionFactory.getCurrentSession().get(User.class, id);
     }
 }

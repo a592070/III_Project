@@ -9,8 +9,13 @@ public interface ViewDAO<T> {
     int getSize();
     T getEle(int id);
 
-    int getSizeByKeywords(String keyWords);
-    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled);
+    byte[] getPicture(int id);
+
+//    int getSizeByKeywords(String keyWords);
+//    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled);
+
+    int getSizeByKeywords(String keyWords, String region);
+    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled);
 
     int getSizeByFiled(String filedName, String filedValue);
     List<T> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled);

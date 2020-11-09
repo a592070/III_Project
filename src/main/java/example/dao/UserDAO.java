@@ -11,7 +11,13 @@ public interface UserDAO {
 
     List<User> select(String username);
 
+    String getUserPassword(int id);
+
     void insert(User user);
     void update(User user);
     void delete(User user);
+
+    void delete2(User user);
+
+    User selectById(int id);
 }
