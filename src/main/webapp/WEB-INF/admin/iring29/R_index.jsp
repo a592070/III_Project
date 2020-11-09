@@ -137,12 +137,14 @@ td {
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
-								<th>Restaurant ID</th>
+								<th>ID</th>
 								<th>餐廳名稱</th>
 								<th>餐廳地址</th>
 								<th>地區</th>
 								<th>會員帳號</th>
-								<th>功能</th>
+								<th>狀態</th>
+								<th>修改</th>
+								<th>刪除</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -155,6 +157,16 @@ td {
 									<td>${r.region}</td>
 									<td>${r.username}</td>
 									<td>
+										啟用/停用
+										<c:if test="">
+										<button type="submit" class="btn btn-warning">啟用</button>
+										</c:if>
+										<c:if test="">
+										<button type="submit" class="btn btn-warning">停用</button>
+										</c:if>
+									</td>
+									
+									<td>
 										<form
 											action="<%=application.getContextPath()%>/DisplayRestaurant"
 											method="POST">
@@ -162,6 +174,7 @@ td {
 											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
 										</form>
 									</td>
+									<td><button type="submit" class="btn btn-warning">刪除</button></td>
 								</tr>
 
 
