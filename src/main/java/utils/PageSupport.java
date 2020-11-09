@@ -4,7 +4,7 @@ public class PageSupport {
     // 用戶輸入當前頁面
     private int currentPage = 1;
     // 總比數
-    private int totalCount = 0;
+    private int totalSize = 0;
     // 每頁比數
     private int pageSize = 0;
     // 總頁數 totalCount/pageSize +1
@@ -22,13 +22,13 @@ public class PageSupport {
         }
     }
 
-    public int getTotalCount() {
-        return totalCount;
+    public int getTotalSize() {
+        return totalSize;
     }
 
-    public void setTotalCount(int totalCount) {
-        if(totalCount > 0){
-            this.totalCount = totalCount;
+    public void setTotalSize(int totalSize) {
+        if(totalSize > 0){
+            this.totalSize = totalSize;
             // 設置總頁數
             this.setTotalPageCountByRs();
         }
@@ -50,10 +50,10 @@ public class PageSupport {
 //        this.totalPageCount = totalPageCount;
 //    }
     public void setTotalPageCountByRs(){
-        if(this.totalCount % this.pageSize == 0){
-            this.totalPageCount = this.totalCount/this.pageSize;
-        }else if(this.totalCount % this.pageSize > 0){
-            this.totalPageCount = this.totalCount/this.pageSize +1;
+        if(this.totalSize % this.pageSize == 0){
+            this.totalPageCount = this.totalSize /this.pageSize;
+        }else if(this.totalSize % this.pageSize > 0){
+            this.totalPageCount = this.totalSize /this.pageSize +1;
         }else{
             this.totalPageCount = 0;
         }

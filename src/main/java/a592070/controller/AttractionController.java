@@ -1,10 +1,11 @@
 package a592070.controller;
 
-import a592070.fieldenum.AttractionFiledName;
 import a592070.pojo.AttractionDO;
 import a592070.pojo.AttractionVO;
 import a592070.service.AttractionService;
 import a592070.service.ViewService;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -12,11 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import utils.IOUtils;
 import utils.PageSupport;
 import utils.StringUtil;
 
@@ -28,8 +26,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@RestController@Lazy
+@RestController
+@Lazy
 public class AttractionController {
 
     @Autowired
@@ -42,49 +42,77 @@ public class AttractionController {
     @Autowired@Qualifier("attractionViewService")
     private ViewService<AttractionVO> viewService;
 
-    @RequestMapping("/admin/attraction")
-    public void attractionMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionInfo02.jsp").forward(request, response);
-    }
-    @RequestMapping("/admin/attraction/detail")
-    public void attractionDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionDetail.jsp").forward(request, response);
-    }
-    @RequestMapping("/admin/attraction/detail/{id}")
-    public AttractionDO attractionDetail(@PathVariable("id") int id) {
-        return service.getEle(id);
-    }
+//    @RequestMapping("/admin/attraction")
+//    public void attractionMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionInfo02.jsp").forward(request, response);
+//    }
+//    @RequestMapping("/admin/attraction/detail")
+//    public void attractionDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionDetail.jsp").forward(request, response);
+//    }
+//    @RequestMapping("/admin/attraction/detail/{id}")
+//    public AttractionDO attractionDetail(@PathVariable("id") int id) {
+//        return service.getEle(id);
+//    }
 
 
     @RequestMapping("/admin/attraction/list/{page}")
-    public List<AttractionVO> getAttractionList(@PathVariable("page") int page){
+    public Map<String, Object> getAttractionList(@PathVariable("page") int page){
         PageSupport pageSupport = new PageSupport();
         pageSupport.setPageSize(PAGE_SIZE);
-        pageSupport.setTotalCount(viewService.getSize());
+        pageSupport.setTotalSize(viewService.getSize());
         pageSupport.setCurrentPage(page);
 
         List<AttractionVO> list = viewService.list(pageSupport.getCurrentPage(), pageSupport.getPageSize());
-        return list;
+        Map<String, Object> map = new HashMap<>();
+        map.put("tableData", list);
+        map.put("pageData", pageSupport);
+        return map;
     }
-    @RequestMapping("/admin/attraction/list/region/{page}/{region}")
-    public List<AttractionVO> getAttractionListByRegion(@PathVariable("page") int page, @PathVariable("region") String region){
+    @RequestMapping("/admin/attraction/list/{page}/{region}")
+    public List<AttractionVO> getAttractionListByRegion(@PathVariable("page") int page,
+                                                        @PathVariable("region") String region){
         PageSupport pageSupport = new PageSupport();
         pageSupport.setPageSize(PAGE_SIZE);
-        pageSupport.setTotalCount(viewService.getSizeByRegion(region));
+        pageSupport.setTotalSize(viewService.getSizeByRegion(region));
         pageSupport.setCurrentPage(page);
 
         List<AttractionVO> list = viewService.listByRegion(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region);
         return list;
     }
-    @RequestMapping("/admin/attraction/list/keyword/{page}/{keywords}")
-    public List<AttractionVO> getAttractionListByKeywords(@PathVariable("page") int page, @PathVariable("keywords") String keywords){
+    @RequestMapping("/admin/attraction/list/{page}/{region}/{keywords}")
+    public Map<String, Object> getAttractionListByKeywords(@PathVariable("page") int page,
+                                                          @PathVariable("region") String region,
+                                                          @PathVariable("keywords") String keywords){
         PageSupport pageSupport = new PageSupport();
         pageSupport.setPageSize(PAGE_SIZE);
-        pageSupport.setTotalCount(viewService.getSizeByKeyWords(keywords));
         pageSupport.setCurrentPage(page);
 
-        List<AttractionVO> list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
-        return list;
+        List<AttractionVO> list;
+
+        if(StringUtil.isEmpty(keywords)){
+            if(StringUtil.isEmpty(region)){
+                pageSupport.setTotalSize(viewService.getSize());
+                list = viewService.list(pageSupport.getCurrentPage(), pageSupport.getPageSize());
+            }else{
+                pageSupport.setTotalSize(viewService.getSizeByRegion(region));
+                list = viewService.listByRegion(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region);
+            }
+        }else{
+            if(StringUtil.isEmpty(region)){
+                pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords));
+                list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+            }else{
+                pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords, region));
+                list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, region);
+            }
+
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("tableData", list);
+        map.put("pageData", pageSupport);
+        return map;
     }
     @RequestMapping("/admin/attraction/entity/{id}")
     public AttractionDO getAttraction(@PathVariable(name = "id") int id){
@@ -104,22 +132,44 @@ public class AttractionController {
         return responseEntity;
     }
 
-    @PostMapping("/admin/attraction/posts/{id}")
-    public boolean uploadPicture(@PathVariable(name = "id") int id,
-                              @RequestParam("file")MultipartFile multipartFile,
-                              @RequestParam("attractionData")String attractionData) throws IOException {
+    @PostMapping("/admin/attraction/update/{id}")
+    public boolean update(@PathVariable(name = "id") int id,
+                              @RequestParam(name="file", required=false)MultipartFile multipartFile,
+                              @RequestParam(name="attractionData", required = false)String attractionData) {
         boolean flag = false;
         try {
             System.out.println(attractionData);
-            String filename = multipartFile.getOriginalFilename();
-            String savePath = context.getContextPath() + "/" + id + "/" + filename;
-            multipartFile.transferTo(new File(savePath));
+            ObjectMapper mapper = new ObjectMapper();
+            AttractionDO attractionDO = mapper.readValue(attractionData, AttractionDO.class);
+
+//            String filename;
+            if(multipartFile != null){
+//                filename = multipartFile.getOriginalFilename();
+//                String savePath = "C:\\JavaCourse\\IntelliJWorkSpace\\III_Project\\target\\III_Project-1.0-SNAPSHOT\\assets\\" + id + "\\" + filename;
+//                System.out.println(savePath);
+//                multipartFile.transferTo(new File(savePath));
+                attractionDO.setPicture(multipartFile.getBytes());
+                System.out.println("saveFile success");
+            }
+            service.update(attractionDO);
 
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
         }
 
+        return flag;
+    }
+
+    @PostMapping("/admin/attraction/delete/{id}")
+    public boolean delete(@PathVariable(name = "id") int id){
+        boolean flag = false;
+        try{
+            service.delete(id);
+            flag = true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return flag;
     }
 

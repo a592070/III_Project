@@ -45,30 +45,32 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public int getSizeByKeywords(String keyWords) {
-        if(StringUtil.isEmpty(keyWords)) {
-            keyWords="";
-        }else {
-            keyWords = "%"+keyWords+"%";
-        }
+    public int getSizeByKeywords(String keyWords, String region) {
+        keyWords = "%"+keyWords+"%";
+        region = "%"+region+"%";
+
         String hql = "select count(sn) from RestaurantVO " +
-                "where name like :keyword or type like :keyword or address like :keyword or description like :keyword ";
+                "where region like :region and (name like :keyword or type like :keyword or address like :keyword or description like :keyword) ";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter("keyword", keyWords);
+        query.setParameter("region", region);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled) {
+    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled) {
         keyWords = "%"+keyWords+"%";
+        region = "%"+region+"%";
 
         String hql = "from RestaurantVO " +
-                "where name like :keyword or type like :keyword or address like :keyword or description like :keyword order by "+orderFiled;
+                "where region like :region and ( name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
         query.setParameter("keyword", keyWords);
+        query.setParameter("region", region);
+
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
         return query.list();

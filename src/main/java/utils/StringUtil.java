@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 public class StringUtil {
     public static boolean isEmpty(String str){
         if(str==null) return true;
-        str = str.trim().toLowerCase();
+        str = str.replace(" ", "").toLowerCase();
         return "null".equals(str) || "".equals(str) || "n/a".equals(str);
     }
     public static String urlEncode(String str, String charset) throws UnsupportedEncodingException {

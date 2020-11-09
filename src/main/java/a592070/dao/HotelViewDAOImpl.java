@@ -40,23 +40,27 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
     }
 
     @Override
-    public int getSizeByKeywords(String keyWords) {
+    public int getSizeByKeywords(String keyWords, String region) {
         keyWords = "%"+keyWords+"%";
+        region = "%"+region+"%";
 
-        String hql = "select count(sn) from HotelVO where name like :keyword or address like :keyword or description like :keyword";
+        String hql = "select count(sn) from HotelVO where region like :region and (name like :keyword or address like :keyword or description like :keyword)";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter("keyword", keyWords);
+        query.setParameter("region", region);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public List<HotelVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled) {
+    public List<HotelVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled) {
         keyWords = "%"+keyWords+"%";
+        region = "%"+region+"%";
 
-        String hql = "from HotelVO where name like :keyword or address like :keyword or description like :keyword order by "+orderFiled;
+        String hql = "from HotelVO where region like :region and (name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
         query.setParameter("keyword", keyWords);
+        query.setParameter("region", region);
 
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);

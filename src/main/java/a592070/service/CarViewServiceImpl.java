@@ -45,17 +45,27 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
 
     @Override
     public int getSizeByKeyWords(String keywords) {
-        return viewDAO.getSizeByKeywords(keywords);
+        return getSizeByKeyWords(keywords, "");
+    }
+
+    @Override
+    public int getSizeByKeyWords(String keywords, String region) {
+        return viewDAO.getSizeByKeywords(keywords, "");
     }
 
     @Override
     public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords) {
-        return listByKeyWords(currentPage, pageSize, keywords, CarFieldName.CAR_ID);
+        return listByKeyWords(currentPage, pageSize, keywords, null, CarFieldName.CAR_ID);
     }
 
     @Override
-    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, orderFiled);
+    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region) {
+        return listByKeyWords(currentPage, pageSize, keywords, null, CarFieldName.CAR_ID);
+    }
+
+    @Override
+    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
+        return viewDAO.listByKeywords(currentPage, pageSize, keywords, null, orderFiled);
     }
 
 

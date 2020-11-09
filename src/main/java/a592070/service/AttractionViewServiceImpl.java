@@ -7,6 +7,7 @@ import a592070.pojo.AttractionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import utils.StringUtil;
 
 import java.util.List;
@@ -61,21 +62,34 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
         return viewDAO.listByRownum(index, pageSize, orderFiled);
     }
 
+
     @Override
     public int getSizeByKeyWords(String keywords) {
-        if(StringUtil.isEmpty(keywords)) return getSize();
-
-        return viewDAO.getSizeByKeywords(keywords);
+        return getSizeByKeyWords(keywords, "");
+    }
+    @Override
+    public int getSizeByKeyWords(String keywords, String region) {
+        if(StringUtil.isEmpty(keywords)) {
+            return getSize();
+        }
+        return viewDAO.getSizeByKeywords(keywords, region);
     }
     @Override
     public List<AttractionVO> listByKeyWords(int currentPage, int pageSize, String keywords) {
-        return listByKeyWords(currentPage, pageSize, keywords, AttractionFiledName.ATTRACTION_ID);
+        return listByKeyWords(currentPage, pageSize, keywords, "", AttractionFiledName.ATTRACTION_ID);
     }
     @Override
-    public List<AttractionVO> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled) {
+    public List<AttractionVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region) {
+        return listByKeyWords(currentPage, pageSize, keywords, region ,AttractionFiledName.ATTRACTION_ID);
+    }
+    @Override
+    public List<AttractionVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
         if(StringUtil.isEmpty(keywords)) keywords = "";
+        if(StringUtil.isEmpty(region)) region = "";
         int index = (currentPage-1)*pageSize;
+//        System.out.println(index);
+//        System.out.println(pageSize);
 
-        return viewDAO.listByKeywords(index, pageSize, keywords, orderFiled);
+        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled);
     }
 }

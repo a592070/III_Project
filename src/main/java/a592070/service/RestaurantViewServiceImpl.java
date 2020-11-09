@@ -55,14 +55,22 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
 
     @Override
     public int getSizeByKeyWords(String keywords) {
-        return viewDAO.getSizeByKeywords(keywords);
+        return viewDAO.getSizeByKeywords(keywords, "");
+    }
+    @Override
+    public int getSizeByKeyWords(String keywords, String region) {
+        return viewDAO.getSizeByKeywords(keywords, region);
     }
     @Override
     public List<RestaurantVO> listByKeyWords(int currentPage, int pageSize, String keywords) {
-        return listByKeyWords(currentPage, pageSize, keywords, RestaurantFieldName.RESTAURANT_ID);
+        return listByKeyWords(currentPage, pageSize, keywords, "", RestaurantFieldName.RESTAURANT_ID);
     }
     @Override
-    public List<RestaurantVO> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, orderFiled);
+    public List<RestaurantVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region) {
+        return listByKeyWords(currentPage, pageSize, keywords, region, RestaurantFieldName.RESTAURANT_ID);
+    }
+    @Override
+    public List<RestaurantVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
+        return viewDAO.listByKeywords(currentPage, pageSize, keywords, region, orderFiled);
     }
 }

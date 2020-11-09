@@ -55,14 +55,22 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
 
     @Override
     public int getSizeByKeyWords(String keywords) {
-        return viewDAO.getSizeByKeywords(keywords);
+        return viewDAO.getSizeByKeywords(keywords, "");
+    }
+    @Override
+    public int getSizeByKeyWords(String keywords, String region) {
+        return viewDAO.getSizeByKeywords(keywords, region);
     }
     @Override
     public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords) {
-        return listByKeyWords(currentPage, pageSize, keywords, HotelFieldName.HOTEL_ID);
+        return listByKeyWords(currentPage, pageSize, keywords, "", HotelFieldName.HOTEL_ID);
     }
     @Override
-    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, orderFiled);
+    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region) {
+        return listByKeyWords(currentPage, pageSize, keywords, region, HotelFieldName.HOTEL_ID);
+    }
+    @Override
+    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
+        return viewDAO.listByKeywords(currentPage, pageSize, keywords, region, orderFiled);
     }
 }
