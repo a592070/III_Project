@@ -78,7 +78,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/Forum">
                             <i class="mdi mdi-reddit"></i>
                             <span class="nav-text">論壇管理</span>
                         </a>
