@@ -59,8 +59,7 @@ h2 {
 </head>
 
 
-<body class="sidebar-fixed sidebar-dark header-light header-fixed"
-	id="body">
+<body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
 
 
 	<div class="mobile-sticky-body-overlay"></div>
@@ -73,127 +72,109 @@ h2 {
 				<div class="box ">
 
 					<div class="search">
-						<form:form action="titleSearch" method="GET" class="mr-5"
-							modelAttribute="articles">
+						<form:form action="articleSearch" method="GET" class="mr-5">
 							<div class="sp_search">文章標題</div>
-							<input class="form-control" type="search" placeholder="請輸入文章標題"
-								name="title">
-							<button type="submit" class="btn btn-primary btn-sm m-2">Search</button>
-						</form:form>
-					</div>
-
-					<div class="search">
-						<form:form action="searchByUserId" method="GET" class="mr-5">
+							<input class="form-control" type="search" placeholder="請輸入文章標題" name="title" defualt>
 							<span class="sp_search">作者</span>
-							<input class="form-control" type="search" placeholder="請輸入用戶名稱"
-								name="userid" />
-							<button type="submit" class="btn btn-primary btn-sm m-2">Search</button>
-						</form:form>
-					</div>
-					<div class="search">
-						<form:form action="artTypeSearch" method="GET" class="mr-5">
+							<input class="form-control" type="search" placeholder="請輸入用戶名稱" name="userid" />
+							<%-- </form:form> --%>
+							<!-- <div class="search"> -->
+							<%-- <form:form action="artTypeSearch" method="GET" class="mr-5"> --%>
 							<span class="sp_search">文章類型</span>
 							<br />
-							<select name="articleType" id="Type" class="form-control">
-								
-								<option value="0">選擇類型</option>
+							<select name="articleType" id="typeSelect" class="form-control">
+								<option value="">選擇類型</option>
 								<option value="1">旅遊</option>
 								<option value="2">住宿</option>
 								<option value="3">美食</option>
 								<option value="4">景點</option>
-								
-
 							</select>
-							<br />
 							<button type="submit" class="btn btn-primary btn-sm m-2">Search</button>
 						</form:form>
+						<!-- </div> -->
 					</div>
-				</div>
-				<h2>文章列表</h2>
-				<script>
-					$(document).ready(function(){
-						$.ajax({
-							
-							type:"GET",
-							url:"Article.controller.json",
-							success:function(response){
-								console.log(obj);
+					<h2>文章列表</h2>
+					<script>
+						/* $(document).ready(function() {
+							$.ajax({
 
-								for(let i=0; i<response.length; i++){
-									
+								type : "GET",
+								url : "Article.controller.json",
+								success : function(response) {
+									console.log(obj);
 
+									for (let i = 0; i < response.length; i++) {
 
 									}
-								
 
 								}
-							
+
 							});
-						});
+						}); */
+					</script>
 
-
-
-				</script>
-
-				<div class="table-responsive">
-					<table class="table table-striped table-sm">
-						<thead>
-							<tr>
-								<th><span class="mdi mdi-key		"></span>ID</th>
-								<th><span class="mdi mdi-tag-text-outline"></span>Title</th>
-								<th><span class="mdi mdi-calendar-clock"></span>Create Time</th>
-								<th><span class="mdi mdi-account-edit"></span>Author</th>
-								<th><span class="mdi mdi-directions-fork"></span>Type</th>
-
-
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="article" items="${artBean}">
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead>
 								<tr>
-									<td>${article.artId}</td>
-									<td><a class="text-dark" href=""> ${article.artTitle}</a></td>
-									<td>${article.artCreTime}</td>
-									<td><a class="text-dark" href="">${article.artUserId}</a></td>
-									<td>${article.articleType.typeName}</td>
-									<td>
-											<form action =editPage.controller method="GET">
-												<button name = "artId" value = "${article.artId}"   ><span class="mdi mdi-pencil-box-outline"></span>Edit</button>
-											</form>
-									</td>
-									
-									<td>
-									<form id="delete" name="delete"  method="POST">
-									<button name="artId" value = "${article.artId}"  onclick="confirmDelete()"><span class="mdi mdi-delete"></span>Delete</button>
-									</form>
-									</td>
+									<th><span class="mdi mdi-key		"></span> ID</th>
+									<th><span class="mdi mdi-tag-text-outline"></span> Title</th>
+									<th><span class="mdi mdi-calendar-clock"></span> Create Time</th>
+									<th><span class="mdi mdi-account-edit"></span> Author</th>
+									<th><span class="mdi mdi-directions-fork"></span> Type</th>
+
 
 								</tr>
-							</c:forEach>
+							</thead>
+							<tbody>
+								<c:forEach var="article" items="${artBean}">
+									<tr>
+										<td>${article.artId}</td>
+										<td><a class="text-dark" href=""> ${article.artTitle}</a></td>
+										<td>${article.artCreTime}</td>
+										<td><a class="text-dark" href="">${article.artUserId}</a></td>
+										<td>${article.articleType.typeName}</td>
+										<td>
+											<form action=editPage.controller method="GET">
+												<button name="artId" value="${article.artId}">
+													<span class="mdi mdi-pencil-box-outline"></span>
+													Edit
+												</button>
+											</form>
+										</td>
 
-						</tbody>
-					</table>
+										<td>
+											<form id="delete" name="delete" method="POST">
+												<button name="artId" value="${article.artId}" onclick="confirmDelete()">
+													<span class="mdi mdi-delete"></span>
+													Delete
+												</button>
+											</form>
+										</td>
+
+									</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+					</div>
 				</div>
+
+
 			</div>
-
-
 		</div>
-	</div>
-<script type="text/javascript">
-function confirmDelete(){
-	var desicion = confirm("確定要刪除此筆資料?");
-	if(desicion){
-		document.forms["delete"].action="delete.controller";
-		document.forms["delete"].submit();
-		}else{
-			return;
+		<script type="text/javascript">
+			function confirmDelete() {
+				var desicion = confirm("確定要刪除此筆資料?");
+				if (desicion) {
+					document.forms["delete"].action = "delete.controller";
+					document.forms["delete"].submit();
+				} else {
+					return;
+				}
 			}
-	}
-
-</script>
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-
-  
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 </body>
 
 </html>
