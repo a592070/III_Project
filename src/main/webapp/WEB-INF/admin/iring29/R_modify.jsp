@@ -166,14 +166,16 @@ pre {
 	background: rgba(0, 0, 0, 0);
 	border-radius: 0;
 }
-.div-back{
-margin-left:150px;
-margin-top:20px;
+
+.div-back {
+	margin-left: 150px;
+	margin-top: 20px;
 }
-.modify_div{
+
+.modify_div {
 	width: 1000px;
 	text-align: center;
-	margin-bottom:50px;
+	margin-bottom: 50px;
 }
 </style>
 
@@ -200,225 +202,146 @@ margin-top:20px;
 
 
 				<div class="container">
+				
+				<FORM  id="modifyR" name="modifyR" method="POST" enctype="multipart/form-data">
+				
 					<div class="box">
 
+						
+							<div>
+								<h2 class="title">${rBean.name}</h2>
+								<div class="top"></div>
 
-						<div>
-							<h2 class="title">${rBean.name}</h2>
-							<div class="top"></div>
-							<FORM action="<%=application.getContextPath()%>/ModifyImg"
-								method="POST" enctype="multipart/form-data">
 								<p class="modify-img">
-									<label for="r-name">請選擇欲修改圖片上傳</label> <input type="file"
-										id="Rpicture" name="Rpicture">
+									<label for="r-name">請選擇欲修改圖片上傳</label> 
+									<input type="file" id="pic" name="pic">
+										<Input type='hidden' name='r_sn' value='${rBean.r_sn}'>
 									<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
 								</p>
 								<div class="div_img">
 									<img id="preview_Rpic"
 										src="<%=application.getContextPath()%>/ShowPic">
 								</div>
-								<!-- 					<p class="modify-img"> -->
-								<!--                         <label for="r-name">請選擇欲修改圖片上傳</label>  -->
-								<!--                         <input type="file" id="pic_rentalcompany" name="pic_rentalcompany" > -->
-								<!--                     </p> -->
-								<!-- 				<div class="div_img">                                -->
-								<!--                         <img id="preview_pic_rentalcompany"  src="ShowCarRentalCompanyPic"> -->
-								<!--                     </div> -->
+
 								<script>
-$("#Rpicture").change(function(){
-    readURL(this);
-});
-function readURL(input){
-   if(input.files && input.files[0]){
-       var reader = new FileReader();
-       reader.onload = function (e) {
-           $("preview_Rpic").attr('src', e.target.result);
-       }
-       reader.readAsDataURL(input.files[0]);
-   }
-}
-</script>
+									$("#pic").change(function() {
+										readURL(this);
+										console.log("in modify pic")
+									});
+									function readURL(input) {
+										console.log("in modify 2")
+										if (input.files && input.files[0]) {
+											var reader = new FileReader();
+											reader.onload = function(e) {
+												$("preview_Rpic").attr('src',
+														e.target.result);
+											}
+											reader.readAsDataURL(input.files[0]);
+										}
+									}
+								</script>
 
-							</FORM>
-
-
-							<FORM id="formL" name="formL"
-								action="<%=pageContext.getServletContext().getContextPath()%>/ModifyLocation"
-								method="POST">
 								<div>
-									<!-- 						<p class="modify"> -->
-									<!-- 							<button class="btn btn-light" name="confirm" value="confrim" onclick="confirmL()" >修改</button> -->
-									<!-- 						</p> -->
 									<h4 class="res_data">餐廳地點</h4>
+								</div>
+
+								<div>
+									<h4 class="res_result">地區</h4>
+									<p class="p_result">
+										<textarea name="region" id="region" cols="80" rows="5">${rBean.region}</textarea>
+									</p>
 								</div>
 
 								<div>
 									<h4 class="res_result">地址</h4>
 									<p class="p_result">
-										<textarea name="address" id="address" cols="80" rows="5"
-											placeholder="${rBean.address}"></textarea>
+										<textarea name="address" id="address" cols="80" rows="5">${rBean.address}</textarea>
 									</p>
-									<%-- 						<p class="p_result">${rBean.address}</p> --%>
 								</div>
 								<div>
 									<h4 class="res_result">交通方式</h4>
 									<p class="p_result">
 										<textarea name="transportation" id="transportation" cols="80"
-											rows="5" placeholder="${rBean.transportation}"></textarea>
+											rows="5">${rBean.transportation}</textarea>
 									</p>
-									<%-- 						<pre><p class="p_result">${rBean.transportation}</p></pre> --%>
 								</div>
 
-								<input type="hidden" id="finalDecision" name="finalDecision"
-									value=""> <input type="hidden" id="r_sn" name="r_sn"
-									value="${rBean.r_sn}">
-
-							</FORM>
-
-							<script type="text/javascript">				
-function confirmL(){
-	if (confirm("確定送出修改 ? ") ) {
-		let address = document.getElementById("address").value;
-		let transportation = document.getElementById("transportation").value;
-		document.forms["formL"].finalDecision.value = "confirmL";
-		console.log(document.forms["formL"].finalDecision.value);
-		if(address === ""){
-			document.getElementById("address").value = "${rBean.address}";
-			}
-		if(transportation === ""){
-			document.getElementById("transportation").value = "${rBean.transportation}";
-			}		
-		document.forms["formL"].action="<%=application.getContextPath()%>/ModifyLocation";
-		document.forms["formL"].method="POST";
-		document.forms["formL"].submit();
-		return;
-	} else {
-		return;
-	}
-}
-</script>
-
-							<FORM id="formT" name="formT"
-								action="<%=pageContext.getServletContext().getContextPath()%>/ModifyType"
-								method="POST">
 								<div>
-									<!-- 						<p class="modify"> -->
-									<!-- 							<button class="btn btn-light" name="confirm" value="confrim" onclick="confirmT()">修改</button> -->
-									<!-- 						</p> -->
 									<h4 class="res_data">菜色介紹</h4>
 								</div>
 								<div>
 									<h4 class="res_result">適合聚餐類型</h4>
 									<p class="p_result">
 										<textarea name="serviceinfo" id="serviceinfo" cols="80"
-											rows="5" placeholder="${rBean.serviceinfo}"></textarea>
+											rows="5">${rBean.serviceinfo}</textarea>
 									</p>
-									<%-- 						<p class="p_result">${rBean.serviceinfo}</p> --%>
 								</div>
 								<div>
 									<h4 class="res_result">料理種類</h4>
 									<p class="p_result">
-										<textarea name="type" id="type" cols="80" rows="5"
-											placeholder="${rBean.type}"></textarea>
+										<textarea name="type" id="type" cols="80" rows="5">${rBean.type}</textarea>
 									</p>
-									<%-- 						<p class="p_result">${rBean.type}</p> --%>
 								</div>
 
-								<input type="hidden" id="finalDecision" name="finalDecision"
-									value=""> <input type="hidden" id="r_sn" name="r_sn"
-									value="${rBean.r_sn}">
-							</FORM>
-							<script type="text/javascript">
-function confirmT(){
-	if (confirm("確定送出修改 ? ") ) {
-		let serviceinfo = document.getElementById("serviceinfo").value;
-		let type = document.getElementById("type").value; 
-		document.forms["formT"].finalDecision.value = "confirmT";
-		console.log(document.forms["formT"].finalDecision.value);
-		if(serviceinfo === ""){
-			document.getElementById("serviceinfo").value = "${rBean.serviceinfo}";
-			}
-		if(type === ""){
-			document.getElementById("type").value = "${rBean.type}";
-			}
-		document.forms["formT"].action="<%=application.getContextPath()%>/ModifyType";
-		document.forms["formT"].method="POST";
-		document.forms["formT"].submit();
-		return;
-	} else {
-		return;
-	}
-}
-</script>
 
-							<FORM id="formI" name="formI"
-								action="<%=pageContext.getServletContext().getContextPath()%>/ModifyInfo"
-								method="POST">
 								<div>
-									<!-- 						<p class="modify"> -->
-									<!-- 							<button class="btn btn-light" name="confirm" value="confrim" onclick="confirmI()">修改</button> -->
-									<!-- 						</p> -->
 									<h4 class="res_data">餐廳資訊</h4>
 								</div>
 								<div>
 									<h4 class="res_result">營業時間</h4>
 									<p class="p_result">
-										<textarea name="opentime" id="opentime" cols="80" rows="5"
-											placeholder="${rBean.opentime}"></textarea>
+										<textarea name="opentime" id="opentime" cols="80" rows="5">${rBean.opentime}</textarea>
 									</p>
-									<%-- 						<pre><p class="p_result">${rBean.opentime}</p></pre> --%>
 								</div>
 								<div>
 									<h4 class="res_result">餐廳描述</h4>
 									<p class="p_result">
 										<textarea name="description" id="description" cols="80"
-											rows="5" placeholder="${rBean.description}"></textarea>
+											rows="5">${rBean.description}</textarea>
 									</p>
-									<%-- 						<p class="p_result">${rBean.description}</p> --%>
 								</div>
 
-								<input type="hidden" id="finalDecision" name="finalDecision"
-									value=""> <input type="hidden" id="r_sn" name="r_sn"
-									value="${rBean.r_sn}">
+								<div>
+									<h4 class="res_data">狀態</h4>
+								</div>
+								<div>
+									<p class="p_result">
+										<c:if test="${rBean.status == 'N'}">停用&nbsp;
+											<button class="btn btn-success" onclick="statusR()">啟用</button>
+										</c:if>
+										<c:if test="${rBean.status == 'Y'}">啟用&nbsp;
+											<button class="btn btn-secondary" onclick="statusR()">停用</button>
+										</c:if>
+									</p>
+								</div>
 
-							</FORM>
-							<script type="text/javascript">
-function confirmI(){
-	if (confirm("確定送出修改 ? ") ) {
-		let opentime = document.getElementById("opentime").value;
-		let description = document.getElementById("description").value; 
-		console.log(document.forms["formI"]);
-		console.log(document.forms["formI"].finalDecision.value);
-		document.forms["formI"].finalDecision.value = "confirmI";
-		console.log(document.forms["formI"].finalDecision.value);
-		if(opentime === ""){
-			document.getElementById("opentime").value = "${rBean.opentime}";
-			}
-		if(description === ""){
-			document.getElementById("description").value = "${rBean.description}";
-			}
-		document.forms["formI"].action="<%=application.getContextPath()%>
-								/ModifyInfo";
-										document.forms["formI"].method = "POST";
-										document.forms["formI"].submit();
-										return;
-									} else {
-										return;
-									}
-								}
-</script>
-
-						</div>
-
-					</div>
-
-							<div class="modify_div">
-								<button class="btn btn-warning" name="confirm" value="confrim"
-									onclick="confirmI()">確認修改</button>
 
 							</div>
 
+						
 
+					</div>
+
+					<div class="modify_div">
+						<button class="btn btn-warning" name="confirm" value="confrim"
+							onclick="confrimModify()">確認修改</button>
+
+					</div>
+				</FORM>
+
+					<script type="text/javascript"> 
+					 function confrimModify(){ 
+						 if (confirm("確定送出修改 ? ") ) { 
+								document.forms["modifyR"].action="<%=application.getContextPath()%>/ModifyRestaurant";
+								document.forms["modifyR"].method = "POST";
+								document.forms["modifyR"].submit();
+								
+								return;
+							} else {
+								return;
+							}
+						}
+					</script>
 
 
 				</div>

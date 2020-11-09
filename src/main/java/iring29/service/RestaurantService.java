@@ -46,7 +46,14 @@ public class RestaurantService {
 	public Restaurant updateStatus(BigDecimal r_sn, String status) {
 		return rDao.updateStatus(r_sn, status);
 	}
-	
+	@Transactional(rollbackFor = { Throwable.class })
+	public Restaurant updateRestaurant(BigDecimal r_sn, String address, String opentime,
+			String description, String transportation, String type, String region, String serviceinfo, byte[] pic) {
+		return rDao.updateRestaurant(r_sn, address, opentime, description, transportation, type, region, serviceinfo, pic);
+	}
+	/*
+	 * 以下可能可刪
+	 * */
 	
 	@Transactional(rollbackFor = { Throwable.class })
 	public int getRegionSize(String region) {
