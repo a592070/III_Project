@@ -18,18 +18,9 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springmvc.servlet.xml")
 public class writePicToDB {
-    private static ApplicationContext beans;
     @Autowired
     private static SessionFactory sessionFactory;
-//    @BeforeClass
-//    public static void init(){
-//        beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
-//    }
-//
-//    @AfterClass
-//    public static void close(){
-//        ((ConfigurableApplicationContext)beans).close();
-//    }
+
     @Test
     public void addPic(){
         String hql = "from AttractionDO where (picture is null) and (pictureUrl is not null) ";

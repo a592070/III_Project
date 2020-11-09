@@ -28,8 +28,9 @@ public class AttractionServiceImpl implements AttractionService{
 
     @Override
     public boolean delete(int id) {
-        if(getEle(id) != null){
-            dao.delete(getEle(id));
+        AttractionDO ele = getEle(id);
+        if(ele != null){
+            dao.delete(ele);
             return true;
         }
         return false;

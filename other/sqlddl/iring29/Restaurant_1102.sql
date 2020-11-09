@@ -4,6 +4,10 @@
 --------------------------------------------------------
 --  DDL for Sequence RESTAURANT_SEQ
 --------------------------------------------------------
+DROP TABLE "III_TEAM_DBA"."RESTAURANT" cascade constraints;
+DROP TABLE "III_TEAM_DBA"."R_ORDER_LIST" cascade constraints;
+drop SEQUENCE "III_TEAM_DBA"."R_ORDER_LIST_SEQ";
+drop SEQUENCE "III_TEAM_DBA"."RESTAURANT_SEQ";
 
    CREATE SEQUENCE  "III_TEAM_DBA"."RESTAURANT_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 162 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 
