@@ -104,11 +104,23 @@ public class AttractionController {
         return responseEntity;
     }
 
-    @GetMapping("/admin/attraction/posts/{id}")
-    public void uploadPicture(@PathVariable(name = "id") int id, @RequestParam("file")MultipartFile multipartFile) throws IOException {
-        String filename = multipartFile.getOriginalFilename();
-        String savePath = context.getContextPath()+"/"+id+"/"+filename;
-        multipartFile.transferTo(new File(savePath));
+    @PostMapping("/admin/attraction/posts/{id}")
+    public boolean uploadPicture(@PathVariable(name = "id") int id,
+                              @RequestParam("file")MultipartFile multipartFile,
+                              @RequestParam("attractionData")String attractionData) throws IOException {
+        boolean flag = false;
+        try {
+            System.out.println(attractionData);
+            String filename = multipartFile.getOriginalFilename();
+            String savePath = context.getContextPath() + "/" + id + "/" + filename;
+            multipartFile.transferTo(new File(savePath));
+
+            flag = true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return flag;
     }
 
 

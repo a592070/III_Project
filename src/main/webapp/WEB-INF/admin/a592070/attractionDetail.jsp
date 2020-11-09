@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="col-12">
 
-                        <el-form label-width="80px" :model="attractionData" ref="attractionData">
+                        <el-form label-width="80px" :model="attractionData" ref="attractionData" >
                             <el-form-item label="ID" prop="sn">
                                 <el-input v-model="attractionData.sn" disabled ></el-input>
                             </el-form-item>
@@ -107,10 +107,11 @@
                                 </el-image>
                                 <el-upload
                                         class="avatar-uploader"
-                                        action="url"
+                                        action=""
                                         :show-file-list="false"
                                         :on-success="handleAvatarSuccess"
-                                        :before-upload="beforeAvatarUpload">
+                                        :before-upload="beforeAvatarUpload"
+                                        ref="upload">
                                     <img v-if="imageUrl" :src="imageUrl" class="avatar">
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 </el-upload>
@@ -148,7 +149,7 @@
                                 <el-input v-model="attractionData.openTime"></el-input>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" v-on:click="submitForm('attractionData')">立即更新</el-button>
+                                <el-button type="primary" v-on:click="submitForm">立即更新</el-button>
                                 <el-button v-on:click="resetDataForm('attractionData')">取消</el-button>
                             </el-form-item>
                         </el-form>
@@ -170,7 +171,7 @@
                 region: [],
                 imageUrl: '',
                 picture: '',
-                url: ''
+                param: ''
 
                 // region: ["全部", "臺北市", "新北市", "桃園市", "臺中市", "高雄市"],
                 // attractionData: {
@@ -227,10 +228,26 @@
                 this.$refs[formName].resetFields();
             },
             submitForm(){
-                JSON.stringify(this.$refs.formName)
+                let url='${pageContext.servletContext.contextPath}/admin/attraction/posts/'+this.attractionData.sn
+                this.param.append('attractionData', this.attractionData);
+                let config = {
+                   header: {
+                       'Content-Type': 'multipart/form-data'
+                   }
+                }
+                axios.get(
+                    url,
+                    this.param,
+                    config
+                ).then(function (response) {
+                    console.log(response);
+                })
             },
             handleAvatarSuccess(res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
+                // this.imageUrl = URL.createObjectURL(file.raw);
+                this.imageUrl = URL.createObjectURL(file);
+                this.param = new FormData();
+                this.param.append('file', file, file.name);
             },
             beforeAvatarUpload(file) {
                 const isPIC = (file.type == 'image/jpeg' || file.type=='image/png');
