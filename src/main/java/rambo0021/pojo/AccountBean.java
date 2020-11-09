@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -85,7 +86,12 @@ public class AccountBean {
 	public String getModify_DateString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		sdf.setLenient(false);
-		String Date = sdf.format(modify_Date);
+		String Date;
+		if(modify_Date ==null) {
+			Date="未知";
+		}else {
+			Date = sdf.format(modify_Date);
+		}
 		return Date;
 	}
 
@@ -106,7 +112,12 @@ public class AccountBean {
 	public String getRegisterString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		sdf.setLenient(false);
-		String Date2 = sdf.format(register);
+		String Date2;
+		if(modify_Date ==null) {
+			Date2="未知";
+		}else {
+			Date2 = sdf.format(modify_Date);
+		}
 		return Date2;
 	}
 
@@ -149,34 +160,5 @@ public class AccountBean {
 	public void setIdentityBean(IdentityBean identityBean) {
 		this.identityBean = identityBean;
 	}
-
-	
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "", cascade = CascadeType.ALL)
-//	public List<R_OrderBean> getR_OrderBean() {
-//		return r_OrderBean;
-//	}
-//
-//	public void setR_OrderBean(List<R_OrderBean> r_OrderBean) {
-//		this.r_OrderBean = r_OrderBean;
-//	}
-//
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "", cascade = CascadeType.ALL)
-//	public List<H_OrderBean> getH_OrderBean() {
-//		return h_OrderBean;
-//	}
-//
-//	public void setH_OrderBean(List<H_OrderBean> h_OrderBean) {
-//		this.h_OrderBean = h_OrderBean;
-//	}
-//
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "", cascade = CascadeType.ALL)
-//	public List<T_Order_List> getT_Order_List() {
-//		return t_Order_List;
-//	}
-//
-//	public void setT_Order_List(List<T_Order_List> t_Order_List) {
-//		this.t_Order_List = t_Order_List;
-//	}
-
 	
 }

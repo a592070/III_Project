@@ -22,7 +22,8 @@
 <!--		<property name="current_session_context_class">thread</property>-->
 
 <!--		<property name="hibernate.show_sql">true</property>-->
-<!--		<property name="hibernate.format_sql">true</property>-->
+		<property name="hibernate.format_sql">true</property>
+<!--		<property name="use_sql_comments">true</property>-->
 
 		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 
@@ -47,6 +48,14 @@
 		<mapping class="azaz4498.model.Comment"/>
 		<mapping class="rambo0021.pojo.AccountBean" />
 		<mapping class="rambo0021.pojo.IdentityBean" />
+		<mapping class="innocence741.model.CarRentalCompany" />
+		<mapping class="innocence741.model.CarRentalCompanyVO" />
+		<mapping class="innocence741.model.CarType" />
+		<mapping class="innocence741.model.HighSpeedRail" />
+		<mapping class="innocence741.model.OrderTableBean" />
+		<mapping class="innocence741.model.T_Order_List" />
+		<mapping class="asx54630.model.Hotel"/>
+
 
 
 

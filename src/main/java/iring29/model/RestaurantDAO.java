@@ -1,5 +1,6 @@
 package iring29.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -12,43 +13,86 @@ import a592070.pojo.RestaurantVO;
 public class RestaurantDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	public RestaurantDAO() {
-		
+
 	}
 
 	public RestaurantDAO(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
-	@Transactional(rollbackFor = {Throwable.class})
-	public List<Show_RView> totalRestaurant() {
-		System.out.println("in");
-		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery("from Show_RView", Show_RView.class);
+
+	//Total
+	public int getSize() {
+		String hql = "select count(r_sn) from Show_RView";
+		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
+	}
+
+	public List<Show_RView> totalRestaurant(int first, int count) {
+		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery("from Show_RView order by r_sn",
+				Show_RView.class);
+		// 找第幾筆
+		query.setFirstResult(first);
+		// 從第幾筆開始count筆
+		query.setMaxResults(count);
 		return query.list();
 	}
 
-	@Transactional(rollbackFor = {Throwable.class})
-	public List<Show_RView> regionRestaurant(String region) {
+	//Region
+	public int getRegionSize(String region) {
+		String hql = "select count(r_sn) from Show_RView where region = ?1";
+		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+		query.setParameter(1, region);
+		return query.uniqueResult().intValue();
+	}
+
+	public List<Show_RView> regionRestaurant(int first, int count, String region) {
 		String hql = "from Show_RView where region =?1 order by r_sn";
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
 		query.setParameter(1, region);
+		query.setFirstResult(first);
+		query.setMaxResults(count);
 		return query.list();
 	}
-
-	@Transactional(rollbackFor = {Throwable.class})
-	public List<Show_RView> nameRestaurant(String name) {
+	//name
+	public int getNameSize(String name) {
+		String hql = "select count(r_sn) from Show_RView where name like ?1";
+		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+		query.setParameter(1, "%" + name + "%");
+		return query.uniqueResult().intValue();
+	}
+	
+	public List<Show_RView> nameRestaurant(int first, int count, String name) {
 		String hql = "from Show_RView where name like ?1 order by r_sn";
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
 		query.setParameter(1, "%" + name + "%");
+		query.setFirstResult(first);
+		query.setMaxResults(count);
 		return query.list();
 	}
+
+	//user
+	public int getUserSize(String username) {
+		String hql = "select count(r_sn) from Show_RView where username like ?1";
+		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+		query.setParameter(1, "%" + username + "%");
+		return query.uniqueResult().intValue();
+	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
-	public List<Show_RView> userRestaurant(String username) {
-		String hql = "from Show_RView where username =?1 order by r_sn";
+	public List<Show_RView> userRestaurant(int first, int count, String username) {
+		String hql = "from Show_RView where username like ?1 order by r_sn";
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
 		query.setParameter(1, "%" + username + "%");
+		query.setFirstResult(first);
+		query.setMaxResults(count);
 		return query.list();
+	}
+
+
+	public Restaurant restaurantInfo(BigDecimal r_sn) {
+		String hql = "from Restaurant where r_sn = ?1";
+		Query<Restaurant> query = sessionFactory.getCurrentSession().createQuery(hql, Restaurant.class);
+		query.setParameter(1, r_sn);
+		return query.uniqueResult();
 	}
 }

@@ -50,8 +50,8 @@
             text-align: center;
         }
         .avatar {
-            width: 178px;
-            height: 178px;
+            /*width: 300px;*/
+            /*height: 300px;*/
             display: block;
         }
     </style>
@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="col-12">
 
-                        <el-form label-width="80px" :model="attractionData" ref="attractionData" >
+                        <el-form label-width="180px" :model="attractionData" ref="attractionData" >
                             <el-form-item label="ID" prop="sn">
                                 <el-input v-model="attractionData.sn" disabled ></el-input>
                             </el-form-item>
@@ -96,28 +96,42 @@
                             <el-form-item label="py" prop="py">
                                 <el-input v-model="attractionData.py"></el-input>
                             </el-form-item>
-                            <el-form-item label="picture_url" prop="picture_url">
-                                <el-input v-model="attractionData.picture_url"></el-input>
+                            <el-form-item label="picture_url" prop="pictureUrl">
+                                <el-input v-model="attractionData.pictureUrl"></el-input>
                             </el-form-item>
                             <el-form-item label="picture" prop="picture">
                                 <el-image
-                                        style="width: 100px; height: 100px"
+                                        style="width: 300px; height: 300px"
                                         :src="picture"
-                                        :preview-src-list="[picture]">
+                                        :preview-src-list="[picture]"
+                                        onerror="this.src='${pageContext.servletContext.contextPath}/assets/nopic.jpg'">
                                 </el-image>
+<%--                                <el-upload--%>
+<%--                                        class="avatar-uploader"--%>
+<%--                                        action=""--%>
+<%--                                        :show-file-list="false"--%>
+<%--                                        :on-success="handleAvatarSuccess"--%>
+<%--                                        :before-upload="beforeAvatarUpload"--%>
+<%--                                        ref="upload">--%>
+<%--                                    <img v-if="imageUrl" :src="imageUrl" class="avatar" >--%>
+<%--                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>--%>
+<%--                                </el-upload>--%>
                                 <el-upload
-                                        class="avatar-uploader"
                                         action=""
-                                        :show-file-list="false"
+                                        list-type="picture-card"
+                                        :on-preview="handlePictureCardPreview"
                                         :on-success="handleAvatarSuccess"
                                         :before-upload="beforeAvatarUpload"
-                                        ref="upload">
-                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                        :on-remove="handleRemove"
+                                        :limit="1">
+                                    <i class="el-icon-plus"></i>
                                 </el-upload>
+                                <el-dialog :visible.sync="dialogVisible">
+                                    <img width="100%" :src="imageUrl" alt="">
+                                </el-dialog>
                             </el-form-item>
-                            <el-form-item label="詳細描述" prop="tolDescription">
-                                <el-input v-model="attractionData.tolDescription"
+                            <el-form-item label="詳細描述" prop="toldescribe">
+                                <el-input v-model="attractionData.toldescribe"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
@@ -140,13 +154,13 @@
                                 <el-input v-model="attractionData.keywords"></el-input>
                             </el-form-item>
                             <el-form-item label="remarks" prop="remarks">
-                                <el-input v-model="attractionData.remarks"></el-input>
+                                <el-input v-model="attractionData.remarks" type="textarea"></el-input>
                             </el-form-item>
                             <el-form-item label="rating" prop="rating">
                                 <el-input v-model="attractionData.rating"></el-input>
                             </el-form-item>
                             <el-form-item label="openTime" prop="openTime">
-                                <el-input v-model="attractionData.openTime"></el-input>
+                                <el-input v-model="attractionData.openTime" type="textarea"></el-input>
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" v-on:click="submitForm">立即更新</el-button>
@@ -171,7 +185,8 @@
                 region: [],
                 imageUrl: '',
                 picture: '',
-                param: ''
+                param: new FormData(),
+                dialogVisible: false
 
                 // region: ["全部", "臺北市", "新北市", "桃園市", "臺中市", "高雄市"],
                 // attractionData: {
@@ -203,19 +218,14 @@
         methods: {
             getAttractionData(obj){
                 $.get({
-                    url: '${pageContext.servletContext.contextPath}/admin/attraction/detail/4512',
+                    url: '${pageContext.servletContext.contextPath}/admin/attraction/entity/${id}',
                     async: false,
                     success: function (response) {
                         obj.attractionData = response;
                         obj.picture = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+response.sn;
-                        obj.url = "${pageContext.servletContext.contextPath}/admin/attraction/posts/"+response.sn;
+                        obj.url = "${pageContext.servletContext.contextPath}/admin/attraction/"+response.sn;
                     }
                 });
-
-                <%--axios.get("${pageContext.servletContext.contextPath}/admin/attraction/detail/4512")--%>
-                <%--    .then(response => {--%>
-                <%--        this.attractionData = response.data;--%>
-                <%--    });--%>
             },
             getRegionData(){
                 axios.get('${pageContext.servletContext.contextPath}/admin/list.Region')
@@ -228,26 +238,39 @@
                 this.$refs[formName].resetFields();
             },
             submitForm(){
-                let url='${pageContext.servletContext.contextPath}/admin/attraction/posts/'+this.attractionData.sn
-                this.param.append('attractionData', this.attractionData);
+                let url='${pageContext.servletContext.contextPath}/admin/attraction/update/'+this.attractionData.sn
+                console.log(this.name);
+                this.param.append('attractionData', JSON.stringify(this.attractionData));
                 let config = {
                    header: {
-                       'Content-Type': 'multipart/form-data'
+                       'Content-Type': 'multipart/form-data',
+                       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE",
+                       'crossdomain': true
                    }
                 }
-                axios.get(
+                axios.post(
                     url,
                     this.param,
                     config
                 ).then(function (response) {
                     console.log(response);
+                    if(response.data == true){
+                        alert("更新成功")
+                        window.location.reload();
+                    }else{
+                        alert("更新失敗")
+                    }
                 })
             },
             handleAvatarSuccess(res, file) {
-                // this.imageUrl = URL.createObjectURL(file.raw);
-                this.imageUrl = URL.createObjectURL(file);
-                this.param = new FormData();
-                this.param.append('file', file, file.name);
+                this.imageUrl = URL.createObjectURL(file.raw);
+                // this.imageUrl = URL.createObjectURL(file);
+                // this.param = new FormData();
+                this.param.append('file', file.raw, file.raw.name);
+            },
+            handlePictureCardPreview(file) {
+                // this.imageUrl = file.url;
+                this.dialogVisible = true;
             },
             beforeAvatarUpload(file) {
                 const isPIC = (file.type == 'image/jpeg' || file.type=='image/png');
@@ -260,6 +283,10 @@
                     this.$message.error('不能超過4MB');
                 }
                 return isPIC && isLt2M;
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+                this.param.delete('file');
             }
         }
     });

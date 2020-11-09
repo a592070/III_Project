@@ -1,32 +1,114 @@
 package azaz4498.controller;
 
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import azaz4498.model.Article;
 import azaz4498.service.ArticleService;
+import azaz4498.service.ArticleTypeService;
 
 @Controller
-@SessionAttributes(names = { "artBean" })
+@Lazy
+@SessionAttributes(names = { "artBean", "typeBean" })
 public class ArticleController {
-	@RequestMapping(path = "/Article.controller")
-	public String showArticles(Model m) {
-		ArticleService articleService = new ArticleService();
+	@Autowired
+	@Qualifier("ArticleService")
+	ArticleService articleService;
+	@Autowired
+	@Qualifier("ArticleTypeService")
+	ArticleTypeService articleTypeService;
+
+	@RequestMapping(path = "/Forum")
+	public String ForumEntry() {
+
+		return "azaz4498/F_index";
+
+	}
+
+	@RequestMapping(path = "/Article.controller.json", method = RequestMethod.GET, produces = {
+			"application/json; charset=UTF-8" })
+	public @ResponseBody List<Article> showArticles() {
+		List<Article> artList = articleService.showAllArticles();
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("list",artList);
+		return artList;
+
+	}
+
+
+	@RequestMapping(path = "Article.controller", method = RequestMethod.GET)
+	public String showArticleList(Model m) {
 		m.addAttribute("artBean", articleService.showAllArticles());
 
-		return "azaz4498/index";
+		return "azaz4498/F_index";
 
 	}
 
-	@RequestMapping(path = "/searchByUserId",method = RequestMethod.GET)
-	public String DisplayByTitle(@RequestParam(name = "userid") String userid,Model m) {
-		ArticleService articleService = new ArticleService();
+
+	@RequestMapping(path = "/searchByUserId", method = RequestMethod.GET)
+	public String DisplayById(@RequestParam(name = "userid") String userid, Model m) {
+
+		m.addAttribute("artBean", articleService.searchByUserId(userid));
+		return "azaz4498/F_index";
+	}
+
+	@RequestMapping(path = "/titleSearch")
+	public String DisplayByTitle(@RequestParam(name = "title") String title, Model m) {
+		m.addAttribute("artBean", articleService.searchByTitle(title));
+		return "azaz4498/F_index";
+	}
+
+	@RequestMapping(path = "/artTypeSearch")
+	public String DisplayByType(@RequestParam(name = "articleType") int typeId, Model m) throws SQLException {
+		m.addAttribute("artBean", articleService.showArticlesByType(typeId));
+		m.addAttribute("typeBean", articleTypeService.showAllType());
+		return "azaz4498/F_index";
+
+	}
+
+	@RequestMapping(path = "/editPage.controller")
+	public String EditPage(@RequestParam(name = "artId") int articleId, Model m) throws SQLException {
+		m.addAttribute("artBean", articleService.showArticleById(articleId));
+
+		return "azaz4498/editPage";
+	}
+
+	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
+	public String Edit(@RequestParam(name = "articleTitle") String title,
+			@RequestParam(name = "articleContent") String content, 
+			@RequestParam(name = "artId") int articleId,
+			@RequestParam(name = "userid") String userid,
+			@RequestParam(name = "typeSelect") int typeId, 
+			Model m)
+			throws SQLException {
+
+		articleService.articleEdit(title, content, articleId, userid, typeId);
+		m.addAttribute("artBean", articleService.showAllArticles());
+
+		return "azaz4498/F_index";
+	}
+
+	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
+	public String Delete(@RequestParam(name = "artId") int articleId,Model m) {
+		articleService.deleteArticleByAdmin(articleId);
+		m.addAttribute("artBean", articleService.showAllArticles());
 		
-		m.addAttribute("artBean",articleService.searchByUserId(userid));
-		return "index";
+		return "azaz4498/F_index";
+
 	}
-	
+
 }

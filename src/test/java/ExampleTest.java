@@ -14,16 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:springmvc.servlet.xml")
 public class ExampleTest {
     private static ApplicationContext beans;
-//    private Logger logger = Logger.getLogger("org.hibernate.type.descriptor.sql.BasicBinder");
-//    @BeforeClass
-//    public static void init(){
-//        beans = new ClassPathXmlApplicationContext("springmvc.servlet.xml");
-//    }
-//    @AfterClass
-//    public static void close(){
-//        ((ConfigurableApplicationContext)beans).close();
-//    }
-
     @Autowired
     private UserService service;
     @Test

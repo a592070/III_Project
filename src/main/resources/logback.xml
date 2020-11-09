@@ -16,6 +16,9 @@
     <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE">
         <AppenderRef ref="STDOUT"/>
     </Logger>
+<!--    <Logger name="org.hibernate.type" level="TRACE">-->
+<!--        <AppenderRef ref="STDOUT"/>-->
+<!--    </Logger>-->
     <Logger name="org.hibernate.engine.transaction.internal.TransactionImpl" level="DEBUG">
         <AppenderRef ref="STDOUT"/>
     </Logger>

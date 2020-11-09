@@ -89,7 +89,7 @@ public class AttractionDO {
     }
 
     public void setToldescribe(String toldescribe) {
-        if(StringUtil.isEmpty(toldescribe)) toldescribe="暫時不提供資訊";
+//        if(StringUtil.isEmpty(toldescribe)) toldescribe="暫時不提供資訊";
         this.toldescribe = toldescribe;
     }
 
@@ -98,7 +98,7 @@ public class AttractionDO {
     }
 
     public void setDescription(String description) {
-        if(StringUtil.isEmpty(description)) description="暫時不提供資訊";
+//        if(StringUtil.isEmpty(description)) description="暫時不提供資訊";
         this.description = description;
     }
 
@@ -107,12 +107,12 @@ public class AttractionDO {
     }
 
     public void setTel(String tel) {
-        if(StringUtil.isEmpty(tel)) tel="暫時不提供資訊";
+//        if(StringUtil.isEmpty(tel)) tel="暫時不提供資訊";
         this.tel = tel;
     }
 
     public String getAddress() {
-        if(StringUtil.isEmpty(address)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(address)) return "暫時不提供資訊";
         return address;
     }
 
@@ -137,7 +137,7 @@ public class AttractionDO {
     }
 
     public String getOpenTime() {
-        if(StringUtil.isEmpty(openTime)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(openTime)) return "暫時不提供資訊";
         return openTime;
     }
 
@@ -146,7 +146,7 @@ public class AttractionDO {
     }
 
     public String getTicketInfo() {
-        if(StringUtil.isEmpty(ticketInfo)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(ticketInfo)) return "暫時不提供資訊";
         return ticketInfo;
     }
 
@@ -155,7 +155,7 @@ public class AttractionDO {
     }
 
     public String getTravellingInfo() {
-        if(StringUtil.isEmpty(travellingInfo)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(travellingInfo)) return "暫時不提供資訊";
         return travellingInfo;
     }
 
@@ -164,7 +164,7 @@ public class AttractionDO {
     }
 
     public String getKeywords() {
-        if(StringUtil.isEmpty(keywords)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(keywords)) return "暫時不提供資訊";
         return keywords;
     }
 
@@ -173,7 +173,7 @@ public class AttractionDO {
     }
 
     public String getRemarks() {
-        if(StringUtil.isEmpty(remarks)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(remarks)) return "暫時不提供資訊";
         return remarks;
     }
 
@@ -190,7 +190,7 @@ public class AttractionDO {
     }
 
     public String getRegion() {
-        if(StringUtil.isEmpty(region)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(region)) return "暫時不提供資訊";
         return region;
     }
 

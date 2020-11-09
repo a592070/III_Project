@@ -42,7 +42,7 @@ public class AttractionVO {
 
 
     public String getAddress() {
-        if(StringUtil.isEmpty(address)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(address)) return "暫時不提供資訊";
         return address;
     }
 
@@ -51,7 +51,7 @@ public class AttractionVO {
     }
 
     public String getTicketInfo() {
-        if(StringUtil.isEmpty(ticketInfo)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(ticketInfo)) return "暫時不提供資訊";
         return ticketInfo;
     }
 
@@ -60,7 +60,7 @@ public class AttractionVO {
     }
 
     public String getDescription() {
-        if(StringUtil.isEmpty(description)) description="暫時不提供資訊";
+//        if(StringUtil.isEmpty(description)) description="暫時不提供資訊";
         return description;
     }
 

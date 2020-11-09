@@ -56,24 +56,29 @@
                                 <div class="row justify-content-between">
                                     <%--地區選擇--%>
                                         <el-header style="text-align: left; font-size: 12px">
-                                            <el-dropdown justify="start" >
-                                                <el-button type="primary">
-                                                    選擇地區<i class="el-icon-arrow-down el-icon--right"></i>
-                                                </el-button>
-                                                <el-dropdown-menu slot="dropdown" >
-                                                    <el-dropdown-item disabled>--請選擇--</el-dropdown-item>
-                                                    <el-dropdown-item v-for="ele in region" v-bind:key="ele" @click.native="handleSelectRegion(ele)">{{ele}}</el-dropdown-item>
-                                                </el-dropdown-menu>
-                                            </el-dropdown>
+<%--                                            <el-dropdown justify="start" >--%>
+<%--                                                <el-button type="primary">--%>
+<%--                                                    選擇地區<i class="el-icon-arrow-down el-icon--right"></i>--%>
+<%--                                                </el-button>--%>
+<%--                                                <el-dropdown-menu slot="dropdown" >--%>
+<%--                                                    <el-dropdown-item disabled>--請選擇--</el-dropdown-item>--%>
+<%--                                                    <el-dropdown-item v-for="ele in region" v-bind:key="ele" @click.native="handleSelectedRegion(ele)">{{ele}}</el-dropdown-item>--%>
+<%--                                                </el-dropdown-menu>--%>
+<%--                                            </el-dropdown>--%>
+                                            <el-select v-model="currentRegion" placeholder="選擇地區" @change="handleSelectedRegion(currentRegion)">
+                                                <el-option label="--請選擇--" disabled></el-option>
+                                                <el-option v-for="ele in region" v-bind:key="ele" :value="ele" ></el-option>
+                                            </el-select>
                                         </el-header>
 
 
                                     <%--搜尋框--%>
                                     <div class="search-form d-none d-lg-inline-block col-4">
+                                        <span>當前搜尋: {{search}}</span>
                                         <div class="input-group">
-                                            <el-button icon="el-icon-search" v-on:click="handleSearch()">資料庫搜尋</el-button>
+                                            <el-button icon="el-icon-search" v-on:click="handleSearch">資料庫搜尋</el-button>
                                             <input type="text" name="query" id="search-input" class="form-control"
-                                                   autofocus autocomplete="off"
+                                                   autofocus ="off"
                                                    v-model="search"
                                                    placeholder="本頁搜尋..."/>
                                         </div>
@@ -133,8 +138,7 @@
                                             :page-size="pageData.pageSize"
                                             :total="pageData.totalSize"
                                             layout="total, prev, pager, next, jumper"
-                                            @size-change="handleSizeChange"
-                                            @current-change="handleCurrentChange">
+                                            @current-change="handleSelectPage">
                                     </el-pagination>
                                 </div>
                             </div>
@@ -155,60 +159,19 @@
         el: '#app',
         data: {
             search: '',
-            selectRegion: 'null',
-            region: ["全部", "臺北市", "新北市", "桃園市", "臺中市", "高雄市"],
+            currentRegion: null,
+            region: [],
             pageData: {
-                currentPage: 2,
-                pageSize: 15,
-                totalSize: 1000
+                currentPage: null,
+                pageSize: null,
+                totalSize: null
             },
-            tableData: [{
-                sn: 1,
-                name: "石岡水壩",
-                address: "臺中市422石岡區豐勢路1238號",
-                ticketInfo: "暫時不提供資訊"
-            },
+            tableData: [
                 {
-                    sn: 2,
-                    name: "葫蘆墩文化中心",
-                    address: "臺中市420豐原區圓環東路782 號",
-                    ticketInfo: "暫時不提供資訊"
-                },
-                {
-                    sn: 3,
-                    name: "萬春宮",
-                    address: "臺中市400中區成功路212號",
-                    ticketInfo: "暫時不提供資訊"
-                },
-                {
-                    sn: 4,
-                    name: "萬春宮",
-                    address: "臺中市400中區成功路212號",
-                    ticketInfo: "暫時不提供資訊"
-                },
-                {
-                    sn: 5,
-                    name: "萬春宮",
-                    address: "臺中市400中區成功路212號",
-                    ticketInfo: "暫時不提供資訊"
-                },
-                {
-                    sn: 6,
-                    name: "萬春宮",
-                    address: "臺中市400中區成功路212號",
-                    ticketInfo: "暫時不提供資訊"
-                },
-                {
-                    sn: 7,
-                    name: "萬春宮",
-                    address: "臺中市400中區成功路212號",
-                    ticketInfo: "暫時不提供資訊"
-                },
-                {
-                    sn: 8,
-                    name: "萬春宮",
-                    address: "臺中市400中區成功路212號",
-                    ticketInfo: "暫時不提供資訊"
+                    sn: null,
+                    name: null,
+                    address: null,
+                    ticketInfo: null
                 }],
             tableColumns: [
                 {
@@ -263,25 +226,78 @@
                 }
             ]
         },
+        created: function() {
+            this.initData();
+            this.getRegionData();
+        },
         methods: {
-            handleSizeChange(val) {
-                console.log(`每頁 \${val} 條`);
+            initData(){
+                axios.get('${pageContext.servletContext.contextPath}/admin/attraction/list/1')
+                    .then(response => {
+                        this.tableData = response.data.tableData;
+                        this.pageData = response.data.pageData;
+                    });
             },
-            handleCurrentChange(val) {
-                console.log(`當前頁: \${val}`);
+            getRegionData(){
+                axios.get('${pageContext.servletContext.contextPath}/admin/list.Region')
+                    .then(response => {
+                        response.data
+                        this.region = response.data;
+                        this.region.unshift("全部");
+                    });
             },
             handleEdit(index, row) {
                 console.log(index, row);
-
+                window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction/detail/"+row.sn;
             },
             handleDelete(index, row) {
                 console.log(index, row);
+                if(confirm("是否刪除?")){
+                    let url = '${pageContext.servletContext.contextPath}/admin/attraction/delete/'+row.sn;
+                    axios.post(url)
+                        .then(response => {
+                            if(response.data == true){
+                                alert("刪除成功")
+                                window.location.reload();
+                            }else{
+                                alert("刪除失敗")
+                            }
+                        });
+                }
+
             },
             handleSearch(){
-                console.log(vm.search);
+                console.log(this.search);
+                this.pageData.currentPage = 1;
+
+                this.handleSelectedData();
             },
-            handleSelectRegion(region){
+            handleSelectedRegion(region){
                 console.log(region);
+                this.currentRegion = region;
+                this.pageData.currentPage = 1;
+
+                this.handleSelectedData();
+            },
+            handleSelectedData(){
+                console.log(this.search);
+                if(this.currentRegion == "全部"){
+                    this.currentRegion = "";
+                }
+                let keyword = null;
+                if(this.search != ''){
+                    keyword = this.search;
+                }
+                let url = '${pageContext.servletContext.contextPath}/admin/attraction/list/'+this.pageData.currentPage+'/'+this.currentRegion+'/'+keyword;
+                axios.get(url)
+                    .then(response => {
+                        this.tableData = response.data.tableData;
+                        this.pageData = response.data.pageData;
+                    });
+            },
+            handleSelectPage(value) {
+                this.pageData.currentPage = value;
+                this.handleSelectedData();
             }
         }
 

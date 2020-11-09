@@ -4,12 +4,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import azaz4498.model.Article;
 import azaz4498.model.ArticleDAO;
 
-@Service("articleService")
+@Transactional
 public class ArticleService {
 	@Autowired
 	private ArticleDAO aDao;
@@ -34,8 +36,8 @@ public class ArticleService {
 		aDao.newArticle(title, typeId, content, userId);
 	}
 
-	public Article articleEdit(String title, String content, int articleId, String userid) throws SQLException {
-		return aDao.articleEdit(title, content, articleId, userid);
+	public Article articleEdit(String title, String content, int articleId, String userid,int typeId) throws SQLException {
+		return aDao.articleEdit(title, content, articleId, userid,typeId);
 	}
 
 	// 查詢文章(依照UserId)
@@ -47,4 +49,13 @@ public class ArticleService {
 	public List<Article> searchByTitle(String keyword) {
 		return aDao.searchByTitle(keyword);
 	}
+	//刪除文章
+	public boolean deleteArticle (int articleId, String userid) {
+		return aDao.deleteArticle(articleId, userid);
+	}
+	//刪除文章(後台)
+	public boolean deleteArticleByAdmin (int articleId) {
+		return aDao.deleteArticleByAdmin(articleId);
+	}
+	
 }

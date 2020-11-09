@@ -43,12 +43,9 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
-    public int getSizeByKeywords(String keyWords) {
-        if(StringUtil.isEmpty(keyWords)) {
-            keyWords="";
-        }else {
-            keyWords = "%"+keyWords+"%";
-        }
+    public int getSizeByKeywords(String keyWords, String region) {
+        keyWords = "%"+keyWords+"%";
+
         String hql = "select count(sn) from CarVO where carType like ?1 or company like ?2";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
@@ -59,7 +56,7 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
-    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled){
+    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled){
         keyWords = "%"+keyWords+"%";
 
         String hql = "from CarVO where carType like :keyword or company like :keyword order by "+orderFiled;

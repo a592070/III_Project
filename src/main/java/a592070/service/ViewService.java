@@ -24,6 +24,9 @@ public interface ViewService<T> {
     List<T> list(int currentPage, int pageSize, String orderFiled);
 
     int getSizeByKeyWords(String keywords);
+    int getSizeByKeyWords(String keywords, String region);
     List<T> listByKeyWords(int currentPage, int pageSize, String keywords);
-    List<T> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled);
+    List<T> listByKeyWords(int currentPage, int pageSize, String keywords, String region);
+
+    List<T> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled);
 }
