@@ -106,16 +106,6 @@
                                         :preview-src-list="[picture]"
                                         onerror="this.src='${pageContext.servletContext.contextPath}/assets/nopic.jpg'">
                                 </el-image>
-<%--                                <el-upload--%>
-<%--                                        class="avatar-uploader"--%>
-<%--                                        action=""--%>
-<%--                                        :show-file-list="false"--%>
-<%--                                        :on-success="handleAvatarSuccess"--%>
-<%--                                        :before-upload="beforeAvatarUpload"--%>
-<%--                                        ref="upload">--%>
-<%--                                    <img v-if="imageUrl" :src="imageUrl" class="avatar" >--%>
-<%--                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>--%>
-<%--                                </el-upload>--%>
                                 <el-upload
                                         action=""
                                         list-type="picture-card"
@@ -181,33 +171,29 @@
         el: '#app',
         data() {
             return {
-                attractionData: {},
+                attractionData: {
+                    sn: '',
+                    name: '',
+                    tel: '',
+                    address: '',
+                    region: '',
+                    px: '',
+                    py: '',
+                    pictureUrl: '',
+                    toldescribe: '',
+                    description: '',
+                    travellingInfo: '',
+                    ticketInfo: '',
+                    keywords: '',
+                    remarks: '',
+                    rating: '',
+                    openTime: ''
+                },
                 region: [],
                 imageUrl: '',
                 picture: '',
                 param: new FormData(),
                 dialogVisible: false
-
-                // region: ["全部", "臺北市", "新北市", "桃園市", "臺中市", "高雄市"],
-                // attractionData: {
-                //     sn: 4515,
-                //     name: '錦吉昆蟲館',
-                //     tel: '886-49-2920029',
-                //     address: '埔里鎮中山路一段21號',
-                //     region: '南投縣',
-                //     px: '121.0420900',
-                //     py: '23.9982700',
-                //     picture_url: 'http://travel.nantou.gov.tw/manasystem/files/scenic/20120513170853_food_food_0428.jpg',
-                //     picture: '',
-                //     tolDescription: '木生昆蟲館位於埔里愛蘭橋附近，錦吉昆蟲館位於觀音瀑布附近，全都收藏了世界各地之昆蟲標本約十幾萬種，是自然科學最佳學習場所。',
-                //     description: '',
-                //     travellingInfo: '＊開車路線 (以埔里為目的地)1.從北部出發:國道3號→草屯交流道→台14→經過愛蘭橋→往霧社方向中途路旁→錦吉昆蟲館2.從南部出發:國道3號→草屯交流道→台14→經過愛蘭橋→往霧社方向中途路旁→錦吉昆蟲館＊大眾運輸1.可至台中干城車站搭往埔里之客運→至埔里市區轉搭往霧社或奧萬大或松岡公車→錦吉昆蟲館',
-                //     ticketInfo: '',
-                //     keywords: '',
-                //     remarks: '',
-                //     rating: '3.3',
-                //     openTime: '上班時間AM08:00~PM06:00'
-                // }
 
             }
         },

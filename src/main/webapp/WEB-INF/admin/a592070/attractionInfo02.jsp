@@ -168,10 +168,10 @@
             },
             tableData: [
                 {
-                    sn: null,
-                    name: null,
-                    address: null,
-                    ticketInfo: null
+                    sn: '',
+                    name: '',
+                    address: '',
+                    ticketInfo: ''
                 }],
             tableColumns: [
                 {

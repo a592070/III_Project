@@ -138,7 +138,7 @@ public class AttractionController {
                               @RequestParam(name="attractionData", required = false)String attractionData) {
         boolean flag = false;
         try {
-            System.out.println(attractionData);
+//            System.out.println(attractionData);
             ObjectMapper mapper = new ObjectMapper();
             AttractionDO attractionDO = mapper.readValue(attractionData, AttractionDO.class);
 
