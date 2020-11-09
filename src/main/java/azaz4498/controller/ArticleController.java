@@ -33,8 +33,8 @@ public class ArticleController {
 	ArticleTypeService articleTypeService;
 
 	@RequestMapping(path = "/Forum")
-	public String ForumEntry() {
-
+	public String ForumEntry(Model m) {
+		m.addAttribute("artBean", articleService.showAllArticles());
 		return "azaz4498/F_index";
 
 	}
