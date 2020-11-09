@@ -31,7 +31,23 @@ public class RestaurantService {
 	public List<Show_RView> totalRestaurant(int first, int count) {
 		return rDao.totalRestaurant(first, count);
 	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public int getSizeByKeywords(String keyWords) {
+		return rDao.getSizeByKeywords(keyWords);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public List<Show_RView> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled) {
+		return rDao.listByKeywords(firstIndex, resultSize, keyWords, orderFiled);
+	}
 
+	@Transactional(rollbackFor = { Throwable.class })
+	public Restaurant updateStatus(BigDecimal r_sn, String status) {
+		return rDao.updateStatus(r_sn, status);
+	}
+	
+	
 	@Transactional(rollbackFor = { Throwable.class })
 	public int getRegionSize(String region) {
 		return rDao.getRegionSize(region);

@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import a592070.pojo.RestaurantVO;
 
 public class RestaurantDAO {
 	@Autowired
@@ -37,6 +36,39 @@ public class RestaurantDAO {
 		query.setMaxResults(count);
 		return query.list();
 	}
+	
+	//keyword
+	public int getSizeByKeywords(String keyWords) {
+		keyWords = "%"+keyWords+"%";
+		
+		String hql = "select count(r_sn) from Show_RView where name like :keyword or address like :keyword or region like :keyword or username like :keyword ";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keyword", keyWords);
+		return query.uniqueResult().intValue();
+	}
+	
+	 public List<Show_RView> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled) {
+	        keyWords = "%"+keyWords+"%";
+	        String hql = "from Show_RView where name like :keyword or address like :keyword or region like :keyword or username like :keyword order by "+orderFiled;
+
+	        Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
+	        query.setParameter("keyword", keyWords);
+	        
+	        query.setFirstResult(firstIndex);
+	        query.setMaxResults(resultSize);
+
+	        return query.list();
+	 }
+	 
+	 //Change Status
+	 public Restaurant updateStatus(BigDecimal r_sn, String status) {
+		 Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
+			if (result != null) {
+				result.setStatus(status);
+				return result;
+			}
+			return result;
+	 }
 
 	//Region
 	public int getRegionSize(String region) {
