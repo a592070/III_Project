@@ -25,7 +25,7 @@ import iring29.service.ModifyService;
 import iring29.service.RestaurantService;
 
 @Controller
-@SessionAttributes(names = { "rBean" })
+@SessionAttributes(names = { "rBean", "RBean"  })
 public class RestaurantController {
 	@Autowired
 	private RestaurantService rs;
@@ -101,12 +101,12 @@ public class RestaurantController {
 	@RequestMapping(path = "/DisplayRestaurant", method = RequestMethod.POST)
 	public String RestaurantDetail(@RequestParam("r_sn") BigDecimal r_sn, Model m) throws IOException {
 		Restaurant rBean = rs.restaurantInfo(r_sn);
-		m.addAttribute("rBean", rBean);
+		m.addAttribute("RBean", rBean);
 		return "iring29/R_modify";
 	}
 
 	@RequestMapping(path = "/ShowPic")
-	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("rBean") Restaurant r) {
+	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("RBean") Restaurant r) {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
@@ -115,17 +115,19 @@ public class RestaurantController {
 	}
 	
 	@RequestMapping(path = "/ModifyRestaurant", method = RequestMethod.POST)
-	public String ModifyRestaurant(@ModelAttribute("rBean") Restaurant r, @RequestParam("address") String address,
+	public String ModifyRestaurant( @RequestParam("r_sn") BigDecimal r_sn, @RequestParam("address") String address,
 			@RequestParam("opentime") String opentime, @RequestParam("description") String description,
 			@RequestParam("transportation") String transportation, @RequestParam("type") String type,
 			@RequestParam("region") String region, @RequestParam("serviceinfo") String serviceinfo,
 			@RequestParam("pic")  MultipartFile pic, Model m) throws IOException {
 		
+		System.out.println("in");
+		Restaurant r = new Restaurant();
 		r.setPic(pic.getInputStream().readAllBytes());
 		
-		Restaurant rBean = rs.updateRestaurant(r.getR_sn(), address, opentime, description, transportation, type,
+		Restaurant rBean = rs.updateRestaurant(r_sn, address, opentime, description, transportation, type,
 				region, serviceinfo, r.getPic());
-		m.addAttribute("rBean", rBean);
+		m.addAttribute("RBean", rBean);
 		return "iring29/R_modify";
 	}
 

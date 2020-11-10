@@ -209,13 +209,13 @@ pre {
 
 						
 							<div>
-								<h2 class="title">${rBean.name}</h2>
+								<h2 class="title">${RBean.name}</h2>
 								<div class="top"></div>
 
 								<p class="modify-img">
 									<label for="r-name">請選擇欲修改圖片上傳</label> 
 									<input type="file" id="pic" name="pic">
-										<Input type='hidden' name='r_sn' value='${rBean.r_sn}'>
+										<Input type='hidden' name='r_sn' value='${RBean.r_sn}'>
 									<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
 								</p>
 								<div class="div_img">
@@ -230,11 +230,11 @@ pre {
 									});
 									function readURL(input) {
 										console.log("in modify 2")
+										console.log(input.files && input.files[0])
 										if (input.files && input.files[0]) {
 											var reader = new FileReader();
 											reader.onload = function(e) {
-												$("preview_Rpic").attr('src',
-														e.target.result);
+												$("preview_Rpic").attr('src',e.target.result);
 											}
 											reader.readAsDataURL(input.files[0]);
 										}
@@ -248,21 +248,21 @@ pre {
 								<div>
 									<h4 class="res_result">地區</h4>
 									<p class="p_result">
-										<textarea name="region" id="region" cols="80" rows="5">${rBean.region}</textarea>
+										<textarea name="region" id="region" cols="80" rows="5">${RBean.region}</textarea>
 									</p>
 								</div>
 
 								<div>
 									<h4 class="res_result">地址</h4>
 									<p class="p_result">
-										<textarea name="address" id="address" cols="80" rows="5">${rBean.address}</textarea>
+										<textarea name="address" id="address" cols="80" rows="5">${RBean.address}</textarea>
 									</p>
 								</div>
 								<div>
 									<h4 class="res_result">交通方式</h4>
 									<p class="p_result">
 										<textarea name="transportation" id="transportation" cols="80"
-											rows="5">${rBean.transportation}</textarea>
+											rows="5">${RBean.transportation}</textarea>
 									</p>
 								</div>
 
@@ -273,13 +273,13 @@ pre {
 									<h4 class="res_result">適合聚餐類型</h4>
 									<p class="p_result">
 										<textarea name="serviceinfo" id="serviceinfo" cols="80"
-											rows="5">${rBean.serviceinfo}</textarea>
+											rows="5">${RBean.serviceinfo}</textarea>
 									</p>
 								</div>
 								<div>
 									<h4 class="res_result">料理種類</h4>
 									<p class="p_result">
-										<textarea name="type" id="type" cols="80" rows="5">${rBean.type}</textarea>
+										<textarea name="type" id="type" cols="80" rows="5">${RBean.type}</textarea>
 									</p>
 								</div>
 
@@ -290,14 +290,14 @@ pre {
 								<div>
 									<h4 class="res_result">營業時間</h4>
 									<p class="p_result">
-										<textarea name="opentime" id="opentime" cols="80" rows="5">${rBean.opentime}</textarea>
+										<textarea name="opentime" id="opentime" cols="80" rows="5">${RBean.opentime}</textarea>
 									</p>
 								</div>
 								<div>
 									<h4 class="res_result">餐廳描述</h4>
 									<p class="p_result">
 										<textarea name="description" id="description" cols="80"
-											rows="5">${rBean.description}</textarea>
+											rows="5">${RBean.description}</textarea>
 									</p>
 								</div>
 
@@ -306,10 +306,10 @@ pre {
 								</div>
 								<div>
 									<p class="p_result">
-										<c:if test="${rBean.status == 'N'}">停用&nbsp;
+										<c:if test="${RBean.status == 'N'}">停用&nbsp;
 											<button class="btn btn-success" onclick="statusR()">啟用</button>
 										</c:if>
-										<c:if test="${rBean.status == 'Y'}">啟用&nbsp;
+										<c:if test="${RBean.status == 'Y'}">啟用&nbsp;
 											<button class="btn btn-secondary" onclick="statusR()">停用</button>
 										</c:if>
 									</p>
