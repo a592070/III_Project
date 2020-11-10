@@ -131,12 +131,12 @@ public class ArticleDAO {
 		return list;
 	}
 	
-	public List<Article> searchArticle(String userid, String title, int type){
-		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article where ART_USERID LIKE ?1 OR ART_TITLE LIKE?2 OR ART_TYPE_ID LIKE?3",Article.class);
-		System.out.println("userid: "+userid+"\n"+"title"+title+"\n"+"type"+type);
-		query.setParameter(1, "%" + userid + "%");
-		query.setParameter(2, "%" + title + "%");
-		query.setParameter(3, "%" + type + "%");
+	public List<Article> searchArticle(String keyword){
+		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article where ART_USERID LIKE ?1 OR ART_TITLE LIKE?2",Article.class);
+		query.setParameter(1, "%" + keyword + "%");
+		query.setParameter(2, "%" + keyword + "%");
+//		query.setParameter(2, "%" + title + "%");
+//		query.setParameter(3, "%" + type + "%");
 		List<Article> list = query.list();
 		return list;
 	}

@@ -70,13 +70,11 @@ public class ArticleController {
 	}
 
 	@RequestMapping(path = "/articleSearch")
-	public String DisplayResults(@RequestParam(name = "userid",defaultValue = "",required = false) String userid,
-			@RequestParam(name = "title",defaultValue = "",required = false) String title,
-			@RequestParam(name = "articleType",defaultValue = "",required = false) int typeId, Model m) {
-		System.out.println("userid: "+userid+"\n"+"title"+title+"\n"+"type"+typeId);
-		
-		m.addAttribute("artBean", articleService.searchArticles(userid, title, typeId));
-		
+	public String DisplayResults(@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
+			Model m) {
+
+		m.addAttribute("artBean", articleService.searchArticles(keyword));
+
 		return "azaz4498/F_index";
 
 	}
