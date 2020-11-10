@@ -11,7 +11,7 @@
         <div id="sidebar" class="sidebar sidebar-with-footer">
             <!-- Aplication Brand -->
             <div class="app-brand">
-                <a href="/index.html">
+                <a href="${pageContext.servletContext.contextPath}/index">
                     <svg
                             class="brand-icon"
                             xmlns="http://www.w3.org/2000/svg"
@@ -37,8 +37,8 @@
 
                 <!-- sidebar menu -->
                 <ul class="nav sidebar-inner" id="sidebar-menu">
-                    <li class="has-sub active expand">
-                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/displayAccount">
+                    <li class="has-sub">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/accountPage">
                             <i class="mdi mdi-view-dashboard-outline"></i>
                             <span class="nav-text">用戶列表</span>
                         </a>
@@ -46,7 +46,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/attraction">
                             <i class="mdi mdi-atlassian"></i>
                             <span class="nav-text">景點</span>
                         </a>
@@ -78,7 +78,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/Forum">
                             <i class="mdi mdi-reddit"></i>
                             <span class="nav-text">論壇管理</span>
                         </a>
@@ -86,32 +86,29 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse"
-                           data-target="#order"
-                           aria-expanded="false" aria-controls="order">
+                        <a class="sidenav-item-link" role="button" href="javascript:void(0)" >
                             <i class="mdi mdi-book-open-page-variant"></i>
-                            <span class="nav-text">訂單管理</span> <b class="caret"></b>
+                            <span class="nav-text">訂單管理(NOT WORK)</span>
                         </a>
-                        <ul class="collapse show" id="order"
-                            data-parent="#sidebar-menu">
+                        <ul id="order">
                             <div class="sub-menu">
 
 
-                                <li class="active">
-                                    <a class="sidenav-item-link" href="index.html">
+                                <li>
+                                    <a class="sidenav-item-link" href="#">
                                         <span class="nav-text">餐廳訂單</span>
                                     </a>
                                 </li>
 
 
                                 <li>
-                                    <a class="sidenav-item-link" href="analytics.html">
+                                    <a class="sidenav-item-link" href="#">
                                         <span class="nav-text">旅館訂單</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a class="sidenav-item-link" href="analytics.html">
+                                    <a class="sidenav-item-link" href="#">
                                         <span class="nav-text">交通訂單</span>
                                     </a>
                                 </li>

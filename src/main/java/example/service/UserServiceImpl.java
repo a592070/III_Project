@@ -31,4 +31,13 @@ public class UserServiceImpl implements UserService{
         List<User> list = dao.selectSort(orderFiled);
         System.out.println(list);
     }
+    @Override
+    @Transactional(rollbackFor = {Throwable.class})
+    public void doSomething2(int id) {
+        String userPassword = dao.getUserPassword(id);
+        System.out.println(userPassword);
+//        User user = new User();
+//        user.setId(id);
+//        dao.delete2(user);
+    }
 }

@@ -4,6 +4,8 @@
 --------------------------------------------------------
 --  DDL for Table ACCOUNT
 --------------------------------------------------------
+DROP TABLE "III_TEAM_DBA"."ACCOUNT" cascade constraints;
+
 
   CREATE TABLE "III_TEAM_DBA"."ACCOUNT" 
    (	"USERNAME" VARCHAR2(255 BYTE), 
@@ -11,9 +13,9 @@
 	"IDENTITY" NUMBER(1,0), 
 	"EMAIL" VARCHAR2(255 BYTE), 
 	"PICTURE" BLOB, 
-	"MODIFY_DATE" TIMESTAMP (6) DEFAULT '19-10月-20 02.42.43.000000000 下午', 
+	"MODIFY_DATE" TIMESTAMP (6)  default sysdate,
 	"NICKNAME" VARCHAR2(255 BYTE), 
-	"REGISTER" TIMESTAMP (6) DEFAULT '19-10月-20 02.42.43.000000000 下午', 
+	"REGISTER" TIMESTAMP (6)  default sysdate,
 	"STATUS" VARCHAR2(255 BYTE) DEFAULT '啟用'
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 

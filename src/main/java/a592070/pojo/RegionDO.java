@@ -2,19 +2,26 @@ package a592070.pojo;
 
 import utils.StringUtil;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "REGION")
 public class RegionDO {
-    @Id@Column(name = "REGION_NAME", nullable = false)
+    @Id@Column(name = "REGION_ID")@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "REGION_NAME", nullable = false)
     private String region;
     private String area;
 
     public RegionDO() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getArea() {

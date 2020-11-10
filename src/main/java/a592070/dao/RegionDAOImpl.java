@@ -17,7 +17,7 @@ public class RegionDAOImpl implements RegionDAO{
 
     @Override
     public List<RegionDO> listRegion(){
-        return sessionFactory.getCurrentSession().createQuery("from RegionDO order by area", RegionDO.class).list();
+        return sessionFactory.getCurrentSession().createQuery("from RegionDO order by id", RegionDO.class).list();
     }
 
 }

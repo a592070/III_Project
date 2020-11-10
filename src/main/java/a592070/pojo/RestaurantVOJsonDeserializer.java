@@ -16,7 +16,6 @@ public class RestaurantVOJsonDeserializer extends JsonDeserializer {
         rVO.setSn(node.get("sn").intValue());
         rVO.setName(node.get("name").textValue());
         rVO.setDescription(node.get("description").textValue());
-        rVO.setPicture(node.get("picture").textValue());
         rVO.setRegion(node.get("region").textValue());
         rVO.setRating(node.get("rating").decimalValue());
         rVO.setAddress(node.get("address").textValue());

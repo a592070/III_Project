@@ -7,4 +7,7 @@ public interface UserService {
 
     @Transactional(rollbackFor = {Throwable.class})
     void doSomething(String orderFiled);
+
+    @Transactional(rollbackFor = {Throwable.class})
+    void doSomething2(int id);
 }

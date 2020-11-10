@@ -17,7 +17,6 @@ public class RestaurantVO {
     private Integer sn;
     private String name;
     private String type;
-    private String picture;
     private String address;
     private String description;
     private BigDecimal rating;
@@ -50,13 +49,6 @@ public class RestaurantVO {
         this.type = type;
     }
 
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
 
     public String getAddress() {
         return address;
@@ -97,7 +89,6 @@ public class RestaurantVO {
                 "sn=" + sn +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                ", picture='" + picture + '\'' +
                 ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +

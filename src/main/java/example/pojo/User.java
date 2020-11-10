@@ -3,6 +3,7 @@ package example.pojo;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "MYBATISUSER")
@@ -10,6 +11,7 @@ public class User {
     @Id
     private int id;
     private String name;
+    @Transient
     private String password;
 
     public User() {
