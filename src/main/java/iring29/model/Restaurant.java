@@ -7,9 +7,11 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
@@ -51,7 +53,8 @@ public class Restaurant {
 	@Column(name = "STATUS")
 	private String status;
 //	private ACCOUNT account;
-//	private Set<R_OrderBean> r_OrderBeans = new HashSet<R_OrderBean>();
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "R_Order_List")
+	private Set<R_Order_List> rSets = new HashSet<R_Order_List>();
 	
 	
 	
@@ -173,6 +176,14 @@ public class Restaurant {
 		this.status = status;
 	}
 
+	public Set<R_Order_List> getrSets() {
+		return rSets;
+	}
+
+	public void setrSets(Set<R_Order_List> rSets) {
+		this.rSets = rSets;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
