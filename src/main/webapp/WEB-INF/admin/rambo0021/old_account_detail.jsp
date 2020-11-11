@@ -96,10 +96,10 @@
 									<button type="button" class="btn btn-warning" data-toggle="modal"
 										data-target="#changePwd">修改密碼</button>
 									<input type="file" id="Apicture" name="Apicture" accept="image/*"
-										style="display: none" >
+										style="display: none" onchange="picsumit.click()">
 									<button type="button" onclick="Apicture.click()" class="btn btn-light">上傳圖片</button>
-									<!-- <button type="button" id="picsumit" name="picsumit" class="btn btn-light"
-										style="display: none"></button> -->
+									<button type="submit" id="picsumit" name="picsumit" class="btn btn-light"
+										style="display: none"></button>
 									<button type="button" id="delImg" class="btn btn-light">改為預設圖片</button>
 								</p>
 							</form>
@@ -509,7 +509,6 @@
 			)
 
 		})
-		//udimgAjax
 	</script>
 </body>
 
