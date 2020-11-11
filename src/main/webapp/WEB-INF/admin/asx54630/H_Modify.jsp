@@ -38,7 +38,9 @@
 	   				  介紹:<input class="form-control"  value="${hoteldetail.DESCRIPTION}" name="upDescription"><br>
 	   				 營業時間:<input class="form-control" type="text"  value="${hoteldetail.OPENTIME}" name="upOpentime"><br>
 	   				 住宿類型:<input class="form-control" type="text"  value="${hoteldetail.TYPE}" name="upType"><br>
-	   				 是否停權<button type="button" class="btn btn-secondary">禁用</button>
+	   				 權限狀態:<p id="Hstatus">${hoteldetail.SN}</p>
+	   				 是否停權:<button type="button" class="btn btn-secondary" id="enable" value="啟用">啟用</button>
+	   				 是否停權:<button type="button" class="btn btn-secondary" id="disable" value="禁用">禁用</button>
                     </div>
                		 <div class="modal-footer">
                   		<button type="button" class="btn btn-secondary" onclick="history.back()">取消</button>
@@ -46,7 +48,19 @@
                		 </div>
                		 </table>
                   </form>            
+	
+	
+				<script type="text/javascript">
 
+				$(document).ready(function () {
+					var status = $("#Hstatus").text()
+						if("啟用"==status){
+			                $("#enable").hide();
+						}else{
+							$("#disable").hide();
+						}
+
+				</script>
 
 
 </div>

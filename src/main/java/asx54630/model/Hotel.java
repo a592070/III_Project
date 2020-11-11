@@ -31,9 +31,10 @@ public class Hotel {
 	private String TYPE;
 	private BigDecimal RATING;
 	private String ACCOUNT;
+	private String STATUS;
 	
 	
-	public Hotel(BigDecimal sn, String name, String region, String address, String tel, BigDecimal dbroom, BigDecimal quadroom, String description, String openTime, String type, BigDecimal rating, String account) {
+	public Hotel(BigDecimal sn, String name, String region, String address, String tel, BigDecimal dbroom, BigDecimal quadroom, String description, String openTime, String type, BigDecimal rating, String account, String status) {
 		this.SN = sn;
 		this.NAME = name;
 		this.REGION = region;
@@ -46,6 +47,7 @@ public class Hotel {
 		this.TYPE = type;
 		this.RATING = rating;
 		this.ACCOUNT = account;
+		this.STATUS = status;
 	}
 	
 	public Hotel() {
@@ -162,5 +164,14 @@ public class Hotel {
 		ACCOUNT = aCCOUNT;
 	}
 
+	@Column(name = "STATUS")
+	public String getSTATUS() {
+		return STATUS;
+	}
+
+	public void setSTATUS(String sTATUS) {
+		STATUS = sTATUS;
+	}
+	
 
 }
