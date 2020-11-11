@@ -108,7 +108,6 @@ th{
 								<option value="金門">金門</option>
 								<option value="連江">連江</option>
 							</select>
-<!-- 							<button type="submit" class="btn btn-primary">Search</button> -->
 						</form>
 					</div>
 				<script>
@@ -128,31 +127,7 @@ th{
  							<button type="submit" class="btn btn-primary">Search</button> 
 						</form> 
  					</div> 
-					
-					
-<!-- 					<div class="search"> -->
-<%-- 						<form action="<%=application.getContextPath()%>/nameSearch" --%>
-<%-- 							method="GET"> --%>
-<!-- 							<span class="sp_search">餐廳名稱</span> <input type="text" -->
-<!-- 								name="restaurant_name" placeholder="請輸入關鍵字" /> -->
-<!-- 							<button type="submit" class="btn btn-primary">Search</button> -->
-<%-- 						</form> --%>
-<!-- 					</div> -->
 
-<!-- 					<div class="search"> -->
-<%-- 						<form action="<%=application.getContextPath()%>/usernameSearch" --%>
-<%-- 							method="POST"> --%>
-<!-- 							<span class="sp_search">會員帳號</span> <input type="text" -->
-<!-- 								name="username" placeholder="請輸入會員帳號" /> -->
-<!-- 							<button type="submit" class="btn btn-primary">查詢</button> -->
-<%-- 						</form> --%>
-<!-- 					</div> -->
-<!-- 					<div class="search"> -->
-<%-- 						<form action="<%=application.getContextPath()%>/Restaurant" --%>
-<%-- 							method="GET"> --%>
-<!-- 							<button type="submit" class="btn btn-primary">重新查詢</button> -->
-<%-- 						</form> --%>
-<!-- 					</div> -->
 				</div>
 				<h2>餐廳列表</h2>
 				<div class="table-responsive">
@@ -201,7 +176,6 @@ th{
 									</td>
 									<td><button type="submit" class="btn btn-danger">刪除</button></td>
 								</tr>
-
 
 							</c:forEach>
 

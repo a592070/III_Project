@@ -71,8 +71,8 @@ public class RestaurantDAO {
 	}
 
 	// Update Restaurant Info
-	public Restaurant updateRestaurant(BigDecimal r_sn, String address, String opentime,
-			String description, String transportation, String type, String region, String serviceinfo, byte[] pic) {
+	public Restaurant updateRestaurant(BigDecimal r_sn, String address, String opentime, String description,
+			String transportation, String type, String region, String serviceinfo, byte[] pic) {
 		Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
 		if (result != null) {
 			result.setAddress(address);
@@ -83,10 +83,18 @@ public class RestaurantDAO {
 			result.setRegion(region);
 			result.setServiceinfo(serviceinfo);
 			result.setPic(pic);
-			
+
 			return result;
 		}
 		return result;
+	}
+
+	// get Img
+	public byte[] getPic(BigDecimal r_sn) {
+		String hql = "select r.pic from Restaurant r where r.r_sn =?1";
+		Query<byte[]> query = sessionFactory.getCurrentSession().createQuery(hql, byte[].class);
+		query.setParameter(1, r_sn);
+		return query.uniqueResult();
 	}
 
 	/*

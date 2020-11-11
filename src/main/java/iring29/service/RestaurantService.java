@@ -51,9 +51,11 @@ public class RestaurantService {
 			String description, String transportation, String type, String region, String serviceinfo, byte[] pic) {
 		return rDao.updateRestaurant(r_sn, address, opentime, description, transportation, type, region, serviceinfo, pic);
 	}
-	/*
-	 * 以下可能可刪
-	 * */
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public byte[] getPic(BigDecimal r_sn) {
+		return rDao.getPic(r_sn);
+	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
 	public int getRegionSize(String region) {
@@ -64,29 +66,10 @@ public class RestaurantService {
 	public List<Show_RView> regionRestaurant(int first, int count, String region) {
 		return rDao.regionRestaurant(first, count, region);
 	}
-
-	@Transactional(rollbackFor = { Throwable.class })
-	public int getNameSize(String name) {
-		return rDao.getNameSize(name);
-	}
 	
-	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> nameRestaurant(int first, int count,String name) {
-		return rDao.nameRestaurant(first, count, name);
-	}
-	
-	@Transactional(rollbackFor = { Throwable.class })
-	public int getUserSize(String username) {
-		return rDao.getUserSize(username);
-	}
-
-	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> userRestaurant(int first, int count,String username) {
-		return rDao.userRestaurant(first, count, username);
-	}
-
 	@Transactional(rollbackFor = { Throwable.class })
 	public Restaurant restaurantInfo(BigDecimal r_sn) {
 		return rDao.restaurantInfo(r_sn);
 	}
+	
 }

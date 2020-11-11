@@ -203,7 +203,6 @@ pre {
 
 				<div class="container">
 				
-				<FORM  id="modifyR" name="modifyR" method="POST" enctype="multipart/form-data">
 				
 					<div class="box">
 
@@ -212,6 +211,7 @@ pre {
 								<h2 class="title">${RBean.name}</h2>
 								<div class="top"></div>
 
+				<FORM  id="modifyR" name="modifyR" method="POST" enctype="multipart/form-data">
 								<p class="modify-img">
 									<label for="r-name">請選擇欲修改圖片上傳</label> 
 									<input type="file" id="pic" name="pic">
@@ -300,10 +300,14 @@ pre {
 											rows="5">${RBean.description}</textarea>
 									</p>
 								</div>
+								</FORM>
+								
 
 								<div>
 									<h4 class="res_data">狀態</h4>
 								</div>
+								
+									<form id="statuss" name="statuss">
 								<div>
 									<p class="p_result">
 										<c:if test="${RBean.status == 'N'}">停用&nbsp;
@@ -312,8 +316,11 @@ pre {
 										<c:if test="${RBean.status == 'Y'}">啟用&nbsp;
 											<button class="btn btn-secondary" onclick="statusR()">停用</button>
 										</c:if>
+											<Input type='hidden' name='status' value='${r.status}'>
+											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
 									</p>
 								</div>
+									</form>
 
 
 							</div>
@@ -327,7 +334,7 @@ pre {
 							onclick="confrimModify()">確認修改</button>
 
 					</div>
-				</FORM>
+				
 
 					<script type="text/javascript"> 
 					 function confrimModify(){ 
@@ -341,6 +348,19 @@ pre {
 								return;
 							}
 						}
+
+					 function statusR(){
+							if (confirm("確定修改店家狀態 ? ") ) {
+								console.log("in modify");
+								document.forms["statuss"].action="<%=application.getContextPath()%>/ModifyStatus";
+								document.forms["statuss"].method="POST";
+								document.forms["statuss"].submit();
+							}else{
+								return null;
+								}
+							 
+						}
+						
 					</script>
 
 
