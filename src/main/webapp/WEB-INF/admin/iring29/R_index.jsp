@@ -154,15 +154,16 @@ th{
 									<td>${r.region}</td>
 									<td>${r.username}</td>
 									<td>
-									<form id="statuss" name="statuss">
+									<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/ModifyStatus" method="POST">
 										<c:if test="${r.status == 'N'}">停用&nbsp;
-											<button class="btn btn-success" onclick="statusR()" >啟用</button>
+											<button id="btn" type="button" class="btn btn-success" onclick="statusR()" >啟用</button>
 										</c:if>
 										<c:if test="${r.status == 'Y'}">啟用&nbsp;
-											<button class="btn btn-secondary" onclick="statusR()" >停用</button>
+											<button id="btn" type="button" class="btn btn-secondary" onclick="statusR()" >停用</button>
 										</c:if>
 											<Input type='hidden' name='status' value='${r.status}'>
-											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+											<Input type='hidden' name='r_sn' value='${r.r_sn}'>											
+										
 									</form>
 									</td>
 																		
@@ -179,22 +180,26 @@ th{
 
 							</c:forEach>
 
+
+
 						</tbody>
+						
 					</table>
+				</div>
 <script type="text/javascript">				
 function statusR(){
-	if (confirm("確定修改店家狀態 ? ") ) {
+	if (confirm("確定修改店家狀態?") ) {
 		console.log("in modify");
 		document.forms["statuss"].action="<%=application.getContextPath()%>/ModifyStatus";
 		document.forms["statuss"].method="POST";
 		document.forms["statuss"].submit();
+		
 	}else{
 		return null;
 		}
 	 
 }
 </script>
-				</div>
 			</div>
 			
 

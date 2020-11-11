@@ -86,7 +86,10 @@ public class RestaurantController {
 
 	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
 	public String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {
+		
 		System.out.println("r_sn = " +r_sn);
+		System.out.println("status = " +status);
+		
 		if (status.equals("Y")) {
 			rs.updateStatus(r_sn, "N");
 		} else if (status.equals("N")) {
