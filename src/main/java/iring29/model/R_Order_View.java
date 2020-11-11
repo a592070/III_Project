@@ -17,7 +17,15 @@ public class R_Order_View {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private BigDecimal id;
+	private BigDecimal id;	
+	@Column(name = "ORDER_ID")
+	private BigDecimal order_id;
+	@Column(name = "BOOK_TIME")
+	private Timestamp bookt_time;
+	@Column(name = "CUSTOMER_NUM")
+	private BigDecimal customer_num;
+	@Column(name = "NAME")
+	private String name;
 
 	public BigDecimal getId() {
 		return id;
@@ -34,15 +42,6 @@ public class R_Order_View {
 	public void setOrder_id(BigDecimal order_id) {
 		this.order_id = order_id;
 	}
-
-	@Column(name = "ORDER_ID")
-	private BigDecimal order_id;
-	@Column(name = "BOOK_TIME")
-	private Timestamp bookt_time;
-	@Column(name = "CUSTOMER_NUM")
-	private BigDecimal customer_num;
-	@Column(name = "NAME")
-	private String name;
 
 	public Timestamp getBookt_time() {
 		return bookt_time;
