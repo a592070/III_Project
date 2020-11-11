@@ -72,4 +72,9 @@ public class AccountServiceImpl implements AccountService {
 	public String disableAccount(String username,String status) {
 		return dao.disableAccount(username,status);
 	}
+
+	@Override
+	public String delAccount(String username) {
+		return dao.delAccount(username);
+	}
 }

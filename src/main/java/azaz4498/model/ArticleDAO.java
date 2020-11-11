@@ -3,7 +3,6 @@ package azaz4498.model;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,6 +127,16 @@ public class ArticleDAO {
 		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article where ART_USERID LIKE ?1",
 				Article.class);
 		query.setParameter(1, "%" + keyword + "%");
+		List<Article> list = query.list();
+		return list;
+	}
+	
+	public List<Article> searchArticle(String keyword){
+		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article where ART_USERID LIKE ?1 OR ART_TITLE LIKE?2",Article.class);
+		query.setParameter(1, "%" + keyword + "%");
+		query.setParameter(2, "%" + keyword + "%");
+//		query.setParameter(2, "%" + title + "%");
+//		query.setParameter(3, "%" + type + "%");
 		List<Article> list = query.list();
 		return list;
 	}

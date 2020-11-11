@@ -49,6 +49,9 @@ public class ArticleService {
 	public List<Article> searchByTitle(String keyword) {
 		return aDao.searchByTitle(keyword);
 	}
+	public List<Article> searchArticles(String keyword) {
+		return aDao.searchArticle(keyword);
+	}
 	//刪除文章
 	public boolean deleteArticle (int articleId, String userid) {
 		return aDao.deleteArticle(articleId, userid);

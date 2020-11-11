@@ -19,4 +19,5 @@ public interface AcountDAO {
 	String delAccountPic(String username);
 	String enableAccount(String username,String status);
 	String disableAccount(String usernamem,String status);
+	String delAccount(String username);
 }

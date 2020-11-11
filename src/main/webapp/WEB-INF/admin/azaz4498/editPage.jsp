@@ -11,6 +11,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
+<script
+		src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
 <title>論壇管理</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
@@ -78,18 +80,18 @@ h2 {
 									<h1>文章修改</h1>
 								</div>
 								<div class="card-body">
-									<form action =edit.controller method="POST">
+									<form action=edit.controller method="POST">
 										<input type="hidden" name="artId" value="${artBean[0].artId }">
-										<input type="hidden" name="userid" value="${artBean[0].artUserId }">
-										
+										<input type="hidden" name="userid"
+											value="${artBean[0].artUserId }">
+
 										<div class="form-group">
-											<label for="fname">標題</label> 
-											<input type="text"
-												name="articleTitle" id = "title" onblur ="showEditTitle()"class="form-control" value="${artBean[0].artTitle }">
+											<label for="fname">標題</label> <input type="text"
+												name="articleTitle" id="title" onblur="showEditTitle()"
+												class="form-control" value="${artBean[0].artTitle }">
 										</div>
 										<div class="form-group">
-											<label for="typeSelect">分類</label> 
-											<select
+											<label for="typeSelect">分類</label> <select
 												class="form-control" id="typeSelect" name="typeSelect">
 												<option value="1">旅遊</option>
 												<option value="2">住宿</option>
@@ -99,7 +101,8 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="content">內容</label>
-											<textarea class="form-control" id="content" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
+											<textarea class="form-control" id="editor" rows="15"
+												name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
 										<!-- <div class="form-group">
@@ -120,7 +123,7 @@ h2 {
 
 
 						</div>
-						
+
 					</div>
 				</div>
 
@@ -133,38 +136,48 @@ h2 {
 		</div>
 	</div>
 	<script type="text/javascript">
-		window.onload=getDefaultType();
+		window.onload = getDefaultType();
 
-		  
-			function getDefaultType(){//判斷文章類型 修改下拉選單預設值
-				var typeSelect = document.getElementById("typeSelect");
-				var options = typeSelect.getElementsByTagName("option");
-				var selectedType = ${artBean[0].articleType.typeId}-1;
-				console.log(selectedType);
-				options[selectedType].selected=true;
-			}	
+		function getDefaultType() {//判斷文章類型 修改下拉選單預設值
+			var typeSelect = document.getElementById("typeSelect");
+			var options = typeSelect.getElementsByTagName("option");
+			var selectedType = ${artBean[0].articleType.typeId}-1;
+			console.log(selectedType);
+			options[selectedType].selected = true;
+		}
 
+		function showEditTitle() {
+			var originTitle = document.getElementById("title").value;
+			if (originTitle == "${artBean[0].artTitle }") {
+			} else {
+				var choice = confirm("確定要將標題修改為:\n"
+						+ document.getElementById("title").value);
+				if (choice) {
 
-			function showEditTitle(){
-				var originTitle = document.getElementById("title").value;
-				if(originTitle=="${artBean[0].artTitle }"){
-				}else{
-					var choice =confirm("確定要將標題修改為:\n"+document.getElementById("title").value);
-					if(choice){
-						
-						}else
-							document.getElementById("title").value="${artBean[0].artTitle }";
-					}
-				
-				
-				
-				}
-
+				} else
+					document.getElementById("title").value = "${artBean[0].artTitle }";
+			}
 			
-	</script>
+
+		}
+		 
+         
+ 	</script>
+	<script>
+		ClassicEditor
+    		.create( document.querySelector( '#editor' ))
+    		.then( editor => {
+        				console.log( editor );
+    		})
+    		.catch( error => {
+        				console.error( error );
+    		} );
+ 	</script>
+
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+	
 
 
 </body>
