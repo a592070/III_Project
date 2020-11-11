@@ -173,5 +173,11 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
+	@RequestMapping(path = "DeleteRestaurant", method = RequestMethod.POST)
+	public String DelRestaurant(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
+		String result = rs.deleteRestaurant(r_sn);
+		m.addAttribute("result",result);
+		return "iring29/result";
+	}
 
 }
