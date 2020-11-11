@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "R_ORDER_VIEW")
-public class R_Order_View {
+public class R_Order_VO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

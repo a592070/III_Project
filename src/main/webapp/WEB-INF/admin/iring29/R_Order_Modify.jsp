@@ -19,6 +19,10 @@
 	width: 500px;
 	text-align: center;
 }
+.div-back {
+	margin-left: 80px;
+	margin-top: 20px;
+}
 </style>
 
 </head>
@@ -32,54 +36,53 @@
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
 
+				<FORM id="RHome" name="RHome"
+					action="<%=pageContext.getServletContext().getContextPath()%>/RestaurantList"
+					method="GET">
+					<div class="div-back">
+						<button type="submit" class="btn btn-primary">回餐廳列表</button>
+					</div>
+				</FORM>
+
+
 				<div class="col-md-8 order-md-1">
-					<h3 class="mb-3">大訂單號碼</h3>
+					<h3 class="mb-3">大訂單號碼&nbsp;${ROList.order_id}</h3>
 					<hr>
-					<h4 class="mb-3">餐廳訂單號碼</h4>
+					<h4 class="mb-3">餐廳訂單號碼&nbsp;${ROList.id}</h4>
 					<hr>
-					<h4 class="mb-3">餐廳名稱</h4>
+					<h4 class="mb-3">餐廳名稱&nbsp;</h4>
+					<h4>${ROList.name}</h4>
 					<hr>
-					<h4 class="mb-3">下訂帳號</h4>
+					<h4 class="mb-3">下訂帳號&nbsp;</h4>
+					<h4>${ROList.username}</h4>
 					<hr>
 					<div class="row"></div>
 					<h4 class="mb-3">訂單資料</h4>
 					<div class="col-md-6 mb-3">
-						<label for="ordername">下訂者姓名</label> <input class="form-control"
-							id="ordername">
+						<label for="ordername">下訂者姓名</label> 
+						<textarea class="form-control"	id="ordername" cols="80" rows="1"> ${ROList.cus_name}</textarea>
 
 					</div>
 
 					<div class="col-md-6 mb-3">
-						<label for="phone">下訂者電話</label> <input class="form-control"
-							id="phone">
+						<label for="phone">下訂者電話</label> 
+						<textarea class="form-control"	id="ordername" cols="80" rows="1"> ${ROList.cus_phone} </textarea>
 
 					</div>
 					<hr>
 
 
-					<h4 class="mb-3">預定時間</h4>
+					<h4 class="mb-3">預定時間&nbsp;${date}&nbsp;${time}</h4>
 					<div class="col-md-6 mb-3">
-						<label>日期</label> <input type="date" name="book_date" id="theDate"
-							min="">
+						<label>日期</label> <input type="date" name="book_date" id="theDate" >
 						<script>
-							var date = new Date();
-
-							var day = date.getDate();
-							var month = date.getMonth() + 1;
-							var year = date.getFullYear();
-
-							if (month < 10)
-								month = "0" + month;
-							if (day < 10)
-								day = "0" + day;
-
-							var today = year + "-" + month + "-" + day;
-							console.log(typeof (today));
-							document.getElementById("theDate").value = today;
-							document.getElementById("theDate").min = today;
+							console.log("${date}");
+							document.getElementById("theDate").value = "${date}";
+							document.getElementById("theDate").min = "${date}";
 						</script>
 
-						<label>時間</label> <select>
+						<label>時間</label> 
+						<select id=sel>
 							<option value="11:00">11:00</option>
 							<option value="12:00">12:00</option>
 							<option value="13:00">13:00</option>
@@ -89,16 +92,48 @@
 							<option value="19:00">19:00</option>
 							<option value="20:00">20:00</option>
 						</select>
+						<script>
+							console.log("${time}");
+							switch ("${time}"){
+							case'11:00':
+								document.getElementById("sel")[0].selected=true;
+								break;
+							case'12:00':
+								document.getElementById("sel")[1].selected=true;
+								break;
+							case'13:00':
+								document.getElementById("sel")[2].selected=true;
+								break;
+							case'14:00':
+								document.getElementById("sel")[3].selected=true;
+								break;
+							case'17:00':
+								document.getElementById("sel")[4].selected=true;
+								break;
+							case'18:00':
+								document.getElementById("sel")[5].selected=true;
+								break;
+							case'19:00':
+								document.getElementById("sel")[6].selected=true;
+								break;
+							case'20:00':
+								document.getElementById("sel")[7].selected=true;
+								break;
+							}
+							
+						</script>
 					</div>
 					<hr>
 					<h4 class="mb-3">總金額 500 元</h4>
 					<hr>
-					<h4 class="mb-3">訂單狀態</h4>
+					<h4 class="mb-3">訂單狀態&nbsp;</h4>
 					<hr>
 					<div class="modify_div">
 						<button class="btn btn-warning" name="confirm" value="confrim"
 							onclick="confrimModify()">確認修改</button>
 					</div>
+					
+					
 				</div>
 			</div>
 		</div>
