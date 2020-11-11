@@ -19,7 +19,9 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import pojo.OrderTableBean;
+import global.pojo.OrderTable;
+
+
 
 @Entity
 @Table(name = "account")
@@ -50,8 +52,8 @@ public class AccountBean {
 	@JoinColumn(name = "IDENTITY")
 	private IdentityBean identityBean;
     
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accountBean")
-	private List<OrderTableBean> orderTableBeans;// 大訂單 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "accountBean")
+	private List<OrderTable> orderTable;// 大訂單 
 
 	public AccountBean() {
 
@@ -152,6 +154,14 @@ public class AccountBean {
 
 	public void setIdentityBean(IdentityBean identityBean) {
 		this.identityBean = identityBean;
+	}
+
+	public List<OrderTable> getOrderTable() {
+		return orderTable;
+	}
+
+	public void setOrderTable(List<OrderTable> orderTable) {
+		this.orderTable = orderTable;
 	}
 	
 }
