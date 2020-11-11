@@ -1,6 +1,8 @@
 package asx54630.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,20 @@ public class H_Controller {
 		
 		return "asx54630/H_index";
 		}
-
+	
+	
+	@RequestMapping(path = "/hoteldetail", method = RequestMethod.GET) //查詢單筆_給修改用
+	public String processHotelDetail(@RequestParam(name = "detailsn") BigDecimal detailsn,Model m) {
+			
+		Hotel hoteldetail = hService.hotelDetail(detailsn);
+		m.addAttribute("hoteldetail", hoteldetail);
+		
+		return "asx54630/H_Modify";
+		}
 	
 	@RequestMapping(path = "/hotelselect", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //查詢
 	public String processHotelSelectPage(@RequestParam(name = "keyword") String keyword, @RequestParam(name = "regionkeywd") String regionkeywd, @RequestParam(name = "typekeywd") String typekeywd, Model m) {
-		
+
 		List<Hotel> hoteldata = hService.selectAll(keyword, regionkeywd,typekeywd);
 		m.addAttribute("hoteldata", hoteldata);
 		
@@ -57,10 +68,7 @@ public class H_Controller {
 		Hotel hotelupdate = hService.update(bsn,updateName,updateRegion,updatesn,updateTel,bdbroom,dqdroom,updateDescription,updateOpentime,updateType);
 		m.addAttribute("hotelupdate", hotelupdate);
 		
-		List<Hotel> hoteldata = hService.selectAll("","","");
-		m.addAttribute("hoteldata", hoteldata);
-		
-		return "asx54630/H_index";
+		return "redirect:hotelindex";
 		}
 	
 	@RequestMapping(path = "/hoteldelete", method = RequestMethod.POST) //刪除
@@ -68,11 +76,8 @@ public class H_Controller {
 		BigDecimal dsn = new BigDecimal(deleteSn);
 		
 		boolean hoteldelete = hService.delete(dsn);
-		m.addAttribute("hoteldelete", hoteldelete);
+		m.addAttribute("hoteldelete", hoteldelete);		
 		
-		List<Hotel> hoteldata = hService.selectAll("","","");
-		m.addAttribute("hoteldata", hoteldata);
-		
-		return "asx54630/H_index";
+		return "redirect:hotelindex";
 		}
 }
