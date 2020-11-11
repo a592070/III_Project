@@ -36,8 +36,8 @@ public class ArticleService {
 		aDao.newArticle(title, typeId, content, userId);
 	}
 
-	public Article articleEdit(String title, String content, int articleId, String userid) throws SQLException {
-		return aDao.articleEdit(title, content, articleId, userid);
+	public Article articleEdit(String title, String content, int articleId, String userid,int typeId) throws SQLException {
+		return aDao.articleEdit(title, content, articleId, userid,typeId);
 	}
 
 	// 查詢文章(依照UserId)
@@ -49,4 +49,16 @@ public class ArticleService {
 	public List<Article> searchByTitle(String keyword) {
 		return aDao.searchByTitle(keyword);
 	}
+	public List<Article> searchArticles(String keyword) {
+		return aDao.searchArticle(keyword);
+	}
+	//刪除文章
+	public boolean deleteArticle (int articleId, String userid) {
+		return aDao.deleteArticle(articleId, userid);
+	}
+	//刪除文章(後台)
+	public boolean deleteArticleByAdmin (int articleId) {
+		return aDao.deleteArticleByAdmin(articleId);
+	}
+	
 }

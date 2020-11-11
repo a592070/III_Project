@@ -9,8 +9,6 @@ import utils.StringUtil;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 @JsonDeserialize(using = AttractionJsonDeserializer.class)
 @JsonSerialize(using = AttractionJsonSerializer.class)
@@ -33,8 +31,9 @@ public class AttractionDO {
     private BigDecimal py;
     @Column(name = "OPENTIME")
     private String openTime;
-    private String picture;
-    private byte[] pic;
+    @Column(name = "PICTURE_URL")
+    private String pictureUrl;
+    private byte[] picture;
     @Column(name = "TICKETINFO")
     private String ticketInfo;
     @Column(name = "TRAVELLINGINFO")
@@ -90,7 +89,7 @@ public class AttractionDO {
     }
 
     public void setToldescribe(String toldescribe) {
-        if(StringUtil.isEmpty(toldescribe)) toldescribe="暫時不提供資訊";
+//        if(StringUtil.isEmpty(toldescribe)) toldescribe="暫時不提供資訊";
         this.toldescribe = toldescribe;
     }
 
@@ -99,7 +98,7 @@ public class AttractionDO {
     }
 
     public void setDescription(String description) {
-        if(StringUtil.isEmpty(description)) description="暫時不提供資訊";
+//        if(StringUtil.isEmpty(description)) description="暫時不提供資訊";
         this.description = description;
     }
 
@@ -108,12 +107,12 @@ public class AttractionDO {
     }
 
     public void setTel(String tel) {
-        if(StringUtil.isEmpty(tel)) tel="暫時不提供資訊";
+//        if(StringUtil.isEmpty(tel)) tel="暫時不提供資訊";
         this.tel = tel;
     }
 
     public String getAddress() {
-        if(StringUtil.isEmpty(address)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(address)) return "暫時不提供資訊";
         return address;
     }
 
@@ -138,7 +137,7 @@ public class AttractionDO {
     }
 
     public String getOpenTime() {
-        if(StringUtil.isEmpty(openTime)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(openTime)) return "暫時不提供資訊";
         return openTime;
     }
 
@@ -147,7 +146,7 @@ public class AttractionDO {
     }
 
     public String getTicketInfo() {
-        if(StringUtil.isEmpty(ticketInfo)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(ticketInfo)) return "暫時不提供資訊";
         return ticketInfo;
     }
 
@@ -156,7 +155,7 @@ public class AttractionDO {
     }
 
     public String getTravellingInfo() {
-        if(StringUtil.isEmpty(travellingInfo)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(travellingInfo)) return "暫時不提供資訊";
         return travellingInfo;
     }
 
@@ -165,7 +164,7 @@ public class AttractionDO {
     }
 
     public String getKeywords() {
-        if(StringUtil.isEmpty(keywords)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(keywords)) return "暫時不提供資訊";
         return keywords;
     }
 
@@ -174,7 +173,7 @@ public class AttractionDO {
     }
 
     public String getRemarks() {
-        if(StringUtil.isEmpty(remarks)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(remarks)) return "暫時不提供資訊";
         return remarks;
     }
 
@@ -191,7 +190,7 @@ public class AttractionDO {
     }
 
     public String getRegion() {
-        if(StringUtil.isEmpty(region)) return "暫時不提供資訊";
+//        if(StringUtil.isEmpty(region)) return "暫時不提供資訊";
         return region;
     }
 
@@ -199,19 +198,19 @@ public class AttractionDO {
         this.region = region;
     }
 
-    public String getPicture() {
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String picture_url) {
+        this.pictureUrl = picture_url;
+    }
+
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
-    }
-
-    public byte[] getPic() {
-        return pic;
-    }
-
-    public void setPic(byte[] pic) {
-        this.pic = pic;
     }
 }

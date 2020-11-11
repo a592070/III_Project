@@ -21,6 +21,7 @@ public class HotelVO {
     private int quadrupleRoomPrice;
     private BigDecimal rating;
     private String description;
+    private String region;
 
     public HotelVO() {
     }
@@ -82,6 +83,14 @@ public class HotelVO {
         this.description = description;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
     @Override
     public String toString() {
         return "HotelVO{" +
@@ -91,6 +100,8 @@ public class HotelVO {
                 ", doubleRoomPrice=" + doubleRoomPrice +
                 ", quadrupleRoomPrice=" + quadrupleRoomPrice +
                 ", rating=" + rating +
+                ", description='" + description + '\'' +
+                ", region='" + region + '\'' +
                 '}';
     }
 }
