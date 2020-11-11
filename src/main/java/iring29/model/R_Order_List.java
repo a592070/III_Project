@@ -8,8 +8,8 @@ import javax.persistence.Table;
 
 import global.pojo.OrderTable;
 
-@Entity
-@Table(name = "R_ORDER_LIST")
+//@Entity
+//@Table(name = "R_ORDER_LIST")
 public class R_Order_List {
 
 	private BigDecimal id;

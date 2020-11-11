@@ -88,6 +88,7 @@
                 <th>地址</th>
                 <th>電話</th>                                            
                 <th>住宿類型</th>
+                <td>狀態</td>
                 <th>修改</th>
                 <th>刪除</th>
             </tr>
@@ -99,10 +100,11 @@
                 <td>${hotels.NAME}</td>
                 <td>${hotels.REGION}</td>
                 <td>${hotels.ADDRESS}</td>
-                <td>${hotels.TEL}</td>
                 <td>${hotels.TYPE}</td>
+                <td>${hotels.STATUS}</td>
+                <td><button type="button" class="btn btn-primary mb-2"   onclick="clickdetail('${hotels.SN}')">啟用</button></td>
                 <td><button type="button" class="btn btn-primary mb-2"   onclick="clickdetail('${hotels.SN}')">修改</button></td>
-               <td><button type="button" class="btn btn-primary"   onclick="clickdelete('${hotels.SN}')">刪除</button></td>
+               <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
             </tr>
             </c:forEach> 
 
@@ -116,13 +118,47 @@
 
 		}
 
-		function clickdelete(id){
+		function clickdelete(id,name){
 
 			$("#deleteId").val(id);
 		}
 
-		</script> 
+		function clickstatus(id){
 
+			document.location.href="${pageContext.servletContext.contextPath}/hotelstatus?detailsn="+id;
+
+		}
+
+		</script> 
+		
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalCenterTitle">刪除</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+                <form action="hoteldelete" method="POST">
+                  <table>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label"></label>
+                      <input type="hidden" id = "deleteId" value="" name="deleteId">
+                      <h4>是否確認刪除?</h4>
+                      <p></p>
+                    </div>
+               		 <div class="modal-footer">
+                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                 	 <button type="submit" class="btn btn-primary">確認</button>
+               		 </div>
+                  </form> 
+             </div>
+           </div>
+         </div>
+       </div>
+		
 		</div>
 	</div>
 
