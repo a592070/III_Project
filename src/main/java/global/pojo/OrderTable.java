@@ -2,6 +2,9 @@ package global.pojo;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import java.util.HashSet;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,7 +20,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+
 import innocence741.model.T_Order_List;
+
+import iring29.model.R_Order_List;
+
 import rambo0021.pojo.AccountBean;
 
 @Entity
@@ -33,6 +40,9 @@ public class OrderTable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USERNAME")
 	private AccountBean accountBean;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "oTable")
+	private Set<R_Order_List> r_Order_Lists;
+
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order_table", cascade = CascadeType.ALL)
 //	@Transient
@@ -61,6 +71,13 @@ public class OrderTable {
 		this.t_Order_Lists.add(tBean);
 	}
 
+
+	public OrderTable() {
+		super();
+		r_Order_Lists = new HashSet<R_Order_List>();
+	}
+	
+
 	public BigDecimal getOrder_id() {
 		return order_id;
 	}
@@ -84,5 +101,19 @@ public class OrderTable {
 	public void setAccountBean(AccountBean accountBean) {
 		this.accountBean = accountBean;
 	}
+
+	public Set<R_Order_List> getR_Order_Lists() {
+		return r_Order_Lists;
+	}
+
+	public void setR_Order_Lists(Set<R_Order_List> r_Order_Lists) {
+		this.r_Order_Lists = r_Order_Lists;
+	}
+	
+	public void addR_Order_Lists(R_Order_List rList) {
+		this.r_Order_Lists.add(rList);
+	}
+	
+	
 
 }

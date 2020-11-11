@@ -86,7 +86,10 @@ public class RestaurantController {
 
 	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
 	public String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {
+		
 		System.out.println("r_sn = " +r_sn);
+		System.out.println("status = " +status);
+		
 		if (status.equals("Y")) {
 			rs.updateStatus(r_sn, "N");
 		} else if (status.equals("N")) {
@@ -170,5 +173,11 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
+	@RequestMapping(path = "DeleteRestaurant", method = RequestMethod.POST)
+	public String DelRestaurant(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
+		String result = rs.deleteRestaurant(r_sn);
+		m.addAttribute("result",result);
+		return "iring29/result";
+	}
 
 }
