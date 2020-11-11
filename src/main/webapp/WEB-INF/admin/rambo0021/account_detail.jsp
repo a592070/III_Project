@@ -90,13 +90,13 @@
 						<div>
 							<h2 class="title" id="username">${userDetail.userName}</h2>
 							<div class="top"></div>
-							<form action="<%=application.getContextPath()%>/admin/udAccountImg" method="POST"
+							<form method="POST"
 								enctype="multipart/form-data">
 								<p class="modify-img">
 									<button type="button" class="btn btn-warning" data-toggle="modal"
 										data-target="#changePwd">修改密碼</button>
 									<input type="file" id="Apicture" name="Apicture" accept="image/*"
-										style="display: none" >
+										style="display: none">
 									<button type="button" onclick="Apicture.click()" class="btn btn-light">上傳圖片</button>
 									<!-- <button type="button" id="picsumit" name="picsumit" class="btn btn-light"
 										style="display: none"></button> -->
@@ -105,7 +105,8 @@
 							</form>
 							<div class="div_img">
 								<c:if test="${!empty userDetail.picture}">
-									<img class="img-circle" id="userPic" src="<%=application.getContextPath()%>/admin/ShowAccountPic">
+									<img class="img-circle" id="userPic"
+										src="<%=application.getContextPath()%>/admin/ShowAccountPic">
 								</c:if>
 								<c:if test="${empty userDetail.picture}">
 									<img src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
@@ -144,7 +145,7 @@
 							</div>
 							<div class="middle">
 								<h4 class="account_result">狀態</h4>
-								<p class="p_result" id="sData" >${userDetail.status}</p>
+								<p class="p_result" id="sData">${userDetail.status}</p>
 								<button type="button" id="sEnable" class="btn btn-success">帳號啟用</button>
 								<button type="button" id="sDisable" class="btn btn-danger">帳號禁用</button>
 							</div>
@@ -329,13 +330,13 @@
 
 	<script>
 		$(document).ready(function () {
-		var status = $("#sData").text()
-			if("啟用"==status){
-                $("#sEnable").hide();
-			}else{
+			var status = $("#sData").text()
+			if ("啟用" == status) {
+				$("#sEnable").hide();
+			} else {
 				$("#sDisable").hide();
 			}
-		
+
 		});
 		var username = $("#username").text()
 		//passwordAjax
@@ -456,25 +457,25 @@
 			$.ajax(
 				{
 					type: 'POST',
-					data: { "username": username},
+					data: { "username": username },
 					url: '${pageContext.servletContext.contextPath}/admin/delAccountPic',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
-						$("#userPic").attr("src","<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png")
+						$("#userPic").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png")
 					}
 
 				}
 			)
 		})
 		//enableAjax
-		$("#sEnable").click(function(){
+		$("#sEnable").click(function () {
 			console.log("啟用帳號")
-			var status ="啟用"
-            $.ajax(
+			var status = "啟用"
+			$.ajax(
 				{
 					type: 'POST',
-					data: { "username": username,"status":status},
+					data: { "username": username, "status": status },
 					url: '${pageContext.servletContext.contextPath}/admin/enableAccount',
 					dataType: 'text',
 					success: function (response) {
@@ -489,13 +490,13 @@
 
 		})
 		//disableAjax
-		$("#sDisable").click(function(){
+		$("#sDisable").click(function () {
 			console.log("禁用帳號")
-			var status ="禁用"
-            $.ajax(
+			var status = "禁用"
+			$.ajax(
 				{
 					type: 'POST',
-					data: { "username": username,"status":status},
+					data: { "username": username, "status": status },
 					url: '${pageContext.servletContext.contextPath}/admin/disableAccount',
 					dataType: 'text',
 					success: function (response) {
@@ -510,6 +511,54 @@
 
 		})
 		//udimgAjax
+		$("#Apicture").change(function () {
+			var form1 = $(this).parents('form');
+			var formData = new FormData(form1[0]); 
+			console.log("換圖片")
+            readURL(this);
+			$.ajax({
+                    
+					type:"POST",
+					url: "<%=application.getContextPath()%>/admin/udAccountImg",
+					data: {formData,"username": username },
+					processData : false, 
+					contentType : false,
+					dataType: "text",
+   
+					success : (response) => {
+					   console.log(response);
+					   alert("修改成功");
+   
+					},
+   
+					error:function(xhr, ajaxOptions, thrownError){
+   
+						console.log(xhr.status+"\n"+thrownError);
+					}
+   
+				});
+   
+		   }
+
+		})
+
+		function readURL(input){
+
+			if (input.files && input.files[0]) {
+
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+
+					$("#userPic").attr('src', e.target.result);
+
+				}
+
+				reader.readAsDataURL(input.files[0]);
+
+			}
+
+		}
 	</script>
 </body>
 

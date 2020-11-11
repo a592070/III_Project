@@ -64,7 +64,7 @@ public class AccountController {
 			return new ResponseEntity<byte[]>(userDetail.getPicture(), headers, HttpStatus.OK);
 	}
 	@RequestMapping(path = "/udAccountImg")
-	public void udAccountImg(@ModelAttribute("userDetail")AccountBean userDetail, @RequestParam("Apicture") MultipartFile img,Model m) throws IOException {
+	public void  udAccountImg(@RequestParam String username, @RequestParam("Apicture") MultipartFile img,Model m) throws IOException {
 		InputStream is =new BufferedInputStream(img.getInputStream());
 //		byte[] b =new byte[is.available()];
 //        is.read(b);
@@ -76,8 +76,7 @@ public class AccountController {
 		while((len =is.read(b))!=-1) {
 			baos.write(b, 0, len);
 		}
-		userDetail.setPicture(baos.toByteArray());
-		service.updateAccImg(userDetail.getPicture(), userDetail.getUserName());
+		service.updateAccImg(baos.toByteArray(), username);
 		baos.close();
 	}
 	@PostMapping("/udAccountPwd")
@@ -111,6 +110,8 @@ public class AccountController {
 	public @ResponseBody String delAccountPic(@RequestParam("username") String username) {
 		return service.delAccountPic(username);
 	}
+	
+	//---------------------------------------------------------------------------------------------------------------
 	@PostMapping("/enableAccount")
 	public @ResponseBody String enableAccount(@RequestParam("username") String username,@RequestParam String status) {
 		return service.enableAccount(username,status);
