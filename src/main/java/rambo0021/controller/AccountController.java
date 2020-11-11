@@ -1,9 +1,11 @@
 package rambo0021.controller;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import oracle.sql.DATE;
 import rambo0021.dao.SHA2DAO;
 import rambo0021.pojo.AccountBean;
 import rambo0021.serive.AccountService;
@@ -61,15 +64,20 @@ public class AccountController {
 			return new ResponseEntity<byte[]>(userDetail.getPicture(), headers, HttpStatus.OK);
 	}
 	@RequestMapping(path = "/udAccountImg")
-	public String udAccountImg(@ModelAttribute("userDetail") AccountBean userDetail, @RequestParam("Apicture") MultipartFile img,Model m) throws IOException {
-		InputStream is = img.getInputStream();
-		byte[] b =new byte[is.available()];
-        is.read(b);
-        is.close();
-		userDetail.setPicture(b);
-		service.updateAccImg(userDetail.getPicture(), userDetail.getUserName());	
-		m.addAttribute("userDetail", userDetail);
-		return "rambo0021/account_detail";
+	public void  udAccountImg(@RequestParam String username, @RequestParam("Apicture") MultipartFile img,Model m) throws IOException {
+		InputStream is =new BufferedInputStream(img.getInputStream());
+//		byte[] b =new byte[is.available()];
+//        is.read(b);
+//        is.close();
+//		userDetail.setPicture(b);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		 byte[] b=new byte[81920];
+		int len=0;
+		while((len =is.read(b))!=-1) {
+			baos.write(b, 0, len);
+		}
+		service.updateAccImg(baos.toByteArray(), username);
+		baos.close();
 	}
 	@PostMapping("/udAccountPwd")
     public @ResponseBody String udAccountPwd(@RequestParam("username") String username,@RequestParam("password") String pwd) {
@@ -102,6 +110,8 @@ public class AccountController {
 	public @ResponseBody String delAccountPic(@RequestParam("username") String username) {
 		return service.delAccountPic(username);
 	}
+	
+	//---------------------------------------------------------------------------------------------------------------
 	@PostMapping("/enableAccount")
 	public @ResponseBody String enableAccount(@RequestParam("username") String username,@RequestParam String status) {
 		return service.enableAccount(username,status);
