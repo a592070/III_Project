@@ -1,6 +1,7 @@
 package rambo0021.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ import rambo0021.serive.DateService;
 
 @Controller
 @Lazy
-@SessionAttributes(names = {"userList", "userDetail" } )
+@SessionAttributes(names = { "userDetail" } )
+@RequestMapping("/admin")
 public class AccountController {
 	@Autowired
 	@Qualifier("accountService")
@@ -37,14 +39,12 @@ public class AccountController {
 	@Autowired
 	@Qualifier("dateService")
 	private DateService dService;
-//	@Autowired
-//	private ServletContext servletContext;
 	@RequestMapping(path = "/accountPage")
 	public String AccountPage(Model m) {
 		List<AccountBean> userList = service.userList();
 		m.addAttribute("userList", userList);
-				
-		return "rambo0021/account_index";
+		return "/rambo0021/account_index";
+//		return "redirect:/rambo0021/account_index";
 	}
 
 	@RequestMapping(path = "/displayAccount")
@@ -58,17 +58,15 @@ public class AccountController {
 	public @ResponseBody ResponseEntity<byte[]> ShowAccountPic(@ModelAttribute("userDetail") AccountBean userDetail) throws IOException{
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
-//		if (userDetail.getPicture() != null) { 改到jsp判斷
 			return new ResponseEntity<byte[]>(userDetail.getPicture(), headers, HttpStatus.OK);
-//		}
-//		InputStream is = servletContext.getResourceAsStream("/assets/img/rambo0021/NoImage.png");
-//		byte[] b = is.readAllBytes();
-//		is.close();
-//		return new ResponseEntity<byte[]>(b, headers, HttpStatus.OK);
 	}
 	@RequestMapping(path = "/udAccountImg")
 	public String udAccountImg(@ModelAttribute("userDetail") AccountBean userDetail, @RequestParam("Apicture") MultipartFile img,Model m) throws IOException {
-		userDetail.setPicture(img.getInputStream().readAllBytes());
+		InputStream is = img.getInputStream();
+		byte[] b =new byte[is.available()];
+        is.read(b);
+        is.close();
+		userDetail.setPicture(b);
 		service.updateAccImg(userDetail.getPicture(), userDetail.getUserName());	
 		m.addAttribute("userDetail", userDetail);
 		return "rambo0021/account_detail";
@@ -100,16 +98,20 @@ public class AccountController {
 		return service.udAccountModify(username,dService.StringtoDate(modify));
 		
 	}
-	@PostMapping("delAccountPic")
+	@PostMapping("/delAccountPic")
 	public @ResponseBody String delAccountPic(@RequestParam("username") String username) {
 		return service.delAccountPic(username);
 	}
-	@PostMapping("enableAccount")
+	@PostMapping("/enableAccount")
 	public @ResponseBody String enableAccount(@RequestParam("username") String username,@RequestParam String status) {
 		return service.enableAccount(username,status);
 	}
-	@PostMapping("disableAccount")
+	@PostMapping("/disableAccount")
 	public @ResponseBody String disableAccount(@RequestParam("username") String username,@RequestParam String status) {
 		return service.disableAccount(username,status);
+	}
+	@PostMapping("/delAccount")
+	public @ResponseBody String delAccount(@RequestParam("username") String username) {
+		return service.delAccount(username);
 	}
 }

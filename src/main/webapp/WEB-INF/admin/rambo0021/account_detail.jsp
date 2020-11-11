@@ -90,7 +90,7 @@
 						<div>
 							<h2 class="title" id="username">${userDetail.userName}</h2>
 							<div class="top"></div>
-							<form action="<%=application.getContextPath()%>/udAccountImg" method="POST"
+							<form action="<%=application.getContextPath()%>/admin/udAccountImg" method="POST"
 								enctype="multipart/form-data">
 								<p class="modify-img">
 									<button type="button" class="btn btn-warning" data-toggle="modal"
@@ -105,7 +105,7 @@
 							</form>
 							<div class="div_img">
 								<c:if test="${!empty userDetail.picture}">
-									<img class="img-circle" id="userPic" src="<%=application.getContextPath()%>/ShowAccountPic">
+									<img class="img-circle" id="userPic" src="<%=application.getContextPath()%>/admin/ShowAccountPic">
 								</c:if>
 								<c:if test="${empty userDetail.picture}">
 									<img src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
@@ -345,7 +345,7 @@
 				{
 					type: 'POST',
 					data: { "password": pwd, "username": username },
-					url: '${pageContext.servletContext.contextPath}/udAccountPwd',
+					url: '${pageContext.servletContext.contextPath}/admin/udAccountPwd',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
@@ -364,7 +364,7 @@
 				{
 					type: 'POST',
 					data: { "username": username, "identity": identity },
-					url: '${pageContext.servletContext.contextPath}/udAccountIdentity',
+					url: '${pageContext.servletContext.contextPath}/admin/udAccountIdentity',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
@@ -382,7 +382,7 @@
 				{
 					type: 'POST',
 					data: { "username": username, "email": email },
-					url: '${pageContext.servletContext.contextPath}/udAccountEmail',
+					url: '${pageContext.servletContext.contextPath}/admin/udAccountEmail',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
@@ -401,7 +401,7 @@
 				{
 					type: 'POST',
 					data: { "username": username, "nickname": nickname },
-					url: '${pageContext.servletContext.contextPath}/udAccountNickname',
+					url: '${pageContext.servletContext.contextPath}/admin/udAccountNickname',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
@@ -420,7 +420,7 @@
 				{
 					type: 'POST',
 					data: { "username": username, "register": register },
-					url: '${pageContext.servletContext.contextPath}/udAccountRegister',
+					url: '${pageContext.servletContext.contextPath}/admin/udAccountRegister',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
@@ -439,7 +439,7 @@
 				{
 					type: 'POST',
 					data: { "username": username, "modify": modify },
-					url: '${pageContext.servletContext.contextPath}/udAccountModify',
+					url: '${pageContext.servletContext.contextPath}/admin/udAccountModify',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
@@ -457,7 +457,7 @@
 				{
 					type: 'POST',
 					data: { "username": username},
-					url: '${pageContext.servletContext.contextPath}/delAccountPic',
+					url: '${pageContext.servletContext.contextPath}/admin/delAccountPic',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
@@ -475,7 +475,7 @@
 				{
 					type: 'POST',
 					data: { "username": username,"status":status},
-					url: '${pageContext.servletContext.contextPath}/enableAccount',
+					url: '${pageContext.servletContext.contextPath}/admin/enableAccount',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
@@ -496,7 +496,7 @@
 				{
 					type: 'POST',
 					data: { "username": username,"status":status},
-					url: '${pageContext.servletContext.contextPath}/disableAccount',
+					url: '${pageContext.servletContext.contextPath}/admin/disableAccount',
 					dataType: 'text',
 					success: function (response) {
 						alert(response)
