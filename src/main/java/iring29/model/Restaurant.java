@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -53,7 +54,7 @@ public class Restaurant {
 	@Column(name = "STATUS")
 	private String status;
 //	private ACCOUNT account;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "R_Order_List")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "restaurant")
 	private Set<R_Order_List> rSets = new HashSet<R_Order_List>();
 	
 	
