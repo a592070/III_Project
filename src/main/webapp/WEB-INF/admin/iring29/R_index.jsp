@@ -57,6 +57,9 @@ h2 {
 td {
 	color: black;
 }
+th{
+	text-align:center;
+}
 .pages{
 	width: 1140px;
 	margin-left:50px ;
@@ -79,10 +82,10 @@ td {
 			<div class="content-wrapper">
 				<div class="box">
 					<div class="search" class="form-group col-md-2">
-						<form action="<%=application.getContextPath()%>/regionSearch"
+						<form id="formR" name="formR" action="<%=application.getContextPath()%>/regionSearch"
 							method="POST">
-							<span class="sp_search">餐廳地區</span> <select name="region_name"
-								id="inputState" class="form-control">
+							<span class="sp_search">餐廳地區</span> 
+							<select name="region_name"	id="inputState" class="form-control">
 								<option value="">請選擇地區</option>
 								<option value="基隆">基隆</option>
 								<option value="新北">新北</option>
@@ -105,44 +108,40 @@ td {
 								<option value="金門">金門</option>
 								<option value="連江">連江</option>
 							</select>
-							<button type="submit" class="btn btn-primary">Search</button>
 						</form>
 					</div>
-					<div class="search">
-						<form action="<%=application.getContextPath()%>/nameSearch"
-							method="GET">
-							<span class="sp_search">餐廳名稱</span> <input type="text"
-								name="restaurant_name" placeholder="請輸入關鍵字" />
-							<button type="submit" class="btn btn-primary">Search</button>
-						</form>
-					</div>
+				<script>
+				$("#inputState").change(function(){
+						console.log("change");
+						console.log($("#inputState").val());
+						document.formR.attributes["action"].value ="<%=application.getContextPath()%>/regionSearch";
+						document.formR.submit();
+					})
 
+				</script>	
+				
 					<div class="search">
-						<form action="<%=application.getContextPath()%>/usernameSearch"
-							method="POST">
-							<span class="sp_search">會員帳號</span> <input type="text"
-								name="username" placeholder="請輸入會員帳號" />
-							<button type="submit" class="btn btn-primary">Search</button>
-						</form>
-					</div>
-					<div class="search">
-						<form action="<%=application.getContextPath()%>/Restaurant"
-							method="GET">
-							<button type="submit" class="btn btn-primary">重新查詢</button>
-						</form>
-					</div>
+						<form action="<%=application.getContextPath()%>/key" method="GET"> 
+							<span class="sp_search">關鍵字搜尋</span> <input type="text"
+ 								name="keyword" placeholder="請輸入關鍵字" /> 
+ 							<button type="submit" class="btn btn-primary">Search</button> 
+						</form> 
+ 					</div> 
+
 				</div>
 				<h2>餐廳列表</h2>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
-								<th>Restaurant ID</th>
+								<th>ID</th>
 								<th>餐廳名稱</th>
 								<th>餐廳地址</th>
 								<th>地區</th>
 								<th>會員帳號</th>
-								<th>功能</th>
+								<th>狀態</th>
+								<th>修改</th>
+								<th>刪除</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -155,6 +154,19 @@ td {
 									<td>${r.region}</td>
 									<td>${r.username}</td>
 									<td>
+									<form id="statuss" name="statuss">
+										<c:if test="${r.status == 'N'}">停用&nbsp;
+											<button class="btn btn-success" onclick="statusR()" >啟用</button>
+										</c:if>
+										<c:if test="${r.status == 'Y'}">啟用&nbsp;
+											<button class="btn btn-secondary" onclick="statusR()" >停用</button>
+										</c:if>
+											<Input type='hidden' name='status' value='${r.status}'>
+											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+									</form>
+									</td>
+																		
+									<td>
 										<form
 											action="<%=application.getContextPath()%>/DisplayRestaurant"
 											method="POST">
@@ -162,16 +174,29 @@ td {
 											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
 										</form>
 									</td>
+									<td><button type="submit" class="btn btn-danger">刪除</button></td>
 								</tr>
-
 
 							</c:forEach>
 
 						</tbody>
 					</table>
+<script type="text/javascript">				
+function statusR(){
+	if (confirm("確定修改店家狀態 ? ") ) {
+		console.log("in modify");
+		document.forms["statuss"].action="<%=application.getContextPath()%>/ModifyStatus";
+		document.forms["statuss"].method="POST";
+		document.forms["statuss"].submit();
+	}else{
+		return null;
+		}
+	 
+}
+</script>
 				</div>
 			</div>
-
+			
 
 		<div class="pages">
 			<nav aria-label="...">
@@ -193,20 +218,20 @@ td {
 				</c:if>
 			</c:if>
 
-			<c:if test="${currentNPage != null}">
-				<c:if test="${currentNPage == 1}">
-					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/nameSearch?currentNPage=${currentNPage-1}" tabindex="-1">Previous</a></li>
+			<c:if test="${currentKPage != null}">
+				<c:if test="${currentKPage == 1}">
+					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage-1}" tabindex="-1">Previous</a></li>
 				</c:if>
-				<c:if test="${currentNPage > 1}">
-					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/nameSearch?currentNPage=${currentNPage-1}&restaurant_name=${restaurant_name}" tabindex="-1">Previous</a></li>
+				<c:if test="${currentKPage > 1}">
+					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage-1}&keyword=${keyword}" tabindex="-1">Previous</a></li>
 				</c:if>
-					<li class="page-item active"><a class="page-link" href="#">${currentNPage}
+					<li class="page-item active"><a class="page-link" href="#">${currentKPage}
 					<span class="sr-only">(current)</span></a></li>
-				<c:if test="${currentNPage != totalNPage}">
-					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/nameSearch?currentNPage=${currentNPage+1}&restaurant_name=${restaurant_name}">Next</a></li>
+				<c:if test="${currentKPage != totalKPage}">
+					<li class="page-item"><a class="page-link" href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage+1}&keyword=${keyword}">Next</a></li>
 				</c:if>
-				<c:if test="${currentNPage == totalNPage}">
-					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/nameSearch?currentNPage=${currentNPage+1}">Next</a></li>
+				<c:if test="${currentKPage == totalKPage}">
+					<li class="page-item disabled"><a class="page-link" href="<%=application.getContextPath()%>/keywords?currenKPage=${currentKPage+1}">Next</a></li>
 				</c:if>
 			</c:if>
 			

@@ -10,6 +10,8 @@
 	<bean id="ModifyDAO" class="iring29.model.ModifyDAO" scope="session" />
 	<bean id="ModifyService" class="iring29.service.ModifyService" scope="session"/>
 	<bean id="Page" class="iring29.model.Page" scope="session"/>
-	<bean id="restaurantController" name="/Restaurant.controller" class="iring29.controller.RestaurantController" scope="session"></bean>
-
+	<bean id="restaurantController" class="iring29.controller.RestaurantController" scope="session"></bean>
+	<bean id="R_OrderDAO" class="iring29.model.R_OrderDAO" scope="session"></bean>
+	<bean id="R_OrderService" class="iring29.service.R_OrderService" scope="session"></bean>
+	<bean id="RorderController" class="iring29.controller.RorderController" scope="session"></bean>
 </beans>
