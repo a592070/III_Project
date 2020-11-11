@@ -526,7 +526,6 @@
 					dataType: "text",
    
 					success : (response) => {
-					   console.log(response);
 					   alert("修改成功");
    
 					},
