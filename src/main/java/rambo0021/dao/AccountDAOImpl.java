@@ -135,4 +135,14 @@ public class AccountDAOImpl implements AcountDAO {
 		return "禁用失敗";
 	}
 
+	@Override
+	public String delAccount(String username) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			sessionFactory.getCurrentSession().delete(aBean);
+			return "刪除成功";
+		    }
+		return "刪除失敗";
+	}
+
 }

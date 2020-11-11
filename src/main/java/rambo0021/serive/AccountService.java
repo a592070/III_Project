@@ -19,4 +19,5 @@ public interface AccountService {
 	String delAccountPic(String username);
 	String enableAccount(String username,String status);
 	String disableAccount(String username,String status);
+	String delAccount(String username);
 }
