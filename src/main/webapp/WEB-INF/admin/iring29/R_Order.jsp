@@ -69,7 +69,12 @@ td {
 												<td>${r.customer_num}</td>
 												<td>${r.bookt_time}</td>
 												<td><span class="badge badge-success">Completed</span></td>
-												<td><button type="submit" class="btn btn-warning">修改</button></td>
+												<td>
+												<form action="<%=application.getContextPath()%>/ROrderModify" method="POST">
+												<button type="submit" class="btn btn-warning">修改</button>
+												<Input type='hidden' name='rid' value='${r.id}'>
+												</form>
+												</td>
 												<td><button type="submit" class="btn btn-danger">刪除</button></td>
 
 											</tr>

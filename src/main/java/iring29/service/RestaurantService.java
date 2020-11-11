@@ -72,4 +72,8 @@ public class RestaurantService {
 		return rDao.restaurantInfo(r_sn);
 	}
 	
+	@Transactional(rollbackFor = { Throwable.class })
+	public String deleteRestaurant(BigDecimal r_sn) {
+		return rDao.deleteRestaurant(r_sn);
+	}
 }
