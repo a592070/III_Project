@@ -50,32 +50,39 @@ public class H_Controller {
 		return "asx54630/H_index";
 		}
 	
+	@RequestMapping(path = "/hotelstatus", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //是否停權
+	public String processHotelStatus(@RequestParam(name = "upId") BigDecimal updateSn,
+									 @RequestParam(name = "upStatus") String updateStatus
+									 ,Model m) {
+		
+		Hotel hotelupdate = hService.updateStatus(updateSn,updateStatus);
+		m.addAttribute("hotelupdate", hotelupdate);
+		
+		return "redirect:hotelindex";
+		}
+	
 	@RequestMapping(path = "/hotelupdate", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //修改
-	public String processHotelUpdate(@RequestParam(name = "upId") String updateSn,
+	public String processHotelUpdate(@RequestParam(name = "upId") BigDecimal updateSn,
 									 @RequestParam(name = "upName") String updateName,
 									 @RequestParam(name = "upRegion") String updateRegion,
 									 @RequestParam(name = "upAddress") String updatesn,
 									 @RequestParam(name = "upTel") String updateTel,
-									 @RequestParam(name = "upDBroom") String updateDBroom,
-									 @RequestParam(name = "upQDroom") String updateQDroom,
+									 @RequestParam(name = "upDBroom") BigDecimal updateDBroom,
+									 @RequestParam(name = "upQDroom") BigDecimal updateQDroom,
 									 @RequestParam(name = "upDescription") String updateDescription,
 									 @RequestParam(name = "upOpentime") String updateOpentime,
 									 @RequestParam(name = "upType") String updateType,Model m) {
-		BigDecimal bsn = new BigDecimal(updateSn);
-		BigDecimal bdbroom = new BigDecimal(updateDBroom);
-		BigDecimal dqdroom = new BigDecimal(updateQDroom);
 		
-		Hotel hotelupdate = hService.update(bsn,updateName,updateRegion,updatesn,updateTel,bdbroom,dqdroom,updateDescription,updateOpentime,updateType);
+		Hotel hotelupdate = hService.update(updateSn,updateName,updateRegion,updatesn,updateTel,updateDBroom,updateQDroom,updateDescription,updateOpentime,updateType);
 		m.addAttribute("hotelupdate", hotelupdate);
 		
 		return "redirect:hotelindex";
 		}
 	
 	@RequestMapping(path = "/hoteldelete", method = RequestMethod.POST) //刪除
-	public String processHotelDelete(@RequestParam(name = "deleteId") String deleteSn,Model m) {
-		BigDecimal dsn = new BigDecimal(deleteSn);
+	public String processHotelDelete(@RequestParam(name = "deleteId") BigDecimal deleteSn,Model m) {
 		
-		boolean hoteldelete = hService.delete(dsn);
+		boolean hoteldelete = hService.delete(deleteSn);
 		m.addAttribute("hoteldelete", hoteldelete);		
 		
 		return "redirect:hotelindex";

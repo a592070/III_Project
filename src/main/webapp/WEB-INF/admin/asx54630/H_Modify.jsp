@@ -69,16 +69,7 @@
 				</form>
 
 
-				<script type="text/javascript">
-					$(document).ready(function() {
-						var status = $("#Hstatus").text()
-						if ("啟用" == status) {
-							$("#enable").hide();
-						} else {
-							$("#disable").hide();
-						}
-					})
-				</script>
+			
 
 
 			</div>

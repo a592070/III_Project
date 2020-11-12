@@ -86,8 +86,8 @@
                 <th>名稱</th>
                 <th>地區</th>
                 <th>地址</th>
-                <th>電話</th>                                            
-                <th>住宿類型</th>
+                <th>住宿類型</th>                                            
+                <th>店家狀態</th>
                 <td>狀態</td>
                 <th>修改</th>
                 <th>刪除</th>
@@ -102,7 +102,7 @@
                 <td>${hotels.ADDRESS}</td>
                 <td>${hotels.TYPE}</td>
                 <td>${hotels.STATUS}</td>
-                <td><button type="button" class="btn btn-primary mb-2"   onclick="clickdetail('${hotels.SN}')">啟用</button></td>
+                <td><button type="button" class="btn btn-primary mb-2"  data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')">變更狀態</button></td>
                 <td><button type="button" class="btn btn-primary mb-2"   onclick="clickdetail('${hotels.SN}')">修改</button></td>
                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
             </tr>
@@ -123,10 +123,10 @@
 			$("#deleteId").val(id);
 		}
 
-		function clickstatus(id){
-
-			document.location.href="${pageContext.servletContext.contextPath}/hotelstatus?detailsn="+id;
-
+		function clickstatus(id,status){
+// 			document.location.href="${pageContext.servletContext.contextPath}/hotelstatus?upId="+id+"&upStatus="+status;
+			$("#statusId").val(id);
+			$("#hstatus").val(status);
 		}
 
 		</script> 
@@ -154,11 +154,42 @@
                  	 <button type="submit" class="btn btn-primary">確認</button>
                		 </div>
                   </form> 
+                  </table>
              </div>
            </div>
          </div>
        </div>
-		
+ <!-----------------------------------------------修改狀態---------------------------------------------------------------------->     
+       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalCenterTitle">修改狀態</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+                <form action="hotelstatus" method="POST">
+                  <table>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label"></label>
+                      <input type="hidden" id = "statusId" value="" name="upId">
+                      <input type="hidden" id = "hstatus" value="" name="upStatus">
+                      <h4>是否確認修改狀態?</h4>
+                      <p></p>
+                    </div>
+               		 <div class="modal-footer">
+                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                 	 <button type="submit" class="btn btn-primary">確認</button>
+               		 </div>
+                  </form> 
+                  </table>
+             </div>
+           </div>
+         </div>
+       </div>
+	<!-----------------------------------------------修改狀態----------------------------------------------------------------------> 
 		</div>
 	</div>
 
