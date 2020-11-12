@@ -29,4 +29,9 @@ public class R_OrderService {
 	public R_OrderList_VO Detail_OderList(BigDecimal id) {
 		return rOrderDAO.Detail_OderList(id);
 	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public String deleteOrder(BigDecimal r_sn) {
+		return rOrderDAO.deleteOrder(r_sn);
+	}
 }
