@@ -1,6 +1,8 @@
 package iring29.controller;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,12 @@ public class RorderController {
 		int pageSize = page.getPageSize();
 		int totalPage = page.getTotalPageCount();
 		List<R_Order_VO> Rlist = rOrderService.totaol_Rlist(start, pageSize);
+		
+		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		System.out.println("ts = " + ts);
+		
 		m.addAttribute("Rlist", Rlist);
+		m.addAttribute("ts", ts);
 		m.addAttribute("currentPage", currentPage);
 		m.addAttribute("totalPage", totalPage);
 		return "iring29/R_Order";
@@ -58,5 +65,13 @@ public class RorderController {
 		m.addAttribute("date", date);
 		m.addAttribute("time",time);
 		return "iring29/R_Order_Modify";
+	}
+	
+	//Delete order
+	@RequestMapping(path = "DeleteOrder", method = RequestMethod.POST)
+	public String DelOrder(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
+		String result = rOrderService.deleteOrder(r_sn);
+		m.addAttribute("result",result);
+		return "iring29/OrderResult";
 	}
 }

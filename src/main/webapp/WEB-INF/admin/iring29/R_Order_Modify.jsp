@@ -56,6 +56,9 @@
 					<h4 class="mb-3">下訂帳號&nbsp;</h4>
 					<h4>${ROList.username}</h4>
 					<hr>
+					<h4 class="mb-3">訂單成立時間&nbsp;</h4>
+					<h4>${ROList.order_date}</h4>
+					<hr>
 					<div class="row"></div>
 					<h4 class="mb-3">訂單資料</h4>
 					<div class="col-md-6 mb-3">
