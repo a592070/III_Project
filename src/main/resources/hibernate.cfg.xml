@@ -43,8 +43,9 @@
 		<mapping class="a592070.pojo.TravelSetDO"/>
 		<mapping class="iring29.model.Show_RView"/>
 		<mapping class="iring29.model.Restaurant"/>
-		<mapping class="iring29.model.R_Order_View"/>
+		<mapping class="iring29.model.R_Order_VO"/>
 		<mapping class="iring29.model.R_Order_List"/>
+		<mapping class="iring29.model.R_OrderList_VO"/>
 		<mapping class="azaz4498.model.Article"/>
 		<mapping class="azaz4498.model.ArticleType"/>
 		<mapping class="azaz4498.model.Comment"/>

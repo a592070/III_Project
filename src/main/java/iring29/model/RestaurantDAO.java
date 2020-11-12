@@ -96,12 +96,6 @@ public class RestaurantDAO {
 		query.setParameter(1, r_sn);
 		return query.uniqueResult();
 	}
-
-	/*
-	 * 以下可能可刪除
-	 * 
-	 */
-
 	// Region
 	public int getRegionSize(String region) {
 		String hql = "select count(r_sn) from Show_RView where region = ?1";
@@ -109,7 +103,7 @@ public class RestaurantDAO {
 		query.setParameter(1, region);
 		return query.uniqueResult().intValue();
 	}
-
+	
 	public List<Show_RView> regionRestaurant(int first, int count, String region) {
 		String hql = "from Show_RView where region =?1 order by r_sn";
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
@@ -118,45 +112,22 @@ public class RestaurantDAO {
 		query.setMaxResults(count);
 		return query.list();
 	}
-
-	// name
-	public int getNameSize(String name) {
-		String hql = "select count(r_sn) from Show_RView where name like ?1";
-		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-		query.setParameter(1, "%" + name + "%");
-		return query.uniqueResult().intValue();
-	}
-
-	public List<Show_RView> nameRestaurant(int first, int count, String name) {
-		String hql = "from Show_RView where name like ?1 order by r_sn";
-		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
-		query.setParameter(1, "%" + name + "%");
-		query.setFirstResult(first);
-		query.setMaxResults(count);
-		return query.list();
-	}
-
-	// user
-	public int getUserSize(String username) {
-		String hql = "select count(r_sn) from Show_RView where username like ?1";
-		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-		query.setParameter(1, "%" + username + "%");
-		return query.uniqueResult().intValue();
-	}
-
-	public List<Show_RView> userRestaurant(int first, int count, String username) {
-		String hql = "from Show_RView where username like ?1 order by r_sn";
-		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
-		query.setParameter(1, "%" + username + "%");
-		query.setFirstResult(first);
-		query.setMaxResults(count);
-		return query.list();
-	}
-
+	
 	public Restaurant restaurantInfo(BigDecimal r_sn) {
 		String hql = "from Restaurant where r_sn = ?1";
 		Query<Restaurant> query = sessionFactory.getCurrentSession().createQuery(hql, Restaurant.class);
 		query.setParameter(1, r_sn);
 		return query.uniqueResult();
 	}
+
+	public String deleteRestaurant(BigDecimal r_sn) {
+		Restaurant rBean = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
+		if(rBean != null) {
+			sessionFactory.getCurrentSession().delete(rBean);
+			return "刪除成功";
+		}
+		return "刪除失敗";
+	}
+
+
 }

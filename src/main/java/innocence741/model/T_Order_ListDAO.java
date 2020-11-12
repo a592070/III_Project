@@ -17,6 +17,7 @@ import java.util.Set;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
+import global.pojo.OrderTable;
 import rambo0021.pojo.AccountBean;
 
 
@@ -30,7 +31,7 @@ public class T_Order_ListDAO {
 		this.session = session;
 	}
 
-	public boolean createOrderTable(OrderTableBean order_table) {
+	public boolean createOrderTable(OrderTable order_table) {
 		boolean flag = false;
 		try {
 			session.save(order_table);
@@ -42,8 +43,8 @@ public class T_Order_ListDAO {
 	}
 
 	public void searchHistoricalOrder(ArrayList<ArrayList> combineArrayList, String userid) throws ParseException {
-		ArrayList<OrderTableBean> tmp_orderTableBeans = new ArrayList<>();
-		ArrayList<OrderTableBean> orderTableBeans = new ArrayList<>();
+		ArrayList<OrderTable> tmp_orderTableBeans = new ArrayList<>();
+		ArrayList<OrderTable> orderTableBeans = new ArrayList<>();
 
 		AccountBean user = new AccountBean();
 
@@ -52,7 +53,7 @@ public class T_Order_ListDAO {
 				+ "\'" + userid + "\'" + "order by o.order_id";
 		List<Object[]> list = session.createSQLQuery(sql).list();
 		for (int i = 0; i < list.size(); i++) {
-			OrderTableBean oBean = new OrderTableBean();
+			OrderTable oBean = new OrderTable();
 			T_Order_List tBean = new T_Order_List();
 			HighSpeedRail hBean = new HighSpeedRail();
 			CarType cBean = new CarType();
@@ -74,7 +75,7 @@ public class T_Order_ListDAO {
 			user.setUserName(list.get(i)[2].toString());
 			user.setModify_Date(new Date());
 			user.setRegister(new Date());
-			oBean.setUser(user);
+			oBean.setAccountBean(user);
 			
 			
 			if (list.get(i)[3] != null)

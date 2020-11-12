@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import global.pojo.OrderTable;
+
 @Entity
 @Table(name = "T_ORDER_LIST")
 public class T_Order_List {
@@ -52,7 +54,7 @@ public class T_Order_List {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORDER_ID")
-	private OrderTableBean order_table; // 晚點改
+	private OrderTable order_table; // 晚點改
 
 	@Column(name = "NAME")
 	private String customerName;
@@ -138,11 +140,11 @@ public class T_Order_List {
 		this.orderType = orderType;
 	}
 
-	public OrderTableBean getOrder_table() {
+	public OrderTable getOrder_table() {
 		return order_table;
 	}
 
-	public void setOrder_table(OrderTableBean order_table) {
+	public void setOrder_table(OrderTable order_table) {
 		this.order_table = order_table;
 	}
 
