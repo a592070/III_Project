@@ -36,9 +36,9 @@ public class R_Order_List {
 	@JoinColumn(name = "ORDER_ID")
 	private OrderTable oTable;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "NAME")
+	@JoinColumn(name = "R_SN")
 	private Restaurant restaurant;
-
+	
 	public BigDecimal getId() {
 		return id;
 	}

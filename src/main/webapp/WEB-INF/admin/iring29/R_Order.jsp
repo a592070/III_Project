@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +15,20 @@ td {
 }
 
 .rname {
-	width: 250px;
+	width: 200px;
 }
 
 .rid {
-	width: 100px;
+	width: 120px;
+}
+.content-wrapper {
+	padding-left: 50px;
+	padding-top: 50px;
+}
+.pages {
+	width: 1140px;
+	margin-left: 50px;
+	margin-bottom: 50px;
 }
 </style>
 </head>
@@ -67,9 +77,31 @@ td {
 												<td class="rid">${r.order_id}</td>
 												<td class="rname">${r.name}</td>
 												<td>${r.customer_num}</td>
-												<td>${r.bookt_time}</td>
-												<td><span class="badge badge-success">Completed</span></td>
-												<td><button type="submit" class="btn btn-warning">修改</button></td>
+												<td>
+												<c:set var="booktime" value="${r.bookt_time}" />
+												<c:set var="BT" value="${fn:substring(booktime, 0, 16)}" />
+												${BT}
+												</td>
+												
+												<c:if test="${r.bookt_time > ts}">
+													<td><span class="badge badge-success">訂單待完成</span></td>
+												</c:if>
+												<c:if test="${r.bookt_time < ts}">
+													<td><span class="badge badge-secondary">訂單已完成</span></td>
+												</c:if>
+												
+												
+												<td>
+												<form action="<%=application.getContextPath()%>/ROrderModify" method="POST">
+												<c:if test="${r.bookt_time > ts}">
+													<button type="submit" class="btn btn-warning">修改</button>
+													<Input type='hidden' name='rid' value='${r.id}'>
+												</c:if>
+												<c:if test="${r.bookt_time < ts}">
+													<button type="submit" class="btn btn-warning"  disabled>修改</button>
+												</c:if>
+												</form>
+												</td>
 												<td><button type="submit" class="btn btn-danger">刪除</button></td>
 
 											</tr>
@@ -80,6 +112,7 @@ td {
 									</tbody>
 								</table>
 							</div>
+							
 						</div>
 					</div>
 				</div>
