@@ -3,6 +3,7 @@ package azaz4498.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -158,6 +159,14 @@ public class Article implements Serializable {
 	
 	public void setArticleType(ArticleType articleType) {
 		this.articleType = articleType;
+	}
+
+	@Override
+	public String toString() {
+		return "Article [artContent=" + artContent + ", artCreTime=" + artCreTime + ", artUserId=" + artUserId
+				+ ", artCommNum=" + artCommNum + ", artView=" + artView + ", artId=" + artId + ", artTypeId="
+				+ artTypeId + ", artTitle=" + artTitle + ", artPic=" + Arrays.toString(artPic) + ", artPicUrl="
+				+ artPicUrl + ", comments=" + comments + ", articleType=" + articleType + "]";
 	}
 
 }
