@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import oracle.sql.DATE;
 import rambo0021.dao.SHA2DAO;
 import rambo0021.pojo.AccountBean;
 import rambo0021.serive.AccountService;
@@ -86,7 +85,7 @@ public class AccountController {
 		baos.close();
 		return status;
 	}
-
+//------------------------------------------------------------------------------------------------------------------
 	@PostMapping("/udAccountPwd")
 	public @ResponseBody String udAccountPwd(@RequestParam("username") String username,
 			@RequestParam("password") String pwd) {
@@ -125,13 +124,12 @@ public class AccountController {
 		return service.udAccountModify(username, dService.StringtoDate(modify));
 
 	}
-
+	// ---------------------------------------------------------------------------------------------------------------
 	@PostMapping("/delAccountPic")
 	public @ResponseBody String delAccountPic(@RequestParam("username") String username) {
 		return service.delAccountPic(username);
 	}
 
-	// ---------------------------------------------------------------------------------------------------------------
 	@PostMapping("/enableAccount")
 	public @ResponseBody String enableAccount(@RequestParam("username") String username, @RequestParam String status) {
 		return service.enableAccount(username, status);
