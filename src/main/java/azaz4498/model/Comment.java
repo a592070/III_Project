@@ -79,7 +79,7 @@ public class Comment implements Serializable{
 		this.comDate = comDate;
 	}
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "COM_ART_ID")
 	public Article getArticle() {
 		return article;

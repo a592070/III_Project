@@ -44,6 +44,17 @@ public class Article implements Serializable {
 	private String artTitle;
 	private byte[] artPic;
 	private String artPicUrl;
+	private String artStatus;
+	
+	@Column(name = "ART_STATUS")
+	public String getArtStatus() {
+		return artStatus;
+	}
+
+	public void setArtStatus(String artStatus) {
+		this.artStatus = artStatus;
+	}
+
 	private List<Comment> comments = new ArrayList<Comment>();
 	private ArticleType articleType;
 
@@ -142,7 +153,7 @@ public class Article implements Serializable {
 		this.artPicUrl = artPicUrl;
 	}
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -161,12 +172,6 @@ public class Article implements Serializable {
 		this.articleType = articleType;
 	}
 
-	@Override
-	public String toString() {
-		return "Article [artContent=" + artContent + ", artCreTime=" + artCreTime + ", artUserId=" + artUserId
-				+ ", artCommNum=" + artCommNum + ", artView=" + artView + ", artId=" + artId + ", artTypeId="
-				+ artTypeId + ", artTitle=" + artTitle + ", artPic=" + Arrays.toString(artPic) + ", artPicUrl="
-				+ artPicUrl + ", comments=" + comments + ", articleType=" + articleType + "]";
-	}
+	
 
 }
