@@ -56,10 +56,11 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
-    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled){
+    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending){
         keyWords = "%"+keyWords+"%";
 
         String hql = "from CarVO where carType like :keyword or company like :keyword order by "+orderFiled;
+        if(descending) hql += " desc";
 
         Query<CarVO> query = sessionFactory.getCurrentSession().createQuery(hql, CarVO.class);
         query.setParameter("keyword", keyWords);
@@ -79,9 +80,10 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
         return query.uniqueResult().intValue();
     }
     @Override
-    public List<CarVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled) {
+    public List<CarVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending) {
         filedValue = "%"+filedValue+"%";
         String hql="from CarVO where "+filedName+" like ?1 order by "+orderFiled;
+        if(descending) hql += " desc";
 
         Query<CarVO> query = sessionFactory.getCurrentSession().createQuery(hql, CarVO.class);
         query.setParameter(1, filedValue);
@@ -91,8 +93,10 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
-    public List<CarVO> listByRownum(int firstIndex, int resultSize, String orderFiled) {
+    public List<CarVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
         String hql="from CarVO order by "+orderFiled;
+        if(descending) hql += " desc";
+
 
         Query<CarVO> query = sessionFactory.getCurrentSession().createQuery(hql, CarVO.class);
         query.setFirstResult(firstIndex);

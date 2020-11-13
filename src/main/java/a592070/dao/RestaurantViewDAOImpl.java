@@ -60,12 +60,13 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled) {
+    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending) {
         keyWords = "%"+keyWords+"%";
         region = "%"+region+"%";
 
         String hql = "from RestaurantVO " +
                 "where region like :region and ( name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
+        if(descending) hql += " desc";
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
         query.setParameter("keyword", keyWords);
@@ -89,10 +90,11 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public List<RestaurantVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled) {
+    public List<RestaurantVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending) {
         filedValue = "%"+filedValue+"%";
 
         String hql = "from RestaurantVO where "+filedName+" like ?1 order by "+orderFiled;
+        if(descending) hql += " desc";
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
         query.setParameter(1, filedValue);
@@ -101,8 +103,9 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public List<RestaurantVO> listByRownum(int startIndex, int endIndex, String orderFiled) {
+    public List<RestaurantVO> listByRownum(int startIndex, int endIndex, String orderFiled, boolean descending) {
         String hql = "from RestaurantVO order by "+orderFiled;
+        if(descending) hql += " desc";
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
 
