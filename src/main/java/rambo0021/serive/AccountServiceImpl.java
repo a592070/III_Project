@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-   public AccountBean updateAccImg(byte[] img,String username) {
+   public String updateAccImg(byte[] img,String username) {
 		return dao.updateAccImg(img, username);
 	}
 	@Override
@@ -77,4 +77,5 @@ public class AccountServiceImpl implements AccountService {
 	public String delAccount(String username) {
 		return dao.delAccount(username);
 	}
+
 }
