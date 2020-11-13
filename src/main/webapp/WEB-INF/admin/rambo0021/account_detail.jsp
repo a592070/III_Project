@@ -5,79 +5,80 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>用戶明細</title>
-	<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+<meta charset="UTF-8">
+<title>用戶明細</title>
+<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 
-	<style>
-		* {
-			padding: 0;
-			margin: 0;
-		}
+<style>
+* {
+	padding: 0;
+	margin: 0;
+}
 
-		.title {
-			text-align: center;
-			background-color: #003060;
-		}
+.title {
+	text-align: center;
+	background-color: #003060;
+}
 
-		h2 {
-			padding: 20px;
-			border-bottom: 1px solid gray;
-			color: white;
-		}
+h2 {
+	padding: 20px;
+	border-bottom: 1px solid gray;
+	color: white;
+}
 
-		.top {
-			display: flex;
-		}
+.top {
+	display: flex;
+}
 
-		.div_img {
-			width: 800px;
-			height: 530px;
-			margin: auto;
-			overflow: hidden;
-			display: flex;
-			padding-bottom: 5px;
-		}
+.div_img {
+	width: 800px;
+	height: 530px;
+	margin: auto;
+	overflow: hidden;
+	display: flex;
+	padding-bottom: 5px;
+}
 
-		.modify-img {
-			padding: 5px;
-			margin-right: 10px;
-			text-align: right;
-		}
+.modify-img {
+	padding: 5px;
+	margin-right: 10px;
+	text-align: right;
+}
 
-		.modify {
-			padding: 5px;
-			margin-right: 10px;
-			text-align: right;
-			float: right;
-		}
+.modify {
+	padding: 5px;
+	margin-right: 10px;
+	text-align: right;
+	float: right;
+}
 
-		img {
-			width: 100%;
-		}
+img {
+	width: 100%;
+}
 
-		.account_result {
-			padding: 10px 30px;
-		}
+.account_result {
+	padding: 10px 30px;
+}
 
-		.p_result {
-			padding: 10px 30px;
-			color: black;
-		}
+.p_result {
+	padding: 10px 30px;
+	color: black;
+}
 
-		.box {
-			width: 900px;
-			margin: 50px auto;
-			border: 1px solid gray;
-		}
+.box {
+	width: 900px;
+	margin: 50px auto;
+	border: 1px solid gray;
+}
 
-		.middle {
-			border: 1px solid gray;
-		}
-	</style>
+.middle {
+	border: 1px solid gray;
+}
+</style>
 </head>
 
-<body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
+<body class="sidebar-fixed sidebar-dark header-light header-fixed"
+	id="body">
 	<div class="mobile-sticky-body-overlay"></div>
 
 	<div class="wrapper">
@@ -92,9 +93,10 @@
 							<div class="top"></div>
 							<form method="POST" enctype="multipart/form-data">
 								<p class="modify-img">
-									<input type="file" id="Apicture" name="Apicture" accept="image/*"
-										style="display: none">
-									<button type="button" onclick="Apicture.click()" class="btn btn-light">上傳圖片</button>
+									<input type="file" id="Apicture" name="Apicture"
+										accept="image/*" style="display: none">
+									<button type="button" onclick="Apicture.click()"
+										class="btn btn-light">上傳圖片</button>
 									<button type="button" id="delImg" class="btn btn-light">改為預設圖片</button>
 								</p>
 							</form>
@@ -104,58 +106,63 @@
 										src="<%=application.getContextPath()%>/admin/ShowAccountPic">
 								</c:if>
 								<c:if test="${empty userDetail.picture}">
-									<img src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
+									<img
+										src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
 								</c:if>
 							</div>
 							<div class="middle">
 								<h4 class="account_result">密碼</h4>
-								<input type="password" id="password" name="password" placeholder="請輸入密碼"
-									value="${userDetail.password}">
+								<input type="password" id="password" name="password"
+									placeholder="請輸入密碼" value="${userDetail.password}">
 							</div>
 
 							<div class="middle">
 								<h4 class="account_result">身分</h4>
 								<p class="p_result" id="idData">${userDetail.identityBean.name}</p>
-								<div class="form-group" width="300px">
-								<select class="custom-select" name="identity" id="identity">
-									<option selected  value="0">修改會員身分</option>
-									<option value="1">管理員</option>
-									<option value="2">一般會員</option>
-									<option value="3">餐廳業者</option>
-									<option value="4">住宿業者</option>
-									<option value="5">交通業者</option>
-								</select>
+								<div class="input-group mb-3" style='width: 250px'>
+									<div class="input-group-prepend">
+										<label class="input-group-text" for="identity">修改會員身分</label>
+									</div>
+									<select class="custom-select" name="identity" id="identity">
+										<option value="1">管理員</option>
+										<option value="2">一般會員</option>
+										<option value="3">餐廳業者</option>
+										<option value="4">住宿業者</option>
+										<option value="5">交通業者</option>
+									</select>
+								</div>
 							</div>
-						</div>
-						<div class="middle">
-							<h4 class="account_result">Email</h4>
-							<p class="p_result" id="emailData">${userDetail.email}</p>
-							<input type="text" id="email" name="email" style='width:200px' value="${userDetail.email}"  />
-						</div>
-						<div class="middle">
-							<h4 class="account_result">暱稱</h4>
-							<p class="p_result" id="nData">${userDetail.nickName}</p>
-							<input type="text" id="nickName" name="nickName" style='width:100px' value="${userDetail.nickName}"  />
-						</div>
-						<div class="middle">
-							<h4 class="account_result">註冊日期</h4>
-							<p class="p_result" id="rData">${userDetail.registerString}</p>
-						</div>
-						<div class="middle">
-							<h4 class="account_result">最後修改日期</h4>
-							<p class="p_result" id="mData">${userDetail.modify_DateString}</p>
-						</div>
-						<div class="middle">
-							<h4 class="account_result">狀態</h4>
-							<p class="p_result" id="sData">${userDetail.status}</p>
-							<button type="button" id="sEnable" class="btn btn-success">帳號啟用</button>
-							<button type="button" id="sDisable" class="btn btn-danger">帳號禁用</button>
+							<div class="middle">
+								<h4 class="account_result">Email</h4>
+								<p class="p_result" id="emailData">${userDetail.email}</p>
+								<input type="text" id="email" name="email" style='width: 200px'
+									value="${userDetail.email}" />
+							</div>
+							<div class="middle">
+								<h4 class="account_result">暱稱</h4>
+								<p class="p_result" id="nData">${userDetail.nickName}</p>
+								<input type="text" id="nickName" name="nickName"
+									style='width: 100px' value="${userDetail.nickName}" />
+							</div>
+							<div class="middle">
+								<h4 class="account_result">註冊日期</h4>
+								<p class="p_result" id="rData">${userDetail.registerString}</p>
+							</div>
+							<div class="middle">
+								<h4 class="account_result">最後修改日期</h4>
+								<p class="p_result" id="mData">${userDetail.modify_DateString}</p>
+							</div>
+<!-- 							<div class="middle"> -->
+<!-- 								<h4 class="account_result">狀態</h4> -->
+<%-- 								<p class="p_result" id="sData">${userDetail.status}</p> --%>
+<!-- 								<button type="button" id="sEnable" class="btn btn-success">帳號啟用</button> -->
+<!-- 								<button type="button" id="sDisable" class="btn btn-danger">帳號禁用</button> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 
