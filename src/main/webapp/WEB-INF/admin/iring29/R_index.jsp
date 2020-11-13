@@ -136,7 +136,20 @@ th {
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
-								<th>ID</th>
+								<th>
+								<form id="statuss" name="statuss"
+											action="<%=application.getContextPath()%>/key" >
+								<button>
+										<svg width="2em" height="1em" viewBox="0 0 16 16"
+											class="bi bi-arrow-down-up" fill="currentColor"
+											xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+										</svg>
+								</button>
+								<Input type='hidden' name='currentKPage' value='1'>
+								<Input type='hidden' name='orderFiled' value='r_sn'>
+								ID</form></th>
 								<th>
 								<form id="statuss" name="statuss"
 											action="<%=application.getContextPath()%>/key" >
@@ -150,10 +163,35 @@ th {
 								</button>
 								<Input type='hidden' name='currentKPage' value='1'>
 								<Input type='hidden' name='orderFiled' value='name'>
-								餐廳名稱</form>
-								</th>
-								<th>餐廳地址</th>
-								<th>地區</th>
+								餐廳名稱</form></th>
+								<th>
+								<form id="statuss" name="statuss"
+											action="<%=application.getContextPath()%>/key" >
+								<button>
+										<svg width="2em" height="1em" viewBox="0 0 16 16"
+											class="bi bi-arrow-down-up" fill="currentColor"
+											xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+										</svg>
+								</button>
+								<Input type='hidden' name='currentKPage' value='1'>
+								<Input type='hidden' name='orderFiled' value='address'>
+								餐廳地址</form></th>
+								<th>
+								<form id="statuss" name="statuss"
+											action="<%=application.getContextPath()%>/key" >
+								<button>
+										<svg width="2em" height="1em" viewBox="0 0 16 16"
+											class="bi bi-arrow-down-up" fill="currentColor"
+											xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+										</svg>
+								</button>
+								<Input type='hidden' name='currentKPage' value='1'>
+								<Input type='hidden' name='orderFiled' value='region'>
+								地區</form></th>
 								<th>會員帳號</th>
 								<th>狀態</th>
 								<th>修改</th>
@@ -189,8 +227,7 @@ th {
 
 									<td>
 
-										<form
-											action="<%=application.getContextPath()%>/DisplayRestaurant"
+										<form action="<%=application.getContextPath()%>/DisplayRestaurant"
 											method="POST">
 											<c:if test="${r.status == 'Y'}">
 												<button type="submit" class="btn btn-warning">修改</button>
