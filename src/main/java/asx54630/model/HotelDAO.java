@@ -77,6 +77,20 @@ public class HotelDAO {
 		return result;
 	}
 	
+	public Hotel updateStatus(BigDecimal sn,String Status) { //修改狀態
+		Session session = sessionFactory.getCurrentSession();
+		Hotel result = session.get(Hotel.class, sn);
+		String str1 = new String("啟用");
+		if(result != null) {
+			if(Status.equals(str1)) {				
+				result.setSTATUS("禁用");
+			}else {
+				result.setSTATUS("啟用");
+			}
+		}
+		return result;
+	}
+	
 	public boolean delete(BigDecimal sn) { //刪除
 		Session session = sessionFactory.getCurrentSession();
 		Hotel result = session.get(Hotel.class, sn);
