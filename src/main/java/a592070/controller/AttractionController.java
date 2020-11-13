@@ -138,16 +138,10 @@ public class AttractionController {
                               @RequestParam(name="attractionData", required = false)String attractionData) {
         boolean flag = false;
         try {
-//            System.out.println(attractionData);
             ObjectMapper mapper = new ObjectMapper();
             AttractionDO attractionDO = mapper.readValue(attractionData, AttractionDO.class);
 
-//            String filename;
             if(multipartFile != null){
-//                filename = multipartFile.getOriginalFilename();
-//                String savePath = "C:\\JavaCourse\\IntelliJWorkSpace\\III_Project\\target\\III_Project-1.0-SNAPSHOT\\assets\\" + id + "\\" + filename;
-//                System.out.println(savePath);
-//                multipartFile.transferTo(new File(savePath));
                 attractionDO.setPicture(multipartFile.getBytes());
                 System.out.println("saveFile success");
             }

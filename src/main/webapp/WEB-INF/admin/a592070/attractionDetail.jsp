@@ -70,6 +70,8 @@
             <div class="content">
                 <div class="row">
                     <div class="col-12">
+                        <el-page-header @back="goBack" content="詳細頁面">
+                        </el-page-header>
 
                         <el-form label-width="180px" :model="attractionData" ref="attractionData" >
                             <el-form-item label="ID" prop="sn">
@@ -273,7 +275,11 @@
             handleRemove(file, fileList) {
                 console.log(file, fileList);
                 this.param.delete('file');
+            },
+            goBack() {
+                console.log('go back');
             }
+
         }
     });
 </script>

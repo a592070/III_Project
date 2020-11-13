@@ -56,7 +56,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
         keyWords = "%"+keyWords+"%";
         region = "%"+region+"%";
 
-        String hql = "select count(*) from AttractionDO " +
+        String hql = "select count(sn) from AttractionDO " +
                 "where region like :region and " +
                 "(name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword) ";
 
@@ -107,7 +107,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     public int getSizeByFiled(String filedName, String filedValue) {
         filedValue = "%" + filedValue + "%";
 
-        String hql = "select count(*) from AttractionDO where "+filedName+" like ?1 ";
+        String hql = "select count(sn) from AttractionDO where "+filedName+" like ?1 ";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter(1, filedValue);

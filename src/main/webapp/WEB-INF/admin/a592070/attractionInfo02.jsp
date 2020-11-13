@@ -94,14 +94,17 @@
                                         ele.sn.toString().toLowerCase().includes(search.toLowerCase()) ||
                                         ele.address.toString().toLowerCase().includes(search.toLowerCase())
                                         ))"
-                                        style="width: 100%">
+                                        style="width: 100%"
+                                        @sort-change='sortChange'>
                                     <el-table-column
                                             label="ID"
-                                            prop="sn">
+                                            prop="sn"
+                                            sortable='custom'>
                                     </el-table-column>
                                     <el-table-column
                                             label="Name"
-                                            prop="name">
+                                            prop="name"
+                                            sortable='custom'>
                                     </el-table-column>
                                     <el-table-column
                                             label="Address"
@@ -298,9 +301,11 @@
             handleSelectPage(value) {
                 this.pageData.currentPage = value;
                 this.handleSelectedData();
+            },
+            sortChange: function(column, prop, order) {
+                console.log(column + '-' + prop + '-' + order)
             }
         }
-
     });
 </script>
 
