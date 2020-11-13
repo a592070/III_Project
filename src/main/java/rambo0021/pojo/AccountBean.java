@@ -52,7 +52,7 @@ public class AccountBean {
 	@JoinColumn(name = "IDENTITY")
 	private IdentityBean identityBean;
     
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "accountBean")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accountBean")
 	private List<OrderTable> orderTable;// 大訂單 
 
 	public AccountBean() {
