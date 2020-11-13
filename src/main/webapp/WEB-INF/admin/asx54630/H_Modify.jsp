@@ -48,22 +48,10 @@
 								class="form-control" type="text" value="${hoteldetail.TYPE}"
 								name="upType"><br>
 						</div>
-						<div>
-							<p class="p_result">
-								<c:if test="${hoteldetail.STATUS == '停用'}">停用&nbsp;
-											<button class="btn btn-success" onclick="Hstatus()">啟用</button>
-								</c:if>
-								<c:if test="${hoteldetail.STATUS == '啟用'}">啟用&nbsp;
-											<button class="btn btn-secondary" onclick="Hstatus()">停用</button>
-								</c:if>
-								<Input type='hidden' name='status' value='${hoteldetail.STATUS}'>
-								<Input type='hidden' name='r_sn' value='${hoteldetail.SN}'>
-							</p>
-						</div>
 						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">確認</button>
 							<button type="button" class="btn btn-secondary"
 								onclick="history.back()">取消</button>
-							<button type="submit" class="btn btn-primary">確認</button>
 						</div>
 					</table>
 				</form>
