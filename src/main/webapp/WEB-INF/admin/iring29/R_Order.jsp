@@ -102,7 +102,13 @@ td {
 												</c:if>
 												</form>
 												</td>
-												<td><button type="submit" class="btn btn-danger">刪除</button></td>
+												<td>
+												<form id="statuss" name="statuss"
+												action="<%=application.getContextPath()%>/DeleteOrder"
+												method="POST" onsubmit="return confirm('確認是否刪除此訂單資料？');">
+												<button type="submit" class="btn btn-danger">刪除</button>
+												<Input type='hidden' name='rid' value='${r.id}'>
+												</form></td>
 
 											</tr>
 

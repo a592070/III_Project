@@ -67,6 +67,46 @@ th {
 	margin-left: 50px;
 	margin-bottom: 50px;
 }
+
+.r_sn {
+	width: 70px;
+	text-align: center;
+}
+
+.name {
+	width: 270px;
+	/* 	text-align: center;	 */
+}
+
+.address {
+	width: 270px;
+	/* 	text-align: center;	 */
+}
+
+.region {
+	width: 100px;
+	text-align: center;
+}
+
+.user {
+	width: 100px;
+	text-align: center;
+}
+
+.status {
+	width: 150px;
+	text-align: center;
+}
+
+.modify {
+	width: 110px;
+	text-align: center;
+}
+
+.delete {
+	width: 110px;
+	text-align: center;
+}
 </style>
 
 </head>
@@ -136,62 +176,67 @@ th {
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
-								<th>
-								<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key" >
-								<button>
-										<svg width="2em" height="1em" viewBox="0 0 16 16"
-											class="bi bi-arrow-down-up" fill="currentColor"
-											xmlns="http://www.w3.org/2000/svg">
+								<th><div>
+										<form id="statuss" name="statuss"
+											action="<%=application.getContextPath()%>/key">
+											<button>
+												<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
 											<path fill-rule="evenodd"
-												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 										</svg>
-								</button>
-								<Input type='hidden' name='currentKPage' value='1'>
-								<Input type='hidden' name='orderFiled' value='r_sn'>
-								ID</form></th>
-								<th>
-								<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key" >
-								<button>
-										<svg width="2em" height="1em" viewBox="0 0 16 16"
-											class="bi bi-arrow-down-up" fill="currentColor"
-											xmlns="http://www.w3.org/2000/svg">
+											</button>
+											<Input type='hidden' name='currentKPage' value='1'> <Input
+												type='hidden' name='orderFiled' value='r_sn'> ID
+										</form>
+									</div></th>
+								<th><div>
+										<form id="statuss" name="statuss"
+											action="<%=application.getContextPath()%>/key">
+											<button>
+												<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
 											<path fill-rule="evenodd"
-												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 										</svg>
-								</button>
-								<Input type='hidden' name='currentKPage' value='1'>
-								<Input type='hidden' name='orderFiled' value='name'>
-								餐廳名稱</form></th>
-								<th>
-								<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key" >
-								<button>
-										<svg width="2em" height="1em" viewBox="0 0 16 16"
-											class="bi bi-arrow-down-up" fill="currentColor"
-											xmlns="http://www.w3.org/2000/svg">
+											</button>
+											<Input type='hidden' name='currentKPage' value='1'> <Input
+												type='hidden' name='orderFiled' value='name'> 餐廳名稱
+										</form>
+									</div></th>
+								<th><div>
+										<form id="statuss" name="statuss"
+											action="<%=application.getContextPath()%>/key">
+											<button>
+												<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
 											<path fill-rule="evenodd"
-												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 										</svg>
-								</button>
-								<Input type='hidden' name='currentKPage' value='1'>
-								<Input type='hidden' name='orderFiled' value='address'>
-								餐廳地址</form></th>
-								<th>
-								<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key" >
-								<button>
-										<svg width="2em" height="1em" viewBox="0 0 16 16"
-											class="bi bi-arrow-down-up" fill="currentColor"
-											xmlns="http://www.w3.org/2000/svg">
+											</button>
+											<Input type='hidden' name='currentKPage' value='1'> <Input
+												type='hidden' name='orderFiled' value='address'>
+											餐廳地址
+										</form>
+									</div></th>
+								<th><div>
+										<form id="statuss" name="statuss"
+											action="<%=application.getContextPath()%>/key">
+											<button>
+												<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
 											<path fill-rule="evenodd"
-												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 										</svg>
-								</button>
-								<Input type='hidden' name='currentKPage' value='1'>
-								<Input type='hidden' name='orderFiled' value='region'>
-								地區</form></th>
+											</button>
+											<Input type='hidden' name='currentKPage' value='1'> <Input
+												type='hidden' name='orderFiled' value='region'> 地區
+										</form>
+									</div></th>
 								<th>會員帳號</th>
 								<th>狀態</th>
 								<th>修改</th>
@@ -202,51 +247,52 @@ th {
 							<c:forEach var="r" items="${rBean}">
 
 								<tr>
-									<td>${r.r_sn}</td>
-									<td>${r.name}</td>
-									<td>${r.address}</td>
-									<td>${r.region}</td>
-									<td>${r.username}</td>
-									<td>
-										<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/ModifyStatus"
-											method="POST" onsubmit="return confirm('確認是否修改狀態？');">
-											<c:if test="${r.status == 'N'}">停用&nbsp;
+									<td class="r_sn">${r.r_sn}</td>
+									<td class="name">${r.name}</td>
+									<td class="address">${r.address}</td>
+									<td class="region">${r.region}</td>
+									<td class="user">${r.username}</td>
+									<td><div class="status">
+											<form id="statuss" name="statuss"
+												action="<%=application.getContextPath()%>/ModifyStatus"
+												method="POST" onsubmit="return confirm('確認是否修改狀態？');">
+												<c:if test="${r.status == 'N'}">停用&nbsp;
 											<button id="btn" type="submit" class="btn btn-success"
-													onclick="statusR()">啟用</button>
-											</c:if>
-											<c:if test="${r.status == 'Y'}">啟用&nbsp;
+														onclick="statusR()">啟用</button>
+												</c:if>
+												<c:if test="${r.status == 'Y'}">啟用&nbsp;
 											<button id="btn" type="submit" class="btn btn-secondary"
-													onclick="statusR()">停用</button>
-											</c:if>
-											<Input type='hidden' name='status' value='${r.status}'>
-											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
-
-										</form>
-									</td>
-
-									<td>
-
-										<form action="<%=application.getContextPath()%>/DisplayRestaurant"
-											method="POST">
-											<c:if test="${r.status == 'Y'}">
-												<button type="submit" class="btn btn-warning">修改</button>
+														onclick="statusR()">停用</button>
+												</c:if>
+												<Input type='hidden' name='status' value='${r.status}'>
 												<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+
+											</form>
+										</div></td>
+
+									<td><div class="modify">
+
+											<form
+												action="<%=application.getContextPath()%>/DisplayRestaurant"
+												method="POST">
+												<c:if test="${r.status == 'Y'}">
+													<button type="submit" class="btn btn-warning">修改</button>
+													<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+												</c:if>
+											</form>
+											<c:if test="${r.status == 'N'}">
+												<button type="submit" class="btn btn-warning" disabled>修改</button>
 											</c:if>
-										</form> <c:if test="${r.status == 'N'}">
-											<button type="submit" class="btn btn-warning" disabled>修改</button>
-										</c:if>
 
-
-									</td>
-									<td>
-										<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/DeleteRestaurant"
-											method="POST" onsubmit="return confirm('確認是否刪除此餐廳資料？');">
-											<button type="submit" class="btn btn-danger">刪除</button>
-											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
-										</form>
-									</td>
+										</div></td>
+									<td><div class="delete">
+											<form id="statuss" name="statuss"
+												action="<%=application.getContextPath()%>/DeleteRestaurant"
+												method="POST" onsubmit="return confirm('確認是否刪除此餐廳資料？');">
+												<button type="submit" class="btn btn-danger">刪除</button>
+												<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+											</form>
+										</div></td>
 								</tr>
 
 							</c:forEach>

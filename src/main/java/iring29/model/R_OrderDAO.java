@@ -44,8 +44,8 @@ public class R_OrderDAO {
 		return query.uniqueResult();
 	}
 	
-	public String deleteOrder(BigDecimal r_sn) {
-		R_Order_List rBean = sessionFactory.getCurrentSession().get(R_Order_List.class, r_sn);
+	public String deleteOrder(BigDecimal id) {
+		R_Order_List rBean = sessionFactory.getCurrentSession().get(R_Order_List.class, id);
 		if(rBean != null) {
 			sessionFactory.getCurrentSession().delete(rBean);
 			return "刪除成功";

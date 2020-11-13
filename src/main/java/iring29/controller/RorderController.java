@@ -69,8 +69,8 @@ public class RorderController {
 	
 	//Delete order
 	@RequestMapping(path = "DeleteOrder", method = RequestMethod.POST)
-	public String DelOrder(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
-		String result = rOrderService.deleteOrder(r_sn);
+	public String DelOrder(@RequestParam("rid") BigDecimal id, Model m) {
+		String result = rOrderService.deleteOrder(id);
 		m.addAttribute("result",result);
 		return "iring29/OrderResult";
 	}
