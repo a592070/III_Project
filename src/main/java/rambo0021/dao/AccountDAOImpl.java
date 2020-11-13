@@ -34,14 +34,14 @@ public class AccountDAOImpl implements AcountDAO {
 	}
 
 	@Override
-	public AccountBean updateAccImg(byte[] img, String username) {
+	public String updateAccImg(byte[] img, String username) {
 		Session session = sessionFactory.getCurrentSession();
 		AccountBean aBean = session.get(AccountBean.class, username);
 		if (aBean != null) {
 			aBean.setPicture(img);
-			return aBean;
+			return "修改成功";
 		}
-		return aBean;
+		return "修改失敗";
 	}
 
 	@Override

@@ -197,7 +197,6 @@
 							<option value="5">交通業者</option>
 						</select>
 					</div>
-					</select>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="idtysubmit">儲存</button>
