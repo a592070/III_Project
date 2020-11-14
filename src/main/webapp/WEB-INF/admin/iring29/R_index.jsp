@@ -126,8 +126,8 @@ th {
 						<form id="formR" name="formR"
 							action="<%=application.getContextPath()%>/regionSearch"
 							method="POST">
-							<span class="sp_search">餐廳地區</span> <select name="region_name"
-								id="inputState" class="form-control">
+							<span class="sp_search">餐廳地區</span> 
+							<select name="region_name" id="inputState" class="form-control">
 								<option value="">請選擇地區</option>
 								<option value="基隆">基隆</option>
 								<option value="新北">新北</option>
@@ -147,8 +147,6 @@ th {
 								<option value="花蓮">花蓮</option>
 								<option value="台東">台東</option>
 								<option value="澎湖">澎湖</option>
-								<option value="金門">金門</option>
-								<option value="連江">連江</option>
 							</select>
 						</form>
 					</div>
@@ -156,9 +154,8 @@ th {
 				$("#inputState").change(function(){
 						console.log("change");
 						console.log($("#inputState").val());
-						document.formR.attributes["action"].value ="<%=application.getContextPath()%>
-						/regionSearch";
-											document.formR.submit();
+						document.formR.attributes["action"].value ="<%=application.getContextPath()%>/regionSearch";
+						document.formR.submit();
 										})
 					</script>
 
@@ -166,7 +163,13 @@ th {
 						<form action="<%=application.getContextPath()%>/key" method="GET">
 							<span class="sp_search">關鍵字搜尋</span> <input type="text"
 								name="keyword" placeholder="請輸入關鍵字" />
-							<button type="submit" class="btn btn-primary">Search</button>
+							<button type="submit" class="btn btn-primary">搜尋</button>
+						</form>
+					</div>
+					
+					<div class="search">
+						<form action="<%=application.getContextPath()%>/NewRestaurant" method="GET">
+							<button type="submit" class="btn btn-success">新增餐廳</button>
 						</form>
 					</div>
 
@@ -176,6 +179,7 @@ th {
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
+								<th>ID</th>
 								<th><div>
 										<form id="statuss" name="statuss"
 											action="<%=application.getContextPath()%>/key">
@@ -187,8 +191,10 @@ th {
 														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 										</svg>
 											</button>
-											<Input type='hidden' name='currentKPage' value='1'> <Input
-												type='hidden' name='orderFiled' value='r_sn'> ID
+											<Input type='hidden' name='currentKPage' value='1'> 
+											<Input type='hidden' name='orderFiled' value='name'> 
+											<Input type='hidden' name='keyword' value='${keyword}'> 
+											<Input type='hidden' name='order' value='${order}'> 餐廳名稱
 										</form>
 									</div></th>
 								<th><div>
@@ -202,8 +208,10 @@ th {
 														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 										</svg>
 											</button>
-											<Input type='hidden' name='currentKPage' value='1'> <Input
-												type='hidden' name='orderFiled' value='name'> 餐廳名稱
+											<Input type='hidden' name='currentKPage' value='1'> 
+											<Input type='hidden' name='orderFiled' value='address'>
+											<Input type='hidden' name='keyword' value='${keyword}'>
+											<Input type='hidden' name='order' value='${order}'> 餐廳地址
 										</form>
 									</div></th>
 								<th><div>
@@ -217,24 +225,10 @@ th {
 														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 										</svg>
 											</button>
-											<Input type='hidden' name='currentKPage' value='1'> <Input
-												type='hidden' name='orderFiled' value='address'>
-											餐廳地址
-										</form>
-									</div></th>
-								<th><div>
-										<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key">
-											<button>
-												<svg width="2em" height="1em" viewBox="0 0 16 16"
-													class="bi bi-arrow-down-up" fill="currentColor"
-													xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-										</svg>
-											</button>
-											<Input type='hidden' name='currentKPage' value='1'> <Input
-												type='hidden' name='orderFiled' value='region'> 地區
+											<Input type='hidden' name='currentKPage' value='1'> 
+											<Input type='hidden' name='orderFiled' value='region'> 
+											<Input type='hidden' name='keyword' value='${keyword}'>
+											<Input type='hidden' name='order' value='${order}'> 地區
 										</form>
 									</div></th>
 								<th>會員帳號</th>
@@ -253,36 +247,41 @@ th {
 									<td class="region">${r.region}</td>
 									<td class="user">${r.username}</td>
 									<td><div class="status">
-											<form id="statuss" name="statuss"
-												action="<%=application.getContextPath()%>/ModifyStatus"
-												method="POST" onsubmit="return confirm('確認是否修改狀態？');">
-												<c:if test="${r.status == 'N'}">停用&nbsp;
-											<button id="btn" type="submit" class="btn btn-success"
-														onclick="statusR()">啟用</button>
-												</c:if>
-												<c:if test="${r.status == 'Y'}">啟用&nbsp;
-											<button id="btn" type="submit" class="btn btn-secondary"
-														onclick="statusR()">停用</button>
-												</c:if>
-												<Input type='hidden' name='status' value='${r.status}'>
-												<Input type='hidden' name='r_sn' value='${r.r_sn}'>
-
-											</form>
+									<form id="changestatus" name="changestatus" action="<%=application.getContextPath()%>/ModifyStatus" 
+									method = "POST" onsubmit="return confirm('確認是否修改狀態？');" >
+									<button type="submit">
+										<c:if test="${r.status == 'N'}">
+											<label class="switch switch-text switch-success switch-pill form-control-label">
+												<input type="checkbox" class="switch-input form-check-input" value="on" id="myCheck" onclick="myFunction()">
+												<span class="switch-label" data-on="On" data-off="Off"></span>
+												<span class="switch-handle"></span>
+											</label>
+										</c:if>
+										<c:if test="${r.status == 'Y'}">
+											<label class="switch switch-text switch-success switch-pill form-control-label">
+												<input type="checkbox" class="switch-input form-check-input" value="on" checked id="myCheck" onclick="myFunction()">
+												<span class="switch-label" data-on="On" data-off="Off"></span>
+												<span class="switch-handle"></span>
+											</label>
+										</c:if>
+										</button>
+											<Input type='hidden' name='status' value='${r.status}'>
+											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+									</form>		
+						
 										</div></td>
-
+		
+		
+		
 									<td><div class="modify">
 
 											<form
 												action="<%=application.getContextPath()%>/DisplayRestaurant"
 												method="POST">
-												<c:if test="${r.status == 'Y'}">
 													<button type="submit" class="btn btn-warning">修改</button>
 													<Input type='hidden' name='r_sn' value='${r.r_sn}'>
-												</c:if>
 											</form>
-											<c:if test="${r.status == 'N'}">
-												<button type="submit" class="btn btn-warning" disabled>修改</button>
-											</c:if>
+											
 
 										</div></td>
 									<td><div class="delete">
@@ -312,49 +311,75 @@ th {
 					<ul class="pagination">
 						<c:if test="${currentPage != null}">
 							<c:if test="${currentPage == 1}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}"
-									tabindex="-1">Previous</a></li>
+								<li class="page-item disabled">
+									<a class="page-link"href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}" tabindex="-1">第一頁</a>
+								</li>
+							</c:if>
+							
+							<c:if test="${currentPage > 1}">
+								<li class="page-item">
+								<a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=1"tabindex="-1">第一頁</a>
+								</li>
 							</c:if>
 							<c:if test="${currentPage > 1}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}"
-									tabindex="-1">Previous</a></li>
+								<li class="page-item">
+								<a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}"tabindex="-1">${currentPage-1}</a>
+								</li>
 							</c:if>
-							<li class="page-item active"><a class="page-link" href="#">${currentPage}
-									<span class="sr-only">(current)</span>
-							</a></li>
+							<!-- current page -->
+								<li class="page-item active">
+									<a class="page-link" href="#">${currentPage}<span class="sr-only">(current)</span></a>
+								</li>
+							
 							<c:if test="${currentPage != totalPage && currentPage != ''}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">Next</a></li>
+								<li class="page-item">
+									<a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">${currentPage+1}</a>
+								</li>
 							</c:if>
+							<c:if test="${currentPage != totalPage && currentPage != ''}">
+								<li class="page-item">
+									<a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${totalPage}">最末頁</a>
+								</li>
+							</c:if>
+							
 							<c:if test="${currentPage == totalPage && currentPage != ''}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">Next</a></li>
+								<li class="page-item disabled">
+									<a class="page-link" href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">最末頁</a>
+								</li>
 							</c:if>
 						</c:if>
+
 
 						<c:if test="${currentKPage != null}">
 							<c:if test="${currentKPage == 1}">
 								<li class="page-item disabled"><a class="page-link"
 									href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage-1}"
-									tabindex="-1">Previous</a></li>
+									tabindex="-1">第一頁</a></li>
+							</c:if>
+							<c:if test="${currentKPage > 1}">
+								<li class="page-item"><a class="page-link"
+									href="<%=application.getContextPath()%>/key?currentKPage=1&keyword=${keyword}&orderFiled=${orderFiled}"
+									tabindex="-1">第一頁</a></li>
 							</c:if>
 							<c:if test="${currentKPage > 1}">
 								<li class="page-item"><a class="page-link"
 									href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage-1}&keyword=${keyword}&orderFiled=${orderFiled}"
-									tabindex="-1">Previous</a></li>
+									tabindex="-1">${currentKPage-1}</a></li>
 							</c:if>
 							<li class="page-item active"><a class="page-link" href="#">${currentKPage}
 									<span class="sr-only">(current)</span>
 							</a></li>
 							<c:if test="${currentKPage != totalKPage}">
 								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage+1}&keyword=${keyword}&orderFiled=${orderFiled}">Next</a></li>
+									href="<%=application.getContextPath()%>/key?currentKPage=${totalKPage}&keyword=${keyword}&orderFiled=${orderFiled}">${currentKPage+1}</a></li>
+							</c:if>
+							<c:if test="${currentKPage != totalKPage}">
+								<li class="page-item"><a class="page-link"
+									href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage+1}&keyword=${keyword}&orderFiled=${orderFiled}">最末頁</a></li>
 							</c:if>
 							<c:if test="${currentKPage == totalKPage}">
 								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/keywords?currenKPage=${currentKPage+1}">Next</a></li>
+									href="<%=application.getContextPath()%>/keywords?currenKPage=${currentKPage+1}">最末夜</a></li>
 							</c:if>
 						</c:if>
 

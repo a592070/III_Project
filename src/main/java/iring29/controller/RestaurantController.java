@@ -22,6 +22,7 @@ import iring29.model.Page;
 import iring29.model.Restaurant;
 import iring29.model.Show_RView;
 import iring29.service.RestaurantService;
+import rambo0021.pojo.AccountBean;
 
 @Controller
 @SessionAttributes(names = { "rBean", "RBean" })
@@ -58,11 +59,18 @@ public class RestaurantController {
 	@RequestMapping(path = "/key", method = RequestMethod.GET)
 	public String RestaurantKeyword(@RequestParam(value = "currentKPage", defaultValue = "1") Integer currentKPage,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword,
-			@RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled, Model m) {
+			@RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
+			@RequestParam(value = "order", defaultValue = "DESC") String order, Model m) {
 
 		if ((keyword == null && orderFiled.equals("r_sn")) || (keyword.equals("") && orderFiled.equals("r_sn"))) {
 
 			return "redirect:Restaurant";
+		}
+
+		if (order.equals("DESC")) {
+			order = "ASC";
+		} else {
+			order = "DESC";
 		}
 
 		int size = rs.getSizeByKeywords(keyword);
@@ -75,9 +83,10 @@ public class RestaurantController {
 			start = (currentKPage - 1) * page.getPageSize();
 		}
 		int totalKPage = page.getTotalPageCount();
-		List<Show_RView> rBean = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled);
+		List<Show_RView> rBean = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
 		m.addAttribute("rBean", rBean);
 		m.addAttribute("orderFiled", orderFiled);
+		m.addAttribute("order", order);
 		m.addAttribute("currentKPage", currentKPage);
 		m.addAttribute("totalKPage", totalKPage);
 		m.addAttribute("keyword", keyword);
@@ -155,11 +164,15 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/ModifyRestaurant", method = RequestMethod.POST)
-	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, @RequestParam("address") String address,
-			@RequestParam("opentime") String opentime, @RequestParam("description") String description,
-			@RequestParam("transportation") String transportation, @RequestParam("type") String type,
-			@RequestParam("region") String region, @RequestParam("serviceinfo") String serviceinfo,
-			@RequestParam("pic") MultipartFile pic, Model m) throws IOException {
+	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, 
+								   @RequestParam("address") String address,
+								   @RequestParam("opentime") String opentime, 
+								   @RequestParam("description") String description,
+								   @RequestParam("transportation") String transportation, 
+								   @RequestParam("type") String type,
+								   @RequestParam("region") String region, 
+								   @RequestParam("serviceinfo") String serviceinfo,
+								   @RequestParam("pic") MultipartFile pic, Model m) throws IOException {
 
 		Restaurant r = new Restaurant();
 		if (pic.getSize() != 0) {
@@ -174,10 +187,51 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
-	@RequestMapping(path = "DeleteRestaurant", method = RequestMethod.POST)
+	//Delete Restaurant
+	@RequestMapping(path = "/DeleteRestaurant", method = RequestMethod.POST)
 	public String DelRestaurant(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
 		String result = rs.deleteRestaurant(r_sn);
 		m.addAttribute("result", result);
+		return "iring29/result";
+	}
+	
+	//Create Restaurant
+	@RequestMapping(path = "/NewRestaurant")
+	public String NewRestaurant() {
+		return "iring29/R_create";
+	}
+	
+	@RequestMapping(path = "/CreateRestaurant", method = RequestMethod.POST)
+	public String CreateRestaurant(@RequestParam("pic") MultipartFile pic,
+								   @RequestParam("name") String name,
+								   @RequestParam("region") String region,
+								   @RequestParam("address") String address,
+								   @RequestParam("transportation") String transportation,
+								   @RequestParam("serviceinfo") String serviceinfo,
+								   @RequestParam("type") String type,
+			   					   @RequestParam("opentime") String opentime, 
+			   					   @RequestParam("description") String description,
+			   					   @RequestParam("username") String username, Model m) throws IOException {
+		Restaurant rBean = new Restaurant();
+		AccountBean accBean = new AccountBean();
+		rBean.setPic(pic.getInputStream().readAllBytes());
+		rBean.setName(name);
+		rBean.setRegion(region);
+		rBean.setAddress(address);
+		rBean.setTransportation(transportation);
+		rBean.setServiceinfo(serviceinfo);
+		rBean.setType(type);
+		rBean.setOpentime(opentime);
+		rBean.setDescription(description);
+		accBean.setUserName(username);
+		rBean.setAccountBean(accBean);
+		
+		rBean.setTablenum(BigDecimal.valueOf(2));
+		rBean.setStatus("Y");
+		
+		String result = rs.inserRestaurant(rBean);
+		m.addAttribute("result", result);
+		
 		return "iring29/result";
 	}
 
