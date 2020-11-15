@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Modify</title>
+<title>Create</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style>
@@ -208,21 +208,20 @@ pre {
 				
 				
 					<div class="box">
-
+						
 						
 							<div>
-								<h2 class="title">${RBean.name}</h2>
+								<h2 class="title"></h2>
 								<div class="top"></div>
-
+								
 								<FORM  id="modifyR" name="modifyR" method="POST" enctype="multipart/form-data">
 								<p class="modify-img">
-									<label for="r-name">請選擇欲修改圖片上傳</label> 
+									<label for="r-name">請選擇封面照圖片上傳</label> 
 									<input type="file" id="pic" name="pic">
-									<Input type='hidden' name='r_sn' value='${RBean.r_sn}'>
 			<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
 								</p>
 								<div class="div_img">
-									<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic">
+									<img id="preview_Rpic" src="">
 								</div>
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
@@ -242,13 +241,22 @@ pre {
 								</script>
 
 								<div>
+									<h4 class="res_data">餐廳名稱</h4>
+								</div>
+								<div>
+									<h4 class="res_result">請輸入餐廳名稱</h4>
+									<p class="p_result">
+										<textarea name="name" id="name" cols="80" rows="5"></textarea>
+									</p>
+								</div>
+
+								<div>
 									<h4 class="res_data">餐廳地點</h4>
 								</div>
 
 								<div>
-									<h4 class="res_result">地區</h4>
+									<h4 class="res_result">請選擇餐廳地區</h4>
 									<p class="p_result">
-<%-- 										<textarea name="region" id="region" cols="80" rows="5">${RBean.region}</textarea> --%>
 							<select name="region" id="region" class="form-control">
 								<option value="">請選擇地區</option>
 								<option value="基隆">基隆</option>
@@ -272,81 +280,20 @@ pre {
 								<option value="金門">金門</option>
 								<option value="連江">連江</option>
 							</select>
-							<script>
-							switch ("${RBean.region}"){
-								case'':
-								document.getElementById("region")[0].selected=true;
-								break;
-								case'基隆':
-								document.getElementById("region")[1].selected=true;
-								break;
-								case'新北':
-								document.getElementById("region")[2].selected=true;
-								break;
-								case'台北':
-								document.getElementById("region")[3].selected=true;
-								break;
-								case'桃園':
-								document.getElementById("region")[4].selected=true;
-								break;
-								case'新竹':
-								document.getElementById("region")[5].selected=true;
-								break;
-								case'苗栗':
-								document.getElementById("region")[6].selected=true;
-								break;
-								case'台中':
-								document.getElementById("region")[7].selected=true;
-								break;
-								case'彰化':
-								document.getElementById("region")[8].selected=true;
-								break;
-								case'南投':
-								document.getElementById("region")[9].selected=true;
-								break;
-								case'雲林':
-								document.getElementById("region")[10].selected=true;
-								break;
-								case'嘉義':
-								document.getElementById("region")[11].selected=true;
-								break;
-								case'台南':
-								document.getElementById("region")[12].selected=true;
-								break;
-								case'高雄':
-								document.getElementById("region")[13].selected=true;
-								break;
-								case'屏東':
-								document.getElementById("region")[14].selected=true;
-								break;
-								case'宜蘭':
-								document.getElementById("region")[15].selected=true;
-								break;
-								case'花蓮':
-								document.getElementById("region")[16].selected=true;
-								break;
-								case'台東':
-								document.getElementById("region")[17].selected=true;
-								break;
-								case'澎湖':
-								document.getElementById("region")[18].selected=true;
-								break;
-								}
-							</script>
+							
 									</p>
 								</div>
 
 								<div>
-									<h4 class="res_result">地址</h4>
+									<h4 class="res_result">請輸入餐廳完整地址</h4>
 									<p class="p_result">
-										<textarea name="address" id="address" cols="80" rows="5">${RBean.address}</textarea>
+										<textarea name="address" id="address" cols="80" rows="5"></textarea>
 									</p>
 								</div>
 								<div>
-									<h4 class="res_result">交通方式</h4>
+									<h4 class="res_result">請輸入交通方式</h4>
 									<p class="p_result">
-										<textarea name="transportation" id="transportation" cols="80"
-											rows="5">${RBean.transportation}</textarea>
+										<textarea name="transportation" id="transportation" cols="80" rows="5"></textarea>
 									</p>
 								</div>
 
@@ -354,16 +301,17 @@ pre {
 									<h4 class="res_data">菜色介紹</h4>
 								</div>
 								<div>
-									<h4 class="res_result">適合聚餐類型</h4>
+									<h4 class="res_result">請輸入適合聚餐類型</h4>
 									<p class="p_result">
-										<textarea name="serviceinfo" id="serviceinfo" cols="80"
-											rows="5">${RBean.serviceinfo}</textarea>
+										<textarea name="serviceinfo" id="serviceinfo" cols="80" rows="5" 
+										placeholder="例如：朋友聚餐、家庭聚餐..."></textarea>
 									</p>
 								</div>
 								<div>
-									<h4 class="res_result">料理種類</h4>
+									<h4 class="res_result">請輸入料理種類</h4>
 									<p class="p_result">
-										<textarea name="type" id="type" cols="80" rows="5">${RBean.type}</textarea>
+										<textarea name="type" id="type" cols="80" rows="5"
+										placeholder="例如：西式料理、中式料理..."></textarea>
 									</p>
 								</div>
 
@@ -372,51 +320,46 @@ pre {
 									<h4 class="res_data">餐廳資訊</h4>
 								</div>
 								<div>
-									<h4 class="res_result">營業時間</h4>
+									<h4 class="res_result">請輸入營業時間</h4>
 									<p class="p_result">
-										<textarea name="opentime" id="opentime" cols="80" rows="5">${RBean.opentime}</textarea>
+										<textarea name="opentime" id="opentime" cols="80" rows="5"></textarea>
 									</p>
 								</div>
 								<div>
-									<h4 class="res_result">餐廳描述</h4>
+									<h4 class="res_result">請輸入餐廳描述</h4>
 									<p class="p_result">
-										<textarea name="description" id="description" cols="80"
-											rows="5">${RBean.description}</textarea>
+										<textarea name="description" id="description" cols="80" rows="5"></textarea>
 									</p>
 								</div>
-								</FORM>
+								
 								
 
 								<div>
 									<h4 class="res_data">餐廳使用者帳號</h4>
 								</div>
 								
-									<form id="statuss" name="statuss">
 								<div>
 									<p class="p_result">
-										${RBean.accountBean.userName}									
+										<textarea name="username" id="username" cols="80" rows="5"></textarea>
 									</p>
 								</div>
-									</form>
 
-
+							</FORM>
+							
 							</div>
-
-						
 
 					</div>
 
 					<div class="modify_div">
 						<button class="btn btn-warning" name="confirm" value="confrim"
-							onclick="confrimModify()">確認修改</button>
+							onclick="confrimModify()">確認新增</button>
 
 					</div>
-				
 
 					<script type="text/javascript"> 
 					 function confrimModify(){ 
-						 if (confirm("確定送出修改 ? ") ) { 
-								document.forms["modifyR"].action="<%=application.getContextPath()%>/ModifyRestaurant";
+						 if (confirm("確定新增餐聽 ? ") ) { 
+								document.forms["modifyR"].action="<%=application.getContextPath()%>/CreateRestaurant";
 								document.forms["modifyR"].method = "POST";
 								document.forms["modifyR"].submit();
 								

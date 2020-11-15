@@ -12,11 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import rambo0021.pojo.AccountBean;
 import utils.StringUtil;
 
 @Entity
@@ -53,10 +56,11 @@ public class Restaurant {
 	private BigDecimal tablenum;
 	@Column(name = "STATUS")
 	private String status;
-//	private ACCOUNT account;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "restaurant")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant")
 	private Set<R_Order_List> rSets = new HashSet<R_Order_List>();
-	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "USERNAME", referencedColumnName="USERNAME")
+	private AccountBean accountBean;
 	
 	
 	public BigDecimal getR_sn() {
@@ -173,7 +177,7 @@ public class Restaurant {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(String status) { 
 		this.status = status;
 	}
 
@@ -185,6 +189,14 @@ public class Restaurant {
 		this.rSets = rSets;
 	}
 	
+	public AccountBean getAccountBean() {
+		return accountBean;
+	}
+
+	public void setAccountBean(AccountBean accountBean) {
+		this.accountBean = accountBean;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
