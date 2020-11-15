@@ -48,7 +48,7 @@ td {
 		count -= 1;
 		//count=0時，跳轉頁面
 		if(count==0){
-			location.href="<%=application.getContextPath()%>/Restaurant";
+			location.href="<%=application.getContextPath()%>/RestaurantList";
 		}
 		//每秒執行一次,showTime()
 		setTimeout("countDown()",1000);
