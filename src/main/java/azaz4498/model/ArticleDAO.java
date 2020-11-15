@@ -32,19 +32,14 @@ public class ArticleDAO {
 
 	// 依類型顯示文章
 	public List<Article> showArticlesByType(int typeId) throws SQLException {
-		if (typeId == 0) {
-			Query<Article> query = sessionFactory.getCurrentSession()
-					.createQuery("From Article  Order by ART_CRE_TIME DESC", Article.class);
-			List<Article> list = query.list();
-			return list;
-		} else {
+		
 			Query<Article> query = sessionFactory.getCurrentSession()
 					.createQuery("From Article where ART_TYPE_ID=?1 Order by ART_CRE_TIME DESC", Article.class);
 			query.setParameter(1, typeId);
 			List<Article> list = query.list();
 			return list;
 
-		}
+		
 
 	}
 
