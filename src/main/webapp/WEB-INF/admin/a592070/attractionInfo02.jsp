@@ -108,7 +108,8 @@
                                     </el-table-column>
                                     <el-table-column
                                             label="Address"
-                                            prop="address">
+                                            prop="address"
+                                            sortable='custom'>
                                     </el-table-column>
                                     <el-table-column
                                             label="TicketInfo"
@@ -303,7 +304,8 @@
                 this.handleSelectedData();
             },
             sortChange: function(column, prop, order) {
-                console.log(column + '-' + prop + '-' + order)
+                console.log(column + '-' + column.prop + '-' + column.order);
+
             }
         }
     });
