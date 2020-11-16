@@ -1,5 +1,7 @@
 package iring29.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -61,12 +63,12 @@ public class RestaurantController {
 	public String RestaurantKeyword(@RequestParam(value = "currentKPage", defaultValue = "1") Integer currentKPage,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword,
 			@RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
-			@RequestParam(value = "order", defaultValue = "DESC") String order, Model m) {
+			@RequestParam(value = "order", defaultValue = "ASC") String order, Model m) {
 
-		if ((keyword == null && orderFiled.equals("r_sn")) || (keyword.equals("") && orderFiled.equals("r_sn"))) {
-
-			return "redirect:Restaurant";
-		}
+//		if ((keyword == null)  || (keyword.equals("") )) {
+//
+//			return "redirect:Restaurant";
+//		}
 
 		if (order.equals("DESC")) {
 			order = "ASC";
@@ -158,22 +160,38 @@ public class RestaurantController {
 	@RequestMapping(path = "/ShowPic")
 	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("RBean") Restaurant r) {
 
+		System.out.println("in ShowPic");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
+
+		if (r.getPic() == null) {
+			try {
+				File file = new File("/III_Project/other/iring29_img/Restaurant_img.png");
+				long fileSize = file.length();
+				FileInputStream fi = new FileInputStream(file);
+				byte[] buffer = new byte[(int) fileSize];
+				int offset = 0;
+				int numRead = 0;
+				while (offset < buffer.length && (numRead = fi.read(buffer, offset, buffer.length - offset)) >= 0) {
+					offset += numRead;
+				}
+
+				fi.close();
+				r.setPic(buffer);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "/ModifyRestaurant", method = RequestMethod.POST)
-	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, 
-								   @RequestParam("address") String address,
-								   @RequestParam("opentime") String opentime, 
-								   @RequestParam("description") String description,
-								   @RequestParam("transportation") String transportation, 
-								   @RequestParam("type") String type,
-								   @RequestParam("region") String region, 
-								   @RequestParam("serviceinfo") String serviceinfo,
-								   @RequestParam("pic") MultipartFile pic, Model m) throws IOException {
+	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, @RequestParam("address") String address,
+			@RequestParam("opentime") String opentime, @RequestParam("description") String description,
+			@RequestParam("transportation") String transportation, @RequestParam("type") String type,
+			@RequestParam("region") String region, @RequestParam("serviceinfo") String serviceinfo,
+			@RequestParam("pic") MultipartFile pic, Model m) throws IOException {
 
 		Restaurant r = new Restaurant();
 		if (pic.getSize() != 0) {
@@ -188,31 +206,27 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
-	//Delete Restaurant
+	// Delete Restaurant
 	@RequestMapping(path = "/DeleteRestaurant", method = RequestMethod.POST)
 	public String DelRestaurant(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
 		String result = rs.deleteRestaurant(r_sn);
 		m.addAttribute("result", result);
 		return "iring29/result";
 	}
-	
-	//Create Restaurant
+
+	// Create Restaurant
 	@RequestMapping(path = "/NewRestaurant")
 	public String NewRestaurant() {
 		return "iring29/R_create";
 	}
-	
+
 	@RequestMapping(path = "/CreateRestaurant", method = RequestMethod.POST)
-	public String CreateRestaurant(@RequestParam("pic") MultipartFile pic,
-								   @RequestParam("name") String name,
-								   @RequestParam("region") String region,
-								   @RequestParam("address") String address,
-								   @RequestParam("transportation") String transportation,
-								   @RequestParam("serviceinfo") String serviceinfo,
-								   @RequestParam("type") String type,
-			   					   @RequestParam("opentime") String opentime, 
-			   					   @RequestParam("description") String description,
-			   					   @RequestParam("username") String username, Model m) throws IOException {
+	public String CreateRestaurant(@RequestParam("pic") MultipartFile pic, @RequestParam("name") String name,
+			@RequestParam("region") String region, @RequestParam("address") String address,
+			@RequestParam("transportation") String transportation, @RequestParam("serviceinfo") String serviceinfo,
+			@RequestParam("type") String type, @RequestParam("opentime") String opentime,
+			@RequestParam("description") String description, @RequestParam("username") String username, Model m)
+			throws IOException {
 		Restaurant rBean = new Restaurant();
 		AccountBean accBean = new AccountBean();
 		rBean.setPic(pic.getInputStream().readAllBytes());
@@ -226,13 +240,13 @@ public class RestaurantController {
 		rBean.setDescription(description);
 		accBean.setUserName(username);
 		rBean.setAccountBean(accBean);
-		
+
 		rBean.setTablenum(BigDecimal.valueOf(2));
 		rBean.setStatus("Y");
-		
+
 		String result = rs.inserRestaurant(rBean);
 		m.addAttribute("result", result);
-		
+
 		return "iring29/result";
 	}
 

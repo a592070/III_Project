@@ -196,7 +196,7 @@ pre {
 			<div class="content-wrapper">
 
 				<FORM id="RHome" name="RHome"
-					action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant"
+					action="<%=pageContext.getServletContext().getContextPath()%>/admin/Restaurant"
 					method="GET">
 					<div class="div-back">
 						<button type="submit" class="btn btn-primary">回餐廳列表</button>
@@ -222,7 +222,7 @@ pre {
 			<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
 								</p>
 								<div class="div_img">
-									<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic">
+									<img id="preview_Rpic" src="<%=application.getContextPath()%>/admin/ShowPic">
 								</div>
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
@@ -416,7 +416,7 @@ pre {
 					<script type="text/javascript"> 
 					 function confrimModify(){ 
 						 if (confirm("確定送出修改 ? ") ) { 
-								document.forms["modifyR"].action="<%=application.getContextPath()%>/ModifyRestaurant";
+								document.forms["modifyR"].action="<%=application.getContextPath()%>/admin/ModifyRestaurant";
 								document.forms["modifyR"].method = "POST";
 								document.forms["modifyR"].submit();
 								

@@ -92,7 +92,7 @@ td {
 												
 												
 												<td>
-												<form action="<%=application.getContextPath()%>/ROrderDisplay" method="POST">
+												<form action="<%=application.getContextPath()%>/admin/ROrderDisplay" method="POST">
 												<c:if test="${r.book_time > ts}">
 													<button type="submit" class="btn btn-warning">修改</button>
 													<Input type='hidden' name='rid' value='${r.id}'>
@@ -104,7 +104,7 @@ td {
 												</td>
 												<td>
 												<form id="statuss" name="statuss"
-												action="<%=application.getContextPath()%>/DeleteOrder"
+												action="<%=application.getContextPath()%>/admin/DeleteOrder"
 												method="POST" onsubmit="return confirm('確認是否刪除此訂單資料？');">
 												<button type="submit" class="btn btn-danger">刪除</button>
 												<Input type='hidden' name='rid' value='${r.id}'>
