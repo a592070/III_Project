@@ -17,6 +17,7 @@ import iring29.model.R_Order_List;
 import iring29.service.R_OrderService;
 
 @Controller
+@RequestMapping("/admin")
 public class RorderController {
 	@Autowired
 	private R_OrderService rOrderService;

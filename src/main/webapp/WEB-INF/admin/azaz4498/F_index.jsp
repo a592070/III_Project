@@ -10,6 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
+
 <head>
 <title>論壇管理</title>
 
@@ -161,21 +162,26 @@ h2 {
 									<td>${article.artCreTime}</td>
 									<td><a class="text-dark" href="">${article.artUserId}</a></td>
 									<td>${article.articleType.typeName}</td>
-									<td><label class="switch switch-success switch-pill switch-text form-control-label"> 
-									
-									<!-- check status -->
-									<c:if
-										test="${article.artStatus=='enabled'}">
-										<input type="checkbox" class="switch-input form-check-input" name="status" id="status" value="${article.artStatus}" checked>
-									</c:if> 
-									
-									<c:if 
-											test="${article.artStatus=='disabled'}">
-											<input type="checkbox" class="switch-input form-check-input" name="status" id="status" value="${article.artStatus}">
-									</c:if>
-									<span class="switch-label" data-on="on" data-off="off"></span> 
-									<span class="switch-handle"></span>
-									</label></td>
+									<td>
+										<form id="changeStatus" name="changeStatus" method="GET">
+											<input type="hidden" value="${article.artId }" name="artId"> 
+											<label
+												class="switch switch-success switch-pill switch-text form-control-label">
+
+												<!-- check status --> 
+												<c:if test="${article.artStatus=='enabled'}">
+													<input type="checkbox" class="switch-input form-check-input" name="status" id="status"
+														value="${article.artStatus}" checked onclick="confirmStatusChange()">
+												</c:if> <c:if test="${article.artStatus=='disabled'}">
+													<input type="checkbox" class="switch-input form-check-input" name="status" id="status"
+														value="${article.artStatus}"  onclick="confirmStatusChange()">
+												</c:if> 
+												<span class="switch-label" data-on="on" data-off="off"></span> 
+												<span class="switch-handle"></span>
+											</label>
+										</form>
+									</td>
+
 									<td>
 										<form action=editPage.controller method="GET">
 											<button name="artId" value="${article.artId}">
@@ -205,7 +211,7 @@ h2 {
 
 
 	</div>
-	</div>
+
 	<script>
 		function confirmDelete() {
 			var desicion = confirm("確定要刪除此筆資料?");
@@ -213,6 +219,17 @@ h2 {
 				document.forms["delete"].action = "delete.controller";
 				document.forms["delete"].submit();
 			} else {
+				return;
+			}
+		}
+
+		function confirmStatusChange() {
+			var desicion = confirm("確定要變更文章狀態?");
+			if (desicion) {
+				document.forms["changeStatus"].action = "statusChange.controller";
+				document.forms["changeStatus"].submit();
+			} else {
+				
 				return;
 			}
 		}

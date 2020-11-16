@@ -153,7 +153,7 @@ public class Article implements Serializable {
 		this.artPicUrl = artPicUrl;
 	}
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -170,6 +170,12 @@ public class Article implements Serializable {
 	
 	public void setArticleType(ArticleType articleType) {
 		this.articleType = articleType;
+	}
+
+	@Override
+	public String toString() {
+		return "Article [artId=" + artId + ", artTypeId=" + artTypeId + ", artTitle=" + artTitle + ", artStatus="
+				+ artStatus + "]";
 	}
 
 	
