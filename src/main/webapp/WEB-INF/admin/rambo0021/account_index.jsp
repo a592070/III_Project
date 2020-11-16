@@ -41,12 +41,27 @@
 										<td>${a.email}</td>
 										<td>${a.registerString}</td>
 										<td>${a.modify_DateString}</td>
-										<td id="status">${a.status}</td>
+										<td id="status">
+										<c:choose>
+										 <c:when test="${a.status == '啟用'}">
+										 <label class="switch switch-text switch-success switch-pill form-control-label">
+												<input type="checkbox" class="switch-input form-check-input" id="checkbox" value="啟用" checked="checked">
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
+												<span class="switch-handle"></span>
+											</label>
+										 </c:when>
+										 <c:otherwise>
+										 <label class="switch switch-text switch-success switch-pill form-control-label">
+												<input type="checkbox" class="switch-input form-check-input" id="checkbox" value="禁用">
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
+												<span class="switch-handle"></span>
+											</label>
+										 </c:otherwise>
+										</c:choose>					
+										</td>
 										<td>
 											<form action="<%=application.getContextPath()%>/admin/displayAccount"
 												method="POST">
-												<button type="button" id="sEnable" class="btn btn-success">帳號啟用</button>
-												<button type="button" id="sDisable" class="btn btn-danger">帳號禁用</button>
 												<button type="submit" class="btn btn-warning">修改</button>
 												<button type="button" id="delAcc" class="btn btn-danger">刪除</button>
 												<Input type='hidden' name='username' value='${a.userName}'>
@@ -62,16 +77,16 @@
 		</div>
 	</div>
 	<script>
-		$(document).ready(function () {
-			for (let i = 0; i < $("[id=status]").length; i++) {
-			    if($("[id=status]").eq(i).text()=="啟用"){			    
-					$("[id=status]").eq(i).next().children().children("#sEnable").hide()
-				}else{
-					$("[id=status]").eq(i).next().children().children("#sDisable").hide()
-				}
-			}
-		}
-		)
+		// $(document).ready(function () {
+		// 	for (let i = 0; i < $("[id=status]").length; i++) {
+		// 		if ($("[id=status]").eq(i).text().substr(0, 2) == "啟用") {
+		// 			$("[id=status]").eq(i).children("#sEnable").hide()
+		// 		} else {
+		// 			$("[id=status]").eq(i).children("#sDisable").hide()
+		// 		}
+		// 	}
+		// }
+		// )
 		//刪除帳號資料
 		$("#table").on('click', '#delAcc', function () {
 
@@ -93,18 +108,19 @@
 				)
 			}
 		})
-      //啟用
-	  $("#table").on('click', '#sEnable', function () {
-		if (confirm("確定要啟用此帳號?")){
-			var username = $(this).closest('td').siblings("#username").text()
-			var status="啟用"
-			$(this).parent().parent().siblings("#status").text(status)
-			$(this).hide()
-			$(this).siblings("#sDisable").show()
-			$.ajax(
+		/*
+		//啟用button
+		$("#table").on('click', '#sEnable', function () {
+			if (confirm("確定要啟用此帳號?")) {
+				var username = $(this).closest('td').siblings("#username").text()
+				var status = "啟用"
+				$(this).parent().siblings("#status").text(status)
+				$(this).hide()
+				$(this).siblings("#sDisable").show()
+				$.ajax(
 					{
 						type: 'POST',
-						data: { "username": username ,"status":status},
+						data: { "username": username, "status": status },
 						url: '${pageContext.servletContext.contextPath}/admin/enableAccount',
 						dataType: 'text',
 						success: function (response) {
@@ -115,19 +131,19 @@
 					}
 				)
 			}
-	  })
-	  //禁用
-	  $("#table").on('click', '#sDisable', function () {
-		if (confirm("確定要禁用此帳號?")){
-			var username = $(this).closest('td').siblings("#username").text()
-			var status="禁用"
-			$(this).parent().parent().siblings("#status").text(status)
-			$(this).hide()
-			$(this).siblings("#sEnable").show()
-			$.ajax(
+		})
+		//禁用button
+		$("#table").on('click', '#sDisable', function () {
+			if (confirm("確定要禁用此帳號?")) {
+				var username = $(this).closest('td').siblings("#username").text()
+				var status = "禁用"
+				$(this).parent().siblings("#status").text(status)
+				$(this).hide()
+				$(this).siblings("#sEnable").show()
+				$.ajax(
 					{
 						type: 'POST',
-						data: { "username": username ,"status":status},
+						data: { "username": username, "status": status },
 						url: '${pageContext.servletContext.contextPath}/admin/disableAccount',
 						dataType: 'text',
 						success: function (response) {
@@ -137,7 +153,50 @@
 					}
 				)
 			}
-	  })
+		})
+		*/
+		//啟用 禁用 checkbox
+		$("#table").on('change', '#checkbox', function () {
+		  var status =$(this).val();
+		  if(status=="啟用"){
+			  console.log("禁用帳號")
+				var username = $(this).closest('td').siblings("#username").text()
+				var cgstatus = "禁用"
+				$(this).val(cgstatus)
+				$.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "status": cgstatus },
+						url: '${pageContext.servletContext.contextPath}/admin/disableAccount',
+						dataType: 'text',
+						success: function (response) {
+							console.log(response)
+
+						}
+					}
+				)
+			
+		  }else{
+            console.log("啟用帳號")
+			var username = $(this).closest('td').siblings("#username").text()
+			var cgstatus = "啟用"
+			$(this).val(cgstatus)
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "status": cgstatus },
+						url: '${pageContext.servletContext.contextPath}/admin/enableAccount',
+						dataType: 'text',
+						success: function (response) {
+							console.log(response)
+
+						}
+
+					}
+				)
+		  }
+		})
+
 	</script>
 </body>
 
