@@ -1,6 +1,7 @@
 package iring29.model;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -22,13 +23,13 @@ public class R_OrderDAO {
 
 	// Total
 	public int getListSize() {
-		String hql = "select count(order_id) from R_Order_VO";
+		String hql = "select count(order_id) from R_OrderList_VO";
 		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
 	}
 
-	public List<R_Order_VO> totaol_Rlist(int first, int count) {
-		Query<R_Order_VO> query = sessionFactory.getCurrentSession()
-				.createQuery("from R_Order_VO order by order_id", R_Order_VO.class);
+	public List<R_OrderList_VO> totaol_Rlist(int first, int count) {
+		Query<R_OrderList_VO> query = sessionFactory.getCurrentSession()
+				.createQuery("from R_OrderList_VO order by order_id", R_OrderList_VO.class);
 		// 找第幾筆
 		query.setFirstResult(first);
 		// 從第幾筆開始count筆
@@ -44,13 +45,27 @@ public class R_OrderDAO {
 		return query.uniqueResult();
 	}
 	
-	public String deleteOrder(BigDecimal r_sn) {
-		R_Order_List rBean = sessionFactory.getCurrentSession().get(R_Order_List.class, r_sn);
+	//update order
+	public R_Order_List updateOrder(BigDecimal id, String cus_name, String cus_phone, Timestamp ts) {
+		R_Order_List result = sessionFactory.getCurrentSession().get(R_Order_List.class, id);
+		if(result != null) {
+			result.setCus_name(cus_name);
+			result.setCus_phone(cus_phone);
+			result.setBookt_time(ts);
+			
+			return result;
+		}
+		return result;
+	}
+	
+	//delete order
+	public String deleteOrder(BigDecimal id) {
+		R_Order_List rBean = sessionFactory.getCurrentSession().get(R_Order_List.class, id);
 		if(rBean != null) {
 			sessionFactory.getCurrentSession().delete(rBean);
-			return "刪除成功";
+			return "訂單刪除成功";
 		}
-		return "刪除失敗";
+		return "訂單刪除失敗";
 	}
 
 }

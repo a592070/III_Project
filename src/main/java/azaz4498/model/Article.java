@@ -44,6 +44,17 @@ public class Article implements Serializable {
 	private String artTitle;
 	private byte[] artPic;
 	private String artPicUrl;
+	private String artStatus;
+	
+	@Column(name = "ART_STATUS")
+	public String getArtStatus() {
+		return artStatus;
+	}
+
+	public void setArtStatus(String artStatus) {
+		this.artStatus = artStatus;
+	}
+
 	private List<Comment> comments = new ArrayList<Comment>();
 	private ArticleType articleType;
 
@@ -163,10 +174,10 @@ public class Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Article [artContent=" + artContent + ", artCreTime=" + artCreTime + ", artUserId=" + artUserId
-				+ ", artCommNum=" + artCommNum + ", artView=" + artView + ", artId=" + artId + ", artTypeId="
-				+ artTypeId + ", artTitle=" + artTitle + ", artPic=" + Arrays.toString(artPic) + ", artPicUrl="
-				+ artPicUrl + ", comments=" + comments + ", articleType=" + articleType + "]";
+		return "Article [artId=" + artId + ", artTypeId=" + artTypeId + ", artTitle=" + artTitle + ", artStatus="
+				+ artStatus + "]";
 	}
+
+	
 
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 public class RestaurantDAO {
 	@Autowired
@@ -46,10 +45,10 @@ public class RestaurantDAO {
 		return query.uniqueResult().intValue();
 	}
 
-	public List<Show_RView> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled) {
+	public List<Show_RView> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled, String order) {
 		keyWords = "%" + keyWords + "%";
 		String hql = "from Show_RView where name like :keyword or address like :keyword or region like :keyword or username like :keyword order by "
-				+ orderFiled;
+				+ orderFiled + " " + order;
 
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
 		query.setParameter("keyword", keyWords);
@@ -124,10 +123,22 @@ public class RestaurantDAO {
 		Restaurant rBean = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
 		if(rBean != null) {
 			sessionFactory.getCurrentSession().delete(rBean);
-			return "刪除成功";
+			return "餐廳刪除成功";
 		}
-		return "刪除失敗";
+		return "餐廳刪除失敗";
 	}
 
+	//create new restaurant
+	public String inserRestaurant(Restaurant rBean) {
+		System.out.println("in insert.");
+		try{
+			sessionFactory.getCurrentSession().save(rBean);
+			return "餐廳新增成功";
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("fail to create order.");
+			return "餐廳新增失敗";
+		}
+	}
 
 }

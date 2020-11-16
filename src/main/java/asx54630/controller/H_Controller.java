@@ -1,8 +1,6 @@
 package asx54630.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.net.URLDecoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import asx54630.service.H_Service;
 
 
 @Controller
+@RequestMapping("/admin")
 public class H_Controller {
 
 	@Autowired
@@ -73,10 +72,10 @@ public class H_Controller {
 									 @RequestParam(name = "upOpentime") String updateOpentime,
 									 @RequestParam(name = "upType") String updateType,Model m) {
 		
-		Hotel hotelupdate = hService.update(updateSn,updateName,updateRegion,updatesn,updateTel,updateDBroom,updateQDroom,updateDescription,updateOpentime,updateType);
-		m.addAttribute("hotelupdate", hotelupdate);
+		Hotel hoteldetail = hService.update(updateSn,updateName,updateRegion,updatesn,updateTel,updateDBroom,updateQDroom,updateDescription,updateOpentime,updateType);
+		m.addAttribute("hoteldetail", hoteldetail);
 		
-		return "redirect:hotelindex";
+		return "asx54630/H_Modify";
 		}
 	
 	@RequestMapping(path = "/hoteldelete", method = RequestMethod.POST) //刪除
