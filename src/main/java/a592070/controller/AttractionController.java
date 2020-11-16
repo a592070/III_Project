@@ -71,15 +71,37 @@ public class AttractionController {
         return map;
     }
     @RequestMapping("/admin/attraction/list/{page}/{region}")
-    public List<AttractionVO> getAttractionListByRegion(@PathVariable("page") int page,
-                                                        @PathVariable("region") String region){
+    public Map<String, Object> getAttractionListByRegion(@PathVariable("page") int page,
+                                                        @PathVariable("region") String region,
+                                                        @RequestParam(name="sortColumn", required = false) String sortColumn,
+                                                        @RequestParam(name = "order", required = false) String order){
         PageSupport pageSupport = new PageSupport();
         pageSupport.setPageSize(PAGE_SIZE);
-        pageSupport.setTotalSize(viewService.getSizeByRegion(region));
         pageSupport.setCurrentPage(page);
 
-        List<AttractionVO> list = viewService.listByRegion(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region);
-        return list;
+        if(StringUtil.isEmpty(sortColumn) || "sn".equals(sortColumn)) {
+            sortColumn = AttractionFiledName.ATTRACTION_ID;
+        }else if("name".equals(sortColumn)){
+            sortColumn = AttractionFiledName.ATTRACTION_NAME;
+        }else if("address".equals(sortColumn)){
+            sortColumn = AttractionFiledName.ATTRACTION_ADDRESS;
+        }
+
+        boolean desc;
+        if(StringUtil.isEmpty(order) || "ascending".equals(order)){
+            desc = false;
+        }else{
+            desc = true;
+        }
+        if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
+
+        pageSupport.setTotalSize(viewService.getSizeByRegion(region));
+        List<AttractionVO> list = viewService.listByRegion(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, sortColumn, desc);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("tableData", list);
+        map.put("pageData", pageSupport);
+        return map;
     }
     @RequestMapping("/admin/attraction/list/{page}/{region}/{keywords}")
     public Map<String, Object> getAttractionListByKeywords(@PathVariable("page") int page,
@@ -95,11 +117,12 @@ public class AttractionController {
 
         if(StringUtil.isEmpty(sortColumn) || "sn".equals(sortColumn)) {
             sortColumn = AttractionFiledName.ATTRACTION_ID;
-        }else{
-            if("name".equals(sortColumn)){
-                sortColumn = AttractionFiledName.ATTRACTION_NAME;
-            }
+        }else if("name".equals(sortColumn)){
+            sortColumn = AttractionFiledName.ATTRACTION_NAME;
+        }else if("address".equals(sortColumn)){
+            sortColumn = AttractionFiledName.ATTRACTION_ADDRESS;
         }
+
         boolean desc;
         if(StringUtil.isEmpty(order) || "ascending".equals(order)){
             desc = false;
@@ -107,24 +130,11 @@ public class AttractionController {
             desc = true;
         }
 
-        if(StringUtil.isEmpty(keywords)){
-            if(StringUtil.isEmpty(region)){
-                pageSupport.setTotalSize(viewService.getSize());
-                list = viewService.list(pageSupport.getCurrentPage(), pageSupport.getPageSize(), sortColumn, desc);
-            }else{
-                pageSupport.setTotalSize(viewService.getSizeByRegion(region));
-                list = viewService.listByRegion(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, sortColumn, desc);
-            }
-        }else{
-            if(StringUtil.isEmpty(region)){
-                pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords));
-                list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, "", sortColumn, desc);
-            }else{
-                pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords, region));
-                list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, region, sortColumn, desc);
-            }
+        if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
 
-        }
+        pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords, region));
+        list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, region, sortColumn, desc);
+
 
         Map<String, Object> map = new HashMap<>();
         map.put("tableData", list);

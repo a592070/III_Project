@@ -48,10 +48,9 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
     }
     @Override
     public List<AttractionVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled, boolean descending){
+        if(StringUtil.isEmpty(region)) return list(currentPage, pageSize, orderFiled, descending);
+
         int index = (currentPage-1)*pageSize;
-
-        if(StringUtil.isEmpty(region)) return list(index, pageSize, orderFiled);
-
         return viewDAO.listByFiled(index, pageSize, AttractionFiledName.ATTRACTION_REGION, region, orderFiled, descending);
     }
 
