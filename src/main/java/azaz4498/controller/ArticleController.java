@@ -105,11 +105,13 @@ public class ArticleController {
 	}
 
 	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
-	public ModelAndView Delete(@RequestParam(name = "artId") int articleId, Model m) {
+	public String Delete(@RequestParam(name = "artId") int articleId, Model m) {
 		articleService.deleteArticleByAdmin(articleId);
-		ModelAndView mv = new ModelAndView("redirect:/Forum");
+		
+//		ModelAndView mv = new ModelAndView("redirect:/Forum");
+		
 
-		return mv;
+		return "azaz4498/F_index";
 
 	}
 
@@ -160,5 +162,14 @@ public class ArticleController {
 			System.out.println("新建文章成功");
 		}
 
+	}
+
+	@RequestMapping(path = "/statusChange.controller", method = RequestMethod.GET)
+	public ModelAndView statusChange(@RequestParam(name = "artId") int articleId, Model m) {
+		articleService.switchStatus(articleId);
+		ModelAndView mv = new ModelAndView("redirect:/Forum");
+		
+		
+		return mv;
 	}
 }

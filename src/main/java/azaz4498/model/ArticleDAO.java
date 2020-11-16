@@ -15,7 +15,7 @@ public class ArticleDAO {
 
 	// 顯示文章列表
 	public List<Article> showAllArticles() {
-		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article Order by ART_CRE_TIME DESC",
+		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article Order by ART_ID",
 				Article.class);
 		List<Article> list = query.list();
 		return list;
@@ -32,14 +32,12 @@ public class ArticleDAO {
 
 	// 依類型顯示文章
 	public List<Article> showArticlesByType(int typeId) throws SQLException {
-		
-			Query<Article> query = sessionFactory.getCurrentSession()
-					.createQuery("From Article where ART_TYPE_ID=?1 Order by ART_CRE_TIME DESC", Article.class);
-			query.setParameter(1, typeId);
-			List<Article> list = query.list();
-			return list;
 
-		
+		Query<Article> query = sessionFactory.getCurrentSession()
+				.createQuery("From Article where ART_TYPE_ID=?1 Order by ART_CRE_TIME DESC", Article.class);
+		query.setParameter(1, typeId);
+		List<Article> list = query.list();
+		return list;
 
 	}
 
@@ -75,10 +73,11 @@ public class ArticleDAO {
 		return false;
 
 	}
-	//刪除文章(後台)
+
+	// 刪除文章(後台)
 	public boolean deleteArticleByAdmin(int articleId) {
 		Article result = sessionFactory.getCurrentSession().get(Article.class, articleId);
-		if (result != null ) {
+		if (result != null) {
 			sessionFactory.getCurrentSession().delete(result);
 			System.out.println("文章已刪除!");
 			return true;
@@ -89,7 +88,8 @@ public class ArticleDAO {
 	}
 
 	// 編輯文章
-	public Article articleEdit(String title, String content, int articleId, String userid,int typeId) throws SQLException {
+	public Article articleEdit(String title, String content, int articleId, String userid, int typeId)
+			throws SQLException {
 		Article result = sessionFactory.getCurrentSession().get(Article.class, articleId);
 		String op = result.getArtUserId();
 		if (result != null && userid.equals(op)) {
@@ -125,14 +125,35 @@ public class ArticleDAO {
 		List<Article> list = query.list();
 		return list;
 	}
-	
-	public List<Article> searchArticle(String keyword){
-		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article where ART_USERID LIKE ?1 OR ART_TITLE LIKE?2",Article.class);
+
+	// 搜尋文章
+	public List<Article> searchArticle(String keyword) {
+		Query<Article> query = sessionFactory.getCurrentSession()
+				.createQuery("From Article where ART_USERID LIKE ?1 OR ART_TITLE LIKE?2", Article.class);
 		query.setParameter(1, "%" + keyword + "%");
 		query.setParameter(2, "%" + keyword + "%");
 //		query.setParameter(2, "%" + title + "%");
 //		query.setParameter(3, "%" + type + "%");
 		List<Article> list = query.list();
 		return list;
+	}
+
+	// 改變文章status
+	public Boolean switchStatus(int id) {
+		Article result = sessionFactory.getCurrentSession().get(Article.class, id);
+		if (result != null) {
+			String currStatus = result.getArtStatus();
+			if (currStatus.equals("enabled")) {
+				result.setArtStatus("disabled");
+				sessionFactory.getCurrentSession().update(result);
+				return true;
+			} else {
+				result.setArtStatus("enabled");
+				sessionFactory.getCurrentSession().update(result);
+				return true;
+			}
+		}
+		return false;
+
 	}
 }
