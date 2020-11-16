@@ -2,7 +2,6 @@ package iring29.controller;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import iring29.model.Page;
 import iring29.model.R_OrderList_VO;
 import iring29.model.R_Order_List;
-import iring29.model.R_Order_VO;
 import iring29.service.R_OrderService;
 
 @Controller
@@ -42,7 +40,7 @@ public class RorderController {
 		}
 		int pageSize = page.getPageSize();
 		int totalPage = page.getTotalPageCount();
-		List<R_Order_VO> Rlist = rOrderService.totaol_Rlist(start, pageSize);
+		List<R_OrderList_VO> Rlist = rOrderService.totaol_Rlist(start, pageSize);
 		
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		System.out.println("ts = " + ts);
@@ -54,8 +52,8 @@ public class RorderController {
 		return "iring29/R_Order";
 	}
 
-	// modify order list
-	@RequestMapping(path = "/ROrderModify")
+	// Display detail order list
+	@RequestMapping(path = "/ROrderDisplay")
 	public String ModifyOrder(@RequestParam(name = "rid") BigDecimal id, Model m) {
 		R_OrderList_VO ROList = rOrderService.Detail_OderList(id);
 //		System.out.println("time = "+ROList.getBook_time().toString()); //time = 2020-10-29 13:00:00.0
@@ -67,10 +65,29 @@ public class RorderController {
 		return "iring29/R_Order_Modify";
 	}
 	
+	// modify order list
+	@RequestMapping(path = "/ROrderModify", method = RequestMethod.POST)
+	public String UpdateOrder(@RequestParam(name = "id") BigDecimal id,
+							  @RequestParam(name = "cus_name") String cus_name,
+							  @RequestParam(name = "cus_phone") String cus_phone, 
+							  @RequestParam(name = "book_date") String book_date,
+							  @RequestParam(name = "book_time") String book_time, Model m) {
+		String booktime = book_date +" " + book_time + ":00" ;
+		Timestamp ts = Timestamp.valueOf(booktime);
+		
+		rOrderService.updateOrder(id, cus_name, cus_phone, ts);
+		R_OrderList_VO ROList = rOrderService.Detail_OderList(id);
+		m.addAttribute("ROList", ROList);
+		m.addAttribute("date", book_date);
+		m.addAttribute("time",book_time);
+		
+		return "iring29/R_Order_Modify";
+	}
+	
 	//Delete order
 	@RequestMapping(path = "DeleteOrder", method = RequestMethod.POST)
-	public String DelOrder(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
-		String result = rOrderService.deleteOrder(r_sn);
+	public String DelOrder(@RequestParam("rid") BigDecimal id, Model m) {
+		String result = rOrderService.deleteOrder(id);
 		m.addAttribute("result",result);
 		return "iring29/OrderResult";
 	}

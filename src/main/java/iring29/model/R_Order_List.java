@@ -31,11 +31,11 @@ public class R_Order_List {
 	@Column(name = "CUS_NAME")
 	private String cus_name;
 	@Column(name = "CUS_PHONE")
-	private String cus_phpne;
-	@ManyToOne(fetch = FetchType.EAGER)
+	private String cus_phone;
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORDER_ID")
 	private OrderTable oTable;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "R_SN")
 	private Restaurant restaurant;
 	
@@ -79,12 +79,12 @@ public class R_Order_List {
 		this.cus_name = cus_name;
 	}
 
-	public String getCus_phpne() {
-		return cus_phpne;
+	public String getCus_phone() {
+		return cus_phone;
 	}
 
-	public void setCus_phpne(String cus_phpne) {
-		this.cus_phpne = cus_phpne;
+	public void setCus_phone(String cus_phone) {
+		this.cus_phone = cus_phone;
 	}
 
 	public OrderTable getoTable() {

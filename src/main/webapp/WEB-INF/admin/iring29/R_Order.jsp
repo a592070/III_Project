@@ -73,36 +73,42 @@ td {
 									<tbody>
 										<c:forEach var="r" items="${Rlist}">
 											<tr>
+												<td class="Brid">${r.order_id}</td>
 												<td class="rid">${r.id}</td>
-												<td class="rid">${r.order_id}</td>
 												<td class="rname">${r.name}</td>
 												<td>${r.customer_num}</td>
 												<td>
-												<c:set var="booktime" value="${r.bookt_time}" />
+												<c:set var="booktime" value="${r.book_time}" />
 												<c:set var="BT" value="${fn:substring(booktime, 0, 16)}" />
 												${BT}
 												</td>
 												
-												<c:if test="${r.bookt_time > ts}">
+												<c:if test="${r.book_time > ts}">
 													<td><span class="badge badge-success">訂單待完成</span></td>
 												</c:if>
-												<c:if test="${r.bookt_time < ts}">
+												<c:if test="${r.book_time < ts}">
 													<td><span class="badge badge-secondary">訂單已完成</span></td>
 												</c:if>
 												
 												
 												<td>
-												<form action="<%=application.getContextPath()%>/ROrderModify" method="POST">
-												<c:if test="${r.bookt_time > ts}">
+												<form action="<%=application.getContextPath()%>/ROrderDisplay" method="POST">
+												<c:if test="${r.book_time > ts}">
 													<button type="submit" class="btn btn-warning">修改</button>
 													<Input type='hidden' name='rid' value='${r.id}'>
 												</c:if>
-												<c:if test="${r.bookt_time < ts}">
+												<c:if test="${r.book_time < ts}">
 													<button type="submit" class="btn btn-warning"  disabled>修改</button>
 												</c:if>
 												</form>
 												</td>
-												<td><button type="submit" class="btn btn-danger">刪除</button></td>
+												<td>
+												<form id="statuss" name="statuss"
+												action="<%=application.getContextPath()%>/DeleteOrder"
+												method="POST" onsubmit="return confirm('確認是否刪除此訂單資料？');">
+												<button type="submit" class="btn btn-danger">刪除</button>
+												<Input type='hidden' name='rid' value='${r.id}'>
+												</form></td>
 
 											</tr>
 

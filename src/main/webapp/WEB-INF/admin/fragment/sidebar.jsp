@@ -95,7 +95,7 @@
 
 
                                 <li>
-                                    <a class="sidenav-item-link" href="#">
+                                    <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/RestaurantList">
                                         <span class="nav-text">餐廳訂單</span>
                                     </a>
                                 </li>
