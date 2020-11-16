@@ -278,6 +278,7 @@
             },
             goBack() {
                 console.log('go back');
+                history.back();
             }
 
         }

@@ -108,8 +108,7 @@
                                     </el-table-column>
                                     <el-table-column
                                             label="Address"
-                                            prop="address"
-                                            sortable='custom'>
+                                            prop="address">
                                     </el-table-column>
                                     <el-table-column
                                             label="TicketInfo"
@@ -285,15 +284,28 @@
             },
             handleSelectedData(){
                 console.log(this.search);
-                if(this.currentRegion == "全部"){
-                    this.currentRegion = "";
+                let url;
+
+                let region = this.currentRegion
+                if(region == "全部"){
+                    region = "";
                 }
-                let keyword = null;
-                if(this.search != ''){
-                    keyword = this.search;
+                let keyword = this.search;
+                if(this.search == ''){
+                    keyword = null;
                 }
-                let url = '${pageContext.servletContext.contextPath}/admin/attraction/list/'+this.pageData.currentPage+'/'+this.currentRegion+'/'+keyword;
-                axios.get(url)
+
+                if(region && keyword){
+                    url = '${pageContext.servletContext.contextPath}/admin/attraction/list/'+this.pageData.currentPage+'/'+region+'/'+keyword;
+                }else if(region){
+                    url = '${pageContext.servletContext.contextPath}/admin/attraction/list/'+this.pageData.currentPage+'/'+region;
+                }else if(keyword){
+
+                }
+
+
+
+                axios.get(url,{region:this.currentRegion, keywords:keyword, })
                     .then(response => {
                         this.tableData = response.data.tableData;
                         this.pageData = response.data.pageData;
@@ -304,7 +316,7 @@
                 this.handleSelectedData();
             },
             sortChange: function(column, prop, order) {
-                console.log(column + '-' + column.prop + '-' + column.order);
+                console.log(column + '-' + column.prop + '-' + column.order)
 
             }
         }
