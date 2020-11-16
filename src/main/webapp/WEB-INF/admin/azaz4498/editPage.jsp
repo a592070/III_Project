@@ -76,6 +76,10 @@ h2 {
 							<div class="card card-default">
 								<div class="card-header card-header-border-bottom">
 									<h1>文章修改</h1>
+									<br/>
+									<div>
+									<a href="${pageContext.servletContext.contextPath}/Forum">回列表</a>
+									</div>
 								</div>
 								
 								<div class="card-body">

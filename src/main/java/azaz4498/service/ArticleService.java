@@ -35,7 +35,7 @@ public class ArticleService {
 	public void newArticle(String title, int typeId, String content, String userId) throws SQLException {
 		aDao.newArticle(title, typeId, content, userId);
 	}
-
+	//編輯文章
 	public Article articleEdit(String title, String content, int articleId, String userid,int typeId) throws SQLException {
 		return aDao.articleEdit(title, content, articleId, userid,typeId);
 	}
@@ -61,4 +61,8 @@ public class ArticleService {
 		return aDao.deleteArticleByAdmin(articleId);
 	}
 	
+	//改變文章status(後台)
+	public boolean switchStatus(int articleId) {
+		return aDao.switchStatus(articleId);
+	}
 }
