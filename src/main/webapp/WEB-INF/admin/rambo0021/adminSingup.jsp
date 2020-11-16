@@ -76,18 +76,18 @@
 					</div>
 					<div class="card-body p-5">
 						<h4 class="text-dark mb-5">Sign Up</h4>
-						<form action="/index.html">
+						<form action="${pageContext.servletContext.contextPath}/admin/registered" method="POST">
 							<div class="row">
 								<div class="form-group col-md-12 mb-4">
-									<input type="text" class="form-control input-lg" id="name"
-										aria-describedby="nameHelp" placeholder="Name">
+									<input type="text" class="form-control input-lg" id="nickname" name="nickname"
+										aria-describedby="nameHelp" placeholder="Nickname">
 								</div>
 								<div class="form-group col-md-12 mb-4">
-									<input type="email" class="form-control input-lg" id="email"
-										aria-describedby="emailHelp" placeholder="Username">
+									<input type="text" class="form-control input-lg" id="username" name="username"
+										aria-describedby="nameHelp" placeholder="Username">
 								</div>
 								<div class="form-group col-md-12 ">
-									<input type="password" class="form-control input-lg"
+									<input type="password" class="form-control input-lg" name="password"
 										id="password" placeholder="Password">
 								</div>
 								<div class="form-group col-md-12 ">

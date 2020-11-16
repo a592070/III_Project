@@ -144,4 +144,10 @@ public class AccountController {
 	public @ResponseBody String delAccount(@RequestParam("username") String username) {
 		return service.delAccount(username);
 	}
+	@PostMapping("/modifyAccount")
+	public @ResponseBody String modifyAccount(@RequestParam String username,@RequestParam String password,@RequestParam int identity,@RequestParam String email, Model m) {
+	
+		
+		return service.modifyAccount(username,password,identity,email);
+	}
 }
