@@ -62,7 +62,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/hotelindex">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/hotelindex">
                             <i class="mdi mdi-hotel"></i>
                             <span class="nav-text">旅館</span>
                         </a>
