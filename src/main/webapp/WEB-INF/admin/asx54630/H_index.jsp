@@ -138,7 +138,7 @@
 		
 		function clickdetail(id){
 
-			document.location.href="${pageContext.servletContext.contextPath}/hoteldetail?detailsn="+id;
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hoteldetail?detailsn="+id;
 
 		}
 

@@ -1,8 +1,6 @@
 package asx54630.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.net.URLDecoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import asx54630.service.H_Service;
 
 
 @Controller
+@RequestMapping("/admin")
 public class H_Controller {
 
 	@Autowired
