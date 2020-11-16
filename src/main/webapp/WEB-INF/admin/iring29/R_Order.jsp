@@ -131,24 +131,33 @@ td {
 						<c:if test="${currentPage != null}">
 							<c:if test="${currentPage == 1}">
 								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/RestaurantList?currentPage=${currentPage-1}"
-									tabindex="-1">Previous</a></li>
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage-1}"
+									tabindex="-1">第一頁</a></li>
 							</c:if>
 							<c:if test="${currentPage > 1}">
 								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/RestaurantList?currentPage=${currentPage-1}"
-									tabindex="-1">Previous</a></li>
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=1"
+									tabindex="-1">第一頁</a></li>
+							</c:if>
+							<c:if test="${currentPage > 1}">
+								<li class="page-item"><a class="page-link"
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage-1}"
+									tabindex="-1">${currentPage-1}</a></li>
 							</c:if>
 							<li class="page-item active"><a class="page-link" href="#">${currentPage}
 									<span class="sr-only">(current)</span>
 							</a></li>
 							<c:if test="${currentPage != totalPage && currentPage != ''}">
 								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/RestaurantList?currentPage=${currentPage+1}">Next</a></li>
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">${currentPage+1}</a></li>
+							</c:if>
+							<c:if test="${currentPage != totalPage && currentPage != ''}">
+								<li class="page-item"><a class="page-link"
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">最末頁</a></li>
 							</c:if>
 							<c:if test="${currentPage == totalPage && currentPage != ''}">
 								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/RestaurantList?currentPage=${currentPage+1}">Next</a></li>
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">最末頁</a></li>
 							</c:if>
 						</c:if>
 

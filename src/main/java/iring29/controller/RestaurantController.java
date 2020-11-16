@@ -26,6 +26,7 @@ import rambo0021.pojo.AccountBean;
 
 @Controller
 @SessionAttributes(names = { "rBean", "RBean" })
+@RequestMapping("/admin")
 public class RestaurantController {
 	@Autowired
 	private RestaurantService rs;
