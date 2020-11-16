@@ -92,7 +92,7 @@ td {
 												
 												
 												<td>
-												<form action="<%=application.getContextPath()%>/ROrderDisplay" method="POST">
+												<form action="<%=application.getContextPath()%>/admin/ROrderDisplay" method="POST">
 												<c:if test="${r.book_time > ts}">
 													<button type="submit" class="btn btn-warning">修改</button>
 													<Input type='hidden' name='rid' value='${r.id}'>
@@ -104,7 +104,7 @@ td {
 												</td>
 												<td>
 												<form id="statuss" name="statuss"
-												action="<%=application.getContextPath()%>/DeleteOrder"
+												action="<%=application.getContextPath()%>/admin/DeleteOrder"
 												method="POST" onsubmit="return confirm('確認是否刪除此訂單資料？');">
 												<button type="submit" class="btn btn-danger">刪除</button>
 												<Input type='hidden' name='rid' value='${r.id}'>
@@ -131,24 +131,33 @@ td {
 						<c:if test="${currentPage != null}">
 							<c:if test="${currentPage == 1}">
 								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/RestaurantList?currentPage=${currentPage-1}"
-									tabindex="-1">Previous</a></li>
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage-1}"
+									tabindex="-1">第一頁</a></li>
 							</c:if>
 							<c:if test="${currentPage > 1}">
 								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/RestaurantList?currentPage=${currentPage-1}"
-									tabindex="-1">Previous</a></li>
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=1"
+									tabindex="-1">第一頁</a></li>
+							</c:if>
+							<c:if test="${currentPage > 1}">
+								<li class="page-item"><a class="page-link"
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage-1}"
+									tabindex="-1">${currentPage-1}</a></li>
 							</c:if>
 							<li class="page-item active"><a class="page-link" href="#">${currentPage}
 									<span class="sr-only">(current)</span>
 							</a></li>
 							<c:if test="${currentPage != totalPage && currentPage != ''}">
 								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/RestaurantList?currentPage=${currentPage+1}">Next</a></li>
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">${currentPage+1}</a></li>
+							</c:if>
+							<c:if test="${currentPage != totalPage && currentPage != ''}">
+								<li class="page-item"><a class="page-link"
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">最末頁</a></li>
 							</c:if>
 							<c:if test="${currentPage == totalPage && currentPage != ''}">
 								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/RestaurantList?currentPage=${currentPage+1}">Next</a></li>
+									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">最末頁</a></li>
 							</c:if>
 						</c:if>
 

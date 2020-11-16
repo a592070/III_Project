@@ -54,7 +54,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/Restaurant">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/Restaurant">
                             <i class="mdi mdi-silverware-variant"></i>
                             <span class="nav-text">餐廳</span>
                         </a>
@@ -95,7 +95,7 @@
 
 
                                 <li>
-                                    <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/RestaurantList">
+                                    <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/RestaurantList">
                                         <span class="nav-text">餐廳訂單</span>
                                     </a>
                                 </li>
