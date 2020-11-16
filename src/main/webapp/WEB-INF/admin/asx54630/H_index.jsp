@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Title</title>
+<title>Hotel</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 
@@ -145,6 +145,12 @@
 
 			$("#deleteId").val(id);
 		}
+		
+		function statuscancel(){
+
+			document.location.href="${pageContext.servletContext.contextPath}/hotelindex";
+
+		}
 
 		</script> 
 		
@@ -198,7 +204,7 @@
                     </div>
                		 <div class="modal-footer">
                  	 <button type="submit" class="btn btn-primary">確認</button>
-                  	<button type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                  	<button type="submit" class="btn btn-secondary" data-dismiss="modal" onclick="statuscancel()">取消</button>
                		 </div>
                   </form> 
                   </table>
