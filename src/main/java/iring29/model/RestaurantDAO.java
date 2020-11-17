@@ -7,6 +7,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import rambo0021.pojo.AccountBean;
+
+
 public class RestaurantDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -138,6 +141,16 @@ public class RestaurantDAO {
 			e.printStackTrace();
 			System.out.println("fail to create order.");
 			return "餐廳新增失敗";
+		}
+	}
+	
+	//check user
+	public boolean checkusr(String username) {
+		AccountBean accountBean = sessionFactory.getCurrentSession().get(AccountBean.class,username);
+		if(accountBean!=null) {
+			return true; //已存在帳號
+		}else {
+			return false; 
 		}
 	}
 

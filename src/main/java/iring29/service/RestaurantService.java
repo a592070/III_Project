@@ -84,4 +84,9 @@ public class RestaurantService {
 	public String inserRestaurant(Restaurant rBean) {
 		return rDao.inserRestaurant(rBean);
 	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public boolean checkusr(String username) {
+		return rDao.checkusr(username);
+	}
 }

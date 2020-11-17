@@ -270,13 +270,12 @@ th {
 									<td class="region">${r.region}</td>
 									<td class="user">${r.username}</td>
 									<td><div class="status">
-									<form id="changestatus" name="changestatus" action="<%=application.getContextPath()%>/admin/ModifyStatus" 
-									method = "POST" onsubmit="return confirm('確認是否修改狀態？');" >
+									<form id="changestatus" name="changestatus" action="<%=application.getContextPath()%>/admin/ModifyStatus" method = "POST"  >
 									<button type="submit">
 										<c:if test="${r.status == 'N'}">
 											<label class="switch switch-text switch-success switch-pill form-control-label">
-												<input type="checkbox" class="switch-input form-check-input" value="on" id="myCheck" onclick="myFunction()">
-												<span class="switch-label" data-on="On" data-off="Off"></span>
+												<input type="checkbox" class="switch-input form-check-input" disabled value="on" id="myCheck" onclick="myFunction()">
+												<span class="switch-label" data-on="On" data-off="Off" ></span>
 												<span class="switch-handle"></span>
 											</label>
 										</c:if>

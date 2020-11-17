@@ -248,7 +248,6 @@ pre {
 								<div>
 									<h4 class="res_result">地區</h4>
 									<p class="p_result">
-<%-- 										<textarea name="region" id="region" cols="80" rows="5">${RBean.region}</textarea> --%>
 							<select name="region" id="region" class="form-control">
 								<option value="">請選擇地區</option>
 								<option value="基隆">基隆</option>
@@ -384,52 +383,86 @@ pre {
 											rows="5">${RBean.description}</textarea>
 									</p>
 								</div>
-								</FORM>
+								
 								
 
 								<div>
 									<h4 class="res_data">餐廳使用者帳號</h4>
 								</div>
 								
-									<form id="statuss" name="statuss">
 								<div>
 									<p class="p_result">
-										${RBean.accountBean.userName}									
+										<span id="idsp"></span><br>	
+										<textarea name="userName" id="userName" cols="80" rows="5" onblur="ajaxusr()">${RBean.accountBean.userName}</textarea>								
 									</p>
 								</div>
-									</form>
 
-
+							</FORM>
+							
 							</div>
 
-						
 
 					</div>
 
 					<div class="modify_div">
-						<button class="btn btn-warning" name="confirm" value="confrim"
-							onclick="confrimModify()">確認修改</button>
+						<button class="btn btn-warning" id="confirm" name="confirm" value="confrim" onclick="confrimModify()">確認修改</button>
 
 					</div>
 				
 
-					<script type="text/javascript"> 
-					 function confrimModify(){ 
-						 if (confirm("確定送出修改 ? ") ) { 
-								document.forms["modifyR"].action="<%=application.getContextPath()%>/admin/ModifyRestaurant";
-								document.forms["modifyR"].method = "POST";
-								document.forms["modifyR"].submit();
+		<script type="text/javascript"> 
+		function confrimModify(){ 
+			if (confirm("確定送出修改 ? ") ) { 
+				document.forms["modifyR"].action="<%=application.getContextPath()%>/admin/ModifyRestaurant";
+				document.forms["modifyR"].method = "POST";
+				document.forms["modifyR"].submit();
 								
-								return;
-							} else {
-								return;
-							}
-						}
-
-			
+				return;
+			} else {
+				return;
+			}
+		}
 						
-					</script>
+		</script>
 
+		<script>
+        function ajaxusr() {
+            let username = document.getElementById("userName").value;
+              $.ajax(
+                    {
+                        type: 'POST',
+                        data: { "userName": username },
+                        url: '${pageContext.servletContext.contextPath}/admin/checkUser',
+                        dataType: 'json',
+                        success:function(response){
+                            checkusr(response);                   
+                        }
+                    }
+                )
+            
+        }function checkusr(response){
+            console.log(response)
+            let username = document.getElementById("userName").value;
+            let sp = document.getElementById("idsp");
+            if (username == "") {
+                sp.innerHTML = "請注意，帳號沒有填寫喔"
+                sp.style.color = "red";
+                sp.style.fontSize = "13px";
+                sp.style.fontStyle = "italic";
+                document.getElementById("confirm").disabled = false;
+            }else if(!response){
+                sp.innerHTML = "帳號不存在，請重新輸入"
+                sp.style.color = "red";
+                sp.style.fontSize = "13px";
+                sp.style.fontStyle = "italic";
+                document.getElementById("confirm").disabled = true;
+
+            }else{
+            	document.getElementById("confirm").disabled = false;
+                }
+
+        }
+        </script>
 
 				</div>
 			</div>

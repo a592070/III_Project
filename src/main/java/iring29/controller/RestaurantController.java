@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,9 +64,9 @@ public class RestaurantController {
 
 	@RequestMapping(path = "/key", method = RequestMethod.GET)
 	public String RestaurantKeyword(@RequestParam(value = "currentKPage", defaultValue = "1") Integer currentKPage,
-			@RequestParam(value = "keyword", defaultValue = "") String keyword,
-			@RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
-			@RequestParam(value = "order", defaultValue = "ASC") String order, Model m) {
+								    @RequestParam(value = "keyword", defaultValue = "") String keyword,
+								    @RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
+								    @RequestParam(value = "order", defaultValue = "ASC") String order, Model m) {
 
 //		if ((keyword == null)  || (keyword.equals("") )) {
 //
@@ -120,7 +123,7 @@ public class RestaurantController {
 
 	@RequestMapping(path = "/regionSearch", method = RequestMethod.POST)
 	public String R_RegionDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
-			@RequestParam("region_name") String region_name, Model m) {
+								  @RequestParam("region_name") String region_name, Model m) {
 		if (region_name == null || region_name.equals("")) {
 			int size = rs.getSize();
 			page.setTotalCount(size);
@@ -160,7 +163,6 @@ public class RestaurantController {
 	@RequestMapping(path = "/ShowPic")
 	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("RBean") Restaurant r) {
 
-		System.out.println("in ShowPic");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
 
@@ -187,11 +189,15 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/ModifyRestaurant", method = RequestMethod.POST)
-	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, @RequestParam("address") String address,
-			@RequestParam("opentime") String opentime, @RequestParam("description") String description,
-			@RequestParam("transportation") String transportation, @RequestParam("type") String type,
-			@RequestParam("region") String region, @RequestParam("serviceinfo") String serviceinfo,
-			@RequestParam("pic") MultipartFile pic, Model m) throws IOException {
+	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, 
+								   @RequestParam("address") String address,
+								   @RequestParam("opentime") String opentime, 
+								   @RequestParam("description") String description,
+								   @RequestParam("transportation") String transportation, 
+								   @RequestParam("type") String type,
+								   @RequestParam("region") String region, 
+								   @RequestParam("serviceinfo") String serviceinfo,
+								   @RequestParam("pic") MultipartFile pic, Model m) throws IOException {
 
 		Restaurant r = new Restaurant();
 		if (pic.getSize() != 0) {
@@ -221,12 +227,17 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/CreateRestaurant", method = RequestMethod.POST)
-	public String CreateRestaurant(@RequestParam("pic") MultipartFile pic, @RequestParam("name") String name,
-			@RequestParam("region") String region, @RequestParam("address") String address,
-			@RequestParam("transportation") String transportation, @RequestParam("serviceinfo") String serviceinfo,
-			@RequestParam("type") String type, @RequestParam("opentime") String opentime,
-			@RequestParam("description") String description, @RequestParam("username") String username, Model m)
-			throws IOException {
+	public String CreateRestaurant(@RequestParam("pic") MultipartFile pic, 
+								   @RequestParam("name") String name,
+								   @RequestParam("region") String region, 
+								   @RequestParam("address") String address,
+								   @RequestParam("transportation") String transportation, 
+								   @RequestParam("serviceinfo") String serviceinfo,
+								   @RequestParam("type") String type, 
+								   @RequestParam("opentime") String opentime,
+								   @RequestParam("description") String description, 
+								   @RequestParam("username") String username, Model m) throws IOException {
+		
 		Restaurant rBean = new Restaurant();
 		AccountBean accBean = new AccountBean();
 		rBean.setPic(pic.getInputStream().readAllBytes());
@@ -248,6 +259,13 @@ public class RestaurantController {
 		m.addAttribute("result", result);
 
 		return "iring29/result";
+	}
+	
+	
+	//check user
+	@RequestMapping(path = "checkUser",method = RequestMethod.POST)
+	public @ResponseBody boolean checkUser(@RequestParam(name = "userName")String username) {
+		return rs.checkusr(username);
 	}
 
 }
