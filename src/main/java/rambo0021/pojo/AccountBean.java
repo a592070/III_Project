@@ -1,52 +1,64 @@
 package rambo0021.pojo;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import global.pojo.OrderTable;
+
+
 
 @Entity
 @Table(name = "account")
 @DynamicInsert
 @DynamicUpdate
 public class AccountBean {
-
+	@Id
+	@Column(name = "USERNAME")
 	private String userName;
+	@Column(name = "PASSWORD")
 	private String password;
-	private int identity;
+	@Column(name = "EMAIL")
 	private String email;
+	@Lob 
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "PICTURE")
 	private byte[] picture;
+	@Column(name = "MODIFY_DATE")
 	private Date modify_Date;
+	@Column(name = "NICKNAME")
 	private String nickName;
+	@Column(name = "REGISTER")
 	private Date register;
+	@Column(name = "STATUS")
 	private String status;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "IDENTITY")
 	private IdentityBean identityBean;
+    
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accountBean")
+	private List<OrderTable> orderTable;// 大訂單 
 
 	public AccountBean() {
 
 	}
-	@Id
-	@Column(name = "USERNAME")
+
 	public String getUserName() {
 		return userName;
 	}
@@ -55,7 +67,6 @@ public class AccountBean {
 		this.userName = userName;
 	}
 
-	@Column(name = "PASSWORD")
 	public String getPassword() {
 		return password;
 	}
@@ -64,16 +75,6 @@ public class AccountBean {
 		this.password = password;
 	}
 
-	@Transient
-	public int getIdentity() {
-		return identity;
-	}
-
-	public void setIdentity(int identity) {
-		this.identity = identity;
-	}
-
-	@Column(name = "EMAIL")
 	public String getEmail() {
 		return email;
 	}
@@ -99,7 +100,6 @@ public class AccountBean {
 		this.modify_Date = modify_Date;
 	}
 
-	@Column(name = "NICKNAME")
 	public String getNickName() {
 		return nickName;
 	}
@@ -125,17 +125,14 @@ public class AccountBean {
 		this.register = register;
 	}
 
-	@Column(name = "PICTURE")
 	public byte[] getPicture() {
 		return picture;
 	}
 
-	@Column(name = "MODIFY_DATE")
 	public Date getModify_Date() {
 		return modify_Date;
 	}
 
-	@Column(name = "REGISTER")
 	public Date getRegister() {
 		return register;
 	}
@@ -144,21 +141,27 @@ public class AccountBean {
 		this.picture = picture;
 	}
 	
-	@Column(name = "STATUS")
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IDENTITY")
+
 	public IdentityBean getIdentityBean() {
 		return identityBean;
 	}
 
 	public void setIdentityBean(IdentityBean identityBean) {
 		this.identityBean = identityBean;
+	}
+
+	public List<OrderTable> getOrderTable() {
+		return orderTable;
+	}
+
+	public void setOrderTable(List<OrderTable> orderTable) {
+		this.orderTable = orderTable;
 	}
 	
 }

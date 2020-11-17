@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rambo0021.dao.AcountDAO;
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.IdentityBean;
 
 @Transactional
 public class AccountServiceImpl implements AccountService {
@@ -27,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-   public AccountBean updateAccImg(byte[] img,String username) {
+   public String updateAccImg(byte[] img,String username) {
 		return dao.updateAccImg(img, username);
 	}
 	@Override
@@ -72,4 +73,21 @@ public class AccountServiceImpl implements AccountService {
 	public String disableAccount(String username,String status) {
 		return dao.disableAccount(username,status);
 	}
+
+	@Override
+	public String delAccount(String username) {
+		return dao.delAccount(username);
+	}
+
+	@Override
+	public String modifyAccount(String username, String password, int identity, String email) {
+		return dao.modifyAccount(username,password,identity,email);
+	}
+
+	@Override
+	public String registered(AccountBean aBean, IdentityBean iBean) {
+		return dao.registered(aBean,iBean);
+	}
+
+
 }

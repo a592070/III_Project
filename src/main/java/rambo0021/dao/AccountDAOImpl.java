@@ -34,14 +34,14 @@ public class AccountDAOImpl implements AcountDAO {
 	}
 
 	@Override
-	public AccountBean updateAccImg(byte[] img, String username) {
+	public String updateAccImg(byte[] img, String username) {
 		Session session = sessionFactory.getCurrentSession();
 		AccountBean aBean = session.get(AccountBean.class, username);
 		if (aBean != null) {
 			aBean.setPicture(img);
-			return aBean;
+			return "修改成功";
 		}
-		return aBean;
+		return "修改失敗";
 	}
 
 	@Override
@@ -133,6 +133,44 @@ public class AccountDAOImpl implements AcountDAO {
 			return "禁用成功";
 		    }
 		return "禁用失敗";
+	}
+
+	@Override
+	public String delAccount(String username) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			sessionFactory.getCurrentSession().delete(aBean);
+			return "刪除成功";
+		    }
+		return "刪除失敗";
+	}
+
+	@Override
+	public String modifyAccount(String username, String password, int identity, String email) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			if(!aBean.getPassword().equals(password)) {
+				System.out.println("密碼不同");
+				aBean.setPassword(SHA2DAO.getSHA256(password));
+			}
+			IdentityBean iBean = sessionFactory.getCurrentSession().get(IdentityBean.class, identity);
+			aBean.setIdentityBean(iBean);
+			aBean.setEmail(email);
+			return "修改成功";
+		}
+		return "修改失敗";
+	}
+
+	@Override
+	public String registered(AccountBean aBean, IdentityBean iBean) {
+		AccountBean result = sessionFactory.getCurrentSession().get(AccountBean.class, aBean.getUserName());
+		IdentityBean identityBean = sessionFactory.getCurrentSession().get(IdentityBean.class,iBean.getId());
+		if(result==null) {
+			aBean.setIdentityBean(identityBean);
+			sessionFactory.getCurrentSession().save(aBean);
+			return "註冊成功";
+		}
+		return "註冊失敗";
 	}
 
 }

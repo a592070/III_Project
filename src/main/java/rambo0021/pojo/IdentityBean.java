@@ -14,15 +14,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "identity")
 public class IdentityBean {
+	@Id
+	@Column(name = "ID")
 	private int id;
+	@Column(name = "NAME")
 	private String name;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "identityBean")
 	private Set<AccountBean> accountBean = new HashSet<AccountBean>();
 
 	public IdentityBean() {
 	}
 
-	@Id
-	@Column(name = "ID")
+	
 	public int getId() {
 		return id;
 	}
@@ -31,7 +34,6 @@ public class IdentityBean {
 		this.id = id;
 	}
 
-	@Column(name = "NAME")
 	public String getName() {
 		return name;
 	}
@@ -40,7 +42,6 @@ public class IdentityBean {
 		this.name = name;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "identityBean")
 	public Set<AccountBean> getAccountBean() {
 		return accountBean;
 	}

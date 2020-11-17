@@ -16,10 +16,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "F_COMMENT")
+@DynamicUpdate
 public class Comment implements Serializable{
 	/**
 	 * 
@@ -79,7 +82,7 @@ public class Comment implements Serializable{
 		this.comDate = comDate;
 	}
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "COM_ART_ID")
 	public Article getArticle() {
 		return article;

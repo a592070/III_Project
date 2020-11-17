@@ -47,4 +47,9 @@ public class H_Service {
 		return hotelDao.delete(sn);
 		
 	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public Hotel updateStatus(BigDecimal sn,String Status) {
+		return hotelDao.updateStatus(sn,Status);
+	}
 }

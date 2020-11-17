@@ -33,6 +33,34 @@ public class RestaurantService {
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
+	public int getSizeByKeywords(String keyWords) {
+		return rDao.getSizeByKeywords(keyWords);
+	}
+
+	@Transactional(rollbackFor = { Throwable.class })
+	public List<Show_RView> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled,
+			String order) {
+		return rDao.listByKeywords(firstIndex, resultSize, keyWords, orderFiled, order);
+	}
+
+	@Transactional(rollbackFor = { Throwable.class })
+	public Restaurant updateStatus(BigDecimal r_sn, String status) {
+		return rDao.updateStatus(r_sn, status);
+	}
+
+	@Transactional(rollbackFor = { Throwable.class })
+	public Restaurant updateRestaurant(BigDecimal r_sn, String address, String opentime, String description,
+			String transportation, String type, String region, String serviceinfo, byte[] pic) {
+		return rDao.updateRestaurant(r_sn, address, opentime, description, transportation, type, region, serviceinfo,
+				pic);
+	}
+
+	@Transactional(rollbackFor = { Throwable.class })
+	public byte[] getPic(BigDecimal r_sn) {
+		return rDao.getPic(r_sn);
+	}
+
+	@Transactional(rollbackFor = { Throwable.class })
 	public int getRegionSize(String region) {
 		return rDao.getRegionSize(region);
 	}
@@ -43,27 +71,17 @@ public class RestaurantService {
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
-	public int getNameSize(String name) {
-		return rDao.getNameSize(name);
-	}
-	
-	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> nameRestaurant(int first, int count,String name) {
-		return rDao.nameRestaurant(first, count, name);
-	}
-	
-	@Transactional(rollbackFor = { Throwable.class })
-	public int getUserSize(String username) {
-		return rDao.getUserSize(username);
-	}
-
-	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> userRestaurant(int first, int count,String username) {
-		return rDao.userRestaurant(first, count, username);
-	}
-
-	@Transactional(rollbackFor = { Throwable.class })
 	public Restaurant restaurantInfo(BigDecimal r_sn) {
 		return rDao.restaurantInfo(r_sn);
+	}
+
+	@Transactional(rollbackFor = { Throwable.class })
+	public String deleteRestaurant(BigDecimal r_sn) {
+		return rDao.deleteRestaurant(r_sn);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public String inserRestaurant(Restaurant rBean) {
+		return rDao.inserRestaurant(rBean);
 	}
 }

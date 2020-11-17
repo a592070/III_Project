@@ -1,5 +1,7 @@
 package iring29.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,26 +23,19 @@ import org.springframework.web.multipart.MultipartFile;
 import iring29.model.Page;
 import iring29.model.Restaurant;
 import iring29.model.Show_RView;
-import iring29.service.ModifyService;
 import iring29.service.RestaurantService;
+import rambo0021.pojo.AccountBean;
 
 @Controller
-@SessionAttributes(names = { "rBean" })
+@SessionAttributes(names = { "rBean", "RBean" })
+@RequestMapping("/admin")
 public class RestaurantController {
 	@Autowired
 	private RestaurantService rs;
 	@Autowired
-	private ModifyService ms;
-	@Autowired
 	private Page page;
-	
-	private int start = 0;
 
-//	@ModelAttribute("rBean")
-//	public Show_RView Restaurant() {
-//		System.out.println("test");
-//		return new Show_RView();
-//	}
+	private int start = 0;
 
 	@RequestMapping(path = "/Restaurant", method = RequestMethod.GET)
 	public String RestaurantDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
@@ -50,8 +45,9 @@ public class RestaurantController {
 		System.out.println("currentPage = " + currentPage);
 		if (currentPage == 1) {
 			currentPage = 1;
+			start = 0;
 		} else {
-			start = (currentPage - 1) * 8;
+			start = (currentPage - 1) * page.getPageSize();
 		}
 		int pageSize = page.getPageSize();
 		int totalPage = page.getTotalPageCount();
@@ -61,6 +57,65 @@ public class RestaurantController {
 		m.addAttribute("totalPage", totalPage);
 
 		return "iring29/R_index";
+	}
+
+	@RequestMapping(path = "/key", method = RequestMethod.GET)
+	public String RestaurantKeyword(@RequestParam(value = "currentKPage", defaultValue = "1") Integer currentKPage,
+			@RequestParam(value = "keyword", defaultValue = "") String keyword,
+			@RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
+			@RequestParam(value = "order", defaultValue = "ASC") String order, Model m) {
+
+//		if ((keyword == null)  || (keyword.equals("") )) {
+//
+//			return "redirect:Restaurant";
+//		}
+
+		if (order.equals("DESC")) {
+			order = "ASC";
+		} else {
+			order = "DESC";
+		}
+
+		int size = rs.getSizeByKeywords(keyword);
+		page.setTotalCount(size);
+		System.out.println("currentKPage = " + currentKPage);
+		if (currentKPage == 1) {
+			currentKPage = 1;
+			start = 0;
+		} else {
+			start = (currentKPage - 1) * page.getPageSize();
+		}
+		int totalKPage = page.getTotalPageCount();
+		List<Show_RView> rBean = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
+		m.addAttribute("rBean", rBean);
+		m.addAttribute("orderFiled", orderFiled);
+		m.addAttribute("order", order);
+		m.addAttribute("currentKPage", currentKPage);
+		m.addAttribute("totalKPage", totalKPage);
+		m.addAttribute("keyword", keyword);
+		return "iring29/R_index";
+
+	}
+
+	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
+	public String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {
+
+		System.out.println("r_sn = " + r_sn);
+		System.out.println("status = " + status);
+
+		if (status.equals("Y")) {
+			rs.updateStatus(r_sn, "N");
+		} else if (status.equals("N")) {
+			rs.updateStatus(r_sn, "Y");
+		}
+		return "redirect:Restaurant";
+	}
+
+	@RequestMapping(path = "/DisplayRestaurant", method = RequestMethod.POST)
+	public String RestaurantDetail(@RequestParam("r_sn") BigDecimal r_sn, Model m) throws IOException {
+		Restaurant rBean = rs.restaurantInfo(r_sn);
+		m.addAttribute("RBean", rBean);
+		return "iring29/R_modify";
 	}
 
 	@RequestMapping(path = "/regionSearch", method = RequestMethod.POST)
@@ -102,136 +157,97 @@ public class RestaurantController {
 		return "iring29/R_index";
 	}
 
-	@RequestMapping(path = "/nameSearch", method = RequestMethod.GET)
-	public String R_NameDisplay(@RequestParam(value = "currentNPage", defaultValue = "1") Integer currentNPage,
-			@RequestParam("restaurant_name") String name, Model m) {
-		String rname = name.trim();
-		int size = rs.getNameSize(rname);
-		Page page = new Page();
-		page.setTotalCount(size);
-		System.out.println("currentNPage = " + currentNPage);
-		if (currentNPage == 1) {
-			currentNPage = 1;
-		} else {
-			start = (currentNPage - 1) * 8;
-		}
-		int pageSize = page.getPageSize();
-		int totalNPage = page.getTotalPageCount();
-		System.out.println("totalNPage = " + totalNPage);
-		List<Show_RView> rBean = rs.nameRestaurant(start, pageSize, rname);
-		m.addAttribute("rBean", rBean);
-		m.addAttribute("restaurant_name", rname);
-		m.addAttribute("currentNPage", currentNPage);
-		m.addAttribute("totalNPage", totalNPage);
-		return "iring29/R_index";
-	}
-
-	@RequestMapping(path = "/usernameSearch", method = RequestMethod.POST)
-	public String userDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
-			@RequestParam("username") String username, Model m) {
-		int size = rs.getUserSize(username);
-		page.setTotalCount(size);
-		System.out.println("currentPage = " + currentPage);
-		if (currentPage == 1) {
-			currentPage = 1;
-		} else {
-			start = (currentPage - 1) * 8;
-		}
-		int pageSize = page.getPageSize();
-		int totalPage = page.getTotalPageCount();
-		List<Show_RView> rBean = rs.userRestaurant(start, pageSize, username);
-		m.addAttribute("rBean", rBean);
-		m.addAttribute("currentPage", currentPage);
-		m.addAttribute("totalPage", totalPage);
-		return "iring29/R_index";
-	}
-
-	@RequestMapping(path = "/DisplayRestaurant", method = RequestMethod.POST)
-	public String RestaurantDetail(@RequestParam("r_sn") BigDecimal r_sn, Model m) throws IOException {
-		Restaurant rBean = rs.restaurantInfo(r_sn);
-		m.addAttribute("rBean", rBean);
-		return "iring29/R_modify";
-	}
-
 	@RequestMapping(path = "/ShowPic")
-	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("rBean") Restaurant r) {
+	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("RBean") Restaurant r) {
 
+		System.out.println("in ShowPic");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
+
+		if (r.getPic() == null) {
+			try {
+				File file = new File("/III_Project/other/iring29_img/Restaurant_img.png");
+				long fileSize = file.length();
+				FileInputStream fi = new FileInputStream(file);
+				byte[] buffer = new byte[(int) fileSize];
+				int offset = 0;
+				int numRead = 0;
+				while (offset < buffer.length && (numRead = fi.read(buffer, offset, buffer.length - offset)) >= 0) {
+					offset += numRead;
+				}
+
+				fi.close();
+				r.setPic(buffer);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/ModifyImg", method = RequestMethod.POST)
-	public String ModifyImg(@ModelAttribute("rBean") Restaurant rBean, @RequestParam("Rpicture") MultipartFile img,
-			Model m) throws Exception {
-		System.out.println("In iMG");
-		System.out.println(img);
-		rBean.setPic(img.getInputStream().readAllBytes());
-		ms.R_Img(rBean.getPic(), rBean.getR_sn());
+	@RequestMapping(path = "/ModifyRestaurant", method = RequestMethod.POST)
+	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, @RequestParam("address") String address,
+			@RequestParam("opentime") String opentime, @RequestParam("description") String description,
+			@RequestParam("transportation") String transportation, @RequestParam("type") String type,
+			@RequestParam("region") String region, @RequestParam("serviceinfo") String serviceinfo,
+			@RequestParam("pic") MultipartFile pic, Model m) throws IOException {
 
-		m.addAttribute("rBean", rBean);
-		return "iring29/R_modify";
-
-	}
-
-	@RequestMapping(path = "/ModifyInfo", method = RequestMethod.POST)
-	public String ModifyInfo(@ModelAttribute("rBean") Restaurant r, @RequestParam("opentime") String opentime,
-			@RequestParam("description") String description, @RequestParam("finalDecision") String decision, Model m) {
-		String op = opentime;
-		String des = description;
-		Restaurant rBean = r;
-		if (decision.equals("confirmI")) {
-			if (op == "") {
-				op = r.getOpentime();
-			}
-			if (des == "") {
-				des = r.getDescription();
-			}
-			rBean = ms.R_Info(op, des, r.getR_sn());
+		Restaurant r = new Restaurant();
+		if (pic.getSize() != 0) {
+			r.setPic(pic.getInputStream().readAllBytes());
+		} else {
+			r.setPic(rs.getPic(r_sn));
 		}
-		m.addAttribute("rBean", rBean);
+
+		Restaurant rBean = rs.updateRestaurant(r_sn, address, opentime, description, transportation, type, region,
+				serviceinfo, r.getPic());
+		m.addAttribute("RBean", rBean);
 		return "iring29/R_modify";
 	}
 
-	@RequestMapping(path = "/ModifyLocation", method = RequestMethod.POST)
-	public String ModifyLocation(@ModelAttribute("rBean") Restaurant r, @RequestParam("address") String address,
-			@RequestParam("transportation") String transportation, @RequestParam("finalDecision") String decision,
-			Model m) {
-		String add = address;
-		String trans = transportation;
-		Restaurant rBean = r;
-		if (decision.equals("confirmL")) {
-			if (add == "") {
-				add = r.getAddress();
-			}
-			if (trans == "") {
-				trans = r.getTransportation();
-			}
-			rBean = ms.R_Address(add, trans, r.getR_sn());
-		}
-		m.addAttribute("rBean", rBean);
-		return "iring29/R_modify";
+	// Delete Restaurant
+	@RequestMapping(path = "/DeleteRestaurant", method = RequestMethod.POST)
+	public String DelRestaurant(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
+		String result = rs.deleteRestaurant(r_sn);
+		m.addAttribute("result", result);
+		return "iring29/result";
 	}
 
-	@RequestMapping(path = "/ModifyType", method = RequestMethod.POST)
-	public String ModifyType(@ModelAttribute("rBean") Restaurant r, @RequestParam("serviceinfo") String serviceinfo,
-			@RequestParam("type") String type, @RequestParam("finalDecision") String decision, Model m) {
-		String ser = serviceinfo;
-		System.out.println("ser = " + ser);
-		String ty = type;
-		Restaurant rBean = r;
-		if (decision.equals("confirmT")) {
-			if (ser == "") {
-				ser = r.getServiceinfo();
-			}
-			if (ty == "") {
-				ty = r.getType();
-			}
-			rBean = ms.R_Type(ser, ty, r.getR_sn());
-		}
-		m.addAttribute("rBean", rBean);
-		return "iring29/R_modify";
+	// Create Restaurant
+	@RequestMapping(path = "/NewRestaurant")
+	public String NewRestaurant() {
+		return "iring29/R_create";
+	}
+
+	@RequestMapping(path = "/CreateRestaurant", method = RequestMethod.POST)
+	public String CreateRestaurant(@RequestParam("pic") MultipartFile pic, @RequestParam("name") String name,
+			@RequestParam("region") String region, @RequestParam("address") String address,
+			@RequestParam("transportation") String transportation, @RequestParam("serviceinfo") String serviceinfo,
+			@RequestParam("type") String type, @RequestParam("opentime") String opentime,
+			@RequestParam("description") String description, @RequestParam("username") String username, Model m)
+			throws IOException {
+		Restaurant rBean = new Restaurant();
+		AccountBean accBean = new AccountBean();
+		rBean.setPic(pic.getInputStream().readAllBytes());
+		rBean.setName(name);
+		rBean.setRegion(region);
+		rBean.setAddress(address);
+		rBean.setTransportation(transportation);
+		rBean.setServiceinfo(serviceinfo);
+		rBean.setType(type);
+		rBean.setOpentime(opentime);
+		rBean.setDescription(description);
+		accBean.setUserName(username);
+		rBean.setAccountBean(accBean);
+
+		rBean.setTablenum(BigDecimal.valueOf(2));
+		rBean.setStatus("Y");
+
+		String result = rs.inserRestaurant(rBean);
+		m.addAttribute("result", result);
+
+		return "iring29/result";
 	}
 
 }
