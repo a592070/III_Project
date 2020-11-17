@@ -38,7 +38,7 @@
                 <!-- sidebar menu -->
                 <ul class="nav sidebar-inner" id="sidebar-menu">
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/accountPage">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/accountPage">
                             <i class="mdi mdi-view-dashboard-outline"></i>
                             <span class="nav-text">用戶列表</span>
                         </a>

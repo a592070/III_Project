@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.IdentityBean;
 
 public interface AccountService {
 
@@ -20,4 +21,6 @@ public interface AccountService {
 	String enableAccount(String username,String status);
 	String disableAccount(String username,String status);
 	String delAccount(String username);
+	String modifyAccount(String username, String password, int identity, String email);
+	String registered(AccountBean aBean, IdentityBean iBean);
 }
