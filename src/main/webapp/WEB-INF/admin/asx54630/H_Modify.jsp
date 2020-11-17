@@ -407,7 +407,7 @@ pre {
 				<script type="text/javascript"> 
 					 function confrimModify(){ 
 						 if (confirm("確定送出修改 ? ") ) { 
-								document.forms["modifyH"].action="<%=application.getContextPath()%>/hotelupdate";
+								document.forms["modifyH"].action="<%=application.getContextPath()%>/admin/hotelupdate";
 								document.forms["modifyH"].method = "POST";
 								document.forms["modifyH"].submit();
 								
