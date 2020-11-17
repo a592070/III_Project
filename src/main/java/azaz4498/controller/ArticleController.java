@@ -54,63 +54,51 @@ public class ArticleController {
 
 	}
 
-	@RequestMapping(path = "/searchByUserId", method = RequestMethod.GET)
-	public String DisplayById(@RequestParam(name = "userid") String userid, Model m) {
 
-		m.addAttribute("artBean", articleService.searchByUserId(userid));
-		return "azaz4498/F_index";
-	}
-
-	@RequestMapping(path = "/titleSearch")
-	public String DisplayByTitle(@RequestParam(name = "title") String title, Model m) {
-		m.addAttribute("artBean", articleService.searchByTitle(title));
-		return "azaz4498/F_index";
-	}
 
 	@RequestMapping(path = "/artTypeSearch")
-	public String DisplayByType(@RequestParam(name = "articleType") int typeId, Model m) throws SQLException {
+	public String DisplayByType(@RequestParam(name = "articleType") Integer typeId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticlesByType(typeId));
 		m.addAttribute("typeBean", articleTypeService.showAllType());
+		m.addAttribute("articleType", typeId);
 		return "azaz4498/F_index";
 
 	}
 
 	@RequestMapping(path = "/articleSearch")
 	public String DisplayResults(@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
-			Model m) {
+			@RequestParam(name = "articleType", defaultValue = "" ,required = false)Integer articleType, Model m) {
+		
 
-		m.addAttribute("artBean", articleService.searchArticles(keyword));
-
+		m.addAttribute("artBean", articleService.searchArticles(keyword, articleType));
 		return "azaz4498/F_index";
 
 	}
 
 	@RequestMapping(path = "/editPage.controller")
-	public String EditPage(@RequestParam(name = "artId") int articleId, Model m) throws SQLException {
+	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticleById(articleId));
 
 		return "azaz4498/editPage";
 	}
 
 	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
-	public ModelAndView Edit(@RequestParam(name = "articleTitle") String title,
-			@RequestParam(name = "articleContent") String content, @RequestParam(name = "artId") int articleId,
-			@RequestParam(name = "userid") String userid, @RequestParam(name = "typeSelect") int typeId, Model m,
-			RedirectAttributes rdattr) throws SQLException {
+	public String Edit(@RequestParam(name = "articleTitle") String title,
+			@RequestParam(name = "articleContent") String content, @RequestParam(name = "artId") Integer articleId,
+			@RequestParam(name = "userid") String userid, @RequestParam(name = "typeSelect") Integer typeId)
+			throws SQLException {
 
 		articleService.articleEdit(title, content, articleId, userid, typeId);
-		ModelAndView mv = new ModelAndView("redirect:/Forum");
 
-		return mv;
+		return "redirect:/Forum";
 	}
 
 	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
-	public String Delete(@RequestParam(name = "artId") int articleId, Model m) {
+	public String Delete(@RequestParam(name = "artId") Integer articleId, Model m) {
 		System.out.println("================before");
 		articleService.deleteArticleByAdmin(articleId);
 		System.out.println("================after");
 //		ModelAndView mv = new ModelAndView("redirect:/Forum");
-		
 
 		return "redirect:/Forum";
 
@@ -123,11 +111,11 @@ public class ArticleController {
 		java.util.List<String> titles = node.findValuesAsText("art_title");
 		java.util.List<String> types = node.findValuesAsText("art_type");
 		java.util.List<String> users = node.findValuesAsText("art_userid");
-		for (int i = 0; i < titles.size(); i++) {
+		for (Integer i = 0; i < titles.size(); i++) {
 			String title = titles.get(i);
 			String userId = users.get(i);
 			String content = "測試文章暫不提供內文";
-			int typeId = 0;
+			Integer typeId = 0;
 			String type = types.get(i);
 			switch (type) {
 			case "遊記":
@@ -165,12 +153,12 @@ public class ArticleController {
 
 	}
 
-	@RequestMapping(path = "/statusChange.controller", method = RequestMethod.GET)
-	public ModelAndView statusChange(@RequestParam(name = "artId") int articleId, Model m) {
+	@RequestMapping(path = "/statusChange.controller", method = RequestMethod.POST)
+	public String statusChange(@RequestParam(name = "artId") Integer articleId) {
+		System.out.println("===========BEFORE===========");
 		articleService.switchStatus(articleId);
-		ModelAndView mv = new ModelAndView("redirect:/Forum");
-		
-		
-		return mv;
+		System.out.println("===========AFTER===========");
+
+		return "redirect:/Forum";
 	}
 }
