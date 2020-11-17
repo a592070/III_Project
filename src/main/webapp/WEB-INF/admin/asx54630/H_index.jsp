@@ -108,12 +108,12 @@
                			<c:set var="status1" value="啟用"/>
                								<c:choose>
                								  <c:when test="${hotels.STATUS eq status1}">
-												<input type="checkbox" name="status" class="switch-input form-check-input" data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')" checked >
+												<input type="checkbox" name="status" class="switch-input form-check-input"  onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')" checked >
 												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
 												<span class="switch-handle"></span>
 											  </c:when>
 											  <c:otherwise>
-												<input type="checkbox" name="status" class="switch-input form-check-input" data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')"  >
+												<input type="checkbox" name="status" class="switch-input form-check-input"  onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')"  >
 												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
 												<span class="switch-handle"></span>
 											  </c:otherwise>
@@ -129,11 +129,11 @@
         
         <script type="text/javascript"> 
 		function clickstatus(id,status){
-// 			document.location.href="${pageContext.servletContext.contextPath}/hotelstatus?upId="+id+"&upStatus="+status;
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hotelstatus?upId="+id+"&upStatus="+status;
 // 			consloe.log(id);
 // 			consloe.log(status);
-			$("#statusId").val(id);
-			$("#hstatus").val(status);
+// 			$("#statusId").val(id);
+// 			$("#hstatus").val(status);
 		}
 		
 		function clickdetail(id){
@@ -147,9 +147,9 @@
 			$("#deleteId").val(id);
 		}
 
-		function statuscancel(){
-			document.location.href="${pageContext.servletContext.contextPath}/admin/hotelindex";
-		}
+// 		function statuscancel(){
+// 			document.location.href="${pageContext.servletContext.contextPath}/admin/hotelindex";
+// 		}
 
 		</script> 
 		
@@ -182,35 +182,35 @@
          </div>
        </div>
  <!-----------------------------------------------修改狀態---------------------------------------------------------------------->     
-       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-           <div class="modal-content">
-             <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalCenterTitle">修改狀態</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-               </button>
-             </div>
-             <div class="modal-body">
-                <form action="hotelstatus" method="POST">
-                  <table>
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label"></label>
-                      <input type="hidden" id = "statusId" value="" name="upId">
-                      <input type="hidden" id = "hstatus" value="" name="upStatus">
-                      <h4>是否確認修改狀態?</h4>
-                      <p></p>
-                    </div>
-               		 <div class="modal-footer">
-                 	 <button type="submit" class="btn btn-primary">確認</button>
-                  	<button type="submit" class="btn btn-secondary" data-dismiss="modal" onclick="statuscancel()">取消</button>
-               		 </div>
-                  </form> 
-                  </table>
-             </div>
-           </div>
-         </div>
-       </div>
+<!--        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
+<!--          <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<!--            <div class="modal-content"> -->
+<!--              <div class="modal-header"> -->
+<!--                <h5 class="modal-title" id="exampleModalCenterTitle">修改狀態</h5> -->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--                  <span aria-hidden="true">&times;</span> -->
+<!--                </button> -->
+<!--              </div> -->
+<!--              <div class="modal-body"> -->
+<!--                 <form action="hotelstatus" method="POST"> -->
+<!--                   <table> -->
+<!--                     <div class="form-group"> -->
+<!--                       <label for="recipient-name" class="col-form-label"></label> -->
+<!--                       <input type="hidden" id = "statusId" value="" name="upId"> -->
+<!--                       <input type="hidden" id = "hstatus" value="" name="upStatus"> -->
+<!--                       <h4>是否確認修改狀態?</h4> -->
+<!--                       <p></p> -->
+<!--                     </div> -->
+<!--                		 <div class="modal-footer"> -->
+<!--                  	 <button type="submit" class="btn btn-primary">確認</button> -->
+<!--                   	<button type="submit" class="btn btn-secondary" data-dismiss="modal" onclick="statuscancel()">取消</button> -->
+<!--                		 </div> -->
+<!--                   </form>  -->
+<!--                   </table> -->
+<!--              </div> -->
+<!--            </div> -->
+<!--          </div> -->
+<!--        </div> -->
 	<!-----------------------------------------------修改狀態----------------------------------------------------------------------> 
 		</div>
 	</div>
