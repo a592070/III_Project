@@ -106,12 +106,13 @@ public class ArticleController {
 
 	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
 	public String Delete(@RequestParam(name = "artId") int articleId, Model m) {
+		System.out.println("================before");
 		articleService.deleteArticleByAdmin(articleId);
-		
+		System.out.println("================after");
 //		ModelAndView mv = new ModelAndView("redirect:/Forum");
 		
 
-		return "azaz4498/F_index";
+		return "redirect:/Forum";
 
 	}
 
