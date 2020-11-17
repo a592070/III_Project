@@ -44,8 +44,8 @@ public class AdminSingController {
 		service.registered(aBean,iBean);
 		return "redirect:/admin/singin";
 	}
-	@RequestMapping(path = "/login")
-	 public String login(@RequestParam String username,@RequestParam String password) {
-		
-	}
+//	@RequestMapping(path = "/login")
+//	 public String login(@RequestParam String username,@RequestParam String password) {
+//		
+//	}
 }
