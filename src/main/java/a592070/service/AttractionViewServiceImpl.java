@@ -44,11 +44,14 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
     }
     @Override
     public List<AttractionVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled){
+        return listByRegion(currentPage, pageSize, region, orderFiled, false);
+    }
+    @Override
+    public List<AttractionVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled, boolean descending){
+        if(StringUtil.isEmpty(region)) return list(currentPage, pageSize, orderFiled, descending);
+
         int index = (currentPage-1)*pageSize;
-
-        if(StringUtil.isEmpty(region)) return list(index, pageSize, orderFiled);
-
-        return viewDAO.listByFiled(index, pageSize, AttractionFiledName.ATTRACTION_REGION, region, orderFiled);
+        return viewDAO.listByFiled(index, pageSize, AttractionFiledName.ATTRACTION_REGION, region, orderFiled, descending);
     }
 
     @Override
@@ -57,9 +60,13 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
     }
     @Override
     public List<AttractionVO> list(int currentPage, int pageSize, String orderFiled) {
+        return list(currentPage, pageSize, orderFiled, false);
+    }
+    @Override
+    public List<AttractionVO> list(int currentPage, int pageSize, String orderFiled, boolean descending) {
         int index = (currentPage-1)*pageSize;
 
-        return viewDAO.listByRownum(index, pageSize, orderFiled);
+        return viewDAO.listByRownum(index, pageSize, orderFiled, descending);
     }
 
 
@@ -84,12 +91,16 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
     }
     @Override
     public List<AttractionVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
+        return listByKeyWords(currentPage, pageSize, keywords, region, orderFiled, false);
+    }
+    @Override
+    public List<AttractionVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
         if(StringUtil.isEmpty(keywords)) keywords = "";
         if(StringUtil.isEmpty(region)) region = "";
         int index = (currentPage-1)*pageSize;
 //        System.out.println(index);
 //        System.out.println(pageSize);
 
-        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled);
+        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled, descending);
     }
 }
