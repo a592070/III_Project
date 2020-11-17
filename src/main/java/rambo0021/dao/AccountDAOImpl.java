@@ -173,4 +173,13 @@ public class AccountDAOImpl implements AcountDAO {
 		return "註冊失敗";
 	}
 
+	@Override
+	public boolean login(String username, String password) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class,username);
+		 if(aBean != null && aBean.getPassword().equals(SHA2DAO.getSHA256(password)) && aBean.getIdentityBean().getId()==1) {
+			 return true;
+		 }
+		return false;
+	}
+
 }
