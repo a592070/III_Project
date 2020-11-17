@@ -56,7 +56,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
         keyWords = "%"+keyWords+"%";
         region = "%"+region+"%";
 
-        String hql = "select count(*) from AttractionDO " +
+        String hql = "select count(sn) from AttractionDO " +
                 "where region like :region and " +
                 "(name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword) ";
 
@@ -84,7 +84,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
 //        return query.list();
 //    }
     @Override
-    public List<AttractionVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled) {
+    public List<AttractionVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending) {
         keyWords = "%"+keyWords+"%";
         region = "%"+region+"%";
 
@@ -92,6 +92,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
                 "where (do.sn=vo.sn) and (do.region like :region) and " +
                 "(do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
                 "order by vo."+orderFiled;
+        if(descending) hql += " desc";
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
         query.setParameter("keyword", keyWords);
@@ -107,7 +108,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     public int getSizeByFiled(String filedName, String filedValue) {
         filedValue = "%" + filedValue + "%";
 
-        String hql = "select count(*) from AttractionDO where "+filedName+" like ?1 ";
+        String hql = "select count(sn) from AttractionDO where "+filedName+" like ?1 ";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter(1, filedValue);
@@ -116,10 +117,12 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     }
 
     @Override
-    public List<AttractionVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled){
+    public List<AttractionVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending){
         filedValue = "%" + filedValue + "%";
 
         String hql = "select vo from AttractionDO do, AttractionVO vo where (do.sn=vo.sn) and (do."+filedName+" like ?1 ) order by vo."+orderFiled;
+        if(descending) hql += " desc";
+
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
         query.setParameter(1, filedValue);
@@ -131,9 +134,11 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     }
 
     @Override
-    public List<AttractionVO> listByRownum(int firstIndex, int resultSize, String orderFiled){
+    public List<AttractionVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending){
 
         String hql = "from AttractionVO order by "+orderFiled;
+        if(descending) hql += " desc";
+
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
 
         query.setFirstResult(firstIndex);

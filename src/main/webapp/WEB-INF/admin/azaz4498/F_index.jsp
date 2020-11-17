@@ -192,7 +192,7 @@ h2 {
 
 
 
-										<form id="delete" name="delete" method="POST">
+										<form id="delete" name="delete" method="POST" action="${pageContext.servletContext.contextPath}/delete.controller">
 											<button name="artId" value="${article.artId}" onclick="confirmDelete()">
 												<span class="mdi mdi-delete"></span>
 												Delete
@@ -216,7 +216,7 @@ h2 {
 		function confirmDelete() {
 			var desicion = confirm("確定要刪除此筆資料?");
 			if (desicion) {
-				document.forms["delete"].action = "delete.controller";
+				
 				document.forms["delete"].submit();
 			} else {
 				return;
