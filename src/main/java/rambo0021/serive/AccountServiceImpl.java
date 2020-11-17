@@ -89,5 +89,10 @@ public class AccountServiceImpl implements AccountService {
 		return dao.registered(aBean,iBean);
 	}
 
+	@Override
+	public boolean login(String username, String password) {
+		return dao.login(username,password);
+	}
+
 
 }

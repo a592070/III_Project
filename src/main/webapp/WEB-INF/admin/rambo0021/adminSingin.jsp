@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <head>
 <meta charset="utf-8" />
@@ -53,6 +54,7 @@
 </head>
 
 </head>
+
 <body class="bg-light-gray" id="body">
 	<div
 		class="container d-flex flex-column justify-content-between vh-100">
@@ -65,28 +67,27 @@
 									xmlns="http://www.w3.org/2000/svg"
 									preserveAspectRatio="xMidYMid" width="30" height="33"
 									viewBox="0 0 30 33">
-                                <g fill="none" fill-rule="evenodd">
-                                    <path class="logo-fill-blue"
-										fill="#7DBCFF" d="M0 4v25l8 4V0zM22 4v25l8 4V0z" />
-                                    <path class="logo-fill-white"
-										fill="#FFF" d="M11 4v25l8 4V0z" />
-                                </g>
-                            </svg> <span class="brand-name">FUN Taiwan</span>
+									<g fill="none" fill-rule="evenodd">
+										<path class="logo-fill-blue" fill="#7DBCFF"
+										d="M0 4v25l8 4V0zM22 4v25l8 4V0z" />
+										<path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
+									</g>
+								</svg> <span class="brand-name">FUN Taiwan</span>
 							</a>
 						</div>
 					</div>
 					<div class="card-body p-5">
 
-						<h4 class="text-dark mb-5">Sign In</h4>
-						<form action="/index.html">
+						<h4 class="text-dark mb-5">登入</h4>
+						<form action="${pageContext.servletContext.contextPath}/admin/login" method="POST">
 							<div class="row">
 								<div class="form-group col-md-12 mb-4">
-									<input type="email" class="form-control input-lg" id="email"
-										aria-describedby="emailHelp" placeholder="Username">
+									<input type="text" class="form-control input-lg" name="username" 
+										aria-describedby="nameHelp" placeholder="使用者名稱">
 								</div>
 								<div class="form-group col-md-12 ">
 									<input type="password" class="form-control input-lg"
-										id="password" placeholder="Password">
+										name="password" placeholder="密碼">
 								</div>
 								<div class="col-md-12">
 									<div class="d-flex my-2 justify-content-between">
@@ -98,14 +99,15 @@
 
 										</div> -->
 										<p>
-											<a class="text-blue" href="#">Forgot Your Password?</a>
+											<a class="text-blue" href="#">忘記密碼?</a>
 										</p>
 									</div>
 									<button type="submit"
-										class="btn btn-lg btn-primary btn-block mb-4">Sign In</button>
+										class="btn btn-lg btn-primary btn-block mb-4">登入</button>
+									<Font color='red' size="-1"> ${ErrorMsgKey.LoginError}</Font>
 									<p>
-										Don't have an account yet ? <a class="text-blue"
-											href="${pageContext.servletContext.contextPath}/admin/singup">Sign Up</a>
+										還沒有帳號 ? <a class="text-blue"
+											href="${pageContext.servletContext.contextPath}/admin/singup">註冊</a>
 									</p>
 								</div>
 							</div>
@@ -116,4 +118,5 @@
 		</div>
 	</div>
 </body>
+
 </html>

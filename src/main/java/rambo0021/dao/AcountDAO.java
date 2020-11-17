@@ -23,4 +23,5 @@ public interface AcountDAO {
 	String delAccount(String username);
 	String modifyAccount(String username, String password, int identity, String email);
 	String registered(AccountBean aBean, IdentityBean iBean);
+	boolean login(String username, String password);
 }

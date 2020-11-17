@@ -19,25 +19,26 @@
         <div class="navbar-right ">
             <ul class="nav navbar-nav">
                 <li class="dropdown notifications-menu">
-                    <button class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="mdi mdi-bell-outline"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header"></li>
-                    </ul>
+<!--                     <button class="dropdown-toggle" data-toggle="dropdown"> -->
+<!--                         <i class="mdi mdi-bell-outline"></i> -->
+<!--                     </button> -->
+<!--                     <ul class="dropdown-menu dropdown-menu-right"> -->
+<!--                         <li class="dropdown-header"></li> -->
+<!--                     </ul> -->
                 </li>
                 <!-- User Account -->
                 <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <img src="" class="user-image" alt="User Image"/>
+<!--                         <img src="" class="user-image" alt="User Image"/> -->
                         <span class="d-none d-lg-inline-block">Admin</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <!-- User image -->
                         <li class="dropdown-header">
-                            <img src="" class="img-circle" alt="User Image"/>
+<!--                             <img src="" class="img-circle" alt="User Image"/> -->
                             <div class="d-inline-block">
-                                Admin <small class="pt-1">xxx@xxx.com</small>
+                                Admin 
+<!--                                 <small class="pt-1">xxx@xxx.com</small> -->
                             </div>
                         </li>
 
@@ -46,14 +47,14 @@
                                 <i class="mdi mdi-account"></i> My Profile
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="mdi mdi-email"></i> Message
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"> <i class="mdi mdi-settings"></i> Account Setting </a>
-                        </li>
+<!--                         <li> -->
+<!--                             <a href="#"> -->
+<!--                                 <i class="mdi mdi-email"></i> Message -->
+<!--                             </a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a href="#"> <i class="mdi mdi-settings"></i> Account Setting </a> -->
+<!--                         </li> -->
 
                         <li class="dropdown-footer">
                             <a href="#"> <i class="mdi mdi-logout"></i> Log Out </a>
