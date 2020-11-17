@@ -109,18 +109,18 @@
                								<c:choose>
                								  <c:when test="${hotels.STATUS eq status1}">
 												<input type="checkbox" name="status" class="switch-input form-check-input" data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')" checked >
-												<span class="switch-label" data-on="On" data-off="Off"></span>
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
 												<span class="switch-handle"></span>
 											  </c:when>
 											  <c:otherwise>
 												<input type="checkbox" name="status" class="switch-input form-check-input" data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')"  >
-												<span class="switch-label" data-on="On" data-off="Off"></span>
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
 												<span class="switch-handle"></span>
 											  </c:otherwise>
 											</c:choose>
 											</label></td> <%-- 開關(綠色) --%> 
-                <td><button type="button" class="btn btn-primary mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
-               <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
+                <td><button type="button" class="btn btn-warning mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
+               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
             </tr>
             </c:forEach> 
 
@@ -148,7 +148,7 @@
 		}
 
 		function statuscancel(){
-			document.location.href="${pageContext.servletContext.contextPath}/hotelindex";
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hotelindex";
 		}
 
 		</script> 
