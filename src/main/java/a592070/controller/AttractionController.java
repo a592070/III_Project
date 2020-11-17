@@ -1,5 +1,6 @@
 package a592070.controller;
 
+import a592070.fieldenum.AttractionFiledName;
 import a592070.pojo.AttractionDO;
 import a592070.pojo.AttractionVO;
 import a592070.service.AttractionService;
@@ -70,44 +71,70 @@ public class AttractionController {
         return map;
     }
     @RequestMapping("/admin/attraction/list/{page}/{region}")
-    public List<AttractionVO> getAttractionListByRegion(@PathVariable("page") int page,
-                                                        @PathVariable("region") String region){
+    public Map<String, Object> getAttractionListByRegion(@PathVariable("page") int page,
+                                                        @PathVariable("region") String region,
+                                                        @RequestParam(name="sortColumn", required = false) String sortColumn,
+                                                        @RequestParam(name = "order", required = false) String order){
         PageSupport pageSupport = new PageSupport();
         pageSupport.setPageSize(PAGE_SIZE);
-        pageSupport.setTotalSize(viewService.getSizeByRegion(region));
         pageSupport.setCurrentPage(page);
 
-        List<AttractionVO> list = viewService.listByRegion(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region);
-        return list;
+        if(StringUtil.isEmpty(sortColumn) || "sn".equals(sortColumn)) {
+            sortColumn = AttractionFiledName.ATTRACTION_ID;
+        }else if("name".equals(sortColumn)){
+            sortColumn = AttractionFiledName.ATTRACTION_NAME;
+        }else if("address".equals(sortColumn)){
+            sortColumn = AttractionFiledName.ATTRACTION_ADDRESS;
+        }
+
+        boolean desc;
+        if(StringUtil.isEmpty(order) || "ascending".equals(order)){
+            desc = false;
+        }else{
+            desc = true;
+        }
+        if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
+
+        pageSupport.setTotalSize(viewService.getSizeByRegion(region));
+        List<AttractionVO> list = viewService.listByRegion(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, sortColumn, desc);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("tableData", list);
+        map.put("pageData", pageSupport);
+        return map;
     }
     @RequestMapping("/admin/attraction/list/{page}/{region}/{keywords}")
     public Map<String, Object> getAttractionListByKeywords(@PathVariable("page") int page,
-                                                          @PathVariable("region") String region,
-                                                          @PathVariable("keywords") String keywords){
+                                                           @PathVariable(name="region", required = false) String region,
+                                                           @PathVariable(name="keywords", required = false) String keywords,
+                                                           @RequestParam(name="sortColumn", required = false) String sortColumn,
+                                                           @RequestParam(name = "order", required = false) String order){
         PageSupport pageSupport = new PageSupport();
         pageSupport.setPageSize(PAGE_SIZE);
         pageSupport.setCurrentPage(page);
 
         List<AttractionVO> list;
 
-        if(StringUtil.isEmpty(keywords)){
-            if(StringUtil.isEmpty(region)){
-                pageSupport.setTotalSize(viewService.getSize());
-                list = viewService.list(pageSupport.getCurrentPage(), pageSupport.getPageSize());
-            }else{
-                pageSupport.setTotalSize(viewService.getSizeByRegion(region));
-                list = viewService.listByRegion(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region);
-            }
-        }else{
-            if(StringUtil.isEmpty(region)){
-                pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords));
-                list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
-            }else{
-                pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords, region));
-                list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, region);
-            }
-
+        if(StringUtil.isEmpty(sortColumn) || "sn".equals(sortColumn)) {
+            sortColumn = AttractionFiledName.ATTRACTION_ID;
+        }else if("name".equals(sortColumn)){
+            sortColumn = AttractionFiledName.ATTRACTION_NAME;
+        }else if("address".equals(sortColumn)){
+            sortColumn = AttractionFiledName.ATTRACTION_ADDRESS;
         }
+
+        boolean desc;
+        if(StringUtil.isEmpty(order) || "ascending".equals(order)){
+            desc = false;
+        }else{
+            desc = true;
+        }
+
+        if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
+
+        pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords, region));
+        list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, region, sortColumn, desc);
+
 
         Map<String, Object> map = new HashMap<>();
         map.put("tableData", list);
@@ -138,16 +165,10 @@ public class AttractionController {
                               @RequestParam(name="attractionData", required = false)String attractionData) {
         boolean flag = false;
         try {
-//            System.out.println(attractionData);
             ObjectMapper mapper = new ObjectMapper();
             AttractionDO attractionDO = mapper.readValue(attractionData, AttractionDO.class);
 
-//            String filename;
             if(multipartFile != null){
-//                filename = multipartFile.getOriginalFilename();
-//                String savePath = "C:\\JavaCourse\\IntelliJWorkSpace\\III_Project\\target\\III_Project-1.0-SNAPSHOT\\assets\\" + id + "\\" + filename;
-//                System.out.println(savePath);
-//                multipartFile.transferTo(new File(savePath));
                 attractionDO.setPicture(multipartFile.getBytes());
                 System.out.println("saveFile success");
             }

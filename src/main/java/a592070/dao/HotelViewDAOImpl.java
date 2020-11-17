@@ -53,11 +53,13 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
     }
 
     @Override
-    public List<HotelVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled) {
+    public List<HotelVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending) {
         keyWords = "%"+keyWords+"%";
         region = "%"+region+"%";
 
         String hql = "from HotelVO where region like :region and (name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
+        if(descending) hql += " desc";
+
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
         query.setParameter("keyword", keyWords);
         query.setParameter("region", region);
@@ -74,16 +76,18 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
 
         String hql = "select count(sn) from HotelVO where "+filedName+" like ?1 ";
 
+
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter(1, filedValue);
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public List<HotelVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled) {
+    public List<HotelVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending) {
         filedValue = "%" + filedValue + "%";
 
         String hql = "from HotelVO where "+filedName+" like ?1  order by "+orderFiled;
+        if(descending) hql += " desc";
 
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
         query.setParameter(1, filedValue);
@@ -95,8 +99,10 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
     }
 
     @Override
-    public List<HotelVO> listByRownum(int firstIndex, int resultSize, String orderFiled) {
+    public List<HotelVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
         String hql = "from CarVO order by "+orderFiled;
+        if(descending) hql += " desc";
+
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
