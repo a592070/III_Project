@@ -5,10 +5,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.NumericBooleanType;
 import utils.StringUtil;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @JsonDeserialize(using = AttractionJsonDeserializer.class)
 @JsonSerialize(using = AttractionJsonSerializer.class)
@@ -31,9 +37,13 @@ public class AttractionDO {
     private BigDecimal py;
     @Column(name = "OPENTIME")
     private String openTime;
-    @Column(name = "PICTURE_URL")
-    private String pictureUrl;
-    private byte[] picture;
+//    @Column(name = "PICTURE_URL")
+//    private String pictureUrl;
+//    private byte[] picture;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "attraction", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AttractionPictureDO> attractionPic = new ArrayList<>();
+
     @Column(name = "TICKETINFO")
     private String ticketInfo;
     @Column(name = "TRAVELLINGINFO")
@@ -42,6 +52,9 @@ public class AttractionDO {
     private String remarks;
     private BigDecimal rating;
     private String region;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
 
     public AttractionDO() {
@@ -50,7 +63,7 @@ public class AttractionDO {
     @Override
     public String toString() {
         return "AttractionDO{" +
-                "sn='" + sn + '\'' +
+                "sn=" + sn +
                 ", name='" + name + '\'' +
                 ", toldescribe='" + toldescribe + '\'' +
                 ", description='" + description + '\'' +
@@ -60,11 +73,12 @@ public class AttractionDO {
                 ", py=" + py +
                 ", openTime='" + openTime + '\'' +
                 ", ticketInfo='" + ticketInfo + '\'' +
-                ", travelingInfo='" + travellingInfo + '\'' +
+                ", travellingInfo='" + travellingInfo + '\'' +
                 ", keywords='" + keywords + '\'' +
                 ", remarks='" + remarks + '\'' +
                 ", rating=" + rating +
                 ", region='" + region + '\'' +
+                ", status=" + status +
                 '}';
     }
 
@@ -198,19 +212,39 @@ public class AttractionDO {
         this.region = region;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+//    public String getPictureUrl() {
+//        return pictureUrl;
+//    }
+//
+//    public void setPictureUrl(String picture_url) {
+//        this.pictureUrl = picture_url;
+//    }
+//
+//    public byte[] getPicture() {
+//        return picture;
+//    }
+//
+//    public void setPicture(byte[] picture) {
+//        this.picture = picture;
+//    }
+
+    public List<AttractionPictureDO> getAttractionPic() {
+        return attractionPic;
     }
 
-    public void setPictureUrl(String picture_url) {
-        this.pictureUrl = picture_url;
+    public void addPic(AttractionPictureDO pictureDO) {
+        this.attractionPic.add(pictureDO);
     }
 
-    public byte[] getPicture() {
-        return picture;
+    public void setAttractionPic(List<AttractionPictureDO> attractionPic) {
+        this.attractionPic = attractionPic;
     }
 
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

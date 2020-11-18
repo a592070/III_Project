@@ -30,7 +30,8 @@ public class AttractionDAOImpl extends AttractionDAO{
 
     @Override
     public AttractionDO update(AttractionDO ele) {
-        return (AttractionDO) sessionFactory.getCurrentSession().merge(ele);
+        return (AttractionDO)sessionFactory.getCurrentSession().merge(ele);
+
     }
 
     @Override
@@ -38,4 +39,11 @@ public class AttractionDAOImpl extends AttractionDAO{
         sessionFactory.getCurrentSession().delete(ele);
     }
 
+    public void removePic(AttractionDO attractionDO, int picId) {
+        attractionDO.getAttractionPic().removeIf(ele -> ele.getId()==picId);
+    }
+
+    public void addPic(AttractionDO attractionDO, byte[] pic) {
+
+    }
 }

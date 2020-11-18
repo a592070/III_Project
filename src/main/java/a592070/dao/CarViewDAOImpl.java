@@ -41,12 +41,17 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     public byte[] getPicture(int id) {
         return null;
     }
+    @Deprecated
+    @Override
+    public List<byte[]> getPictures(int id) {
+        return null;
+    }
 
     @Override
     public int getSizeByKeywords(String keyWords, String region) {
         keyWords = "%"+keyWords+"%";
 
-        String hql = "select count(sn) from CarVO where carType like ?1 or company like ?2";
+        String hql = "select count(sn) from CarVO where str(sn) like :keyword or carType like ?1 or company like ?2";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter(1, keyWords);
@@ -59,7 +64,7 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending){
         keyWords = "%"+keyWords+"%";
 
-        String hql = "from CarVO where carType like :keyword or company like :keyword order by "+orderFiled;
+        String hql = "from CarVO where str(sn) like :keyword or carType like :keyword or company like :keyword order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<CarVO> query = sessionFactory.getCurrentSession().createQuery(hql, CarVO.class);
