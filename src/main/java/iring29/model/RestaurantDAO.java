@@ -63,13 +63,13 @@ public class RestaurantDAO {
 	}
 
 	// Change Status
-	public Restaurant updateStatus(BigDecimal r_sn, String status) {
+	public String updateStatus(BigDecimal r_sn, String status) {
 		Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
 		if (result != null) {
 			result.setStatus(status);
-			return result;
+			return "狀態切換成功";
 		}
-		return result;
+		return "狀態切換失敗";
 	}
 
 	// Update Restaurant Info

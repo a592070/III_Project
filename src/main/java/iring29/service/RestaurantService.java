@@ -44,7 +44,7 @@ public class RestaurantService {
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
-	public Restaurant updateStatus(BigDecimal r_sn, String status) {
+	public String updateStatus(BigDecimal r_sn, String status) {
 		return rDao.updateStatus(r_sn, status);
 	}
 

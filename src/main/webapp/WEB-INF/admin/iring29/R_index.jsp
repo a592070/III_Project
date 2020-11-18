@@ -183,7 +183,7 @@ th {
 				</div>
 				<h2>餐廳列表</h2>
 				<div class="table-responsive">
-					<table class="table table-striped table-sm">
+					<table class="table table-striped table-sm"  id="table">
 						<thead>
 							<tr>
 								<th><div>
@@ -264,34 +264,27 @@ th {
 							<c:forEach var="r" items="${rBean}">
 
 								<tr>
-									<td class="r_sn">${r.r_sn}</td>
+									<td id="r_sn" class="r_sn">${r.r_sn}</td>
 									<td class="name">${r.name}</td>
 									<td class="address">${r.address}</td>
 									<td class="region">${r.region}</td>
 									<td class="user">${r.username}</td>
-									<td><div class="status">
-									<form id="changestatus" name="changestatus" action="<%=application.getContextPath()%>/admin/ModifyStatus" method = "POST"  >
-									<button type="submit">
+									<td id="status"><div class="status">
+
 										<c:if test="${r.status == 'N'}">
 											<label class="switch switch-text switch-success switch-pill form-control-label">
-												<input type="checkbox" class="switch-input form-check-input" disabled value="on" id="myCheck" onclick="myFunction()">
+												<input type="checkbox" class="switch-input form-check-input" value="禁用" id="checkbox">
 												<span class="switch-label" data-on="啟用" data-off="禁用" ></span>
 												<span class="switch-handle"></span>
 											</label>
 										</c:if>
 										<c:if test="${r.status == 'Y'}">
 											<label class="switch switch-text switch-success switch-pill form-control-label">
-												<input type="checkbox" class="switch-input form-check-input" value="on" checked id="myCheck" onclick="myFunction()">
+												<input type="checkbox" class="switch-input form-check-input" value="啟用" id="checkbox" checked="checked">
 												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
 												<span class="switch-handle"></span>
 											</label>
 										</c:if>
-										</button>
-											<Input type='hidden' name='status' value='${r.status}'>
-											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
-											<Input type='hidden' name='currentPage' value='${currentPage}'>
-											<Input type='hidden' name='currentKPage' value='${currentKPage}'>
-									</form>		
 						
 										</div></td>
 		
@@ -328,8 +321,52 @@ th {
 				</div>
 
 			</div>
+			
+		<script>
+		//啟用 禁用 checkbox
+		$("#table").on('change', '#checkbox', function () {
+		  var cur_status =$(this).val();
+		  if(cur_status=="啟用"){
+			  console.log("禁用帳號")
+				var r_sn = $(this).closest('td').siblings("#r_sn").text()
+				var cgstatus = "禁用"
+				var status = 'Y';
+				$(this).val(cgstatus)
+				$.ajax(
+					{
+						type: 'POST',
+						data: { "r_sn": r_sn, "status": status },
+						url: '${pageContext.servletContext.contextPath}/admin/ModifyStatus',
+						dataType: 'text',
+						success: function (response) {
+							console.log(response)
 
+						}
+					}
+				)
+			
+		  }else{
+            console.log("啟用帳號")
+			var r_sn = $(this).closest('td').siblings("#r_sn").text()
+			var cgstatus = "啟用"
+			var status = 'N';
+			$(this).val(cgstatus)
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "r_sn": r_sn, "status": status },
+						url: '${pageContext.servletContext.contextPath}/admin/ModifyStatus',
+						dataType: 'text',
+						success: function (response) {
+							console.log(response)
 
+						}
+
+					}
+				)
+		  }
+		})
+	</script>
 			<div class="pages">
 				<nav aria-label="...">
 					<ul class="pagination">

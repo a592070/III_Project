@@ -105,25 +105,19 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
-	public String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn,
-						   @RequestParam("currentPage") Integer currentPage,
-						   @RequestParam("currentKPage") Integer currentKPage, Model m) {
+	public @ResponseBody String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn,
+
+						   Model m) {
 
 		System.out.println("r_sn = " + r_sn);
 		System.out.println("status = " + status);
 
 		if (status.equals("Y")) {
-			rs.updateStatus(r_sn, "N");
+			return rs.updateStatus(r_sn, "N");
 		} else if (status.equals("N")) {
-			rs.updateStatus(r_sn, "Y");
+			return rs.updateStatus(r_sn, "Y");
 		}
-		if(currentPage != null) {
-			m.addAttribute("currentPage", currentPage);
-			return "redirect:Restaurant";
-		}else if(currentKPage != null) {
-			m.addAttribute("currentKPage", currentKPage);
-			return "redirect:Restaurant";
-		}
+
 		return "redirect:Restaurant";
 	}
 
