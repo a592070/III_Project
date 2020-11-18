@@ -73,28 +73,28 @@ h2 {
 
 
 				<div class="d-flex justify-content-between">
-				<form action="${pageContext.servletContext.contextPath}/articleSearch" method="GET" class="form-inline">
-					<input type="text" class="form-control" placeholder="輸入文章標題或作者..." aria-label="search" name="keyword">
-					<input type="hidden" value="${articleType }" name="articleType">
-					<button>
-						<span class="input-group-text bg-primary text-white"> 搜尋 </span>
-					</button>
-				</form>
-				<form action="${pageContext.servletContext.contextPath}/artTypeSearch" method="GET" class="mr-5">
+					<form action="${pageContext.servletContext.contextPath}/articleSearch" method="GET" class="form-inline">
+						<input type="text" class="form-control" placeholder="輸入文章標題或作者..." aria-label="search" name="keyword">
+						<input type="hidden" value="${articleType }" name="articleType">
+						<button>
+							<span class="input-group-text bg-primary text-white"> 搜尋 </span>
+						</button>
+					</form>
+					<form action="${pageContext.servletContext.contextPath}/artTypeSearch" method="GET" class="mr-5">
 
-					<select name="articleType" id="typeSelect" class="form-control" onchange="this.form.submit()">
-						<option value="">選擇類型</option>
-						<option value="1">旅遊</option>
-						<option value="2">住宿</option>
-						<option value="3">美食</option>
-						<option value="4">景點</option>
-						<option value="5">交通</option>
-						<option value="6">行程</option>
-						<option value="7">購物</option>
-						<option value="0">其他</option>
+						<select name="articleType" id="typeSelect" class="form-control" onchange="this.form.submit()">
+							<option value="">選擇類型</option>
+							<option value="1">旅遊</option>
+							<option value="2">住宿</option>
+							<option value="3">美食</option>
+							<option value="4">景點</option>
+							<option value="5">交通</option>
+							<option value="6">行程</option>
+							<option value="7">購物</option>
+							<option value="0">其他</option>
 
-					</select>
-				</form>
+						</select>
+					</form>
 				</div>
 
 
@@ -103,24 +103,7 @@ h2 {
 				<span>
 					<a href="${pageContext.servletContext.contextPath}/Forum">回列表</a>
 				</span>
-				<script>
-					/* $(document).ready(function() {
-						$.ajax({
-
-							type : "GET",
-							url : "Article.controller.json",
-							success : function(response) {
-								console.log(obj);
-
-								for (let i = 0; i < response.length; i++) {
-
-								}
-
-							}
-
-						});
-					}); */
-				</script>
+				
 				<div class="box">
 
 					<div class="table-responsive">
