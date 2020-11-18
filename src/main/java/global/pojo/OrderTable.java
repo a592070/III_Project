@@ -37,7 +37,7 @@ public class OrderTable {
 	private BigDecimal order_id;
 	@Column(name = "ORDER_DATE")
 	private Timestamp order_date;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "USERNAME")
 	private AccountBean accountBean;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "oTable")

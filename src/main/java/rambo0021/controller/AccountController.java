@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import rambo0021.dao.SHA2DAO;
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.AccountListViewBean;
 import rambo0021.serive.AccountService;
 import rambo0021.serive.DateService;
 
@@ -145,9 +147,16 @@ public class AccountController {
 		return service.delAccount(username);
 	}
 	@PostMapping("/modifyAccount")
-	public @ResponseBody String modifyAccount(@RequestParam String username,@RequestParam String password,@RequestParam int identity,@RequestParam String email, Model m) {
-	
-		
-		return service.modifyAccount(username,password,identity,email);
+	public @ResponseBody String modifyAccount(@RequestParam String username,@RequestParam String password,@RequestParam int identity,@RequestParam String email,@RequestParam String nickName, Model m) {	
+		return service.modifyAccount(username,password,identity,email,nickName);
+	}
+	@PostMapping("/search")
+	public ModelAndView search(@RequestParam(name="username",required = false) String username,@RequestParam(name="identity",required = false) String identity,@RequestParam(name="email",required = false) String email) {
+		System.out.println(username);
+		List<AccountListViewBean> aBeanList = service.search(username,identity,email);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("userList", aBeanList);
+		modelAndView.setViewName("rambo0021/searchPage");
+		return modelAndView;
 	}
 }

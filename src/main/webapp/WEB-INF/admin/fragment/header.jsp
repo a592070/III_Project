@@ -30,21 +30,21 @@
                 <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 <!--                         <img src="" class="user-image" alt="User Image"/> -->
-                        <span class="d-none d-lg-inline-block">Admin</span>
+                        <span class="d-none d-lg-inline-block">${adminBean.userName}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <!-- User image -->
                         <li class="dropdown-header">
 <!--                             <img src="" class="img-circle" alt="User Image"/> -->
                             <div class="d-inline-block">
-                                Admin 
+                                ${adminBean.userName}
 <!--                                 <small class="pt-1">xxx@xxx.com</small> -->
                             </div>
                         </li>
 
                         <li>
                             <a href="#">
-                                <i class="mdi mdi-account"></i> My Profile
+                                <i class="mdi mdi-account"></i> 個人頁面
                             </a>
                         </li>
 <!--                         <li> -->
@@ -57,7 +57,7 @@
 <!--                         </li> -->
 
                         <li class="dropdown-footer">
-                            <a href="#"> <i class="mdi mdi-logout"></i> Log Out </a>
+                            <a href="<%=application.getContextPath()%>/admin/logout"> <i class="mdi mdi-logout"></i> 登出 </a>
                         </li>
                     </ul>
                 </li>
