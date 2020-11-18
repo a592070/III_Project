@@ -49,7 +49,32 @@ public class H_Controller {
 		return "asx54630/H_index";
 		}
 	
-	@RequestMapping(path = "/hotelstatus", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //是否停權
+	@RequestMapping(path = "/hotelSort", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //以ID排序
+	public String processHotelSort(@RequestParam(name = "orderfiled",defaultValue = "SN") String orderfiled,
+								   @RequestParam(name = "keyword") String keyword,
+								   @RequestParam(name = "regionkeywd") String regionkeywd,
+								   @RequestParam(name = "typekeywd") String typekeywd,
+								   @RequestParam(name = "order",defaultValue = "ASC") String order, Model m) {
+
+		if (order.equals("DESC")) {
+			order = "ASC";
+		} else {
+			order = "DESC";
+		}
+		
+		List<Hotel> hoteldata = hService.sort(orderfiled,keyword,regionkeywd,typekeywd,order);
+		m.addAttribute("hoteldata", hoteldata);
+		m.addAttribute("orderfiled", orderfiled);
+		m.addAttribute("keyword", keyword);
+		m.addAttribute("regionkeywd", regionkeywd);
+		m.addAttribute("typekeywd", typekeywd);
+		m.addAttribute("order", order);
+
+		
+		return "asx54630/H_index";
+		}
+	
+	@RequestMapping(path = "/hotelstatus", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //是否停權
 	public String processHotelStatus(@RequestParam(name = "upId") BigDecimal updateSn,
 									 @RequestParam(name = "upStatus") String updateStatus
 									 ,Model m) {

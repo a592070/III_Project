@@ -52,4 +52,9 @@ public class H_Service {
 	public Hotel updateStatus(BigDecimal sn,String Status) {
 		return hotelDao.updateStatus(sn,Status);
 	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){
+		return hotelDao.sort(orderfiled,name,region,type,order);
+	}
 }

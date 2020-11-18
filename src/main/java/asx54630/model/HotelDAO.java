@@ -40,7 +40,17 @@ public class HotelDAO {
 
 	public List<Hotel> selectAll(String name, String region, String type){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
-		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", Hotel.class);
+		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 or REGION like ?1 or TYPE like ?2", Hotel.class);
+		query.setParameter(0, "%" + name + "%");
+		query.setParameter(1, "%" + region + "%");
+		query.setParameter(2, "%" + type + "%");
+		List<Hotel> list = query.list();
+		return list;
+	}
+	
+	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){ //以ID排序
+		Session session = sessionFactory.getCurrentSession();
+		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order , Hotel.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
