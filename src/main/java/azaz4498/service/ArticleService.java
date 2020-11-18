@@ -22,43 +22,38 @@ public class ArticleService {
 	}
 
 	// 顯示當前文章(by Id)
-	public List<Article> showArticleById(int articleId) throws SQLException {
+	public List<Article> showArticleById(Integer articleId) throws SQLException {
 		return aDao.showArticleById(articleId);
 	}
 
 	// 依類型顯示文章
-	public List<Article> showArticlesByType(int typeId) throws SQLException {
+	public List<Article> showArticlesByType(Integer typeId) throws SQLException {
 		return aDao.showArticlesByType(typeId);
 	}
 
 	// 新增文章
-	public void newArticle(String title, int typeId, String content, String userId) throws SQLException {
+	public void newArticle(String title, Integer typeId, String content, String userId) throws SQLException {
 		aDao.newArticle(title, typeId, content, userId);
 	}
-
-	public Article articleEdit(String title, String content, int articleId, String userid,int typeId) throws SQLException {
+	//編輯文章
+	public Article articleEdit(String title, String content, Integer articleId, String userid,Integer typeId) throws SQLException {
 		return aDao.articleEdit(title, content, articleId, userid,typeId);
 	}
 
-	// 查詢文章(依照UserId)
-	public List<Article> searchByUserId(String keyword) {
-		return aDao.searchByUserId(keyword);
-	}
-
-	// 查詢文章(依照Title)
-	public List<Article> searchByTitle(String keyword) {
-		return aDao.searchByTitle(keyword);
-	}
-	public List<Article> searchArticles(String keyword) {
-		return aDao.searchArticle(keyword);
+	public List<Article> searchArticles(String keyword,Integer articleType) {
+		return aDao.searchArticle(keyword,articleType);
 	}
 	//刪除文章
-	public boolean deleteArticle (int articleId, String userid) {
+	public boolean deleteArticle (Integer articleId, String userid) {
 		return aDao.deleteArticle(articleId, userid);
 	}
 	//刪除文章(後台)
-	public boolean deleteArticleByAdmin (int articleId) {
+	public boolean deleteArticleByAdmin (Integer articleId) {
 		return aDao.deleteArticleByAdmin(articleId);
 	}
 	
+	//改變文章status(後台)
+	public boolean switchStatus(Integer articleId) {
+		return aDao.switchStatus(articleId);
+	}
 }

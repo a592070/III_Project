@@ -145,4 +145,41 @@ public class AccountDAOImpl implements AcountDAO {
 		return "刪除失敗";
 	}
 
+	@Override
+	public String modifyAccount(String username, String password, int identity, String email) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			if(!aBean.getPassword().equals(password)) {
+				System.out.println("密碼不同");
+				aBean.setPassword(SHA2DAO.getSHA256(password));
+			}
+			IdentityBean iBean = sessionFactory.getCurrentSession().get(IdentityBean.class, identity);
+			aBean.setIdentityBean(iBean);
+			aBean.setEmail(email);
+			return "修改成功";
+		}
+		return "修改失敗";
+	}
+
+	@Override
+	public String registered(AccountBean aBean, IdentityBean iBean) {
+		AccountBean result = sessionFactory.getCurrentSession().get(AccountBean.class, aBean.getUserName());
+		IdentityBean identityBean = sessionFactory.getCurrentSession().get(IdentityBean.class,iBean.getId());
+		if(result==null) {
+			aBean.setIdentityBean(identityBean);
+			sessionFactory.getCurrentSession().save(aBean);
+			return "註冊成功";
+		}
+		return "註冊失敗";
+	}
+
+	@Override
+	public boolean login(String username, String password) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class,username);
+		 if(aBean != null && aBean.getPassword().equals(SHA2DAO.getSHA256(password)) && aBean.getIdentityBean().getId()==1) {
+			 return true;
+		 }
+		return false;
+	}
+
 }

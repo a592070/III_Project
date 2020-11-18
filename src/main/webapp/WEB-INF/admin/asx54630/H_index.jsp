@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Title</title>
+<title>Hotel</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 
@@ -25,8 +25,8 @@
 		<div class="page-wrapper">
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
  <%-- -- <div class="content-wrapper"></div>  -------------------------------以下為個人內容-------------------------- --%>
-<!-- 			   <div class="container"> -->
-        <h2>飯店</h2>
+<!-- 		<div class="container"> -->
+        
         <div class="mx-auto my-3" style="width: 1100px">
             <form class="form-inline" action="hotelselect" method="GET">
                 <div class="form-group mb-2">
@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputState">地區:</label>
-                    <select id="inputState" class="form-control" placeholder="地區" name="regionkeywd" onChange="this.form.submit()">
+                    <select id="inputState" class="form-control"  name="regionkeywd" onChange="this.form.submit()">
                         <option value="">請選擇..</option>
                         <option value="基隆市">基隆市</option>
                         <option value="新北市">新北市</option>
@@ -64,9 +64,9 @@
                         <option value="連江縣">連江縣</option>
                     </select>
                   </div>
-                  <div class="form-group col-md-2">
+                  <div class="form-group col-md-3">
                     <label for="inputState">類型:</label>
-                    <select id="inputState" class="form-control" placeholder="住宿類型" name="typekeywd">
+                    <select id="inputState" class="form-control" name="typekeywd">
                       <option value="">請選擇..</option>
                       <option value="飯店">飯店</option>
                       <option value="民宿">民宿</option>
@@ -76,6 +76,7 @@
                 <button type="submit" class="btn btn-primary mb-2" value="search" name="search">搜尋</button>
               </form>
             </div>
+            <h2>飯店列表</h2>
   <!--------------------------------------------以上為搜尋列----------------------------------------------------------->  
   <!--------------------------------------------以下為飯店內容--------------------------------------------------------->
         <br>
@@ -102,9 +103,24 @@
                 <td>${hotels.ADDRESS}</td>
                 <td>${hotels.TYPE}</td>
                 <td>${hotels.STATUS}</td>
-                <td><button type="button" class="btn btn-primary mb-2"  data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')">變更狀態</button></td>
-                <td><button type="button" class="btn btn-primary mb-2"   onclick="clickdetail('${hotels.SN}')">修改</button></td>
-               <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
+<%--                 <td><button type="button" class="btn btn-primary mb-2"  data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')">變更狀態</button></td> --%>
+     <%-- 開關(綠色) --%>          <td><label class="switch switch-text switch-success switch-pill form-control-label">
+               			<c:set var="status1" value="啟用"/>
+               								<c:choose>
+               								  <c:when test="${hotels.STATUS eq status1}">
+												<input type="checkbox" name="status" class="switch-input form-check-input" data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')" checked >
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
+												<span class="switch-handle"></span>
+											  </c:when>
+											  <c:otherwise>
+												<input type="checkbox" name="status" class="switch-input form-check-input" data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')"  >
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
+												<span class="switch-handle"></span>
+											  </c:otherwise>
+											</c:choose>
+											</label></td> <%-- 開關(綠色) --%> 
+                <td><button type="button" class="btn btn-warning mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
+               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
             </tr>
             </c:forEach> 
 
@@ -112,9 +128,17 @@
         </table>
         
         <script type="text/javascript"> 
+		function clickstatus(id,status){
+// 			document.location.href="${pageContext.servletContext.contextPath}/hotelstatus?upId="+id+"&upStatus="+status;
+// 			consloe.log(id);
+// 			consloe.log(status);
+			$("#statusId").val(id);
+			$("#hstatus").val(status);
+		}
+		
 		function clickdetail(id){
 
-			document.location.href="${pageContext.servletContext.contextPath}/hoteldetail?detailsn="+id;
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hoteldetail?detailsn="+id;
 
 		}
 
@@ -123,10 +147,8 @@
 			$("#deleteId").val(id);
 		}
 
-		function clickstatus(id,status){
-// 			document.location.href="${pageContext.servletContext.contextPath}/hotelstatus?upId="+id+"&upStatus="+status;
-			$("#statusId").val(id);
-			$("#hstatus").val(status);
+		function statuscancel(){
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hotelindex";
 		}
 
 		</script> 
@@ -150,8 +172,8 @@
                       <p></p>
                     </div>
                		 <div class="modal-footer">
-                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                  	 <button type="submit" class="btn btn-primary">確認</button>
+                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                		 </div>
                   </form> 
                   </table>
@@ -180,8 +202,8 @@
                       <p></p>
                     </div>
                		 <div class="modal-footer">
-                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                  	 <button type="submit" class="btn btn-primary">確認</button>
+                  	<button type="submit" class="btn btn-secondary" data-dismiss="modal" onclick="statuscancel()">取消</button>
                		 </div>
                   </form> 
                   </table>

@@ -76,16 +76,21 @@ h2 {
 							<div class="card card-default">
 								<div class="card-header card-header-border-bottom">
 									<h1>文章修改</h1>
+									<br />
+									<div>
+										<a href="${pageContext.servletContext.contextPath}/Forum">回列表</a>
+									</div>
 								</div>
-								
+
 								<div class="card-body">
-									<form action=edit.controller method="POST">
-										<input type="hidden" name="artId" value="${artBean[0].artId }"> <input type="hidden" name="userid"
-											value="${artBean[0].artUserId }">
+									<form action=${pageContext.servletContext.contextPath}/edit.controller method="POST">
+										<input type="hidden" name="artId" value="${artBean[0].artId }">
+										<input type="hidden" name="userid" value="${artBean[0].artUserId }">
 
 										<div class="form-group">
-											<label for="fname"><h3>標題</h3></label> <input type="text" name="articleTitle" id="title" onblur="showEditTitle()"
-												class="form-control" value="${artBean[0].artTitle }">
+											<label for="fname"><h3>標題</h3></label>
+											<input type="text" name="articleTitle" id="title" onblur="showEditTitle()" class="form-control"
+												value="${artBean[0].artTitle }">
 										</div>
 										<div class="form-group">
 											<label for="typeSelect"><h3>分類</h3></label> <select class="form-control" id="typeSelect" name="typeSelect">
@@ -141,7 +146,7 @@ h2 {
 		function getDefaultType() {//判斷文章類型 修改下拉選單預設值
 			var typeSelect = document.getElementById("typeSelect");
 			var options = typeSelect.getElementsByTagName("option");
-			var selectedType = ${artBean[0].articleType.typeId}-1;
+			var selectedType = ${artBean[0].articleType.typeId};
 			console.log(selectedType);
 			options[selectedType].selected = true;
 		}

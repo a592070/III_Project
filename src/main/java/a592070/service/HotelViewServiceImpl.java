@@ -39,7 +39,11 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
     }
     @Override
     public List<HotelVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled) {
-        return viewDAO.listByFiled(currentPage, pageSize, HotelFieldName.HOTEL_ID, region, orderFiled);
+        return listByRegion(currentPage, pageSize, region, orderFiled, false);
+    }
+    @Override
+    public List<HotelVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled, boolean descending) {
+        return viewDAO.listByFiled(currentPage, pageSize, HotelFieldName.HOTEL_REGION, region, orderFiled, descending);
     }
 
 
@@ -49,9 +53,12 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
     }
     @Override
     public List<HotelVO> list(int currentPage, int pageSize, String orderFiled) {
-        return viewDAO.listByRownum(currentPage, pageSize, orderFiled);
+        return list(currentPage, pageSize, orderFiled,false);
     }
-
+    @Override
+    public List<HotelVO> list(int currentPage, int pageSize, String orderFiled, boolean descending) {
+        return viewDAO.listByRownum(currentPage, pageSize, orderFiled, descending);
+    }
 
     @Override
     public int getSizeByKeyWords(String keywords) {
@@ -71,6 +78,10 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
     }
     @Override
     public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, region, orderFiled);
+        return listByKeyWords(currentPage, pageSize, keywords, region, orderFiled, false);
+    }
+    @Override
+    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
+        return viewDAO.listByKeywords(currentPage, pageSize, keywords, region, orderFiled, descending);
     }
 }
