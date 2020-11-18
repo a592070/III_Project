@@ -118,10 +118,10 @@ th {
 
 	<div class="wrapper">
 		<c:import url="/WEB-INF/admin/fragment/sidebar.jsp" />
-		<div class="page-wrapper">
+		<div class="page-wrapper"  id="page" >
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
-				<div class="box">
+				<div class="box" >
 					<div class="search" class="form-group col-md-2">
 						<form id="formR" name="formR"
 							action="<%=application.getContextPath()%>/admin/regionSearch" >
@@ -153,24 +153,30 @@ th {
 					$("#inputState").change(function(){
 						console.log("change");
 						console.log($("#inputState").val());
-						document.formR.attributes["action"].value ="<%=application.getContextPath()%>/admin/key";
-						document.formR.submit();
+						var region = $("#inputState").val();
+						$('#inputState option:contains(' + region + ')').attr('selected', 'selected');
+						$('#keyword').val(region);
+						$('#page-botton').click();
+<%-- 						document.formR.attributes["action"].value ="<%=application.getContextPath()%>/admin/key"; --%>
+// 						document.formR.submit();
 										})
 					</script>
 
 					<div class="search">
-						<form action="<%=application.getContextPath()%>/admin/key" method="GET">
+<%-- 						<form action="<%=application.getContextPath()%>/admin/key" method="GET"> --%>
 							<span class="sp_search">關鍵字搜尋</span> 
 							<input id="keyword" type="text" name="keyword" placeholder="請輸入關鍵字" value="${keyword}"/>
-							<button type="submit" class="btn btn-primary">搜尋</button>
+							<button type="submit" class="btn btn-primary" id="page-botton">搜尋</button>
 							<Input type='hidden' name='order' value='DESC'>
-							<button type="submit" class="btn btn-primary" onclick="clearkey()">清空關鍵字</button>
-						</form>
+							<button type="submit" class="btn btn-primary" id="clearkey">清空關鍵字</button>
+<%-- 						</form> --%>
 					</div>
-					<script type="text/javascript">
-						function clearkey() {
-						  document.getElementById("keyword").value= "";
-						}
+					<script>
+						$('#clearkey').click(function(){
+							console.log("clear");
+						  $("#keyword").val('');
+						  $('#inputState').val('');
+						})
 
 					</script>
 					
@@ -187,9 +193,9 @@ th {
 						<thead id="thead">
 							<tr>
 								<th><div>
-										<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/admin/key">
-											<button>
+<%-- 										<form id="statuss" name="statuss"  --%>
+<%-- 											action="<%=application.getContextPath()%>/admin/key">  --%>
+											<button id="page-botton">
 												<svg width="2em" height="1em" viewBox="0 0 16 16"
 													class="bi bi-arrow-down-up" fill="currentColor"
 													xmlns="http://www.w3.org/2000/svg">
@@ -197,11 +203,9 @@ th {
 														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 										</svg>
 											</button>
-											<Input type='hidden' name='currentKPage' value='1'> 
-											<Input type='hidden' name='orderFiled' value='r_sn'> 
-											<Input type='hidden' name='keyword' value='${keyword}'> 
-											<Input type='hidden' name='order' value='${order}'>ID
-										</form>
+											
+											<Input type='hidden' name='order' id="order" value=''>ID
+<%-- 										</form>  --%>
 									</div></th>
 								<th>餐廳名稱</th>
 								<th>餐廳地址</th>
@@ -323,7 +327,7 @@ th {
 	
 			<div class="pages">
 				<nav aria-label="...">
-					<ul class="pagination" id="page" >
+					<ul class="pagination">
 						
 								<li class="page-item">
 									<button class="page-link" id="page-botton" value="first">第一頁</button>
@@ -363,10 +367,21 @@ th {
 			var cgpage =$(this).val();
 			var currentPage = $("#page-btn").val();
 			var totalPage = $(".page-link.last").val();
+			var keyword = $("#keyword").val();
+			var order = $("#order").val();
 			console.log("cgpage = " + cgpage);
 			console.log("currentPage = " + currentPage);
 			console.log("totalPage = " + totalPage);
-
+			console.log("keyword = " + keyword);
+			console.log("order = " + order);
+			if(order == "" || order == "DESC"){
+				$("#order").val('ASC'); 
+				order = $("#order").val();
+			}else{
+				$("#order").val('DESC');
+				order = $("#order").val();
+				}
+			console.log("order = " + order);
 					$.ajax(
 						{
 							type: 'POST',
@@ -402,7 +417,11 @@ th {
 									res_context += '<tr>';
 									res_context += '<td id="r_sn" class="r_sn">' + response[i].r_sn + '</td>';
 									res_context += '<td class="name">'+ response[i].name +'</td>'
+										if(response[i].address == null){
+									res_context += '<td class="user">'+ "暫不提供相關資料" +'</td>'
+										}else{
 									res_context += '<td class="address">'+ response[i].address +'</td>'
+												}
 									res_context += '<td class="region">'+ response[i].region +'</td>'
 										if(response[i].username == null){
 									res_context += '<td class="user">'+ "" +'</td>'
