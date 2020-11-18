@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -53,7 +52,7 @@ public class AccountBean {
 	@JoinColumn(name = "IDENTITY")
 	private IdentityBean identityBean;
     
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "accountBean")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accountBean")
 	private List<OrderTable> orderTable;// 大訂單 
 
 	public AccountBean() {

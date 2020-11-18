@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rambo0021.dao.AcountDAO;
 import rambo0021.pojo.AccountBean;
-import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
 
 @Transactional
@@ -81,8 +80,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public String modifyAccount(String username, String password, int identity, String email,String nickName) {
-		return dao.modifyAccount(username,password,identity,email,nickName);
+	public String modifyAccount(String username, String password, int identity, String email) {
+		return dao.modifyAccount(username,password,identity,email);
 	}
 
 	@Override
@@ -93,11 +92,6 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean login(String username, String password) {
 		return dao.login(username,password);
-	}
-
-	@Override
-	public List<AccountListViewBean> search(String username, String identity, String email) {
-		return dao.search(username,identity,email);
 	}
 
 

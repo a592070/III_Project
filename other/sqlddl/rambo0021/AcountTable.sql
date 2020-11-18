@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  已建立檔案 - 星期三-十一月-18-2020   
+--  已建立檔案 - 星期日-十一月-08-2020   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table ACCOUNT
@@ -9,11 +9,11 @@
    (	"USERNAME" VARCHAR2(255 BYTE), 
 	"PASSWORD" VARCHAR2(255 BYTE), 
 	"IDENTITY" NUMBER(1,0), 
-	"EMAIL" VARCHAR2(255 BYTE) DEFAULT '無', 
+	"EMAIL" VARCHAR2(255 BYTE), 
 	"PICTURE" BLOB, 
-	"MODIFY_DATE" TIMESTAMP (6) DEFAULT sysdate, 
+	"MODIFY_DATE" TIMESTAMP (6) default sysdate,
 	"NICKNAME" VARCHAR2(255 BYTE), 
-	"REGISTER" TIMESTAMP (6) DEFAULT sysdate, 
+	"REGISTER" TIMESTAMP (6) DEFAULT default sysdate,
 	"STATUS" VARCHAR2(255 BYTE) DEFAULT '啟用'
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
