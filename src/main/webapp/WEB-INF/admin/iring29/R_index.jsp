@@ -323,87 +323,72 @@ th {
 	
 			<div class="pages">
 				<nav aria-label="...">
-					<ul class="pagination">
-						<c:if test="${currentPage != null}">
-							<c:if test="${currentPage == 1}">
-								<li class="page-item disabled">
-									<a class="page-link"href="<%=application.getContextPath()%>/admin/Restaurant?currentPage=${currentPage-1}" tabindex="-1">第一頁</a>
+					<ul class="pagination" id="page" >
+						
+								<li class="page-item">
+									<button class="page-link" id="page-btn-F">第一頁</button>
 								</li>
-							</c:if>
 							
-							<c:if test="${currentPage > 1}">
+							
+							<!-- previous -->
 								<li class="page-item">
-								<a class="page-link" href="<%=application.getContextPath()%>/admin/Restaurant?currentPage=1"tabindex="-1">第一頁</a>
+									<button class="page-link" id="page-btn-P" value="previous">&laquo;</button>
 								</li>
-							</c:if>
-							<c:if test="${currentPage > 1}">
-								<li class="page-item">
-								<a class="page-link" href="<%=application.getContextPath()%>/admin/Restaurant?currentPage=${currentPage-1}"tabindex="-1">${currentPage-1}</a>
-								</li>
-							</c:if>
+							
+							
 							<!-- current page -->
 								<li class="page-item active">
-									<a class="page-link" href="#">${currentPage}<span class="sr-only">(current)</span></a>
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}</button>
+								</li>
+						
+							<!-- NEXT -->
+								<li class="page-item">
+									<button class="page-link" id="page-btn-N" value="next">&raquo;</button>
 								</li>
 							
-							<c:if test="${currentPage != totalPage && currentPage != ''}">
-								<li class="page-item">
-									<a class="page-link" href="<%=application.getContextPath()%>/admin/Restaurant?currentPage=${currentPage+1}">${currentPage+1}</a>
-								</li>
-							</c:if>
-							<c:if test="${currentPage != totalPage && currentPage != ''}">
-								<li class="page-item">
-									<a class="page-link" href="<%=application.getContextPath()%>/admin/Restaurant?currentPage=${totalPage}">最末頁</a>
-								</li>
-							</c:if>
 							
-							<c:if test="${currentPage == totalPage && currentPage != ''}">
+							
 								<li class="page-item disabled">
-									<a class="page-link" href="<%=application.getContextPath()%>/admin/Restaurant?currentPage=${currentPage+1}">最末頁</a>
+									<button class="page-link" id="page-btn-L" >最末頁</button>
 								</li>
-							</c:if>
-						</c:if>
-
-
-						<c:if test="${currentKPage != null}">
-							<c:if test="${currentKPage == 1}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/key?currentKPage=${currentKPage-1}"
-									tabindex="-1">第一頁</a></li>
-							</c:if>
-							<c:if test="${currentKPage > 1}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/key?currentKPage=1&keyword=${keyword}&orderFiled=${orderFiled}"
-									tabindex="-1">第一頁</a></li>
-							</c:if>
-							<c:if test="${currentKPage > 1}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/key?currentKPage=${currentKPage-1}&keyword=${keyword}&orderFiled=${orderFiled}"
-									tabindex="-1">${currentKPage-1}</a></li>
-							</c:if>
-							<li class="page-item active"><a class="page-link" href="#">${currentKPage}
-									<span class="sr-only">(current)</span>
-							</a></li>
-							<c:if test="${currentKPage != totalKPage}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/key?currentKPage=${totalKPage}&keyword=${keyword}&orderFiled=${orderFiled}">${currentKPage+1}</a></li>
-							</c:if>
-							<c:if test="${currentKPage != totalKPage}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/key?currentKPage=${totalPage}&keyword=${keyword}&orderFiled=${orderFiled}">最末頁</a></li>
-							</c:if>
-							<c:if test="${currentKPage == totalKPage}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/keywords?currenKPage=${totalPage}">最末頁</a></li>
-							</c:if>
-						</c:if>
-
-
+							
+					
 					</ul>
 				</nav>
 			</div>
 
+	<script>
+		
+		$("#page").on('click', '#page-btn-N', function () {
+			var cgpage =$(this).val();
+			var currentPage = $("#page-btn").val();
+			console.log(currentPage);
+			console.log(cgpage);
+			  if(cgpage=="next"){
+					$.ajax(
+						{
+							type: 'POST',
+							data: { "currentPage": currentPage, "cgpage":cgpage },
+							url: '${pageContext.servletContext.contextPath}/admin/RestaurantSorted',
+							dataType: 'json',
+							success: function (response) {
+								
+								currentPage = Number(currentPage) + 1;
+								$("#page-btn").html(currentPage);
+								$("#page-btn").val(currentPage);
+								for (let i = 0; i < response.length; i++) {
+									console.log(response[i].r_sn);
+									$("#r_sn").html(response[i].r_sn);
+									}
+								console.log(response);
+								console.log(currentPage);
 
+							}
+						}
+					)
+			  }
+		})
+	</script>
 
 		</div>
 	</div>

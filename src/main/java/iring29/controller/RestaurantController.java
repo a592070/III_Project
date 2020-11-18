@@ -41,11 +41,9 @@ public class RestaurantController {
 	private int start = 0;
 
 	@RequestMapping(path = "/Restaurant", method = RequestMethod.GET)
-	public String RestaurantDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
-			Model m) {
+	public String RestaurantDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model m) {
 		int size = rs.getSize();
 		page.setTotalCount(size);
-		System.out.println("currentPage = " + currentPage);
 		
 		if (currentPage == 1) {
 			currentPage = 1;
@@ -64,6 +62,16 @@ public class RestaurantController {
 		m.addAttribute("totalPage", totalPage);
 
 		return "iring29/R_index";
+	}
+	
+	@RequestMapping(path = "/RestaurantSorted", method = RequestMethod.POST)
+	public @ResponseBody List<Show_RView> RestaurantSorted(@RequestParam(value = "currentPage") Integer currentPage, 
+														   @RequestParam(value = "cgpage") String cgpage) {
+		if(cgpage.equals("next")) {
+			start = (currentPage) * page.getPageSize();
+		}
+		
+		return rs.totalRestaurant(start, page.getPageSize());
 	}
 
 	@RequestMapping(path = "/key", method = RequestMethod.GET)
