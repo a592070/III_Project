@@ -37,10 +37,10 @@ public class Article implements Serializable {
 	private String artContent;
 	private Timestamp artCreTime;
 	private String artUserId;
-	private int artCommNum;
-	private int artView;
-	private int artId;
-	private int artTypeId;
+	private Integer artCommNum;
+	private Integer artView;
+	private Integer artId;
+	private Integer artTypeId;
 	private String artTitle;
 	private byte[] artPic;
 	private String artPicUrl;
@@ -89,20 +89,20 @@ public class Article implements Serializable {
 	}
 
 	@Column(name = "ART_COMM_NUM")
-	public int getArtCommNum() {
+	public Integer getArtCommNum() {
 		return artCommNum;
 	}
 
-	public void setArtCommNum(int artCommNum) {
+	public void setArtCommNum(Integer artCommNum) {
 		this.artCommNum = artCommNum;
 	}
 
 	@Column(name = "ART_VIEW")
-	public int getArtView() {
+	public Integer getArtView() {
 		return artView;
 	}
 
-	public void setArtView(int artView) {
+	public void setArtView(Integer artView) {
 		this.artView = artView;
 	}
 
@@ -110,20 +110,20 @@ public class Article implements Serializable {
 	@Column(name = "ART_ID")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARTID_SEQUENCE")
 	@SequenceGenerator(name = "ARTID_SEQUENCE", sequenceName = "ARTID_SEQUENCE", allocationSize = 1)
-	public int getArtId() {
+	public Integer getArtId() {
 		return artId;
 	}
 
-	public void setArtId(int artId) {
+	public void setArtId(Integer artId) {
 		this.artId = artId;
 	}
 	@JsonIgnore
 	@Transient
-	public int getArtTypeId() {
+	public Integer getArtTypeId() {
 		return artTypeId;
 	}
 
-	public void setArtTypeId(int artTypeId) {
+	public void setArtTypeId(Integer artTypeId) {
 		this.artTypeId = artTypeId;
 	}
 

@@ -75,39 +75,38 @@
 						</div>
 					</div>
 					<div class="card-body p-5">
-						<h4 class="text-dark mb-5">Sign Up</h4>
+						<h4 class="text-dark mb-5">註冊</h4>
 						<form action="${pageContext.servletContext.contextPath}/admin/registered" method="POST">
 							<div class="row">
 								<div class="form-group col-md-12 mb-4">
 									<input type="text" class="form-control input-lg" id="nickname" name="nickname"
-										aria-describedby="nameHelp" placeholder="Nickname">
+										aria-describedby="nameHelp" placeholder="暱稱">
 								</div>
 								<div class="form-group col-md-12 mb-4">
 									<input type="text" class="form-control input-lg" id="username" name="username"
-										aria-describedby="nameHelp" placeholder="Username">
+										aria-describedby="nameHelp" placeholder="使用者名稱">
 								</div>
 								<div class="form-group col-md-12 ">
 									<input type="password" class="form-control input-lg" name="password"
-										id="password" placeholder="Password">
+										id="password" placeholder="密碼">
 								</div>
 								<div class="form-group col-md-12 ">
 									<input type="password" class="form-control input-lg"
-										id="cpassword" placeholder="Confirm Password">
+										id="cpassword" placeholder="密碼確認">
 								</div>
 								<div class="col-md-12">
 									<div class="d-inline-block mr-3">
 										<label class="control control-checkbox"> <input
 											type="checkbox" />
-											<div class="control-indicator"></div> I Agree the terms and
-											conditions
+											<div class="control-indicator"></div>我同意條款和條件
 										</label>
 
 									</div>
 									<button type="submit"
-										class="btn btn-lg btn-primary btn-block mb-4">Sign Up</button>
+										class="btn btn-lg btn-primary btn-block mb-4">註冊</button>
 									<p>
-										Already have an account? <a class="text-blue"
-											href="sign-in.html">Sign in</a>
+										已經有帳號? <a class="text-blue"
+											href="sign-in.html">登入</a>
 									</p>
 								</div>
 							</div>

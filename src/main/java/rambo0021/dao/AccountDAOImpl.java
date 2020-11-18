@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
 
 public class AccountDAOImpl implements AcountDAO {
@@ -146,7 +147,7 @@ public class AccountDAOImpl implements AcountDAO {
 	}
 
 	@Override
-	public String modifyAccount(String username, String password, int identity, String email) {
+	public String modifyAccount(String username, String password, int identity, String email,String nickName) {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
 		if (aBean != null) {
 			if(!aBean.getPassword().equals(password)) {
@@ -156,6 +157,7 @@ public class AccountDAOImpl implements AcountDAO {
 			IdentityBean iBean = sessionFactory.getCurrentSession().get(IdentityBean.class, identity);
 			aBean.setIdentityBean(iBean);
 			aBean.setEmail(email);
+			aBean.setNickName(nickName);
 			return "修改成功";
 		}
 		return "修改失敗";
@@ -171,6 +173,28 @@ public class AccountDAOImpl implements AcountDAO {
 			return "註冊成功";
 		}
 		return "註冊失敗";
+	}
+
+	@Override
+	public boolean login(String username, String password) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class,username);
+		 if(aBean != null && aBean.getPassword().equals(SHA2DAO.getSHA256(password)) && aBean.getIdentityBean().getId()==1) {
+			 return true;
+		 }
+		return false;
+	}
+
+	@Override
+	public List<AccountListViewBean> search(String username, String identity, String email) {
+		Session session = sessionFactory.getCurrentSession();
+		String hql="From AccountListViewBean WHERE userName like ?0 and iName like ?1 and email like ?2 order by Modify_Date DESC";
+//		String hql="From AccountBean WHERE userName like ?0 and email like ?1";
+		
+		Query<AccountListViewBean> query = session.createQuery(hql,AccountListViewBean.class);
+		query.setParameter(0, "%" + username + "%");
+		query.setParameter(1, "%" + identity + "%");
+		query.setParameter(2, "%" + email + "%");
+		return query.list();
 	}
 
 }
