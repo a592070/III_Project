@@ -139,8 +139,8 @@ button {
 					</script>
 				</div>
 				<div class="search"  class="form-group col-md-2">
-					<span class="sp_search-1">人數</span> 
-					<select name="person_numer" id="inputState" class="form-control">
+					<span class="sp_search-1">人數</span>
+					<select name="person_number" id="inputState" class="form-control">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>

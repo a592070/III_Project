@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,13 +41,16 @@ public class F_RestaurantController {
 	public String DisplayRestaurant(@RequestParam(name = "region_name") String region_name,
 								    @RequestParam(name = "restaurant_name") String restaurant_name, 
 								    @RequestParam(name = "book_date") String book_date,
-								    @RequestParam(name = "person_numer") String person_numer,Model m) {
+								    @RequestParam(name = "person_number") String person_number,
+								    HttpSession session, Model m) {
 
 		if (!StringUtil.isEmpty(region_name) && !StringUtil.isEmpty(restaurant_name)) {
 			List<Show_RView> Multi_Rdata = F_Serivce.findMulti_Name_Region(restaurant_name, region_name);
 			m.addAttribute("Multi_Rdata", Multi_Rdata);
-			m.addAttribute("book_date", book_date);
-			m.addAttribute("person_numer", person_numer);
+			session.setAttribute("book_date", book_date);
+			session.setAttribute("person_number", person_number);
+//			m.addAttribute("book_date", book_date);
+//			m.addAttribute("person_numer", person_numer);
 			return "iring29/MultiRestaurant";
 
 		}  else if (restaurant_name != null && region_name == null || restaurant_name != "" && region_name == "") {
@@ -53,14 +58,18 @@ public class F_RestaurantController {
 			if (num == 1) {
 				Restaurant res_data = F_Serivce.findRestaurant(restaurant_name);
 				m.addAttribute("res_data", res_data);
-				m.addAttribute("book_date", book_date);
-				m.addAttribute("person_numer", person_numer);
+				session.setAttribute("book_date", book_date);
+				session.setAttribute("person_number", person_number);
+//				m.addAttribute("book_date", book_date);
+//				m.addAttribute("person_numer", person_numer);
 				return "iring29/DisplayRestaurant";
 			} else if (num > 1) {
 				List<Show_RView> Multi_Rdata = F_Serivce.findMulti_R(restaurant_name);
 				m.addAttribute("Multi_Rdata", Multi_Rdata);
-				m.addAttribute("book_date", book_date);
-				m.addAttribute("person_numer", person_numer);
+				session.setAttribute("book_date", book_date);
+				session.setAttribute("person_number", person_number);
+//				m.addAttribute("book_date", book_date);
+//				m.addAttribute("person_numer", person_numer);
 				return "iring29/MultiRestaurant";
 
 			} else {
@@ -69,8 +78,10 @@ public class F_RestaurantController {
 		} else if (region_name != null && restaurant_name == null|| region_name != "" && restaurant_name == "") {
 			List<Show_RView> res_data_region = F_Serivce.findRegion(region_name);
 			m.addAttribute("res_data_region", res_data_region);
-			m.addAttribute("book_date", book_date);
-			m.addAttribute("person_numer", person_numer);
+			session.setAttribute("book_date", book_date);
+			session.setAttribute("person_number", person_number);
+//			m.addAttribute("book_date", book_date);
+//			m.addAttribute("person_numer", person_numer);
 			return "iring29/Region_Restaurant";
 
 		}else {
@@ -80,13 +91,15 @@ public class F_RestaurantController {
 	
 	@RequestMapping(path = "/DisplyRestaurant", method = RequestMethod.POST)
 	public String ShowRestaurant(@RequestParam(name = "restaurant_name") String restaurant_name, 
-		    				     @RequestParam(name = "book_date") String book_date,
-		    				     @RequestParam(name = "person_numer") String person_numer,Model m) {
+//		    				     @RequestParam(name = "book_date") String book_date,
+//		    				     @RequestParam(name = "person_numer") String person_numer,
+		    				     HttpSession session, Model m) {
 		
 		Restaurant res_data = F_Serivce.findRestaurant(restaurant_name);
-		m.addAttribute("res_data", res_data);
-		m.addAttribute("book_date", book_date);
-		m.addAttribute("person_numer", person_numer);
+		session.setAttribute("res_data", res_data);
+//		m.addAttribute("res_data", res_data);
+//		m.addAttribute("book_date", book_date);
+//		m.addAttribute("person_numer", person_numer);
 		return "iring29/DisplayRestaurant";
 	}
 	@RequestMapping(path = "/ShowPic")
@@ -97,10 +110,13 @@ public class F_RestaurantController {
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 	
-//	public String InsertOrder(@RequestParam(name = "r_id") BigDecimal rid, 
-//							  @RequestParam(name = "book_date") String book_date, 
-//							  @RequestParam(name = "person_numer") String person_numer,Model m) {
-//		
-//	}
+	@RequestMapping(path = "OrderList", method = RequestMethod.POST)
+	public String PlaceOrder( HttpSession session
+//							 @RequestParam(name = "r_id") BigDecimal rid, 
+//							 @RequestParam(name = "book_date") String book_date, 
+//							 @RequestParam(name = "person_numer") String person_numer,Model m
+							 ) {
+		return "iring29/OrderList";
+	}
 	
 }

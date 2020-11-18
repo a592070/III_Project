@@ -58,7 +58,7 @@ label {
 	text-align: center;
 }
 
-#inputState.form-control {
+#time, #p_num {
 	width: 250px;
 	padding-left: 20px;
 }
@@ -83,7 +83,7 @@ input {
 				<h1>訂單訊息</h1>
 				<div class="">
 					<div class="div-1">
-						<label for="r-name">訂位餐廳</label> <span>${res_name}</span>
+						<label for="r-name">訂位餐廳</label> <span>${res_name}</span><span>${res_data.name}</span>
 					</div>
 
 					<div class="div-1">
@@ -116,7 +116,7 @@ input {
 						<label for="r-date">用餐時間</label>
 						<%-- <span>${time}</span> --%>
 					
-					<select name="time" id="inputState" class="form-control">
+					<select name="time" id="time" class="form-control">
 						<option value="">請選擇用餐時間</option>
 						<option value="11:00">11:00</option>
 						<option value="12:00">12:00</option>
@@ -143,8 +143,7 @@ input {
 				</div>
 				<div class="div-1">
 					<label for="b-number">用餐人數</label>
-					<!--  <span>${person_numer}</span>  -->
-					<select name="person_numer" id="inputState" class="form-control">
+					<select name="person_number" id="p_num" class="form-control">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -157,8 +156,12 @@ input {
 						<option value="10">10</option>
 					</select>
 					<script type="text/javascript">
-        				var opts=document.getElementsByTagName("option");
-       					opts[${person_numer}-1].selected=true;
+						var num  =  ${person_number};
+						console.log("type" + typeof(num));
+        				var opts=document.getElementById("p_num");
+						console.log("num" + opts[num].value);
+						console.log("num" + opts[${person_number}].value);
+       					opts[num-1].selected=true;
    					</script>
 				</div>
 				<h1>付款資訊</h1>

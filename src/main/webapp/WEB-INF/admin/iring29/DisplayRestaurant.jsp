@@ -209,7 +209,7 @@
         
     </script>
                     
-               <FORM  action="<c:url value='BookRestaurantServlet' />" method="POST">
+               <FORM  action="<%=pageContext.getServletContext().getContextPath()%>/OrderList" method="POST">
                	<Input class="btn btn-warning" type='submit' value='Booking'>
           <!-- 隱藏欄位都會送到後端 /BookRestaurantServlet-->  
           		<Input type='hidden' name='res_name' value='${res_data.name}'>
