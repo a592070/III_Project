@@ -46,15 +46,19 @@ public class RestaurantController {
 		int size = rs.getSize();
 		page.setTotalCount(size);
 		System.out.println("currentPage = " + currentPage);
+		
 		if (currentPage == 1) {
 			currentPage = 1;
 			start = 0;
 		} else {
 			start = (currentPage - 1) * page.getPageSize();
 		}
+		
 		int pageSize = page.getPageSize();
 		int totalPage = page.getTotalPageCount();
+		
 		List<Show_RView> rBean = rs.totalRestaurant(start, pageSize);
+		
 		m.addAttribute("rBean", rBean);
 		m.addAttribute("currentPage", currentPage);
 		m.addAttribute("totalPage", totalPage);
@@ -101,7 +105,9 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
-	public String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {
+	public String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn,
+						   @RequestParam("currentPage") Integer currentPage,
+						   @RequestParam("currentKPage") Integer currentKPage, Model m) {
 
 		System.out.println("r_sn = " + r_sn);
 		System.out.println("status = " + status);
@@ -110,6 +116,13 @@ public class RestaurantController {
 			rs.updateStatus(r_sn, "N");
 		} else if (status.equals("N")) {
 			rs.updateStatus(r_sn, "Y");
+		}
+		if(currentPage != null) {
+			m.addAttribute("currentPage", currentPage);
+			return "redirect:Restaurant";
+		}else if(currentKPage != null) {
+			m.addAttribute("currentKPage", currentKPage);
+			return "redirect:Restaurant";
 		}
 		return "redirect:Restaurant";
 	}

@@ -275,20 +275,22 @@ th {
 										<c:if test="${r.status == 'N'}">
 											<label class="switch switch-text switch-success switch-pill form-control-label">
 												<input type="checkbox" class="switch-input form-check-input" disabled value="on" id="myCheck" onclick="myFunction()">
-												<span class="switch-label" data-on="On" data-off="Off" ></span>
+												<span class="switch-label" data-on="啟用" data-off="禁用" ></span>
 												<span class="switch-handle"></span>
 											</label>
 										</c:if>
 										<c:if test="${r.status == 'Y'}">
 											<label class="switch switch-text switch-success switch-pill form-control-label">
 												<input type="checkbox" class="switch-input form-check-input" value="on" checked id="myCheck" onclick="myFunction()">
-												<span class="switch-label" data-on="On" data-off="Off"></span>
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
 												<span class="switch-handle"></span>
 											</label>
 										</c:if>
 										</button>
 											<Input type='hidden' name='status' value='${r.status}'>
 											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+											<Input type='hidden' name='currentPage' value='${currentPage}'>
+											<Input type='hidden' name='currentKPage' value='${currentKPage}'>
 									</form>		
 						
 										</div></td>
