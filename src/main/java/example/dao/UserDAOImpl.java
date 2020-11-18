@@ -29,11 +29,13 @@ public class UserDAOImpl implements UserDAO{
         return query.list();
     }
     @Override
-    public List<User> select(String username){
-        username = "%"+username+"%";
+    public List<User> select(String keyword){
+        keyword = "%"+keyword+"%";
         Session session = sessionFactory.getCurrentSession();
-        Query<User> query = session.createQuery("from User where name like :keyword or password like :keyword ", User.class);
-        query.setParameter("keyword", username);
+        Query<User> query = session.createQuery("from User where str(id) like :keyword or name like :keyword or password like :keyword ", User.class);
+        query.setParameter("keyword", (Object) keyword);
+
+
         return query.list();
     }
     @Override
