@@ -40,7 +40,8 @@ public class ArticleController {
 	@RequestMapping(path = "/Forum")
 	public String ForumEntry(Model m) {
 		m.addAttribute("artBean", articleService.showAllArticles());
-		return "azaz4498/F_index";
+//		return "azaz4498/F_index";
+		return "azaz4498/F_JSONindex";
 
 	}
 
@@ -64,6 +65,12 @@ public class ArticleController {
 		return "azaz4498/F_index";
 
 	}
+	@RequestMapping(path = "/artTypeSearch.json" ,method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	public @ResponseBody List<Article> dispalyByTypeJSON(@RequestParam(name = "articleType") Integer typeId) throws SQLException {
+		List<Article> artList= articleService.showArticlesByType(typeId);
+		return artList;
+	}
+	
 
 	@RequestMapping(path = "/articleSearch")
 	public String DisplayResults(@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
