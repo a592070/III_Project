@@ -109,17 +109,6 @@ public class F_RestaurantController {
 
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
-	
-	@RequestMapping(path = "OrderList", method = RequestMethod.POST)
-	public String PlaceOrder() {
-		return "iring29/OrderList";
-	}
-	
-	@RequestMapping(path = "ShoppingCart", method = RequestMethod.POST)
-	public String ShoppingCart(HttpSession session) {
-		
-		
-		return "iring29/ShoppingCart";
-	}
+
 	
 }

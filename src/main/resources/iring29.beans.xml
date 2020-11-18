@@ -17,4 +17,5 @@
 	<bean id="R_OrderDAO" class="iring29.model.R_OrderDAO" scope="session"></bean>
 	<bean id="R_OrderService" class="iring29.service.R_OrderService" scope="session"></bean>
 	<bean id="RorderController" class="iring29.controller.RorderController" scope="session"></bean>
+	<bean id="F_RorderController" class="iring29.controller.F_RorderController" scope="session"></bean>
 </beans>

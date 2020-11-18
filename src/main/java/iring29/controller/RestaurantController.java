@@ -105,19 +105,13 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
-	public @ResponseBody String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn,
-
-						   Model m) {
-
-		System.out.println("r_sn = " + r_sn);
-		System.out.println("status = " + status);
+	public @ResponseBody String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {
 
 		if (status.equals("Y")) {
 			return rs.updateStatus(r_sn, "N");
 		} else if (status.equals("N")) {
 			return rs.updateStatus(r_sn, "Y");
 		}
-
 		return "redirect:Restaurant";
 	}
 

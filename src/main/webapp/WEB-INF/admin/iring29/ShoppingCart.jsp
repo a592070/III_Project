@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,7 +122,7 @@
 	</div>
 
 
-
+<!-- 餐廳 start -->
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -149,8 +150,8 @@
 <!-- 										style="width: 72px; height: 72px;"> -->
 <!-- 									</a> -->
 									<div class="media-body">
-										<h4 class="media-heading">餐廳名稱</h4>
-										<h5 class="media-heading">餐廳地址</h5>
+										<h4 class="media-heading">餐廳名稱&nbsp;&nbsp;${res_data.name}</h4>
+										<h5 class="media-heading">餐廳地址&nbsp;&nbsp;${res_data.address}</h5>
 <!-- 										<span>Status: </span><span class="text-success"><strong>In -->
 <!-- 												Stock</strong></span> -->
 									</div>
@@ -171,7 +172,7 @@
 							day = "0" + day;
 
 						var today = year + "-" + month + "-" + day;
-						document.getElementById("theDate").value = "${date}";
+						document.getElementById("theDate").value = "${book_date}";
 						document.getElementById("theDate").min = today;
 					</script>
 							</td>
@@ -298,7 +299,7 @@
 		</div>
 	</div>
 
-
+<!-- 餐廳 END -->
 
 	<div class="container">
 		<div class="row">
