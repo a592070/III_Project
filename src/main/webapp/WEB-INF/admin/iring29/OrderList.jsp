@@ -160,7 +160,6 @@ input {
 						console.log("type" + typeof(num));
         				var opts=document.getElementById("p_num");
 						console.log("num" + opts[num].value);
-						console.log("num" + opts[${person_number}].value);
        					opts[num-1].selected=true;
    					</script>
 				</div>

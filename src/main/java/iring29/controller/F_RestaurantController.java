@@ -111,12 +111,15 @@ public class F_RestaurantController {
 	}
 	
 	@RequestMapping(path = "OrderList", method = RequestMethod.POST)
-	public String PlaceOrder( HttpSession session
-//							 @RequestParam(name = "r_id") BigDecimal rid, 
-//							 @RequestParam(name = "book_date") String book_date, 
-//							 @RequestParam(name = "person_numer") String person_numer,Model m
-							 ) {
+	public String PlaceOrder() {
 		return "iring29/OrderList";
+	}
+	
+	@RequestMapping(path = "ShoppingCart", method = RequestMethod.POST)
+	public String ShoppingCart(HttpSession session) {
+		
+		
+		return "iring29/ShoppingCart";
 	}
 	
 }
