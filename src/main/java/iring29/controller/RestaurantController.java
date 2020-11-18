@@ -69,6 +69,12 @@ public class RestaurantController {
 														   @RequestParam(value = "cgpage") String cgpage) {
 		if(cgpage.equals("next")) {
 			start = (currentPage) * page.getPageSize();
+		}else if(cgpage.equals("previous")) {
+			start = (currentPage-2) * page.getPageSize();
+		}else if(cgpage.equals("first")) {
+			start = 0 ;
+		}else {
+			start = (page.getTotalPageCount()-1) * page.getPageSize();
 		}
 		
 		return rs.totalRestaurant(start, page.getPageSize());

@@ -150,7 +150,7 @@ th {
 						</form>
 					</div>
 					<script>
-				$("#inputState").change(function(){
+					$("#inputState").change(function(){
 						console.log("change");
 						console.log($("#inputState").val());
 						document.formR.attributes["action"].value ="<%=application.getContextPath()%>/admin/key";
@@ -168,7 +168,7 @@ th {
 						</form>
 					</div>
 					<script type="text/javascript">
-					function clearkey() {
+						function clearkey() {
 						  document.getElementById("keyword").value= "";
 						}
 
@@ -184,7 +184,7 @@ th {
 				<h2>餐廳列表</h2>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm"  id="table">
-						<thead>
+						<thead id="thead">
 							<tr>
 								<th><div>
 										<form id="statuss" name="statuss"
@@ -212,7 +212,7 @@ th {
 								<th>刪除</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbody">
 							<c:forEach var="r" items="${rBean}">
 
 								<tr>
@@ -326,13 +326,13 @@ th {
 					<ul class="pagination" id="page" >
 						
 								<li class="page-item">
-									<button class="page-link" id="page-btn-F">第一頁</button>
+									<button class="page-link" id="page-botton" value="first">第一頁</button>
 								</li>
 							
 							
 							<!-- previous -->
 								<li class="page-item">
-									<button class="page-link" id="page-btn-P" value="previous">&laquo;</button>
+									<button class="page-link" id="page-botton" value="previous">&laquo;</button>
 								</li>
 							
 							
@@ -343,13 +343,13 @@ th {
 						
 							<!-- NEXT -->
 								<li class="page-item">
-									<button class="page-link" id="page-btn-N" value="next">&raquo;</button>
+									<button class="page-link next" id="page-botton" value="next">&raquo;</button>
 								</li>
 							
 							
 							
-								<li class="page-item disabled">
-									<button class="page-link" id="page-btn-L" >最末頁</button>
+								<li class="page-item">
+									<button class="page-link last" id="page-botton" value="${totalPage}">最末頁</button>
 								</li>
 							
 					
@@ -359,12 +359,14 @@ th {
 
 	<script>
 		
-		$("#page").on('click', '#page-btn-N', function () {
+		$("#page").on('click', '#page-botton', function () {
 			var cgpage =$(this).val();
 			var currentPage = $("#page-btn").val();
-			console.log(currentPage);
-			console.log(cgpage);
-			  if(cgpage=="next"){
+			var totalPage = $(".page-link.last").val();
+			console.log("cgpage = " + cgpage);
+			console.log("currentPage = " + currentPage);
+			console.log("totalPage = " + totalPage);
+
 					$.ajax(
 						{
 							type: 'POST',
@@ -372,21 +374,78 @@ th {
 							url: '${pageContext.servletContext.contextPath}/admin/RestaurantSorted',
 							dataType: 'json',
 							success: function (response) {
-								
-								currentPage = Number(currentPage) + 1;
+								$("#tbody").empty();
+								if(cgpage == "next"){
+									currentPage = Number(currentPage) + 1;
+									if(currentPage == totalPage){
+										$(".page-link.next").attr("disabled", true);
+										}
+									
+								}else if(cgpage == "previous"){
+									currentPage = Number(currentPage) - 1;
+									if(currentPage == totalPage){
+										$(".page-link.next").attr("disabled", true);
+									}else{
+										$(".page-link.next").attr("disabled", false);
+									}
+								}else if(cgpage == "first"){
+									currentPage = 1;
+								}else {
+									currentPage = Number(cgpage);
+									$(".page-link.next").attr("disabled", true);
+								}
 								$("#page-btn").html(currentPage);
 								$("#page-btn").val(currentPage);
+								var res_context = "";
 								for (let i = 0; i < response.length; i++) {
 									console.log(response[i].r_sn);
-									$("#r_sn").html(response[i].r_sn);
+									res_context += '<tr>';
+									res_context += '<td id="r_sn" class="r_sn">' + response[i].r_sn + '</td>';
+									res_context += '<td class="name">'+ response[i].name +'</td>'
+									res_context += '<td class="address">'+ response[i].address +'</td>'
+									res_context += '<td class="region">'+ response[i].region +'</td>'
+										if(response[i].username == null){
+									res_context += '<td class="user">'+ "" +'</td>'
+										}else{
+									res_context += '<td class="user">'+ response[i].username +'</td>'
+										}
+									res_context += '<td id="status"><div class="status">'
+										if(response[i].status == "N"){
+									res_context += '<label class="switch switch-text switch-success switch-pill form-control-label">'
+									res_context += '<input type="checkbox" class="switch-input form-check-input" value="禁用" id="checkbox">'
+									res_context += '<span class="switch-label" data-on="啟用" data-off="禁用" ></span>'
+									res_context += '<span class="switch-handle"></span>'
+									res_context += '</label>'
+											}
+										if(response[i].status == "Y"){
+									res_context += '<label class="switch switch-text switch-success switch-pill form-control-label">'
+									res_context += '<input type="checkbox" class="switch-input form-check-input" value="啟用" id="checkbox" checked="checked">'
+									res_context += '<span class="switch-label" data-on="啟用" data-off="禁用"></span>'
+									res_context += '<span class="switch-handle"></span>'
+									res_context += '</label>'
+										}
+									res_context += '</div></td>';
+									res_context += '<td><div class="modify">';
+									res_context += '<form action="<%=application.getContextPath()%>/admin/DisplayRestaurant" method="POST">';
+									res_context += '<button type="submit" class="btn btn-warning">修改</button>';
+									res_context += '<Input type="hidden" name="r_sn" value="'+ response[i].r_sn + '">';
+									res_context += '</form>';
+									res_context += '</div></td>';
+									res_context += '<td><div class="delete">';
+									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm("確認是否刪除此餐廳資料？");">';
+									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
+									res_context += '<Input type="hidden" name="r_sn" value="'+ response[i].r_sn + '">';
+									res_context += '</form>';
+									res_context += '</div></td>';
+									res_context += '</tr>';
 									}
+									$("#tbody").html(res_context);
 								console.log(response);
 								console.log(currentPage);
 
 							}
-						}
+						 } 
 					)
-			  }
 		})
 	</script>
 

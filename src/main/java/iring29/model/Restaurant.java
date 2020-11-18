@@ -196,42 +196,6 @@ public class Restaurant {
 	public void setAccountBean(AccountBean accountBean) {
 		this.accountBean = accountBean;
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Restaurant [r_sn=");
-		builder.append(r_sn);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", address=");
-		builder.append(address);
-		builder.append(", opentime=");
-		builder.append(opentime);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", transportation=");
-		builder.append(transportation);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", rating=");
-		builder.append(rating);
-		builder.append(", region=");
-		builder.append(region);
-		builder.append(", pic_url=");
-		builder.append(pic_url);
-		builder.append(", serviceinfo=");
-		builder.append(serviceinfo);
-		builder.append(", pic=");
-		builder.append(Arrays.toString(pic));
-		builder.append(", tablenum=");
-		builder.append(tablenum);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append("]");
-		return builder.toString();
-	}
-	
 	
 
 }
