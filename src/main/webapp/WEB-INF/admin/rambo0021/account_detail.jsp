@@ -5,79 +5,80 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>用戶明細</title>
-	<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+<meta charset="UTF-8">
+<title>用戶明細</title>
+<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 
-	<style>
-		* {
-			padding: 0;
-			margin: 0;
-		}
+<style>
+* {
+	padding: 0;
+	margin: 0;
+}
 
-		.title {
-			text-align: center;
-			background-color: #003060;
-		}
+.title {
+	text-align: center;
+	background-color: #003060;
+}
 
-		h2 {
-			padding: 20px;
-			border-bottom: 1px solid gray;
-			color: white;
-		}
+h2 {
+	padding: 20px;
+	border-bottom: 1px solid gray;
+	color: white;
+}
 
-		.top {
-			display: flex;
-		}
+.top {
+	display: flex;
+}
 
-		.div_img {
-			width: 800px;
-			height: 530px;
-			margin: auto;
-			overflow: hidden;
-			display: flex;
-			padding-bottom: 5px;
-		}
+.div_img {
+	width: 800px;
+	height: 530px;
+	margin: auto;
+	overflow: hidden;
+	display: flex;
+	padding-bottom: 5px;
+}
 
-		.modify-img {
-			padding: 5px;
-			margin-right: 10px;
-			text-align: right;
-		}
+.modify-img {
+	padding: 5px;
+	margin-right: 10px;
+	text-align: right;
+}
 
-		.modify {
-			padding: 5px;
-			margin-right: 10px;
-			text-align: right;
-			float: right;
-		}
+.modify {
+	padding: 5px;
+	margin-right: 10px;
+	text-align: right;
+	float: right;
+}
 
-		img {
-			width: 100%;
-		}
+img {
+	width: 100%;
+}
 
-		.account_result {
-			padding: 10px 30px;
-		}
+.account_result {
+	padding: 10px 30px;
+}
 
-		.p_result {
-			padding: 10px 30px;
-			color: black;
-		}
+.p_result {
+	padding: 10px 30px;
+	color: black;
+}
 
-		.box {
-			width: 900px;
-			margin: 50px auto;
-			border: 1px solid gray;
-		}
+.box {
+	width: 900px;
+	margin: 50px auto;
+	border: 1px solid gray;
+}
 
-		.middle {
-			border: 1px solid gray;
-		}
-	</style>
+.middle {
+	border: 1px solid gray;
+}
+</style>
 </head>
 
-<body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
+<body class="sidebar-fixed sidebar-dark header-light header-fixed"
+	id="body">
 	<div class="mobile-sticky-body-overlay"></div>
 
 	<div class="wrapper">
@@ -88,12 +89,14 @@
 				<div class="container">
 					<div class="box">
 						<div>
+							<button type="submit" class="btn btn-primary"
+								onclick="location.href='${pageContext.servletContext.contextPath}/admin/accountPage'">回用戶列表</button>
 							<h2 class="title" id="username">${userDetail.userName}</h2>
 							<div class="top">
 								<form method="POST" enctype="multipart/form-data">
 									<p class="modify-img">
-										<input type="file" id="Apicture" name="Apicture" accept="image/*"
-											style="display: none">
+										<input type="file" id="Apicture" name="Apicture"
+											accept="image/*" style="display: none">
 										<button type="button" onclick="Apicture.click()"
 											class="btn btn-light">上傳圖片</button>
 										<button type="button" id="delImg" class="btn btn-light">改為預設圖片</button>
@@ -106,42 +109,37 @@
 										src="<%=application.getContextPath()%>/admin/ShowAccountPic">
 								</c:if>
 								<c:if test="${empty userDetail.picture}">
-									<img src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
+									<img
+										src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
 								</c:if>
 							</div>
 							<form method="POST" id="aForm">
 								<div class="middle">
 									<h4 class="account_result">密碼</h4>
-									<input type="password" id="password" name="password" placeholder="請輸入密碼"
-										value="${userDetail.password}">
+									<input type="password" id="password" name="password"
+										placeholder="請輸入密碼" value="${userDetail.password}">
 								</div>
 								<div class="middle">
 									<h4 class="account_result">身分</h4>
-									<p class="p_result" id="idData">${userDetail.identityBean.name}</p>
 									<div class="input-group mb-3" style='width: 250px'>
-										<div class="input-group-prepend">
-											<label class="input-group-text" for="identity">修改會員身分</label>
-										</div>
 										<select class="custom-select" name="identity" id="identity">
-											<option value="1">管理員</option>
-											<option value="2">一般會員</option>
-											<option value="3">餐廳業者</option>
-											<option value="4">住宿業者</option>
-											<option value="5">交通業者</option>
+											<option value="1" id="1">管理員</option>
+											<option value="2" id="2">一般會員</option>
+											<option value="3" id="3">餐廳業者</option>
+											<option value="4" id="4">住宿業者</option>
+											<option value="5" id="5">交通業者</option>
 										</select>
 									</div>
 								</div>
 								<div class="middle">
 									<h4 class="account_result">Email</h4>
-									<p class="p_result" id="emailData">${userDetail.email}</p>
 									<input type="text" id="email" name="email" style='width: 200px'
 										value="${userDetail.email}" />
 								</div>
 								<div class="middle">
 									<h4 class="account_result">暱稱</h4>
-									<p class="p_result" id="nData">${userDetail.nickName}</p>
-									<input type="text" id="nickName" name="nickName" style='width: 100px'
-										value="${userDetail.nickName}" />
+									<input type="text" id="nickName" name="nickName"
+										style='width: 100px' value="${userDetail.nickName}" />
 								</div>
 								<div class="middle">
 									<h4 class="account_result">註冊日期</h4>
@@ -155,7 +153,7 @@
 									<button type="button" id="sumit" class="btn btn-success">確定</button>
 									<button type="button" id="" class="btn btn-danger">取消</button>
 								</div>
-							</form>					
+							</form>
 						</div>
 					</div>
 				</div>
@@ -165,17 +163,39 @@
 
 
 	<script>
+		$(document).ready(function (){
+        //  if('${userDetail.identityBean.name}'=='管理員'){
+		// 	 $("#1").attr("selected")
+		//  }
+		   if('${userDetail.identityBean.id}'=='1'){
+			   console.log('1')
+			$("#1").attr("selected")
+		   }else if('${userDetail.identityBean.id}'=='2'){
+			console.log('2')
+			$("#2").attr("selected", true)
+		   }else if('${userDetail.identityBean.id}'=='3'){
+			console.log('3')
+			$("#3").attr("selected", true)
+		   }else if('${userDetail.identityBean.id}'=='4'){
+			console.log('4')
+			$("#4").attr("selected", true)
+		   }else if('${userDetail.identityBean.id}'=='5'){
+			console.log('5')
+			$("#5").attr("selected", true)
+		   }
+		})
 		var username = $("#username").text()
 		//accountAjax
 		$("#sumit").click(function () {
 			var password = $('#password').val()
 			var identity = $("#identity").val()
 			var email = $('#email').val()
+			var nickname = $('#nickName').val()
 			console.log("修改資料")
 			$.ajax(
 				{   
 					type: 'POST',
-					data:{ "username": username ,"password":password,"identity":identity,"email":email},
+					data:{ "username": username ,"password":password,"identity":identity,"email":email,"nickName":nickName},
 					url: '${pageContext.servletContext.contextPath}/admin/modifyAccount',
 					dataType: 'text',
 					success: function (response) {
