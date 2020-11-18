@@ -3,6 +3,7 @@ package a592070.service;
 import a592070.dao.ViewDAO;
 import a592070.fieldenum.AttractionFiledName;
 import a592070.pojo.AttractionDO;
+import a592070.pojo.AttractionPictureDO;
 import a592070.pojo.AttractionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +26,12 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
     @Override
     public byte[] getPicture(int id) {
         return viewDAO.getPicture(id);
+    }
+
+
+    @Override
+    public List getPictures(int id) {
+        return viewDAO.getPictures(id);
     }
 
     @Override

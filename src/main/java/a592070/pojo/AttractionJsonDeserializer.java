@@ -53,7 +53,8 @@ public class AttractionJsonDeserializer extends JsonDeserializer<AttractionDO> {
         attractionDO.setRemarks(node.get("remarks").textValue());
         attractionDO.setRegion(node.get("region").textValue());
         attractionDO.setRating(node.get("rating").decimalValue());
-        attractionDO.setPictureUrl(node.get("pictureUrl").textValue());
+//        attractionDO.setPictureUrl(node.get("pictureUrl").textValue());
+        attractionDO.setStatus(node.get("status").booleanValue());
 
         return attractionDO;
     }

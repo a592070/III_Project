@@ -19,6 +19,11 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
     }
 
     @Override
+    public List<byte[]> getPictures(int id) {
+        return null;
+    }
+
+    @Override
     public byte[] getPicture(int id) {
         return null;
     }

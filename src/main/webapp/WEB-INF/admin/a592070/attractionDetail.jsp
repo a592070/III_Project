@@ -70,93 +70,102 @@
             <div class="content">
                 <div class="row">
                     <div class="col-12">
-                        <el-page-header @back="goBack" content="詳細頁面">
+                        <el-page-header @back="goBack" content="Detail Page">
                         </el-page-header>
 
                         <el-form label-width="180px" :model="attractionData" ref="attractionData" >
                             <el-form-item label="ID" prop="sn">
                                 <el-input v-model="attractionData.sn" disabled ></el-input>
                             </el-form-item>
-                            <el-form-item label="名稱" prop="name">
+                            <el-form-item label="Name" prop="name">
                                 <el-input v-model="attractionData.name"></el-input>
                             </el-form-item>
-                            <el-form-item label="tel" prop="tel">
+                            <el-form-item label="Tel" prop="tel">
                                 <el-input v-model="attractionData.tel"></el-input>
                             </el-form-item>
-                            <el-form-item label="address" prop="address">
+                            <el-form-item label="Address" prop="address">
                                 <el-input v-model="attractionData.address"></el-input>
                             </el-form-item>
-                            <el-form-item label="region" prop="region">
+                            <el-form-item label="Region" prop="region">
                                 <el-select v-model="attractionData.region" placeholder="選擇地區" >
                                     <el-option label="--請選擇--" disabled></el-option>
                                     <el-option v-for="ele in region" v-bind:key="ele" :value="ele"></el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="px" prop="px">
+                            <el-form-item label="Px" prop="px">
                                 <el-input v-model="attractionData.px"></el-input>
                             </el-form-item>
-                            <el-form-item label="py" prop="py">
+                            <el-form-item label="Py" prop="py">
                                 <el-input v-model="attractionData.py"></el-input>
                             </el-form-item>
-                            <el-form-item label="picture_url" prop="pictureUrl">
-                                <el-input v-model="attractionData.pictureUrl"></el-input>
-                            </el-form-item>
-                            <el-form-item label="picture" prop="picture">
-                                <el-image
-                                        style="width: 300px; height: 300px"
-                                        :src="picture"
-                                        :preview-src-list="[picture]"
-                                        onerror="this.src='${pageContext.servletContext.contextPath}/assets/nopic.jpg'">
-                                </el-image>
+<%--                            <el-form-item label="picture_url" prop="pictureUrl">--%>
+<%--                                <el-input v-model="attractionPic.picUrl"></el-input>--%>
+<%--                            </el-form-item>--%>
+                            <el-form-item label="Picture" prop="picture">
+                                <el-tag type="warning">限制 {{pictureLimit}} 張圖片</el-tag>
+<%--                                <el-image--%>
+<%--                                        style="width: 300px; height: 300px"--%>
+<%--                                        :src="picture[0]"--%>
+<%--                                        :preview-src-list="picture"--%>
+<%--                                        onerror="this.src='${pageContext.servletContext.contextPath}/assets/nopic.jpg'">--%>
+<%--                                </el-image>--%>
                                 <el-upload
                                         action=""
                                         list-type="picture-card"
+                                        :file-list="fileList"
                                         :on-preview="handlePictureCardPreview"
                                         :on-success="handleAvatarSuccess"
                                         :before-upload="beforeAvatarUpload"
                                         :on-remove="handleRemove"
-                                        :limit="1">
+                                        :limit="pictureLimit">
                                     <i class="el-icon-plus"></i>
                                 </el-upload>
                                 <el-dialog :visible.sync="dialogVisible">
-                                    <img width="100%" :src="imageUrl" alt="">
+                                    <img width="100%" :src="imageUrl" alt="" >
                                 </el-dialog>
                             </el-form-item>
-                            <el-form-item label="詳細描述" prop="toldescribe">
+                            <el-form-item label="TotalDescribe" prop="toldescribe">
                                 <el-input v-model="attractionData.toldescribe"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
-                            <el-form-item label="description" prop="description">
+                            <el-form-item label="Description" prop="description">
                                 <el-input v-model="attractionData.description"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
-                            <el-form-item label="travellingInfo" prop="travellingInfo">
+                            <el-form-item label="TravellingInfo" prop="travellingInfo">
                                 <el-input v-model="attractionData.travellingInfo"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
-                            <el-form-item label="ticketInfo" prop="ticketInfo">
+                            <el-form-item label="TicketInfo" prop="ticketInfo">
                                 <el-input v-model="attractionData.ticketInfo"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
-                            <el-form-item label="keywords" prop="keywords">
+                            <el-form-item label="Keywords" prop="keywords">
                                 <el-input v-model="attractionData.keywords"></el-input>
                             </el-form-item>
-                            <el-form-item label="remarks" prop="remarks">
+                            <el-form-item label="Remarks" prop="remarks">
                                 <el-input v-model="attractionData.remarks" type="textarea"></el-input>
                             </el-form-item>
-                            <el-form-item label="rating" prop="rating">
+                            <el-form-item label="Rating" prop="rating">
                                 <el-input v-model="attractionData.rating"></el-input>
                             </el-form-item>
-                            <el-form-item label="openTime" prop="openTime">
+                            <el-form-item label="OpenTime" prop="openTime">
                                 <el-input v-model="attractionData.openTime" type="textarea"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Status" prop="status">
+                                <label class="switch switch-text switch-success switch-pill form-control-label">
+                                    <input type="checkbox" class="switch-input form-check-input" v-bind:checked="attractionData.status" v-on:click="()=>attractionData.status=!attractionData.status">
+                                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                                    <span class="switch-handle"></span>
+                                </label>
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" v-on:click="submitForm">立即更新</el-button>
-                                <el-button v-on:click="resetDataForm('attractionData')">取消</el-button>
+                                <el-button v-on:click="resetDataForm('attractionData')">重置</el-button>
                             </el-form-item>
                         </el-form>
 
@@ -189,12 +198,17 @@
                     keywords: '',
                     remarks: '',
                     rating: '',
-                    openTime: ''
+                    openTime: '',
+                    status: false
                 },
+                attractionPic: {},
                 region: [],
                 imageUrl: '',
-                picture: '',
+                picture: [],
+                fileList: [],
+                pictureLimit: 3,
                 param: new FormData(),
+                removePicId: [],
                 dialogVisible: false
 
             }
@@ -209,9 +223,16 @@
                     url: '${pageContext.servletContext.contextPath}/admin/attraction/entity/${id}',
                     async: false,
                     success: function (response) {
-                        obj.attractionData = response;
-                        obj.picture = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+response.sn;
-                        obj.url = "${pageContext.servletContext.contextPath}/admin/attraction/"+response.sn;
+                        obj.attractionData = response.attractionData;
+                        obj.attractionPic = response.attractionPic;
+
+                        for (let i = 0; i < obj.attractionPic.length; i++) {
+                            let sId = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+obj.attractionData.sn+"/"+i;
+                            // obj.picture.push(sId);
+                            obj.fileList.push({name:response.attractionPic[i].id, url:sId});
+                        }
+                        <%--obj.picture = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+response.sn;--%>
+                        <%--obj.url = "${pageContext.servletContext.contextPath}/admin/attraction/"+response.sn;--%>
                     }
                 });
             },
@@ -229,6 +250,7 @@
                 let url='${pageContext.servletContext.contextPath}/admin/attraction/update/'+this.attractionData.sn
                 console.log(this.name);
                 this.param.append('attractionData', JSON.stringify(this.attractionData));
+                this.param.append('removePicId', JSON.stringify(this.removePicId));
                 let config = {
                    header: {
                        'Content-Type': 'multipart/form-data',
@@ -255,9 +277,10 @@
                 // this.imageUrl = URL.createObjectURL(file);
                 // this.param = new FormData();
                 this.param.append('file', file.raw, file.raw.name);
+
             },
             handlePictureCardPreview(file) {
-                // this.imageUrl = file.url;
+                this.imageUrl = file.url;
                 this.dialogVisible = true;
             },
             beforeAvatarUpload(file) {
@@ -275,10 +298,13 @@
             handleRemove(file, fileList) {
                 console.log(file, fileList);
                 this.param.delete('file');
+                this.removePicId.push(file.name);
             },
             goBack() {
                 console.log('go back');
-                history.back();
+                // location.href = document.referrer;
+                window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction";
+                // parent.window.location.assign(window.location.href);
             }
 
         }
