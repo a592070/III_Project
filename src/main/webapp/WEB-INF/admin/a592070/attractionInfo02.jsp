@@ -80,7 +80,7 @@
                                             <input type="text" name="query" id="search-input" class="form-control"
                                                    autofocus ="off"
                                                    v-model="search"
-                                                   placeholder="本頁搜尋..."/>
+                                                   placeholder="keywords..."/>
                                         </div>
                                     </div>
                                 </div>
@@ -120,14 +120,15 @@
                                     </el-table-column>
                                     <el-table-column
                                             label="Status"
-                                            prop="status"
                                             width="75"
                                             align="right">
+                                        <template slot-scope="scope">
                                         <label class="switch switch-text switch-success switch-pill form-control-label">
-                                            <input type="checkbox" class="switch-input form-check-input" value="on">
+                                            <input type="checkbox" class="switch-input form-check-input" v-bind:checked="scope.row.status" v-on:click="handleSwitchStatus(scope.row)">
                                             <span class="switch-label" data-on="On" data-off="Off"></span>
                                             <span class="switch-handle"></span>
                                         </label>
+                                        </template>
                                     </el-table-column>
                                     <el-table-column
                                             width="200"
@@ -192,7 +193,7 @@
                     sn: '',
                     name: '',
                     address: '',
-                    ticketInfo: ''
+                    status: false
                 }],
             tableColumns: [
                 {
@@ -332,6 +333,27 @@
                 console.log(column + '-' + column.prop + '-' + column.order);
                 this.sortParams = {"sortColumn":column.prop, "order":column.order};
                 this.handleSelectedData();
+            },
+            handleSwitchStatus(value){
+                console.log(value.status);
+                value.status = !value.status;
+
+                let url = '${pageContext.servletContext.contextPath}/admin/attraction/status/'+value.sn;
+                axios.post(url)
+                    .then(response => {
+                        if(response.data){
+                            const h = this.$createElement;
+                            this.$message({
+                                message: h('p', null, [
+                                    h('i', { style: 'color: teal' }, value.name),
+                                    h('span', null, '狀態更改成功 ')
+                                ])
+                            });
+                        }else{
+                            this.$message.error(value.name+': 狀態更改失敗');
+                        }
+                        // this.search = "";
+                    });
             }
         }
     });

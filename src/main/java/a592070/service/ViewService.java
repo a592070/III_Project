@@ -12,6 +12,7 @@ import java.util.List;
 public interface ViewService<T> {
 
     T getEle(int id);
+    List getPictures(int id);
     byte[] getPicture(int id);
 
     int getSize();

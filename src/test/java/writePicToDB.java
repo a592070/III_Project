@@ -5,6 +5,7 @@ import org.hibernate.query.Query;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -14,11 +15,12 @@ import utils.PictureSupport;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springmvc.servlet.xml")
 public class writePicToDB {
-    @Autowired
+    @Autowired@Qualifier("sessionFactory")
     private static SessionFactory sessionFactory;
 
     @Test
@@ -59,7 +61,7 @@ public class writePicToDB {
         List<AttractionDO> list = query.list();
         try {
             for (AttractionDO ele : list) {
-                ele.setPicture(null);
+//                ele.setPicture(null);
             }
             session.getTransaction().commit();
         }catch (Exception e){
@@ -77,8 +79,8 @@ public class writePicToDB {
         List<AttractionDO> list = query.list();
         try {
             for (AttractionDO ele : list) {
-                String replace = ele.getPictureUrl().replace("https://", "http://");
-                ele.setPictureUrl(replace);
+//                String replace = ele.getPictureUrl().replace("https://", "http://");
+//                ele.setPictureUrl(replace);
             }
             session.getTransaction().commit();
         }catch (Exception e){
