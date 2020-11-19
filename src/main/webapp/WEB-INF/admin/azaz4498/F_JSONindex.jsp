@@ -138,6 +138,8 @@
 	</div>
 
 	<script>
+		//編輯文章
+
 		//文章列表
 		$(document).ready(function () {
 			$.ajax({
@@ -207,9 +209,9 @@
 							"<span class='switch-handle'></span>" +
 							"</label></td>" +
 							"<td>" +
-							"<button name='artId' value='" + element.artId + "'>" +
+							"<button id='edit_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-pencil-box-outline'></span>Edit</button>" +
-							"<button name='artId' value='" + element.artId + "' onclick='confirmDelete()'>" +
+							"<button id='delete_btn' name='artId' value='" + element.artId + "' onclick='confirmDelete()'>" +
 							"<span class='mdi mdi-delete'></span>Delete</button>" +
 							"</td>" +
 							'</tr>'
@@ -223,16 +225,21 @@
 		function confirmDelete() {
 			var desicion = confirm("確定要刪除此筆資料?");
 			if (desicion) {
+				var currId = $(this).attr(value);
 				$.ajax({
 					type: "POST",
 					url: "delete.controller",
-					data: { "artId": 123 },
-				})
+					data: { "artId": currId },
+					success: function (response) {
+						console.log(currId);
+					}
+				});
 
 			} else {
 				return;
 			}
 		}
+
 	</script>
 </body>
 
