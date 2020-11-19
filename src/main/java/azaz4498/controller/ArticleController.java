@@ -164,9 +164,7 @@ public class ArticleController {
 
 	@RequestMapping(path = "/statusChange.controller", method = RequestMethod.POST)
 	public String statusChange(@RequestParam(name = "artId") Integer articleId) {
-		System.out.println("===========BEFORE===========");
 		articleService.switchStatus(articleId);
-		System.out.println("===========AFTER===========");
 
 		return "redirect:/Forum";
 	}

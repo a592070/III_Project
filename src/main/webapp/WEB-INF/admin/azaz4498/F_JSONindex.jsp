@@ -153,12 +153,13 @@
 
 						$('tbody').append(
 							'<tr>' +
-							'<td>' + element.artId + '</td>' +
+							"<td>" + element.artId + '</td>' +
 							'<td>' + "<a class='text-dark' href=''>" + element.artTitle + '</a></td>' +
 							'<td>' + element.artCreTime + '</td>' +
 							'<td>' + "<a class='text-dark' href=''>" + element.artUserId + '</a></td>' +
 							'<td>' + element.articleType.typeName + '</td>' +
 							"<td><label class='switch switch-success switch-pill switch-text form-control-label'>" +
+							
 							"<input type='checkbox' class='switch-input form-check-input' name='status' id='status' value='" +
 							element.artStatus + "'" +
 							(currStatus == 'enabled' ? 'checked' : '') +
@@ -254,13 +255,32 @@
 					url: "editPage.controller",
 					data: { "artId": currId },
 					success: function (response) {
-						window.location.href = ''
+						window.location.href = 'editPage.controller?artId='+currId;
 
 
 					}
 				});
 			});
+
+			$('tbody').on("click","#status", function(){
+				var currId = $(this).closest('tr').children().first().text();
+				$.ajax({
+					type: "POST",
+					url: "statusChange.controller",
+					data: {"artId" : currId},
+					success: function(response){
+						
+					}
+				});
+			});
+
+			
+			
 		});
+
+		
+		
+		
 
 
 	</script>
