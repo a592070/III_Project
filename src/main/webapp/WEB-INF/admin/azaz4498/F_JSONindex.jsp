@@ -142,10 +142,12 @@
 
 		//文章列表
 		$(document).ready(function () {
+
 			$.ajax({
 				type: "GET",
 				url: "Article.controller.json",
 				success: function (response) {
+
 					$.each(response, function (index, element) {
 						var currStatus = element.artStatus;
 
@@ -165,9 +167,9 @@
 							"<span class='switch-handle'></span>" +
 							"</label></td>" +
 							"<td>" +
-							"<button name='artId' value='" + element.artId + "'>" +
+							"<button class='edit_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-pencil-box-outline'></span>Edit</button>" +
-							"<button name='artId' value='" + element.artId + "' onclick='confirmDelete()'>" +
+							"<button class='delete_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-delete'></span>Delete</button>" +
 							"</td>" +
 							'</tr>'
@@ -209,9 +211,9 @@
 							"<span class='switch-handle'></span>" +
 							"</label></td>" +
 							"<td>" +
-							"<button id='edit_btn' name='artId' value='" + element.artId + "'>" +
+							"<button class='edit_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-pencil-box-outline'></span>Edit</button>" +
-							"<button id='delete_btn' name='artId' value='" + element.artId + "' onclick='confirmDelete()'>" +
+							"<button class='delete_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-delete'></span>Delete</button>" +
 							"</td>" +
 							'</tr>'
@@ -222,23 +224,44 @@
 		});
 	</script>
 	<script>
-		function confirmDelete() {
-			var desicion = confirm("確定要刪除此筆資料?");
-			if (desicion) {
-				var currId = $(this).attr(value);
+		$(document).ready(function () {
+			$('tbody').on("click", ".delete_btn", function () {
+
+				var currId = $(this).val();
+				var desicion = confirm("確定要刪除此筆資料?");
+				if (desicion) {
+					$(this).closest('tr').remove();
+					$.ajax({
+						type: "POST",
+						url: "delete.controller",
+						data: { "artId": currId },
+						success: function (response) {
+
+						}
+					});
+
+				} else {
+					return;
+				};
+
+			});
+
+			$('tbody').on("click", ".edit_btn", function () {
+				var currId = $(this).val();
+
 				$.ajax({
-					type: "POST",
-					url: "delete.controller",
+					type: "GET",
+					url: "editPage.controller",
 					data: { "artId": currId },
 					success: function (response) {
-						console.log(currId);
+						window.location.href = ''
+
+
 					}
 				});
+			});
+		});
 
-			} else {
-				return;
-			}
-		}
 
 	</script>
 </body>

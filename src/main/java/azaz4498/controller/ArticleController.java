@@ -85,6 +85,8 @@ public class ArticleController {
 	@RequestMapping(path = "/editPage.controller")
 	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticleById(articleId));
+		
+		System.out.println("==========Edit Page 我要進去囉==========");
 
 		return "azaz4498/editPage";
 	}
