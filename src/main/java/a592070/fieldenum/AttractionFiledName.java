@@ -9,6 +9,7 @@ public class AttractionFiledName {
     public static final String ATTRACTION_TICKETINFO = "ticketInfo";
     public static final String ATTRACTION_RATING = "rating";
     public static final String ATTRACTION_REGION = "region";
+    public static final String ATTRACTION_STATUS = "status";
 
     public static final String ATTRACTION_DEFAULT_ORDER = "picture, sn";
 

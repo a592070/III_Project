@@ -19,6 +19,11 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     }
 
     @Override
+    public List<byte[]> getPictures(int id) {
+        return null;
+    }
+
+    @Override
     public byte[] getPicture(int id) {
         return viewDAO.getPicture(id);
     }
