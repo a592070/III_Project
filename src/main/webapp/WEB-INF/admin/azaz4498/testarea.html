@@ -1,11 +1,30 @@
-<button name='artId' value=''>
-    <span class='mdi mdi-pencil-box-outline'></span>
-    Edit
-</button>
+<!DOCTYPE html>
+<html lang="en">
 
-<button name='artId' value='' onclick='confirmDelete()'>
-    <span class='mdi mdi-delete'></span>
-    Delete
-</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+</head>
 
-<a class='text-dark' href=''></a>
+<body>
+    <button class='delete_btn' name='artId' value='123'>
+        <span class='mdi mdi-delete'></span>Delete</button>
+    <button class='delete_btn' name='artId' value='12345'>
+        <span class='mdi mdi-delete'></span>Delete2</button>
+    <script>
+        $(document).ready(function () {
+            $('.delete_btn').click(function () {
+                var currId = $(this).val();
+                console.log(currId);
+
+            })
+
+        })
+    </script>
+
+</body>
+
+</html>
