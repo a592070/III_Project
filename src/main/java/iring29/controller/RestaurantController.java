@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -64,75 +66,70 @@ public class RestaurantController {
 		return "iring29/R_index";
 	}
 	
-	@RequestMapping(path = "/RestaurantSorted", method = RequestMethod.POST)
-	public @ResponseBody List<Show_RView> RestaurantSorted(@RequestParam(value = "currentPage") Integer currentPage, 
-														   @RequestParam(value = "cgpage") String cgpage) {
-		if(cgpage.equals("next")) {
-			start = (currentPage) * page.getPageSize();
-		}else if(cgpage.equals("previous")) {
-			start = (currentPage-2) * page.getPageSize();
-		}else if(cgpage.equals("first")) {
-			start = 0 ;
-		}else {
-			start = (page.getTotalPageCount()-1) * page.getPageSize();
-		}
-		
-		return rs.totalRestaurant(start, page.getPageSize());
-	}
+//	@RequestMapping(path = "/RestaurantSorted", method = RequestMethod.POST)
+//	public @ResponseBody List<Show_RView> RestaurantSorted(@RequestParam(value = "currentPage") Integer currentPage, 
+//														   @RequestParam(value = "cgpage") String cgpage) {
+//		if(cgpage.equals("next")) {
+//			start = (currentPage) * page.getPageSize();
+//		}else if(cgpage.equals("previous")) {
+//			start = (currentPage-2) * page.getPageSize();
+//		}else if(cgpage.equals("first")) {
+//			start = 0 ;
+//		}else {
+//			start = (page.getTotalPageCount()-1) * page.getPageSize();
+//		}
+//		
+//		return rs.totalRestaurant(start, page.getPageSize());
+//	}
 
-	@RequestMapping(path = "/key", method = RequestMethod.GET)
-	public @ResponseBody List<Show_RView> RestaurantKeyword(@RequestParam(value = "currentKPage") Integer currentKPage,
+	@RequestMapping(path = "/key", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> RestaurantKeyword(@RequestParam(value = "currentPage") Integer currentPage,
 									@RequestParam(value = "cgpage") String cgpage,
 								    @RequestParam(value = "keyword") String keyword,
 								    @RequestParam(value = "orderFiled") String orderFiled,
 								    @RequestParam(value = "order") String order, Model m) {
-//		if() {
-//			
-//		}
 		
-		return  rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
+		int size = rs.getSizeByKeywords(keyword);
+		page.setTotalCount(size);
+		
+		if(orderFiled.isEmpty()) {
+			orderFiled = "r_sn";
+		}
+		
+		if(cgpage.equals("1") || cgpage.isEmpty()) {
+			
+			page.setCurrentPage(currentPage);
+			start = (currentPage - 1) * page.getPageSize();
+			
+		}else if(cgpage.equals("next")) {
+			
+			start = (currentPage) * page.getPageSize();
+			page.setCurrentPage(currentPage + 1);
+			
+		}else if(cgpage.equals("previous")) {
+			
+			start = (currentPage - 2) * page.getPageSize();
+			page.setCurrentPage(currentPage - 1);
+			
+		}else if(cgpage.equals("first")) {
+			
+			start = 0 ;
+			page.setCurrentPage(1);
+			
+		}else {
+			start = (page.getTotalPageCount()-1) * page.getPageSize();
+		}
+		
+		System.out.println("page = "+page.getCurrentPage());
+		
+		List<Show_RView> Rlist = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
+		Map<String, Object> map = new HashMap<>();
+		map.put("Rlist", Rlist);
+		map.put("page", page);
+		return map;
 		
 
 	}
-	
-	
-//	@RequestMapping(path = "/key", method = RequestMethod.GET)
-//	public String RestaurantKeyword(@RequestParam(value = "currentKPage", defaultValue = "1") Integer currentKPage,
-//			@RequestParam(value = "keyword", defaultValue = "") String keyword,
-//			@RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
-//			@RequestParam(value = "order", defaultValue = "ASC") String order, Model m) {
-//		
-//		if ((keyword == null)  || (keyword.equals("") )) {
-//
-//			return "redirect:Restaurant";
-//		}
-//		
-//		if (order.equals("DESC")) {
-//			order = "ASC";
-//		} else {
-//			order = "DESC";
-//		}
-//		
-//		int size = rs.getSizeByKeywords(keyword);
-//		page.setTotalCount(size);
-//		System.out.println("currentKPage = " + currentKPage);
-//		if (currentKPage == 1) {
-//			currentKPage = 1;
-//			start = 0;
-//		} else {
-//			start = (currentKPage - 1) * page.getPageSize();
-//		}
-//		int totalKPage = page.getTotalPageCount();
-//		List<Show_RView> rBean = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
-//		m.addAttribute("rBean", rBean);
-//		m.addAttribute("orderFiled", orderFiled);
-//		m.addAttribute("order", order);
-//		m.addAttribute("currentKPage", currentKPage);
-//		m.addAttribute("totalKPage", totalKPage);
-//		m.addAttribute("keyword", keyword);
-//		return "iring29/R_index";
-//		
-//	}
 
 	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
 	public @ResponseBody String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {

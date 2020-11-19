@@ -156,6 +156,8 @@ th {
 						var region = $("#inputState").val();
 						$('#inputState option:contains(' + region + ')').attr('selected', 'selected');
 						$('#keyword').val(region);
+						$("#page-btn").val(1);
+						$(".page-link.last").val('');
 						$('#page-botton').click();
 <%-- 						document.formR.attributes["action"].value ="<%=application.getContextPath()%>/admin/key"; --%>
 // 						document.formR.submit();
@@ -165,17 +167,23 @@ th {
 					<div class="search">
 <%-- 						<form action="<%=application.getContextPath()%>/admin/key" method="GET"> --%>
 							<span class="sp_search">關鍵字搜尋</span> 
-							<input id="keyword" type="text" name="keyword" placeholder="請輸入關鍵字" value="${keyword}"/>
+							<input id="keyword" type="text" name="keyword" id="keyword" placeholder="請輸入關鍵字" value="${keyword}"/>
 							<button type="submit" class="btn btn-primary" id="page-botton">搜尋</button>
 							<Input type='hidden' name='order' value='DESC'>
 							<button type="submit" class="btn btn-primary" id="clearkey">清空關鍵字</button>
 <%-- 						</form> --%>
 					</div>
 					<script>
+						$('#keyword').change(function(){
+							$('#order').val('');
+							$("#page-btn").val(1);
+							})
+							
 						$('#clearkey').click(function(){
 							console.log("clear");
 						  $("#keyword").val('');
 						  $('#inputState').val('');
+						  $('#order').val('');
 						})
 
 					</script>
@@ -193,19 +201,25 @@ th {
 						<thead id="thead">
 							<tr>
 								<th><div>
-<%-- 										<form id="statuss" name="statuss"  --%>
-<%-- 											action="<%=application.getContextPath()%>/admin/key">  --%>
-											<button id="page-botton">
-												<svg width="2em" height="1em" viewBox="0 0 16 16"
+										<button id="page-botton" class="id-btn">
+											<svg width="2em" height="1em" viewBox="0 0 16 16"
 													class="bi bi-arrow-down-up" fill="currentColor"
 													xmlns="http://www.w3.org/2000/svg">
 											<path fill-rule="evenodd"
 														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-										</svg>
-											</button>
-											
+											</svg>
+										</button>
 											<Input type='hidden' name='order' id="order" value=''>ID
-<%-- 										</form>  --%>
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='r_sn'>
+					<script>
+						$('.id-btn').click(function(){
+							var order = $('#order').val();
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>
 									</div></th>
 								<th>餐廳名稱</th>
 								<th>餐廳地址</th>
@@ -336,7 +350,7 @@ th {
 							
 							<!-- previous -->
 								<li class="page-item">
-									<button class="page-link" id="page-botton" value="previous">&laquo;</button>
+									<button class="page-link previous" id="page-botton" value="previous">&laquo;</button>
 								</li>
 							
 							
@@ -352,7 +366,7 @@ th {
 							
 							
 							
-								<li class="page-item">
+								<li class="page-item last">
 									<button class="page-link last" id="page-botton" value="${totalPage}">最末頁</button>
 								</li>
 							
@@ -369,74 +383,80 @@ th {
 			var totalPage = $(".page-link.last").val();
 			var keyword = $("#keyword").val();
 			var order = $("#order").val();
+			var orderFiled = $("#orderFiled").val();
 			console.log("cgpage = " + cgpage);
 			console.log("currentPage = " + currentPage);
 			console.log("totalPage = " + totalPage);
 			console.log("keyword = " + keyword);
 			console.log("order = " + order);
-			if(order == "" || order == "DESC"){
-				$("#order").val('ASC'); 
-				order = $("#order").val();
-			}else{
-				$("#order").val('DESC');
-				order = $("#order").val();
-				}
-			console.log("order = " + order);
+			console.log("orderFiled = " + orderFiled);
 					$.ajax(
 						{
 							type: 'POST',
-							data: { "currentPage": currentPage, "cgpage":cgpage },
-							url: '${pageContext.servletContext.contextPath}/admin/RestaurantSorted',
+							data: { "currentPage": currentPage, "cgpage":cgpage, "keyword":keyword, "order":order, "orderFiled":orderFiled },
+							url: '${pageContext.servletContext.contextPath}/admin/key',
 							dataType: 'json',
 							success: function (response) {
 								$("#tbody").empty();
-								if(cgpage == "next"){
-									currentPage = Number(currentPage) + 1;
-									if(currentPage == totalPage){
-										$(".page-link.next").attr("disabled", true);
-										}
-									
-								}else if(cgpage == "previous"){
-									currentPage = Number(currentPage) - 1;
-									if(currentPage == totalPage){
-										$(".page-link.next").attr("disabled", true);
-									}else{
-										$(".page-link.next").attr("disabled", false);
-									}
-								}else if(cgpage == "first"){
-									currentPage = 1;
-								}else {
-									currentPage = Number(cgpage);
-									$(".page-link.next").attr("disabled", true);
+								$("#page-btn").remove();
+								var current_page = "";
+								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage +'</button>';
+								$('.page-item.active').html(current_page);
+								currentPage = response.page.currentPage;
+
+								$(".page-link.last").remove();
+								var total_page = "";
+								total_page += '<button class="page-link last" id="page-botton" value="">最末頁</button>';
+								$(".page-item.last").html(total_page);
+								totalPage = response.page.totalPageCount;
+								$('.page-link.last').val(totalPage);
+
+								if(cgpage == totalPage){
+									currentPage = totalPage;
+									$('#page-btn').empty();
+									$('#page-btn').html(currentPage);
 								}
-								$("#page-btn").html(currentPage);
-								$("#page-btn").val(currentPage);
+
+								if(currentPage == 1){
+									$(".page-link.previous").attr("disabled", true);
+								}else{
+									$(".page-link.previous").attr("disabled", false);
+								}
+
+								if(currentPage == totalPage){
+									$(".page-link.next").attr("disabled", true);
+								}else{
+									$(".page-link.next").attr("disabled", false);
+								}
+
+								$('#page-btn').val(currentPage);
+								
 								var res_context = "";
-								for (let i = 0; i < response.length; i++) {
-									console.log(response[i].r_sn);
+								for (let i = 0; i < response.Rlist.length; i++) {
+									console.log(response.Rlist[i].r_sn);
 									res_context += '<tr>';
-									res_context += '<td id="r_sn" class="r_sn">' + response[i].r_sn + '</td>';
-									res_context += '<td class="name">'+ response[i].name +'</td>'
-										if(response[i].address == null){
+									res_context += '<td id="r_sn" class="r_sn">' + response.Rlist[i].r_sn + '</td>';
+									res_context += '<td class="name">'+ response.Rlist[i].name +'</td>'
+										if(response.Rlist[i].address == null){
 									res_context += '<td class="user">'+ "暫不提供相關資料" +'</td>'
 										}else{
-									res_context += '<td class="address">'+ response[i].address +'</td>'
+									res_context += '<td class="address">'+ response.Rlist[i].address +'</td>'
 												}
-									res_context += '<td class="region">'+ response[i].region +'</td>'
-										if(response[i].username == null){
+									res_context += '<td class="region">'+ response.Rlist[i].region +'</td>'
+										if(response.Rlist[i].username == null){
 									res_context += '<td class="user">'+ "" +'</td>'
 										}else{
-									res_context += '<td class="user">'+ response[i].username +'</td>'
+									res_context += '<td class="user">'+ response.Rlist[i].username +'</td>'
 										}
 									res_context += '<td id="status"><div class="status">'
-										if(response[i].status == "N"){
+										if(response.Rlist[i].status == "N"){
 									res_context += '<label class="switch switch-text switch-success switch-pill form-control-label">'
 									res_context += '<input type="checkbox" class="switch-input form-check-input" value="禁用" id="checkbox">'
 									res_context += '<span class="switch-label" data-on="啟用" data-off="禁用" ></span>'
 									res_context += '<span class="switch-handle"></span>'
 									res_context += '</label>'
 											}
-										if(response[i].status == "Y"){
+										if(response.Rlist[i].status == "Y"){
 									res_context += '<label class="switch switch-text switch-success switch-pill form-control-label">'
 									res_context += '<input type="checkbox" class="switch-input form-check-input" value="啟用" id="checkbox" checked="checked">'
 									res_context += '<span class="switch-label" data-on="啟用" data-off="禁用"></span>'
@@ -447,19 +467,18 @@ th {
 									res_context += '<td><div class="modify">';
 									res_context += '<form action="<%=application.getContextPath()%>/admin/DisplayRestaurant" method="POST">';
 									res_context += '<button type="submit" class="btn btn-warning">修改</button>';
-									res_context += '<Input type="hidden" name="r_sn" value="'+ response[i].r_sn + '">';
+									res_context += '<Input type="hidden" name="r_sn" value="'+ response.Rlist[i].r_sn + '">';
 									res_context += '</form>';
 									res_context += '</div></td>';
 									res_context += '<td><div class="delete">';
 									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm("確認是否刪除此餐廳資料？");">';
 									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
-									res_context += '<Input type="hidden" name="r_sn" value="'+ response[i].r_sn + '">';
+									res_context += '<Input type="hidden" name="r_sn" value="'+ response.Rlist[i].r_sn + '">';
 									res_context += '</form>';
 									res_context += '</div></td>';
 									res_context += '</tr>';
 									}
 									$("#tbody").html(res_context);
-								console.log(response);
 								console.log(currentPage);
 
 							}
