@@ -23,6 +23,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -69,7 +70,7 @@ public class Article implements Serializable {
 	public void setArtContent(String artContent) {
 		this.artContent = artContent;
 	}
-
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "ART_CRE_TIME")
 	public Timestamp getArtCreTime() {
 		return artCreTime;
@@ -153,7 +154,7 @@ public class Article implements Serializable {
 		this.artPicUrl = artPicUrl;
 	}
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -161,7 +162,7 @@ public class Article implements Serializable {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ART_TYPE_ID")
 	public ArticleType getArticleType() {
@@ -174,9 +175,10 @@ public class Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Article [artId=" + artId + ", artTypeId=" + artTypeId + ", artTitle=" + artTitle + ", artStatus="
-				+ artStatus + "]";
+		return "Article [artCreTime=" + artCreTime + "]";
 	}
+
+	
 
 	
 
