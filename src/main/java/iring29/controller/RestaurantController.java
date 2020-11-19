@@ -81,42 +81,58 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/key", method = RequestMethod.GET)
-	public String RestaurantKeyword(@RequestParam(value = "currentKPage", defaultValue = "1") Integer currentKPage,
-								    @RequestParam(value = "keyword", defaultValue = "") String keyword,
-								    @RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
-								    @RequestParam(value = "order", defaultValue = "ASC") String order, Model m) {
+	public @ResponseBody List<Show_RView> RestaurantKeyword(@RequestParam(value = "currentKPage") Integer currentKPage,
+									@RequestParam(value = "cgpage") String cgpage,
+								    @RequestParam(value = "keyword") String keyword,
+								    @RequestParam(value = "orderFiled") String orderFiled,
+								    @RequestParam(value = "order") String order, Model m) {
+//		if() {
+//			
+//		}
+		
+		return  rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
+		
 
+	}
+	
+	
+//	@RequestMapping(path = "/key", method = RequestMethod.GET)
+//	public String RestaurantKeyword(@RequestParam(value = "currentKPage", defaultValue = "1") Integer currentKPage,
+//			@RequestParam(value = "keyword", defaultValue = "") String keyword,
+//			@RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
+//			@RequestParam(value = "order", defaultValue = "ASC") String order, Model m) {
+//		
 //		if ((keyword == null)  || (keyword.equals("") )) {
 //
 //			return "redirect:Restaurant";
 //		}
-
-		if (order.equals("DESC")) {
-			order = "ASC";
-		} else {
-			order = "DESC";
-		}
-
-		int size = rs.getSizeByKeywords(keyword);
-		page.setTotalCount(size);
-		System.out.println("currentKPage = " + currentKPage);
-		if (currentKPage == 1) {
-			currentKPage = 1;
-			start = 0;
-		} else {
-			start = (currentKPage - 1) * page.getPageSize();
-		}
-		int totalKPage = page.getTotalPageCount();
-		List<Show_RView> rBean = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
-		m.addAttribute("rBean", rBean);
-		m.addAttribute("orderFiled", orderFiled);
-		m.addAttribute("order", order);
-		m.addAttribute("currentKPage", currentKPage);
-		m.addAttribute("totalKPage", totalKPage);
-		m.addAttribute("keyword", keyword);
-		return "iring29/R_index";
-
-	}
+//		
+//		if (order.equals("DESC")) {
+//			order = "ASC";
+//		} else {
+//			order = "DESC";
+//		}
+//		
+//		int size = rs.getSizeByKeywords(keyword);
+//		page.setTotalCount(size);
+//		System.out.println("currentKPage = " + currentKPage);
+//		if (currentKPage == 1) {
+//			currentKPage = 1;
+//			start = 0;
+//		} else {
+//			start = (currentKPage - 1) * page.getPageSize();
+//		}
+//		int totalKPage = page.getTotalPageCount();
+//		List<Show_RView> rBean = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
+//		m.addAttribute("rBean", rBean);
+//		m.addAttribute("orderFiled", orderFiled);
+//		m.addAttribute("order", order);
+//		m.addAttribute("currentKPage", currentKPage);
+//		m.addAttribute("totalKPage", totalKPage);
+//		m.addAttribute("keyword", keyword);
+//		return "iring29/R_index";
+//		
+//	}
 
 	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
 	public @ResponseBody String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {
