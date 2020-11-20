@@ -471,7 +471,7 @@ th {
 									res_context += '</form>';
 									res_context += '</div></td>';
 									res_context += '<td><div class="delete">';
-									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm("確認是否刪除此餐廳資料？");">';
+									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm(`確認是否刪除此餐廳資料？`);">';
 									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
 									res_context += '<Input type="hidden" name="r_sn" value="'+ response.Rlist[i].r_sn + '">';
 									res_context += '</form>';
