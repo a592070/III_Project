@@ -15,8 +15,11 @@ public class Page {
 	}
 
 	public void setCurrentPage(int currentPage) {
-		if (currentPage > 0)
+		if (currentPage > 0) {
 			this.currentPage = currentPage;
+		} else {
+			this.currentPage = 1;
+		}
 	}
 
 	public int getTotalCount() {

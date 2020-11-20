@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,20 +43,22 @@ public class RestaurantController {
 	private int start = 0;
 
 	@RequestMapping(path = "/Restaurant", method = RequestMethod.GET)
-	public String RestaurantDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
-			Model m) {
+	public String RestaurantDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model m) {
 		int size = rs.getSize();
 		page.setTotalCount(size);
-		System.out.println("currentPage = " + currentPage);
+		
 		if (currentPage == 1) {
 			currentPage = 1;
 			start = 0;
 		} else {
 			start = (currentPage - 1) * page.getPageSize();
 		}
+		
 		int pageSize = page.getPageSize();
 		int totalPage = page.getTotalPageCount();
+		
 		List<Show_RView> rBean = rs.totalRestaurant(start, pageSize);
+		
 		m.addAttribute("rBean", rBean);
 		m.addAttribute("currentPage", currentPage);
 		m.addAttribute("totalPage", totalPage);
@@ -59,54 +66,78 @@ public class RestaurantController {
 		return "iring29/R_index";
 	}
 
-	@RequestMapping(path = "/key", method = RequestMethod.GET)
-	public String RestaurantKeyword(@RequestParam(value = "currentKPage", defaultValue = "1") Integer currentKPage,
-			@RequestParam(value = "keyword", defaultValue = "") String keyword,
-			@RequestParam(value = "orderFiled", defaultValue = "r_sn") String orderFiled,
-			@RequestParam(value = "order", defaultValue = "ASC") String order, Model m) {
-
-//		if ((keyword == null)  || (keyword.equals("") )) {
-//
-//			return "redirect:Restaurant";
-//		}
-
-		if (order.equals("DESC")) {
-			order = "ASC";
-		} else {
-			order = "DESC";
+	@RequestMapping(path = "/key", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> RestaurantKeyword(@RequestParam(value = "currentPage") Integer currentPage,
+									@RequestParam(value = "cgpage") String cgpage,
+								    @RequestParam(value = "keyword") String keyword,
+								    @RequestParam(value = "orderFiled") String orderFiled,
+								    @RequestParam(value = "order") String order, 
+								    @RequestParam(value = "region") String region) {
+		int size;
+		if(region.isEmpty()) {
+			size = rs.getSizeByKeywords(keyword);
+		}else if((!region.isEmpty()) && (!keyword.isEmpty())){
+			size = rs.getSizeRK(region, keyword);
+		}else {
+			size = rs.getRegionSize(region);
 		}
-
-		int size = rs.getSizeByKeywords(keyword);
 		page.setTotalCount(size);
-		System.out.println("currentKPage = " + currentKPage);
-		if (currentKPage == 1) {
-			currentKPage = 1;
-			start = 0;
-		} else {
-			start = (currentKPage - 1) * page.getPageSize();
+		
+		
+		if(orderFiled.isEmpty()) {
+			orderFiled = "r_sn";
 		}
-		int totalKPage = page.getTotalPageCount();
-		List<Show_RView> rBean = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
-		m.addAttribute("rBean", rBean);
-		m.addAttribute("orderFiled", orderFiled);
-		m.addAttribute("order", order);
-		m.addAttribute("currentKPage", currentKPage);
-		m.addAttribute("totalKPage", totalKPage);
-		m.addAttribute("keyword", keyword);
-		return "iring29/R_index";
+		
+		if(cgpage.equals("1") || cgpage.isEmpty()) {
+			
+			page.setCurrentPage(currentPage);
+			start = (currentPage - 1) * page.getPageSize();
+			
+		}else if(cgpage.equals("next")) {
+			
+			start = (currentPage) * page.getPageSize();
+			page.setCurrentPage(currentPage + 1);
+			
+		}else if(cgpage.equals("previous")) {
+			
+			start = (currentPage - 2) * page.getPageSize();
+			page.setCurrentPage(currentPage - 1);
+			
+		}else if(cgpage.equals("first")) {
+			
+			start = 0 ;
+			page.setCurrentPage(1);
+			
+		}else {
+			start = (page.getTotalPageCount()-1) * page.getPageSize();
+		}
+		
+		System.out.println("page = "+page.getCurrentPage());
+		
+		List<Show_RView> Rlist;
+		if(region.isEmpty()) {
+			Rlist = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
+		}else if((!region.isEmpty()) && (!keyword.isEmpty())){ 
+			Rlist = rs.listByRK(start, page.getPageSize(), region, keyword, orderFiled, order);
+		}else {
+			Rlist = rs.regionRestaurant(start, page.getPageSize(), region, orderFiled, order);
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("Rlist", Rlist);
+		map.put("page", page);
+		return map;
+		
 
 	}
 
 	@RequestMapping(path = "/ModifyStatus", method = RequestMethod.POST)
-	public String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {
-
-		System.out.println("r_sn = " + r_sn);
-		System.out.println("status = " + status);
+	public @ResponseBody String R_status(@RequestParam("status") String status, @RequestParam("r_sn") BigDecimal r_sn) {
 
 		if (status.equals("Y")) {
-			rs.updateStatus(r_sn, "N");
+			return rs.updateStatus(r_sn, "N");
 		} else if (status.equals("N")) {
-			rs.updateStatus(r_sn, "Y");
+			return rs.updateStatus(r_sn, "Y");
 		}
 		return "redirect:Restaurant";
 	}
@@ -118,80 +149,46 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
-	@RequestMapping(path = "/regionSearch", method = RequestMethod.POST)
-	public String R_RegionDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
-			@RequestParam("region_name") String region_name, Model m) {
-		if (region_name == null || region_name.equals("")) {
-			int size = rs.getSize();
-			page.setTotalCount(size);
-			System.out.println("currentPage = " + currentPage);
-			if (currentPage == 1) {
-				currentPage = 1;
-			} else {
-				start = (currentPage - 1) * 8;
-			}
-			int pageSize = page.getPageSize();
-			int totalPage = page.getTotalPageCount();
-			List<Show_RView> rBean = rs.totalRestaurant(start, pageSize);
-			m.addAttribute("rBean", rBean);
-			m.addAttribute("currentPage", currentPage);
-			m.addAttribute("totalPage", totalPage);
-			return "iring29/R_index";
-		} else {
-			int size = rs.getRegionSize(region_name);
-			int start = 0;
-			page.setTotalCount(size);
-			System.out.println("currentPage = " + currentPage);
-			if (currentPage == 1) {
-				currentPage = 1;
-			} else {
-				start = (currentPage - 1) * 8;
-			}
-			int pageSize = page.getPageSize();
-			int totalPage = page.getTotalPageCount();
-			List<Show_RView> rBean = rs.regionRestaurant(start, pageSize, region_name);
-			m.addAttribute("rBean", rBean);
-			m.addAttribute("currentPage", currentPage);
-			m.addAttribute("totalPage", totalPage);
-		}
-		return "iring29/R_index";
-	}
-
 	@RequestMapping(path = "/ShowPic")
 	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("RBean") Restaurant r) {
 
-		System.out.println("in ShowPic");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
 
-		if (r.getPic() == null) {
-			try {
-				File file = new File("/III_Project/other/iring29_img/Restaurant_img.png");
-				long fileSize = file.length();
-				FileInputStream fi = new FileInputStream(file);
-				byte[] buffer = new byte[(int) fileSize];
-				int offset = 0;
-				int numRead = 0;
-				while (offset < buffer.length && (numRead = fi.read(buffer, offset, buffer.length - offset)) >= 0) {
-					offset += numRead;
-				}
-
-				fi.close();
-				r.setPic(buffer);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		System.out.println("in img");
+		
+//		if (r.getPic() == null) {
+//			try {
+//				File file = new File("/III_Project/src/main/webapp/assets/img/iring29/Restaurant_img.png");
+//				long fileSize = file.length();
+//				FileInputStream fi = new FileInputStream(file);
+//				byte[] buffer = new byte[(int) fileSize];
+//				int offset = 0;
+//				int numRead = 0;
+//				while (offset < buffer.length && (numRead = fi.read(buffer, offset, buffer.length - offset)) >= 0) {
+//					offset += numRead;
+//				}
+//
+//				fi.close();
+//				r.setPic(buffer);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "/ModifyRestaurant", method = RequestMethod.POST)
-	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, @RequestParam("address") String address,
-			@RequestParam("opentime") String opentime, @RequestParam("description") String description,
-			@RequestParam("transportation") String transportation, @RequestParam("type") String type,
-			@RequestParam("region") String region, @RequestParam("serviceinfo") String serviceinfo,
-			@RequestParam("pic") MultipartFile pic, Model m) throws IOException {
+	public String ModifyRestaurant(@RequestParam("r_sn") BigDecimal r_sn, 
+								   @RequestParam("address") String address,
+								   @RequestParam("opentime") String opentime, 
+								   @RequestParam("description") String description,
+								   @RequestParam("transportation") String transportation, 
+								   @RequestParam("type") String type,
+								   @RequestParam("region") String region, 
+								   @RequestParam("serviceinfo") String serviceinfo,
+								   @RequestParam("pic") MultipartFile pic, Model m) throws IOException {
 
 		Restaurant r = new Restaurant();
 		if (pic.getSize() != 0) {
@@ -221,12 +218,17 @@ public class RestaurantController {
 	}
 
 	@RequestMapping(path = "/CreateRestaurant", method = RequestMethod.POST)
-	public String CreateRestaurant(@RequestParam("pic") MultipartFile pic, @RequestParam("name") String name,
-			@RequestParam("region") String region, @RequestParam("address") String address,
-			@RequestParam("transportation") String transportation, @RequestParam("serviceinfo") String serviceinfo,
-			@RequestParam("type") String type, @RequestParam("opentime") String opentime,
-			@RequestParam("description") String description, @RequestParam("username") String username, Model m)
-			throws IOException {
+	public String CreateRestaurant(@RequestParam("pic") MultipartFile pic, 
+								   @RequestParam("name") String name,
+								   @RequestParam("region") String region, 
+								   @RequestParam("address") String address,
+								   @RequestParam("transportation") String transportation, 
+								   @RequestParam("serviceinfo") String serviceinfo,
+								   @RequestParam("type") String type, 
+								   @RequestParam("opentime") String opentime,
+								   @RequestParam("description") String description, 
+								   @RequestParam("username") String username, Model m) throws IOException {
+		
 		Restaurant rBean = new Restaurant();
 		AccountBean accBean = new AccountBean();
 		rBean.setPic(pic.getInputStream().readAllBytes());
@@ -248,6 +250,13 @@ public class RestaurantController {
 		m.addAttribute("result", result);
 
 		return "iring29/result";
+	}
+	
+	
+	//check user
+	@RequestMapping(path = "checkUser",method = RequestMethod.POST)
+	public @ResponseBody boolean checkUser(@RequestParam(name = "userName")String username) {
+		return rs.checkusr(username);
 	}
 
 }
