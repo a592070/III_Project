@@ -138,23 +138,28 @@
 	</div>
 
 	<script>
+		//編輯文章
+
 		//文章列表
 		$(document).ready(function () {
+
 			$.ajax({
 				type: "GET",
 				url: "Article.controller.json",
 				success: function (response) {
+
 					$.each(response, function (index, element) {
 						var currStatus = element.artStatus;
 
 						$('tbody').append(
 							'<tr>' +
-							'<td>' + element.artId + '</td>' +
+							"<td>" + element.artId + '</td>' +
 							'<td>' + "<a class='text-dark' href=''>" + element.artTitle + '</a></td>' +
 							'<td>' + element.artCreTime + '</td>' +
 							'<td>' + "<a class='text-dark' href=''>" + element.artUserId + '</a></td>' +
 							'<td>' + element.articleType.typeName + '</td>' +
 							"<td><label class='switch switch-success switch-pill switch-text form-control-label'>" +
+							
 							"<input type='checkbox' class='switch-input form-check-input' name='status' id='status' value='" +
 							element.artStatus + "'" +
 							(currStatus == 'enabled' ? 'checked' : '') +
@@ -163,9 +168,9 @@
 							"<span class='switch-handle'></span>" +
 							"</label></td>" +
 							"<td>" +
-							"<button name='artId' value='" + element.artId + "'>" +
+							"<button class='edit_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-pencil-box-outline'></span>Edit</button>" +
-							"<button name='artId' value='" + element.artId + "' onclick='confirmDelete()'>" +
+							"<button class='delete_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-delete'></span>Delete</button>" +
 							"</td>" +
 							'</tr>'
@@ -207,9 +212,9 @@
 							"<span class='switch-handle'></span>" +
 							"</label></td>" +
 							"<td>" +
-							"<button name='artId' value='" + element.artId + "'>" +
+							"<button class='edit_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-pencil-box-outline'></span>Edit</button>" +
-							"<button name='artId' value='" + element.artId + "' onclick='confirmDelete()'>" +
+							"<button class='delete_btn' name='artId' value='" + element.artId + "'>" +
 							"<span class='mdi mdi-delete'></span>Delete</button>" +
 							"</td>" +
 							'</tr>'
@@ -220,19 +225,64 @@
 		});
 	</script>
 	<script>
-		function confirmDelete() {
-			var desicion = confirm("確定要刪除此筆資料?");
-			if (desicion) {
+		$(document).ready(function () {
+			$('tbody').on("click", ".delete_btn", function () {
+
+				var currId = $(this).val();
+				var desicion = confirm("確定要刪除此筆資料?");
+				if (desicion) {
+					$(this).closest('tr').remove();
+					$.ajax({
+						type: "POST",
+						url: "delete.controller",
+						data: { "artId": currId },
+						success: function (response) {
+
+						}
+					});
+
+				} else {
+					return;
+				};
+
+			});
+
+			$('tbody').on("click", ".edit_btn", function () {
+				var currId = $(this).val();
+
+				$.ajax({
+					type: "GET",
+					url: "editPage.controller",
+					data: { "artId": currId },
+					success: function (response) {
+						window.location.href = 'editPage.controller?artId='+currId;
+
+
+					}
+				});
+			});
+
+			$('tbody').on("click","#status", function(){
+				var currId = $(this).closest('tr').children().first().text();
 				$.ajax({
 					type: "POST",
-					url: "delete.controller",
-					data: { "artId": 123 },
-				})
+					url: "statusChange.controller",
+					data: {"artId" : currId},
+					success: function(response){
+						
+					}
+				});
+			});
 
-			} else {
-				return;
-			}
-		}
+			
+			
+		});
+
+		
+		
+		
+
+
 	</script>
 </body>
 

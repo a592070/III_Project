@@ -44,7 +44,7 @@ public class RestaurantService {
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
-	public Restaurant updateStatus(BigDecimal r_sn, String status) {
+	public String updateStatus(BigDecimal r_sn, String status) {
 		return rDao.updateStatus(r_sn, status);
 	}
 
@@ -66,8 +66,18 @@ public class RestaurantService {
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> regionRestaurant(int first, int count, String region) {
-		return rDao.regionRestaurant(first, count, region);
+	public List<Show_RView> regionRestaurant(int first, int count, String region, String orderFiled, String order) {
+		return rDao.regionRestaurant(first, count, region, orderFiled, order);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public int getSizeRK(String region, String keyWords) {
+		return rDao.getSizeRK(region, keyWords);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public List<Show_RView> listByRK(int first, int count, String region, String keyWords, String orderFiled, String order) {
+		return rDao.listByRK(first, count, region, keyWords, orderFiled, order);
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
@@ -83,5 +93,10 @@ public class RestaurantService {
 	@Transactional(rollbackFor = { Throwable.class })
 	public String inserRestaurant(Restaurant rBean) {
 		return rDao.inserRestaurant(rBean);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public boolean checkusr(String username) {
+		return rDao.checkusr(username);
 	}
 }
