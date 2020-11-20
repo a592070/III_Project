@@ -65,32 +65,24 @@ public class RestaurantController {
 
 		return "iring29/R_index";
 	}
-	
-//	@RequestMapping(path = "/RestaurantSorted", method = RequestMethod.POST)
-//	public @ResponseBody List<Show_RView> RestaurantSorted(@RequestParam(value = "currentPage") Integer currentPage, 
-//														   @RequestParam(value = "cgpage") String cgpage) {
-//		if(cgpage.equals("next")) {
-//			start = (currentPage) * page.getPageSize();
-//		}else if(cgpage.equals("previous")) {
-//			start = (currentPage-2) * page.getPageSize();
-//		}else if(cgpage.equals("first")) {
-//			start = 0 ;
-//		}else {
-//			start = (page.getTotalPageCount()-1) * page.getPageSize();
-//		}
-//		
-//		return rs.totalRestaurant(start, page.getPageSize());
-//	}
 
 	@RequestMapping(path = "/key", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> RestaurantKeyword(@RequestParam(value = "currentPage") Integer currentPage,
 									@RequestParam(value = "cgpage") String cgpage,
 								    @RequestParam(value = "keyword") String keyword,
 								    @RequestParam(value = "orderFiled") String orderFiled,
-								    @RequestParam(value = "order") String order, Model m) {
-		
-		int size = rs.getSizeByKeywords(keyword);
+								    @RequestParam(value = "order") String order, 
+								    @RequestParam(value = "region") String region) {
+		int size;
+		if(region.isEmpty()) {
+			size = rs.getSizeByKeywords(keyword);
+		}else if((!region.isEmpty()) && (!keyword.isEmpty())){
+			size = rs.getSizeRK(region, keyword);
+		}else {
+			size = rs.getRegionSize(region);
+		}
 		page.setTotalCount(size);
+		
 		
 		if(orderFiled.isEmpty()) {
 			orderFiled = "r_sn";
@@ -122,7 +114,15 @@ public class RestaurantController {
 		
 		System.out.println("page = "+page.getCurrentPage());
 		
-		List<Show_RView> Rlist = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
+		List<Show_RView> Rlist;
+		if(region.isEmpty()) {
+			Rlist = rs.listByKeywords(start, page.getPageSize(), keyword, orderFiled, order);
+		}else if((!region.isEmpty()) && (!keyword.isEmpty())){ 
+			Rlist = rs.listByRK(start, page.getPageSize(), region, keyword, orderFiled, order);
+		}else {
+			Rlist = rs.regionRestaurant(start, page.getPageSize(), region, orderFiled, order);
+		}
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("Rlist", Rlist);
 		map.put("page", page);
@@ -149,69 +149,32 @@ public class RestaurantController {
 		return "iring29/R_modify";
 	}
 
-	@RequestMapping(path = "/regionSearch", method = RequestMethod.POST)
-	public String R_RegionDisplay(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
-								  @RequestParam("region_name") String region_name, Model m) {
-		if (region_name == null || region_name.equals("")) {
-			int size = rs.getSize();
-			page.setTotalCount(size);
-			System.out.println("currentPage = " + currentPage);
-			if (currentPage == 1) {
-				currentPage = 1;
-			} else {
-				start = (currentPage - 1) * 8;
-			}
-			int pageSize = page.getPageSize();
-			int totalPage = page.getTotalPageCount();
-			List<Show_RView> rBean = rs.totalRestaurant(start, pageSize);
-			m.addAttribute("rBean", rBean);
-			m.addAttribute("currentPage", currentPage);
-			m.addAttribute("totalPage", totalPage);
-			return "iring29/R_index";
-		} else {
-			int size = rs.getRegionSize(region_name);
-			int start = 0;
-			page.setTotalCount(size);
-			System.out.println("currentPage = " + currentPage);
-			if (currentPage == 1) {
-				currentPage = 1;
-			} else {
-				start = (currentPage - 1) * 8;
-			}
-			int pageSize = page.getPageSize();
-			int totalPage = page.getTotalPageCount();
-			List<Show_RView> rBean = rs.regionRestaurant(start, pageSize, region_name);
-			m.addAttribute("rBean", rBean);
-			m.addAttribute("currentPage", currentPage);
-			m.addAttribute("totalPage", totalPage);
-		}
-		return "iring29/R_index";
-	}
-
 	@RequestMapping(path = "/ShowPic")
 	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("RBean") Restaurant r) {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
 
-		if (r.getPic() == null) {
-			try {
-				File file = new File("/III_Project/other/iring29_img/Restaurant_img.png");
-				long fileSize = file.length();
-				FileInputStream fi = new FileInputStream(file);
-				byte[] buffer = new byte[(int) fileSize];
-				int offset = 0;
-				int numRead = 0;
-				while (offset < buffer.length && (numRead = fi.read(buffer, offset, buffer.length - offset)) >= 0) {
-					offset += numRead;
-				}
-
-				fi.close();
-				r.setPic(buffer);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		System.out.println("in img");
+		
+//		if (r.getPic() == null) {
+//			try {
+//				File file = new File("/III_Project/src/main/webapp/assets/img/iring29/Restaurant_img.png");
+//				long fileSize = file.length();
+//				FileInputStream fi = new FileInputStream(file);
+//				byte[] buffer = new byte[(int) fileSize];
+//				int offset = 0;
+//				int numRead = 0;
+//				while (offset < buffer.length && (numRead = fi.read(buffer, offset, buffer.length - offset)) >= 0) {
+//					offset += numRead;
+//				}
+//
+//				fi.close();
+//				r.setPic(buffer);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}

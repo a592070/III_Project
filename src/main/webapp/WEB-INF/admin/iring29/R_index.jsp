@@ -123,10 +123,10 @@ th {
 			<div class="content-wrapper">
 				<div class="box" >
 					<div class="search" class="form-group col-md-2">
-						<form id="formR" name="formR"
-							action="<%=application.getContextPath()%>/admin/regionSearch" >
+<%-- 						<form id="formR" name="formR" --%>
+<%-- 							action="<%=application.getContextPath()%>/admin/regionSearch" > --%>
 							<span class="sp_search">餐廳地區</span> 
-							<select name="keyword" id="inputState" class="form-control">
+							<select name="region" id="inputState" class="form-control">
 								<option value="">請選擇地區</option>
 								<option value="基隆">基隆</option>
 								<option value="新北">新北</option>
@@ -147,7 +147,7 @@ th {
 								<option value="台東">台東</option>
 								<option value="澎湖">澎湖</option>
 							</select>
-						</form>
+<%-- 						</form> --%>
 					</div>
 					<script>
 					$("#inputState").change(function(){
@@ -155,12 +155,10 @@ th {
 						console.log($("#inputState").val());
 						var region = $("#inputState").val();
 						$('#inputState option:contains(' + region + ')').attr('selected', 'selected');
-						$('#keyword').val(region);
+// 						$('#keyword').val(region);
 						$("#page-btn").val(1);
 						$(".page-link.last").val('');
 						$('#page-botton').click();
-<%-- 						document.formR.attributes["action"].value ="<%=application.getContextPath()%>/admin/key"; --%>
-// 						document.formR.submit();
 										})
 					</script>
 
@@ -384,16 +382,18 @@ th {
 			var keyword = $("#keyword").val();
 			var order = $("#order").val();
 			var orderFiled = $("#orderFiled").val();
+			var region = $("#inputState").val();
 			console.log("cgpage = " + cgpage);
 			console.log("currentPage = " + currentPage);
 			console.log("totalPage = " + totalPage);
 			console.log("keyword = " + keyword);
 			console.log("order = " + order);
 			console.log("orderFiled = " + orderFiled);
+			console.log("region = " + region);
 					$.ajax(
 						{
 							type: 'POST',
-							data: { "currentPage": currentPage, "cgpage":cgpage, "keyword":keyword, "order":order, "orderFiled":orderFiled },
+							data: { "currentPage": currentPage, "cgpage":cgpage, "keyword":keyword, "order":order, "orderFiled":orderFiled, "region":region },
 							url: '${pageContext.servletContext.contextPath}/admin/key',
 							dataType: 'json',
 							success: function (response) {

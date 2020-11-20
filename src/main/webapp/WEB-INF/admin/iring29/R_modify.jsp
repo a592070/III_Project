@@ -217,7 +217,7 @@ pre {
 								<FORM  id="modifyR" name="modifyR" method="POST" enctype="multipart/form-data">
 								<p class="modify-img">
 									<label for="r-name">請選擇欲修改圖片上傳</label> 
-									<input type="file" id="pic" name="pic">
+									<input type="file" id="pic" name="pic" value="${RBean.pic}">
 									<Input type='hidden' name='r_sn' value='${RBean.r_sn}'>
 			<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
 								</p>
@@ -227,6 +227,14 @@ pre {
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 								<script>
+								$("#pic").ready(function(){
+									var pic = $("#pic").val();
+									console.log(pic);
+										if(pic == ""){
+											 $("#preview_Rpic").attr('src', '<%=application.getContextPath()%>/assets/img/iring29/Restaurant_img.png');
+											}
+									})
+								
 								$("#pic").change(function(){
 					                 readURL(this);
 					            });

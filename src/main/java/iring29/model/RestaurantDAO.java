@@ -61,7 +61,45 @@ public class RestaurantDAO {
 
 		return query.list();
 	}
-
+	
+	// Region
+	public int getRegionSize(String region) {
+		String hql = "select count(r_sn) from Show_RView where region = ?1";
+		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+		query.setParameter(1, region);
+		return query.uniqueResult().intValue();
+	}
+		
+	public List<Show_RView> regionRestaurant(int first, int count, String region, String orderFiled, String order) {
+		String hql = "from Show_RView where region =?1 order by " + orderFiled + " " + order;
+		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
+		query.setParameter(1, region);
+		query.setFirstResult(first);
+		query.setMaxResults(count);
+		return query.list();
+	}
+		
+	// Region + keyword
+	public int getSizeRK(String region, String keyWords) {
+		String hql = "select count(r_sn) from Show_RView where region = ?1 and name like ?2";
+		keyWords = "%" + keyWords + "%";
+		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+		query.setParameter(1, region);
+		query.setParameter(2, keyWords);
+		return query.uniqueResult().intValue();
+	}
+		
+	public List<Show_RView> listByRK(int first, int count, String region, String keyWords, String orderFiled, String order) {
+		String hql = "from Show_RView where region =?1 and name like ?2 order by " + orderFiled + " " + order;
+		keyWords = "%" + keyWords + "%";
+		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
+		query.setParameter(1, region);
+		query.setParameter(2, keyWords);
+		query.setFirstResult(first);
+		query.setMaxResults(count);
+		return query.list();
+	}
+		
 	// Change Status
 	public String updateStatus(BigDecimal r_sn, String status) {
 		Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
@@ -98,23 +136,8 @@ public class RestaurantDAO {
 		query.setParameter(1, r_sn);
 		return query.uniqueResult();
 	}
-	// Region
-	public int getRegionSize(String region) {
-		String hql = "select count(r_sn) from Show_RView where region = ?1";
-		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-		query.setParameter(1, region);
-		return query.uniqueResult().intValue();
-	}
 	
-	public List<Show_RView> regionRestaurant(int first, int count, String region) {
-		String hql = "from Show_RView where region =?1 order by r_sn";
-		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
-		query.setParameter(1, region);
-		query.setFirstResult(first);
-		query.setMaxResults(count);
-		return query.list();
-	}
-	
+	//Detail info
 	public Restaurant restaurantInfo(BigDecimal r_sn) {
 		String hql = "from Restaurant where r_sn = ?1";
 		Query<Restaurant> query = sessionFactory.getCurrentSession().createQuery(hql, Restaurant.class);
@@ -122,6 +145,7 @@ public class RestaurantDAO {
 		return query.uniqueResult();
 	}
 
+	//Delete info
 	public String deleteRestaurant(BigDecimal r_sn) {
 		Restaurant rBean = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
 		if(rBean != null) {
