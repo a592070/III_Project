@@ -116,7 +116,7 @@ h2 {
 												id="exampleFormControlFile1">
 										</div> -->
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
-											<button type="submit" class="btn btn-primary btn-default">送出修改</button>
+											<button class="btn btn-primary btn-default" onclick="confirmEdit()">送出修改</button>
 											<!-- <button type="submit" class="btn btn-secondary btn-default">Cancel</button> -->
 										</div>
 
@@ -163,6 +163,17 @@ h2 {
 					document.getElementById("title").value = "${artBean[0].artTitle }";
 			}
 			
+
+		}
+
+		function confirmEdit(){
+			var desicion = confirm("確定要送出修改?");
+			if(desicion){
+				$(this).submit();
+
+			}else{
+				event.preventDefault();
+			}
 
 		}
 		 

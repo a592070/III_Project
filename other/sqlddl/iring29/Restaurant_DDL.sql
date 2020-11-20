@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  已建立檔案 -version:06 UPDATE: 2020/11/13
+--  已建立檔案 -version:07 UPDATE: 2020/11/16
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence RESTAURANT_SEQ
@@ -611,15 +611,18 @@ ALTER TRIGGER "R_ORDER_LIST_TRG" ENABLE;
 
   
 --------------------------------------------------------
---  Create VIEW Table R_order_view
---------------------------------------------------------	
-create view R_order_view as
-select o.order_id, o.id, r.name, o.book_time, o.customer_num, o.cus_name, o.cus_phone, o.deposit, t.order_date, t.username 
-from r_order_list o, restaurant r, order_table t
-where o.r_sn = r.r_sn and o.order_id = t.order_id;
-	  
+--  DDL for View R_ORDERLIST_VIEW
 --------------------------------------------------------
---  Create VIEW Table SHOW_RVIEW
---------------------------------------------------------	    
-create view SHOW_RVIEW as
-select R_SN, NAME, ADDRESS, REGION, USERNAME, STATUS from RESTAURANT;
+
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "III_TEAM_DBA"."R_ORDERLIST_VIEW" ("ORDER_ID", "ID", "NAME", "BOOK_TIME", "CUSTOMER_NUM", "CUS_NAME", "CUS_PHONE", "DEPOSIT", "ORDER_DATE", "USERNAME") AS 
+  select o.order_id, o.id, r.name, o.book_time, o.customer_num, o.cus_name, o.cus_phone, o.deposit, t.order_date, t.username 
+from r_order_list o, restaurant r, order_table t
+where o.r_sn = r.r_sn and o.order_id = t.order_id
+;
+--------------------------------------------------------
+--  DDL for View SHOW_RVIEW
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "III_TEAM_DBA"."SHOW_RVIEW" ("R_SN", "NAME", "ADDRESS", "REGION", "USERNAME", "STATUS", "TYPE") AS 
+  select R_SN, NAME, ADDRESS, REGION, USERNAME, STATUS, TYPE from RESTAURANT
+;
