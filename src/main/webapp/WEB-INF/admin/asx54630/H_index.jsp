@@ -84,7 +84,6 @@
         <table class="table" id="table">
             <thead>
             <tr>
-<!--             	<th>圖片</th> -->
                 <th><div>
 						<form id="statuss" name="statuss"
 							action="<%=application.getContextPath()%>/admin/hotelSort">
@@ -115,7 +114,6 @@
             <tbody>
             <c:forEach var="hotels" items="${hoteldata}">
             <tr>
-<!--             	<td></td> -->
 				<td id="SN">${hotels.SN}</td>
                 <td>${hotels.NAME}</td>
                 <td>${hotels.REGION}</td>
