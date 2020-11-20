@@ -40,7 +40,8 @@ public class ArticleController {
 	@RequestMapping(path = "/Forum")
 	public String ForumEntry(Model m) {
 		m.addAttribute("artBean", articleService.showAllArticles());
-		return "azaz4498/F_index";
+//		return "azaz4498/F_index";
+		return "azaz4498/F_JSONindex";
 
 	}
 
@@ -64,6 +65,12 @@ public class ArticleController {
 		return "azaz4498/F_index";
 
 	}
+	@RequestMapping(path = "/artTypeSearch.json" ,method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	public @ResponseBody List<Article> dispalyByTypeJSON(@RequestParam(name = "articleType") Integer typeId) throws SQLException {
+		List<Article> artList= articleService.showArticlesByType(typeId);
+		return artList;
+	}
+	
 
 	@RequestMapping(path = "/articleSearch")
 	public String DisplayResults(@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
@@ -78,6 +85,8 @@ public class ArticleController {
 	@RequestMapping(path = "/editPage.controller")
 	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticleById(articleId));
+		
+		System.out.println("==========Edit Page 我要進去囉==========");
 
 		return "azaz4498/editPage";
 	}
@@ -155,9 +164,7 @@ public class ArticleController {
 
 	@RequestMapping(path = "/statusChange.controller", method = RequestMethod.POST)
 	public String statusChange(@RequestParam(name = "artId") Integer articleId) {
-		System.out.println("===========BEFORE===========");
 		articleService.switchStatus(articleId);
-		System.out.println("===========AFTER===========");
 
 		return "redirect:/Forum";
 	}

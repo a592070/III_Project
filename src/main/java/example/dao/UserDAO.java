@@ -9,7 +9,7 @@ public interface UserDAO {
 
     List<User> selectSort(String orderFiled);
 
-    List<User> select(String username);
+    List<User> select(String keyword);
 
     String getUserPassword(int id);
 

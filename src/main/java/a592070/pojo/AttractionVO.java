@@ -3,6 +3,7 @@ package a592070.pojo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Type;
 import utils.StringUtil;
 
 import javax.persistence.*;
@@ -20,6 +21,9 @@ public class AttractionVO {
     private String address;
     private String ticketInfo;
     private String description;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
     public AttractionVO() {
     }
@@ -68,6 +72,14 @@ public class AttractionVO {
         this.description = description;
     }
 
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "AttractionVO{" +
@@ -76,6 +88,7 @@ public class AttractionVO {
                 ", address='" + address + '\'' +
                 ", ticketInfo='" + ticketInfo + '\'' +
                 ", description='" + description + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

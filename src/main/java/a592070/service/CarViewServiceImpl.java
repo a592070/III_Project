@@ -23,6 +23,11 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
     }
 
     @Override
+    public List<byte[]> getPictures(int id) {
+        return null;
+    }
+
+    @Override
     public byte[] getPicture(int id) {
         return null;
     }

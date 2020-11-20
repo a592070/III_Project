@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService{
     public void doSomething() {
 //        dao.insert(new User(9, "test transA", "trans"));
 //        dao.insert(new User(7, "test trans", "trans"));
-        List<User> list = dao.select("NAME");
+        List<User> list = dao.select("1");
         System.out.println(list);
     }
     @Override

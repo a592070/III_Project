@@ -39,12 +39,18 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
         return null;
     }
 
+    @Deprecated
+    @Override
+    public List<byte[]> getPictures(int id) {
+        return null;
+    }
+
     @Override
     public int getSizeByKeywords(String keyWords, String region) {
         keyWords = "%"+keyWords+"%";
         region = "%"+region+"%";
 
-        String hql = "select count(sn) from HotelVO where region like :region and (name like :keyword or address like :keyword or description like :keyword)";
+        String hql = "select count(sn) from HotelVO where region like :region and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword)";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter("keyword", keyWords);
         query.setParameter("region", region);
@@ -57,7 +63,7 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
         keyWords = "%"+keyWords+"%";
         region = "%"+region+"%";
 
-        String hql = "from HotelVO where region like :region and (name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
+        String hql = "from HotelVO where region like :region and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
