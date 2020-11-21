@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import asx54630.model.Hotel;
+import asx54630.model.HotelView;
 import asx54630.service.H_Service;
 
 
@@ -24,7 +26,7 @@ public class H_Controller {
 	@RequestMapping(path = "/hotelindex", method = RequestMethod.GET)
 	public String processHotelPage(Model m) {
 		
-		List<Hotel> hoteldata = hService.selectAll("","","");
+		List<HotelView> hoteldata = hService.selectAll("","","");
 		m.addAttribute("hoteldata", hoteldata);
 		
 		return "asx54630/H_index";
@@ -40,13 +42,15 @@ public class H_Controller {
 		return "asx54630/H_Modify";
 		}
 	
-	@RequestMapping(path = "/hotelselect", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //查詢
-	public String processHotelSelectPage(@RequestParam(name = "keyword") String keyword, @RequestParam(name = "regionkeywd") String regionkeywd, @RequestParam(name = "typekeywd") String typekeywd, Model m) {
+	@RequestMapping(path = "/hotelselect", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //查詢
+	public ModelAndView processHotelSelectPage(@RequestParam(name = "keyword",required = false) String keyword, @RequestParam(name = "regionkeywd",required = false) String regionkeywd, @RequestParam(name = "typekeywd",required = false) String typekeywd) {
 
-		List<Hotel> hoteldata = hService.selectAll(keyword, regionkeywd,typekeywd);
-		m.addAttribute("hoteldata", hoteldata);
+		List<HotelView> hoteldata = hService.selectAll(keyword, regionkeywd,typekeywd);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("hoteldata", hoteldata);
+		mav.setViewName("asx54630/H_search");
 		
-		return "asx54630/H_index";
+		return mav;
 		}
 	
 	@RequestMapping(path = "/hotelSort", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //以ID排序

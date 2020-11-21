@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import asx54630.model.Hotel;
+import asx54630.model.HotelView;
 
 
 
@@ -38,17 +38,17 @@ public class HotelDAO {
 	}
 	
 
-	public List<Hotel> selectAll(String name, String region, String type){ //查詢多筆
+	public List<HotelView> selectAll(String name, String region, String type){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
-		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 or REGION like ?1 or TYPE like ?2", Hotel.class);
+		Query<HotelView> query = session.createQuery("From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", HotelView.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
-		List<Hotel> list = query.list();
+		List<HotelView> list = query.list();
 		return list;
 	}
 	
-	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){ //以ID排序
+	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){ //排序
 		Session session = sessionFactory.getCurrentSession();
 		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order , Hotel.class);
 		query.setParameter(0, "%" + name + "%");

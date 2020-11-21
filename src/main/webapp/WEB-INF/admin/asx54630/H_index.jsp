@@ -28,7 +28,7 @@
 <!-- 		<div class="container"> -->
         
         <div class="mx-auto my-3" style="width: 1100px">
-            <form class="form-inline" action="hotelselect" method="GET" id="form">
+            <form class="form-inline"  id="form">
                 <div class="form-group mb-2">
                   <h5>輸入關鍵字:</h5>
                 </div>
@@ -38,8 +38,8 @@
                   <Input type='hidden' name='order' value='DESC'>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputState">地區:</label>
-                    <select id="inputState" class="form-control"  name="regionkeywd" id="regionkeywd" onChange="this.form.submit()">
+                    <label for="regionkeywd">地區:</label>
+                    <select class="form-control"  name="regionkeywd" id="regionkeywd" >
                         <option value="">請選擇..</option>
                         <option value="基隆市">基隆市</option>
                         <option value="新北市">新北市</option>
@@ -67,14 +67,14 @@
                   </div>
                   <div class="form-group col-md-3">
                     <label for="typekeywd">類型:</label>
-                    <select id="typekeywd" class="form-control" name="typekeywd">
+                    <select class="form-control" name="typekeywd" id="typekeywd">
                       <option value="">請選擇..</option>
                       <option value="飯店">飯店</option>
                       <option value="民宿">民宿</option>
                       <option value="汽車旅館">汽車旅館</option>
                     </select>
                   </div>      
-                <button type="submit" class="btn btn-primary mb-2" id="search" name="search">搜尋</button>
+                <button type="button" class="btn btn-primary mb-2" id="search" name="search">搜尋</button>
               </form>
             </div>
             <h2>飯店列表</h2>
@@ -106,12 +106,29 @@
                 <th>地區</th>
                 <th>地址</th>
                 <th>住宿類型</th>                                            
-                <td>狀態</td>
-                <th>修改</th>
+                <th><div>
+						<form id="statuss" name="statuss"
+							action="<%=application.getContextPath()%>/admin/hotelSort">
+							<button>
+								<svg width="2em" height="1em" viewBox="0 0 16 16"
+									class="bi bi-arrow-down-up" fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd"
+										d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+						</svg>
+							</button> 
+							<Input type='hidden' name='orderfiled' value='STATUS'> 
+							<Input type='hidden' name='keyword' value='${keyword}'>
+							<Input type='hidden' name='regionkeywd' value='${regionkeywd}'>
+							<Input type='hidden' name='typekeywd' value='${typekeywd}'> 
+							<Input type='hidden' name='order' value='${order}'>狀態
+						</form>
+					</div></th>
+				<th>修改</th>
                 <th>刪除</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody">
             <c:forEach var="hotels" items="${hoteldata}">
             <tr>
 				<td id="SN">${hotels.SN}</td>
@@ -161,7 +178,68 @@
 			
 		  })
 		
+		$("#search").click(function () {
+			console.log("搜尋")
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
 		
+		$("#regionkeywd").on('change' ,function () {
+			console.log("地區搜尋")
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#typekeywd").on('change' ,function () {
+			console.log("類型搜尋")
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
 		
 		function clickdetail(id){
 
