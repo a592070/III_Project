@@ -6,12 +6,16 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<bean id="restaurantDAO" class="iring29.model.RestaurantDAO" scope="session" />
+	<bean id="F_restaurantDAO" class="iring29.model.F_RestaurantDAO" scope="session" />
 	<bean id="restaurantService" class="iring29.service.RestaurantService"  scope="session" />
+	<bean id="F_restaurantService" class="iring29.service.F_RestaurantService"  scope="session" />
 	<bean id="ModifyDAO" class="iring29.model.ModifyDAO" scope="session" />
 	<bean id="ModifyService" class="iring29.service.ModifyService" scope="session"/>
 	<bean id="Page" class="iring29.model.Page" scope="session"/>
 	<bean id="restaurantController" class="iring29.controller.RestaurantController" scope="session"></bean>
+	<bean id="F_restaurantController" class="iring29.controller.F_RestaurantController" scope="session"></bean>
 	<bean id="R_OrderDAO" class="iring29.model.R_OrderDAO" scope="session"></bean>
 	<bean id="R_OrderService" class="iring29.service.R_OrderService" scope="session"></bean>
 	<bean id="RorderController" class="iring29.controller.RorderController" scope="session"></bean>
+	<bean id="F_RorderController" class="iring29.controller.F_RorderController" scope="session"></bean>
 </beans>

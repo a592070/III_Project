@@ -11,8 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<script
-		src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
 <title>論壇管理</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
@@ -61,8 +60,7 @@ h2 {
 </head>
 
 
-<body class="sidebar-fixed sidebar-dark header-light header-fixed"
-	id="body">
+<body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
 
 
 	<div class="mobile-sticky-body-overlay"></div>
@@ -78,31 +76,38 @@ h2 {
 							<div class="card card-default">
 								<div class="card-header card-header-border-bottom">
 									<h1>文章修改</h1>
+									<br />
+									<div>
+										<a href="${pageContext.servletContext.contextPath}/Forum">回列表</a>
+									</div>
 								</div>
+
 								<div class="card-body">
-									<form action=edit.controller method="POST">
+									<form action=${pageContext.servletContext.contextPath}/edit.controller method="POST">
 										<input type="hidden" name="artId" value="${artBean[0].artId }">
-										<input type="hidden" name="userid"
-											value="${artBean[0].artUserId }">
+										<input type="hidden" name="userid" value="${artBean[0].artUserId }">
 
 										<div class="form-group">
-											<label for="fname">標題</label> <input type="text"
-												name="articleTitle" id="title" onblur="showEditTitle()"
-												class="form-control" value="${artBean[0].artTitle }">
+											<label for="fname"><h3>標題</h3></label>
+											<input type="text" name="articleTitle" id="title" onblur="showEditTitle()" class="form-control"
+												value="${artBean[0].artTitle }">
 										</div>
 										<div class="form-group">
-											<label for="typeSelect">分類</label> <select
-												class="form-control" id="typeSelect" name="typeSelect">
+											<label for="typeSelect"><h3>分類</h3></label> <select class="form-control" id="typeSelect" name="typeSelect">
+												<option value="">選擇類型</option>
 												<option value="1">旅遊</option>
 												<option value="2">住宿</option>
 												<option value="3">美食</option>
 												<option value="4">景點</option>
+												<option value="5">交通</option>
+												<option value="6">行程</option>
+												<option value="7">購物</option>
+												<option value="0">其他</option>
 											</select>
 										</div>
 										<div class="form-group">
-											<label for="content">內容</label>
-											<textarea class="form-control" id="editor" rows="15"
-												name="articleContent">${artBean[0].artContent }</textarea>
+											<label for="content"><h3>內容</h3></label>
+											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
 										<!-- <div class="form-group">
@@ -111,7 +116,7 @@ h2 {
 												id="exampleFormControlFile1">
 										</div> -->
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
-											<button type="submit" class="btn btn-primary btn-default">Submit</button>
+											<button class="btn btn-primary btn-default" onclick="confirmEdit()">送出修改</button>
 											<!-- <button type="submit" class="btn btn-secondary btn-default">Cancel</button> -->
 										</div>
 
@@ -141,7 +146,7 @@ h2 {
 		function getDefaultType() {//判斷文章類型 修改下拉選單預設值
 			var typeSelect = document.getElementById("typeSelect");
 			var options = typeSelect.getElementsByTagName("option");
-			var selectedType = ${artBean[0].articleType.typeId}-1;
+			var selectedType = ${artBean[0].articleType.typeId};
 			console.log(selectedType);
 			options[selectedType].selected = true;
 		}
@@ -160,6 +165,17 @@ h2 {
 			
 
 		}
+
+		function confirmEdit(){
+			var desicion = confirm("確定要送出修改?");
+			if(desicion){
+				$(this).submit();
+
+			}else{
+				event.preventDefault();
+			}
+
+		}
 		 
          
  	</script>
@@ -175,9 +191,8 @@ h2 {
  	</script>
 
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-	
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
 
 
 </body>

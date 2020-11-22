@@ -19,6 +19,11 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     }
 
     @Override
+    public List<byte[]> getPictures(int id) {
+        return null;
+    }
+
+    @Override
     public byte[] getPicture(int id) {
         return viewDAO.getPicture(id);
     }
@@ -39,7 +44,11 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     }
     @Override
     public List<RestaurantVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled) {
-        return viewDAO.listByFiled(currentPage, pageSize, RestaurantFieldName.RESTAURANT_REGION, region, orderFiled);
+        return listByRegion(currentPage, pageSize, region, orderFiled, false);
+    }
+    @Override
+    public List<RestaurantVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled, boolean descending) {
+        return viewDAO.listByFiled(currentPage, pageSize, RestaurantFieldName.RESTAURANT_REGION, region, orderFiled, descending);
     }
 
 
@@ -49,7 +58,11 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     }
     @Override
     public List<RestaurantVO> list(int currentPage, int pageSize, String orderFiled) {
-        return viewDAO.listByRownum(currentPage, pageSize, orderFiled);
+        return viewDAO.listByRownum(currentPage, pageSize, orderFiled, false);
+    }
+    @Override
+    public List<RestaurantVO> list(int currentPage, int pageSize, String orderFiled, boolean descending) {
+        return viewDAO.listByRownum(currentPage, pageSize, orderFiled, descending);
     }
 
 
@@ -71,6 +84,10 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     }
     @Override
     public List<RestaurantVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, region, orderFiled);
+        return listByKeyWords(currentPage, pageSize, keywords, region, orderFiled, false);
+    }
+    @Override
+    public List<RestaurantVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
+        return viewDAO.listByKeywords(currentPage, pageSize, keywords, region, orderFiled, descending);
     }
 }

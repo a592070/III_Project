@@ -26,7 +26,7 @@
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
  <%-- -- <div class="content-wrapper"></div>  -------------------------------以下為個人內容-------------------------- --%>
 <!-- 		<div class="container"> -->
-        <h2>飯店</h2>
+        
         <div class="mx-auto my-3" style="width: 1100px">
             <form class="form-inline" action="hotelselect" method="GET">
                 <div class="form-group mb-2">
@@ -76,6 +76,7 @@
                 <button type="submit" class="btn btn-primary mb-2" value="search" name="search">搜尋</button>
               </form>
             </div>
+            <h2>飯店列表</h2>
   <!--------------------------------------------以上為搜尋列----------------------------------------------------------->  
   <!--------------------------------------------以下為飯店內容--------------------------------------------------------->
         <br>
@@ -103,23 +104,23 @@
                 <td>${hotels.TYPE}</td>
                 <td>${hotels.STATUS}</td>
 <%--                 <td><button type="button" class="btn btn-primary mb-2"  data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')">變更狀態</button></td> --%>
-               <td><label class="switch switch-text switch-success switch-pill form-control-label">
+     <%-- 開關(綠色) --%>          <td><label class="switch switch-text switch-success switch-pill form-control-label">
                			<c:set var="status1" value="啟用"/>
                								<c:choose>
                								  <c:when test="${hotels.STATUS eq status1}">
 												<input type="checkbox" name="status" class="switch-input form-check-input" data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')" checked >
-												<span class="switch-label" data-on="On" data-off="Off"></span>
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
 												<span class="switch-handle"></span>
 											  </c:when>
 											  <c:otherwise>
 												<input type="checkbox" name="status" class="switch-input form-check-input" data-toggle="modal" data-target="#exampleModal" onclick="clickstatus('${hotels.SN}','${hotels.STATUS}')"  >
-												<span class="switch-label" data-on="On" data-off="Off"></span>
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
 												<span class="switch-handle"></span>
 											  </c:otherwise>
 											</c:choose>
-											</label></td>
-                <td><button type="button" class="btn btn-primary mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
-               <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
+											</label></td> <%-- 開關(綠色) --%> 
+                <td><button type="button" class="btn btn-warning mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
+               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
             </tr>
             </c:forEach> 
 
@@ -137,7 +138,7 @@
 		
 		function clickdetail(id){
 
-			document.location.href="${pageContext.servletContext.contextPath}/hoteldetail?detailsn="+id;
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hoteldetail?detailsn="+id;
 
 		}
 
@@ -150,6 +151,10 @@
 
 			document.location.href="${pageContext.servletContext.contextPath}/hotelindex";
 
+		}
+
+		function statuscancel(){
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hotelindex";
 		}
 
 		</script> 

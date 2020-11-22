@@ -23,6 +23,11 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
     }
 
     @Override
+    public List<byte[]> getPictures(int id) {
+        return null;
+    }
+
+    @Override
     public byte[] getPicture(int id) {
         return null;
     }
@@ -40,7 +45,11 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
 
     @Override
     public List<CarVO> list(int currentPage, int pageSize, String orderFiled) {
-        return viewDAO.listByRownum(currentPage, pageSize, orderFiled);
+        return list(currentPage, pageSize, orderFiled, false);
+    }
+    @Override
+    public List<CarVO> list(int currentPage, int pageSize, String orderFiled, boolean descending) {
+        return viewDAO.listByRownum(currentPage, pageSize, orderFiled, descending);
     }
 
     @Override
@@ -65,7 +74,11 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
 
     @Override
     public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, null, orderFiled);
+        return listByKeyWords(currentPage, pageSize, keywords, null, orderFiled, false);
+    }
+    @Override
+    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
+        return viewDAO.listByKeywords(currentPage, pageSize, keywords, null, orderFiled, descending);
     }
 
 
@@ -102,6 +115,10 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
     @Deprecated
     @Override
     public List<CarVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled) {
+        return null;
+    }
+    @Override
+    public List<CarVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled, boolean descending) {
         return null;
     }
 }

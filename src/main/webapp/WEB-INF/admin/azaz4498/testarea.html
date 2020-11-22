@@ -1,0 +1,20 @@
+$(document).ready(function () {
+    $('tbody').on("click", ".delete_btn", function () {
+
+        var currId = $(this).val();
+        var desicion = confirm("確定要刪除此筆資料?");
+        if (desicion) {
+            $.ajax({
+                type: "POST",
+                url: "delete.controller",
+                data: { "artId": currId },
+                success: function (response) {
+                    $(this).closest('tr').remove();
+                }
+            });
+
+        } else {
+            return;
+        };
+
+    });

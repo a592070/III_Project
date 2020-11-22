@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Restaurant Order List</title>
+<title>Result</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style type="text/css">
@@ -39,7 +39,7 @@ td {
 
 <script type="text/javascript">
 	//設定倒數秒數 
-	var count = 5;
+	var count = 3;
 	//寫一個方法，顯示倒數秒數  數到0後跳轉頁面  
 	function countDown(){
 		//將count顯示在div中
@@ -48,7 +48,7 @@ td {
 		count -= 1;
 		//count=0時，跳轉頁面
 		if(count==0){
-			location.href="<%=application.getContextPath()%>/Restaurant";
+			location.href="<%=application.getContextPath()%>/admin/Restaurant";
 		}
 		//每秒執行一次,showTime()
 		setTimeout("countDown()",1000);

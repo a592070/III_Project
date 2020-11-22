@@ -23,6 +23,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -37,13 +38,24 @@ public class Article implements Serializable {
 	private String artContent;
 	private Timestamp artCreTime;
 	private String artUserId;
-	private int artCommNum;
-	private int artView;
-	private int artId;
-	private int artTypeId;
+	private Integer artCommNum;
+	private Integer artView;
+	private Integer artId;
+	private Integer artTypeId;
 	private String artTitle;
 	private byte[] artPic;
 	private String artPicUrl;
+	private String artStatus;
+	
+	@Column(name = "ART_STATUS")
+	public String getArtStatus() {
+		return artStatus;
+	}
+
+	public void setArtStatus(String artStatus) {
+		this.artStatus = artStatus;
+	}
+
 	private List<Comment> comments = new ArrayList<Comment>();
 	private ArticleType articleType;
 
@@ -58,7 +70,7 @@ public class Article implements Serializable {
 	public void setArtContent(String artContent) {
 		this.artContent = artContent;
 	}
-
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "ART_CRE_TIME")
 	public Timestamp getArtCreTime() {
 		return artCreTime;
@@ -78,20 +90,20 @@ public class Article implements Serializable {
 	}
 
 	@Column(name = "ART_COMM_NUM")
-	public int getArtCommNum() {
+	public Integer getArtCommNum() {
 		return artCommNum;
 	}
 
-	public void setArtCommNum(int artCommNum) {
+	public void setArtCommNum(Integer artCommNum) {
 		this.artCommNum = artCommNum;
 	}
 
 	@Column(name = "ART_VIEW")
-	public int getArtView() {
+	public Integer getArtView() {
 		return artView;
 	}
 
-	public void setArtView(int artView) {
+	public void setArtView(Integer artView) {
 		this.artView = artView;
 	}
 
@@ -99,20 +111,20 @@ public class Article implements Serializable {
 	@Column(name = "ART_ID")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARTID_SEQUENCE")
 	@SequenceGenerator(name = "ARTID_SEQUENCE", sequenceName = "ARTID_SEQUENCE", allocationSize = 1)
-	public int getArtId() {
+	public Integer getArtId() {
 		return artId;
 	}
 
-	public void setArtId(int artId) {
+	public void setArtId(Integer artId) {
 		this.artId = artId;
 	}
 	@JsonIgnore
 	@Transient
-	public int getArtTypeId() {
+	public Integer getArtTypeId() {
 		return artTypeId;
 	}
 
-	public void setArtTypeId(int artTypeId) {
+	public void setArtTypeId(Integer artTypeId) {
 		this.artTypeId = artTypeId;
 	}
 
@@ -142,7 +154,7 @@ public class Article implements Serializable {
 		this.artPicUrl = artPicUrl;
 	}
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -150,7 +162,7 @@ public class Article implements Serializable {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ART_TYPE_ID")
 	public ArticleType getArticleType() {
@@ -163,10 +175,11 @@ public class Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Article [artContent=" + artContent + ", artCreTime=" + artCreTime + ", artUserId=" + artUserId
-				+ ", artCommNum=" + artCommNum + ", artView=" + artView + ", artId=" + artId + ", artTypeId="
-				+ artTypeId + ", artTitle=" + artTitle + ", artPic=" + Arrays.toString(artPic) + ", artPicUrl="
-				+ artPicUrl + ", comments=" + comments + ", articleType=" + articleType + "]";
+		return "Article [artCreTime=" + artCreTime + "]";
 	}
+
+	
+
+	
 
 }

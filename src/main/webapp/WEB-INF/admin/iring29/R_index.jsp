@@ -67,6 +67,46 @@ th {
 	margin-left: 50px;
 	margin-bottom: 50px;
 }
+
+.r_sn {
+	width: 70px;
+	text-align: center;
+}
+
+.name {
+	width: 270px;
+	/* 	text-align: center;	 */
+}
+
+.address {
+	width: 270px;
+	/* 	text-align: center;	 */
+}
+
+.region {
+	width: 100px;
+	text-align: center;
+}
+
+.user {
+	width: 100px;
+	text-align: center;
+}
+
+.status {
+	width: 150px;
+	text-align: center;
+}
+
+.modify {
+	width: 110px;
+	text-align: center;
+}
+
+.delete {
+	width: 110px;
+	text-align: center;
+}
 </style>
 
 </head>
@@ -78,16 +118,15 @@ th {
 
 	<div class="wrapper">
 		<c:import url="/WEB-INF/admin/fragment/sidebar.jsp" />
-		<div class="page-wrapper">
+		<div class="page-wrapper"  id="page" >
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
-				<div class="box">
+				<div class="box" >
 					<div class="search" class="form-group col-md-2">
-						<form id="formR" name="formR"
-							action="<%=application.getContextPath()%>/regionSearch"
-							method="POST">
-							<span class="sp_search">餐廳地區</span> <select name="region_name"
-								id="inputState" class="form-control">
+<%-- 						<form id="formR" name="formR" --%>
+<%-- 							action="<%=application.getContextPath()%>/admin/regionSearch" > --%>
+							<span class="sp_search">餐廳地區</span> 
+							<select name="region" id="inputState" class="form-control">
 								<option value="">請選擇地區</option>
 								<option value="基隆">基隆</option>
 								<option value="新北">新北</option>
@@ -107,146 +146,137 @@ th {
 								<option value="花蓮">花蓮</option>
 								<option value="台東">台東</option>
 								<option value="澎湖">澎湖</option>
-								<option value="金門">金門</option>
-								<option value="連江">連江</option>
 							</select>
-						</form>
+<%-- 						</form> --%>
 					</div>
 					<script>
-				$("#inputState").change(function(){
+					$("#inputState").change(function(){
 						console.log("change");
 						console.log($("#inputState").val());
-						document.formR.attributes["action"].value ="<%=application.getContextPath()%>
-						/regionSearch";
-											document.formR.submit();
+						var region = $("#inputState").val();
+						$('#inputState option:contains(' + region + ')').attr('selected', 'selected');
+// 						$('#keyword').val(region);
+						$("#page-btn").val(1);
+						$(".page-link.last").val('');
+						$('#page-botton').click();
 										})
 					</script>
 
 					<div class="search">
-						<form action="<%=application.getContextPath()%>/key" method="GET">
-							<span class="sp_search">關鍵字搜尋</span> <input type="text"
-								name="keyword" placeholder="請輸入關鍵字" />
-							<button type="submit" class="btn btn-primary">Search</button>
+<%-- 						<form action="<%=application.getContextPath()%>/admin/key" method="GET"> --%>
+							<span class="sp_search">關鍵字搜尋</span> 
+							<input id="keyword" type="text" name="keyword" id="keyword" placeholder="請輸入關鍵字" value="${keyword}"/>
+							<button type="submit" class="btn btn-primary" id="page-botton">搜尋</button>
+							<Input type='hidden' name='order' value='DESC'>
+							<button type="submit" class="btn btn-primary" id="clearkey">清空關鍵字</button>
+<%-- 						</form> --%>
+					</div>
+					<script>
+						$('#keyword').change(function(){
+							$('#order').val('');
+							$("#page-btn").val(1);
+							})
+							
+						$('#clearkey').click(function(){
+							console.log("clear");
+						  $("#keyword").val('');
+						  $('#inputState').val('');
+						  $('#order').val('');
+						})
+
+					</script>
+					
+					<div class="search">
+						<form action="<%=application.getContextPath()%>/admin/NewRestaurant" method="GET">
+							<button type="submit" class="btn btn-success">新增餐廳</button>
 						</form>
 					</div>
 
 				</div>
 				<h2>餐廳列表</h2>
 				<div class="table-responsive">
-					<table class="table table-striped table-sm">
-						<thead>
+					<table class="table table-striped table-sm"  id="table">
+						<thead id="thead">
 							<tr>
-								<th>
-								<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key" >
-								<button>
-										<svg width="2em" height="1em" viewBox="0 0 16 16"
-											class="bi bi-arrow-down-up" fill="currentColor"
-											xmlns="http://www.w3.org/2000/svg">
+								<th><div>
+										<button id="page-botton" class="id-btn">
+											<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
 											<path fill-rule="evenodd"
-												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-										</svg>
-								</button>
-								<Input type='hidden' name='currentKPage' value='1'>
-								<Input type='hidden' name='orderFiled' value='r_sn'>
-								ID</form></th>
-								<th>
-								<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key" >
-								<button>
-										<svg width="2em" height="1em" viewBox="0 0 16 16"
-											class="bi bi-arrow-down-up" fill="currentColor"
-											xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-										</svg>
-								</button>
-								<Input type='hidden' name='currentKPage' value='1'>
-								<Input type='hidden' name='orderFiled' value='name'>
-								餐廳名稱</form></th>
-								<th>
-								<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key" >
-								<button>
-										<svg width="2em" height="1em" viewBox="0 0 16 16"
-											class="bi bi-arrow-down-up" fill="currentColor"
-											xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-										</svg>
-								</button>
-								<Input type='hidden' name='currentKPage' value='1'>
-								<Input type='hidden' name='orderFiled' value='address'>
-								餐廳地址</form></th>
-								<th>
-								<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/key" >
-								<button>
-										<svg width="2em" height="1em" viewBox="0 0 16 16"
-											class="bi bi-arrow-down-up" fill="currentColor"
-											xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-												d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-										</svg>
-								</button>
-								<Input type='hidden' name='currentKPage' value='1'>
-								<Input type='hidden' name='orderFiled' value='region'>
-								地區</form></th>
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+											</svg>
+										</button>
+											<Input type='hidden' name='order' id="order" value=''>ID
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='r_sn'>
+					<script>
+						$('.id-btn').click(function(){
+							var order = $('#order').val();
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>
+									</div></th>
+								<th>餐廳名稱</th>
+								<th>餐廳地址</th>
+								<th>地區</th>
 								<th>會員帳號</th>
 								<th>狀態</th>
 								<th>修改</th>
 								<th>刪除</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbody">
 							<c:forEach var="r" items="${rBean}">
 
 								<tr>
-									<td>${r.r_sn}</td>
-									<td>${r.name}</td>
-									<td>${r.address}</td>
-									<td>${r.region}</td>
-									<td>${r.username}</td>
-									<td>
-										<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/ModifyStatus"
-											method="POST" onsubmit="return confirm('確認是否修改狀態？');">
-											<c:if test="${r.status == 'N'}">停用&nbsp;
-											<button id="btn" type="submit" class="btn btn-success"
-													onclick="statusR()">啟用</button>
-											</c:if>
-											<c:if test="${r.status == 'Y'}">啟用&nbsp;
-											<button id="btn" type="submit" class="btn btn-secondary"
-													onclick="statusR()">停用</button>
-											</c:if>
-											<Input type='hidden' name='status' value='${r.status}'>
-											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+									<td id="r_sn" class="r_sn">${r.r_sn}</td>
+									<td class="name">${r.name}</td>
+									<td class="address">${r.address}</td>
+									<td class="region">${r.region}</td>
+									<td class="user">${r.username}</td>
+									<td id="status"><div class="status">
 
-										</form>
-									</td>
-
-									<td>
-
-										<form action="<%=application.getContextPath()%>/DisplayRestaurant"
-											method="POST">
-											<c:if test="${r.status == 'Y'}">
-												<button type="submit" class="btn btn-warning">修改</button>
-												<Input type='hidden' name='r_sn' value='${r.r_sn}'>
-											</c:if>
-										</form> <c:if test="${r.status == 'N'}">
-											<button type="submit" class="btn btn-warning" disabled>修改</button>
+										<c:if test="${r.status == 'N'}">
+											<label class="switch switch-text switch-success switch-pill form-control-label">
+												<input type="checkbox" class="switch-input form-check-input" value="禁用" id="checkbox">
+												<span class="switch-label" data-on="啟用" data-off="禁用" ></span>
+												<span class="switch-handle"></span>
+											</label>
 										</c:if>
+										<c:if test="${r.status == 'Y'}">
+											<label class="switch switch-text switch-success switch-pill form-control-label">
+												<input type="checkbox" class="switch-input form-check-input" value="啟用" id="checkbox" checked="checked">
+												<span class="switch-label" data-on="啟用" data-off="禁用"></span>
+												<span class="switch-handle"></span>
+											</label>
+										</c:if>
+						
+										</div></td>
+		
+		
+		
+									<td><div class="modify">
 
+											<form
+												action="<%=application.getContextPath()%>/admin/DisplayRestaurant"
+												method="POST">
+													<button type="submit" class="btn btn-warning">修改</button>
+													<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+											</form>
+											
 
-									</td>
-									<td>
-										<form id="statuss" name="statuss"
-											action="<%=application.getContextPath()%>/DeleteRestaurant"
-											method="POST" onsubmit="return confirm('確認是否刪除此餐廳資料？');">
-											<button type="submit" class="btn btn-danger">刪除</button>
-											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
-										</form>
-									</td>
+										</div></td>
+									<td><div class="delete">
+											<form id="statuss" name="statuss"
+												action="<%=application.getContextPath()%>/admin/DeleteRestaurant"
+												method="POST" onsubmit="return confirm('確認是否刪除此餐廳資料？');">
+												<button type="submit" class="btn btn-danger">刪除</button>
+												<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+											</form>
+										</div></td>
 								</tr>
 
 							</c:forEach>
@@ -259,65 +289,203 @@ th {
 				</div>
 
 			</div>
+			
+		<script>
+		//啟用 禁用 checkbox
+		$("#table").on('change', '#checkbox', function () {
+		  var cur_status =$(this).val();
+		  if(cur_status=="啟用"){
+			  console.log("禁用帳號")
+				var r_sn = $(this).closest('td').siblings("#r_sn").text()
+				var cgstatus = "禁用"
+				var status = 'Y';
+				$(this).val(cgstatus)
+				$.ajax(
+					{
+						type: 'POST',
+						data: { "r_sn": r_sn, "status": status },
+						url: '${pageContext.servletContext.contextPath}/admin/ModifyStatus',
+						dataType: 'text',
+						success: function (response) {
+							console.log(response)
 
+						}
+					}
+				)
+			
+		  }else{
+            console.log("啟用帳號")
+			var r_sn = $(this).closest('td').siblings("#r_sn").text()
+			var cgstatus = "啟用"
+			var status = 'N';
+			$(this).val(cgstatus)
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "r_sn": r_sn, "status": status },
+						url: '${pageContext.servletContext.contextPath}/admin/ModifyStatus',
+						dataType: 'text',
+						success: function (response) {
+							console.log(response)
 
+						}
+
+					}
+				)
+		  }
+		})
+	</script>
+	
+	
 			<div class="pages">
 				<nav aria-label="...">
 					<ul class="pagination">
-						<c:if test="${currentPage != null}">
-							<c:if test="${currentPage == 1}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}"
-									tabindex="-1">Previous</a></li>
-							</c:if>
-							<c:if test="${currentPage > 1}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage-1}"
-									tabindex="-1">Previous</a></li>
-							</c:if>
-							<li class="page-item active"><a class="page-link" href="#">${currentPage}
-									<span class="sr-only">(current)</span>
-							</a></li>
-							<c:if test="${currentPage != totalPage && currentPage != ''}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">Next</a></li>
-							</c:if>
-							<c:if test="${currentPage == totalPage && currentPage != ''}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/Restaurant?currentPage=${currentPage+1}">Next</a></li>
-							</c:if>
-						</c:if>
-
-						<c:if test="${currentKPage != null}">
-							<c:if test="${currentKPage == 1}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage-1}"
-									tabindex="-1">Previous</a></li>
-							</c:if>
-							<c:if test="${currentKPage > 1}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage-1}&keyword=${keyword}&orderFiled=${orderFiled}"
-									tabindex="-1">Previous</a></li>
-							</c:if>
-							<li class="page-item active"><a class="page-link" href="#">${currentKPage}
-									<span class="sr-only">(current)</span>
-							</a></li>
-							<c:if test="${currentKPage != totalKPage}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/key?currentKPage=${currentKPage+1}&keyword=${keyword}&orderFiled=${orderFiled}">Next</a></li>
-							</c:if>
-							<c:if test="${currentKPage == totalKPage}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/keywords?currenKPage=${currentKPage+1}">Next</a></li>
-							</c:if>
-						</c:if>
-
-
+						
+								<li class="page-item">
+									<button class="page-link" id="page-botton" value="first">第一頁</button>
+								</li>
+							
+							
+							<!-- previous -->
+								<li class="page-item">
+									<button class="page-link previous" id="page-botton" value="previous">&laquo;</button>
+								</li>
+							
+							
+							<!-- current page -->
+								<li class="page-item active">
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}</button>
+								</li>
+						
+							<!-- NEXT -->
+								<li class="page-item">
+									<button class="page-link next" id="page-botton" value="next">&raquo;</button>
+								</li>
+							
+							
+							
+								<li class="page-item last">
+									<button class="page-link last" id="page-botton" value="${totalPage}">最末頁</button>
+								</li>
+							
+					
 					</ul>
 				</nav>
 			</div>
 
+	<script>
+		
+		$("#page").on('click', '#page-botton', function () {
+			var cgpage =$(this).val();
+			var currentPage = $("#page-btn").val();
+			var totalPage = $(".page-link.last").val();
+			var keyword = $("#keyword").val();
+			var order = $("#order").val();
+			var orderFiled = $("#orderFiled").val();
+			var region = $("#inputState").val();
+			console.log("cgpage = " + cgpage);
+			console.log("currentPage = " + currentPage);
+			console.log("totalPage = " + totalPage);
+			console.log("keyword = " + keyword);
+			console.log("order = " + order);
+			console.log("orderFiled = " + orderFiled);
+			console.log("region = " + region);
+					$.ajax(
+						{
+							type: 'POST',
+							data: { "currentPage": currentPage, "cgpage":cgpage, "keyword":keyword, "order":order, "orderFiled":orderFiled, "region":region },
+							url: '${pageContext.servletContext.contextPath}/admin/key',
+							dataType: 'json',
+							success: function (response) {
+								$("#tbody").empty();
+								$("#page-btn").remove();
+								var current_page = "";
+								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage +'</button>';
+								$('.page-item.active').html(current_page);
+								currentPage = response.page.currentPage;
 
+								$(".page-link.last").remove();
+								var total_page = "";
+								total_page += '<button class="page-link last" id="page-botton" value="">最末頁</button>';
+								$(".page-item.last").html(total_page);
+								totalPage = response.page.totalPageCount;
+								$('.page-link.last').val(totalPage);
+
+								if(cgpage == totalPage){
+									currentPage = totalPage;
+									$('#page-btn').empty();
+									$('#page-btn').html(currentPage);
+								}
+
+								if(currentPage == 1){
+									$(".page-link.previous").attr("disabled", true);
+								}else{
+									$(".page-link.previous").attr("disabled", false);
+								}
+
+								if(currentPage == totalPage){
+									$(".page-link.next").attr("disabled", true);
+								}else{
+									$(".page-link.next").attr("disabled", false);
+								}
+
+								$('#page-btn').val(currentPage);
+								
+								var res_context = "";
+								for (let i = 0; i < response.Rlist.length; i++) {
+									console.log(response.Rlist[i].r_sn);
+									res_context += '<tr>';
+									res_context += '<td id="r_sn" class="r_sn">' + response.Rlist[i].r_sn + '</td>';
+									res_context += '<td class="name">'+ response.Rlist[i].name +'</td>'
+										if(response.Rlist[i].address == null){
+									res_context += '<td class="user">'+ "暫不提供相關資料" +'</td>'
+										}else{
+									res_context += '<td class="address">'+ response.Rlist[i].address +'</td>'
+												}
+									res_context += '<td class="region">'+ response.Rlist[i].region +'</td>'
+										if(response.Rlist[i].username == null){
+									res_context += '<td class="user">'+ "" +'</td>'
+										}else{
+									res_context += '<td class="user">'+ response.Rlist[i].username +'</td>'
+										}
+									res_context += '<td id="status"><div class="status">'
+										if(response.Rlist[i].status == "N"){
+									res_context += '<label class="switch switch-text switch-success switch-pill form-control-label">'
+									res_context += '<input type="checkbox" class="switch-input form-check-input" value="禁用" id="checkbox">'
+									res_context += '<span class="switch-label" data-on="啟用" data-off="禁用" ></span>'
+									res_context += '<span class="switch-handle"></span>'
+									res_context += '</label>'
+											}
+										if(response.Rlist[i].status == "Y"){
+									res_context += '<label class="switch switch-text switch-success switch-pill form-control-label">'
+									res_context += '<input type="checkbox" class="switch-input form-check-input" value="啟用" id="checkbox" checked="checked">'
+									res_context += '<span class="switch-label" data-on="啟用" data-off="禁用"></span>'
+									res_context += '<span class="switch-handle"></span>'
+									res_context += '</label>'
+										}
+									res_context += '</div></td>';
+									res_context += '<td><div class="modify">';
+									res_context += '<form action="<%=application.getContextPath()%>/admin/DisplayRestaurant" method="POST">';
+									res_context += '<button type="submit" class="btn btn-warning">修改</button>';
+									res_context += '<Input type="hidden" name="r_sn" value="'+ response.Rlist[i].r_sn + '">';
+									res_context += '</form>';
+									res_context += '</div></td>';
+									res_context += '<td><div class="delete">';
+									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm("確認是否刪除此餐廳資料？");">';
+									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
+									res_context += '<Input type="hidden" name="r_sn" value="'+ response.Rlist[i].r_sn + '">';
+									res_context += '</form>';
+									res_context += '</div></td>';
+									res_context += '</tr>';
+									}
+									$("#tbody").html(res_context);
+								console.log(currentPage);
+
+							}
+						 } 
+					)
+		})
+	</script>
 
 		</div>
 	</div>

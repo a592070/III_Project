@@ -12,11 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import rambo0021.pojo.AccountBean;
 import utils.StringUtil;
 
 @Entity
@@ -53,10 +56,11 @@ public class Restaurant {
 	private BigDecimal tablenum;
 	@Column(name = "STATUS")
 	private String status;
-//	private ACCOUNT account;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "restaurant")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant")
 	private Set<R_Order_List> rSets = new HashSet<R_Order_List>();
-	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "USERNAME", referencedColumnName="USERNAME")
+	private AccountBean accountBean;
 	
 	
 	public BigDecimal getR_sn() {
@@ -173,7 +177,7 @@ public class Restaurant {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(String status) { 
 		this.status = status;
 	}
 
@@ -185,41 +189,13 @@ public class Restaurant {
 		this.rSets = rSets;
 	}
 	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Restaurant [r_sn=");
-		builder.append(r_sn);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", address=");
-		builder.append(address);
-		builder.append(", opentime=");
-		builder.append(opentime);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", transportation=");
-		builder.append(transportation);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", rating=");
-		builder.append(rating);
-		builder.append(", region=");
-		builder.append(region);
-		builder.append(", pic_url=");
-		builder.append(pic_url);
-		builder.append(", serviceinfo=");
-		builder.append(serviceinfo);
-		builder.append(", pic=");
-		builder.append(Arrays.toString(pic));
-		builder.append(", tablenum=");
-		builder.append(tablenum);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append("]");
-		return builder.toString();
+	public AccountBean getAccountBean() {
+		return accountBean;
 	}
-	
+
+	public void setAccountBean(AccountBean accountBean) {
+		this.accountBean = accountBean;
+	}
 	
 
 }

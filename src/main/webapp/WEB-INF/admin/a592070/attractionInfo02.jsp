@@ -74,13 +74,13 @@
 
                                     <%--搜尋框--%>
                                     <div class="search-form d-none d-lg-inline-block col-4">
-                                        <span>當前搜尋: {{search}}</span>
+                                        <span>當前搜尋: {{currentSearch}}</span>
                                         <div class="input-group">
                                             <el-button icon="el-icon-search" v-on:click="handleSearch">資料庫搜尋</el-button>
                                             <input type="text" name="query" id="search-input" class="form-control"
                                                    autofocus ="off"
                                                    v-model="search"
-                                                   placeholder="本頁搜尋..."/>
+                                                   placeholder="keywords..."/>
                                         </div>
                                     </div>
                                 </div>
@@ -88,30 +88,50 @@
 
                                 <%--表格內容--%>
                                 <el-table
-                                        :data="tableData.filter(ele => (
-                                        !search ||
-                                        ele.name.toString().toLowerCase().includes(search.toLowerCase()) ||
-                                        ele.sn.toString().toLowerCase().includes(search.toLowerCase()) ||
-                                        ele.address.toString().toLowerCase().includes(search.toLowerCase())
-                                        ))"
-                                        style="width: 100%">
+                                        :data="tableData"
+<%--                                        :data="tableData.filter(ele => (--%>
+<%--                                        !search ||--%>
+<%--                                        ele.name.toString().toLowerCase().includes(search.toLowerCase()) ||--%>
+<%--                                        ele.sn.toString().toLowerCase().includes(search.toLowerCase()) ||--%>
+<%--                                        ele.address.toString().toLowerCase().includes(search.toLowerCase())--%>
+<%--                                        ))"--%>
+                                        style="width: 100%"
+                                        @sort-change='sortChange'
+                                        >
                                     <el-table-column
                                             label="ID"
-                                            prop="sn">
+                                            prop="sn"
+                                            width="75"
+                                            sortable='custom'
+                                            :sort-orders="['descending', 'ascending']">
                                     </el-table-column>
                                     <el-table-column
                                             label="Name"
-                                            prop="name">
+                                            prop="name"
+                                            width="200"
+                                            sortable='custom'
+                                            :sort-orders="['descending', 'ascending']">
                                     </el-table-column>
                                     <el-table-column
                                             label="Address"
-                                            prop="address">
+                                            prop="address"
+                                            sortable='custom'
+                                            :sort-orders="['descending', 'ascending']">
                                     </el-table-column>
                                     <el-table-column
-                                            label="TicketInfo"
-                                            prop="ticketInfo">
+                                            label="Status"
+                                            width="75"
+                                            align="right">
+                                        <template slot-scope="scope">
+                                        <label class="switch switch-text switch-success switch-pill form-control-label">
+                                            <input type="checkbox" class="switch-input form-check-input" v-bind:checked="scope.row.status" v-on:click="handleSwitchStatus(scope.row)">
+                                            <span class="switch-label" data-on="On" data-off="Off"></span>
+                                            <span class="switch-handle"></span>
+                                        </label>
+                                        </template>
                                     </el-table-column>
                                     <el-table-column
+                                            width="200"
                                             align="right">
                                         <template slot-scope="scope">
                                             <el-button
@@ -159,6 +179,8 @@
         el: '#app',
         data: {
             search: '',
+            sortParams: {},
+            currentSearch: '',
             currentRegion: null,
             region: [],
             pageData: {
@@ -171,7 +193,7 @@
                     sn: '',
                     name: '',
                     address: '',
-                    ticketInfo: ''
+                    status: false
                 }],
             tableColumns: [
                 {
@@ -187,8 +209,8 @@
                     key: 'address'
                 },
                 {
-                    title: 'TicketInfo',
-                    key: 'ticketInfo'
+                    title: 'Status',
+                    key: 'status'
                 },
                 {
                     title: 'Action',
@@ -281,26 +303,59 @@
             },
             handleSelectedData(){
                 console.log(this.search);
-                if(this.currentRegion == "全部"){
-                    this.currentRegion = "";
+                let url;
+
+                let region = this.currentRegion
+                if(!region || region == "全部"){
+                    region = "all";
                 }
-                let keyword = null;
-                if(this.search != ''){
-                    keyword = this.search;
+                let keyword = this.search;
+                if(!this.search || this.search== ''){
+                    url = '${pageContext.servletContext.contextPath}/admin/attraction/list/'+this.pageData.currentPage+'/'+region;
+                }else{
+                    url = '${pageContext.servletContext.contextPath}/admin/attraction/list/'+this.pageData.currentPage+'/'+region+'/'+keyword;
                 }
-                let url = '${pageContext.servletContext.contextPath}/admin/attraction/list/'+this.pageData.currentPage+'/'+this.currentRegion+'/'+keyword;
-                axios.get(url)
+
+                let params = this.sortParams;
+                axios.get(url, {params})
                     .then(response => {
                         this.tableData = response.data.tableData;
                         this.pageData = response.data.pageData;
+                        this.currentSearch = this.search;
+                        // this.search = "";
                     });
             },
             handleSelectPage(value) {
                 this.pageData.currentPage = value;
                 this.handleSelectedData();
+            },
+            sortChange: function(column, prop, order) {
+                console.log(column + '-' + column.prop + '-' + column.order);
+                this.sortParams = {"sortColumn":column.prop, "order":column.order};
+                this.handleSelectedData();
+            },
+            handleSwitchStatus(value){
+                console.log(value.status);
+                value.status = !value.status;
+
+                let url = '${pageContext.servletContext.contextPath}/admin/attraction/status/'+value.sn;
+                axios.post(url)
+                    .then(response => {
+                        if(response.data){
+                            const h = this.$createElement;
+                            this.$message({
+                                message: h('p', null, [
+                                    h('i', { style: 'color: teal' }, value.name),
+                                    h('span', null, '狀態更改成功 ')
+                                ])
+                            });
+                        }else{
+                            this.$message.error(value.name+': 狀態更改失敗');
+                        }
+                        // this.search = "";
+                    });
             }
         }
-
     });
 </script>
 

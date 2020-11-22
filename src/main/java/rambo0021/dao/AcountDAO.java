@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.AccountListViewBean;
+import rambo0021.pojo.IdentityBean;
 
 public interface AcountDAO {
 
@@ -20,4 +22,8 @@ public interface AcountDAO {
 	String enableAccount(String username,String status);
 	String disableAccount(String usernamem,String status);
 	String delAccount(String username);
+	String modifyAccount(String username, String password, int identity, String email,String nickName);
+	String registered(AccountBean aBean, IdentityBean iBean);
+	boolean login(String username, String password);
+	List<AccountListViewBean> search(String username, String identity, String email);
 }

@@ -177,6 +177,9 @@ pre {
 	text-align: center;
 	margin-bottom: 50px;
 }
+.form-control{
+	width: 650px;
+}
 </style>
 
 </head>
@@ -193,7 +196,7 @@ pre {
 			<div class="content-wrapper">
 
 				<FORM id="RHome" name="RHome"
-					action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant"
+					action="<%=pageContext.getServletContext().getContextPath()%>/admin/Restaurant"
 					method="GET">
 					<div class="div-back">
 						<button type="submit" class="btn btn-primary">回餐廳列表</button>
@@ -211,34 +214,39 @@ pre {
 								<h2 class="title">${RBean.name}</h2>
 								<div class="top"></div>
 
-				<FORM  id="modifyR" name="modifyR" method="POST" enctype="multipart/form-data">
+								<FORM  id="modifyR" name="modifyR" method="POST" enctype="multipart/form-data">
 								<p class="modify-img">
 									<label for="r-name">請選擇欲修改圖片上傳</label> 
-									<input type="file" id="pic" name="pic">
-										<Input type='hidden' name='r_sn' value='${RBean.r_sn}'>
-									<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
+									<input type="file" id="pic" name="pic" value="${RBean.pic}">
+									<Input type='hidden' name='r_sn' value='${RBean.r_sn}'>
+			<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
 								</p>
 								<div class="div_img">
-									<img id="preview_Rpic"
-										src="<%=application.getContextPath()%>/ShowPic">
+									<img id="preview_Rpic" src="<%=application.getContextPath()%>/admin/ShowPic">
 								</div>
-
+								
+								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 								<script>
-									$("#pic").change(function() {
-										readURL(this);
-										console.log("in modify pic")
-									});
-									function readURL(input) {
-										console.log("in modify 2")
-										console.log(input.files && input.files[0])
-										if (input.files && input.files[0]) {
-											var reader = new FileReader();
-											reader.onload = function(e) {
-												$("preview_Rpic").attr('src',e.target.result);
+								$("#pic").ready(function(){
+									var pic = $("#pic").val();
+									console.log(pic);
+										if(pic == ""){
+											 $("#preview_Rpic").attr('src', '<%=application.getContextPath()%>/assets/img/iring29/Restaurant_img.png');
 											}
-											reader.readAsDataURL(input.files[0]);
-										}
-									}
+									})
+								
+								$("#pic").change(function(){
+					                 readURL(this);
+					            });
+					            function readURL(input){
+					                if(input.files && input.files[0]){
+					                    var reader = new FileReader();
+					                    reader.onload = function (e) {
+					                        $("#preview_Rpic").attr('src', e.target.result);
+					                    }
+					                    reader.readAsDataURL(input.files[0]);
+					                }
+					            }
 								</script>
 
 								<div>
@@ -248,7 +256,90 @@ pre {
 								<div>
 									<h4 class="res_result">地區</h4>
 									<p class="p_result">
-										<textarea name="region" id="region" cols="80" rows="5">${RBean.region}</textarea>
+							<select name="region" id="region" class="form-control">
+								<option value="">請選擇地區</option>
+								<option value="基隆">基隆</option>
+								<option value="新北">新北</option>
+								<option value="台北">台北</option>
+								<option value="桃園">桃園</option>
+								<option value="新竹">新竹</option>
+								<option value="苗栗">苗栗</option>
+								<option value="台中">台中</option>
+								<option value="彰化">彰化</option>
+								<option value="南投">南投</option>
+								<option value="雲林">雲林</option>
+								<option value="嘉義">嘉義</option>
+								<option value="台南">台南</option>
+								<option value="高雄">高雄</option>
+								<option value="屏東">屏東</option>
+								<option value="宜蘭">宜蘭</option>
+								<option value="花蓮">花蓮</option>
+								<option value="台東">台東</option>
+								<option value="澎湖">澎湖</option>
+								<option value="金門">金門</option>
+								<option value="連江">連江</option>
+							</select>
+							<script>
+							switch ("${RBean.region}"){
+								case'':
+								document.getElementById("region")[0].selected=true;
+								break;
+								case'基隆':
+								document.getElementById("region")[1].selected=true;
+								break;
+								case'新北':
+								document.getElementById("region")[2].selected=true;
+								break;
+								case'台北':
+								document.getElementById("region")[3].selected=true;
+								break;
+								case'桃園':
+								document.getElementById("region")[4].selected=true;
+								break;
+								case'新竹':
+								document.getElementById("region")[5].selected=true;
+								break;
+								case'苗栗':
+								document.getElementById("region")[6].selected=true;
+								break;
+								case'台中':
+								document.getElementById("region")[7].selected=true;
+								break;
+								case'彰化':
+								document.getElementById("region")[8].selected=true;
+								break;
+								case'南投':
+								document.getElementById("region")[9].selected=true;
+								break;
+								case'雲林':
+								document.getElementById("region")[10].selected=true;
+								break;
+								case'嘉義':
+								document.getElementById("region")[11].selected=true;
+								break;
+								case'台南':
+								document.getElementById("region")[12].selected=true;
+								break;
+								case'高雄':
+								document.getElementById("region")[13].selected=true;
+								break;
+								case'屏東':
+								document.getElementById("region")[14].selected=true;
+								break;
+								case'宜蘭':
+								document.getElementById("region")[15].selected=true;
+								break;
+								case'花蓮':
+								document.getElementById("region")[16].selected=true;
+								break;
+								case'台東':
+								document.getElementById("region")[17].selected=true;
+								break;
+								case'澎湖':
+								document.getElementById("region")[18].selected=true;
+								break;
+								}
+							</script>
 									</p>
 								</div>
 
@@ -300,69 +391,86 @@ pre {
 											rows="5">${RBean.description}</textarea>
 									</p>
 								</div>
-								</FORM>
+								
 								
 
 								<div>
-									<h4 class="res_data">狀態</h4>
+									<h4 class="res_data">餐廳使用者帳號</h4>
 								</div>
 								
-									<form id="statuss" name="statuss">
 								<div>
 									<p class="p_result">
-										<c:if test="${RBean.status == 'N'}">停用&nbsp;
-											<button class="btn btn-success" onclick="statusR()">啟用</button>
-										</c:if>
-										<c:if test="${RBean.status == 'Y'}">啟用&nbsp;
-											<button class="btn btn-secondary" onclick="statusR()">停用</button>
-										</c:if>
-											<Input type='hidden' name='status' value='${r.status}'>
-											<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+										<span id="idsp"></span><br>	
+										<textarea name="userName" id="userName" cols="80" rows="5" onblur="ajaxusr()">${RBean.accountBean.userName}</textarea>								
 									</p>
 								</div>
-									</form>
 
-
+							</FORM>
+							
 							</div>
 
-						
 
 					</div>
 
 					<div class="modify_div">
-						<button class="btn btn-warning" name="confirm" value="confrim"
-							onclick="confrimModify()">確認修改</button>
+						<button class="btn btn-warning" id="confirm" name="confirm" value="confrim" onclick="confrimModify()">確認修改</button>
 
 					</div>
 				
 
-					<script type="text/javascript"> 
-					 function confrimModify(){ 
-						 if (confirm("確定送出修改 ? ") ) { 
-								document.forms["modifyR"].action="<%=application.getContextPath()%>/ModifyRestaurant";
-								document.forms["modifyR"].method = "POST";
-								document.forms["modifyR"].submit();
+		<script type="text/javascript"> 
+		function confrimModify(){ 
+			if (confirm("確定送出修改 ? ") ) { 
+				document.forms["modifyR"].action="<%=application.getContextPath()%>/admin/ModifyRestaurant";
+				document.forms["modifyR"].method = "POST";
+				document.forms["modifyR"].submit();
 								
-								return;
-							} else {
-								return;
-							}
-						}
-
-					 function statusR(){
-							if (confirm("確定修改店家狀態 ? ") ) {
-								console.log("in modify");
-								document.forms["statuss"].action="<%=application.getContextPath()%>/ModifyStatus";
-								document.forms["statuss"].method="POST";
-								document.forms["statuss"].submit();
-							}else{
-								return null;
-								}
-							 
-						}
+				return;
+			} else {
+				return;
+			}
+		}
 						
-					</script>
+		</script>
 
+		<script>
+        function ajaxusr() {
+            let username = document.getElementById("userName").value;
+              $.ajax(
+                    {
+                        type: 'POST',
+                        data: { "userName": username },
+                        url: '${pageContext.servletContext.contextPath}/admin/checkUser',
+                        dataType: 'json',
+                        success:function(response){
+                            checkusr(response);                   
+                        }
+                    }
+                )
+            
+        }function checkusr(response){
+            console.log(response)
+            let username = document.getElementById("userName").value;
+            let sp = document.getElementById("idsp");
+            if (username == "") {
+                sp.innerHTML = "請注意，帳號沒有填寫喔"
+                sp.style.color = "red";
+                sp.style.fontSize = "13px";
+                sp.style.fontStyle = "italic";
+                document.getElementById("confirm").disabled = false;
+            }else if(!response){
+                sp.innerHTML = "帳號不存在，請重新輸入"
+                sp.style.color = "red";
+                sp.style.fontSize = "13px";
+                sp.style.fontStyle = "italic";
+                document.getElementById("confirm").disabled = true;
+
+            }else{
+            	document.getElementById("confirm").disabled = false;
+                }
+
+        }
+        </script>
 
 				</div>
 			</div>

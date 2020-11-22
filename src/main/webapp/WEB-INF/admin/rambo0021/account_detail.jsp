@@ -89,17 +89,20 @@ img {
 				<div class="container">
 					<div class="box">
 						<div>
+							<button type="submit" class="btn btn-primary"
+								onclick="location.href='${pageContext.servletContext.contextPath}/admin/accountPage'">回用戶列表</button>
 							<h2 class="title" id="username">${userDetail.userName}</h2>
-							<div class="top"></div>
-							<form method="POST" enctype="multipart/form-data">
-								<p class="modify-img">
-									<input type="file" id="Apicture" name="Apicture"
-										accept="image/*" style="display: none">
-									<button type="button" onclick="Apicture.click()"
-										class="btn btn-light">上傳圖片</button>
-									<button type="button" id="delImg" class="btn btn-light">改為預設圖片</button>
-								</p>
-							</form>
+							<div class="top">
+								<form method="POST" enctype="multipart/form-data">
+									<p class="modify-img">
+										<input type="file" id="Apicture" name="Apicture"
+											accept="image/*" style="display: none">
+										<button type="button" onclick="Apicture.click()"
+											class="btn btn-light">上傳圖片</button>
+										<button type="button" id="delImg" class="btn btn-light">改為預設圖片</button>
+									</p>
+								</form>
+							</div>
 							<div class="div_img">
 								<c:if test="${!empty userDetail.picture}">
 									<img class="img-circle" id="userPic"
@@ -110,54 +113,47 @@ img {
 										src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
 								</c:if>
 							</div>
-							<div class="middle">
-								<h4 class="account_result">密碼</h4>
-								<input type="password" id="password" name="password"
-									placeholder="請輸入密碼" value="${userDetail.password}">
-							</div>
-
-							<div class="middle">
-								<h4 class="account_result">身分</h4>
-								<p class="p_result" id="idData">${userDetail.identityBean.name}</p>
-								<div class="input-group mb-3" style='width: 250px'>
-									<div class="input-group-prepend">
-										<label class="input-group-text" for="identity">修改會員身分</label>
-									</div>
-									<select class="custom-select" name="identity" id="identity">
-										<option value="1">管理員</option>
-										<option value="2">一般會員</option>
-										<option value="3">餐廳業者</option>
-										<option value="4">住宿業者</option>
-										<option value="5">交通業者</option>
-									</select>
+							<form method="POST" id="aForm">
+								<div class="middle">
+									<h4 class="account_result">密碼</h4>
+									<input type="password" id="password" name="password"
+										placeholder="請輸入密碼" value="${userDetail.password}">
 								</div>
-							</div>
-							<div class="middle">
-								<h4 class="account_result">Email</h4>
-								<p class="p_result" id="emailData">${userDetail.email}</p>
-								<input type="text" id="email" name="email" style='width: 200px'
-									value="${userDetail.email}" />
-							</div>
-							<div class="middle">
-								<h4 class="account_result">暱稱</h4>
-								<p class="p_result" id="nData">${userDetail.nickName}</p>
-								<input type="text" id="nickName" name="nickName"
-									style='width: 100px' value="${userDetail.nickName}" />
-							</div>
-							<div class="middle">
-								<h4 class="account_result">註冊日期</h4>
-								<p class="p_result" id="rData">${userDetail.registerString}</p>
-							</div>
-							<div class="middle">
-								<h4 class="account_result">最後修改日期</h4>
-								<p class="p_result" id="mData">${userDetail.modify_DateString}</p>
-							</div>
-<!-- 							<div class="middle"> -->
-<!-- 								<h4 class="account_result">狀態</h4> -->
-<%-- 								<p class="p_result" id="sData">${userDetail.status}</p> --%>
-<!-- 								<button type="button" id="sEnable" class="btn btn-success">帳號啟用</button> -->
-<!-- 								<button type="button" id="sDisable" class="btn btn-danger">帳號禁用</button> -->
-<!-- 							</div> -->
+								<div class="middle">
+									<h4 class="account_result">身分</h4>
+									<div class="input-group mb-3" style='width: 250px'>
+										<select class="custom-select" name="identity" id="identity">
+											<option value="1" id="1">管理員</option>
+											<option value="2" id="2">一般會員</option>
+											<option value="3" id="3">餐廳業者</option>
+											<option value="4" id="4">住宿業者</option>
+											<option value="5" id="5">交通業者</option>
+										</select>
+									</div>
+								</div>
+								<div class="middle">
+									<h4 class="account_result">Email</h4>
+									<input type="text" id="email" name="email" style='width: 200px'
+										value="${userDetail.email}" />
+								</div>
+								<div class="middle">
+									<h4 class="account_result">暱稱</h4>
+									<input type="text" id="nickName" name="nickName"
+										style='width: 100px' value="${userDetail.nickName}" />
+								</div>
+								<div class="middle">
+									<h4 class="account_result">註冊日期</h4>
+									<p class="p_result" id="rData">${userDetail.registerString}</p>
+								</div>
+								<div class="middle">
+									<h4 class="account_result">最後修改日期</h4>
+									<p class="p_result" id="mData">${userDetail.modify_DateString}</p>
+								</div>
+								<div class="middle">
+									<button type="button" id="sumit" class="btn btn-success">確定</button>
+									<button type="button" id="" class="btn btn-danger">取消</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -167,123 +163,43 @@ img {
 
 
 	<script>
-		$(document).ready(function () {
-			var status = $("#sData").text()
-			if ("啟用" == status) {
-				$("#sEnable").hide();
-			} else {
-				$("#sDisable").hide();
-			}
-
-		});
+		$(document).ready(function (){
+        //  if('${userDetail.identityBean.name}'=='管理員'){
+		// 	 $("#1").attr("selected")
+		//  }
+		   if('${userDetail.identityBean.id}'=='1'){
+			   console.log('1')
+			$("#1").attr("selected")
+		   }else if('${userDetail.identityBean.id}'=='2'){
+			console.log('2')
+			$("#2").attr("selected", true)
+		   }else if('${userDetail.identityBean.id}'=='3'){
+			console.log('3')
+			$("#3").attr("selected", true)
+		   }else if('${userDetail.identityBean.id}'=='4'){
+			console.log('4')
+			$("#4").attr("selected", true)
+		   }else if('${userDetail.identityBean.id}'=='5'){
+			console.log('5')
+			$("#5").attr("selected", true)
+		   }
+		})
 		var username = $("#username").text()
-		//passwordAjax
-		$('#pwdsubmit').click(function () {
-			var pwd = $('#password').val()
-			$.ajax(
-				{
-					type: 'POST',
-					data: { "password": pwd, "username": username },
-					url: '${pageContext.servletContext.contextPath}/admin/udAccountPwd',
-					dataType: 'text',
-					success: function (response) {
-						alert(response)
-						$("#pClose").trigger('click');
-					}
-
-				}
-			)
-		})
-		//identityAjax
-		$('#idtysubmit').click(function () {
+		//accountAjax
+		$("#sumit").click(function () {
+			var password = $('#password').val()
 			var identity = $("#identity").val()
-			var idStr = $("#identity :selected").text();
-			console.log("身分" + identity)
-			$.ajax(
-				{
-					type: 'POST',
-					data: { "username": username, "identity": identity },
-					url: '${pageContext.servletContext.contextPath}/admin/udAccountIdentity',
-					dataType: 'text',
-					success: function (response) {
-						alert(response)
-						$("#iClose").trigger('click');
-						$("#idData").text(idStr);
-					}
-
-				}
-			)
-		})
-		//emailAjax
-		$('#emailsubmit').click(function () {
 			var email = $('#email').val()
-			$.ajax(
-				{
-					type: 'POST',
-					data: { "username": username, "email": email },
-					url: '${pageContext.servletContext.contextPath}/admin/udAccountEmail',
-					dataType: 'text',
-					success: function (response) {
-						alert(response)
-						$("#eClose").trigger('click');
-						$("#emailData").text(email);
-					}
-
-				}
-			)
-		})
-		//nicknameAjax
-		$('#nNamesubmit').click(function () {
 			var nickname = $('#nickName').val()
-			console.log(nickname)
+			console.log("修改資料")
 			$.ajax(
-				{
+				{   
 					type: 'POST',
-					data: { "username": username, "nickname": nickname },
-					url: '${pageContext.servletContext.contextPath}/admin/udAccountNickname',
+					data:{ "username": username ,"password":password,"identity":identity,"email":email,"nickName":nickName},
+					url: '${pageContext.servletContext.contextPath}/admin/modifyAccount',
 					dataType: 'text',
 					success: function (response) {
-						alert(response)
-						$("#nClose").trigger('click')
-						$("#nData").text(nickname)
-					}
-
-				}
-			)
-		})
-		//registerAjax
-		$('#rsubmit').click(function () {
-			var register = $('#register').val()
-			console.log(register)
-			$.ajax(
-				{
-					type: 'POST',
-					data: { "username": username, "register": register },
-					url: '${pageContext.servletContext.contextPath}/admin/udAccountRegister',
-					dataType: 'text',
-					success: function (response) {
-						alert(response)
-						$("#rClose").trigger('click')
-						$("#rData").text(register)
-					}
-
-				}
-			)
-		})
-		//ModifyAjax
-		$('#msubmit').click(function () {
-			var modify = $('#modify').val()
-			console.log(modify)
-			$.ajax(
-				{
-					type: 'POST',
-					data: { "username": username, "modify": modify },
-					url: '${pageContext.servletContext.contextPath}/admin/udAccountModify',
-					dataType: 'text',
-					success: function (response) {
-						alert(response)
-						$("#mClose").trigger('click')
-						$("#mData").text(modify);
+					  alert(response)
 					}
 
 				}
@@ -305,48 +221,6 @@ img {
 
 				}
 			)
-		})
-		//enableAjax
-		$("#sEnable").click(function () {
-			console.log("啟用帳號")
-			var status = "啟用"
-			$.ajax(
-				{
-					type: 'POST',
-					data: { "username": username, "status": status },
-					url: '${pageContext.servletContext.contextPath}/admin/enableAccount',
-					dataType: 'text',
-					success: function (response) {
-						alert(response)
-						$("#sData").text(status);
-						$("#sEnable").hide();
-						$("#sDisable").show();
-					}
-
-				}
-			)
-
-		})
-		//disableAjax
-		$("#sDisable").click(function () {
-			console.log("禁用帳號")
-			var status = "禁用"
-			$.ajax(
-				{
-					type: 'POST',
-					data: { "username": username, "status": status },
-					url: '${pageContext.servletContext.contextPath}/admin/disableAccount',
-					dataType: 'text',
-					success: function (response) {
-						alert(response)
-						$("#sData").text(status);
-						$("#sEnable").show();
-						$("#sDisable").hide();
-					}
-
-				}
-			)
-
 		})
 		//udimgAjax
 		$("#Apicture").change(function () {
@@ -382,7 +256,7 @@ img {
 		function readURL(input) {
 
 			if (input.files && input.files[0]) {
-
+				console.log("我會幫你換圖片")
 				var reader = new FileReader();
 
 				reader.onload = function (e) {
