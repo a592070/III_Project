@@ -50,6 +50,24 @@ language="java"%>
         padding-top: 50px;
       }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.bootstrap_4.min.css"
+      integrity="sha512-2C6AmJKgt4B+bQc08/TwUeFKkq8CsBNlTaNcNgUmsDJSU1Fg+R6azDbho+ZzuxEkJnCjLZQMozSq3y97ZmgwjA=="
+      crossorigin="anonymous"
+    />
+
+    <!-- load jQuery and tablesorter scripts -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"
+      integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/parsers/parser-input-select.min.js"
+      integrity="sha512-1yWDRolEDA6z68VeUHdXNFZhWYteCOlutcPMPuDtX1f7/doKecWLx87shPRKx8zmxdWA0FV9mNRUr9NnSwzwyw=="
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
@@ -98,7 +116,10 @@ language="java"%>
           </span>
           <div class="box">
             <div class="table-responsive">
-              <table class="table table-striped table-sm">
+              <table
+                class="table table-striped table-sm tablesorter"
+                id="articleTable"
+              >
                 <thead>
                   <tr>
                     <th><span class="mdi mdi-key"></span> ID</th>
@@ -110,7 +131,7 @@ language="java"%>
                     </th>
                     <th><span class="mdi mdi-account-edit"></span> 作者</th>
                     <th><span class="mdi mdi-directions-fork"></span> 類型</th>
-                    <th>
+                    <th class="sorter-checkbox">
                       <span class="mdi mdi-information-outline"></span>狀態
                     </th>
                     <th><span class="mdi mdi-settings"></span>設定</th>
@@ -144,7 +165,6 @@ language="java"%>
             url: "articleSearch.json",
             data: { articleType: selected, keyword: keyword },
             success: function (response) {
-              console.log("change success");
               showList(response);
             },
           });
@@ -206,6 +226,7 @@ language="java"%>
       });
     </script>
 
+    //生成頁面的function
     <script>
       function showList(response) {
         $("tbody").empty();
@@ -252,6 +273,23 @@ language="java"%>
               "</td>" +
               "</tr>"
           );
+          //table sorter
+          $(function () {
+            $("#articleTable").tablesorter({
+              theme: "bootstrap",
+              checkboxClss: "checked",
+              sortReset: true,
+              sortRestart: true,
+              debug: true,
+              headers: {
+                1: { sorter: false },
+                6: { sorter: false },
+                5: { sorter: "checkbox" },
+              },
+            });
+            var resort = true;
+            $("#articleTable").trigger("updateAll", [resort]);
+          });
         });
       }
     </script>
