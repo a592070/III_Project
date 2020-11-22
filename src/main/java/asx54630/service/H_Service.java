@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import asx54630.model.Hotel;
 import asx54630.model.HotelDAO;
+import asx54630.model.HotelView;
 
 @Service("hService")
 public class H_Service {
@@ -17,7 +18,7 @@ public class H_Service {
 	private HotelDAO hotelDao;
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public List<Hotel> selectAll(String name, String region, String type) {
+	public List<HotelView> selectAll(String name, String region, String type) {
 
 		return hotelDao.selectAll(name, region, type);
 	}
@@ -51,5 +52,10 @@ public class H_Service {
 	@Transactional(rollbackFor = {Throwable.class})
 	public Hotel updateStatus(BigDecimal sn,String Status) {
 		return hotelDao.updateStatus(sn,Status);
+	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){
+		return hotelDao.sort(orderfiled,name,region,type,order);
 	}
 }
