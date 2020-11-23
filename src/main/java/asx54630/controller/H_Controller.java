@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import asx54630.model.Hotel;
@@ -53,7 +54,7 @@ public class H_Controller {
 		return mav;
 		}
 	
-	@RequestMapping(path = "/hotelSort", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //以ID排序
+	@RequestMapping(path = "/hotelSort", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //排序
 	public String processHotelSort(@RequestParam(name = "orderfiled",defaultValue = "SN") String orderfiled,
 								   @RequestParam(name = "keyword") String keyword,
 								   @RequestParam(name = "regionkeywd") String regionkeywd,

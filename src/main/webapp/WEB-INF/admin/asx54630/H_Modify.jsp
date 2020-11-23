@@ -214,7 +214,7 @@ pre {
 									<input type="file" id="pic" name="pic">
 									<Input type='hidden' name='r_sn' value=''>
 			<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
-								</p>-->
+								</p>
 								<div class="div_img">
 <%-- 									<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic"> --%>
 								</div>
