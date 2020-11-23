@@ -81,8 +81,8 @@ public class ArticleController {
 
 	}
 
-	@RequestMapping(path = "/articleSearch.json",  method = RequestMethod.GET, produces = {
-	"application/json; charset=UTF-8" })
+	@RequestMapping(path = "/articleSearch.json", method = RequestMethod.GET, produces = {
+			"application/json; charset=UTF-8" })
 	public @ResponseBody List<Article> DisplayJSONResults(
 			@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
 			@RequestParam(name = "articleType", defaultValue = "", required = false) Integer articleType) {
