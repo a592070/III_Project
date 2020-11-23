@@ -19,7 +19,7 @@ td {
 }
 
 .rid {
-	width: 120px;
+	width: 170px;
 }
 .content-wrapper {
 	padding-left: 50px;
@@ -60,12 +60,83 @@ td {
 									style="width: 100%">
 									<thead>
 										<tr>
-											<th>大訂單號</th>
-											<th>餐廳訂單號</th>
+										
+										<!-- 大訂單 -->
+											<th><div>
+										<button id="page-botton" class="Bid-btn">
+											<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+											</svg>
+										</button>
+											<Input type='hidden' name='order' id="order" value=''>大訂單號
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='order_id'>
+					<script>
+						$('.Bid-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderFiled').val('order_id');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>
+									</div></th>
+									
+									<!-- 小訂單 -->
+											<th><div>
+										<button id="page-botton" class="Rid-btn">
+											<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+											</svg>
+										</button>
+											<Input type='hidden' name='order' id="order" value=''>餐廳訂單號
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='id'>
+					<script>
+						$('.Rid-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderFiled').val('id');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>
+									</div></th>
 											<th class="rname">餐廳名稱</th>
 											<th class="d-none d-md-table-cell">訂位人數</th>
+											
+									
 											<th class="d-none d-md-table-cell">訂位時間</th>
-											<th>狀態</th>
+											
+									<!-- 狀態 -->
+											<th><div>
+										<button id="page-botton" class="timeid-btn">
+											<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+											</svg>
+										</button>
+											<Input type='hidden' name='order' id="order" value=''>狀態
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='book_time'>
+					<script>
+						$('.timeid-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderFiled').val('book_time');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>
+									</div></th>
 											<th>修改</th>
 											<th>刪除</th>
 										</tr>
@@ -165,13 +236,17 @@ td {
 				var cgpage =$(this).val();
 				var currentPage = $("#page-btn").val();
 				var totalPage = $(".page-link.last").val();
+				var orderFiled = $("#orderFiled").val();
+				var order = $("#order").val();
 				console.log("cgpage = " + cgpage);
 				console.log("currentPage = " + currentPage);
 				console.log("totalPage = " + totalPage);
+				console.log("orderFiled = " + orderFiled);
+				console.log("order = " + order);
 				$.ajax(
 						{
 							type: 'POST',
-							data: { "currentPage": currentPage, "cgpage":cgpage },
+							data: { "currentPage": currentPage, "cgpage":cgpage, "orderFiled":orderFiled, "order":order },
 							url: '${pageContext.servletContext.contextPath}/admin/OrderList',
 							dataType: 'json',
 							success: function (response) {

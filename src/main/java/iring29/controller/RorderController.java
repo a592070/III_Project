@@ -41,9 +41,10 @@ public class RorderController {
 		} else {
 			start = (currentPage - 1) * page.getPageSize();
 		}
-		int pageSize = page.getPageSize();
+		String orderFiled = "order_id";
+		String order = "ASC";
 		int totalPage = page.getTotalPageCount();
-		List<R_OrderList_VO> Rlist = rOrderService.totaol_Rlist(start, pageSize);
+		List<R_OrderList_VO> Rlist = rOrderService.totaol_Rlist(start, page.getPageSize(),orderFiled,order);
 		
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		System.out.println("ts = " + ts);
@@ -57,7 +58,9 @@ public class RorderController {
 	
 	@RequestMapping(path = "/OrderList", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> OrderDisplay(@RequestParam(value = "currentPage") Integer currentPage,
-							   @RequestParam(value = "cgpage") String cgpage) {
+							   							  @RequestParam(value = "cgpage") String cgpage,
+							   							  @RequestParam(value = "orderFiled") String orderFiled,
+							   							  @RequestParam(value = "order") String order) {
 		
 		int size = rOrderService.getListSize();
 		page.setTotalCount(size);
@@ -87,7 +90,7 @@ public class RorderController {
 			start = (page.getTotalPageCount()-1) * page.getPageSize();
 		}
 		
-		List<R_OrderList_VO> Rlist = rOrderService.totaol_Rlist(start, page.getPageSize());
+		List<R_OrderList_VO> Rlist = rOrderService.totaol_Rlist(start, page.getPageSize(),orderFiled, order);
 		
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		Map<String, Object> map = new HashMap<>();

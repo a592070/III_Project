@@ -53,6 +53,10 @@ public class RestaurantDAO {
 		String hql = "from Show_RView where name like :keyword or address like :keyword or region like :keyword or username like :keyword order by "
 				+ orderFiled + " " + order;
 
+		if(orderFiled.equals("status")) {
+			hql += ", r_sn";
+		}
+		
 		Query<Show_RView> query = sessionFactory.getCurrentSession().createQuery(hql, Show_RView.class);
 		query.setParameter("keyword", keyWords);
 
