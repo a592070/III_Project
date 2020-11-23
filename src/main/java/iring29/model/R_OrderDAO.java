@@ -27,9 +27,10 @@ public class R_OrderDAO {
 		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
 	}
 
-	public List<R_OrderList_VO> totaol_Rlist(int first, int count) {
+	public List<R_OrderList_VO> totaol_Rlist(int first, int count, String orderField, String order) {
+		String hql = "from R_OrderList_VO order by " + orderField + " " + order;
 		Query<R_OrderList_VO> query = sessionFactory.getCurrentSession()
-				.createQuery("from R_OrderList_VO order by order_id", R_OrderList_VO.class);
+				.createQuery(hql, R_OrderList_VO.class);
 		// 找第幾筆
 		query.setFirstResult(first);
 		// 從第幾筆開始count筆
