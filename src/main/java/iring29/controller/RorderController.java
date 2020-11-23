@@ -2,7 +2,9 @@ package iring29.controller;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import iring29.model.Page;
 import iring29.model.R_OrderList_VO;
@@ -35,13 +38,13 @@ public class RorderController {
 		System.out.println("currentPage = " + currentPage);
 		if (currentPage == 1) {
 			currentPage = 1;
-			start = 0;
 		} else {
 			start = (currentPage - 1) * page.getPageSize();
 		}
-		int pageSize = page.getPageSize();
+		String orderFiled = "order_id";
+		String order = "ASC";
 		int totalPage = page.getTotalPageCount();
-		List<R_OrderList_VO> Rlist = rOrderService.totaol_Rlist(start, pageSize);
+		List<R_OrderList_VO> Rlist = rOrderService.totaol_Rlist(start, page.getPageSize(),orderFiled,order);
 		
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		System.out.println("ts = " + ts);
@@ -51,6 +54,51 @@ public class RorderController {
 		m.addAttribute("currentPage", currentPage);
 		m.addAttribute("totalPage", totalPage);
 		return "iring29/R_Order";
+	}
+	
+	@RequestMapping(path = "/OrderList", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> OrderDisplay(@RequestParam(value = "currentPage") Integer currentPage,
+							   							  @RequestParam(value = "cgpage") String cgpage,
+							   							  @RequestParam(value = "orderFiled") String orderFiled,
+							   							  @RequestParam(value = "order") String order) {
+		
+		int size = rOrderService.getListSize();
+		page.setTotalCount(size);
+		System.out.println("currentPage = " + currentPage);
+		
+		if(cgpage.equals("1") || cgpage.isEmpty()) {
+			
+			page.setCurrentPage(currentPage);
+			start = (currentPage - 1) * page.getPageSize();
+			
+		}else if(cgpage.equals("next")) {
+			
+			start = (currentPage) * page.getPageSize();
+			page.setCurrentPage(currentPage + 1);
+			
+		}else if(cgpage.equals("previous")) {
+			
+			start = (currentPage - 2) * page.getPageSize();
+			page.setCurrentPage(currentPage - 1);
+			
+		}else if(cgpage.equals("first")) {
+			
+			start = 0 ;
+			page.setCurrentPage(1);
+			
+		}else {
+			start = (page.getTotalPageCount()-1) * page.getPageSize();
+		}
+		
+		List<R_OrderList_VO> Rlist = rOrderService.totaol_Rlist(start, page.getPageSize(),orderFiled, order);
+		
+		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("Rlist", Rlist);
+		map.put("page", page);
+		map.put("ts", ts);
+		return map;
 	}
 
 	// Display detail order list
