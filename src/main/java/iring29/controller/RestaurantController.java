@@ -1,14 +1,12 @@
 package iring29.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -154,28 +152,7 @@ public class RestaurantController {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
-
-		System.out.println("in img");
 		
-//		if (r.getPic() == null) {
-//			try {
-//				File file = new File("/III_Project/src/main/webapp/assets/img/iring29/Restaurant_img.png");
-//				long fileSize = file.length();
-//				FileInputStream fi = new FileInputStream(file);
-//				byte[] buffer = new byte[(int) fileSize];
-//				int offset = 0;
-//				int numRead = 0;
-//				while (offset < buffer.length && (numRead = fi.read(buffer, offset, buffer.length - offset)) >= 0) {
-//					offset += numRead;
-//				}
-//
-//				fi.close();
-//				r.setPic(buffer);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 

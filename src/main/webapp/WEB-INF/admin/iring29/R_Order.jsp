@@ -19,7 +19,7 @@ td {
 }
 
 .rid {
-	width: 120px;
+	width: 170px;
 }
 .content-wrapper {
 	padding-left: 50px;
@@ -39,7 +39,7 @@ td {
 
 	<div class="wrapper">
 		<c:import url="/WEB-INF/admin/fragment/sidebar.jsp" />
-		<div class="page-wrapper">
+		<div class="page-wrapper" id="page" >
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
 
@@ -60,17 +60,88 @@ td {
 									style="width: 100%">
 									<thead>
 										<tr>
-											<th>大訂單號</th>
-											<th>餐廳訂單號</th>
+										
+										<!-- 大訂單 -->
+											<th><div>
+										<button id="page-botton" class="Bid-btn">
+											<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+											</svg>
+										</button>
+											<Input type='hidden' name='order' id="order" value=''>大訂單號
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='order_id'>
+					<script>
+						$('.Bid-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderFiled').val('order_id');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>
+									</div></th>
+									
+									<!-- 小訂單 -->
+											<th><div>
+										<button id="page-botton" class="Rid-btn">
+											<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+											</svg>
+										</button>
+											<Input type='hidden' name='order' id="order" value=''>餐廳訂單號
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='id'>
+					<script>
+						$('.Rid-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderFiled').val('id');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>
+									</div></th>
 											<th class="rname">餐廳名稱</th>
 											<th class="d-none d-md-table-cell">訂位人數</th>
+											
+									
 											<th class="d-none d-md-table-cell">訂位時間</th>
-											<th>狀態</th>
+											
+									<!-- 狀態 -->
+											<th><div>
+										<button id="page-botton" class="timeid-btn">
+											<svg width="2em" height="1em" viewBox="0 0 16 16"
+													class="bi bi-arrow-down-up" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+											</svg>
+										</button>
+											<Input type='hidden' name='order' id="order" value=''>狀態
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='book_time'>
+					<script>
+						$('.timeid-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderFiled').val('book_time');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>
+									</div></th>
 											<th>修改</th>
 											<th>刪除</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="tbody">
 										<c:forEach var="r" items="${Rlist}">
 											<tr>
 												<td class="Brid">${r.order_id}</td>
@@ -128,42 +199,142 @@ td {
 			<div class="pages">
 				<nav aria-label="...">
 					<ul class="pagination">
-						<c:if test="${currentPage != null}">
-							<c:if test="${currentPage == 1}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage-1}"
-									tabindex="-1">第一頁</a></li>
-							</c:if>
-							<c:if test="${currentPage > 1}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=1"
-									tabindex="-1">第一頁</a></li>
-							</c:if>
-							<c:if test="${currentPage > 1}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage-1}"
-									tabindex="-1">${currentPage-1}</a></li>
-							</c:if>
-							<li class="page-item active"><a class="page-link" href="#">${currentPage}
-									<span class="sr-only">(current)</span>
-							</a></li>
-							<c:if test="${currentPage != totalPage && currentPage != ''}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">${currentPage+1}</a></li>
-							</c:if>
-							<c:if test="${currentPage != totalPage && currentPage != ''}">
-								<li class="page-item"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">最末頁</a></li>
-							</c:if>
-							<c:if test="${currentPage == totalPage && currentPage != ''}">
-								<li class="page-item disabled"><a class="page-link"
-									href="<%=application.getContextPath()%>/admin/RestaurantList?currentPage=${currentPage+1}">最末頁</a></li>
-							</c:if>
-						</c:if>
+					
+								<li class="page-item">
+									<button class="page-link" id="page-botton" value="first">第一頁</button>
+								</li>
+							
+							
+							<!-- previous -->
+								<li class="page-item">
+									<button class="page-link previous" id="page-botton" value="previous">&laquo;</button>
+								</li>
+							
+							
+							<!-- current page -->
+								<li class="page-item active">
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}</button>
+								</li>
+						
+							<!-- NEXT -->
+								<li class="page-item">
+									<button class="page-link next" id="page-botton" value="next">&raquo;</button>
+								</li>
+							
+							
+							
+								<li class="page-item last">
+									<button class="page-link last" id="page-botton" value="${totalPage}">最末頁</button>
+								</li>
 
 					</ul>
 				</nav>
 			</div>
+
+			<script>
+			$("#page").on('click', '#page-botton', function () {
+				var cgpage =$(this).val();
+				var currentPage = $("#page-btn").val();
+				var totalPage = $(".page-link.last").val();
+				var orderFiled = $("#orderFiled").val();
+				var order = $("#order").val();
+				console.log("cgpage = " + cgpage);
+				console.log("currentPage = " + currentPage);
+				console.log("totalPage = " + totalPage);
+				console.log("orderFiled = " + orderFiled);
+				console.log("order = " + order);
+				$.ajax(
+						{
+							type: 'POST',
+							data: { "currentPage": currentPage, "cgpage":cgpage, "orderFiled":orderFiled, "order":order },
+							url: '${pageContext.servletContext.contextPath}/admin/OrderList',
+							dataType: 'json',
+							success: function (response) {
+								$("#tbody").empty();
+								$("#page-btn").remove();
+								var current_page = "";
+								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage +'</button>';
+								$('.page-item.active').html(current_page);
+								currentPage = response.page.currentPage;
+
+								$(".page-link.last").remove();
+								var total_page = "";
+								total_page += '<button class="page-link last" id="page-botton" value="">最末頁</button>';
+								$(".page-item.last").html(total_page);
+								totalPage = response.page.totalPageCount;
+								$('.page-link.last').val(totalPage);
+
+								if(cgpage == totalPage){
+									currentPage = totalPage;
+									$('#page-btn').empty();
+									$('#page-btn').html(currentPage);
+								}
+
+								if(currentPage == 1){
+									$(".page-link.previous").attr("disabled", true);
+								}else{
+									$(".page-link.previous").attr("disabled", false);
+								}
+
+								if(currentPage == totalPage){
+									$(".page-link.next").attr("disabled", true);
+								}else{
+									$(".page-link.next").attr("disabled", false);
+								}
+
+								$('#page-btn').val(currentPage);
+								
+								var res_context = "";
+								for (let i = 0; i < response.Rlist.length; i++) {
+									res_context += '<tr>';
+									res_context += '<td class="Brid">' + response.Rlist[i].order_id +'</td>';
+									res_context += '<td class="rid">'+ response.Rlist[i].id +'</td>';
+									res_context += '<td class="rname">'+ response.Rlist[i].name +'</td>';
+									res_context += '<td>'+ response.Rlist[i].customer_num +'</td>';
+									var t = response.Rlist[i].book_time;
+									console.log(t);
+									var date = new Date(t);
+							        Y = date.getFullYear() + '-';
+							        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+							        D = date.getDate() + ' ';
+							        if(D < 10){D = '0' + D};
+							        h = date.getHours() + ':';
+							        m = date.getMinutes() + '0';
+							        t = Y+M+D+h+m;
+									console.log(t);
+									t = t.substr(0,16);
+									console.log(response.ts);
+									res_context += '<td>'+ t +'</td>';
+										if(response.Rlist[i].book_time > response.ts){
+									res_context += '<td><span class="badge badge-success">訂單待完成</span></td>';
+										}else if(response.Rlist[i].book_time < response.ts){
+									res_context += '<td><span class="badge badge-secondary">訂單已完成</span></td>';
+												}
+									res_context += '<td>';
+									res_context += '<form action="<%=application.getContextPath()%>/admin/ROrderDisplay" method="POST">';
+										if(response.Rlist[i].book_time > response.ts){
+									res_context += '<button type="submit" class="btn btn-warning">修改</button>';
+									res_context += '<Input type="hidden" name="rid" value="' + response.Rlist[i].id +'">';
+										}else if(response.Rlist[i].book_time < response.ts){
+									res_context += '<button type="submit" class="btn btn-warning"  disabled>修改</button>';
+										}	
+									res_context += '</form></td>';
+									res_context += '<td><div class="delete">';
+									var del = "確認是否刪除此訂單資料？";
+									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" onsubmit="return confirm(`del`);">';
+									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
+									res_context += '<Input type="hidden" name="rid" value="'+ response.Rlist[i].id + '">';
+									res_context += '</form></td>';
+									}
+									$("#tbody").html(res_context);
+								console.log(currentPage);
+
+							}
+						 } 
+					)
+				})
+				
+			</script>	
 
 
 		</div>
