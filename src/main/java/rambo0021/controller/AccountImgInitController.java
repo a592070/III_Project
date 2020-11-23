@@ -1,6 +1,5 @@
 package rambo0021.controller;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -28,7 +27,8 @@ public class AccountImgInitController {
 	@GetMapping("/initImg")
 	public @ResponseBody String initImg() {
 		InputStream imgis = null;
-		List<AccountBean> userList = service.userList();
+		int size=service.getSize();
+		List<AccountBean> userList = service.userList(0, size);
 		for (AccountBean accountBean : userList) {
 			int filename = (int) (Math.random() * 3)+1;
 			String realPath = servletContext.getRealPath("/assets/img/initAccImg/" + String.valueOf(filename) + ".jpg");
