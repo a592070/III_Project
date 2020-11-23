@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import rambo0021.dao.SHA2DAO;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountListViewBean;
+import rambo0021.pojo.Page;
 import rambo0021.serive.AccountService;
 import rambo0021.serive.DateService;
 
@@ -42,14 +44,47 @@ public class AccountController {
 	@Autowired
 	@Qualifier("dateService")
 	private DateService dService;
+	
+	@Autowired
+	@Qualifier("accPage")
+	private Page aPage;
+	
+	private int start = 0;
 
-	@RequestMapping(path = "/accountPage")
-	public String AccountPage(Model m) {
-		List<AccountBean> userList = service.userList();
+	@RequestMapping(path = "/accountPage", method = RequestMethod.GET)
+	public String AccountPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
+		int size=service.getSize();
+		aPage.setTotalCount(size);
+	    start = (currentPage -1) * aPage.getPageSize();
+	    System.out.println("起始="+start);
+		int pageSize = aPage.getPageSize();
+	   
+		List<AccountBean> userList = service.userList(start,pageSize);
 		m.addAttribute("userList", userList);
-		return "/rambo0021/account_index";
-//		return "redirect:/rambo0021/account_index";
+		m.addAttribute("page", aPage);
+
+		return "rambo0021/account_index";
+      
 	}
+	
+//	@RequestMapping("/accountPageController")
+//	public ModelAndView accountPageController(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
+//		int size=service.getSize();
+//		aPage.setTotalCount(size);
+//	    start = (currentPage -1) * aPage.getPageSize();
+//	    System.out.println("起始="+start);
+//		int pageSize = aPage.getPageSize();
+//	   
+//		List<AccountBean> userList = service.userList(start,pageSize);
+//	
+//		ModelAndView modelAndView = new ModelAndView();
+//		modelAndView.addObject("userList", userList);
+//		modelAndView.addObject("page", aPage);
+//		modelAndView.setViewName("rambo0021/appendPage");
+//		return modelAndView;
+//      
+//	}
+	
 
 	@RequestMapping(path = "/displayAccount")
 	public String DisplayAccount(@RequestParam("username") String username, Model m) throws IOException {
@@ -152,11 +187,10 @@ public class AccountController {
 	}
 	@PostMapping("/search")
 	public ModelAndView search(@RequestParam(name="username",required = false) String username,@RequestParam(name="identity",required = false) String identity,@RequestParam(name="email",required = false) String email) {
-		System.out.println(username);
 		List<AccountListViewBean> aBeanList = service.search(username,identity,email);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("userList", aBeanList);
-		modelAndView.setViewName("rambo0021/searchPage");
+		modelAndView.setViewName("rambo0021/appendPage");
 		return modelAndView;
 	}
 }

@@ -109,11 +109,48 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<div class="pages">
+				<nav aria-label="..." id='nav'>
+					<ul class="pagination">
+						
+								<li class="page-item">
+									<button class="page-link" id="page-botton-first" value="1">第一頁</button>
+								</li>
+							
+							<c:if test="${page.currentPage ne 1}">
+							<!-- previous -->
+								<li class="page-item">
+									<button class="page-link previous" id="page-botton-previous" value="previous">&laquo;</button>
+								</li>
+							</c:if>
+							
+							<!-- current page -->
+								<li class="page-item active">
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${page.currentPage}">${page.currentPage}</button>
+								</li>
+						   
+						   <c:if test="${page.currentPage ne page.totalPageCount}">
+							<!-- NEXT -->
+								<li class="page-item">
+									<button class="page-link next" id="page-botton-next" value="next">&raquo;</button>
+								</li>
+							</c:if>
+							
+							
+								<li class="page-item last">
+									<button class="page-link last" id="page-botton-last" value="${page.totalPageCount}">最末頁</button>
+								</li>
+							
+					
+					</ul>
+				</nav>
+			</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	<script>
 		// $(document).ready(function () {
 		// 	for (let i = 0; i < $("[id=status]").length; i++) {
