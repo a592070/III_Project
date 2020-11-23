@@ -115,27 +115,7 @@ language="java"%>
             </form>
           </div>
 
-          <nav aria-label="Page navigation example" class="pager">
-            <ul class="pagination">
-              <li class="page-item first">
-                <a class="page-link first" id="first">第一頁</a>
-              </li>
-              <li class="page-item prev">
-                <a class="page-link prev" id="previous">上一頁</a>
-              </li>
-
-              <li class="page-item">
-                <a class="page-link pagedisplay"></a>
-              </li>
-
-              <li class="page-item next">
-                <a class="page-link next" id="next">下一頁</a>
-              </li>
-              <li class="page-item last">
-                <a class="page-link last" id="last">最末頁</a>
-              </li>
-            </ul>
-          </nav>
+          
 
           <!-- </div> -->
           <h2>文章列表</h2>
@@ -162,11 +142,32 @@ language="java"%>
                     <th class="sorter-checkbox">
                       <span class="mdi mdi-information-outline"></span>狀態
                     </th>
-                    <th><span class="mdi mdi-settings"></span>設定</th>
+                    <th class="text-left"><span class="mdi mdi-settings"></span>設定</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
+              <nav aria-label="Page navigation example" class="pager">
+                <ul class="pagination">
+                  <li class="page-item first">
+                    <a class="page-link first" id="first">第一頁</a>
+                  </li>
+                  <li class="page-item prev">
+                    <a class="page-link prev" id="previous">上一頁</a>
+                  </li>
+    
+                  <li class="page-item">
+                    <a class="page-link pagedisplay"></a>
+                  </li>
+    
+                  <li class="page-item next">
+                    <a class="page-link next" id="next">下一頁</a>
+                  </li>
+                  <li class="page-item last">
+                    <a class="page-link last" id="last">最末頁</a>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
@@ -290,14 +291,14 @@ language="java"%>
               "<span class='switch-handle'></span>" +
               "</label></td>" +
               "<td>" +
-              "<button class='edit_btn' name='artId' value='" +
+              "<button class='edit_btn btn btn-warning mr-2' name='artId' value='" +
               element.artId +
               "'>" +
-              "<span class='mdi mdi-pencil-box-outline'></span>Edit</button>" +
-              "<button class='delete_btn' name='artId' value='" +
+              "<span class='mdi mdi-pencil-box-outline'></span>修改</button>" +
+              "<button class='delete_btn btn btn-danger' name='artId' value='" +
               element.artId +
               "'>" +
-              "<span class='mdi mdi-delete'></span>Delete</button>" +
+              "<span class='mdi mdi-delete'></span>刪除</button>" +
               "</td>" +
               "</tr>"
           );
@@ -305,6 +306,9 @@ language="java"%>
 
         //table sorter
         $(function () {
+          var resort = true;
+          $("#articleTable").trigger("updateAll", [resort]);
+
           $("#articleTable")
             .tablesorter({
               theme: "bootstrap",
@@ -316,7 +320,8 @@ language="java"%>
                 1: { sorter: false },
                 6: { sorter: false },
                 5: { sorter: "checkbox" },
-              },
+                
+              }
             })
             //分頁
             .tablesorterPager({
@@ -332,9 +337,9 @@ language="java"%>
               cssPageSize: ".pagesize", // page size selector - select dropdown that sets the "size" option});
               output: "{page}/{totalPages}",
               cssDisabled: "disabled", // Note there is no period "." in front of this class name
+              
             });
-          var resort = true;
-          $("#articleTable").trigger("updateAll", [resort]);
+          
         });
       }
     </script>
