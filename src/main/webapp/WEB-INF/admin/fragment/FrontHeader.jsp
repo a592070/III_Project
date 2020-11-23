@@ -7,6 +7,32 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<style>
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px; 
+}
+.fa.fa-shopping-cart.fa-2x{
+	color:white;
+	padding-left:10px;
+}
+
+</style>
 
 
 <%--樣式跑掉，將下面4行加入引入頁面--%>
@@ -67,6 +93,14 @@
 					href="${pageContext.servletContext.contextPath}/">店家頁面</a>
 				</li>
 				</c:if>
+				
+				<!-- Shopping Cart -->
+				<li>
+					<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+					<i class="fa fa-shopping-cart fa-2x"></i>
+					<span class='badge badge-warning' id='lblCartCount'>  </span>
+  				</li>
+				
 			</ul>
 		</div>
 
