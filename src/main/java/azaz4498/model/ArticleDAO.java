@@ -12,9 +12,12 @@ import org.springframework.context.annotation.Lazy;
 public class ArticleDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 
 	// 顯示文章列表
 	public List<Article> showAllArticles() {
+		
+		
 		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article Order by ART_ID",
 				Article.class);
 		List<Article> list = query.list();
