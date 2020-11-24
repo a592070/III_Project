@@ -12,6 +12,8 @@
 <title>Hotel</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+<script src='//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script>
+<link href='//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel='stylesheet'></link>
 
 </head>
 
@@ -158,41 +160,41 @@
          </tbody>
         </table>
         
-        <div>
-				<nav aria-label="...">
-					<ul class="pagination">
+<!--         <div> -->
+<!-- 				<nav aria-label="..."> -->
+<!-- 					<ul class="pagination"> -->
 						
-								<li class="page-item">
-									<button class="page-link" id="page-botton" value="first">第一頁</button>
-								</li>
+<!-- 								<li class="page-item"> -->
+<!-- 									<button class="page-link" id="page-botton" value="first">第一頁</button> -->
+<!-- 								</li> -->
 							
 							
-							<!-- previous -->
-								<li class="page-item">
-									<button class="page-link previous" id="page-botton" value="previous">&laquo;</button>
-								</li>
+<!-- 							previous -->
+<!-- 								<li class="page-item"> -->
+<!-- 									<button class="page-link previous" id="page-botton" value="previous">&laquo;</button> -->
+<!-- 								</li> -->
 							
 							
-							<!-- current page -->
-								<li class="page-item active">
-									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">1</button>
-								</li>
+<!-- 							current page -->
+<!-- 								<li class="page-item active"> -->
+<!-- 									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">1</button> -->
+<!-- 								</li> -->
 						
-							<!-- NEXT -->
-								<li class="page-item">
-									<button class="page-link next" id="page-botton" value="next">&raquo;</button>
-								</li>
+<!-- 							NEXT -->
+<!-- 								<li class="page-item"> -->
+<!-- 									<button class="page-link next" id="page-botton" value="next">&raquo;</button> -->
+<!-- 								</li> -->
 							
 							
 							
-								<li class="page-item last">
-									<button class="page-link last" id="page-botton" value="">最末頁</button>
-								</li>
+<!-- 								<li class="page-item last"> -->
+<!-- 									<button class="page-link last" id="page-botton" value="">最末頁</button> -->
+<!-- 								</li> -->
 							
 					
-					</ul>
-				</nav>
-			</div>
+<!-- 					</ul> -->
+<!-- 				</nav> -->
+<!-- 			</div> -->
         
         
         <script type="text/javascript"> 
@@ -289,6 +291,18 @@
 			$("#deleteId").val(id);
 		}
 
+		$(function () {
+			$('#table').DataTable({
+				 searching: false
+
+				 columnDefs: [{
+				      targets: [3],
+				       orderable: false,
+				        }]		
+				 
+				 });
+			});
+		
 		</script> 
 		
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
