@@ -120,8 +120,10 @@
                                     </el-table-column>
                                     <el-table-column
                                             label="Status"
-                                            width="75"
-                                            align="right">
+                                            width="100"
+                                            prop="status"
+                                            sortable='custom'
+                                            :sort-orders="['descending', 'ascending']">
                                         <template slot-scope="scope">
                                         <label class="switch switch-text switch-success switch-pill form-control-label">
                                             <input type="checkbox" class="switch-input form-check-input" v-bind:checked="scope.row.status" v-on:click="handleSwitchStatus(scope.row)">
