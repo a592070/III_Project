@@ -34,5 +34,5 @@
 <script src="${pageContext.request.contextPath}/assets/plugins/toaster/toastr.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/sleek.js"></script>
-<script src="${pageContext.request.contextPath}/assets/ckeditor5-build-classic-master/build/ckeditor.js"></script>
+<script src="${pageContext.request.contextPath}/assets/ckeditor5/build/ckeditor.js"></script>
 
