@@ -9,7 +9,7 @@ import rambo0021.pojo.IdentityBean;
 
 public interface AccountService {
 
-	List<AccountBean> userList();
+	List<AccountBean> userList(int start, int pageSize);
 	AccountBean userDetail(String username);
 	String updateAccImg(byte[] img,String username);
 	String updateAccPwd(String username, String pwd);
@@ -26,4 +26,5 @@ public interface AccountService {
 	String registered(AccountBean aBean, IdentityBean iBean);
 	boolean login(String username, String password);
 	List<AccountListViewBean> search(String username, String identity, String email);
+	int getSize();
 }

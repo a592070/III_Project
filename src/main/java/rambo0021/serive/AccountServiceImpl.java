@@ -19,8 +19,8 @@ public class AccountServiceImpl implements AccountService {
 	private AcountDAO dao;
 
 	@Override
-	public List<AccountBean> userList() {
-		return dao.userList();
+	public List<AccountBean> userList(int start, int pageSize) {
+		return dao.userList(start,pageSize);
 	}
 
 	@Override
@@ -98,6 +98,11 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public List<AccountListViewBean> search(String username, String identity, String email) {
 		return dao.search(username,identity,email);
+	}
+
+	@Override
+	public int getSize() {
+		return dao.getSize();
 	}
 
 
