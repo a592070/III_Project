@@ -186,17 +186,50 @@ h2 {
 	 </script>
 
 	<script>
-		var cb=function(){return(new Date()).getTime()};
 		ClassicEditor
     		.create( document.querySelector( '#editor' ),{
 
-				toolbar: ["heading", "|", "bold", "italic", "link", "bulletedList", "numberedList",  "|", "imageUpload", "blockQuote", "insertTable", "mediaEmbed", "undo", "redo" ],
-				simpleUpload: {
-			// Feature configuration.
-			uploadUrl: {url:'/Upload/Image', headers:{'x-header':'myhead', 'x-header-cb':cb}}
+				extraPlugins: [ MyCustomUploadAdapterPlugin ],
+
+				toolbar: {
+					items: [
+						'heading',
+						'|',
+						'bold',
+						'italic',
+						'horizontalLine',
+						'link',
+						'bulletedList',
+						'numberedList',
+						'|',
+						'imageUpload',
+						'blockQuote',
+						'mediaEmbed',
+						'undo',
+						'redo',
+						'insertTable'
+					]
+				},
+				language: 'zh',
+				image: {
+					toolbar: [
+						'imageTextAlternative',
+						'imageStyle:full',
+						'imageStyle:side'
+					]
+				},
+				table: {
+					contentToolbar: [
+						'tableColumn',
+						'tableRow',
+						'mergeTableCells'
+					]
+				},
+				licenseKey: '', 
+
+				ckfinder:{uploadUrl: 'upload'},
 			
-        						}
-			})
+        	})
     		.then( editor => {
 				
 						console.log( editor );
@@ -204,6 +237,7 @@ h2 {
     		.catch( error => {
         				console.error( error );
     		} );
+
 			
 			
 			

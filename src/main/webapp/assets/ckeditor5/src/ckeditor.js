@@ -6,6 +6,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
+import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder.js';
+import CKFinderUploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter.js';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline.js';
@@ -22,10 +24,10 @@ import List from '@ckeditor/ckeditor5-list/src/list.js';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter.js';
 import Table from '@ckeditor/ckeditor5-table/src/table.js';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
+import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 
 class Editor extends ClassicEditor {}
 
@@ -34,6 +36,8 @@ Editor.builtinPlugins = [
 	Autoformat,
 	BlockQuote,
 	Bold,
+	CKFinder,
+	CKFinderUploadAdapter,
 	Essentials,
 	Heading,
 	HorizontalLine,
@@ -50,10 +54,10 @@ Editor.builtinPlugins = [
 	MediaEmbed,
 	Paragraph,
 	PasteFromOffice,
-	SimpleUploadAdapter,
 	Table,
 	TableToolbar,
-	TextTransformation
+	TextTransformation,
+	Underline
 ];
 
 export default Editor;
