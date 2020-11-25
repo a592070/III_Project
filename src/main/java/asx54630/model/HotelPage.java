@@ -2,84 +2,59 @@ package asx54630.model;
 
 public class HotelPage {
 
-	private Integer currentPage;// 當前頁
-	private Integer prePage;// 上一頁
-	private Integer nextPage;// 下一頁
-	private Integer lastPage;// 尾頁
-	private Integer pageSize = 8;// 每頁顯示的條數
-	private Integer counter;// 總數據
-	
-	public  HotelPage(String currentPage, Integer pageSize, Integer counter) {
-		if (currentPage == null||"".equals(currentPage)) {
-			// 如果當前頁的頁面是空值的話，當前頁賦值爲1
-			currentPage = "1";
-		}
-		// 把當前頁數傳遞過去
-		this.currentPage = Integer.parseInt(currentPage);
-		// 求總頁數
-		this.lastPage = counter / pageSize;
-		// 如果總條數不能整除每頁顯示的條數的時候，就+1；例如93/10=9;93%10=3;還有三條數據要做一頁，總共10頁；
-		if (counter % pageSize != 0) {
+	// 用戶輸入當前頁面
+		private int currentPage = 1;
+		// 總比數
+		private int totalCount = 0;
+		// 每頁比數
+		private int pageSize = 8;
+		// 總頁數 totalCount/pageSize +1
+		private int totalPageCount = 1;
 
-			this.lastPage = this.lastPage + 1;
+		public int getCurrentPage() {
+			return currentPage;
 		}
 
-		// 把上一頁傳遞過去
-		this.prePage = (this.currentPage == 1) ? this.currentPage
-				: this.currentPage - 1;
-		// 把下一頁傳遞過去
-		this.nextPage = (this.currentPage == this.lastPage) ? this.currentPage
-				: this.currentPage + 1;
+		public void sethCurrentPage(int currentPage) {
+			if (currentPage > 0) {
+				this.currentPage = currentPage;
+			} else {
+				this.currentPage = 1;
+			}
+		}
+
+		public int gethTotalCount() {
+			return totalCount;
+		}
+
+		public void sethTotalCount(int totalCount) {
+			if (totalCount > 0) {
+				this.totalCount = totalCount;
+				// 設置總頁數
+				this.setTotalPageCountH();
+			}
+		}
+
+		public int gethPageSize() {
+			return pageSize;
+		}
+
+		public void sethPageSize(int pageSize) {
+			if (pageSize > 0)
+				this.pageSize = pageSize;
+		}
+
+		public int gethTotalPageCount() {
+			return totalPageCount;
+		}
+
+		public void setTotalPageCountH() {
+			if (this.totalCount % this.pageSize == 0) {
+				this.totalPageCount = this.totalCount / this.pageSize;
+			} else if (this.totalCount % this.pageSize > 0) {
+				this.totalPageCount = this.totalCount / this.pageSize + 1;
+			} else {
+				this.totalPageCount = 0;
+			}
+		}
 	}
-	
-	public Integer getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(Integer currentPage) {
-		this.currentPage = currentPage;
-	}
-
-	public Integer getPrePage() {
-		return prePage;
-	}
-
-	public void setPrePage(Integer prePage) {
-		this.prePage = prePage;
-	}
-
-	public Integer getNextPage() {
-		return nextPage;
-	}
-
-	public void setNextPage(Integer nextPage) {
-		this.nextPage = nextPage;
-	}
-
-	public Integer getLastPage() {
-		return lastPage;
-	}
-
-	public void setLastPage(Integer lastPage) {
-		this.lastPage = lastPage;
-	}
-
-	public Integer getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public Integer getCounter() {
-		return counter;
-	}
-
-	public void setCounter(Integer counter) {
-		this.counter = counter;
-	}
-
-
-
-}

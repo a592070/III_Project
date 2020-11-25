@@ -58,4 +58,21 @@ public class H_Service {
 	public List<HotelView> sort(String orderfiled ,String name, String region, String type ,String order){
 		return hotelDao.sort(orderfiled,name,region,type,order);
 	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public int getSize() {
+		return hotelDao.getSize();
+	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public List<HotelView> totalHotel(int first, int count) {
+		return hotelDao.totalHotel(first,count);
+	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public int howMuchData(String name, String region, String type){
+		return hotelDao.howMuchData(name, region, type);
+	}
+	
 }
+

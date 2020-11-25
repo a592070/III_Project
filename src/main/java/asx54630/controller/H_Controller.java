@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import asx54630.model.Hotel;
+import asx54630.model.HotelPage;
 import asx54630.model.HotelView;
 import asx54630.service.H_Service;
+import iring29.model.Page;
 
 
 @Controller
@@ -23,12 +25,30 @@ public class H_Controller {
 
 	@Autowired
 	private H_Service hService;
-		
+	@Autowired
+	private HotelPage hpage;
+	
+	private int start = 0;
+	
 	@RequestMapping(path = "/hotelindex", method = RequestMethod.GET)
-	public String processHotelPage(Model m) {
+	public String processHotelPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
+		int size = hService.getSize();
+		hpage.sethTotalCount(size);
 		
-		List<HotelView> hoteldata = hService.selectAll("","","");
+		if (currentPage == 1) {
+			currentPage = 1;
+			start = 0;
+		} else {
+			start = (currentPage - 1) * hpage.gethPageSize();
+		}
+		
+		int pageSize = hpage.gethPageSize();
+		int totalPage = hpage.gethTotalPageCount();
+		
+		List<HotelView> hoteldata = hService.totalHotel(start, pageSize);
 		m.addAttribute("hoteldata", hoteldata);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("totalPage", totalPage);
 		
 		return "asx54630/H_index";
 		}
@@ -54,12 +74,18 @@ public class H_Controller {
 		return mav;
 		}
 	
-	@RequestMapping(path = "/hotelSort", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //排序
-	public ModelAndView processHotelSort(@RequestParam(name = "orderfiled",defaultValue = "SN") String orderfiled,
+	@RequestMapping(path = "/hotelSort", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //排序
+	public ModelAndView processHotelSort(@RequestParam(name = "orderfiled") String orderfiled,
 								   @RequestParam(name = "keyword") String keyword,
 								   @RequestParam(name = "regionkeywd") String regionkeywd,
 								   @RequestParam(name = "typekeywd") String typekeywd,
-								   @RequestParam(name = "order",defaultValue = "ASC") String order, Model m) {
+								   @RequestParam(name = "order") String order, Model m) {
+		
+		System.out.println(orderfiled);
+		System.out.println(keyword);
+		System.out.println(regionkeywd);
+		System.out.println(typekeywd);
+		System.out.println(order);
 
 		if (order.equals("DESC")) {
 			order = "ASC";

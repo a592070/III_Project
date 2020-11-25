@@ -24,12 +24,12 @@ public class HotelDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	public int getSize() {
+	public int getSize() { //初始資料總筆數
 		String hql = "select count(SN) from HotelView";
 		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
 	}
 	
-	public List<HotelView> totalRestaurant(int first, int count) {
+	public List<HotelView> totalHotel(int first, int count) {
 		Query<HotelView> query = sessionFactory.getCurrentSession().createQuery("from HotelView order by SN", HotelView.class);
 		// 找第幾筆
 		query.setFirstResult(first);
@@ -38,7 +38,16 @@ public class HotelDAO {
 		return query.list();
 	}
 	
-	public Hotel hotelDetail(BigDecimal sn) { //查詢飯店詳細資料
+	public int howMuchData(String name, String region, String type){ //查詢資料總筆數
+		Session session = sessionFactory.getCurrentSession();
+		Query<Long> query = session.createQuery("Select count(SN) From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", Long.class);
+		query.setParameter(0, "%" + name + "%");
+		query.setParameter(1, "%" + region + "%");
+		query.setParameter(2, "%" + type + "%");
+		return query.uniqueResult().intValue();
+	}
+	
+	public Hotel hotelDetail(BigDecimal sn) { //查詢單筆飯店詳細資料
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Hotel.class, sn);
 	}

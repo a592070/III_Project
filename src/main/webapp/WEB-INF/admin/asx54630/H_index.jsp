@@ -89,8 +89,7 @@
             <thead>
             <tr>
                 <th><div>
-						<form id="statuss" name="statuss">
-							<button id="sort">
+							<button id="sort" class="id-btn">
 								<svg width="2em" height="1em" viewBox="0 0 16 16"
 									class="bi bi-arrow-down-up" fill="currentColor"
 									xmlns="http://www.w3.org/2000/svg">
@@ -99,19 +98,25 @@
 						</svg>
 							</button> 
 							<Input type='hidden' name='orderfiled' id="orderfiled" value='SN'> 
-							<Input type='hidden' name='keyword' id="keyword" value='${keyword}'>
-							<Input type='hidden' name='regionkeywd' id="regionkeywd" value='${regionkeywd}'>
-							<Input type='hidden' name='typekeywd' id="typekeywd" value='${typekeywd}'> 
-							<Input type='hidden' name='order' id="order" value='${order}'>ID
-						</form>
+							<Input type='hidden' name='order' id="order" value=''>ID
+						<script>
+						$('.id-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderFiled').val('SN');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>	
+							
 					</div></th>
                 <th>名稱</th>
                 <th>地區</th>
                 <th>地址</th>
                 <th>住宿類型</th>                                            
                 <th><div>
-						<form id="statuss" name="statuss">
-							<button id="sort">
+							<button id="sort1" class="status-btn">
 								<svg width="2em" height="1em" viewBox="0 0 16 16"
 									class="bi bi-arrow-down-up" fill="currentColor"
 									xmlns="http://www.w3.org/2000/svg">
@@ -119,12 +124,18 @@
 										d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 						</svg>
 							</button> 
-							<Input type='hidden' name='orderfiled' id="orderfiled" value='STATUS'> 
-							<Input type='hidden' name='keyword' id="keyword" value='${keyword}'>
-							<Input type='hidden' name='regionkeywd' id="regionkeywd" value='${regionkeywd}'>
-							<Input type='hidden' name='typekeywd' id="typekeywd" value='${typekeywd}'> 
-							<Input type='hidden' name='order' id="order" value='${order}'>狀態
-						</form>
+							<Input type='hidden' name='orderfiled1' id="orderfiled1" value='STATUS'> 
+							<Input type='hidden' name='order' id="order" value=''>狀態
+						<script>
+						$('.status-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderFiled1').val('STATUS');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>		
 					</div></th>
 				<th>修改</th>
                 <th>刪除</th>
@@ -177,7 +188,7 @@
 							
 								<!--current page -->
 								<li class="page-item active">
-									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">1</button>
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}</button>
 								</li>
 						
 								<!--NEXT -->
@@ -188,7 +199,7 @@
 							
 							
 								<li class="page-item last">
-									<button class="page-link last" id="page-botton" value="">最末頁</button>
+									<button class="page-link last" id="page-botton" value="${totalPage}">最末頁</button>
 								</li>
 							
 					
@@ -290,7 +301,30 @@
 			$("#tbody").children().remove();
 			$.ajax(
 					{
-						type: 'POST',
+						type: 'GET',
+						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelSort',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#sort1").click(function () {
+			console.log("排序狀態")
+			var orderfiled = $("#orderfiled1").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'GET',
 						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order },
 						url: '${pageContext.servletContext.contextPath}/admin/hotelSort',
 						dataType: 'html',
