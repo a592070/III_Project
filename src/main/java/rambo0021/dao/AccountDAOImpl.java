@@ -22,7 +22,7 @@ public class AccountDAOImpl implements AcountDAO {
 	@Override
 	public List<AccountBean> userList(int start, int pageSize) {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "From AccountBean order by Modify_Date DESC";
+		String hql = "From AccountBean";
 		Query<AccountBean> query = session.createQuery(hql, AccountBean.class);
 		// 找第幾筆
 		query.setFirstResult(start);
@@ -144,15 +144,33 @@ public class AccountDAOImpl implements AcountDAO {
 	}
 
 	@Override
+	public String delAccount(AccountBean aBean) {
+		Session session = sessionFactory.getCurrentSession();
+		if (aBean.getOrderTable()!=null) 
+			{   
+				for (OrderTable oBean : aBean.getOrderTable()) {
+					oBean.setAccountBean(null);
+					System.out.println("設定null");
+				}
+				
+			}
+		session.update(aBean);
+		session.remove(aBean);
+		return "刪除成功";
+	}
+	@Override
 	public String delAccount(String username) {
 		Session session = sessionFactory.getCurrentSession();
 		AccountBean aBean = session.get(AccountBean.class, username);
+		
 		if (aBean != null) {
-			if (aBean.getOrderTable() != null) {
-				for (OrderTable oBean : aBean.getOrderTable())
-					oBean.setAccountBean(null);
-			}
-			session.delete(aBean);
+			System.out.println("123");
+//			if (!aBean.getOrderTable().isEmpty()) 
+//			{
+//				for (OrderTable oBean : aBean.getOrderTable())
+//					oBean.setAccountBean(null);
+//				
+//			}
 			return "刪除成功";
 		}
 		return "刪除失敗";
@@ -162,6 +180,7 @@ public class AccountDAOImpl implements AcountDAO {
 	public String modifyAccount(String username, String password, int identity, String email, String nickName) {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
 		if (aBean != null) {
+			System.out.println("修改資料");
 			if (!aBean.getPassword().equals(password)) {
 				System.out.println("密碼不同");
 				aBean.setPassword(SHA2DAO.getSHA256(password));
@@ -198,21 +217,20 @@ public class AccountDAOImpl implements AcountDAO {
 	}
 
 	@Override
-	public List<AccountListViewBean> search(String username, String identity, String email) {
+	public List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize) {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "From AccountListViewBean WHERE userName like ?0 and iName like ?1 and email like ?2 order by Modify_Date DESC";
+		String hql = "From AccountListViewBean WHERE userName like ?0 and iName like ?1 and email like ?2";
 //		String hql="From AccountBean WHERE userName like ?0 and email like ?1";
 
 		Query<AccountListViewBean> query = session.createQuery(hql, AccountListViewBean.class);
 		query.setParameter(0, "%" + username + "%");
 		query.setParameter(1, "%" + identity + "%");
 		query.setParameter(2, "%" + email + "%");
-		return query.list();
+		return query.setFirstResult(start).setMaxResults(pageSize).list();
 	}
 
 	@Override
-	public int getSize() {
-		String hql = "select count(userName) From AccountListViewBean";
+	public int getSize(String hql) {
 		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
 	}
 

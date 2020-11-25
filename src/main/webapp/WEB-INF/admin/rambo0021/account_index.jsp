@@ -31,7 +31,7 @@
 							<div class="form-group mb-2">
 								<h5>身分:</h5>
 								<select id="idkeyword" class="form-control" name="idkeyword">
-									<option value="">請選擇..</option>
+									<option value="" id="defaultId">請選擇..</option>
 									<option value="管理員">管理員</option>
 									<option value="一般會員">一般會員</option>
 									<option value="餐廳業者">餐廳業者</option>
@@ -48,13 +48,13 @@
 								placeholder="請輸入email">
 						</div>
 
-						<button type="button" class="btn btn-primary mb-2" value="search" name="search"
-							id="search">搜尋</button>
+						<button type="button" class="btn btn-primary mb-2" value="delsearch" name="delsearch"
+							id="delsearch">重置搜尋</button>
 					</form>
 				</div>
 				<div>
 					<h2>用戶列表</h2>
-					<div class="table-responsive">
+					<div class="table-responsive" id="appendbody">
 						<table class="table table-striped table-sm" id="table">
 							<thead>
 								<tr>
@@ -140,8 +140,9 @@
 								<li class="page-item last">
 									<button class="page-link last" id="page-botton-last" value="${page.totalPageCount}">最末頁</button>
 								</li>
-							
-					
+								<li class="page-item last">
+								     <span>結果${page.totalCount}筆,共${page.totalPageCount}頁</span>	
+								</li>			
 					</ul>
 				</nav>
 			</div>
@@ -163,7 +164,7 @@
 		// }
 		// )
 		//刪除帳號資料
-		$("#table").on('click', '#delAcc', function () {
+		$("#appendbody").on('click', '#delAcc', function () {
 
 			if (confirm("確定要刪除此筆資料?")) {
 				var username = $(this).closest('td').siblings("#username").text()
@@ -175,7 +176,7 @@
 						url: '${pageContext.servletContext.contextPath}/admin/delAccount',
 						dataType: 'text',
 						success: function (response) {
-							console.log(response)
+							alert(response)
 
 						}
 
@@ -231,7 +232,7 @@
 		})
 		*/
 		//啟用 禁用 checkbox
-		$("#table").on('change', '#checkbox', function () {
+		$("#appendbody").on('change', '#checkbox', function () {
 			var status = $(this).val();
 			if (status == "啟用") {
 				console.log("禁用帳號")
@@ -271,12 +272,13 @@
 				)
 			}
 		})
-		$("#search").click(function () {
-			console.log("搜尋")
+		//username email搜尋
+		$("#namekeyword,#emailkeyword").keyup(function () {
+			console.log("input搜尋")
 			var username = $("#namekeyword").val()
 			var identity = $("#idkeyword").val()
 			var email = $("#emailkeyword").val()
-			$("#tbody").children().remove();
+			
 			$.ajax(
 					{
 						type: 'POST',
@@ -284,13 +286,154 @@
 						url: '${pageContext.servletContext.contextPath}/admin/search',
 						dataType: 'html',
 						success: function (response) {
-							$("#tbody").append(response)
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
 
 						}
 
 					}
 				)
 		})
+		//身分搜尋
+		$("#idkeyword").change(function () {
+			console.log("select搜尋")
+			var username = $("#namekeyword").val()
+			var identity = $("#idkeyword").val()
+			var email = $("#emailkeyword").val()
+			
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity, "email" : email },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		//重置搜尋
+		$("#delsearch").click(function(){
+			console.log("reset")
+			$("#namekeyword").val("");
+            $("#idkeyword").val("");
+			$("#emailkeyword").val("");
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "username": "", "identity": "", "email" : "" },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		//第一頁
+		$("#appendbody").on('click', '#page-botton-first', function (){
+           console.log("第一頁")
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+		   var currentPage=1
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity , "email" : email ,"currentPage": currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+
+
+		}) 
+		//前一頁
+		$("#appendbody").on('click', '#page-botton-previous', function (){
+           console.log("前一頁")
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+		   var currentPage=parseInt($("#page-btn").val())-1
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity , "email" : email ,"currentPage": currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+
+
+		}) 
+
+		//後一頁
+		$("#appendbody").on('click', '#page-botton-next', function (){
+           console.log("後一頁")
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+		   var currentPage=parseInt($("#page-btn").val())+1
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity , "email" : email ,"currentPage": currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+
+
+		}) 
+		//最末頁
+		$("#appendbody").on('click', '#page-botton-last', function (){
+           console.log("最末頁")
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+		   var currentPage=$("#page-botton-last").val()
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity , "email" : email ,"currentPage": currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+
+
+		}) 
 
 	</script>
 </body>
