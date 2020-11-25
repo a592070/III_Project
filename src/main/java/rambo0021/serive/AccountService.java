@@ -25,6 +25,7 @@ public interface AccountService {
 	String modifyAccount(String username, String password, int identity, String email,String nickName);
 	String registered(AccountBean aBean, IdentityBean iBean);
 	boolean login(String username, String password);
-	List<AccountListViewBean> search(String username, String identity, String email);
-	int getSize();
+	List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize);
+	int getSize(String hql);
+	String delAccount(AccountBean aBean);
 }

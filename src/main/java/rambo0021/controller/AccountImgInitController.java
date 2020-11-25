@@ -27,7 +27,7 @@ public class AccountImgInitController {
 	@GetMapping("/initImg")
 	public @ResponseBody String initImg() {
 		InputStream imgis = null;
-		int size=service.getSize();
+		int size=service.getSize("select count(userName) From AccountListViewBean");
 		List<AccountBean> userList = service.userList(0, size);
 		for (AccountBean accountBean : userList) {
 			int filename = (int) (Math.random() * 3)+1;

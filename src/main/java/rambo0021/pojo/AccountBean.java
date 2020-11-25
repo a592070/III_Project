@@ -1,6 +1,7 @@
 package rambo0021.pojo;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,6 +23,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import global.pojo.OrderTable;
+import iring29.model.Restaurant;
 
 
 
@@ -53,8 +56,11 @@ public class AccountBean {
 	@JoinColumn(name = "IDENTITY")
 	private IdentityBean identityBean;
     
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accountBean")
-	private List<OrderTable> orderTable;// 大訂單 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "accountBean", orphanRemoval=true)
+	private List<OrderTable> orderTable = new ArrayList<OrderTable>();// 大訂單 
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "accountBean")
+    private Restaurant restaurant;	
 
 	public AccountBean() {
 
@@ -164,5 +170,15 @@ public class AccountBean {
 	public void setOrderTable(List<OrderTable> orderTable) {
 		this.orderTable = orderTable;
 	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+	}
+	
+	
 	
 }
