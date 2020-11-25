@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import iring29.model.Show_RView;
+
 
 
 @Repository("hotelDao")
@@ -22,7 +24,20 @@ public class HotelDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-
+	public int getSize() {
+		String hql = "select count(SN) from HotelView";
+		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
+	}
+	
+	public List<HotelView> totalRestaurant(int first, int count) {
+		Query<HotelView> query = sessionFactory.getCurrentSession().createQuery("from HotelView order by SN", HotelView.class);
+		// 找第幾筆
+		query.setFirstResult(first);
+		// 從第幾筆開始count筆
+		query.setMaxResults(count);
+		return query.list();
+	}
+	
 	public Hotel hotelDetail(BigDecimal sn) { //查詢飯店詳細資料
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Hotel.class, sn);
@@ -45,13 +60,13 @@ public class HotelDAO {
 		return list;
 	}
 	
-	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){ //排序
+	public List<HotelView> sort(String orderfiled ,String name, String region, String type ,String order){ //排序
 		Session session = sessionFactory.getCurrentSession();
-		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order , Hotel.class);
+		Query<HotelView> query = session.createQuery("From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order , HotelView.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
-		List<Hotel> list = query.list();
+		List<HotelView> list = query.list();
 		return list;
 	}
 	

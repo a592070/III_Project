@@ -12,8 +12,8 @@
 <title>Hotel</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
-<script src='//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script>
-<link href='//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel='stylesheet'></link>
+<!-- <script src='//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script> -->
+<!-- <link href='//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel='stylesheet'></link> -->
 
 </head>
 
@@ -29,8 +29,8 @@
  <%-- -- <div class="content-wrapper"></div>  -------------------------------以下為個人內容-------------------------- --%>
 <!-- 		<div class="container"> -->
         
-        <div class="mx-auto my-3" style="width: 1100px">
-            <form class="form-inline"  id="form">
+        <div class="mx-auto my-3" style="width: 1200px">
+            <form class="form-inline mx-4"  id="form">
                 <div class="form-group mb-2">
                   <h5>輸入關鍵字:</h5>
                 </div>
@@ -67,7 +67,7 @@
                         <option value="連江縣">連江縣</option>
                     </select>
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-2">
                     <label for="typekeywd">類型:</label>
                     <select class="form-control" name="typekeywd" id="typekeywd">
                       <option value="">請選擇..</option>
@@ -76,7 +76,9 @@
                       <option value="汽車旅館">汽車旅館</option>
                     </select>
                   </div>      
-                <button type="button" class="btn btn-primary mb-2" id="search" name="search">搜尋</button>
+                <button type="button" class="btn btn-primary mx-2 mr-2" id="search" name="search">搜尋</button>
+                <button type="submit" class="btn btn-primary mr-2" id="resetkeyword">清空關鍵字</button>
+                <button type="button" class="btn btn-success" id="insert">新增飯店</button>
               </form>
             </div>
             <h2>飯店列表</h2>
@@ -87,9 +89,8 @@
             <thead>
             <tr>
                 <th><div>
-						<form id="statuss" name="statuss"
-							action="<%=application.getContextPath()%>/admin/hotelSort">
-							<button>
+						<form id="statuss" name="statuss">
+							<button id="sort">
 								<svg width="2em" height="1em" viewBox="0 0 16 16"
 									class="bi bi-arrow-down-up" fill="currentColor"
 									xmlns="http://www.w3.org/2000/svg">
@@ -97,11 +98,11 @@
 										d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 						</svg>
 							</button> 
-							<Input type='hidden' name='orderfiled' value='SN'> 
-							<Input type='hidden' name='keyword' value='${keyword}'>
-							<Input type='hidden' name='regionkeywd' value='${regionkeywd}'>
-							<Input type='hidden' name='typekeywd' value='${typekeywd}'> 
-							<Input type='hidden' name='order' value='${order}'>ID
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='SN'> 
+							<Input type='hidden' name='keyword' id="keyword" value='${keyword}'>
+							<Input type='hidden' name='regionkeywd' id="regionkeywd" value='${regionkeywd}'>
+							<Input type='hidden' name='typekeywd' id="typekeywd" value='${typekeywd}'> 
+							<Input type='hidden' name='order' id="order" value='${order}'>ID
 						</form>
 					</div></th>
                 <th>名稱</th>
@@ -109,9 +110,8 @@
                 <th>地址</th>
                 <th>住宿類型</th>                                            
                 <th><div>
-						<form id="statuss" name="statuss"
-							action="<%=application.getContextPath()%>/admin/hotelSort">
-							<button>
+						<form id="statuss" name="statuss">
+							<button id="sort">
 								<svg width="2em" height="1em" viewBox="0 0 16 16"
 									class="bi bi-arrow-down-up" fill="currentColor"
 									xmlns="http://www.w3.org/2000/svg">
@@ -119,11 +119,11 @@
 										d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 						</svg>
 							</button> 
-							<Input type='hidden' name='orderfiled' value='STATUS'> 
-							<Input type='hidden' name='keyword' value='${keyword}'>
-							<Input type='hidden' name='regionkeywd' value='${regionkeywd}'>
-							<Input type='hidden' name='typekeywd' value='${typekeywd}'> 
-							<Input type='hidden' name='order' value='${order}'>狀態
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='STATUS'> 
+							<Input type='hidden' name='keyword' id="keyword" value='${keyword}'>
+							<Input type='hidden' name='regionkeywd' id="regionkeywd" value='${regionkeywd}'>
+							<Input type='hidden' name='typekeywd' id="typekeywd" value='${typekeywd}'> 
+							<Input type='hidden' name='order' id="order" value='${order}'>狀態
 						</form>
 					</div></th>
 				<th>修改</th>
@@ -160,41 +160,41 @@
          </tbody>
         </table>
         
-<!--         <div> -->
-<!-- 				<nav aria-label="..."> -->
-<!-- 					<ul class="pagination"> -->
+        <div>
+				<nav aria-label="...">
+					<ul class="pagination">
 						
-<!-- 								<li class="page-item"> -->
-<!-- 									<button class="page-link" id="page-botton" value="first">第一頁</button> -->
-<!-- 								</li> -->
+								<li class="page-item">
+									<button class="page-link" id="page-botton" value="first">第一頁</button>
+								</li>
 							
 							
-<!-- 							previous -->
-<!-- 								<li class="page-item"> -->
-<!-- 									<button class="page-link previous" id="page-botton" value="previous">&laquo;</button> -->
-<!-- 								</li> -->
+								<!--previous -->
+								<li class="page-item">
+									<button class="page-link previous" id="page-botton" value="previous">&laquo;</button>
+								</li>
 							
 							
-<!-- 							current page -->
-<!-- 								<li class="page-item active"> -->
-<!-- 									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">1</button> -->
-<!-- 								</li> -->
+								<!--current page -->
+								<li class="page-item active">
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">1</button>
+								</li>
 						
-<!-- 							NEXT -->
-<!-- 								<li class="page-item"> -->
-<!-- 									<button class="page-link next" id="page-botton" value="next">&raquo;</button> -->
-<!-- 								</li> -->
+								<!--NEXT -->
+								<li class="page-item">
+									<button class="page-link next" id="page-botton" value="next">&raquo;</button>
+								</li>
 							
 							
 							
-<!-- 								<li class="page-item last"> -->
-<!-- 									<button class="page-link last" id="page-botton" value="">最末頁</button> -->
-<!-- 								</li> -->
+								<li class="page-item last">
+									<button class="page-link last" id="page-botton" value="">最末頁</button>
+								</li>
 							
 					
-<!-- 					</ul> -->
-<!-- 				</nav> -->
-<!-- 			</div> -->
+					</ul>
+				</nav>
+			</div>
         
         
         <script type="text/javascript"> 
@@ -280,6 +280,29 @@
 				)
 		})
 		
+		$("#sort").click(function () {
+			console.log("排序")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelSort',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
 		function clickdetail(id){
 
 			document.location.href="${pageContext.servletContext.contextPath}/admin/hoteldetail?detailsn="+id;
@@ -291,17 +314,24 @@
 			$("#deleteId").val(id);
 		}
 
-		$(function () {
-			$('#table').DataTable({
-				 searching: false
+		$('#resetkeyword').click(function(){
+			console.log("clear");
+		  $("#keyword").val('');
+		  $('#regionkeywd').val('');
+		  $('#typekeywd').val('');
+		})
+		
+// 		$(function () {
+// 			$('#table').DataTable({
+// 				 searching: false
 
-				 columnDefs: [{
-				      targets: [3],
-				       orderable: false,
-				        }]		
+// 				 columnDefs: [{
+// 				      targets: [3],
+// 				       orderable: false,
+// 				        }]		
 				 
-				 });
-			});
+// 				 });
+// 			});
 		
 		</script> 
 		

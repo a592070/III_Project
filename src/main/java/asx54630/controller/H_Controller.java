@@ -54,8 +54,8 @@ public class H_Controller {
 		return mav;
 		}
 	
-	@RequestMapping(path = "/hotelSort", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //排序
-	public String processHotelSort(@RequestParam(name = "orderfiled",defaultValue = "SN") String orderfiled,
+	@RequestMapping(path = "/hotelSort", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //排序
+	public ModelAndView processHotelSort(@RequestParam(name = "orderfiled",defaultValue = "SN") String orderfiled,
 								   @RequestParam(name = "keyword") String keyword,
 								   @RequestParam(name = "regionkeywd") String regionkeywd,
 								   @RequestParam(name = "typekeywd") String typekeywd,
@@ -67,16 +67,17 @@ public class H_Controller {
 			order = "DESC";
 		}
 		
-		List<Hotel> hoteldata = hService.sort(orderfiled,keyword,regionkeywd,typekeywd,order);
-		m.addAttribute("hoteldata", hoteldata);
-		m.addAttribute("orderfiled", orderfiled);
-		m.addAttribute("keyword", keyword);
-		m.addAttribute("regionkeywd", regionkeywd);
-		m.addAttribute("typekeywd", typekeywd);
-		m.addAttribute("order", order);
-
+		List<HotelView> hoteldata = hService.sort(orderfiled,keyword,regionkeywd,typekeywd,order);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("hoteldata", hoteldata);
+		mav.addObject("orderfiled", orderfiled);
+		mav.addObject("keyword", keyword);
+		mav.addObject("regionkeywd", regionkeywd);
+		mav.addObject("typekeywd", typekeywd);
+		mav.addObject("order", order);
+		mav.setViewName("asx54630/H_search");
 		
-		return "asx54630/H_index";
+		return mav;
 		}
 	
 	@RequestMapping(path = "/hotelstatus", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //是否停權

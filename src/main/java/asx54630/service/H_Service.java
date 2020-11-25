@@ -55,7 +55,7 @@ public class H_Service {
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){
+	public List<HotelView> sort(String orderfiled ,String name, String region, String type ,String order){
 		return hotelDao.sort(orderfiled,name,region,type,order);
 	}
 }
