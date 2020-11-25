@@ -92,9 +92,6 @@ public class ArticleController {
 	@RequestMapping(path = "/editPage.controller")
 	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticleById(articleId));
-
-		System.out.println("==========Edit Page 我要進去囉==========");
-
 		return "azaz4498/editPage";
 	}
 
@@ -111,9 +108,7 @@ public class ArticleController {
 
 	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
 	public String Delete(@RequestParam(name = "artId") Integer articleId, Model m) {
-		System.out.println("================before");
 		articleService.deleteArticleByAdmin(articleId);
-		System.out.println("================after");
 //		ModelAndView mv = new ModelAndView("redirect:/Forum");
 
 		return "redirect:/Forum";
