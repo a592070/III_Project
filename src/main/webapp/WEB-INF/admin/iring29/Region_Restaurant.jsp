@@ -122,7 +122,7 @@ h4 {
 
 	<c:forEach var="res" items="${res_data_region}">
 		<FORM
-			action="<%=pageContext.getServletContext().getContextPath()%>/RestaurantServlet"
+			action="<%=pageContext.getServletContext().getContextPath()%>/DisplyRestaurant"
 			method="POST">
 			<div class="div1">
 				<div class="div2">
