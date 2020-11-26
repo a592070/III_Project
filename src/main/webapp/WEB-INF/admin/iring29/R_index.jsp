@@ -212,7 +212,7 @@ th {
 					<script>
 						$('.id-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled').val('status');
+							$('#orderFiled').val('r_sn');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));

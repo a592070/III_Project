@@ -76,7 +76,7 @@ input {
 <body>
 	<c:import url="/WEB-INF/admin/fragment/FrontHeader.jsp" />
 
-	<FORM id="form1" name="form1" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
+	<FORM id="form1" name="form1" >
 		<div class="wrapper">
 			<div class="container">
 
@@ -88,8 +88,7 @@ input {
 
 					<div class="div-1">
 						<label for="r-date">用餐日期</label>
-						<!--  	<span>${book_date}</span>-->
-						<input type="date" name="book_date" id="theDate" min="">
+						<input type="date" name="bookdate" id="theDate" min="" onchange="rclick()">
 						<script>
 						var book = "${book_date}";
 						console.log(book);
@@ -109,6 +108,12 @@ input {
 
 						var today = year + "-" + month + "-" + day;
 						document.getElementById("theDate").min = today;
+
+						function rclick(){
+							var theDate = document.getElementById("theDate").value
+							console.log(theDate);
+							}
+					
 						</script>
 					</div>
 
@@ -132,13 +137,12 @@ input {
 
 					<div class="div-1">
 						<label for="b-name">訂位人姓名</label> <input type="text" id="b-name"
-							name="b-name" placeholder="請輸入完整姓名">
+							name="b_name" placeholder="請輸入完整姓名">
 					</div>
 				</div>
 				<div class="div-1">
 					<label for="b-phone">訂位人手機</label> 
-					<input type="text" id="b-phone" onblur="checkPhone()" 
-						name="b-phone" placeholder="請輸入手機號碼">
+					<input type="text" id="b-phone" onblur="checkPhone()" name="b_phone" placeholder="請輸入手機號碼">
 						<p id="uidt" style="margin-left: 10px"></p> 
 				</div>
 				<div class="div-1">
@@ -175,8 +179,8 @@ input {
 					<Input type='hidden' name='person_numer' value='${person_numer}'>
 					<Input type='hidden' name='r_id' value='${r_id}'>
 				<div class="div-btn">
-					<button type="submit" class="btn btn-success" name="confirm" value="結帳">結帳</button>
-					<input type="button" class="btn btn-primary" name="CancelBtn" value="繼續逛" onclick="cancelOrder()">
+					<button type="button" class="btn btn-success" name="confirm" onclick="checkOrder()">結帳</button>
+					<button type="button" class="btn btn-primary" name="CancelBtn" onclick="checkR()">繼續逛</button>
 				</div>
 
 			</div>
@@ -191,19 +195,18 @@ input {
             return false;
         } else { return document.getElementById('uidt').innerHTML = 'ok'; }
     }
-	
- function cancelOrder() {
-	if (confirm("確定取消此份訂單 ? ") ) {
-		// 接收此資料的Servlet會使用 finalDecision 參數的值
-		document.forms["form1"].finalDecision.value = "CANCEL";
-		document.forms["form1"].action="<c:url value='/iring29/Restaurant_index.jsp' />";
+
+    function checkOrder(){
+    	document.forms["form1"].action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder";
 		document.forms["form1"].method="POST";
 		document.forms["form1"].submit();
-		return;
-	} else {
-		return;
-	}
-} 
+        }
+    function checkR(){
+    	document.forms["form1"].action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_index";
+		document.forms["form1"].method="GET";
+		document.forms["form1"].submit();
+        }
+	
 function reconfirmOrder() {
 	var time = document.getElementById('inputState').value;
 	if  (time === "") {
