@@ -22,4 +22,8 @@ public class DispatcherController {
         model.addAttribute("id", id);
         return "a592070/attractionDetail";
     }
+    @RequestMapping("/admin/attraction/insert")
+    public String attractionInsert() {
+        return "a592070/attractionDetail";
+    }
 }

@@ -12,22 +12,30 @@ public class AttractionServiceImpl implements AttractionService{
     private AttractionDAO dao;
 
     @Override
-    public AttractionDO getEle(int id){
+    public AttractionDO getEle(Integer id){
+        if(id == null || id==0) return null;
         return dao.getEle(id);
     }
 
     @Override
-    public AttractionDO insert(AttractionDO attractionDO) {
-        return dao.insert(attractionDO);
-    }
-
-    @Override
-    public AttractionDO update(AttractionDO attractionDO) {
+    public AttractionDO save(AttractionDO attractionDO) {
+        if(attractionDO.getSn() == null || attractionDO.getSn()==0){
+            return dao.insert(attractionDO);
+        }
         return dao.update(attractionDO);
     }
 
+//    @Override
+//    public AttractionDO insert(AttractionDO attractionDO) {
+//        return dao.insert(attractionDO);
+//    }
+//    @Override
+//    public AttractionDO update(AttractionDO attractionDO) {
+//        return dao.update(attractionDO);
+//    }
+
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         AttractionDO ele = getEle(id);
         if(ele != null){
             dao.delete(ele);

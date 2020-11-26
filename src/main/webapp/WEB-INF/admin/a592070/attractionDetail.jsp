@@ -74,8 +74,8 @@
                         </el-page-header>
 
                         <el-form label-width="180px" :model="attractionData" ref="attractionData" >
-                            <el-form-item label="ID" prop="sn">
-                                <el-input v-model="attractionData.sn" disabled ></el-input>
+                            <el-form-item label="ID" prop="sn" v-bind:hidden="isInsert">
+                                <el-input v-model="attractionData.sn" disabled></el-input>
                             </el-form-item>
                             <el-form-item label="Name" prop="name">
                                 <el-input v-model="attractionData.name"></el-input>
@@ -182,6 +182,7 @@
         el: '#app',
         data() {
             return {
+                isInsert: true,
                 attractionData: {
                     sn: '',
                     name: '',
@@ -214,7 +215,10 @@
             }
         },
         created: function () {
+            <c:if test="${not empty id}">
+            this.isInsert = false;
             this.getAttractionData(this)
+            </c:if>
             this.getRegionData()
         },
         methods: {
@@ -247,15 +251,14 @@
                 this.$refs[formName].resetFields();
             },
             submitForm(){
-                let url='${pageContext.servletContext.contextPath}/admin/attraction/update/'+this.attractionData.sn
-                console.log(this.name);
+                let url='${pageContext.servletContext.contextPath}/admin/attraction/save/'+this.attractionData.sn
+                if(this.isInsert) url = '${pageContext.servletContext.contextPath}/admin/attraction/save';
+
                 this.param.append('attractionData', JSON.stringify(this.attractionData));
                 this.param.append('removePicId', JSON.stringify(this.removePicId));
                 let config = {
                    header: {
-                       'Content-Type': 'multipart/form-data',
-                       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE",
-                       'crossdomain': true
+                       'Content-Type': 'multipart/form-data'
                    }
                 }
                 axios.post(
@@ -268,8 +271,15 @@
                         alert("更新成功")
                         window.location.reload();
                     }else{
-                        alert("更新失敗")
+                        this.$message({
+                            type: 'info',
+                            message: '更新失敗!!'
+                        });
                     }
+                }).catch(reason => {
+                    this.$message({
+                    type: 'info',
+                    message: '更新失敗!!'});
                 })
             },
             handleAvatarSuccess(res, file) {
@@ -302,9 +312,7 @@
             },
             goBack() {
                 console.log('go back');
-                // location.href = document.referrer;
                 window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction";
-                // parent.window.location.assign(window.location.href);
             }
 
         }

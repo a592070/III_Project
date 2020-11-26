@@ -42,20 +42,6 @@ public class AttractionController {
     @Autowired@Qualifier("attractionViewService")
     private ViewService<AttractionVO> viewService;
 
-//    @RequestMapping("/admin/attraction")
-//    public void attractionMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionInfo02.jsp").forward(request, response);
-//    }
-//    @RequestMapping("/admin/attraction/detail")
-//    public void attractionDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionDetail.jsp").forward(request, response);
-//    }
-//    @RequestMapping("/admin/attraction/detail/{id}")
-//    public AttractionDO attractionDetail(@PathVariable("id") int id) {
-//        return service.getEle(id);
-//    }
-
-
     @RequestMapping("/admin/attraction/list/{page}")
     public Map<String, Object> getAttractionList(@PathVariable("page") int page){
         PageSupport pageSupport = new PageSupport();
@@ -146,9 +132,9 @@ public class AttractionController {
         Map<String, Object> map = new HashMap<>();
         map.put("attractionData", attractionDO);
 
+
 //        List<Integer> list = new ArrayList<>();
 //        attractionDO.getAttractionPic().forEach(ele -> list.add(ele.getId()));
-
         map.put("attractionPic", attractionDO.getAttractionPic());
         return map;
     }
@@ -166,8 +152,10 @@ public class AttractionController {
         return responseEntity;
     }
 
-    @PostMapping("/admin/attraction/update/{id}")
-    public boolean update(@PathVariable(name = "id") int id,
+
+
+    @PostMapping({"/admin/attraction/save/{id}", "/admin/attraction/save/", "/admin/attraction/save"})
+    public boolean save(@PathVariable(name = "id", required = false) Integer id,
                               @RequestParam(name="file", required=false)MultipartFile[] multipartFile,
                               @RequestParam(name="removePicId", required = false) String picId,
                               @RequestParam(name="attractionData", required = false)String attractionData) {
@@ -175,20 +163,21 @@ public class AttractionController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             AttractionDO attractionDO = mapper.readValue(attractionData, AttractionDO.class);
-
-            AttractionDO originDo = service.getEle(attractionDO.getSn());
-            attractionDO.setAttractionPic(originDo.getAttractionPic());
+//            AttractionDO attractionDO = attractionData;
+            if(id == null || id == 0) {
+                attractionDO.setSn(null);
+            }else{
+                AttractionDO originDo = service.getEle(attractionDO.getSn());
+                if(originDo != null) attractionDO.setAttractionPic(originDo.getAttractionPic());
+            }
 
             if(multipartFile != null || multipartFile.length!=0){
                 for (MultipartFile file : multipartFile) {
                     AttractionPictureDO pictureDO = new AttractionPictureDO();
                     pictureDO.setPicture(file.getBytes());
                     pictureDO.setAttraction(attractionDO);
-
                     attractionDO.addPic(pictureDO);
                 }
-//                attractionDO.addPic(multipartFile.getBytes());
-//                attractionDO.setPicture(multipartFile.getBytes());
                 System.out.println("saveFile success");
             }
 
@@ -197,7 +186,7 @@ public class AttractionController {
                 attractionDO.getAttractionPic().removeIf(ele -> ele.getId() == i);
             }
 
-            service.update(attractionDO);
+            service.save(attractionDO);
 
             flag = true;
         }catch (Exception e){
@@ -206,13 +195,16 @@ public class AttractionController {
 
         return flag;
     }
-    @PostMapping("/admin/attraction/status/{id}")
+
+
+
+    @PutMapping("/admin/attraction/status/{id}")
     public boolean switchStatus(@PathVariable(name = "id") int id){
         boolean flag = false;
         try {
             AttractionDO ele = service.getEle(id);
             ele.setStatus(!ele.getStatus());
-            service.update(ele);
+            service.save(ele);
 
             flag = true;
         }catch (Exception e){
@@ -221,7 +213,7 @@ public class AttractionController {
         return flag;
     }
 
-    @PostMapping("/admin/attraction/delete/{id}")
+    @DeleteMapping("/admin/attraction/delete/{id}")
     public boolean delete(@PathVariable(name = "id") int id){
         boolean flag = false;
         try{

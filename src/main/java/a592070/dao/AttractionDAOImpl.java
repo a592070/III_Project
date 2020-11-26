@@ -17,7 +17,7 @@ public class AttractionDAOImpl extends AttractionDAO{
     }
 
     @Override
-    public AttractionDO getEle(int id) {
+    public AttractionDO getEle(Integer id) {
         return sessionFactory.getCurrentSession().get(AttractionDO.class, id);
     }
 
@@ -26,12 +26,13 @@ public class AttractionDAOImpl extends AttractionDAO{
         sessionFactory.getCurrentSession().save(ele);
         return ele;
     }
-
-
     @Override
     public AttractionDO update(AttractionDO ele) {
         return (AttractionDO)sessionFactory.getCurrentSession().merge(ele);
-
+    }
+    public AttractionDO save(AttractionDO ele){
+        sessionFactory.getCurrentSession().saveOrUpdate(ele);
+        return ele;
     }
 
     @Override
