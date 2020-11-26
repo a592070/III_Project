@@ -1,22 +1,29 @@
 package azaz4498.controller;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -81,8 +88,8 @@ public class ArticleController {
 
 	}
 
-	@RequestMapping(path = "/articleSearch.json",  method = RequestMethod.GET, produces = {
-	"application/json; charset=UTF-8" })
+	@RequestMapping(path = "/articleSearch.json", method = RequestMethod.GET, produces = {
+			"application/json; charset=UTF-8" })
 	public @ResponseBody List<Article> DisplayJSONResults(
 			@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
 			@RequestParam(name = "articleType", defaultValue = "", required = false) Integer articleType) {
@@ -94,9 +101,6 @@ public class ArticleController {
 	@RequestMapping(path = "/editPage.controller")
 	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticleById(articleId));
-
-		System.out.println("==========Edit Page 我要進去囉==========");
-
 		return "azaz4498/editPage";
 	}
 
@@ -113,9 +117,7 @@ public class ArticleController {
 
 	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
 	public String Delete(@RequestParam(name = "artId") Integer articleId, Model m) {
-		System.out.println("================before");
 		articleService.deleteArticleByAdmin(articleId);
-		System.out.println("================after");
 //		ModelAndView mv = new ModelAndView("redirect:/Forum");
 
 		return "redirect:/Forum";
@@ -177,4 +179,25 @@ public class ArticleController {
 
 		return "redirect:/Forum";
 	}
+	@RequestMapping(value = "/imgUpload",method = RequestMethod.POST)
+	public Map<String, String> imgUpload(@RequestParam("file")MultipartFile uploadFile,HttpSession session) throws IOException{
+		Map<String, String> map = new HashMap<String, String>();
+		String fileName = uploadFile.getOriginalFilename();
+		String finalFileName = UUID.randomUUID()+fileName.substring(fileName.lastIndexOf("."));
+		String path = session.getServletContext().getRealPath("assets/img/azaz4498")+File.separator+finalFileName;
+		File file = new File(path);
+		InputStream is = uploadFile.getInputStream();
+		byte[] bytes = FileCopyUtils.copyToByteArray(is);
+		uploadFile.transferTo(file);
+		articleService.uploadImg(2, bytes, path);
+		
+		map.put("finalFileName", finalFileName);
+		map.put("path", path);
+		is.close();
+		return map;
+		
+		
+	}
+	
+	
 }

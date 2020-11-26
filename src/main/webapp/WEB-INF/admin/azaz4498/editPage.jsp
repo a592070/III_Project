@@ -11,10 +11,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
+
+
+
+
 <title>論壇管理</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+
 <style>
 .sp_search-1 {
 	float: left;
@@ -121,6 +126,7 @@ h2 {
 										</div>
 
 									</form>
+									
 								</div>
 							</div>
 
@@ -147,7 +153,6 @@ h2 {
 			var typeSelect = document.getElementById("typeSelect");
 			var options = typeSelect.getElementsByTagName("option");
 			var selectedType = ${artBean[0].articleType.typeId};
-			console.log(selectedType);
 			options[selectedType].selected = true;
 		}
 
@@ -178,20 +183,68 @@ h2 {
 		}
 		 
          
- 	</script>
+	 </script>
+
 	<script>
 		ClassicEditor
-    		.create( document.querySelector( '#editor' ))
+    		.create( document.querySelector( '#editor' ),{
+
+				extraPlugins: [ MyCustomUploadAdapterPlugin ],
+
+				toolbar: {
+					items: [
+						'heading',
+						'|',
+						'bold',
+						'italic',
+						'horizontalLine',
+						'link',
+						'bulletedList',
+						'numberedList',
+						'|',
+						'imageUpload',
+						'blockQuote',
+						'mediaEmbed',
+						'undo',
+						'redo',
+						'insertTable'
+					]
+				},
+				language: 'zh',
+				image: {
+					toolbar: [
+						'imageTextAlternative',
+						'imageStyle:full',
+						'imageStyle:side'
+					]
+				},
+				table: {
+					contentToolbar: [
+						'tableColumn',
+						'tableRow',
+						'mergeTableCells'
+					]
+				},
+				licenseKey: '', 
+
+				ckfinder:{uploadUrl: 'upload'},
+			
+        	})
     		.then( editor => {
-        				console.log( editor );
+				
+						console.log( editor );
     		})
     		.catch( error => {
         				console.error( error );
     		} );
+
+			
+			
+			
  	</script>
 
 
-	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
 
 
 

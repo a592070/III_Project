@@ -35,25 +35,34 @@ public class ArticleService {
 	public void newArticle(String title, Integer typeId, String content, String userId) throws SQLException {
 		aDao.newArticle(title, typeId, content, userId);
 	}
-	//編輯文章
-	public Article articleEdit(String title, String content, Integer articleId, String userid,Integer typeId) throws SQLException {
-		return aDao.articleEdit(title, content, articleId, userid,typeId);
+
+	// 編輯文章
+	public Article articleEdit(String title, String content, Integer articleId, String userid, Integer typeId)
+			throws SQLException {
+		return aDao.articleEdit(title, content, articleId, userid, typeId);
 	}
 
-	public List<Article> searchArticles(String keyword,Integer articleType) {
-		return aDao.searchArticle(keyword,articleType);
+	public List<Article> searchArticles(String keyword, Integer articleType) {
+		return aDao.searchArticle(keyword, articleType);
 	}
-	//刪除文章
-	public boolean deleteArticle (Integer articleId, String userid) {
+
+	// 刪除文章
+	public boolean deleteArticle(Integer articleId, String userid) {
 		return aDao.deleteArticle(articleId, userid);
 	}
-	//刪除文章(後台)
-	public boolean deleteArticleByAdmin (Integer articleId) {
+
+	// 刪除文章(後台)
+	public boolean deleteArticleByAdmin(Integer articleId) {
 		return aDao.deleteArticleByAdmin(articleId);
 	}
-	
-	//改變文章status(後台)
+
+	// 改變文章status(後台)
 	public boolean switchStatus(Integer articleId) {
 		return aDao.switchStatus(articleId);
+	}
+
+	// upload img
+	public String uploadImg(int articleId,byte[] img, String imgUrl) {
+		return aDao.imgUpload(articleId, img, imgUrl);
 	}
 }
