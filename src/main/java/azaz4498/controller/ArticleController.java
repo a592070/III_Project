@@ -51,6 +51,10 @@ public class ArticleController {
 		return "azaz4498/F_JSONindex";
 
 	}
+	@RequestMapping(path = "/test")
+	public String testPage() {
+		return "azaz4498/test";
+	}
 
 	@RequestMapping(path = "/Article.controller.json", method = RequestMethod.GET, produces = {
 			"application/json; charset=UTF-8" })
@@ -179,8 +183,8 @@ public class ArticleController {
 
 		return "redirect:/Forum";
 	}
-	@RequestMapping(value = "/imgUpload",method = RequestMethod.POST)
-	public Map<String, String> imgUpload(@RequestParam("file")MultipartFile uploadFile,HttpSession session) throws IOException{
+	@RequestMapping(path = "/imgUpload",method = RequestMethod.POST)
+	public @ResponseBody Map<String, String> imgUpload(@RequestParam(name = "upload")MultipartFile uploadFile,HttpSession session) throws IOException{
 		Map<String, String> map = new HashMap<String, String>();
 		String fileName = uploadFile.getOriginalFilename();
 		String finalFileName = UUID.randomUUID()+fileName.substring(fileName.lastIndexOf("."));
@@ -189,11 +193,13 @@ public class ArticleController {
 		InputStream is = uploadFile.getInputStream();
 		byte[] bytes = FileCopyUtils.copyToByteArray(is);
 		uploadFile.transferTo(file);
-		articleService.uploadImg(2, bytes, path);
+		articleService.uploadImg(41, bytes, path);
 		
 		map.put("finalFileName", finalFileName);
-		map.put("path", path);
+		map.put("url", path);
+		map.put("uploaded","true");
 		is.close();
+		System.out.println("imgUpload ====================");
 		return map;
 		
 		

@@ -184,12 +184,49 @@ h2 {
 		 
          
 	 </script>
+	
+	<script>
 
+		class MyUploadAdapter {
+		constructor(loader) {
+			this.loader = loader;
+			this.upload=this.upload.bind(this);
+			this.abort= this.abort.bind(this)
+		}
+		upload() {
+			return this.loader.file
+			.then(file=>new Promise((resolve, reject) => {
+				const data = new FormData();
+				   data.append('upload', file);
+		//data.append('allowSize', 10);//允许图片上传的大小/兆
+				$.ajax({
+				url: 'imgUpload',
+				type: 'POST',
+				data: data,
+				dataType: 'json',
+				
+			//enctype : 'multipart/form-data',
+				processData: false,
+				//contentType: false,
+				success: function (data) {
+					
+							if (data.res) {
+								resolve({ default: data.url});
+								} else { reject(data.msg);}
+				}
+					});
+			
+			}))
+		}
+
+	abort() {
+	}
+	}
+		
+ </script>
 	<script>
 		ClassicEditor
     		.create( document.querySelector( '#editor' ),{
-
-				extraPlugins: [ MyCustomUploadAdapterPlugin ],
 
 				toolbar: {
 					items: [
@@ -227,26 +264,25 @@ h2 {
 				},
 				licenseKey: '', 
 
-				ckfinder:{uploadUrl: 'upload'},
+				//ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/imgUpload'},
+				
 			
         	})
     		.then( editor => {
-				
+						//myEditor=editor;
 						console.log( editor );
+						editor.plugins.get('FileRepository').createUploadAdapter = (loader)=>{
+       					return new MyUploadAdapter(loader);
+						   };
+						  window.editor=editor;
     		})
     		.catch( error => {
         				console.error( error );
-    		} );
+    		
+			});
+</script>
 
-			
-			
-			
- 	</script>
-
-
-
-
-
+	
 
 </body>
 
