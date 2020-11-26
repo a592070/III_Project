@@ -164,4 +164,11 @@ public class ArticleDAO {
 		return false;
 
 	}
+	//img upload
+	public String imgUpload(int articleId,byte[] img, String imgUrl) {
+		Article result = sessionFactory.getCurrentSession().get(Article.class, articleId);
+		result.setArtPic(img);
+		result.setArtPicUrl(imgUrl);
+		return "上傳圖片";
+	}
 }
