@@ -58,7 +58,7 @@ public class H_Controller {
 		}
 	
 	
-	@RequestMapping(path = "/hotelPage", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //分頁
+	@RequestMapping(path = "/hotelPage", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //分頁.搜尋.排序
 	public ModelAndView processHotelPage(@RequestParam(name = "keyword",required = false) String keyword,
 										@RequestParam(name = "regionkeywd",required = false) String regionkeywd,
 										@RequestParam(name = "typekeywd",required = false) String typekeywd,
@@ -118,27 +118,27 @@ public class H_Controller {
 		}
 	
 	
-	@RequestMapping(path = "/hotelSort", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //排序
-	public ModelAndView processHotelSort(@RequestParam(name = "orderfiled") String orderfiled,
-								   @RequestParam(name = "keyword") String keyword,
-								   @RequestParam(name = "regionkeywd") String regionkeywd,
-								   @RequestParam(name = "typekeywd") String typekeywd,
-								   @RequestParam(name = "order") String order, Model m) {
-		
-		
-
-		List<HotelView> hoteldata = hService.sort(start,hpage.gethPageSize(),orderfiled,keyword,regionkeywd,typekeywd,order);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("hoteldata", hoteldata);
-		mav.addObject("orderfiled", orderfiled);
-		mav.addObject("keyword", keyword);
-		mav.addObject("regionkeywd", regionkeywd);
-		mav.addObject("typekeywd", typekeywd);
-		mav.addObject("order", order);
-		mav.setViewName("asx54630/H_search");
-		
-		return mav;
-		}
+//	@RequestMapping(path = "/hotelSort", method = RequestMethod.GET , produces = "text/plain;charset=UTF-8") //排序
+//	public ModelAndView processHotelSort(@RequestParam(name = "orderfiled") String orderfiled,
+//								   @RequestParam(name = "keyword") String keyword,
+//								   @RequestParam(name = "regionkeywd") String regionkeywd,
+//								   @RequestParam(name = "typekeywd") String typekeywd,
+//								   @RequestParam(name = "order") String order, Model m) {
+//		
+//		
+//
+//		List<HotelView> hoteldata = hService.sort(start,hpage.gethPageSize(),orderfiled,keyword,regionkeywd,typekeywd,order);
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("hoteldata", hoteldata);
+//		mav.addObject("orderfiled", orderfiled);
+//		mav.addObject("keyword", keyword);
+//		mav.addObject("regionkeywd", regionkeywd);
+//		mav.addObject("typekeywd", typekeywd);
+//		mav.addObject("order", order);
+//		mav.setViewName("asx54630/H_search");
+//		
+//		return mav;
+//		}
 	
 	@RequestMapping(path = "/hotelstatus", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //是否停權
 	public String processHotelStatus(@RequestParam(name = "upId") BigDecimal updateSn,
