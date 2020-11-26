@@ -26,3 +26,24 @@
                <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
             </tr>
             </c:forEach>
+            <script type="text/javascript">
+				currentPage = ${hpage.currentPage};
+				totalPage = ${hpage.totalPageCount};
+				$("#page-btn").text(currentPage);
+
+				if(currentPage == 1){
+					$(".page-link.first").attr("disabled", true);
+					$(".page-link.previous").attr("disabled", true);						
+				}else{
+					$(".page-link.first").attr("disabled", false);
+					$(".page-link.previous").attr("disabled", false);
+					}
+
+				if(currentPage == totalPage){
+					$(".page-link.last").attr("disabled", true);
+					$(".page-link.next").attr("disabled", true);						
+				}else{
+					$(".page-link.last").attr("disabled", false);
+					$(".page-link.next").attr("disabled", false);
+					}
+            </script>

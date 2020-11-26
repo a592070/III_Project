@@ -102,7 +102,7 @@
 						<script>
 						$('.id-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled').val('SN');
+							$('#orderFiled').val('STATUS');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));
@@ -124,12 +124,12 @@
 										d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
 						</svg>
 							</button> 
-							<Input type='hidden' name='orderfiled1' id="orderfiled1" value='STATUS'> 
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='STATUS'> 
 							<Input type='hidden' name='order' id="order" value=''>狀態
 						<script>
 						$('.status-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled1').val('STATUS');
+							$('#orderFiled').val('STATUS');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));
@@ -168,21 +168,21 @@
             </tr>
             </c:forEach> 
 
-         </tbody>
+         </t1body>
         </table>
         
         <div>
 				<nav aria-label="...">
 					<ul class="pagination">
 						
-								<li class="page-item">
-									<button class="page-link" id="page-botton" value="first">第一頁</button>
+								<li class="page-item first" id ="fBtn">
+									<button type="button" class="page-link first" id="page-first" value="first">第一頁</button>
 								</li>
 							
 							
 								<!--previous -->
-								<li class="page-item">
-									<button class="page-link previous" id="page-botton" value="previous">&laquo;</button>
+								<li class="page-item previous" id="pBtn">
+									<button class="page-link previous " id="page-previous" value="previous">&laquo;</button>
 								</li>
 							
 							
@@ -192,14 +192,14 @@
 								</li>
 						
 								<!--NEXT -->
-								<li class="page-item">
-									<button class="page-link next" id="page-botton" value="next">&raquo;</button>
+								<li class="page-item next" id ="nBtn">
+									<button class="page-link next" id="page-next" value="next">&raquo;</button>
 								</li>
 							
 							
 							
-								<li class="page-item last">
-									<button class="page-link last" id="page-botton" value="${totalPage}">最末頁</button>
+								<li class="page-item last" id ="lBtn">
+									<button class="page-link last" id="page-last" value="last">最末頁</button>
 								</li>
 							
 					
@@ -209,7 +209,29 @@
         
         
         <script type="text/javascript"> 
-		
+        var currentPage = 1;
+		var totalPage = 1;
+
+// 		$(document).ready(function() {
+// 			var keyword = $("#keyword").val()
+// 			var regionkeywd = $("#regionkeywd").val()
+// 			var typekeywd = $("#typekeywd").val()
+// 			$("#tbody").children().remove();
+// 			$.ajax(
+// 					{
+// 						type: 'POST',
+// 						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
+// 						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+// 						dataType: 'html',
+// 						success: function (response) {
+// 							$("#tbody").append(response)
+
+// 						}
+
+// 					}
+// 				)
+// 			});
+        
 		$("#table").on('change', '#checkbox', function () {
 				var SN = $(this).closest('td').siblings("#SN").text()
 				var STATUS =$(this).val();
@@ -230,15 +252,17 @@
 		
 		$("#search").click(function () {
 			console.log("搜尋")
+			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
 			$("#tbody").children().remove();
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
 							$("#tbody").append(response)
@@ -251,15 +275,17 @@
 		
 		$("#regionkeywd").on('change' ,function () {
 			console.log("地區搜尋")
+			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
 			$("#tbody").children().remove();
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order,"currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
 							$("#tbody").append(response)
@@ -272,15 +298,17 @@
 		
 		$("#typekeywd").on('change' ,function () {
 			console.log("類型搜尋")
+			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
 			$("#tbody").children().remove();
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order,"currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
 							$("#tbody").append(response)
@@ -292,7 +320,7 @@
 		})
 		
 		$("#sort").click(function () {
-			console.log("排序")
+			console.log("編號排序")
 			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
@@ -301,9 +329,9 @@
 			$("#tbody").children().remove();
 			$.ajax(
 					{
-						type: 'GET',
-						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelSort',
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage  },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
 							$("#tbody").append(response)
@@ -316,7 +344,7 @@
 		
 		$("#sort1").click(function () {
 			console.log("排序狀態")
-			var orderfiled = $("#orderfiled1").val()
+			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
@@ -324,9 +352,132 @@
 			$("#tbody").children().remove();
 			$.ajax(
 					{
-						type: 'GET',
-						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelSort',
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage  },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+ 		$("#page-first").click(function () {
+			console.log("第一頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-first").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage = 1;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#page-previous").click(function () {
+			console.log("前一頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-previous").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage--;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#page-next").click(function () {
+			console.log("下一頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-next").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage++;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response);
+						}
+
+					}
+				)
+		})
+		
+		$("#page-last").click(function () {
+			console.log("末頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-last").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage = totalPage;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
 							$("#tbody").append(response)
@@ -355,17 +506,6 @@
 		  $('#typekeywd').val('');
 		})
 		
-// 		$(function () {
-// 			$('#table').DataTable({
-// 				 searching: false
-
-// 				 columnDefs: [{
-// 				      targets: [3],
-// 				       orderable: false,
-// 				        }]		
-				 
-// 				 });
-// 			});
 		
 		</script> 
 		

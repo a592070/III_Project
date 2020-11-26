@@ -31,7 +31,7 @@ public class HotelPage {
 			if (totalCount > 0) {
 				this.totalCount = totalCount;
 				// 設置總頁數
-				this.setTotalPageCountH();
+				this.setTotalPageCount();
 			}
 		}
 
@@ -44,11 +44,11 @@ public class HotelPage {
 				this.pageSize = pageSize;
 		}
 
-		public int gethTotalPageCount() {
+		public int getTotalPageCount() {
 			return totalPageCount;
 		}
 
-		public void setTotalPageCountH() {
+		public void setTotalPageCount() {
 			if (this.totalCount % this.pageSize == 0) {
 				this.totalPageCount = this.totalCount / this.pageSize;
 			} else if (this.totalCount % this.pageSize > 0) {

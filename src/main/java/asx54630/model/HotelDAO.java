@@ -30,7 +30,8 @@ public class HotelDAO {
 	}
 	
 	public List<HotelView> totalHotel(int first, int count) {
-		Query<HotelView> query = sessionFactory.getCurrentSession().createQuery("from HotelView order by SN", HotelView.class);
+		Session session = sessionFactory.getCurrentSession();
+		Query<HotelView> query = session.createQuery("from HotelView order by SN", HotelView.class);
 		// 找第幾筆
 		query.setFirstResult(first);
 		// 從第幾筆開始count筆
@@ -59,23 +60,28 @@ public class HotelDAO {
 	}
 	
 
-	public List<HotelView> selectAll(String name, String region, String type){ //查詢多筆
+	public List<HotelView> selectAll(int first, int count, String name, String region, String type, String orderfiled, String order){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
-		Query<HotelView> query = session.createQuery("From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", HotelView.class);
+		Query<HotelView> query = session.createQuery("From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order, HotelView.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
+		query.setFirstResult(first);
+		query.setMaxResults(count);
 		List<HotelView> list = query.list();
 		return list;
 	}
 	
-	public List<HotelView> sort(String orderfiled ,String name, String region, String type ,String order){ //排序
+	public List<HotelView> sort(int first, int count, String orderfiled ,String name, String region, String type ,String order){ //排序
 		Session session = sessionFactory.getCurrentSession();
 		Query<HotelView> query = session.createQuery("From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order , HotelView.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
+		query.setFirstResult(first);
+		query.setMaxResults(count);
 		List<HotelView> list = query.list();
+		
 		return list;
 	}
 	

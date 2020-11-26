@@ -18,9 +18,9 @@ public class H_Service {
 	private HotelDAO hotelDao;
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public List<HotelView> selectAll(String name, String region, String type) {
+	public List<HotelView> selectAll(int first, int count, String name, String region, String type, String orderfiled, String order) {
 
-		return hotelDao.selectAll(name, region, type);
+		return hotelDao.selectAll(first,count, name, region, type, orderfiled, order);
 	}
 
 	@Transactional(rollbackFor = {Throwable.class})
@@ -55,8 +55,8 @@ public class H_Service {
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public List<HotelView> sort(String orderfiled ,String name, String region, String type ,String order){
-		return hotelDao.sort(orderfiled,name,region,type,order);
+	public List<HotelView> sort(int first, int count,String orderfiled ,String name, String region, String type ,String order){
+		return hotelDao.sort(first,count,orderfiled,name,region,type,order);
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
