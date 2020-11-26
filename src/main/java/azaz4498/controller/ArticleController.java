@@ -1,20 +1,29 @@
 package azaz4498.controller;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -169,6 +178,25 @@ public class ArticleController {
 		articleService.switchStatus(articleId);
 
 		return "redirect:/Forum";
+	}
+	@RequestMapping(value = "/imgUpload",method = RequestMethod.POST)
+	public Map<String, String> imgUpload(@RequestParam("file")MultipartFile uploadFile,HttpSession session) throws IOException{
+		Map<String, String> map = new HashMap<String, String>();
+		String fileName = uploadFile.getOriginalFilename();
+		String finalFileName = UUID.randomUUID()+fileName.substring(fileName.lastIndexOf("."));
+		String path = session.getServletContext().getRealPath("assets/img/azaz4498")+File.separator+finalFileName;
+		File file = new File(path);
+		InputStream is = uploadFile.getInputStream();
+		byte[] bytes = FileCopyUtils.copyToByteArray(is);
+		uploadFile.transferTo(file);
+		articleService.uploadImg(2, bytes, path);
+		
+		map.put("finalFileName", finalFileName);
+		map.put("path", path);
+		is.close();
+		return map;
+		
+		
 	}
 	
 	

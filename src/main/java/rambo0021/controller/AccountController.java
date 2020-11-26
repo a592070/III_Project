@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import rambo0021.dao.SHA2DAO;
 import rambo0021.pojo.AccountBean;
@@ -49,17 +48,13 @@ public class AccountController {
 	@Qualifier("accPage")
 	private Page aPage;
 	
-	private int start = 0;
 
 	@RequestMapping(path = "/accountPage", method = RequestMethod.GET)
 	public String AccountPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
-		int size=service.getSize();
+		int size=service.getSize("select count(userName) From AccountListViewBean");
 		aPage.setTotalCount(size);
-	    start = (currentPage -1) * aPage.getPageSize();
-	    System.out.println("起始="+start);
-		int pageSize = aPage.getPageSize();
-	   
-		List<AccountBean> userList = service.userList(start,pageSize);
+		aPage.setCurrentPage(currentPage);   
+		List<AccountBean> userList = service.userList(aPage.getStart(),aPage.getPageSize());
 		m.addAttribute("userList", userList);
 		m.addAttribute("page", aPage);
 
@@ -179,18 +174,27 @@ public class AccountController {
 
 	@PostMapping("/delAccount")
 	public @ResponseBody String delAccount(@RequestParam("username") String username) {
-		return service.delAccount(username);
+		System.out.println("username="+username);
+		AccountBean acc = service.userDetail(username);
+		return service.delAccount(acc);
+		
+//		return service.delAccount(username);
 	}
 	@PostMapping("/modifyAccount")
-	public @ResponseBody String modifyAccount(@RequestParam String username,@RequestParam String password,@RequestParam int identity,@RequestParam String email,@RequestParam String nickName, Model m) {	
+	public @ResponseBody String modifyAccount(@RequestParam String username,@RequestParam String password,@RequestParam int identity,@RequestParam String email,@RequestParam String nickName) {	
+		System.out.println("username="+username);
 		return service.modifyAccount(username,password,identity,email,nickName);
 	}
 	@PostMapping("/search")
-	public ModelAndView search(@RequestParam(name="username",required = false) String username,@RequestParam(name="identity",required = false) String identity,@RequestParam(name="email",required = false) String email) {
-		List<AccountListViewBean> aBeanList = service.search(username,identity,email);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("userList", aBeanList);
-		modelAndView.setViewName("rambo0021/appendPage");
-		return modelAndView;
+	public String search(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,@RequestParam(name="username",required = false) String username,@RequestParam(name="identity",required = false) String identity,@RequestParam(name="email",required = false) String email,Model m) {
+		int size = service.getSize("select count(userName) From AccountListViewBean where username like '%"+username+"%' and iName like '%"+identity+"%' and email like '%"+email+"%'");
+		System.out.println("size="+size);
+		aPage.setTotalCount(size);
+		aPage.setCurrentPage(currentPage);
+
+		List<AccountListViewBean> aBeanList = service.search(username,identity,email,aPage.getStart(),aPage.getPageSize());
+		m.addAttribute("userList", aBeanList);
+		m.addAttribute("page", aPage);
+		return "rambo0021/appendPage";
 	}
 }

@@ -5,12 +5,14 @@ public class Page {
 	private int currentPage = 1;
 	// 總比數
 	private int totalCount = 0;
-	// 每頁比數
+	// 每頁筆數
 	private int pageSize = 10;
 	// 總頁數 totalCount/pageSize +1
 	private int totalPageCount = 1;
-    private boolean haveNextPage;
-    private boolean havePrePage;
+	//起始筆數
+//	private int start = 0;
+//    private boolean haveNextPage;
+//    private boolean havePrePage;
     
     public int getCurrentPage() {
 		return currentPage;
@@ -55,16 +57,22 @@ public class Page {
 			this.totalPageCount = 0;
 		}
 	}
-    public boolean isHaveNextPage() { 
-        haveNextPage = false; 
-        if ((getTotalCount() > 1) && (getTotalCount() > getCurrentPage())) 
-            haveNextPage = true; 
-        return haveNextPage; 
-    } 
-    public boolean isHavePrePage() { 
-        havePrePage = false; 
-        if ((getTotalCount() > 1) && (currentPage > 1)) 
-            havePrePage = true; 
-        return havePrePage; 
-    } 
+
+	public int getStart() {
+		return (currentPage-1)*pageSize;
+	}
+	
+	
+//    public boolean isHaveNextPage() { 
+//        haveNextPage = false; 
+//        if ((getTotalCount() > 1) && (getTotalCount() > getCurrentPage())) 
+//            haveNextPage = true; 
+//        return haveNextPage; 
+//    } 
+//    public boolean isHavePrePage() { 
+//        havePrePage = false; 
+//        if ((getTotalCount() > 1) && (currentPage > 1)) 
+//            havePrePage = true; 
+//        return havePrePage; 
+//    } 
 }

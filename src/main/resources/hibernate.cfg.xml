@@ -53,7 +53,7 @@
 		<mapping class="rambo0021.pojo.AccountBean" />
 		<mapping class="rambo0021.pojo.IdentityBean" />
 		<mapping class="rambo0021.pojo.AccountListViewBean" />
-		<mapping class="rambo0021.pojo.Page"/>
+		
 		<mapping class="innocence741.model.CarRentalCompany" />
 		<mapping class="innocence741.model.CarRentalCompanyVO" />
 		<mapping class="innocence741.model.CarType" />
