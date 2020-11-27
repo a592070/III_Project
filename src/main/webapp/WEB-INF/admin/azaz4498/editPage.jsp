@@ -11,10 +11,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
+
+
+
+
 <title>論壇管理</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+
 <style>
 .sp_search-1 {
 	float: left;
@@ -107,7 +112,7 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="content"><h3>內容</h3></label>
-											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
+											<textarea class="form-control" id="editor" rows="15" name="articleContent"></textarea>
 										</div>
 
 										<!-- <div class="form-group">
@@ -116,11 +121,12 @@ h2 {
 												id="exampleFormControlFile1">
 										</div> -->
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
-											<button type="submit" class="btn btn-primary btn-default">送出修改</button>
+											<button class="btn btn-primary btn-default" onclick="confirmEdit()">送出修改</button>
 											<!-- <button type="submit" class="btn btn-secondary btn-default">Cancel</button> -->
 										</div>
 
 									</form>
+									
 								</div>
 							</div>
 
@@ -147,7 +153,6 @@ h2 {
 			var typeSelect = document.getElementById("typeSelect");
 			var options = typeSelect.getElementsByTagName("option");
 			var selectedType = ${artBean[0].articleType.typeId};
-			console.log(selectedType);
 			options[selectedType].selected = true;
 		}
 
@@ -165,24 +170,124 @@ h2 {
 			
 
 		}
+
+		function confirmEdit(){
+			var desicion = confirm("確定要送出修改?");
+			if(desicion){
+				$(this).submit();
+
+			}else{
+				event.preventDefault();
+			}
+
+		}
 		 
          
- 	</script>
+	 </script>
+	
+	
 	<script>
 		ClassicEditor
-    		.create( document.querySelector( '#editor' ))
+    		.create( document.querySelector( '#editor' ),{
+
+				toolbar: {
+					items: [
+						'heading',
+						'|',
+						'bold',
+						'italic',
+						'horizontalLine',
+						'link',
+						'bulletedList',
+						'numberedList',
+						'|',
+						'imageUpload',
+						'blockQuote',
+						'mediaEmbed',
+						'undo',
+						'redo',
+						'insertTable'
+					]
+				},
+				language: 'zh',
+				image: {
+					toolbar: [
+						'imageTextAlternative',
+						'imageStyle:full',
+						'imageStyle:side'
+					]
+				},
+				table: {
+					contentToolbar: [
+						'tableColumn',
+						'tableRow',
+						'mergeTableCells'
+					]
+				},
+				licenseKey: '', 
+
+				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/imgUpload'},
+				
+			
+        	})
     		.then( editor => {
-        				console.log( editor );
+						//myEditor=editor;
+						console.log( editor );
+						this.editor = editor;
+						editor.plugins.get('FileRepository').createUploadAdapter = (loader)=>{
+       					return new MyUploadAdapter(loader);
+						   };
+						  
     		})
     		.catch( error => {
         				console.error( error );
-    		} );
- 	</script>
+    		
+			});
+</script>
+<script>
 
+	class MyUploadAdapter {
+	constructor(loader) {
+		this.loader = loader;
+		this.upload=this.upload.bind(this);
+		this.abort= this.abort.bind(this)
+	}
+	upload() {
+		return this.loader.file
+		.then(file=>new Promise((resolve, reject) => {
+			const data = new FormData();
+			data.append('upload', file);
+			data.append('allowSize', 10)//允许图片上传的大小/兆
+			$.ajax({
+			url: 'imgUpload',
+			type: 'POST',
+			data: data,
+			dataType: 'json',
+			enctype : 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			success: function (data) {
+				
+						if (data.res) {
+							resolve({ 
+								default: data.url
+								});
+							} else { 
+								reject(data.msg)
+								;}
+			}
+				});
+		
+		}))
+	}
 
-	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+abort() {
+}
+}
+	
+</script>
 
-
+	
 
 </body>
 

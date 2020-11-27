@@ -28,6 +28,8 @@ public class Show_RView {
 	private String username;
 	@Column(name = "STATUS")
 	private String status;
+	@Column(name = "TYPE")
+	private String type;
 
 	public BigDecimal getR_sn() {
 		return r_sn;
@@ -77,4 +79,13 @@ public class Show_RView {
 		this.status = status;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	
 }

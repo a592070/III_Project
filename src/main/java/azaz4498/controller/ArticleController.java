@@ -1,22 +1,29 @@
 package azaz4498.controller;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -40,8 +47,13 @@ public class ArticleController {
 	@RequestMapping(path = "/Forum")
 	public String ForumEntry(Model m) {
 		m.addAttribute("artBean", articleService.showAllArticles());
-		return "azaz4498/F_index";
+//		return "azaz4498/F_index";
+		return "azaz4498/F_JSONindex";
 
+	}
+	@RequestMapping(path = "/test")
+	public String testPage() {
+		return "azaz4498/test";
 	}
 
 	@RequestMapping(path = "/Article.controller.json", method = RequestMethod.GET, produces = {
@@ -54,8 +66,6 @@ public class ArticleController {
 
 	}
 
-
-
 	@RequestMapping(path = "/artTypeSearch")
 	public String DisplayByType(@RequestParam(name = "articleType") Integer typeId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticlesByType(typeId));
@@ -65,20 +75,36 @@ public class ArticleController {
 
 	}
 
+	@RequestMapping(path = "/artTypeSearch.json", method = RequestMethod.GET, produces = {
+			"application/json; charset=UTF-8" })
+	public @ResponseBody List<Article> dispalyByTypeJSON(@RequestParam(name = "articleType") Integer typeId)
+			throws SQLException {
+		List<Article> artList = articleService.showArticlesByType(typeId);
+		return artList;
+	}
+
 	@RequestMapping(path = "/articleSearch")
 	public String DisplayResults(@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
-			@RequestParam(name = "articleType", defaultValue = "" ,required = false)Integer articleType, Model m) {
-		
+			@RequestParam(name = "articleType", defaultValue = "", required = false) Integer articleType, Model m) {
 
 		m.addAttribute("artBean", articleService.searchArticles(keyword, articleType));
 		return "azaz4498/F_index";
 
 	}
 
+	@RequestMapping(path = "/articleSearch.json", method = RequestMethod.GET, produces = {
+			"application/json; charset=UTF-8" })
+	public @ResponseBody List<Article> DisplayJSONResults(
+			@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
+			@RequestParam(name = "articleType", defaultValue = "", required = false) Integer articleType) {
+		List<Article> artList = articleService.searchArticles(keyword, articleType);
+		return artList;
+
+	}
+
 	@RequestMapping(path = "/editPage.controller")
 	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticleById(articleId));
-
 		return "azaz4498/editPage";
 	}
 
@@ -95,9 +121,7 @@ public class ArticleController {
 
 	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
 	public String Delete(@RequestParam(name = "artId") Integer articleId, Model m) {
-		System.out.println("================before");
 		articleService.deleteArticleByAdmin(articleId);
-		System.out.println("================after");
 //		ModelAndView mv = new ModelAndView("redirect:/Forum");
 
 		return "redirect:/Forum";
@@ -155,10 +179,31 @@ public class ArticleController {
 
 	@RequestMapping(path = "/statusChange.controller", method = RequestMethod.POST)
 	public String statusChange(@RequestParam(name = "artId") Integer articleId) {
-		System.out.println("===========BEFORE===========");
 		articleService.switchStatus(articleId);
-		System.out.println("===========AFTER===========");
 
 		return "redirect:/Forum";
 	}
+	@RequestMapping(path = "/imgUpload",method = RequestMethod.POST)
+	public @ResponseBody Map<String, String> imgUpload(@RequestParam(name = "upload")MultipartFile uploadFile,HttpSession session) throws IOException{
+		Map<String, String> map = new HashMap<String, String>();
+		String fileName = uploadFile.getOriginalFilename();
+		String finalFileName = UUID.randomUUID()+fileName.substring(fileName.lastIndexOf("."));
+		String path = session.getServletContext().getRealPath("assets/img/azaz4498")+File.separator+finalFileName;
+		File file = new File(path);
+		InputStream is = uploadFile.getInputStream();
+		byte[] bytes = FileCopyUtils.copyToByteArray(is);
+		uploadFile.transferTo(file);
+		articleService.uploadImg(41, bytes, path);
+		
+		map.put("finalFileName", finalFileName);
+		map.put("url", path);
+		map.put("uploaded","true");
+		is.close();
+		System.out.println("imgUpload ====================");
+		return map;
+		
+		
+	}
+	
+	
 }

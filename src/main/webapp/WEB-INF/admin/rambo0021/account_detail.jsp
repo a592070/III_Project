@@ -168,7 +168,6 @@ img {
 		// 	 $("#1").attr("selected")
 		//  }
 		   if('${userDetail.identityBean.id}'=='1'){
-			   console.log('1')
 			$("#1").attr("selected")
 		   }else if('${userDetail.identityBean.id}'=='2'){
 			console.log('2')
@@ -195,7 +194,7 @@ img {
 			$.ajax(
 				{   
 					type: 'POST',
-					data:{ "username": username ,"password":password,"identity":identity,"email":email,"nickName":nickName},
+					data:{ "username": username ,"password":password,"identity":identity,"email":email,"nickName":nickname},
 					url: '${pageContext.servletContext.contextPath}/admin/modifyAccount',
 					dataType: 'text',
 					success: function (response) {
