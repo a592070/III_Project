@@ -120,6 +120,7 @@ th {
 		<c:import url="/WEB-INF/admin/fragment/sidebar.jsp" />
 		<div class="page-wrapper"  id="page" >
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
+			<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 			<div class="content-wrapper">
 				<div class="box" >
 					<div class="search" class="form-group col-md-2">
@@ -200,12 +201,7 @@ th {
 							<tr>
 								<th><div>
 										<button id="page-botton" class="id-btn">
-											<svg width="2em" height="1em" viewBox="0 0 16 16"
-													class="bi bi-arrow-down-up" fill="currentColor"
-													xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-											</svg>
+										<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
 											<Input type='hidden' name='order' id="order" value=''>ID
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='r_sn'>
@@ -226,12 +222,7 @@ th {
 								<th>會員帳號</th>
 								<th><div>
 										<button id="page-botton" class="status-btn">
-											<svg width="2em" height="1em" viewBox="0 0 16 16"
-													class="bi bi-arrow-down-up" fill="currentColor"
-													xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-											</svg>
+										<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
 											<Input type='hidden' name='order' id="order" value=''>狀態
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='status'>
@@ -294,7 +285,7 @@ th {
 									<td><div class="delete">
 											<form id="statuss" name="statuss"
 												action="<%=application.getContextPath()%>/admin/DeleteRestaurant"
-												method="POST" onsubmit="return confirm('確認是否刪除此餐廳資料？');">
+												method="POST" onsubmit="return confirm('確認是否刪除  ${r.name}  餐廳資料？');">
 												<button type="submit" class="btn btn-danger">刪除</button>
 												<Input type='hidden' name='r_sn' value='${r.r_sn}'>
 											</form>
@@ -493,7 +484,9 @@ th {
 									res_context += '</form>';
 									res_context += '</div></td>';
 									res_context += '<td><div class="delete">';
-									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm(`確認是否刪除此餐廳資料？`);">';
+									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm(`確認是否'
+									res_context += response.Rlist[i].name; 
+									res_context += '刪除餐廳資料？`);">';
 									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
 									res_context += '<Input type="hidden" name="r_sn" value="'+ response.Rlist[i].r_sn + '">';
 									res_context += '</form>';
