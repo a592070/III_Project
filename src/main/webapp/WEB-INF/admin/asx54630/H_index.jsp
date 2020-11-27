@@ -78,7 +78,7 @@
                   </div>      
                 <button type="button" class="btn btn-primary mx-2 mr-2" id="search" name="search">搜尋</button>
                 <button type="submit" class="btn btn-primary mr-2" id="resetkeyword">清空關鍵字</button>
-                <button type="button" class="btn btn-success" id="insert">新增飯店</button>
+                <button type="button" class="btn btn-success" id="insert" onclick="clickcreate()">新增飯店</button>
               </form>
             </div>
             <h2>飯店列表</h2>
@@ -494,6 +494,12 @@
 
 		}
 
+		function clickcreate(){
+
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hotelcreateurl";
+
+		}
+		
 		function clickdelete(id,name){
 
 			$("#deleteId").val(id);

@@ -86,15 +86,23 @@ public class HotelDAO {
 	}
 	
 
-	public Hotel insert(Hotel bean) { //新增
+	public String insert(Hotel bean) { //新增
 		Session session = sessionFactory.getCurrentSession();
-		Hotel result = session.get(Hotel.class, bean.getSN());
 		
-		if (result == null) {
+		try{
 			session.save(bean);
-			return bean;
+			return "新增成功";
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "新增失敗";
 		}
-		return null;
+	
+		
+//		if (result == null) {
+//			session.save(bean);
+//			return bean;
+//		}
+
 	}
 	
 	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type) { //修改

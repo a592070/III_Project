@@ -34,7 +34,7 @@ public class H_Service {
 	}
 
 	@Transactional(rollbackFor = {Throwable.class})
-	public Hotel insert(Hotel bean) {
+	public String insert(Hotel bean) {
 		return hotelDao.insert(bean);
 	}
 	

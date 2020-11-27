@@ -151,11 +151,15 @@ public class H_Controller {
 		return "redirect:hotelindex";
 		}
 	
-	@RequestMapping(path = "/hotelupdate", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //修改
-	public String processHotelUpdate(@RequestParam(name = "upId") BigDecimal updateSn,
-									 @RequestParam(name = "upName") String updateName,
+	@RequestMapping(path = "/hotelcreateurl") //新增頁面跳轉
+	public String processHotelCreatUrl() {
+		return "asx54630/H_insert";
+	}
+	
+	@RequestMapping(path = "/hotelcreate", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //新增
+	public String processHotelCreate(@RequestParam(name = "upName") String updateName,
 									 @RequestParam(name = "upRegion") String updateRegion,
-									 @RequestParam(name = "upAddress") String updatesn,
+									 @RequestParam(name = "upAddress") String updateaddress,
 									 @RequestParam(name = "upTel") String updateTel,
 									 @RequestParam(name = "upDBroom") BigDecimal updateDBroom,
 									 @RequestParam(name = "upQDroom") BigDecimal updateQDroom,
@@ -163,7 +167,37 @@ public class H_Controller {
 									 @RequestParam(name = "upOpentime") String updateOpentime,
 									 @RequestParam(name = "upType") String updateType,Model m) {
 		
-		Hotel hoteldetail = hService.update(updateSn,updateName,updateRegion,updatesn,updateTel,updateDBroom,updateQDroom,updateDescription,updateOpentime,updateType);
+		Hotel hbean = new Hotel();
+		hbean.setNAME(updateName);
+		hbean.setREGION(updateRegion);
+		hbean.setADDRESS(updateaddress);
+		hbean.setTEL(updateTel);
+		hbean.setDOUBLE_ROOM(updateDBroom);
+		hbean.setQUADRUPLE_ROOM(updateQDroom);
+		hbean.setDESCRIPTION(updateDescription);
+		hbean.setOPENTIME(updateOpentime);
+		hbean.setTYPE(updateType);
+		hbean.setSTATUS("啟用");
+		
+		String hotelnewdata = hService.insert(hbean);
+		m.addAttribute("hotelnewdata", hotelnewdata);
+		
+		return "asx54630/H_index";
+		}
+	
+	@RequestMapping(path = "/hotelupdate", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //修改
+	public String processHotelUpdate(@RequestParam(name = "upId") BigDecimal updateSn,
+									 @RequestParam(name = "upName") String updateName,
+									 @RequestParam(name = "upRegion") String updateRegion,
+									 @RequestParam(name = "upAddress") String updateaddress,
+									 @RequestParam(name = "upTel") String updateTel,
+									 @RequestParam(name = "upDBroom") BigDecimal updateDBroom,
+									 @RequestParam(name = "upQDroom") BigDecimal updateQDroom,
+									 @RequestParam(name = "upDescription") String updateDescription,
+									 @RequestParam(name = "upOpentime") String updateOpentime,
+									 @RequestParam(name = "upType") String updateType,Model m) {
+		
+		Hotel hoteldetail = hService.update(updateSn,updateName,updateRegion,updateaddress,updateTel,updateDBroom,updateQDroom,updateDescription,updateOpentime,updateType);
 		m.addAttribute("hoteldetail", hoteldetail);
 		
 		return "asx54630/H_Modify";
