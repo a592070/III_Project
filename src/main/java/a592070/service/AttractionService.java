@@ -1,6 +1,12 @@
 package a592070.service;
 
 import a592070.pojo.AttractionDO;
+import a592070.pojo.AttractionPictureDO;
+
+import javax.servlet.ServletContext;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public interface AttractionService {
     AttractionDO getEle(Integer id);
@@ -8,4 +14,16 @@ public interface AttractionService {
 //    AttractionDO insert(AttractionDO attractionDO);
 //    AttractionDO update(AttractionDO attractionDO);
     boolean delete(Integer id);
+
+    List<Map<String, Object>> listPictureDest(AttractionDO attractionDO, String destPrefix, ServletContext context);
+
+    void writePicToDest(AttractionPictureDO ele, String destPath, ServletContext context);
+
+    void addPicture(AttractionDO attractionDO, AttractionPictureDO pictureDO);
+
+    void addPicture(AttractionDO attractionDO, byte[] pic);
+
+    void removePicture(AttractionDO attractionDO, int id, ServletContext context);
+
+    void removePicture(AttractionDO attractionDO, String fileName, ServletContext context);
 }

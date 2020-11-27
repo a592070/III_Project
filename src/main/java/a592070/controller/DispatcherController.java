@@ -17,13 +17,9 @@ public class DispatcherController {
     public String attractionMain(){
         return "a592070/attractionInfo02";
     }
-    @RequestMapping("/admin/attraction/detail/{id}")
-    public String attractionDetail(@PathVariable("id") int id, Model model) {
-        model.addAttribute("id", id);
-        return "a592070/attractionDetail";
-    }
-    @RequestMapping("/admin/attraction/insert")
-    public String attractionInsert() {
+    @RequestMapping({"/admin/attraction/detail/{id}", "/admin/attraction/detail"})
+    public String attractionDetail(@PathVariable(value = "id", required = false) Integer id, Model model) {
+        if(id != null && id.intValue() != 0) model.addAttribute("id", id);
         return "a592070/attractionDetail";
     }
 }

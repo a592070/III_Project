@@ -14,6 +14,15 @@ public class Constant {
     public static final String LOGIN = "Login";
     public static final String HISTORY_MESSAGE = "historyMsg";
 
+    public static final String WEB_INF_PATH = "/WEB-INF";
+
+    public static final String ASSETS_PATH = WEB_INF_PATH+"/assets";
+    public static final String ASSETS_URL = "/assets";
+
+    public static final String ATTRACTION_PIC_PATH = ASSETS_PATH+"/attraction";
+    public static final String ATTRACTION_PIC_URL = ASSETS_URL+"/attraction";
+
+
     public String getUser(){
         return USER_SESSION;
     }

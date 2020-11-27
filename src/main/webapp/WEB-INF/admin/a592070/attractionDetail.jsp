@@ -70,7 +70,9 @@
             <div class="content">
                 <div class="row">
                     <div class="col-12">
-                        <el-page-header @back="goBack" content="Detail Page">
+                        <el-page-header @back="goBack" v-if="isInsert" content="新 增 頁 面">
+                        </el-page-header>
+                        <el-page-header @back="goBack" v-else content="修 改 頁 面">
                         </el-page-header>
 
                         <el-form label-width="180px" :model="attractionData" ref="attractionData" >
@@ -121,7 +123,7 @@
                                     <i class="el-icon-plus"></i>
                                 </el-upload>
                                 <el-dialog :visible.sync="dialogVisible">
-                                    <img width="100%" :src="imageUrl" alt="" >
+                                    <el-image width="100%" :src="imageUrl" alt="" lazy></el-image>
                                 </el-dialog>
                             </el-form-item>
                             <el-form-item label="TotalDescribe" prop="toldescribe">
@@ -165,7 +167,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" v-on:click="submitForm">立即更新</el-button>
-                                <el-button v-on:click="resetDataForm('attractionData')">重置</el-button>
+                                <el-button v-on:click="resetDataForm('attractionData')">重 置</el-button>
                             </el-form-item>
                         </el-form>
 
@@ -202,7 +204,7 @@
                     openTime: '',
                     status: false
                 },
-                attractionPic: {},
+                attractionPic: [{id: '', filename: '', dest: ''}],
                 region: [],
                 imageUrl: '',
                 picture: [],
@@ -222,6 +224,16 @@
             this.getRegionData()
         },
         methods: {
+            initData(){
+                this.attractionData = {};
+                this.attractionPic = [];
+                this.imageUrl = '';
+                this.picture= [];
+                this.fileList = [];
+                this.param= new FormData();
+                this.removePicId= [];
+                this.dialogVisible= false;
+            },
             getAttractionData(obj){
                 $.get({
                     url: '${pageContext.servletContext.contextPath}/admin/attraction/entity/${id}',
@@ -229,11 +241,13 @@
                     success: function (response) {
                         obj.attractionData = response.attractionData;
                         obj.attractionPic = response.attractionPic;
-
+                        obj.fileList = [];
                         for (let i = 0; i < obj.attractionPic.length; i++) {
-                            let sId = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+obj.attractionData.sn+"/"+i;
-                            // obj.picture.push(sId);
-                            obj.fileList.push({name:response.attractionPic[i].id, url:sId});
+                            <%--let sId = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+obj.attractionData.sn+"/"+i;--%>
+                            <%--obj.fileList.push({name:response.attractionPic[i].id, url:sId});--%>
+
+                            let pic = response.attractionPic[i];
+                            obj.fileList.push({id:pic.id, name:pic.filename, url:"${pageContext.servletContext.contextPath}"+pic.dest});
                         }
                         <%--obj.picture = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+response.sn;--%>
                         <%--obj.url = "${pageContext.servletContext.contextPath}/admin/attraction/"+response.sn;--%>
@@ -265,21 +279,28 @@
                     url,
                     this.param,
                     config
-                ).then(function (response) {
+                ).then(response =>  {
                     console.log(response);
-                    if(response.data == true){
-                        alert("更新成功")
-                        window.location.reload();
+                    if(response.data.message){
+                        this.$message({
+                            type: 'success',
+                            message: '更新成功!!'
+                        });
+                        this.initData();
+                        this.attractionData = response.data.attractionData;
+                        this.attractionPic = response.data.attractionPic;
+                        this.isInsert = false;
+
+                        for (let i = 0; i < this.attractionPic.length; i++) {
+                            let pic = this.attractionPic[i];
+                            this.fileList.push({id:pic.id, name:pic.filename, url:"${pageContext.servletContext.contextPath}"+pic.dest});
+                        }
                     }else{
                         this.$message({
                             type: 'info',
                             message: '更新失敗!!'
                         });
                     }
-                }).catch(reason => {
-                    this.$message({
-                    type: 'info',
-                    message: '更新失敗!!'});
                 })
             },
             handleAvatarSuccess(res, file) {
@@ -308,7 +329,7 @@
             handleRemove(file, fileList) {
                 console.log(file, fileList);
                 this.param.delete('file');
-                this.removePicId.push(file.name);
+                this.removePicId.push(file.id);
             },
             goBack() {
                 console.log('go back');

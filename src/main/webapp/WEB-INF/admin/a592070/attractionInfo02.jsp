@@ -279,7 +279,7 @@
                     });
             },
             handleInsert(){
-                window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction/insert";
+                window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction/detail";
             },
             handleEdit(index, row) {
                 console.log(index, row);
@@ -301,7 +301,8 @@
                                     type: 'success',
                                     message: '刪除成功!'
                                 });
-                                window.location.reload();
+                                this.handleSelectedData();
+                                // window.location.reload();
                             }else{
                                 this.$message({
                                     type: 'info',

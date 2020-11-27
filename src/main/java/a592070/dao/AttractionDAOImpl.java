@@ -1,6 +1,7 @@
 package a592070.dao;
 
 import a592070.pojo.AttractionDO;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,9 @@ public class AttractionDAOImpl extends AttractionDAO{
 
     @Override
     public AttractionDO insert(AttractionDO ele) {
-        sessionFactory.getCurrentSession().save(ele);
-        return ele;
+        Session session = sessionFactory.getCurrentSession();
+        Integer sn = (Integer)session.save(ele);
+        return session.find(AttractionDO.class, sn);
     }
     @Override
     public AttractionDO update(AttractionDO ele) {
@@ -42,9 +44,5 @@ public class AttractionDAOImpl extends AttractionDAO{
 
     public void removePic(AttractionDO attractionDO, int picId) {
         attractionDO.getAttractionPic().removeIf(ele -> ele.getId()==picId);
-    }
-
-    public void addPic(AttractionDO attractionDO, byte[] pic) {
-
     }
 }

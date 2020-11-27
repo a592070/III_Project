@@ -201,9 +201,5 @@ public class ArticleController {
 		is.close();
 		System.out.println("imgUpload ====================");
 		return map;
-		
-		
 	}
-	
-	
 }

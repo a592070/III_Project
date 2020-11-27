@@ -8,6 +8,7 @@ import a592070.service.AttractionService;
 import a592070.service.ViewService;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import global.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import utils.IOUtils;
 import utils.PageSupport;
 import utils.StringUtil;
 
@@ -127,15 +129,15 @@ public class AttractionController {
         return map;
     }
     @RequestMapping("/admin/attraction/entity/{id}")
-    public Map<String, Object> getAttraction(@PathVariable(name = "id") int id){
+    public Map<String, Object> getAttraction(@PathVariable(name = "id") int id) {
         AttractionDO attractionDO = service.getEle(id);
         Map<String, Object> map = new HashMap<>();
         map.put("attractionData", attractionDO);
 
+        // /assets/attraction/xxx
+        String destPrefix = Constant.ATTRACTION_PIC_URL + File.separator +attractionDO.getSn();
+        map.put("attractionPic", service.listPictureDest(attractionDO, destPrefix, context));
 
-//        List<Integer> list = new ArrayList<>();
-//        attractionDO.getAttractionPic().forEach(ele -> list.add(ele.getId()));
-        map.put("attractionPic", attractionDO.getAttractionPic());
         return map;
     }
 
@@ -152,19 +154,17 @@ public class AttractionController {
         return responseEntity;
     }
 
-
-
     @PostMapping({"/admin/attraction/save/{id}", "/admin/attraction/save/", "/admin/attraction/save"})
-    public boolean save(@PathVariable(name = "id", required = false) Integer id,
+    public Map<String, Object> save(@PathVariable(name = "id", required = false) Integer id,
                               @RequestParam(name="file", required=false)MultipartFile[] multipartFile,
                               @RequestParam(name="removePicId", required = false) String picId,
                               @RequestParam(name="attractionData", required = false)String attractionData) {
-        boolean flag = false;
+        Map<String, Object> map = new HashMap<>();
         try {
             ObjectMapper mapper = new ObjectMapper();
             AttractionDO attractionDO = mapper.readValue(attractionData, AttractionDO.class);
 //            AttractionDO attractionDO = attractionData;
-            if(id == null || id == 0) {
+            if(id == null || id.intValue() == 0) {
                 attractionDO.setSn(null);
             }else{
                 AttractionDO originDo = service.getEle(attractionDO.getSn());
@@ -173,27 +173,32 @@ public class AttractionController {
 
             if(multipartFile != null || multipartFile.length!=0){
                 for (MultipartFile file : multipartFile) {
-                    AttractionPictureDO pictureDO = new AttractionPictureDO();
-                    pictureDO.setPicture(file.getBytes());
-                    pictureDO.setAttraction(attractionDO);
-                    attractionDO.addPic(pictureDO);
+                    service.addPicture(attractionDO, file.getBytes());
                 }
-                System.out.println("saveFile success");
             }
 
             int[] pics = mapper.readValue(picId, int[].class);
             for (int i : pics) {
-                attractionDO.getAttractionPic().removeIf(ele -> ele.getId() == i);
+                service.removePicture(attractionDO, i, context);
+//                attractionDO.getAttractionPic().removeIf(ele -> ele.getId() == i);
             }
 
-            service.save(attractionDO);
+            attractionDO = service.save(attractionDO);
 
-            flag = true;
+            System.out.println(attractionDO.getSn());
+
+            map.put("attractionData", attractionDO);
+            // /assets/attraction/xxx
+            String destPrefix = Constant.ATTRACTION_PIC_URL + File.separator +attractionDO.getSn();
+            map.put("attractionPic", service.listPictureDest(attractionDO, destPrefix, context));
+            map.put("message", true);
+
+            return map;
         }catch (Exception e){
             e.printStackTrace();
+            map.put("message", false);
         }
-
-        return flag;
+        return map;
     }
 
 

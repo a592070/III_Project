@@ -235,7 +235,11 @@ public class AttractionDO {
     }
 
     public void addPic(AttractionPictureDO pictureDO) {
+        pictureDO.setAttraction(this);
         this.attractionPic.add(pictureDO);
+    }
+    public void remove(AttractionPictureDO pictureDO) {
+        this.attractionPic.remove(pictureDO);
     }
 
     public void setAttractionPic(List<AttractionPictureDO> attractionPic) {
