@@ -4,6 +4,7 @@ import a592070.fieldenum.AttractionFiledName;
 import a592070.pojo.AttractionDO;
 import a592070.pojo.AttractionPictureDO;
 import a592070.pojo.AttractionVO;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

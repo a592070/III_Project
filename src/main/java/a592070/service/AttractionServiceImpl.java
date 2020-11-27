@@ -81,19 +81,17 @@ public class AttractionServiceImpl implements AttractionService{
         if(StringUtil.isEmpty(realPath) || !new File(realPath).exists()){
             try {
 
-                // ;
-//                    System.out.println(File.pathSeparator);
-                // \
-//                    System.out.println(File.separator);
+                // File.pathSeparator  ;
+                // File.separator  \
 
                 String dirPath = realPath.substring(0, realPath.lastIndexOf(File.separator));
 
                 File fileDir = new File(dirPath);
                 if(!fileDir.exists()) fileDir.mkdir();
-
+                assert ele.getPicture()!=null;
                 IOUtils.writeFileToDest(realPath, ele.getPicture());
 
-            } catch (IOException e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
             }
         }
@@ -101,8 +99,10 @@ public class AttractionServiceImpl implements AttractionService{
     private void removePicFromDest(AttractionPictureDO ele, ServletContext context){
         String path = Constant.ATTRACTION_PIC_PATH + File.separator + ele.getPicFileName();
         String realPath = context.getRealPath(path);
-        new File(realPath).deleteOnExit();
+        File file = new File(realPath);
 
+        assert file.exists();
+        file.delete();
     }
 
     @Override
@@ -120,15 +120,34 @@ public class AttractionServiceImpl implements AttractionService{
     public void removePicture(AttractionDO attractionDO, int id, ServletContext context){
         List<AttractionPictureDO> pictureDOList = attractionDO.getAttractionPic();
 
-//        for (AttractionPictureDO pictureDO : pictureDOList) {
-//            if(pictureDO.getId())
-//        }
-//        removePicFromDest(pictureDOList, context);
-
-        pictureDOList.removeIf(ele -> ele.getId()==id);
+        ListIterator<AttractionPictureDO> iterator = pictureDOList.listIterator();
+        while(iterator.hasNext()){
+            AttractionPictureDO next = iterator.next();
+            if(next.getId().equals(id)){
+                iterator.remove();
+                try {
+                    removePicFromDest(next, context);
+                }catch (Throwable e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     @Override
     public void removePicture(AttractionDO attractionDO, String fileName, ServletContext context){
-        attractionDO.getAttractionPic().removeIf(ele -> fileName.equals(ele.getPicFileName()));
+        List<AttractionPictureDO> pictureDOList = attractionDO.getAttractionPic();
+
+        ListIterator<AttractionPictureDO> iterator = pictureDOList.listIterator();
+        while(iterator.hasNext()){
+            AttractionPictureDO next = iterator.next();
+            if(next.getPicFileName().equals(fileName)){
+                iterator.remove();
+                try {
+                    removePicFromDest(next, context);
+                }catch (Throwable e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

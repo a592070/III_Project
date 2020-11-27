@@ -16,11 +16,11 @@ public class Constant {
 
     public static final String WEB_INF_PATH = "/WEB-INF";
 
-    public static final String ASSETS_PATH = WEB_INF_PATH+"/assets";
     public static final String ASSETS_URL = "/assets";
+    public static final String ASSETS_PATH = WEB_INF_PATH+ASSETS_URL;
 
-    public static final String ATTRACTION_PIC_PATH = ASSETS_PATH+"/attraction";
     public static final String ATTRACTION_PIC_URL = ASSETS_URL+"/attraction";
+    public static final String ATTRACTION_PIC_PATH = WEB_INF_PATH + ATTRACTION_PIC_URL;
 
 
     public String getUser(){

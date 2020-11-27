@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import utils.IOUtils;
 import utils.PictureSupport;
 
 import javax.persistence.QueryHint;
@@ -83,4 +84,46 @@ public class InitAttractionPicture extends TestCase {
         out.close();
     }
 
+    @Test
+    public void writePicToEntity() {
+        String local = "src/main/webapp/WEB-INF/assets/attraction/";
+
+        File file = new File(local);
+        System.out.println(file.getAbsolutePath());
+        assert file.exists() && file.isDirectory();
+
+        File[] files = file.listFiles();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        try {
+            for (File idDir : files) {
+                String idDirName = idDir.getName();
+                if (idDir.isDirectory()) {
+                    File[] picFile = idDir.listFiles();
+
+                    Query<AttractionDO> query = session.createQuery("from AttractionDO where sn=:id", AttractionDO.class);
+                    query.setParameter("id", Integer.parseInt(idDirName));
+                    AttractionDO attractionDO = query.uniqueResult();
+
+                    for (File pic : picFile) {
+//                        Query<AttractionPictureDO> query = session.createQuery("from AttractionPictureDO where attraction.sn=:id and picFileName=:picname", AttractionPictureDO.class);
+//                        query.setParameter("id", Integer.parseInt(idDirName));
+//                        query.setParameter("picname", pic.getName());
+//                        AttractionPictureDO pictureDO = query.getSingleResult();
+//                        pictureDO.setPicture(IOUtils.pathToByteArray(local));
+
+
+                        AttractionPictureDO pictureDO = new AttractionPictureDO();
+                        pictureDO.setPicture(IOUtils.pathToByteArray(pic.getAbsolutePath()));
+                        pictureDO.setPicFileName(pic.getName());
+                        attractionDO.addPic(pictureDO);
+                    }
+                }
+            }
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+    }
 }

@@ -26,6 +26,32 @@ public class IOUtils {
         return bytes;
     }
 
+    public static byte[] pathToByteArray(String path) throws IOException {
+        BufferedInputStream in = null;
+        ByteArrayOutputStream buffer = null;
+        byte[] bytes = null;
+        try {
+            in = new BufferedInputStream(new FileInputStream(path));
+            buffer = new ByteArrayOutputStream();
+
+            int len;
+            byte[] buf = new byte[4 * 1024]; //4KB
+            while ((len = in.read(buf)) != -1) {
+                buffer.write(buf, 0, len);
+            }
+            bytes = buffer.toByteArray();
+            buffer.close();
+            in.close();
+        } catch (IOException e) {
+            if(buffer != null) buffer.close();
+            if(in != null) in.close();
+            e.printStackTrace();
+            throw e;
+        }
+        return bytes;
+    }
+
+
     public static byte[] urlToByteArray(String url) throws Exception {
         url = StringUtil.urlEncode(url, "UTF-8");
 
