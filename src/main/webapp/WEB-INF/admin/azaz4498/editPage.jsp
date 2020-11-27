@@ -112,7 +112,7 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="content"><h3>內容</h3></label>
-											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
+											<textarea class="form-control" id="editor" rows="15" name="articleContent"></textarea>
 										</div>
 
 										<!-- <div class="form-group">
@@ -185,45 +185,7 @@ h2 {
          
 	 </script>
 	
-	<script>
-
-		class MyUploadAdapter {
-		constructor(loader) {
-			this.loader = loader;
-			this.upload=this.upload.bind(this);
-			this.abort= this.abort.bind(this)
-		}
-		upload() {
-			return this.loader.file
-			.then(file=>new Promise((resolve, reject) => {
-				const data = new FormData();
-				   data.append('upload', file);
-		//data.append('allowSize', 10);//允许图片上传的大小/兆
-				$.ajax({
-				url: 'imgUpload',
-				type: 'POST',
-				data: data,
-				dataType: 'json',
-				
-			//enctype : 'multipart/form-data',
-				processData: false,
-				//contentType: false,
-				success: function (data) {
-					
-							if (data.res) {
-								resolve({ default: data.url});
-								} else { reject(data.msg);}
-				}
-					});
-			
-			}))
-		}
-
-	abort() {
-	}
-	}
-		
- </script>
+	
 	<script>
 		ClassicEditor
     		.create( document.querySelector( '#editor' ),{
@@ -264,22 +226,65 @@ h2 {
 				},
 				licenseKey: '', 
 
-				//ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/imgUpload'},
+				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/imgUpload'},
 				
 			
         	})
     		.then( editor => {
 						//myEditor=editor;
 						console.log( editor );
+						this.editor = editor;
 						editor.plugins.get('FileRepository').createUploadAdapter = (loader)=>{
        					return new MyUploadAdapter(loader);
 						   };
-						  window.editor=editor;
+						  
     		})
     		.catch( error => {
         				console.error( error );
     		
 			});
+</script>
+<script>
+
+	class MyUploadAdapter {
+	constructor(loader) {
+		this.loader = loader;
+		this.upload=this.upload.bind(this);
+		this.abort= this.abort.bind(this)
+	}
+	upload() {
+		return this.loader.file
+		.then(file=>new Promise((resolve, reject) => {
+			const data = new FormData();
+			data.append('upload', file);
+			data.append('allowSize', 10)//允许图片上传的大小/兆
+			$.ajax({
+			url: 'imgUpload',
+			type: 'POST',
+			data: data,
+			dataType: 'json',
+			enctype : 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			success: function (data) {
+				
+						if (data.res) {
+							resolve({ 
+								default: data.url
+								});
+							} else { 
+								reject(data.msg)
+								;}
+			}
+				});
+		
+		}))
+	}
+
+abort() {
+}
+}
+	
 </script>
 
 	
