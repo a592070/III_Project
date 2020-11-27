@@ -12,5 +12,6 @@
 	<bean id="hotelDao" class="asx54630.model.HotelDAO" lazy-init="true" scope="session"/>
 	<bean id="H_controller" name="/hotelindex" class="asx54630.controller.H_Controller" lazy-init="true" scope="session"/>
 	<bean id="H_service" class="asx54630.service.H_Service" lazy-init="true" scope="session"/>
-
+	<bean id="HotelPage" class="asx54630.model.HotelPage" scope="session"/>
+	
 </beans>
