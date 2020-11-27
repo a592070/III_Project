@@ -8,6 +8,7 @@
 	<meta charset="UTF-8">
 	<title>用戶清單</title>
 	<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
@@ -58,11 +59,11 @@
 						<table class="table table-striped table-sm" id="table">
 							<thead>
 								<tr>
-									<th>帳號</th>
-									<th>身分</th>
-									<th>email</th>
-									<th>註冊日期</th>
-									<th>修改日期</th>
+									<th>帳號<i class="fa fa-fw fa-sort" id="uSort"></i></th>
+									<th>身分<i class="fa fa-fw fa-sort" id="iSort"></i></th>
+									<th>email<i class="fa fa-fw fa-sort" id="eSort"></i></th>
+									<th>註冊日期<i class="fa fa-fw fa-sort" id="rSort"></i></th>
+									<th>修改日期<i class="fa fa-fw fa-sort" id="mSort"></i></th>
 									<th>狀態</th>
 									<th>功能</th>
 								</tr>
@@ -153,16 +154,6 @@
 	</div>
 	
 	<script>
-		// $(document).ready(function () {
-		// 	for (let i = 0; i < $("[id=status]").length; i++) {
-		// 		if ($("[id=status]").eq(i).text().substr(0, 2) == "啟用") {
-		// 			$("[id=status]").eq(i).children("#sEnable").hide()
-		// 		} else {
-		// 			$("[id=status]").eq(i).children("#sDisable").hide()
-		// 		}
-		// 	}
-		// }
-		// )
 		//刪除帳號資料
 		$("#appendbody").on('click', '#delAcc', function () {
 
@@ -184,53 +175,6 @@
 				)
 			}
 		})
-		/*
-		//啟用button
-		$("#table").on('click', '#sEnable', function () {
-			if (confirm("確定要啟用此帳號?")) {
-				var username = $(this).closest('td').siblings("#username").text()
-				var status = "啟用"
-				$(this).parent().siblings("#status").text(status)
-				$(this).hide()
-				$(this).siblings("#sDisable").show()
-				$.ajax(
-					{
-						type: 'POST',
-						data: { "username": username, "status": status },
-						url: '${pageContext.servletContext.contextPath}/admin/enableAccount',
-						dataType: 'text',
-						success: function (response) {
-							console.log(response)
-
-						}
-
-					}
-				)
-			}
-		})
-		//禁用button
-		$("#table").on('click', '#sDisable', function () {
-			if (confirm("確定要禁用此帳號?")) {
-				var username = $(this).closest('td').siblings("#username").text()
-				var status = "禁用"
-				$(this).parent().siblings("#status").text(status)
-				$(this).hide()
-				$(this).siblings("#sEnable").show()
-				$.ajax(
-					{
-						type: 'POST',
-						data: { "username": username, "status": status },
-						url: '${pageContext.servletContext.contextPath}/admin/disableAccount',
-						dataType: 'text',
-						success: function (response) {
-							console.log(response)
-
-						}
-					}
-				)
-			}
-		})
-		*/
 		//啟用 禁用 checkbox
 		$("#appendbody").on('change', '#checkbox', function () {
 			var status = $(this).val();
@@ -434,6 +378,53 @@
 
 
 		}) 
+		//帳號排序
+		$("#appendbody").on('click','#uSort,#eSort,#rSort,#iSort,#mSort',function(){
+			console.log("排序")
+			if($(this).attr("class") == "fa fa-fw fa-sort"){
+				$(this).attr("class","fa fa-fw fa-sort-asc")
+				$(this).val("asc")
+			}else if($(this).attr("class") == "fa fa-fw fa-sort-asc"){
+				$(this).attr("class","fa fa-fw fa-sort-desc")
+				$(this).val("desc")
+			}else if($(this).attr("class") == "fa fa-fw fa-sort-desc"){
+				$(this).attr("class","fa fa-fw fa-sort")
+				$(this).val("default")
+			}
+			var uSort = $("#uSort").val()
+			var eSort = $("#eSort").val()
+			var rSort = $("#rSort").val()
+			var iSort = $("#iSort").val()
+			var mSort = $("#mSort").val()
+
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, 
+						        "identity": identity, 
+								"email" : email,
+								"uSort" : uSort,
+								"eSort" : eSort,
+								"rSort" : rSort,
+								"iSort": iSort,
+								"mSort": mSort
+								},
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+			
+		})
 
 	</script>
 </body>

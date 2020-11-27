@@ -112,7 +112,7 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="content"><h3>內容</h3></label>
-											<textarea class="form-control" id="editor" rows="15" name="articleContent"></textarea>
+											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
 										<!-- <div class="form-group">

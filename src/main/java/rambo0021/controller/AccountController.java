@@ -28,6 +28,7 @@ import rambo0021.dao.SHA2DAO;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.Page;
+import rambo0021.pojo.Sort;
 import rambo0021.serive.AccountService;
 import rambo0021.serive.DateService;
 
@@ -48,6 +49,9 @@ public class AccountController {
 	@Qualifier("accPage")
 	private Page aPage;
 	
+	@Autowired
+	@Qualifier("accSort")
+	private Sort aSort;
 
 	@RequestMapping(path = "/accountPage", method = RequestMethod.GET)
 	public String AccountPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
@@ -186,13 +190,27 @@ public class AccountController {
 		return service.modifyAccount(username,password,identity,email,nickName);
 	}
 	@PostMapping("/search")
-	public String search(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,@RequestParam(name="username",required = false) String username,@RequestParam(name="identity",required = false) String identity,@RequestParam(name="email",required = false) String email,Model m) {
+	public String search(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,@RequestParam(name="username",required = false) String username,
+			@RequestParam(name="identity",required = false) String identity,
+			@RequestParam(name="email",required = false) String email,
+			@RequestParam(defaultValue = "default") String uSort,
+			@RequestParam(defaultValue = "default") String eSort,
+			@RequestParam(defaultValue = "default") String rSort,
+			@RequestParam(defaultValue = "default") String iSort,
+			@RequestParam(defaultValue = "default") String mSort,
+			Model m) {
+		aSort.setuSort(uSort);
+		aSort.seteSort(eSort);
+		aSort.setrSort(rSort);
+		aSort.setiSort(iSort);
+		aSort.setmSort(mSort);
+	    	
 		int size = service.getSize("select count(userName) From AccountListViewBean where username like '%"+username+"%' and iName like '%"+identity+"%' and email like '%"+email+"%'");
 		System.out.println("size="+size);
 		aPage.setTotalCount(size);
 		aPage.setCurrentPage(currentPage);
 
-		List<AccountListViewBean> aBeanList = service.search(username,identity,email,aPage.getStart(),aPage.getPageSize());
+		List<AccountListViewBean> aBeanList = service.search(username,identity,email,aPage.getStart(),aPage.getPageSize(),aSort);
 		m.addAttribute("userList", aBeanList);
 		m.addAttribute("page", aPage);
 		return "rambo0021/appendPage";
