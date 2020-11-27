@@ -190,7 +190,7 @@ public class RestaurantController {
 	public String DelRestaurant(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
 		String result = rs.deleteRestaurant(r_sn);
 		m.addAttribute("result", result);
-		return "iring29/result";
+		return "redirect:Restaurant";
 	}
 
 	// Create Restaurant
