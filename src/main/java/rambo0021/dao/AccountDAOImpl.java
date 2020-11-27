@@ -13,6 +13,8 @@ import global.pojo.OrderTable;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
+import rambo0021.pojo.Page;
+import rambo0021.pojo.Sort;
 
 public class AccountDAOImpl implements AcountDAO {
 	@Autowired
@@ -22,7 +24,7 @@ public class AccountDAOImpl implements AcountDAO {
 	@Override
 	public List<AccountBean> userList(int start, int pageSize) {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "From AccountBean";
+		String hql = "From AccountBean order by userName";
 		Query<AccountBean> query = session.createQuery(hql, AccountBean.class);
 		// 找第幾筆
 		query.setFirstResult(start);
@@ -217,10 +219,11 @@ public class AccountDAOImpl implements AcountDAO {
 	}
 
 	@Override
-	public List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize) {
+	public List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize,Sort aSort) {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "From AccountListViewBean WHERE userName like ?0 and iName like ?1 and email like ?2";
+		String hql = "From AccountListViewBean WHERE userName like ?0 and iName like ?1 and email like ?2 order by userName";
 //		String hql="From AccountBean WHERE userName like ?0 and email like ?1";
+//		if()
 
 		Query<AccountListViewBean> query = session.createQuery(hql, AccountListViewBean.class);
 		query.setParameter(0, "%" + username + "%");
