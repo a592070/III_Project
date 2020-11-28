@@ -162,6 +162,15 @@ pre {
     background: rgba(0, 0, 0, 0);
     border-radius: 0;
 }
+.div-back {
+	margin-left: 150px;
+	margin-top: 20px;
+}
+.modify_div {
+	width: 1000px;
+	text-align: center;
+	margin-bottom: 50px;
+}
 
 </style>
 
@@ -179,8 +188,13 @@ pre {
 			<div class="content-wrapper">
 				
 				<div class="container">
+					<FORM id="RHome" name="RHome" action="Tindex.controller" method="GET">		 
+						<div class="div-back">
+							<button type="submit" class="btn btn-primary">回租車列表</button>
+						</div>
+					</FORM>
 		<div class="box">
-			
+
 			
 			<div>
                 <FORM method="POST" enctype="multipart/form-data" >
@@ -227,25 +241,24 @@ pre {
 					</div>
 <!-- ||||||||||||||| -->
                     
-                    <div>
+                    <!-- <div>
                         <h4 class="res_result">帳號狀態</h4>
                         <p class="p_result"><textarea name="accessible_carrentalcompany" id="accessible_carrentalcompany" cols="80" rows="5"></textarea></p>
-                    </div>
+                    </div> -->
+					
+
                     
-                    <input value="確認修改" type="button" class="updateData" id="updateData">
 				 </FORM> 
-				 
+
 
 				
 			</div>
 
 		</div>
+		<div class="modify_div">
+			<input value="確認修改" type="button" class="updateData btn btn-warning" id="updateData">
+		</div>
 
-		<FORM id="RHome" name="RHome" action="Tindex.controller" method="GET">		 
-            <div class="div-btn">
-                <button type="submit" class="btn btn-primary">回租車公司首頁</button>
-            </div>
-        </FORM>
 				 
 
 
