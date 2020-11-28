@@ -214,7 +214,7 @@ pre {
 									<input type="file" id="pic" name="pic">
 									<Input type='hidden' name='r_sn' value=''>
 			<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
-								</p>-->
+								</p>
 								<div class="div_img">
 <%-- 									<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic"> --%>
 								</div>
@@ -245,7 +245,7 @@ pre {
 								<div>
 									<h4 class="res_result">地區</h4>
 									<p class="p_result">
-							<select name="upRegion" id="dataRegion" class="form-control">
+							<select name="upRegion" id="upRegion" class="form-control">
 								 <option value="">請選擇地區</option>
                                  <option value="基隆市">基隆市</option>
                                  <option value="新北市">新北市</option>

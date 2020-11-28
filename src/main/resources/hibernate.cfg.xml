@@ -61,6 +61,8 @@
 <!-- 		<mapping class="innocence741.model.OrderTableBean" /> -->
 		<mapping class="innocence741.model.T_Order_List" />
 		<mapping class="asx54630.model.Hotel"/>
+		<mapping class="asx54630.model.HotelView"/>
+		<mapping class="asx54630.model.HotelPage"/>
 		<mapping class="global.pojo.OrderTable"/>
 
 

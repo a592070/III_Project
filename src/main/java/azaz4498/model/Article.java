@@ -43,8 +43,6 @@ public class Article implements Serializable {
 	private Integer artId;
 	private Integer artTypeId;
 	private String artTitle;
-	private byte[] artPic;
-	private String artPicUrl;
 	private String artStatus;
 	
 	@Column(name = "ART_STATUS")
@@ -57,6 +55,7 @@ public class Article implements Serializable {
 	}
 
 	private List<Comment> comments = new ArrayList<Comment>();
+	private List<Picture> pictures = new ArrayList<Picture>();
 	private ArticleType articleType;
 
 	public Article() {
@@ -137,22 +136,7 @@ public class Article implements Serializable {
 		this.artTitle = artTitle;
 	}
 
-	@Column(name = "ART_PIC")
-	public byte[] getArtPic() {
-		return artPic;
-	}
-
-	public void setArtPic(byte[] artPic) {
-		this.artPic = artPic;
-	}
-	@Column(name = "ART_PIC_URL")
-	public String getArtPicUrl() {
-		return artPicUrl;
-	}
-
-	public void setArtPicUrl(String artPicUrl) {
-		this.artPicUrl = artPicUrl;
-	}
+	
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
@@ -162,6 +146,16 @@ public class Article implements Serializable {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
+	public List<Picture> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(List<Picture> pictures) {
+		this.pictures = pictures;
+	}
+
 	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ART_TYPE_ID")

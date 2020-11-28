@@ -116,3 +116,19 @@ SET DEFINE OFF;
 	  REFERENCES "HOTEL" ("SN") ENABLE;
   ALTER TABLE "H_ORDER_LIST" ADD CONSTRAINT "H_ORDER_LIST_HOTEL_QUADRUPLE_ROOM_FK" FOREIGN KEY ("QUADRUPLE_ROOM")
 	  REFERENCES "HOTEL" ("SN") ENABLE;
+	  
+	  
+--------------------------------------------------------
+--  已建立檔案 - 星期六-十一月-21-2020   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for View H_VIEW
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "H_VIEW" ("SN", "NAME", "REGION", "ADDRESS", "TYPE", "STATUS") AS 
+  SELECT 
+    SN, NAME, REGION, ADDRESS, TYPE, STATUS
+FROM 
+    Hotel
+;
+

@@ -11,6 +11,7 @@
     <bean id="accountService" class="rambo0021.serive.AccountServiceImpl" lazy-init="true" scope="session"/>
     <bean id="dateService" class="rambo0021.serive.DateServiceImpl" lazy-init="true" scope="session"/>
    	<bean id="accPage" class="rambo0021.pojo.Page" scope="session"/>
+   	<bean id="accSort" class="rambo0021.pojo.Sort" scope="session"/>
    	<context:component-scan base-package="rambo0021.controller"/>
 </beans>
 
