@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Student
@@ -54,13 +54,12 @@ h2 {
 	padding-left: 50px;
 	padding-top: 50px;
 }
-
-td {
+td{
 	color: black;
 }
 
-.carRentalCompanyDiv {
-	padding: 15px;
+.carRentalCompanyDiv{
+    padding: 15px;
 }
 </style>
 
@@ -78,74 +77,70 @@ td {
 			<div class="content-wrapper">
 				<div class="box">
 					<div class="search" class="form-group col-md-2">
-						<form action="<%=application.getContextPath()%>/regionSearch"
-							method="POST">
-							<span class="sp_search">車行地區</span> <select name="region_name"
-								id="inputState" class="form-control">
-								<option value="">請選擇地區</option>
-								<option value="基隆">基隆</option>
-								<option value="新北">新北</option>
-								<option value="台北">台北</option>
-								<option value="桃園">桃園</option>
-								<option value="新竹">新竹</option>
-								<option value="苗栗">苗栗</option>
-								<option value="台中">台中</option>
-								<option value="彰化">彰化</option>
-								<option value="南投">南投</option>
-								<option value="雲林">雲林</option>
-								<option value="嘉義">嘉義</option>
-								<option value="台南">台南</option>
-								<option value="高雄">高雄</option>
-								<option value="屏東">屏東</option>
-								<option value="宜蘭">宜蘭</option>
-								<option value="花蓮">花蓮</option>
-								<option value="台東">台東</option>
-								<option value="澎湖">澎湖</option>
-								<option value="金門">金門</option>
-								<option value="連江">連江</option>
-							</select>
-							<button type="submit" class="btn btn-primary">Search</button>
-						</form>
-					</div>
-					<div class="search">
-						<form action="<%=application.getContextPath()%>/nameSearch"
-							method="POST">
-							<span class="sp_search">車行名稱</span> <input type="text"
-								name="restaurant_name" placeholder="請輸入關鍵字" />
-							<button type="submit" class="btn btn-primary">Search</button>
-						</form>
-					</div>
+  					<form action="<%=application.getContextPath()%>/regionSearch" method="POST">
+						<span class="sp_search">車行地區</span> 
+						<select name="region_name" id="inputState" class="form-control">
+							<option value="">請選擇地區</option>
+							<option value="基隆">基隆</option>
+							<option value="新北">新北</option>
+							<option value="台北">台北</option>
+							<option value="桃園">桃園</option>
+							<option value="新竹">新竹</option>
+							<option value="苗栗">苗栗</option>
+							<option value="台中">台中</option>
+							<option value="彰化">彰化</option>
+							<option value="南投">南投</option>
+							<option value="雲林">雲林</option>
+							<option value="嘉義">嘉義</option>
+							<option value="台南">台南</option>
+							<option value="高雄">高雄</option>
+							<option value="屏東">屏東</option>
+							<option value="宜蘭">宜蘭</option>
+							<option value="花蓮">花蓮</option>
+							<option value="台東">台東</option>
+							<option value="澎湖">澎湖</option>
+							<option value="金門">金門</option>
+							<option value="連江">連江</option>
+						</select>
+						<button type="submit" class="btn btn-primary">Search</button>
+						</form>   
+					</div> 
+ 					<div class="search">
+ 						<form action="<%=application.getContextPath()%>/nameSearch" method="POST"> 
+ 						<span class="sp_search">車行名稱</span>  
+						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>  
+ 						<button type="submit" class="btn btn-primary">Search</button>  
+ 						</form>  
+					</div> 
 
-					<div class="search">
-						<form action="<%=application.getContextPath()%>/usernameSearch"
-							method="POST">
-							<span class="sp_search">會員帳號</span> <input type="text"
-								name="username" placeholder="請輸入會員帳號" />
-							<button type="submit" class="btn btn-primary">Search</button>
-						</form>
-					</div>
+ 					<div class="search">
+ 					    <form action="<%=application.getContextPath()%>/usernameSearch" method="POST" > 
+ 						    <span class="sp_search">會員帳號</span> 
+ 						    <input type="text" name="username" placeholder="請輸入會員帳號" /> 
+ 						    <button type="submit" class="btn btn-primary">Search</button> 
+                        </form> 
+                    </div>
 
-					<div class="search">
-						<form action="CreateCarRentalCompany.controller" method="GET">
-							<button type="submit" class="btn btn-primary">增加租車行</button>
-						</form>
-					</div>
+                     <div class="search">
+                        <form action="CreateCarRentalCompany.controller" method="GET" > 
+                            <button type="submit" class="btn btn-primary">增加租車行</button> 
+                        </form> 
+                    </div>
 
-				</div>
+			    </div>
 				<h2>租車公司列表</h2>
-				<div id="carRentalCompany"></div>
+                <div id="carRentalCompany"></div>
 
 
 
 
-			</div>
+		    </div>
 
 
-		</div>
-	</div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-	<script>
+	    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script>
         $(document).ready(function(){
             $.ajax({
 
@@ -175,14 +170,21 @@ td {
                                        $("<td></td>").append(
                                            $("<input>").attr("value",response[i]["address"]).attr("name","address").attr("readonly","true").attr("size",45)
                                        ),
+                                        // $("<td></td>").append(
+                                        //     $("<input>").attr("value",response[i]["compantAccount"]).attr("name","compantAccount").attr("readonly","true")
+                                        // ),
                                         $("<td></td>").append(
-                                            $("<input>").attr("value",response[i]["compantAccount"]).attr("name","compantAccount").attr("readonly","true")
+                                            $("<label>").addClass('switch switch-text switch-success switch-pill form-control-label').append(
+                                                $("<input>").attr("type","checkbox").addClass('switch-input form-check-input').attr("checked","checked"),
+                                                $("<span>").addClass('switch-label').attr("data-on","啟用").attr("data-off","禁用"),
+                                                $("<span>").addClass('switch-handle')
+                                            )
                                         ),
                                         $("<td></td>").append(
-                                            $("<input>").attr("value","修改").attr("type","button").addClass('updateData')
+                                            $("<input>").attr("value","修改").attr("type","button").addClass('updateData btn btn-warning')
                                         ),
                                         $("<td></td>").append(
-                                            $("<input>").attr("value","刪除").attr("type","button").addClass('dropData')
+                                            $("<input>").attr("value","刪除").attr("type","button").addClass('dropData btn btn-danger')
                                         )
                                     )
                                 )
@@ -218,6 +220,8 @@ td {
                         //     console.log(formData.get('pic_rentalcompany'));
 
                      },
+
+                     //Ajax失敗後要執行的function，此例為印出錯誤訊息
 
                      error:function(xhr, ajaxOptions, thrownError){
 
