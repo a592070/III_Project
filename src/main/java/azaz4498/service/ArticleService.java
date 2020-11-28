@@ -62,7 +62,5 @@ public class ArticleService {
 	}
 
 	// upload img
-	public String uploadImg(int articleId,byte[] img, String imgUrl) {
-		return aDao.imgUpload(articleId, img, imgUrl);
-	}
+	
 }

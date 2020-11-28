@@ -1,5 +1,7 @@
 package azaz4498.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +23,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "F_PICTURE")
 @DynamicUpdate
 @DynamicInsert
-public class Picture {
+public class Picture implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +36,6 @@ public class Picture {
 	private String picFileName;
 	@Column(name = "URL")
 	private String picUrl;
-	@Column(name = "REF_ID")
 	private Integer refId;
 	@Column(name = "PICTURE")
 	private byte[] picture;
@@ -81,7 +86,7 @@ public class Picture {
 		this.picture = picture;
 	}
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "REF_ID")
 	public Article getArticle() {
 		return article;
