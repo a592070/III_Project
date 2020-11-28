@@ -22,14 +22,20 @@ public class AttractionServiceImpl implements AttractionService{
 
     @Override
     public AttractionDO getEle(Integer id){
+        return getEle(id, false);
+    }
+
+    @Override
+    public AttractionDO getEle(Integer id, boolean findFromPersistence) {
         if(id == null || id==0) return null;
-        return dao.getEle(id);
+        return dao.getEle(id, findFromPersistence);
     }
 
     @Override
     public AttractionDO save(AttractionDO attractionDO) {
         if(attractionDO.getSn() == null || attractionDO.getSn()==0){
-            return dao.insert(attractionDO);
+            Integer insertPk = dao.insert(attractionDO);
+            return getEle(insertPk, true);
         }
         return dao.update(attractionDO);
     }
@@ -65,9 +71,8 @@ public class AttractionServiceImpl implements AttractionService{
 
             // /WEB-INF/assets/attraction/xxx/xxx.jpg
             String dest = Constant.WEB_INF_PATH + destPrefix + File.separator + ele.getPicFileName();
-            writePicToDest(ele, dest, context);
+            if(writePicToDest(ele, dest, context)) map.put("dest", destPrefix+"/"+ele.getPicFileName());
 
-            map.put("dest", destPrefix+"/"+ele.getPicFileName());
             list.add(map);
         }
         return list;
@@ -75,34 +80,35 @@ public class AttractionServiceImpl implements AttractionService{
 
 
     @Override
-    public void writePicToDest(AttractionPictureDO ele, String destPath, ServletContext context) {
+    public boolean writePicToDest(AttractionPictureDO ele, String destPath, ServletContext context) {
+        boolean flag = false;
         String realPath = context.getRealPath(destPath);
-
-        if(StringUtil.isEmpty(realPath) || !new File(realPath).exists()){
-            try {
+        try {
+            if(!new File(realPath).exists()) {
+                assert ele.getPicture() != null;
 
                 // File.pathSeparator  ;
                 // File.separator  \
-
                 String dirPath = realPath.substring(0, realPath.lastIndexOf(File.separator));
 
                 File fileDir = new File(dirPath);
-                if(!fileDir.exists()) fileDir.mkdir();
-                assert ele.getPicture()!=null;
+                if (!fileDir.exists()) fileDir.mkdir();
                 IOUtils.writeFileToDest(realPath, ele.getPicture());
-
-            } catch (Throwable e) {
-                e.printStackTrace();
             }
+            flag = true;
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
+        return flag;
     }
     private void removePicFromDest(AttractionPictureDO ele, ServletContext context){
-        String path = Constant.ATTRACTION_PIC_PATH + File.separator + ele.getPicFileName();
+        String path = Constant.ATTRACTION_PIC_PATH + File.separator + ele.getAttraction().getSn() + File.separator + ele.getPicFileName();
         String realPath = context.getRealPath(path);
         File file = new File(realPath);
 
         assert file.exists();
-        file.delete();
+        System.out.println("delete file: " +realPath + "\n" + file.delete());
+
     }
 
     @Override
@@ -117,13 +123,13 @@ public class AttractionServiceImpl implements AttractionService{
         attractionDO.addPic(pictureDO);
     }
     @Override
-    public void removePicture(AttractionDO attractionDO, int id, ServletContext context){
+    public void removePicture(AttractionDO attractionDO, Integer id, ServletContext context){
         List<AttractionPictureDO> pictureDOList = attractionDO.getAttractionPic();
 
         ListIterator<AttractionPictureDO> iterator = pictureDOList.listIterator();
         while(iterator.hasNext()){
             AttractionPictureDO next = iterator.next();
-            if(next.getId().equals(id)){
+            if(id.equals(next.getId())){
                 iterator.remove();
                 try {
                     removePicFromDest(next, context);
@@ -150,4 +156,5 @@ public class AttractionServiceImpl implements AttractionService{
             }
         }
     }
+
 }

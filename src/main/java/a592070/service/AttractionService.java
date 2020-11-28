@@ -10,6 +10,7 @@ import java.util.Map;
 
 public interface AttractionService {
     AttractionDO getEle(Integer id);
+    AttractionDO getEle(Integer id, boolean findFromPersistence);
     AttractionDO save(AttractionDO attractionDO);
 //    AttractionDO insert(AttractionDO attractionDO);
 //    AttractionDO update(AttractionDO attractionDO);
@@ -17,13 +18,13 @@ public interface AttractionService {
 
     List<Map<String, Object>> listPictureDest(AttractionDO attractionDO, String destPrefix, ServletContext context);
 
-    void writePicToDest(AttractionPictureDO ele, String destPath, ServletContext context);
+    boolean writePicToDest(AttractionPictureDO ele, String destPath, ServletContext context);
 
     void addPicture(AttractionDO attractionDO, AttractionPictureDO pictureDO);
 
     void addPicture(AttractionDO attractionDO, byte[] pic);
 
-    void removePicture(AttractionDO attractionDO, int id, ServletContext context);
+    void removePicture(AttractionDO attractionDO, Integer id, ServletContext context);
 
     void removePicture(AttractionDO attractionDO, String fileName, ServletContext context);
 }

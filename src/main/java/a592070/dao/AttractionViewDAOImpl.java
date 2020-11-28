@@ -28,17 +28,22 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     }
 
     @Override
-    public AttractionVO getEle(int id) {
-        return sessionFactory.getCurrentSession().get(AttractionVO.class, id);
+    public AttractionVO getEle(Integer id, boolean findFromPersistence) {
+        Session session = sessionFactory.getCurrentSession();
+        if(findFromPersistence){
+            return session.find(AttractionVO.class, id);
+        }else{
+            return session.get(AttractionVO.class, id);
+        }
     }
 
     @Override
-    public byte[] getPicture(int id) {
+    public byte[] getPicture(Integer id) {
         return ((AttractionPictureDO)getPictures(id).get(0)).getPicture();
     }
 
     @Override
-    public List getPictures(int id) {
+    public List getPictures(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from AttractionPictureDO where attraction.sn = ?1 order by id";
         Query<AttractionPictureDO> query = session.createQuery(hql, AttractionPictureDO.class);

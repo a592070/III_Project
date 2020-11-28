@@ -112,6 +112,7 @@
 <%--                                        onerror="this.src='${pageContext.servletContext.contextPath}/assets/nopic.jpg'">--%>
 <%--                                </el-image>--%>
                                 <el-upload
+                                        ref="upload"
                                         action=""
                                         list-type="picture-card"
                                         :file-list="fileList"
@@ -219,8 +220,9 @@
         created: function () {
             <c:if test="${not empty id}">
             this.isInsert = false;
-            this.getAttractionData(this)
+            this.attractionData.sn = ${id};
             </c:if>
+            if(!this.isInsert) this.getAttractionData(this);
             this.getRegionData()
         },
         methods: {
@@ -236,7 +238,7 @@
             },
             getAttractionData(obj){
                 $.get({
-                    url: '${pageContext.servletContext.contextPath}/admin/attraction/entity/${id}',
+                    url: '${pageContext.servletContext.contextPath}/admin/attraction/entity/'+obj.attractionData.sn,
                     async: false,
                     success: function (response) {
                         obj.attractionData = response.attractionData;
@@ -247,7 +249,7 @@
                             <%--obj.fileList.push({name:response.attractionPic[i].id, url:sId});--%>
 
                             let pic = response.attractionPic[i];
-                            obj.fileList.push({id:pic.id, name:pic.filename, url:"${pageContext.servletContext.contextPath}"+pic.dest});
+                            obj.fileList.push({id:pic.id, name:pic.filename, url:"${pageContext.servletContext.contextPath}/attraction/pic/"+obj.attractionData.sn+"/"+pic.filename});
                         }
                         <%--obj.picture = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+response.sn;--%>
                         <%--obj.url = "${pageContext.servletContext.contextPath}/admin/attraction/"+response.sn;--%>
@@ -286,14 +288,23 @@
                             type: 'success',
                             message: '更新成功!!'
                         });
+                        // this.isInsert = false;
+                        // this.attractionData.sn = response.data.attractionData.sn;
+                        // window.location.reload();
+
                         this.initData();
+                        <%--// this.$refs.upload.clearFiles();--%>
                         this.attractionData = response.data.attractionData;
                         this.attractionPic = response.data.attractionPic;
                         this.isInsert = false;
+                        console.log(this.fileList);
+                        <%--// this.fileList.splice();--%>
+                        <%--console.log(this.fileList);--%>
 
                         for (let i = 0; i < this.attractionPic.length; i++) {
                             let pic = this.attractionPic[i];
-                            this.fileList.push({id:pic.id, name:pic.filename, url:"${pageContext.servletContext.contextPath}"+pic.dest});
+                            this.fileList.push({id:pic.id, name:pic.filename, url:"${pageContext.servletContext.contextPath}/attraction/pic/"+this.attractionData.sn+"/"+pic.filename});
+                            this.imageUrl = this.fileList[i].url;
                         }
                     }else{
                         this.$message({
@@ -302,6 +313,7 @@
                         });
                     }
                 })
+                this.$forceUpdate();
             },
             handleAvatarSuccess(res, file) {
                 this.imageUrl = URL.createObjectURL(file.raw);
@@ -327,9 +339,11 @@
                 return isPIC && isLt2M;
             },
             handleRemove(file, fileList) {
-                console.log(file, fileList);
                 this.param.delete('file');
-                this.removePicId.push(file.id);
+                if(file.id){
+                    console.log(file.id)
+                    this.removePicId.push(file.id);
+                }
             },
             goBack() {
                 console.log('go back');

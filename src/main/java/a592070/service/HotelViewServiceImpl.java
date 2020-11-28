@@ -14,17 +14,23 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
     private ViewDAO<HotelVO> viewDAO;
 
     @Override
-    public HotelVO getEle(int id) {
-        return viewDAO.getEle(id);
+    public HotelVO getEle(Integer id) {
+        return getEle(id, false);
     }
 
     @Override
-    public List<byte[]> getPictures(int id) {
+    public HotelVO getEle(Integer id, boolean findFromPersistence) {
+        if(id == null || id==0) return null;
+        return viewDAO.getEle(id, findFromPersistence);
+    }
+
+    @Override
+    public List<byte[]> getPictures(Integer id) {
         return null;
     }
 
     @Override
-    public byte[] getPicture(int id) {
+    public byte[] getPicture(Integer id) {
         return null;
     }
 
