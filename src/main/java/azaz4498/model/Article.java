@@ -140,7 +140,7 @@ public class Article implements Serializable {
 
 	
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -149,7 +149,8 @@ public class Article implements Serializable {
 		this.comments = comments;
 	}
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
 	public List<Picture> getPictures() {
 		return pictures;
 	}
