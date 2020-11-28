@@ -24,6 +24,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="global"/>
 	<mvc:default-servlet-handler />
+ 	<mvc:resources mapping = "/assets/**" location="/WEB-INF/assets/"/>
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
