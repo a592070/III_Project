@@ -238,9 +238,9 @@ public class ArticleController {
 		HttpHeaders headers = new HttpHeaders();
 		Picture picture = pictureService.getPic(id);
 		
-		headers.setContentType(MediaType.IMAGE_PNG);
+		headers.setContentType(MediaType.IMAGE_JPEG);
 		
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity(picture.getPicture(),headers,HttpStatus.OK);
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(picture.getPicture(),headers,HttpStatus.OK);
 		
 		return responseEntity;
 		

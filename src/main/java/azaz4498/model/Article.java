@@ -2,7 +2,9 @@ package azaz4498.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +21,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -52,8 +56,8 @@ public class Article implements Serializable {
 		this.artStatus = artStatus;
 	}
 
-	private Set<Comment> comments = new LinkedHashSet<>();
-	private Set<Picture> pictures = new LinkedHashSet<>();
+	private List<Comment> comments = new ArrayList<Comment>();
+	private List<Picture> pictures = new ArrayList<Picture>();
 	private ArticleType articleType;
 
 	public Article() {
@@ -136,21 +140,21 @@ public class Article implements Serializable {
 
 	
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
-	public Set<Comment> getComments() {
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+	public List<Comment> getComments() {
 		return comments;
 	}
 
-	public void setComments(Set<Comment> comments) {
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
-	public Set<Picture> getPictures() {
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+	public List<Picture> getPictures() {
 		return pictures;
 	}
 
-	public void setPictures(Set<Picture> pictures) {
+	public void setPictures(List<Picture> pictures) {
 		this.pictures = pictures;
 	}
 
