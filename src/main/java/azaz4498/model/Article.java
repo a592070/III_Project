@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -145,6 +147,7 @@ public class Article implements Serializable {
 		this.comments = comments;
 	}
 	@JsonManagedReference
+	@Fetch(FetchMode.SELECT)
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
 	public Set<Picture> getPictures() {
 		return pictures;

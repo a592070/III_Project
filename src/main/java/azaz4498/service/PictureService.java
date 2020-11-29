@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import azaz4498.model.Picture;
 import azaz4498.model.PictureDAO;
 
-@Service
+
 @Transactional
 public class PictureService {
 	@Autowired
