@@ -1,5 +1,6 @@
 package a592070.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -16,8 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@JsonDeserialize(using = AttractionJsonDeserializer.class)
-@JsonSerialize(using = AttractionJsonSerializer.class)
+//@JsonDeserialize(using = AttractionJsonDeserializer.class)
+//@JsonSerialize(using = AttractionJsonSerializer.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "ATTRACTION")
@@ -41,6 +42,7 @@ public class AttractionDO {
 //    private String pictureUrl;
 //    private byte[] picture;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "attraction", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AttractionPictureDO> attractionPic = new ArrayList<>();
 
@@ -233,7 +235,11 @@ public class AttractionDO {
     }
 
     public void addPic(AttractionPictureDO pictureDO) {
+        pictureDO.setAttraction(this);
         this.attractionPic.add(pictureDO);
+    }
+    public void remove(AttractionPictureDO pictureDO) {
+        this.attractionPic.remove(pictureDO);
     }
 
     public void setAttractionPic(List<AttractionPictureDO> attractionPic) {

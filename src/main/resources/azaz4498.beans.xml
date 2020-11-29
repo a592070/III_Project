@@ -26,4 +26,7 @@
 	<context:component-scan
 		base-package="azaz4498.controller" />
 
+	<bean id="PictureDAO" class="azaz4498.model.PictureDAO" lazy-init="true" scope="session"/>
+	<bean id="PictureService" class="azaz4498.service.PictureService" lazy-init="true" scope="session"/>
+
 </beans>

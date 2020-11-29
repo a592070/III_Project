@@ -8,15 +8,14 @@ import a592070.service.AttractionService;
 import a592070.service.ViewService;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import global.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import utils.IOUtils;
 import utils.PageSupport;
 import utils.StringUtil;
 
@@ -41,20 +40,6 @@ public class AttractionController {
     private AttractionService service;
     @Autowired@Qualifier("attractionViewService")
     private ViewService<AttractionVO> viewService;
-
-//    @RequestMapping("/admin/attraction")
-//    public void attractionMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionInfo02.jsp").forward(request, response);
-//    }
-//    @RequestMapping("/admin/attraction/detail")
-//    public void attractionDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        request.getRequestDispatcher("/WEB-INF/admin/a592070/attractionDetail.jsp").forward(request, response);
-//    }
-//    @RequestMapping("/admin/attraction/detail/{id}")
-//    public AttractionDO attractionDetail(@PathVariable("id") int id) {
-//        return service.getEle(id);
-//    }
-
 
     @RequestMapping("/admin/attraction/list/{page}")
     public Map<String, Object> getAttractionList(@PathVariable("page") int page){
@@ -141,78 +126,94 @@ public class AttractionController {
         return map;
     }
     @RequestMapping("/admin/attraction/entity/{id}")
-    public Map<String, Object> getAttraction(@PathVariable(name = "id") int id){
+    public Map<String, Object> getAttraction(@PathVariable(name = "id") int id) {
         AttractionDO attractionDO = service.getEle(id);
         Map<String, Object> map = new HashMap<>();
         map.put("attractionData", attractionDO);
+        // /assets/attraction/xxx
+        String destPrefix = Constant.ATTRACTION_PIC_URL + File.separator +attractionDO.getSn();
+        map.put("attractionPic", service.listPictureDest(attractionDO, destPrefix, context));
 
-//        List<Integer> list = new ArrayList<>();
-//        attractionDO.getAttractionPic().forEach(ele -> list.add(ele.getId()));
-
-        map.put("attractionPic", attractionDO.getAttractionPic());
         return map;
     }
 
 
-    @GetMapping("/admin/attraction/pic/{id}/{index}")
-    public ResponseEntity<byte[]> getPicture(@PathVariable(name = "id") int id,
-                                             @PathVariable(name = "index") int index){
-        List<AttractionPictureDO> picture = (List<AttractionPictureDO>)viewService.getPictures(id);
+    @GetMapping("/attraction/pic/{id}/{fileName}")
+    public ResponseEntity<byte[]> getPicture(@PathVariable(name = "id") Integer id,
+                                             @PathVariable(name = "fileName") String fileName){
+//        List<AttractionPictureDO> picture = (List<AttractionPictureDO>)viewService.getPictures(id);
 
+        String path = Constant.ATTRACTION_PIC_PATH + File.separator + id + File.separator + fileName + ".jpg";
+        String realPath = context.getRealPath(path);
+        byte[] bytes = null;
+        try {
+            bytes = IOUtils.pathToByteArray(realPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.IMAGE_JPEG);
-        ResponseEntity<byte[]> responseEntity = new ResponseEntity(picture.get(index).getPicture(), httpHeaders, HttpStatus.OK);
-
+        httpHeaders.setCacheControl(CacheControl.noCache());
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity(bytes, httpHeaders, HttpStatus.OK);
         return responseEntity;
     }
 
-    @PostMapping("/admin/attraction/update/{id}")
-    public boolean update(@PathVariable(name = "id") int id,
+    @PostMapping({"/admin/attraction/save/{id}", "/admin/attraction/save/", "/admin/attraction/save"})
+    public Map<String, Object> save(@PathVariable(name = "id", required = false) Integer id,
                               @RequestParam(name="file", required=false)MultipartFile[] multipartFile,
-                              @RequestParam(name="removePicId", required = false) String picId,
+                              @RequestParam(name="removePicId", required = false) String removePicId,
                               @RequestParam(name="attractionData", required = false)String attractionData) {
-        boolean flag = false;
+        Map<String, Object> map = new HashMap<>();
         try {
             ObjectMapper mapper = new ObjectMapper();
             AttractionDO attractionDO = mapper.readValue(attractionData, AttractionDO.class);
-
-            AttractionDO originDo = service.getEle(attractionDO.getSn());
-            attractionDO.setAttractionPic(originDo.getAttractionPic());
+//            AttractionDO attractionDO = attractionData;
+            if(id == null || id.intValue() == 0) {
+                attractionDO.setSn(null);
+            }else{
+                // find from Persistence
+                AttractionDO originDo = service.getEle(attractionDO.getSn(), true);
+                if(originDo != null) attractionDO.setAttractionPic(originDo.getAttractionPic());
+            }
 
             if(multipartFile != null || multipartFile.length!=0){
                 for (MultipartFile file : multipartFile) {
-                    AttractionPictureDO pictureDO = new AttractionPictureDO();
-                    pictureDO.setPicture(file.getBytes());
-                    pictureDO.setAttraction(attractionDO);
-
-                    attractionDO.addPic(pictureDO);
+                    service.addPicture(attractionDO, file.getBytes());
                 }
-//                attractionDO.addPic(multipartFile.getBytes());
-//                attractionDO.setPicture(multipartFile.getBytes());
-                System.out.println("saveFile success");
             }
 
-            int[] pics = mapper.readValue(picId, int[].class);
-            for (int i : pics) {
-                attractionDO.getAttractionPic().removeIf(ele -> ele.getId() == i);
+            Integer[] pics = mapper.readValue(removePicId, Integer[].class);
+            for (Integer i : pics) {
+                service.removePicture(attractionDO, i, context);
+//                attractionDO.getAttractionPic().removeIf(ele -> ele.getId() == i);
             }
 
-            service.update(attractionDO);
+            attractionDO = service.save(attractionDO);
 
-            flag = true;
+            System.out.println(attractionDO.getSn());
+
+            map.put("attractionData", attractionDO);
+            // /assets/attraction/xxx
+            String destPrefix = Constant.ATTRACTION_PIC_URL + File.separator +attractionDO.getSn();
+            map.put("attractionPic", service.listPictureDest(attractionDO, destPrefix, context));
+            map.put("message", true);
+
+            return map;
         }catch (Exception e){
             e.printStackTrace();
+            map.put("message", false);
         }
-
-        return flag;
+        return map;
     }
-    @PostMapping("/admin/attraction/status/{id}")
+
+
+    @PutMapping("/admin/attraction/status/{id}")
     public boolean switchStatus(@PathVariable(name = "id") int id){
         boolean flag = false;
         try {
             AttractionDO ele = service.getEle(id);
             ele.setStatus(!ele.getStatus());
-            service.update(ele);
+            service.save(ele);
 
             flag = true;
         }catch (Exception e){
@@ -221,7 +222,8 @@ public class AttractionController {
         return flag;
     }
 
-    @PostMapping("/admin/attraction/delete/{id}")
+
+    @DeleteMapping("/admin/attraction/delete/{id}")
     public boolean delete(@PathVariable(name = "id") int id){
         boolean flag = false;
         try{

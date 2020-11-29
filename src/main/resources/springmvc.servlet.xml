@@ -23,8 +23,10 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="global"/>
+
 	<mvc:default-servlet-handler />
- 	<mvc:resources mapping = "/assets/**" location="/WEB-INF/assets/"/>
+	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
+
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -39,6 +41,15 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+
+	<mvc:cors>
+		<mvc:mapping path="/**"
+					 allowed-origins="*"
+					 allowed-methods="GET, PUT, POST, DELETE, OPTIONS, HEAD"
+					 allowed-headers="*"
+					 allow-credentials="true"
+					 max-age="3600" />
+	</mvc:cors>
 
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->

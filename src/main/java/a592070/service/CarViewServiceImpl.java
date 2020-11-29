@@ -18,17 +18,23 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
     private ViewDAO<CarVO> viewDAO;
 
     @Override
-    public CarVO getEle(int id){
-        return viewDAO.getEle(id);
+    public CarVO getEle(Integer id){
+        return getEle(id, false);
     }
 
     @Override
-    public List<byte[]> getPictures(int id) {
+    public CarVO getEle(Integer id, boolean findFromPersistence) {
+        if(id == null || id==0) return null;
+        return viewDAO.getEle(id, findFromPersistence);
+    }
+
+    @Override
+    public List<byte[]> getPictures(Integer id) {
         return null;
     }
 
     @Override
-    public byte[] getPicture(int id) {
+    public byte[] getPicture(Integer id) {
         return null;
     }
 
