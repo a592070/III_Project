@@ -165,17 +165,22 @@ public class RestaurantController {
 								   @RequestParam("type") String type,
 								   @RequestParam("region") String region, 
 								   @RequestParam("serviceinfo") String serviceinfo,
-								   @RequestParam("pic") MultipartFile pic, Model m) throws IOException {
+								   @RequestParam("pic") MultipartFile pic, 
+								   @RequestParam("userName") String userName, 
+								   Model m) throws IOException {
 
+		System.out.println("userName = " + userName);
+		if(userName.isEmpty() || userName == null) {
+			userName = "";
+		}
 		Restaurant r = new Restaurant();
 		if (pic.getSize() != 0) {
 			r.setPic(pic.getInputStream().readAllBytes());
 		} else {
 			r.setPic(rs.getPic(r_sn));
 		}
-
 		Restaurant rBean = rs.updateRestaurant(r_sn, address, opentime, description, transportation, type, region,
-				serviceinfo, r.getPic());
+				serviceinfo, r.getPic(), userName);
 		m.addAttribute("RBean", rBean);
 		return "iring29/R_modify";
 	}
@@ -185,7 +190,7 @@ public class RestaurantController {
 	public String DelRestaurant(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
 		String result = rs.deleteRestaurant(r_sn);
 		m.addAttribute("result", result);
-		return "iring29/result";
+		return "redirect:Restaurant";
 	}
 
 	// Create Restaurant

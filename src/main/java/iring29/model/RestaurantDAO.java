@@ -116,20 +116,26 @@ public class RestaurantDAO {
 
 	// Update Restaurant Info
 	public Restaurant updateRestaurant(BigDecimal r_sn, String address, String opentime, String description,
-			String transportation, String type, String region, String serviceinfo, byte[] pic) {
+			String transportation, String type, String region, String serviceinfo, byte[] pic, String userName) {
 		Restaurant result = sessionFactory.getCurrentSession().get(Restaurant.class, r_sn);
-		if (result != null) {
-			result.setAddress(address);
-			result.setOpentime(opentime);
-			result.setDescription(description);
-			result.setTransportation(transportation);
-			result.setType(type);
-			result.setRegion(region);
-			result.setServiceinfo(serviceinfo);
-			result.setPic(pic);
-
-			return result;
-		}
+			
+			if (result != null) {
+				result.setAddress(address);
+				result.setOpentime(opentime);
+				result.setDescription(description);
+				result.setTransportation(transportation);
+				result.setType(type);
+				result.setRegion(region);
+				result.setServiceinfo(serviceinfo);
+				result.setPic(pic);
+				if(!userName.isEmpty() || userName != null) {
+					AccountBean acc = sessionFactory.getCurrentSession().get(AccountBean.class, userName);
+					result.setAccountBean(acc);
+				}
+				
+				return result;
+			}
+		
 		return result;
 	}
 

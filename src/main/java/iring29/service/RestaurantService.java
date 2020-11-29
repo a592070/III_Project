@@ -50,9 +50,9 @@ public class RestaurantService {
 
 	@Transactional(rollbackFor = { Throwable.class })
 	public Restaurant updateRestaurant(BigDecimal r_sn, String address, String opentime, String description,
-			String transportation, String type, String region, String serviceinfo, byte[] pic) {
+			String transportation, String type, String region, String serviceinfo, byte[] pic, String userName) {
 		return rDao.updateRestaurant(r_sn, address, opentime, description, transportation, type, region, serviceinfo,
-				pic);
+				pic, userName);
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })

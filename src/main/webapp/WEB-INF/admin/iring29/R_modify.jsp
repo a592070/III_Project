@@ -227,13 +227,14 @@ pre {
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 								<script>
-								$("#pic").ready(function(){
-									var pic = $("#pic").val();
-									console.log(pic);
-										if(pic == ""){
-											 $("#preview_Rpic").attr('src', '<%=application.getContextPath()%>/assets/img/iring29/Restaurant_img.png');
-											}
-									})
+ 								$("#pic").ready(function(){
+//  									var pic = $("#pic").val();
+ 									var pic = $("#preview_Rpic").attr("src");
+ 									console.log("pic = " +pic);
+// 										if(pic == ""){
+<%-- 											 $("#preview_Rpic").attr('src', '<%=application.getContextPath()%>/assets/img/iring29/Restaurant_img.png'); --%>
+// 											}
+ 									})
 								
 								$("#pic").change(function(){
 					                 readURL(this);
@@ -453,6 +454,8 @@ pre {
             let username = document.getElementById("userName").value;
             let sp = document.getElementById("idsp");
             if (username == "") {
+            	console.log("userName = "+document.getElementById("userName").value)
+            	document.getElementById("userName").value="";
                 sp.innerHTML = "請注意，帳號沒有填寫喔"
                 sp.style.color = "red";
                 sp.style.fontSize = "13px";
@@ -466,6 +469,9 @@ pre {
                 document.getElementById("confirm").disabled = true;
 
             }else{
+                console.log("response = "+response)
+            	console.log(document.getElementById("userName").value);
+            	sp.innerHTML = "";
             	document.getElementById("confirm").disabled = false;
                 }
 
