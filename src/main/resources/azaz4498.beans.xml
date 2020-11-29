@@ -11,7 +11,7 @@
 		lazy-init="true" scope="session" />
 	<bean id="ArticleTypeDAO" class="azaz4498.model.ArticleTypeDAO"
 		lazy-init="true" scope="session" />
-		<bean id="PictureDAO" class="azaz4498.model.PictureDAO"
+	<bean id="PictureDAO" class="azaz4498.model.PictureDAO"
 		lazy-init="true" scope="session" />
 	<bean id="ArticleService" class="azaz4498.service.ArticleService"
 		lazy-init="true" scope="session" />
@@ -20,13 +20,10 @@
 	<bean id="ArticleTypeService"
 		class="azaz4498.service.ArticleTypeService" lazy-init="true"
 		scope="session" />
-		<bean id="PictureService"
+	<bean id="PictureService"
 		class="azaz4498.service.PictureService" lazy-init="true"
 		scope="session" />
 	<context:component-scan
 		base-package="azaz4498.controller" />
-
-	<bean id="PictureDAO" class="azaz4498.model.PictureDAO" lazy-init="true" scope="session"/>
-	<bean id="PictureService" class="azaz4498.service.PictureService" lazy-init="true" scope="session"/>
 
 </beans>
