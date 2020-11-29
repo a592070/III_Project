@@ -12,9 +12,7 @@
 <title>Hotel</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
-<!-- <script src='//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script> -->
-<!-- <link href='//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel='stylesheet'></link> -->
-
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 
@@ -154,7 +152,7 @@
 	      			</c:choose>
 	      			</label></td> <%-- 開關(綠色) --%> 
                 <td><button type="button" class="btn btn-warning mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
-               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
+               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}','${hotels.NAME}')">刪除</button></td>
             </tr>
             </c:forEach> 
 
@@ -172,18 +170,20 @@
 							
 								<!--previous -->
 								<li class="page-item previous" id="pBtn">
-									<button class="page-link previous " id="page-previous" value="previous">&laquo;</button>
+<!-- 									<button class="page-link previous " id="page-previous" value="previous">&laquo;</button> -->
+										<button class="page-link previous " id="page-previous" value="previous">上一頁</button>
 								</li>
 							
 							
 								<!--current page -->
-								<li class="page-item active">
-									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}</button>
+								<li class="page-item">
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}/${totalPage}</button>
 								</li>
 						
 								<!--NEXT -->
 								<li class="page-item next" id ="nBtn">
-									<button class="page-link next" id="page-next" value="next">&raquo;</button>
+<!-- 									<button class="page-link next" id="page-next" value="next">&raquo;</button> -->
+									<button class="page-link next" id="page-next" value="next">下一頁</button>
 								</li>
 							
 							
@@ -493,6 +493,7 @@
 		function clickdelete(id,name){
 
 			$("#deleteId").val(id);
+			$("#deleteName").val(name);
 		}
 
 		$('#resetkeyword').click(function(){
@@ -516,19 +517,18 @@
              </div>
              <div class="modal-body">
                 <form action="hoteldelete" method="POST">
-                  <table>
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label"></label>
                       <input type="hidden" id = "deleteId" value="" name="deleteId">
+                      <input type="hidden" id = "deleteName" value="" name="deleteName">
+                      <p id="testid"></p>
                       <h4>是否確認刪除?</h4>
-                      <p></p>
                     </div>
                		 <div class="modal-footer">
                  	 <button type="submit" class="btn btn-primary">確認</button>
                   	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                		 </div>
                   </form> 
-                  </table>
              </div>
            </div>
          </div>

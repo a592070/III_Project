@@ -209,31 +209,30 @@ pre {
 
 								<FORM  id="modifyH" name="modifyH" method="POST" enctype="multipart/form-data">
 								<input type="hidden" value="${hoteldetail.SN}" name="upId" id="dataId">
-								<!-- <p class="modify-img">
+								 <p class="modify-img">
 									<label for="r-name">請選擇欲修改圖片上傳</label> 
 									<input type="file" id="pic" name="pic">
 									<Input type='hidden' name='r_sn' value=''>
-			<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
 								</p>
 								<div class="div_img">
-<%-- 									<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic"> --%>
+									<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic"> 
 								</div>
 								
-<!-- 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script> -->
-<!-- 								<script> -->
-<!-- 								$("#pic").change(function(){ -->
-<!-- 					                 readURL(this); -->
-<!-- 					            }); -->
-<!-- 					            function readURL(input){ -->
-<!-- 					                if(input.files && input.files[0]){ -->
-<!-- 					                    var reader = new FileReader(); -->
-<!-- 					                    reader.onload = function (e) { -->
-<!-- 					                        $("#preview_Rpic").attr('src', e.target.result); -->
-<!-- 					                    } -->
-<!-- 					                    reader.readAsDataURL(input.files[0]); -->
-<!-- 					                } -->
-<!-- 					            } -->
-<!-- 								</script> -->
+								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+								<script> 
+								$("#pic").change(function(){ 
+					                 readURL(this); 
+									            }); 
+ 					            function readURL(input){ 
+ 					                if(input.files && input.files[0]){ 
+ 					                    var reader = new FileReader(); 
+ 					                    reader.onload = function (e) { 
+ 					                        $("#preview_Rpic").attr('src', e.target.result);
+ 					                    } 
+ 					                    reader.readAsDataURL(input.files[0]); 
+ 					                } 
+					            } 
+ 								</script>  
 								
 								<div>
 									<h4 class="res_result">名稱</h4>
