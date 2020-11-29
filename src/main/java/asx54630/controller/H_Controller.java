@@ -182,7 +182,7 @@ public class H_Controller {
 		String hotelnewdata = hService.insert(hbean);
 		m.addAttribute("hotelnewdata", hotelnewdata);
 		
-		return "asx54630/H_index";
+		return "redirect:hotelindex";
 		}
 	
 	@RequestMapping(path = "/hotelupdate", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //修改

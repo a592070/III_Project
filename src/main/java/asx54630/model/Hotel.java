@@ -55,7 +55,7 @@ public class Hotel {
 	}
 	
 	@Id @Column(name="SN")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public BigDecimal getSN() {
 		return SN;
 	}

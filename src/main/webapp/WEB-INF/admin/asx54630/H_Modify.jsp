@@ -246,7 +246,6 @@ pre {
 									<h4 class="res_result">地區</h4>
 									<p class="p_result">
 							<select name="upRegion" id="upRegion" class="form-control">
-								 <option value="">請選擇地區</option>
                                  <option value="基隆市">基隆市</option>
                                  <option value="新北市">新北市</option>
                                  <option value="臺北市">臺北市</option>
@@ -272,74 +271,71 @@ pre {
 							</select>
 							<script>
 							switch ("${hoteldetail.REGION}"){
-								case'':
+								case'基隆市':
 								document.getElementById("upRegion")[0].selected=true;
 								break;
-								case'基隆市':
+								case'新北市':
 								document.getElementById("upRegion")[1].selected=true;
 								break;
-								case'新北市':
+								case'臺北市':
 								document.getElementById("upRegion")[2].selected=true;
 								break;
-								case'臺北市':
+								case'桃園市':
 								document.getElementById("upRegion")[3].selected=true;
 								break;
-								case'桃園市':
+								case'新竹市':
 								document.getElementById("upRegion")[4].selected=true;
 								break;
-								case'新竹市':
+								case'新竹縣':
 								document.getElementById("upRegion")[5].selected=true;
 								break;
-								case'新竹縣':
+								case'苗栗縣':
 								document.getElementById("upRegion")[6].selected=true;
 								break;
-								case'苗栗縣':
+								case'宜蘭縣':
 								document.getElementById("upRegion")[7].selected=true;
 								break;
-								case'宜蘭縣':
+								case'臺中市':
 								document.getElementById("upRegion")[8].selected=true;
 								break;
-								case'臺中市':
+								case'彰化縣':
 								document.getElementById("upRegion")[9].selected=true;
 								break;
-								case'彰化縣':
+								case'南投縣':
 								document.getElementById("upRegion")[10].selected=true;
 								break;
-								case'南投縣':
+								case'雲林縣':
 								document.getElementById("upRegion")[11].selected=true;
 								break;
-								case'雲林縣':
+								case'嘉義市':
 								document.getElementById("upRegion")[12].selected=true;
 								break;
-								case'嘉義市':
+								case'嘉義縣':
 								document.getElementById("upRegion")[13].selected=true;
 								break;
-								case'嘉義縣':
+								case'臺南市':
 								document.getElementById("upRegion")[14].selected=true;
 								break;
-								case'臺南市':
+								case'高雄市':
 								document.getElementById("upRegion")[15].selected=true;
 								break;
-								case'高雄市':
+								case'屏東縣':
 								document.getElementById("upRegion")[16].selected=true;
 								break;
-								case'屏東縣':
+								case'花蓮縣':
 								document.getElementById("upRegion")[17].selected=true;
 								break;
-								case'花蓮縣':
+								case'臺東縣':
 								document.getElementById("upRegion")[18].selected=true;
 								break;
-								case'臺東縣':
+								case'澎湖縣':
 								document.getElementById("upRegion")[19].selected=true;
 								break;
-								case'澎湖縣':
+								case'金門縣':
 								document.getElementById("upRegion")[20].selected=true;
 								break;
-								case'金門縣':
-								document.getElementById("upRegion")[21].selected=true;
-								break;
 								case'連江縣':
-								document.getElementById("upRegion")[22].selected=true;
+								document.getElementById("upRegion")[21].selected=true;
 								break;			
 								}
 							</script>
@@ -388,10 +384,24 @@ pre {
 								<div>
 									<h4 class="res_result">住宿類型</h4>
 									<p class="p_result">
-										<textarea name="upType" id="dataType" cols="80"
-											rows="5">${hoteldetail.TYPE}</textarea>
-									</p>
-								</div>
+							<select name="upType" id="upType" class="form-control">
+                      				<option value="飯店">飯店</option>
+                       				<option value="民宿">民宿</option>
+                      			 	<option value="汽車旅館">汽車旅館</option>
+							</select>
+							<script>
+							switch ("${hoteldetail.TYPE}"){
+								case'飯店':
+								document.getElementById("upType")[0].selected=true;
+								break;
+								case'民宿':
+								document.getElementById("upType")[1].selected=true;
+								break;
+								case'汽車旅館':
+								document.getElementById("upType")[2].selected=true;
+								break;		
+								}
+							</script>	
 									
 								</FORM>
 							</div>

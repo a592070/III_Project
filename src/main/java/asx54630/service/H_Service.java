@@ -54,10 +54,10 @@ public class H_Service {
 		return hotelDao.updateStatus(sn,Status);
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
-	public List<HotelView> sort(int first, int count,String orderfiled ,String name, String region, String type ,String order){
-		return hotelDao.sort(first,count,orderfiled,name,region,type,order);
-	}
+//	@Transactional(rollbackFor = {Throwable.class})
+//	public List<HotelView> sort(int first, int count,String orderfiled ,String name, String region, String type ,String order){
+//		return hotelDao.sort(first,count,orderfiled,name,region,type,order);
+//	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
 	public int getSize() {
