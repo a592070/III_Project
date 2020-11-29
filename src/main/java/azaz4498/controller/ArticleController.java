@@ -218,6 +218,7 @@ public class ArticleController {
 		picture.setRefId(articleId);
 		
 		Integer picId = pictureService.addPic(picture).getId();
+		String imgPath = "showPic/"+picId;
 		
 		
 		
@@ -225,7 +226,7 @@ public class ArticleController {
 		System.out.println(path);
 		
 		map.put("finalFileName", finalFileName);
-		map.put("url", path);
+		map.put("url", imgPath);
 		map.put("uploaded","true");
 		is.close();
 		System.out.println("imgUpload ====================");

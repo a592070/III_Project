@@ -115,7 +115,7 @@ h2 {
 											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
-										<img  src="${pageContext.request.contextPath }">
+										
 										
 										
 
@@ -128,6 +128,7 @@ h2 {
 											<button class="btn btn-primary btn-default" onclick="confirmEdit()">送出修改</button>
 											<!-- <button type="submit" class="btn btn-secondary btn-default">Cancel</button> -->
 										</div>
+										
 
 									</form>
 									
@@ -244,7 +245,7 @@ h2 {
     		.then( editor => {
 						//myEditor=editor;
 						console.log( editor );
-						//this.editor = editor;
+						this.editor = editor;
     		})
     		.catch( error => {
         				console.error( error );
