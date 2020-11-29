@@ -115,6 +115,10 @@ h2 {
 											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
+										<img  src="${pageContext.request.contextPath }">
+										
+										
+
 										<!-- <div class="form-group">
 											<label for="exampleFormControlFile1">Example file
 												input</label> <input type="file" class="form-control-file"
@@ -187,9 +191,16 @@ h2 {
 	
 	
 	<script>
+	function MyCustomUploadAdapterPlugin( editor ) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        return new MyUploadAdapter( loader );
+    };
+}
+
+
 		ClassicEditor
     		.create( document.querySelector( '#editor' ),{
-
+				extraPlugins: [  MyCustomUploadAdapterPlugin ],
 				toolbar: {
 					items: [
 						'heading',
@@ -233,11 +244,7 @@ h2 {
     		.then( editor => {
 						//myEditor=editor;
 						console.log( editor );
-						this.editor = editor;
-						editor.plugins.get('FileRepository').createUploadAdapter = (loader)=>{
-       					return new MyUploadAdapter(loader);
-						   };
-						  
+						//this.editor = editor;
     		})
     		.catch( error => {
         				console.error( error );

@@ -49,6 +49,7 @@
 
                             <div class="card-header justify-content-between">
                                 <h2>Attraction Table</h2>
+                                <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>
                             </div>
 
 
@@ -88,6 +89,10 @@
 
                                 <%--表格內容--%>
                                 <el-table
+                                        v-loading="loading"
+                                        element-loading-text="唉呦威..."
+                                        element-loading-spinner="el-icon-loading"
+                                        element-loading-background="rgba(0, 0, 0, 0.8)"
                                         :data="tableData"
 <%--                                        :data="tableData.filter(ele => (--%>
 <%--                                        !search ||--%>
@@ -120,8 +125,10 @@
                                     </el-table-column>
                                     <el-table-column
                                             label="Status"
-                                            width="75"
-                                            align="right">
+                                            width="100"
+                                            prop="status"
+                                            sortable='custom'
+                                            :sort-orders="['descending', 'ascending']">
                                         <template slot-scope="scope">
                                         <label class="switch switch-text switch-success switch-pill form-control-label">
                                             <input type="checkbox" class="switch-input form-check-input" v-bind:checked="scope.row.status" v-on:click="handleSwitchStatus(scope.row)">
@@ -135,12 +142,12 @@
                                             align="right">
                                         <template slot-scope="scope">
                                             <el-button
-                                                    size="mini"
-                                                    type="primary" round
+                                                    size="medium"
+                                                    type="primary" icon="el-icon-edit"
                                                     @click="handleEdit(scope.$index, scope.row)">Edit
                                             </el-button>
                                             <el-button
-                                                    size="mini"
+                                                    size="medium"
                                                     type="danger" icon="el-icon-delete"
                                                     @click="handleDelete(scope.$index, scope.row)"></el-button>
                                         </template>
@@ -163,6 +170,7 @@
                                 </div>
                             </div>
 
+
                         </div>
                     </div>
                 </div>
@@ -178,6 +186,7 @@
     var vm = new Vue({
         el: '#app',
         data: {
+            loading: true,
             search: '',
             sortParams: {},
             currentSearch: '',
@@ -258,6 +267,7 @@
                     .then(response => {
                         this.tableData = response.data.tableData;
                         this.pageData = response.data.pageData;
+                        this.loading = false;
                     });
             },
             getRegionData(){
@@ -268,24 +278,57 @@
                         this.region.unshift("全部");
                     });
             },
+            handleInsert(){
+                window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction/detail";
+            },
             handleEdit(index, row) {
                 console.log(index, row);
                 window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction/detail/"+row.sn;
             },
             handleDelete(index, row) {
                 console.log(index, row);
-                if(confirm("是否刪除?")){
+                this.$confirm('此操作將永久刪除資料, 是否繼續?', '提示', {
+                    confirmButtonText: '去死吧',
+                    cancelButtonText: '手滑了...',
+                    type: 'warning',
+                    center: true
+                }).then(() => {
                     let url = '${pageContext.servletContext.contextPath}/admin/attraction/delete/'+row.sn;
-                    axios.post(url)
+                    axios.delete(url)
                         .then(response => {
                             if(response.data == true){
-                                alert("刪除成功")
-                                window.location.reload();
+                                this.$message({
+                                    type: 'success',
+                                    message: '刪除成功!'
+                                });
+                                this.handleSelectedData();
+                                // window.location.reload();
                             }else{
-                                alert("刪除失敗")
+                                this.$message({
+                                    type: 'info',
+                                    message: '刪除失敗!!'
+                                });
                             }
                         });
-                }
+
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消刪除'
+                    });
+                });
+                <%--if(confirm("是否刪除?")){--%>
+                <%--    let url = '${pageContext.servletContext.contextPath}/admin/attraction/delete/'+row.sn;--%>
+                <%--    axios.post(url)--%>
+                <%--        .then(response => {--%>
+                <%--            if(response.data == true){--%>
+                <%--                alert("刪除成功")--%>
+                <%--                window.location.reload();--%>
+                <%--            }else{--%>
+                <%--                alert("刪除失敗")--%>
+                <%--            }--%>
+                <%--        });--%>
+                <%--}--%>
 
             },
             handleSearch(){
@@ -302,6 +345,7 @@
                 this.handleSelectedData();
             },
             handleSelectedData(){
+                this.loading = true;
                 console.log(this.search);
                 let url;
 
@@ -323,6 +367,7 @@
                         this.pageData = response.data.pageData;
                         this.currentSearch = this.search;
                         // this.search = "";
+                        this.loading = false;
                     });
             },
             handleSelectPage(value) {
@@ -354,7 +399,11 @@
                         }
                         // this.search = "";
                     });
+            },
+            testRemove1(index, row){
+                console.log(index, row);
             }
+
         }
     });
 </script>

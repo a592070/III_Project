@@ -1,5 +1,7 @@
 package azaz4498.model;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -54,8 +56,6 @@ public class ArticleDAO {
 		article.setArtCreTime(new java.sql.Timestamp(new java.util.Date().getTime()));
 		article.setArtCommNum(0);
 		article.setArtView(0);
-		article.setArtPic(null);
-		article.setArtPicUrl(null);
 		type.setTypeId(typeId);
 		article.setArticleType(type);
 		sessionFactory.getCurrentSession().save(article);
@@ -165,10 +165,17 @@ public class ArticleDAO {
 
 	}
 	//img upload
-	public String imgUpload(int articleId,byte[] img, String imgUrl) {
-		Article result = sessionFactory.getCurrentSession().get(Article.class, articleId);
-		result.setArtPic(img);
-		result.setArtPicUrl(imgUrl);
-		return "上傳圖片";
+	public void imgUpload(int articleId, String filePath,String fileName) throws IOException {
+		Picture picture = new Picture();
+		FileInputStream fis = new FileInputStream(filePath);
+		byte[] b= new byte[fis.available()];
+		picture.setPicFileName(fileName);
+		picture.setRefId(articleId);
+		picture.setPicUrl(filePath);
+		fis.read(b);
+		fis.close();
+		picture.setPicture(b);
+		
+		
 	}
 }

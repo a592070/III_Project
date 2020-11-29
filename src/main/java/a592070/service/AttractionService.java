@@ -1,10 +1,30 @@
 package a592070.service;
 
 import a592070.pojo.AttractionDO;
+import a592070.pojo.AttractionPictureDO;
+
+import javax.servlet.ServletContext;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public interface AttractionService {
-    AttractionDO getEle(int id);
-    AttractionDO insert(AttractionDO attractionDO);
-    AttractionDO update(AttractionDO attractionDO);
-    boolean delete(int id);
+    AttractionDO getEle(Integer id);
+    AttractionDO getEle(Integer id, boolean findFromPersistence);
+    AttractionDO save(AttractionDO attractionDO);
+//    AttractionDO insert(AttractionDO attractionDO);
+//    AttractionDO update(AttractionDO attractionDO);
+    boolean delete(Integer id);
+
+    List<Map<String, Object>> listPictureDest(AttractionDO attractionDO, String destPrefix, ServletContext context);
+
+    boolean writePicToDest(AttractionPictureDO ele, String destPath, ServletContext context);
+
+    void addPicture(AttractionDO attractionDO, AttractionPictureDO pictureDO);
+
+    void addPicture(AttractionDO attractionDO, byte[] pic);
+
+    void removePicture(AttractionDO attractionDO, Integer id, ServletContext context);
+
+    void removePicture(AttractionDO attractionDO, String fileName, ServletContext context);
 }

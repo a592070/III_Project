@@ -1,5 +1,6 @@
 package a592070.dao;
 
+import a592070.pojo.AttractionVO;
 import a592070.pojo.CarVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,8 +28,13 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
-    public CarVO getEle(int id) {
-        return sessionFactory.getCurrentSession().get(CarVO.class, id);
+    public CarVO getEle(Integer id, boolean findFromPersistence) {
+        Session session = sessionFactory.getCurrentSession();
+        if(findFromPersistence){
+            return session.find(CarVO.class, id);
+        }else{
+            return session.get(CarVO.class, id);
+        }
     }
 
     /**
@@ -38,12 +44,12 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
      */
     @Deprecated
     @Override
-    public byte[] getPicture(int id) {
+    public byte[] getPicture(Integer id) {
         return null;
     }
     @Deprecated
     @Override
-    public List<byte[]> getPictures(int id) {
+    public List<byte[]> getPictures(Integer id) {
         return null;
     }
 

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 
 public class AttractionJsonDeserializer extends JsonDeserializer<AttractionDO> {
@@ -42,8 +43,10 @@ public class AttractionJsonDeserializer extends JsonDeserializer<AttractionDO> {
         attractionDO.setTel(node.get("tel").textValue());
         attractionDO.setAddress(node.get("address").textValue());
 
-        attractionDO.setPx(node.get("px").decimalValue());
-        attractionDO.setPy(node.get("py").decimalValue());
+        BigDecimal decimal = new BigDecimal(node.get("px").textValue());
+        attractionDO.setPx(decimal);
+        decimal = new BigDecimal(node.get("py").textValue());
+        attractionDO.setPy(decimal);
 
 
         attractionDO.setOpenTime(node.get("openTime").textValue());
@@ -52,7 +55,9 @@ public class AttractionJsonDeserializer extends JsonDeserializer<AttractionDO> {
         attractionDO.setKeywords(node.get("keywords").textValue());
         attractionDO.setRemarks(node.get("remarks").textValue());
         attractionDO.setRegion(node.get("region").textValue());
-        attractionDO.setRating(node.get("rating").decimalValue());
+
+        if(node.get("rating").textValue() != null) decimal = new BigDecimal(node.get("rating").textValue());
+        attractionDO.setRating(decimal);
 //        attractionDO.setPictureUrl(node.get("pictureUrl").textValue());
         attractionDO.setStatus(node.get("status").booleanValue());
 

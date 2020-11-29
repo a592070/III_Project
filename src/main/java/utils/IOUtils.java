@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class IOUtils {
     public static byte[] toByteArray(InputStream in) throws IOException {
@@ -24,6 +25,32 @@ public class IOUtils {
         buffer.close();
         return bytes;
     }
+
+    public static byte[] pathToByteArray(String path) throws IOException {
+        BufferedInputStream in = null;
+        ByteArrayOutputStream buffer = null;
+        byte[] bytes = null;
+        try {
+            in = new BufferedInputStream(new FileInputStream(path));
+            buffer = new ByteArrayOutputStream();
+
+            int len;
+            byte[] buf = new byte[4 * 1024]; //4KB
+            while ((len = in.read(buf)) != -1) {
+                buffer.write(buf, 0, len);
+            }
+            bytes = buffer.toByteArray();
+            buffer.close();
+            in.close();
+        } catch (IOException e) {
+            if(buffer != null) buffer.close();
+            if(in != null) in.close();
+            e.printStackTrace();
+            throw e;
+        }
+        return bytes;
+    }
+
 
     public static byte[] urlToByteArray(String url) throws Exception {
         url = StringUtil.urlEncode(url, "UTF-8");
@@ -124,4 +151,25 @@ public class IOUtils {
     public static String extractFileName(String pathName) throws IOException, SQLException {
         return pathName.substring(pathName.lastIndexOf("/") + 1);
     }
+
+    public static String fileNameByUUID(byte[] file){
+        return UUID.nameUUIDFromBytes(file).toString();
+    }
+
+    public static void writeFileToDest(String dest, byte[] pic) throws IOException {
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(dest));
+        out.write(pic);
+        out.close();
+    }
+    public static void writeFileToDest(String dest, InputStream in) throws IOException {
+        BufferedInputStream input = new BufferedInputStream(in);
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(dest));
+        byte[] buf = new byte[4*1024];
+        int len = 0;
+        while((len = input.read(buf)) > 0){
+            out.write(buf, 0, len);
+        }
+        out.close();
+    }
+
 }
