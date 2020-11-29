@@ -19,18 +19,24 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
     private ViewDAO<AttractionVO> viewDAO;
 
     @Override
-    public AttractionVO getEle(int id){
-        return viewDAO.getEle(id);
+    public AttractionVO getEle(Integer id){
+        return getEle(id, false);
     }
 
     @Override
-    public byte[] getPicture(int id) {
+    public AttractionVO getEle(Integer id, boolean findFromPersistence) {
+        if(id == null || id==0) return null;
+        return viewDAO.getEle(id, findFromPersistence);
+    }
+
+    @Override
+    public byte[] getPicture(Integer id) {
         return viewDAO.getPicture(id);
     }
 
 
     @Override
-    public List getPictures(int id) {
+    public List getPictures(Integer id) {
         return viewDAO.getPictures(id);
     }
 

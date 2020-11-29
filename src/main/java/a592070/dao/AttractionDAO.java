@@ -10,5 +10,5 @@ public abstract class AttractionDAO implements ModifyDAO<AttractionDO>{
 //    public abstract AttractionDO update(AttractionDO attractionDO);
 //    public abstract AttractionDO delete(AttractionDO attractionDO);
 
-    public abstract  AttractionDO getEle(int id);
+    public abstract  AttractionDO getEle(Integer id, boolean findFromPersistence);
 }

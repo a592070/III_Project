@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 
@@ -20,7 +22,10 @@ public class AttractionPictureDO {
     private Integer id;
     @Column(name = "pic_url")
     private String picUrl;
+
     private byte[] picture;
+    @Column(name = "PIC_FILENAME")
+    private String picFileName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ATTRACTION_ID", referencedColumnName = "A_SN")
@@ -59,5 +64,13 @@ public class AttractionPictureDO {
 
     public void setAttraction(AttractionDO attraction) {
         this.attraction = attraction;
+    }
+
+    public String getPicFileName() {
+        return picFileName;
+    }
+
+    public void setPicFileName(String picFileName) {
+        this.picFileName = picFileName;
     }
 }
