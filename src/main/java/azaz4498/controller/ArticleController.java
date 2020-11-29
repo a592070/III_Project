@@ -2,29 +2,46 @@ package azaz4498.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import azaz4498.model.Article;
+import azaz4498.model.Picture;
+import azaz4498.model.PictureDAO;
 import azaz4498.service.ArticleService;
 import azaz4498.service.ArticleTypeService;
+import azaz4498.service.PictureService;
 
 @Controller
 @Lazy
@@ -36,6 +53,8 @@ public class ArticleController {
 	@Autowired
 	@Qualifier("ArticleTypeService")
 	ArticleTypeService articleTypeService;
+	@Autowired
+	PictureService pictureService;
 
 	@RequestMapping(path = "/Forum")
 	public String ForumEntry(Model m) {
@@ -43,6 +62,10 @@ public class ArticleController {
 //		return "azaz4498/F_index";
 		return "azaz4498/F_JSONindex";
 
+	}
+	@RequestMapping(path = "/test")
+	public String testPage() {
+		return "azaz4498/test";
 	}
 
 	@RequestMapping(path = "/Article.controller.json", method = RequestMethod.GET, produces = {
@@ -81,8 +104,8 @@ public class ArticleController {
 
 	}
 
-	@RequestMapping(path = "/articleSearch.json",  method = RequestMethod.GET, produces = {
-	"application/json; charset=UTF-8" })
+	@RequestMapping(path = "/articleSearch.json", method = RequestMethod.GET, produces = {
+			"application/json; charset=UTF-8" })
 	public @ResponseBody List<Article> DisplayJSONResults(
 			@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
 			@RequestParam(name = "articleType", defaultValue = "", required = false) Integer articleType) {
@@ -94,9 +117,6 @@ public class ArticleController {
 	@RequestMapping(path = "/editPage.controller")
 	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
 		m.addAttribute("artBean", articleService.showArticleById(articleId));
-
-		System.out.println("==========Edit Page 我要進去囉==========");
-
 		return "azaz4498/editPage";
 	}
 
@@ -113,9 +133,7 @@ public class ArticleController {
 
 	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST)
 	public String Delete(@RequestParam(name = "artId") Integer articleId, Model m) {
-		System.out.println("================before");
 		articleService.deleteArticleByAdmin(articleId);
-		System.out.println("================after");
 //		ModelAndView mv = new ModelAndView("redirect:/Forum");
 
 		return "redirect:/Forum";
@@ -177,4 +195,57 @@ public class ArticleController {
 
 		return "redirect:/Forum";
 	}
+	
+	
+	@RequestMapping(path = "/imgUpload",method = RequestMethod.POST)
+	public @ResponseBody Map<String, String> imgUpload(@RequestParam(name = "upload")MultipartFile uploadFile,HttpServletRequest request) throws IOException{
+		Map<String, String> map = new HashMap<String, String>();
+		String fileName = uploadFile.getOriginalFilename();
+		String finalFileName = UUID.randomUUID()+fileName.substring(fileName.lastIndexOf("."));
+		
+		String path = request.getServletContext().getRealPath("/img/azaz4498")+File.separator+finalFileName;
+		
+		File file = new File(path);
+		InputStream is = uploadFile.getInputStream();
+		byte[] bytes = FileCopyUtils.copyToByteArray(is);
+		uploadFile.transferTo(file);
+		
+		Picture picture = new Picture();
+		picture.setPicFileName(finalFileName);
+		picture.setPicUrl(path);
+		picture.setPicture(bytes);
+		Integer articleId = 41;
+		picture.setRefId(articleId);
+		
+		Integer picId = pictureService.addPic(picture).getId();
+		String imgPath = "showPic/"+picId;
+		
+		
+		
+//		articleService.uploadImg(41, bytes, path);
+		System.out.println(path);
+		
+		map.put("finalFileName", finalFileName);
+		map.put("url", imgPath);
+		map.put("uploaded","true");
+		is.close();
+		System.out.println("imgUpload ====================");
+		return map;
+		
+		
+	}
+	@RequestMapping(path="/showPic/{id}",method = RequestMethod.GET)
+	public ResponseEntity<byte[]> showImg(@PathVariable(name = "id")Integer id) throws IOException{
+		HttpHeaders headers = new HttpHeaders();
+		Picture picture = pictureService.getPic(id);
+		
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(picture.getPicture(),headers,HttpStatus.OK);
+		
+		return responseEntity;
+		
+	}
+	
+	
 }

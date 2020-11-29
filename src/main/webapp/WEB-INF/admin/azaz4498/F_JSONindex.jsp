@@ -50,6 +50,30 @@ language="java"%>
         padding-top: 50px;
       }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.bootstrap_4.min.css"
+      integrity="sha512-2C6AmJKgt4B+bQc08/TwUeFKkq8CsBNlTaNcNgUmsDJSU1Fg+R6azDbho+ZzuxEkJnCjLZQMozSq3y97ZmgwjA=="
+      crossorigin="anonymous"
+    />
+
+    <!-- load jQuery and tablesorter scripts -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"
+      integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/parsers/parser-input-select.min.js"
+      integrity="sha512-1yWDRolEDA6z68VeUHdXNFZhWYteCOlutcPMPuDtX1f7/doKecWLx87shPRKx8zmxdWA0FV9mNRUr9NnSwzwyw=="
+      crossorigin="anonymous"
+    ></script>
+    <!--pager-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/extras/jquery.tablesorter.pager.min.js"
+      integrity="sha512-y845ijdup9lDunrcSRQAlFdQICHVhkB5UNguWRX8A3L+guxO7Oow0poojw0PLckhcKij++h85bnyro80fjR9+A=="
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
@@ -91,6 +115,8 @@ language="java"%>
             </form>
           </div>
 
+          
+
           <!-- </div> -->
           <h2>文章列表</h2>
           <span>
@@ -98,7 +124,10 @@ language="java"%>
           </span>
           <div class="box">
             <div class="table-responsive">
-              <table class="table table-striped table-sm">
+              <table
+                class="table table-striped table-sm tablesorter"
+                id="articleTable"
+              >
                 <thead>
                   <tr>
                     <th><span class="mdi mdi-key"></span> ID</th>
@@ -110,14 +139,35 @@ language="java"%>
                     </th>
                     <th><span class="mdi mdi-account-edit"></span> 作者</th>
                     <th><span class="mdi mdi-directions-fork"></span> 類型</th>
-                    <th>
+                    <th class="sorter-checkbox">
                       <span class="mdi mdi-information-outline"></span>狀態
                     </th>
-                    <th><span class="mdi mdi-settings"></span>設定</th>
+                    <th class="text-left"><span class="mdi mdi-settings"></span>設定</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
+              <nav aria-label="Page navigation example" class="pager">
+                <ul class="pagination">
+                  <li class="page-item first">
+                    <a class="page-link first" id="first">第一頁</a>
+                  </li>
+                  <li class="page-item prev">
+                    <a class="page-link prev" id="previous">上一頁</a>
+                  </li>
+    
+                  <li class="page-item">
+                    <a class="page-link pagedisplay"></a>
+                  </li>
+    
+                  <li class="page-item next">
+                    <a class="page-link next" id="next">下一頁</a>
+                  </li>
+                  <li class="page-item last">
+                    <a class="page-link last" id="last">最末頁</a>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
@@ -144,7 +194,6 @@ language="java"%>
             url: "articleSearch.json",
             data: { articleType: selected, keyword: keyword },
             success: function (response) {
-              console.log("change success");
               showList(response);
             },
           });
@@ -206,6 +255,7 @@ language="java"%>
       });
     </script>
 
+    //生成頁面的function
     <script>
       function showList(response) {
         $("tbody").empty();
@@ -241,17 +291,55 @@ language="java"%>
               "<span class='switch-handle'></span>" +
               "</label></td>" +
               "<td>" +
-              "<button class='edit_btn' name='artId' value='" +
+              "<button class='edit_btn btn btn-warning mr-2' name='artId' value='" +
               element.artId +
               "'>" +
-              "<span class='mdi mdi-pencil-box-outline'></span>Edit</button>" +
-              "<button class='delete_btn' name='artId' value='" +
+              "<span class='mdi mdi-pencil-box-outline'></span>修改</button>" +
+              "<button class='delete_btn btn btn-danger' name='artId' value='" +
               element.artId +
               "'>" +
-              "<span class='mdi mdi-delete'></span>Delete</button>" +
+              "<span class='mdi mdi-delete'></span>刪除</button>" +
               "</td>" +
               "</tr>"
           );
+        });
+
+        //table sorter
+        $(function () {
+          var resort = true;
+          $("#articleTable").trigger("updateAll", [resort]);
+
+          $("#articleTable")
+            .tablesorter({
+              theme: "bootstrap",
+              checkboxClss: "checked",
+              sortReset: true,
+              sortRestart: true,
+              debug: true,
+              headers: {
+                1: { sorter: false },
+                6: { sorter: false },
+                5: { sorter: "checkbox" },
+                
+              }
+            })
+            //分頁
+            .tablesorterPager({
+              container: $(".pager"),
+              page: 0,
+              size: 10,
+              cssNext: ".next", // next page arrow
+              cssPrev: ".prev", // previous page arrow
+              cssFirst: ".first", // go to first page arrow
+              cssLast: ".last", // go to last page arrow
+              cssGoto: ".gotoPage", // select dropdown to allow choosing a page
+              cssPageDisplay: ".pagedisplay", // location of where the "output" is displayed
+              cssPageSize: ".pagesize", // page size selector - select dropdown that sets the "size" option});
+              output: "{page}/{totalPages}",
+              cssDisabled: "disabled", // Note there is no period "." in front of this class name
+              
+            });
+          
         });
       }
     </script>

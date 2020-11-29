@@ -9,9 +9,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import asx54630.model.HotelView;
+import iring29.model.Show_RView;
 
 
 
@@ -25,8 +24,31 @@ public class HotelDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-
-	public Hotel hotelDetail(BigDecimal sn) { //查詢飯店詳細資料
+	public int getSize() { //初始資料總筆數
+		String hql = "select count(SN) from HotelView";
+		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
+	}
+	
+	public List<HotelView> totalHotel(int first, int count) {
+		Session session = sessionFactory.getCurrentSession();
+		Query<HotelView> query = session.createQuery("from HotelView order by SN", HotelView.class);
+		// 找第幾筆
+		query.setFirstResult(first);
+		// 從第幾筆開始count筆
+		query.setMaxResults(count);
+		return query.list();
+	}
+	
+	public int howMuchData(String name, String region, String type){ //查詢資料總筆數
+		Session session = sessionFactory.getCurrentSession();
+		Query<Long> query = session.createQuery("Select count(SN) From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", Long.class);
+		query.setParameter(0, "%" + name + "%");
+		query.setParameter(1, "%" + region + "%");
+		query.setParameter(2, "%" + type + "%");
+		return query.uniqueResult().intValue();
+	}
+	
+	public Hotel hotelDetail(BigDecimal sn) { //查詢單筆飯店詳細資料
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Hotel.class, sn);
 	}
@@ -38,36 +60,57 @@ public class HotelDAO {
 	}
 	
 
-	public List<HotelView> selectAll(String name, String region, String type){ //查詢多筆
+	public List<HotelView> selectAll(int first, int count, String name, String region, String type, String orderfiled, String order){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
-		Query<HotelView> query = session.createQuery("From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", HotelView.class);
+		String hql = "From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order ;
+		if(orderfiled.equals("STATUS")) {
+			hql += ", SN";
+		}
+		Query<HotelView> query = session.createQuery(hql, HotelView.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
+		query.setFirstResult(first);
+		query.setMaxResults(count);
 		List<HotelView> list = query.list();
 		return list;
 	}
 	
-	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){ //排序
-		Session session = sessionFactory.getCurrentSession();
-		Query<Hotel> query = session.createQuery("From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order , Hotel.class);
-		query.setParameter(0, "%" + name + "%");
-		query.setParameter(1, "%" + region + "%");
-		query.setParameter(2, "%" + type + "%");
-		List<Hotel> list = query.list();
-		return list;
-	}
+//	public List<HotelView> sort(int first, int count, String orderfiled ,String name, String region, String type ,String order){ //排序
+//		Session session = sessionFactory.getCurrentSession();
+//		String hql = "From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order ;
+//		if(orderfiled.equals("STATUS")) {
+//			hql += ", SN";
+//		}
+//		Query<HotelView> query = session.createQuery(hql, HotelView.class);
+//		query.setParameter(0, "%" + name + "%");
+//		query.setParameter(1, "%" + region + "%");
+//		query.setParameter(2, "%" + type + "%");
+//		query.setFirstResult(first);
+//		query.setMaxResults(count);
+//		List<HotelView> list = query.list();
+//		
+//		return list;
+//	}
 	
 
-	public Hotel insert(Hotel bean) { //新增
+	public String insert(Hotel bean) { //新增
 		Session session = sessionFactory.getCurrentSession();
-		Hotel result = session.get(Hotel.class, bean.getSN());
 		
-		if (result == null) {
+		try{
 			session.save(bean);
-			return bean;
+			return "新增成功";
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "新增失敗";
 		}
-		return null;
+	
+		
+//		if (result == null) {
+//			session.save(bean);
+//			return bean;
+//		}
+
 	}
 	
 	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type) { //修改

@@ -18,9 +18,9 @@ public class H_Service {
 	private HotelDAO hotelDao;
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public List<HotelView> selectAll(String name, String region, String type) {
+	public List<HotelView> selectAll(int first, int count, String name, String region, String type, String orderfiled, String order) {
 
-		return hotelDao.selectAll(name, region, type);
+		return hotelDao.selectAll(first,count, name, region, type, orderfiled, order);
 	}
 
 	@Transactional(rollbackFor = {Throwable.class})
@@ -34,7 +34,7 @@ public class H_Service {
 	}
 
 	@Transactional(rollbackFor = {Throwable.class})
-	public Hotel insert(Hotel bean) {
+	public String insert(Hotel bean) {
 		return hotelDao.insert(bean);
 	}
 	
@@ -54,8 +54,25 @@ public class H_Service {
 		return hotelDao.updateStatus(sn,Status);
 	}
 	
+//	@Transactional(rollbackFor = {Throwable.class})
+//	public List<HotelView> sort(int first, int count,String orderfiled ,String name, String region, String type ,String order){
+//		return hotelDao.sort(first,count,orderfiled,name,region,type,order);
+//	}
+	
 	@Transactional(rollbackFor = {Throwable.class})
-	public List<Hotel> sort(String orderfiled ,String name, String region, String type ,String order){
-		return hotelDao.sort(orderfiled,name,region,type,order);
+	public int getSize() {
+		return hotelDao.getSize();
 	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public List<HotelView> totalHotel(int first, int count) {
+		return hotelDao.totalHotel(first,count);
+	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public int howMuchData(String name, String region, String type){
+		return hotelDao.howMuchData(name, region, type);
+	}
+	
 }
+

@@ -37,15 +37,15 @@ public class OrderTable {
 	private BigDecimal order_id;
 	@Column(name = "ORDER_DATE")
 	private Timestamp order_date;
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERNAME")
 	private AccountBean accountBean;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "oTable")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "oTable", orphanRemoval=true)
 	private Set<R_Order_List> r_Order_Lists;
 
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order_table", cascade = CascadeType.ALL)
-//	@Transient
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order_table", cascade = CascadeType.ALL, orphanRemoval=true)
+	@Transient
 	Set<T_Order_List> t_Order_Lists;
 
 	@Transient

@@ -11,6 +11,8 @@ import rambo0021.dao.AcountDAO;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
+import rambo0021.pojo.Page;
+import rambo0021.pojo.Sort;
 
 @Transactional
 public class AccountServiceImpl implements AccountService {
@@ -19,8 +21,8 @@ public class AccountServiceImpl implements AccountService {
 	private AcountDAO dao;
 
 	@Override
-	public List<AccountBean> userList() {
-		return dao.userList();
+	public List<AccountBean> userList(int start, int pageSize) {
+		return dao.userList(start,pageSize);
 	}
 
 	@Override
@@ -79,6 +81,11 @@ public class AccountServiceImpl implements AccountService {
 	public String delAccount(String username) {
 		return dao.delAccount(username);
 	}
+	@Override
+	public String delAccount(AccountBean aBean) {
+		return dao.delAccount(aBean);
+	}
+
 
 	@Override
 	public String modifyAccount(String username, String password, int identity, String email,String nickName) {
@@ -96,8 +103,13 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<AccountListViewBean> search(String username, String identity, String email) {
-		return dao.search(username,identity,email);
+	public List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize,Sort aSort) {
+		return dao.search(username,identity,email,start,pageSize,aSort);
+	}
+
+	@Override
+	public int getSize(String hql) {
+		return dao.getSize(hql);
 	}
 
 

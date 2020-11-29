@@ -1,5 +1,7 @@
 package azaz4498.model;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,9 +14,12 @@ import org.springframework.context.annotation.Lazy;
 public class ArticleDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 
 	// 顯示文章列表
 	public List<Article> showAllArticles() {
+		
+		
 		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article Order by ART_ID",
 				Article.class);
 		List<Article> list = query.list();
@@ -51,8 +56,6 @@ public class ArticleDAO {
 		article.setArtCreTime(new java.sql.Timestamp(new java.util.Date().getTime()));
 		article.setArtCommNum(0);
 		article.setArtView(0);
-		article.setArtPic(null);
-		article.setArtPicUrl(null);
 		type.setTypeId(typeId);
 		article.setArticleType(type);
 		sessionFactory.getCurrentSession().save(article);
@@ -160,5 +163,19 @@ public class ArticleDAO {
 		}
 		return false;
 
+	}
+	//img upload
+	public void imgUpload(int articleId, String filePath,String fileName) throws IOException {
+		Picture picture = new Picture();
+		FileInputStream fis = new FileInputStream(filePath);
+		byte[] b= new byte[fis.available()];
+		picture.setPicFileName(fileName);
+		picture.setRefId(articleId);
+		picture.setPicUrl(filePath);
+		fis.read(b);
+		fis.close();
+		picture.setPicture(b);
+		
+		
 	}
 }

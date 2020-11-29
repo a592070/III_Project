@@ -11,10 +11,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
+
+
+
+
 <title>論壇管理</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+
 <style>
 .sp_search-1 {
 	float: left;
@@ -110,6 +115,10 @@ h2 {
 											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
+										
+										
+										
+
 										<!-- <div class="form-group">
 											<label for="exampleFormControlFile1">Example file
 												input</label> <input type="file" class="form-control-file"
@@ -119,8 +128,10 @@ h2 {
 											<button class="btn btn-primary btn-default" onclick="confirmEdit()">送出修改</button>
 											<!-- <button type="submit" class="btn btn-secondary btn-default">Cancel</button> -->
 										</div>
+										
 
 									</form>
+									
 								</div>
 							</div>
 
@@ -147,7 +158,6 @@ h2 {
 			var typeSelect = document.getElementById("typeSelect");
 			var options = typeSelect.getElementsByTagName("option");
 			var selectedType = ${artBean[0].articleType.typeId};
-			console.log(selectedType);
 			options[selectedType].selected = true;
 		}
 
@@ -178,22 +188,114 @@ h2 {
 		}
 		 
          
- 	</script>
+	 </script>
+	
+	
 	<script>
+	function MyCustomUploadAdapterPlugin( editor ) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        return new MyUploadAdapter( loader );
+    };
+}
+
+
 		ClassicEditor
-    		.create( document.querySelector( '#editor' ))
+    		.create( document.querySelector( '#editor' ),{
+				extraPlugins: [  MyCustomUploadAdapterPlugin ],
+				toolbar: {
+					items: [
+						'heading',
+						'|',
+						'bold',
+						'italic',
+						'horizontalLine',
+						'link',
+						'bulletedList',
+						'numberedList',
+						'|',
+						'imageUpload',
+						'blockQuote',
+						'mediaEmbed',
+						'undo',
+						'redo',
+						'insertTable'
+					]
+				},
+				language: 'zh',
+				image: {
+					toolbar: [
+						'imageTextAlternative',
+						'imageStyle:full',
+						'imageStyle:side'
+					]
+				},
+				table: {
+					contentToolbar: [
+						'tableColumn',
+						'tableRow',
+						'mergeTableCells'
+					]
+				},
+				licenseKey: '', 
+
+				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/imgUpload'},
+				
+			
+        	})
     		.then( editor => {
-        				console.log( editor );
+						//myEditor=editor;
+						console.log( editor );
+						this.editor = editor;
     		})
     		.catch( error => {
         				console.error( error );
-    		} );
- 	</script>
+    		
+			});
+</script>
+<script>
 
+	class MyUploadAdapter {
+	constructor(loader) {
+		this.loader = loader;
+		this.upload=this.upload.bind(this);
+		this.abort= this.abort.bind(this)
+	}
+	upload() {
+		return this.loader.file
+		.then(file=>new Promise((resolve, reject) => {
+			const data = new FormData();
+			data.append('upload', file);
+			data.append('allowSize', 10)//允许图片上传的大小/兆
+			$.ajax({
+			url: 'imgUpload',
+			type: 'POST',
+			data: data,
+			dataType: 'json',
+			enctype : 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			success: function (data) {
+				
+						if (data.res) {
+							resolve({ 
+								default: data.url
+								});
+							} else { 
+								reject(data.msg)
+								;}
+			}
+				});
+		
+		}))
+	}
 
-	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+abort() {
+}
+}
+	
+</script>
 
-
+	
 
 </body>
 

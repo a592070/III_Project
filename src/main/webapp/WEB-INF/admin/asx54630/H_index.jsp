@@ -12,7 +12,7 @@
 <title>Hotel</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
-
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 
@@ -27,8 +27,8 @@
  <%-- -- <div class="content-wrapper"></div>  -------------------------------以下為個人內容-------------------------- --%>
 <!-- 		<div class="container"> -->
         
-        <div class="mx-auto my-3" style="width: 1100px">
-            <form class="form-inline"  id="form">
+        <div class="mx-auto my-3" style="width: 1200px">
+            <form class="form-inline mx-4"  id="form">
                 <div class="form-group mb-2">
                   <h5>輸入關鍵字:</h5>
                 </div>
@@ -65,7 +65,7 @@
                         <option value="連江縣">連江縣</option>
                     </select>
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-2">
                     <label for="typekeywd">類型:</label>
                     <select class="form-control" name="typekeywd" id="typekeywd">
                       <option value="">請選擇..</option>
@@ -74,7 +74,9 @@
                       <option value="汽車旅館">汽車旅館</option>
                     </select>
                   </div>      
-                <button type="button" class="btn btn-primary mb-2" id="search" name="search">搜尋</button>
+                <button type="button" class="btn btn-primary mx-2 mr-2" id="search" name="search">搜尋</button>
+                <button type="submit" class="btn btn-primary mr-2" id="resetkeyword">清空關鍵字</button>
+                <button type="button" class="btn btn-success" id="insert" onclick="clickcreate()">新增飯店</button>
               </form>
             </div>
             <h2>飯店列表</h2>
@@ -85,44 +87,43 @@
             <thead>
             <tr>
                 <th><div>
-						<form id="statuss" name="statuss"
-							action="<%=application.getContextPath()%>/admin/hotelSort">
-							<button>
-								<svg width="2em" height="1em" viewBox="0 0 16 16"
-									class="bi bi-arrow-down-up" fill="currentColor"
-									xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd"
-										d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-						</svg>
+							<button id="sort" class="id-btn">
+								<i class="fa fa-fw fa-sort" id="uSort"></i>
 							</button> 
-							<Input type='hidden' name='orderfiled' value='SN'> 
-							<Input type='hidden' name='keyword' value='${keyword}'>
-							<Input type='hidden' name='regionkeywd' value='${regionkeywd}'>
-							<Input type='hidden' name='typekeywd' value='${typekeywd}'> 
-							<Input type='hidden' name='order' value='${order}'>ID
-						</form>
+							<Input type='hidden' name='order' id="order" value=''>ID
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='SN'> 
+						<script>
+						$('.id-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderfiled').val('SN');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>	
+							
 					</div></th>
                 <th>名稱</th>
                 <th>地區</th>
                 <th>地址</th>
                 <th>住宿類型</th>                                            
                 <th><div>
-						<form id="statuss" name="statuss"
-							action="<%=application.getContextPath()%>/admin/hotelSort">
-							<button>
-								<svg width="2em" height="1em" viewBox="0 0 16 16"
-									class="bi bi-arrow-down-up" fill="currentColor"
-									xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd"
-										d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-						</svg>
+							<button id="sort1" class="status-btn">
+							<i class="fa fa-fw fa-sort" id="uSort"></i>
 							</button> 
-							<Input type='hidden' name='orderfiled' value='STATUS'> 
-							<Input type='hidden' name='keyword' value='${keyword}'>
-							<Input type='hidden' name='regionkeywd' value='${regionkeywd}'>
-							<Input type='hidden' name='typekeywd' value='${typekeywd}'> 
-							<Input type='hidden' name='order' value='${order}'>狀態
-						</form>
+							<Input type='hidden' name='order' id="order" value=''>狀態
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='STATUS'> 
+						<script>
+						$('.status-btn').click(function(){
+							var order = $('#order').val();
+							$('#orderfiled').val('STATUS');
+							if(order == "" || order == "ASC"){
+								$('#order').val("DESC");
+							}else($('#order').val("ASC"));
+						})
+
+					</script>		
 					</div></th>
 				<th>修改</th>
                 <th>刪除</th>
@@ -151,15 +152,76 @@
 	      			</c:choose>
 	      			</label></td> <%-- 開關(綠色) --%> 
                 <td><button type="button" class="btn btn-warning mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
-               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
+               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}','${hotels.NAME}')">刪除</button></td>
             </tr>
             </c:forEach> 
 
-         </tbody>
+         </t1body>
         </table>
         
+        <div>
+				<nav aria-label="...">
+					<ul class="pagination">
+						
+								<li class="page-item first" id ="fBtn">
+									<button type="button" class="page-link first" id="page-first" value="first">第一頁</button>
+								</li>
+							
+							
+								<!--previous -->
+								<li class="page-item previous" id="pBtn">
+<!-- 									<button class="page-link previous " id="page-previous" value="previous">&laquo;</button> -->
+										<button class="page-link previous " id="page-previous" value="previous">上一頁</button>
+								</li>
+							
+							
+								<!--current page -->
+								<li class="page-item">
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}/${totalPage}</button>
+								</li>
+						
+								<!--NEXT -->
+								<li class="page-item next" id ="nBtn">
+<!-- 									<button class="page-link next" id="page-next" value="next">&raquo;</button> -->
+									<button class="page-link next" id="page-next" value="next">下一頁</button>
+								</li>
+							
+							
+							
+								<li class="page-item last" id ="lBtn">
+									<button class="page-link last" id="page-last" value="last">最末頁</button>
+								</li>
+							
+					
+					</ul>
+				</nav>
+			</div>
+        
+        
         <script type="text/javascript"> 
-		
+        var currentPage = 1;
+		var totalPage = 1;
+
+// 		$(document).ready(function() {
+// 			var keyword = $("#keyword").val()
+// 			var regionkeywd = $("#regionkeywd").val()
+// 			var typekeywd = $("#typekeywd").val()
+// 			$("#tbody").children().remove();
+// 			$.ajax(
+// 					{
+// 						type: 'POST',
+// 						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
+// 						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+// 						dataType: 'html',
+// 						success: function (response) {
+// 							$("#tbody").append(response)
+
+// 						}
+
+// 					}
+// 				)
+// 			});
+        
 		$("#table").on('change', '#checkbox', function () {
 				var SN = $(this).closest('td').siblings("#SN").text()
 				var STATUS =$(this).val();
@@ -180,15 +242,17 @@
 		
 		$("#search").click(function () {
 			console.log("搜尋")
+			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
 			$("#tbody").children().remove();
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
 							$("#tbody").append(response)
@@ -201,15 +265,17 @@
 		
 		$("#regionkeywd").on('change' ,function () {
 			console.log("地區搜尋")
+			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
 			$("#tbody").children().remove();
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order,"currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
 							$("#tbody").append(response)
@@ -222,15 +288,186 @@
 		
 		$("#typekeywd").on('change' ,function () {
 			console.log("類型搜尋")
+			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
 			$("#tbody").children().remove();
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelselect',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order,"currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#sort").click(function () {
+			console.log("編號排序")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage  },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#sort1").click(function () {
+			console.log("排序狀態")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage  },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+ 		$("#page-first").click(function () {
+			console.log("第一頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-first").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage = 1;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#page-previous").click(function () {
+			console.log("前一頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-previous").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage--;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#page-next").click(function () {
+			console.log("下一頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-next").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage++;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response);
+						}
+
+					}
+				)
+		})
+		
+		$("#page-last").click(function () {
+			console.log("末頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-last").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage = totalPage;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
 							$("#tbody").append(response)
@@ -247,11 +484,26 @@
 
 		}
 
+		function clickcreate(){
+
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hotelcreateurl";
+
+		}
+		
 		function clickdelete(id,name){
 
 			$("#deleteId").val(id);
+			$("#deleteName").val(name);
 		}
 
+		$('#resetkeyword').click(function(){
+			console.log("clear");
+		  $("#keyword").val('');
+		  $('#regionkeywd').val('');
+		  $('#typekeywd').val('');
+		})
+		
+		
 		</script> 
 		
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -265,19 +517,18 @@
              </div>
              <div class="modal-body">
                 <form action="hoteldelete" method="POST">
-                  <table>
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label"></label>
                       <input type="hidden" id = "deleteId" value="" name="deleteId">
+                      <input type="hidden" id = "deleteName" value="" name="deleteName">
+                      <p id="testid"></p>
                       <h4>是否確認刪除?</h4>
-                      <p></p>
                     </div>
                		 <div class="modal-footer">
                  	 <button type="submit" class="btn btn-primary">確認</button>
                   	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                		 </div>
                   </form> 
-                  </table>
              </div>
            </div>
          </div>

@@ -1,20 +1,25 @@
-$(document).ready(function () {
-    $('tbody').on("click", ".delete_btn", function () {
-
-        var currId = $(this).val();
-        var desicion = confirm("確定要刪除此筆資料?");
-        if (desicion) {
-            $.ajax({
-                type: "POST",
-                url: "delete.controller",
-                data: { "artId": currId },
-                success: function (response) {
-                    $(this).closest('tr').remove();
-                }
-            });
-
-        } else {
-            return;
-        };
-
-    });
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+  </head>
+  <body>
+    <div id="editor"></div>
+    <script>
+      var cb = function () {
+        return new Date().getTime();
+      };
+      ClassicEditor.create(document.querySelector("#editor"), {
+        simpleUpload: {
+          uploadUrl: {
+            url: "/adm/ckeditor_classic/upload_image.php",
+            headers: { "x-header": "myhead", "x-header-cb": cb },
+          },
+        },
+      }).catch((error) => {
+        console.error(error);
+      });
+    </script>
+  </body>
+</html>

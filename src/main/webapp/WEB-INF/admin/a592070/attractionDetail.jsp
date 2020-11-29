@@ -70,12 +70,14 @@
             <div class="content">
                 <div class="row">
                     <div class="col-12">
-                        <el-page-header @back="goBack" content="Detail Page">
+                        <el-page-header @back="goBack" v-if="isInsert" content="新 增 頁 面">
+                        </el-page-header>
+                        <el-page-header @back="goBack" v-else content="修 改 頁 面">
                         </el-page-header>
 
                         <el-form label-width="180px" :model="attractionData" ref="attractionData" >
-                            <el-form-item label="ID" prop="sn">
-                                <el-input v-model="attractionData.sn" disabled ></el-input>
+                            <el-form-item label="ID" prop="sn" v-bind:hidden="isInsert">
+                                <el-input v-model="attractionData.sn" disabled></el-input>
                             </el-form-item>
                             <el-form-item label="Name" prop="name">
                                 <el-input v-model="attractionData.name"></el-input>
@@ -110,6 +112,7 @@
 <%--                                        onerror="this.src='${pageContext.servletContext.contextPath}/assets/nopic.jpg'">--%>
 <%--                                </el-image>--%>
                                 <el-upload
+                                        ref="upload"
                                         action=""
                                         list-type="picture-card"
                                         :file-list="fileList"
@@ -121,7 +124,7 @@
                                     <i class="el-icon-plus"></i>
                                 </el-upload>
                                 <el-dialog :visible.sync="dialogVisible">
-                                    <img width="100%" :src="imageUrl" alt="" >
+                                    <el-image width="100%" :src="imageUrl" alt="" lazy></el-image>
                                 </el-dialog>
                             </el-form-item>
                             <el-form-item label="TotalDescribe" prop="toldescribe">
@@ -165,7 +168,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" v-on:click="submitForm">立即更新</el-button>
-                                <el-button v-on:click="resetDataForm('attractionData')">重置</el-button>
+                                <el-button v-on:click="resetDataForm('attractionData')">重 置</el-button>
                             </el-form-item>
                         </el-form>
 
@@ -182,6 +185,7 @@
         el: '#app',
         data() {
             return {
+                isInsert: true,
                 attractionData: {
                     sn: '',
                     name: '',
@@ -201,7 +205,7 @@
                     openTime: '',
                     status: false
                 },
-                attractionPic: {},
+                attractionPic: [{id: '', filename: '', dest: ''}],
                 region: [],
                 imageUrl: '',
                 picture: [],
@@ -214,22 +218,38 @@
             }
         },
         created: function () {
-            this.getAttractionData(this)
+            <c:if test="${not empty id}">
+            this.isInsert = false;
+            this.attractionData.sn = ${id};
+            </c:if>
+            if(!this.isInsert) this.getAttractionData(this);
             this.getRegionData()
         },
         methods: {
+            initData(){
+                this.attractionData = {};
+                this.attractionPic = [];
+                this.imageUrl = '';
+                this.picture= [];
+                this.fileList = [];
+                this.param= new FormData();
+                this.removePicId= [];
+                this.dialogVisible= false;
+            },
             getAttractionData(obj){
                 $.get({
-                    url: '${pageContext.servletContext.contextPath}/admin/attraction/entity/${id}',
+                    url: '${pageContext.servletContext.contextPath}/admin/attraction/entity/'+obj.attractionData.sn,
                     async: false,
                     success: function (response) {
                         obj.attractionData = response.attractionData;
                         obj.attractionPic = response.attractionPic;
-
+                        obj.fileList = [];
                         for (let i = 0; i < obj.attractionPic.length; i++) {
-                            let sId = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+obj.attractionData.sn+"/"+i;
-                            // obj.picture.push(sId);
-                            obj.fileList.push({name:response.attractionPic[i].id, url:sId});
+                            <%--let sId = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+obj.attractionData.sn+"/"+i;--%>
+                            <%--obj.fileList.push({name:response.attractionPic[i].id, url:sId});--%>
+
+                            let pic = response.attractionPic[i];
+                            obj.fileList.push({id:pic.id, name:pic.filename, url:"${pageContext.servletContext.contextPath}/attraction/pic/"+obj.attractionData.sn+"/"+pic.filename});
                         }
                         <%--obj.picture = "${pageContext.servletContext.contextPath}/admin/attraction/pic/"+response.sn;--%>
                         <%--obj.url = "${pageContext.servletContext.contextPath}/admin/attraction/"+response.sn;--%>
@@ -247,30 +267,53 @@
                 this.$refs[formName].resetFields();
             },
             submitForm(){
-                let url='${pageContext.servletContext.contextPath}/admin/attraction/update/'+this.attractionData.sn
-                console.log(this.name);
+                let url='${pageContext.servletContext.contextPath}/admin/attraction/save/'+this.attractionData.sn
+                if(this.isInsert) url = '${pageContext.servletContext.contextPath}/admin/attraction/save';
+
                 this.param.append('attractionData', JSON.stringify(this.attractionData));
                 this.param.append('removePicId', JSON.stringify(this.removePicId));
                 let config = {
                    header: {
-                       'Content-Type': 'multipart/form-data',
-                       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE",
-                       'crossdomain': true
+                       'Content-Type': 'multipart/form-data'
                    }
                 }
                 axios.post(
                     url,
                     this.param,
                     config
-                ).then(function (response) {
+                ).then(response =>  {
                     console.log(response);
-                    if(response.data == true){
-                        alert("更新成功")
-                        window.location.reload();
+                    if(response.data.message){
+                        this.$message({
+                            type: 'success',
+                            message: '更新成功!!'
+                        });
+                        // this.isInsert = false;
+                        // this.attractionData.sn = response.data.attractionData.sn;
+                        // window.location.reload();
+
+                        this.initData();
+                        <%--// this.$refs.upload.clearFiles();--%>
+                        this.attractionData = response.data.attractionData;
+                        this.attractionPic = response.data.attractionPic;
+                        this.isInsert = false;
+                        console.log(this.fileList);
+                        <%--// this.fileList.splice();--%>
+                        <%--console.log(this.fileList);--%>
+
+                        for (let i = 0; i < this.attractionPic.length; i++) {
+                            let pic = this.attractionPic[i];
+                            this.fileList.push({id:pic.id, name:pic.filename, url:"${pageContext.servletContext.contextPath}/attraction/pic/"+this.attractionData.sn+"/"+pic.filename});
+                            this.imageUrl = this.fileList[i].url;
+                        }
                     }else{
-                        alert("更新失敗")
+                        this.$message({
+                            type: 'info',
+                            message: '更新失敗!!'
+                        });
                     }
                 })
+                this.$forceUpdate();
             },
             handleAvatarSuccess(res, file) {
                 this.imageUrl = URL.createObjectURL(file.raw);
@@ -296,15 +339,15 @@
                 return isPIC && isLt2M;
             },
             handleRemove(file, fileList) {
-                console.log(file, fileList);
                 this.param.delete('file');
-                this.removePicId.push(file.name);
+                if(file.id){
+                    console.log(file.id)
+                    this.removePicId.push(file.id);
+                }
             },
             goBack() {
                 console.log('go back');
-                // location.href = document.referrer;
                 window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction";
-                // parent.window.location.assign(window.location.href);
             }
 
         }

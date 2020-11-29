@@ -21,8 +21,8 @@ public class R_OrderService {
 	}
 
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<R_OrderList_VO> totaol_Rlist(int first, int count) {
-		return rOrderDAO.totaol_Rlist(first, count);
+	public List<R_OrderList_VO> totaol_Rlist(int first, int count, String orderField, String order) {
+		return rOrderDAO.totaol_Rlist(first, count, orderField, order);
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })

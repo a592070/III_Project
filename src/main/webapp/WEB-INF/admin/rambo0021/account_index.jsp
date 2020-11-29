@@ -8,6 +8,7 @@
 	<meta charset="UTF-8">
 	<title>用戶清單</title>
 	<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
@@ -31,7 +32,7 @@
 							<div class="form-group mb-2">
 								<h5>身分:</h5>
 								<select id="idkeyword" class="form-control" name="idkeyword">
-									<option value="">請選擇..</option>
+									<option value="" id="defaultId">請選擇..</option>
 									<option value="管理員">管理員</option>
 									<option value="一般會員">一般會員</option>
 									<option value="餐廳業者">餐廳業者</option>
@@ -48,21 +49,21 @@
 								placeholder="請輸入email">
 						</div>
 
-						<button type="button" class="btn btn-primary mb-2" value="search" name="search"
-							id="search">搜尋</button>
+						<button type="button" class="btn btn-primary mb-2" value="delsearch" name="delsearch"
+							id="delsearch">重置搜尋</button>
 					</form>
 				</div>
 				<div>
 					<h2>用戶列表</h2>
-					<div class="table-responsive">
+					<div class="table-responsive" id="appendbody">
 						<table class="table table-striped table-sm" id="table">
 							<thead>
 								<tr>
-									<th>帳號</th>
-									<th>身分</th>
-									<th>email</th>
-									<th>註冊日期</th>
-									<th>修改日期</th>
+									<th>帳號<i class="fa fa-fw fa-sort" id="uSort"></i></th>
+									<th>身分<i class="fa fa-fw fa-sort" id="iSort"></i></th>
+									<th>email<i class="fa fa-fw fa-sort" id="eSort"></i></th>
+									<th>註冊日期<i class="fa fa-fw fa-sort" id="rSort"></i></th>
+									<th>修改日期<i class="fa fa-fw fa-sort" id="mSort"></i></th>
 									<th>狀態</th>
 									<th>功能</th>
 								</tr>
@@ -109,24 +110,52 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<div class="pages">
+				<nav aria-label="..." id='nav'>
+					<ul class="pagination">
+						
+								<li class="page-item">
+									<button class="page-link" id="page-botton-first" value="1">第一頁</button>
+								</li>
+							
+							<c:if test="${page.currentPage ne 1}">
+							<!-- previous -->
+								<li class="page-item">
+									<button class="page-link previous" id="page-botton-previous" value="previous">&laquo;</button>
+								</li>
+							</c:if>
+							
+							<!-- current page -->
+								<li class="page-item active">
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${page.currentPage}">${page.currentPage}</button>
+								</li>
+						   
+						   <c:if test="${page.currentPage ne page.totalPageCount}">
+							<!-- NEXT -->
+								<li class="page-item">
+									<button class="page-link next" id="page-botton-next" value="next">&raquo;</button>
+								</li>
+							</c:if>
+							
+							
+								<li class="page-item last">
+									<button class="page-link last" id="page-botton-last" value="${page.totalPageCount}">最末頁</button>
+								</li>
+								<li class="page-item last">
+								     <span>結果${page.totalCount}筆,共${page.totalPageCount}頁</span>	
+								</li>			
+					</ul>
+				</nav>
+			</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	<script>
-		// $(document).ready(function () {
-		// 	for (let i = 0; i < $("[id=status]").length; i++) {
-		// 		if ($("[id=status]").eq(i).text().substr(0, 2) == "啟用") {
-		// 			$("[id=status]").eq(i).children("#sEnable").hide()
-		// 		} else {
-		// 			$("[id=status]").eq(i).children("#sDisable").hide()
-		// 		}
-		// 	}
-		// }
-		// )
 		//刪除帳號資料
-		$("#table").on('click', '#delAcc', function () {
+		$("#appendbody").on('click', '#delAcc', function () {
 
 			if (confirm("確定要刪除此筆資料?")) {
 				var username = $(this).closest('td').siblings("#username").text()
@@ -138,7 +167,7 @@
 						url: '${pageContext.servletContext.contextPath}/admin/delAccount',
 						dataType: 'text',
 						success: function (response) {
-							console.log(response)
+							alert(response)
 
 						}
 
@@ -146,55 +175,8 @@
 				)
 			}
 		})
-		/*
-		//啟用button
-		$("#table").on('click', '#sEnable', function () {
-			if (confirm("確定要啟用此帳號?")) {
-				var username = $(this).closest('td').siblings("#username").text()
-				var status = "啟用"
-				$(this).parent().siblings("#status").text(status)
-				$(this).hide()
-				$(this).siblings("#sDisable").show()
-				$.ajax(
-					{
-						type: 'POST',
-						data: { "username": username, "status": status },
-						url: '${pageContext.servletContext.contextPath}/admin/enableAccount',
-						dataType: 'text',
-						success: function (response) {
-							console.log(response)
-
-						}
-
-					}
-				)
-			}
-		})
-		//禁用button
-		$("#table").on('click', '#sDisable', function () {
-			if (confirm("確定要禁用此帳號?")) {
-				var username = $(this).closest('td').siblings("#username").text()
-				var status = "禁用"
-				$(this).parent().siblings("#status").text(status)
-				$(this).hide()
-				$(this).siblings("#sEnable").show()
-				$.ajax(
-					{
-						type: 'POST',
-						data: { "username": username, "status": status },
-						url: '${pageContext.servletContext.contextPath}/admin/disableAccount',
-						dataType: 'text',
-						success: function (response) {
-							console.log(response)
-
-						}
-					}
-				)
-			}
-		})
-		*/
 		//啟用 禁用 checkbox
-		$("#table").on('change', '#checkbox', function () {
+		$("#appendbody").on('change', '#checkbox', function () {
 			var status = $(this).val();
 			if (status == "啟用") {
 				console.log("禁用帳號")
@@ -234,12 +216,13 @@
 				)
 			}
 		})
-		$("#search").click(function () {
-			console.log("搜尋")
+		//username email搜尋
+		$("#namekeyword,#emailkeyword").keyup(function () {
+			console.log("input搜尋")
 			var username = $("#namekeyword").val()
 			var identity = $("#idkeyword").val()
 			var email = $("#emailkeyword").val()
-			$("#tbody").children().remove();
+			
 			$.ajax(
 					{
 						type: 'POST',
@@ -247,12 +230,200 @@
 						url: '${pageContext.servletContext.contextPath}/admin/search',
 						dataType: 'html',
 						success: function (response) {
-							$("#tbody").append(response)
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
 
 						}
 
 					}
 				)
+		})
+		//身分搜尋
+		$("#idkeyword").change(function () {
+			console.log("select搜尋")
+			var username = $("#namekeyword").val()
+			var identity = $("#idkeyword").val()
+			var email = $("#emailkeyword").val()
+			
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity, "email" : email },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		//重置搜尋
+		$("#delsearch").click(function(){
+			console.log("reset")
+			$("#namekeyword").val("");
+            $("#idkeyword").val("");
+			$("#emailkeyword").val("");
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "username": "", "identity": "", "email" : "" },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		//第一頁
+		$("#appendbody").on('click', '#page-botton-first', function (){
+           console.log("第一頁")
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+		   var currentPage=1
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity , "email" : email ,"currentPage": currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+
+
+		}) 
+		//前一頁
+		$("#appendbody").on('click', '#page-botton-previous', function (){
+           console.log("前一頁")
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+		   var currentPage=parseInt($("#page-btn").val())-1
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity , "email" : email ,"currentPage": currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+
+
+		}) 
+
+		//後一頁
+		$("#appendbody").on('click', '#page-botton-next', function (){
+           console.log("後一頁")
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+		   var currentPage=parseInt($("#page-btn").val())+1
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity , "email" : email ,"currentPage": currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+
+
+		}) 
+		//最末頁
+		$("#appendbody").on('click', '#page-botton-last', function (){
+           console.log("最末頁")
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+		   var currentPage=$("#page-botton-last").val()
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, "identity": identity , "email" : email ,"currentPage": currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+
+
+		}) 
+		//帳號排序
+		$("#appendbody").on('click','#uSort,#eSort,#rSort,#iSort,#mSort',function(){
+			console.log("排序")
+			if($(this).attr("class") == "fa fa-fw fa-sort"){
+				$(this).attr("class","fa fa-fw fa-sort-asc")
+				$(this).val("asc")
+			}else if($(this).attr("class") == "fa fa-fw fa-sort-asc"){
+				$(this).attr("class","fa fa-fw fa-sort-desc")
+				$(this).val("desc")
+			}else if($(this).attr("class") == "fa fa-fw fa-sort-desc"){
+				$(this).attr("class","fa fa-fw fa-sort")
+				$(this).val("default")
+			}
+			var uSort = $("#uSort").val()
+			var eSort = $("#eSort").val()
+			var rSort = $("#rSort").val()
+			var iSort = $("#iSort").val()
+			var mSort = $("#mSort").val()
+
+		   var username = $("#namekeyword").val()
+		   var identity = $("#idkeyword").val()
+		   var email = $("#emailkeyword").val()
+
+		   $.ajax(
+					{
+						type: 'POST',
+						data: { "username": username, 
+						        "identity": identity, 
+								"email" : email,
+								"uSort" : uSort,
+								"eSort" : eSort,
+								"rSort" : rSort,
+								"iSort": iSort,
+								"mSort": mSort
+								},
+						url: '${pageContext.servletContext.contextPath}/admin/search',
+						dataType: 'html',
+						success: function (response) {
+							$("#appendbody").children().remove();
+							$("#appendbody").append(response)
+
+						}
+
+					}
+				)
+			
 		})
 
 	</script>

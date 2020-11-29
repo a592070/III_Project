@@ -18,14 +18,14 @@
 		<property name="hibernate.c3p0.max_statements">50</property>
 		<property name="hibernate.c3p0.idle_test_period">3000</property>
 
-		 <property name="current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property>
+<!--		 <property name="current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property>-->
 <!--		<property name="current_session_context_class">thread</property>-->
 
 <!--		<property name="hibernate.show_sql">true</property>-->
 		<property name="hibernate.format_sql">true</property>
 <!--		<property name="use_sql_comments">true</property>-->
 
-		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+<!--		 <property name="hibernate.hbm2ddl.auto">update</property>-->
 
 
 <!--		<mapping class="example.pojo.User" />-->
@@ -50,9 +50,11 @@
 		<mapping class="azaz4498.model.Article"/>
 		<mapping class="azaz4498.model.ArticleType"/>
 		<mapping class="azaz4498.model.Comment"/>
+		<mapping class="azaz4498.model.Picture"/>
 		<mapping class="rambo0021.pojo.AccountBean" />
 		<mapping class="rambo0021.pojo.IdentityBean" />
 		<mapping class="rambo0021.pojo.AccountListViewBean" />
+		
 		<mapping class="innocence741.model.CarRentalCompany" />
 		<mapping class="innocence741.model.CarRentalCompanyVO" />
 		<mapping class="innocence741.model.CarType" />
@@ -61,6 +63,7 @@
 		<mapping class="innocence741.model.T_Order_List" />
 		<mapping class="asx54630.model.Hotel"/>
 		<mapping class="asx54630.model.HotelView"/>
+		<mapping class="asx54630.model.HotelPage"/>
 		<mapping class="global.pojo.OrderTable"/>
 
 

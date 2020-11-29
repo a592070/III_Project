@@ -1,7 +1,9 @@
 package a592070.dao;
 
 import a592070.pojo.AttractionVO;
+import a592070.pojo.CarVO;
 import a592070.pojo.HotelVO;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,13 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
     }
 
     @Override
-    public HotelVO getEle(int id) {
-        return sessionFactory.getCurrentSession().get(HotelVO.class, id);
+    public HotelVO getEle(Integer id, boolean findFromPersistence) {
+        Session session = sessionFactory.getCurrentSession();
+        if(findFromPersistence){
+            return session.find(HotelVO.class, id);
+        }else{
+            return session.get(HotelVO.class, id);
+        }
     }
 
     /**
@@ -35,13 +42,13 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
      */
     @Deprecated
     @Override
-    public byte[] getPicture(int id) {
+    public byte[] getPicture(Integer id) {
         return null;
     }
 
     @Deprecated
     @Override
-    public List<byte[]> getPictures(int id) {
+    public List<byte[]> getPictures(Integer id) {
         return null;
     }
 
