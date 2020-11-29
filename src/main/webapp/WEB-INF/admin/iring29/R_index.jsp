@@ -283,12 +283,41 @@ th {
 
 										</div></td>
 									<td><div class="delete">
-											<form id="statuss" name="statuss"
-												action="<%=application.getContextPath()%>/admin/DeleteRestaurant"
-												method="POST" onsubmit="return confirm('確認是否刪除  ${r.name}  餐廳資料？');">
-												<button type="submit" class="btn btn-danger">刪除</button>
-												<Input type='hidden' name='r_sn' value='${r.r_sn}'>
-											</form>
+<%-- 											<form id="statuss" name="statuss" --%>
+<%-- 												action="<%=application.getContextPath()%>/admin/DeleteRestaurant" --%>
+<%-- 												method="POST" onsubmit="return confirm('確認是否刪除  ${r.name}  餐廳資料？');"> --%>
+<!-- 												<button type="submit" class="btn btn-danger">刪除</button> -->
+<%-- 												<Input type='hidden' name='r_sn' value='${r.r_sn}'> --%>
+<%-- 											</form> --%>
+
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+											  刪除
+											</button>
+
+											<!-- Modal -->
+											<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ 											 <div class="modal-dialog modal-dialog-centered" role="document">
+  											  <div class="modal-content">
+ 											     <div class="modal-header">
+ 											       <h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>
+ 											       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  											        <span aria-hidden="true">&times;</span>											
+  											      </button>											
+  											    </div>
+  											    <div class="modal-body">
+  											      是否確認刪除  ${r.name}  餐廳資料？
+     											</div>											
+ 											     <div class="modal-footer">
+   											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+   											     <form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" >
+   											     	<button type="submit" class="btn btn-primary">確認</button>
+   											     	<Input type='hidden' name='r_sn' value='${r.r_sn}'>
+   											     </form>
+   											   </div>
+  											  </div>
+  											</div>
+											</div>
 										</div></td>
 								</tr>
 
@@ -484,12 +513,28 @@ th {
 									res_context += '</form>';
 									res_context += '</div></td>';
 									res_context += '<td><div class="delete">';
-									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm(`確認是否'
-									res_context += response.Rlist[i].name; 
-									res_context += '刪除餐廳資料？`);">';
-									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
-									res_context += '<Input type="hidden" name="r_sn" value="'+ response.Rlist[i].r_sn + '">';
-									res_context += '</form>';
+									res_context += '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">';
+									res_context += '刪除</button>';
+									res_context += '<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">';
+									res_context += '<div class="modal-dialog modal-dialog-centered" role="document">';
+									res_context += '<div class="modal-content">';
+									res_context += '<div class="modal-header">';
+									res_context += '<h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>';
+									res_context += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+									res_context += '<span aria-hidden="true">&times;</span></button></div>';
+									res_context += '<div class="modal-body">是否確認刪除  '+ response.Rlist[i].name +'  餐廳資料？</div>';
+									res_context += '<div class="modal-footer">';
+									res_context += '<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>';
+									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" >';
+									res_context += '<button type="submit" class="btn btn-primary">確認</button>';
+									res_context += '<Input type="hidden" name="r_sn" value="' + response.Rlist[i].r_sn + '">';
+									res_context += '</form></div></div></div></div>';
+<%-- 									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteRestaurant" method="POST" onsubmit="return confirm(`確認是否'; --%>
+// 									res_context += response.Rlist[i].name; 
+// 									res_context += '刪除餐廳資料？`);">';
+// 									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
+// 									res_context += '<Input type="hidden" name="r_sn" value="'+ response.Rlist[i].r_sn + '">';
+// 									res_context += '</form>';
 									res_context += '</div></td>';
 									res_context += '</tr>';
 									}
