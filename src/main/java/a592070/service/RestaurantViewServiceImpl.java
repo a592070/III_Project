@@ -14,17 +14,23 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     private ViewDAO<RestaurantVO> viewDAO;
 
     @Override
-    public RestaurantVO getEle(int id) {
-        return viewDAO.getEle(id);
+    public RestaurantVO getEle(Integer id) {
+        return getEle(id, false);
     }
 
     @Override
-    public List<byte[]> getPictures(int id) {
+    public RestaurantVO getEle(Integer id, boolean findFromPersistence) {
+        if(id == null || id==0) return null;
+        return viewDAO.getEle(id, findFromPersistence);
+    }
+
+    @Override
+    public List<byte[]> getPictures(Integer id) {
         return null;
     }
 
     @Override
-    public byte[] getPicture(int id) {
+    public byte[] getPicture(Integer id) {
         return viewDAO.getPicture(id);
     }
 

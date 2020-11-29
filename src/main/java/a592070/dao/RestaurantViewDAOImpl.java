@@ -1,5 +1,6 @@
 package a592070.dao;
 
+import a592070.pojo.HotelVO;
 import a592070.pojo.RestaurantVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,12 +29,17 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public RestaurantVO getEle(int id) {
-        return sessionFactory.getCurrentSession().get(RestaurantVO.class, id);
+    public RestaurantVO getEle(Integer id, boolean findFromPersistence) {
+        Session session = sessionFactory.getCurrentSession();
+        if(findFromPersistence){
+            return session.find(RestaurantVO.class, id);
+        }else{
+            return session.get(RestaurantVO.class, id);
+        }
     }
 
     @Override
-    public byte[] getPicture(int id) {
+    public byte[] getPicture(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         NativeQuery nativeQuery = session.createNativeQuery("select picture from restaurant where r_sn = ?1");
         nativeQuery.setParameter(1, id);
@@ -48,7 +54,7 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public List<byte[]> getPictures(int id) {
+    public List<byte[]> getPictures(Integer id) {
         return null;
     }
 

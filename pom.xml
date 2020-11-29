@@ -52,7 +52,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>5.2.9.RELEASE</version>
-            <scope>test</scope>
         </dependency>
 
 

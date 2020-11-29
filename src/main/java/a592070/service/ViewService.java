@@ -11,9 +11,10 @@ import java.util.List;
 
 public interface ViewService<T> {
 
-    T getEle(int id);
-    List getPictures(int id);
-    byte[] getPicture(int id);
+    T getEle(Integer id);
+    T getEle(Integer id, boolean findFromPersistence);
+    List getPictures(Integer id);
+    byte[] getPicture(Integer id);
 
     int getSize();
 

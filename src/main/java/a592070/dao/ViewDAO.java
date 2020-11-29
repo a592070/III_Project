@@ -7,10 +7,10 @@ import java.util.List;
 public interface ViewDAO<T> {
 
     int getSize();
-    T getEle(int id);
+    T getEle(Integer id, boolean findFromPersistence);
 
-    byte[] getPicture(int id);
-    List getPictures(int id);
+    byte[] getPicture(Integer id);
+    List getPictures(Integer id);
 
 //    int getSizeByKeywords(String keyWords);
 //    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled);

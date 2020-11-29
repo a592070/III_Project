@@ -6,6 +6,8 @@ import java.util.List;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
+import rambo0021.pojo.Page;
+import rambo0021.pojo.Sort;
 
 public interface AccountService {
 
@@ -25,7 +27,7 @@ public interface AccountService {
 	String modifyAccount(String username, String password, int identity, String email,String nickName);
 	String registered(AccountBean aBean, IdentityBean iBean);
 	boolean login(String username, String password);
-	List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize);
+	List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize, Sort aSort);
 	int getSize(String hql);
 	String delAccount(AccountBean aBean);
 }

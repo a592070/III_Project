@@ -2,9 +2,7 @@ package azaz4498.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -43,8 +43,6 @@ public class Article implements Serializable {
 	private Integer artId;
 	private Integer artTypeId;
 	private String artTitle;
-	private byte[] artPic;
-	private String artPicUrl;
 	private String artStatus;
 	
 	@Column(name = "ART_STATUS")
@@ -56,7 +54,8 @@ public class Article implements Serializable {
 		this.artStatus = artStatus;
 	}
 
-	private List<Comment> comments = new ArrayList<Comment>();
+	private Set<Comment> comments = new LinkedHashSet<>();
+	private Set<Picture> pictures = new LinkedHashSet<>();
 	private ArticleType articleType;
 
 	public Article() {
@@ -137,31 +136,27 @@ public class Article implements Serializable {
 		this.artTitle = artTitle;
 	}
 
-	@Column(name = "ART_PIC")
-	public byte[] getArtPic() {
-		return artPic;
-	}
-
-	public void setArtPic(byte[] artPic) {
-		this.artPic = artPic;
-	}
-	@Column(name = "ART_PIC_URL")
-	public String getArtPicUrl() {
-		return artPicUrl;
-	}
-
-	public void setArtPicUrl(String artPicUrl) {
-		this.artPicUrl = artPicUrl;
-	}
+	
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
-	public List<Comment> getComments() {
+	public Set<Comment> getComments() {
 		return comments;
 	}
 
-	public void setComments(List<Comment> comments) {
+	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
+	@JsonManagedReference
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
+	public Set<Picture> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(Set<Picture> pictures) {
+		this.pictures = pictures;
+	}
+
 	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ART_TYPE_ID")
