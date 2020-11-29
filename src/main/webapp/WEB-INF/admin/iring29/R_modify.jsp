@@ -227,13 +227,14 @@ pre {
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 								<script>
-								$("#pic").ready(function(){
-									var pic = $("#pic").val();
-									console.log(pic);
-										if(pic == ""){
-											 $("#preview_Rpic").attr('src', '<%=application.getContextPath()%>/assets/img/iring29/Restaurant_img.png');
-											}
-									})
+ 								$("#pic").ready(function(){
+//  									var pic = $("#pic").val();
+ 									var pic = $("#preview_Rpic").attr("src");
+ 									console.log("pic = " +pic);
+// 										if(pic == ""){
+<%-- 											 $("#preview_Rpic").attr('src', '<%=application.getContextPath()%>/assets/img/iring29/Restaurant_img.png'); --%>
+// 											}
+ 									})
 								
 								$("#pic").change(function(){
 					                 readURL(this);
