@@ -291,12 +291,12 @@ th {
 <%-- 											</form> --%>
 
 											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#餐廳${r.r_sn}">
 											  刪除
 											</button>
 
 											<!-- Modal -->
-											<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+											<div class="modal fade" id="餐廳${r.r_sn}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
  											 <div class="modal-dialog modal-dialog-centered" role="document">
   											  <div class="modal-content">
  											     <div class="modal-header">
@@ -513,9 +513,9 @@ th {
 									res_context += '</form>';
 									res_context += '</div></td>';
 									res_context += '<td><div class="delete">';
-									res_context += '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">';
+									res_context += '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#餐廳'+ response.Rlist[i].r_sn + '" >';
 									res_context += '刪除</button>';
-									res_context += '<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">';
+									res_context += '<div class="modal fade" id="餐廳'+ response.Rlist[i].r_sn + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">';
 									res_context += '<div class="modal-dialog modal-dialog-centered" role="document">';
 									res_context += '<div class="modal-content">';
 									res_context += '<div class="modal-header">';
