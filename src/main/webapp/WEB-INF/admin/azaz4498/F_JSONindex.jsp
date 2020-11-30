@@ -303,7 +303,7 @@ h2 {
 														+ (currStatus == "enabled" ? "checked"
 																: "")
 														+ ">"
-														+ "<span class='switch-label' data-on='on' data-off='off'></span>"
+														+ "<span class='switch-label' data-on='啟用' data-off='禁用'></span>"
 														+ "<span class='switch-handle'></span>"
 														+ "</label></td>"
 														+ "<td>"
