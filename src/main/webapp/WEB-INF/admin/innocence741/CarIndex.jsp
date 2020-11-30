@@ -139,6 +139,32 @@ td{
 
 	    </div>
     </div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="display:none" id="modal">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+ <div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLongTitle">刪除車行</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+ <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" id="modal-body">
+  
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal" >取消</button>
+  <button type="button" class="btn btn-primary" id="confirm">確認</button>
+</div>
+ </div>
+</div>
+</div>
+
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -248,6 +274,9 @@ td{
         $("#carRentalCompany").on("click", ".dropData", function(){
             var form1 = $(this).parents('form');
             var formData = new FormData(form1[0]);
+            $("#modal").click();
+			$("#confirm").click(function(){
+
             $.ajax({
         
                 type:"POST",   
@@ -272,13 +301,18 @@ td{
                         alert("刪除失敗")
                     }
 
+                    $("#close").click();
 
                 },
 
                 error:function(xhr, ajaxOptions, thrownError){
 
                     console.log(xhr.status+"\n"+thrownError);
+                    $("#close").click();
+
                 }
+
+            });
 
             });
         })
