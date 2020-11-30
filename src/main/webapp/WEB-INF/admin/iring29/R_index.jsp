@@ -107,6 +107,7 @@ th {
 	width: 110px;
 	text-align: center;
 }
+
 </style>
 
 </head>
@@ -197,7 +198,7 @@ th {
 				<h2>餐廳列表</h2>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm"  id="table">
-						<thead id="thead">
+						<thead>
 							<tr>
 								<th><div>
 										<button id="page-botton" class="id-btn">
@@ -242,6 +243,9 @@ th {
 							</tr>
 						</thead>
 						<tbody id="tbody">
+						
+						
+						
 							<c:forEach var="r" items="${rBean}">
 
 								<tr>

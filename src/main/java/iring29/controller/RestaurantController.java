@@ -189,7 +189,7 @@ public class RestaurantController {
 	@RequestMapping(path = "/DeleteRestaurant", method = RequestMethod.POST)
 	public String DelRestaurant(@RequestParam("r_sn") BigDecimal r_sn, Model m) {
 		String result = rs.deleteRestaurant(r_sn);
-		m.addAttribute("result", result);
+//		m.addAttribute("result", result);
 		return "redirect:Restaurant";
 	}
 

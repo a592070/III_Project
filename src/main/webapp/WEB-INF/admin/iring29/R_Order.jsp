@@ -182,7 +182,7 @@ td {
   											      </button>											
   											    </div>
   											    <div class="modal-body">
-  											      是否確認刪除餐廳訂單 ${r.id} 資料？
+  											      確認刪除餐廳訂單 ${r.id} 資料？
      											</div>											
  											     <div class="modal-footer">
    											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -344,7 +344,7 @@ td {
 									res_context += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
 									res_context += '<span aria-hidden="true">&times;</span></button></div>';
 									res_context += '<div class="modal-body">';
-									res_context += '是否確認刪除餐廳訂單'+ response.Rlist[i].id +'資料？';
+									res_context += '確認刪除餐廳訂單'+ response.Rlist[i].id +'資料？';
 									res_context += '</div><div class="modal-footer">';
 									res_context += '<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>';
 									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" >';

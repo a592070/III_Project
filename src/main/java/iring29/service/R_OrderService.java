@@ -36,8 +36,8 @@ public class R_OrderService {
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public R_Order_List updateOrder(BigDecimal id, String cus_name, String cus_phone, Timestamp ts) {
-		return rOrderDAO.updateOrder(id, cus_name, cus_phone, ts);
+	public R_Order_List updateOrder(BigDecimal id, String cus_name, String cus_phone, Timestamp ts, BigDecimal customer_num) {
+		return rOrderDAO.updateOrder(id, cus_name, cus_phone, ts, customer_num);
 	}
 	
 }
