@@ -154,11 +154,28 @@ h3{
           	<c:forEach var="res" items="${res_data_region}">
           		<div class="col-md-4 ">
 		    				<div class="destination">
+		    				<c:if test="${!empty res.pic}">
+		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" >
+		    					<img id="ItemPreview" src="">
+		    						<div class="icon d-flex justify-content-center align-items-center">
+    							<span class="icon-search2"></span>
+    							<!-- not yet ready -->
+    							<script type="text/javascript">
+    								window.onload = function() {
+        								console.log("in pic")
+    									document.getElementById("ItemPreview").src = "";
+    								};
+    							</script>
+    						</div>
+		    					</a>
+		    				</c:if>
+		    				<c:if test="${empty res.pic}">
 		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://img.etimg.com/thumb/msid-75176755,width-640,resizemode-4,imgsize-612672/effect-of-coronavirus-on-food.jpg');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     							<span class="icon-search2"></span>
     						</div>
 		    					</a>
+		    				</c:if>
 		    					<div class="text p-3">
 		    						<div class="R_info">
 		    						<div class="d-flex">
@@ -170,7 +187,7 @@ h3{
 				    							<i class="icon-star"></i>
 				    							<i class="icon-star"></i>
 				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
+				    							<span>${res.rating}</span>
 				    						</p>
 			    						</div>
 			    						<div class="two">
@@ -181,7 +198,7 @@ h3{
 		    						</div>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
+		    							<span><i class="icon-map-o"></i>${res.region}</span> 
 		    							<span class="ml-auto"><a href="#">訂位去</a></span>
 		    						</p>
 		    					</div>

@@ -176,7 +176,7 @@ h3{
 		    						</div>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
+		    							<span><i class="icon-map-o"></i>${res.region}</span> 
 		    							<span class="ml-auto"><a href="#">訂位去</a></span>
 		    						</p>
 		    					</div>

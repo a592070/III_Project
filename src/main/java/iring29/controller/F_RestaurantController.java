@@ -1,8 +1,7 @@
 package iring29.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.math.BigDecimal;
+
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,14 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import iring29.model.Restaurant;
-import iring29.model.Show_RView;
+import iring29.model.Restaurant_VO;
 import iring29.service.F_RestaurantService;
 import utils.StringUtil;
 
 @Controller
-@SessionAttributes(names = { "res_data" })
+@SessionAttributes(names = { "res_data", "res_data_region" })
 public class F_RestaurantController {
 
 	@Autowired
@@ -45,12 +45,10 @@ public class F_RestaurantController {
 								    HttpSession session, Model m) {
 
 		if (!StringUtil.isEmpty(region_name) && !StringUtil.isEmpty(restaurant_name)) {
-			List<Show_RView> Multi_Rdata = F_Serivce.findMulti_Name_Region(restaurant_name, region_name);
+			List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_Name_Region(restaurant_name, region_name);
 			m.addAttribute("Multi_Rdata", Multi_Rdata);
 			session.setAttribute("book_date", book_date);
 			session.setAttribute("person_number", person_number);
-//			m.addAttribute("book_date", book_date);
-//			m.addAttribute("person_numer", person_numer);
 			return "iring29/MultiRestaurant";
 
 		}  else if (restaurant_name != null && region_name == null || restaurant_name != "" && region_name == "") {
@@ -60,28 +58,22 @@ public class F_RestaurantController {
 				m.addAttribute("res_data", res_data);
 				session.setAttribute("book_date", book_date);
 				session.setAttribute("person_number", person_number);
-//				m.addAttribute("book_date", book_date);
-//				m.addAttribute("person_numer", person_numer);
 				return "iring29/DisplayRestaurant";
 			} else if (num > 1) {
-				List<Show_RView> Multi_Rdata = F_Serivce.findMulti_R(restaurant_name);
+				List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_R(restaurant_name);
 				m.addAttribute("Multi_Rdata", Multi_Rdata);
 				session.setAttribute("book_date", book_date);
 				session.setAttribute("person_number", person_number);
-//				m.addAttribute("book_date", book_date);
-//				m.addAttribute("person_numer", person_numer);
 				return "iring29/MultiRestaurant";
 
 			} else {
 				return "iring29/BackHome";
 			}
 		} else if (region_name != null && restaurant_name == null|| region_name != "" && restaurant_name == "") {
-			List<Show_RView> res_data_region = F_Serivce.findRegion(region_name);
+			List<Restaurant_VO> res_data_region = F_Serivce.findRegion(region_name);
 			m.addAttribute("res_data_region", res_data_region);
 			session.setAttribute("book_date", book_date);
 			session.setAttribute("person_number", person_number);
-//			m.addAttribute("book_date", book_date);
-//			m.addAttribute("person_numer", person_numer);
 			return "iring29/Region_Restaurant";
 
 		}else {
@@ -91,19 +83,15 @@ public class F_RestaurantController {
 	
 	@RequestMapping(path = "/DisplyRestaurant", method = RequestMethod.POST)
 	public String ShowRestaurant(@RequestParam(name = "restaurant_name") String restaurant_name, 
-//		    				     @RequestParam(name = "book_date") String book_date,
-//		    				     @RequestParam(name = "person_numer") String person_numer,
 		    				     HttpSession session, Model m) {
 		
 		Restaurant res_data = F_Serivce.findRestaurant(restaurant_name);
 		session.setAttribute("res_data", res_data);
-//		m.addAttribute("res_data", res_data);
-//		m.addAttribute("book_date", book_date);
-//		m.addAttribute("person_numer", person_numer);
 		return "iring29/DisplayRestaurant";
 	}
-	@RequestMapping(path = "/ShowPic")
-	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("res_data") Restaurant r) {
+	@RequestMapping(path = "/ShowRPic")
+	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("res_data_region") Restaurant r) {
+		System.out.println("in pic" + r.getName());
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
 
