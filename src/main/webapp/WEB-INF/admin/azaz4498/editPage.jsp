@@ -19,6 +19,7 @@
 <title>論壇管理</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+<c:import url="/WEB-INF/admin/fragment/Forum_ref.jsp" />
 
 <style>
 .sp_search-1 {
