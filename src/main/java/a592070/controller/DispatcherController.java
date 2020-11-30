@@ -21,4 +21,9 @@ public class DispatcherController {
     public String travelSetMain(){
         return "a592070/travelSetInfo";
     }
+
+    @RequestMapping({"/admin/test"})
+    public String test(){
+        return "a592070/travelSetInfo02";
+    }
 }
