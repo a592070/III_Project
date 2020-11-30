@@ -2,6 +2,8 @@ package a592070.pojo;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import utils.StringUtil;
 
 import javax.persistence.*;
@@ -29,13 +31,17 @@ public class TravelSetDO {
     private String name;
     private Integer available;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<TravelEleCarDO> travelCars2 = new LinkedHashSet<>();
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<TravelEleHotelDO> travelHotels2 = new LinkedHashSet<>();
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<TravelEleRestaurantDO> travelRestaurants2 = new LinkedHashSet<>();
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<TravelEleAttractionDO> travelAttractions2 = new LinkedHashSet<>();
 
 
