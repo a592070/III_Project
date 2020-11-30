@@ -200,11 +200,11 @@ th {
 					<table class="table table-striped table-sm"  id="table">
 						<thead>
 							<tr>
-								<th><div>
+								<th><div>ID
 										<button id="page-botton" class="id-btn">
 										<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
-											<Input type='hidden' name='order' id="order" value=''>ID
+											<Input type='hidden' name='order' id="order" value=''>
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='r_sn'>
 					<script>
 						$('.id-btn').click(function(){
@@ -221,11 +221,11 @@ th {
 								<th>餐廳地址</th>
 								<th>地區</th>
 								<th>會員帳號</th>
-								<th><div>
+								<th><div>狀態
 										<button id="page-botton" class="status-btn">
 										<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
-											<Input type='hidden' name='order' id="order" value=''>狀態
+											<Input type='hidden' name='order' id="order" value=''>
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='status'>
 					<script>
 						$('.status-btn').click(function(){
@@ -400,7 +400,7 @@ th {
 							
 							<!-- current page -->
 								<li class="page-item active">
-									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}</button>
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}/${totalPage}</button>
 								</li>
 						
 							<!-- NEXT -->
@@ -446,7 +446,7 @@ th {
 								$("#tbody").empty();
 								$("#page-btn").remove();
 								var current_page = "";
-								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage +'</button>';
+								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage + '/' + response.page.totalPageCount +'</button>';
 								$('.page-item.active').html(current_page);
 								currentPage = response.page.currentPage;
 
@@ -460,7 +460,7 @@ th {
 								if(cgpage == totalPage){
 									currentPage = totalPage;
 									$('#page-btn').empty();
-									$('#page-btn').html(currentPage);
+									$('#page-btn').html(currentPage + '/' + totalPage);
 								}
 
 								if(currentPage == 1){
