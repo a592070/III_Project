@@ -89,7 +89,7 @@ public class AccountController {
 	}
 	//新增帳號
 	@RequestMapping(path = "/createAccount")
-	public String CreateAccount(@RequestParam("Apicture") MultipartFile img,@RequestParam String username,@RequestParam String password,@RequestParam int identity,@RequestParam String email,@RequestParam String nickName,@RequestParam(defaultValue = "禁用") String status,Model m) throws IOException {
+	public String CreateAccount(@RequestParam("Apicture") MultipartFile img,@RequestParam String username,@RequestParam String password,@RequestParam int identity,@RequestParam(required = false,defaultValue = "無") String email,@RequestParam String nickName,@RequestParam(defaultValue = "禁用") String status,Model m) throws IOException {
 		
 		InputStream is = new BufferedInputStream(img.getInputStream());
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -219,7 +219,7 @@ public class AccountController {
 		aSort.setiSort(iSort);
 		aSort.setmSort(mSort);
 	    	
-		int size = service.getSize("select count(userName) From AccountListViewBean where username like '%"+username+"%' and iName like '%"+identity+"%' and email like '%"+email+"%'");
+		int size = service.getSize("select count(userName) From AccountListViewBean where userName like '%"+username+"%' and iName like '%"+identity+"%' and email like '%"+email+"%'");
 		aPage.setTotalCount(size);
 		aPage.setCurrentPage(currentPage);
 

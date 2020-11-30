@@ -19,11 +19,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import global.pojo.OrderTable;
 import iring29.model.Restaurant;
+import utils.StringUtil;
 
 
 
