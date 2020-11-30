@@ -4,11 +4,11 @@
 <table class="table table-striped table-sm" id="table">
 	<thead>
 		<tr>
-			<th>帳號</th>
-			<th>身分</th>
-			<th>email</th>
-			<th>註冊日期</th>
-			<th>修改日期</th>
+			<th>帳號<i class="${sort.uSortClass}" id="uSort" ></i></th>
+			<th>身分<i class="${sort.iSortClass}" id="iSort" ></i></th>
+			<th>email<i class="${sort.eSortClass}" id="eSort"></i></th>
+			<th>註冊日期<i class="${sort.rSortClass}" id="rSort"></i></th>
+			<th>修改日期<i class="${sort.mSortClass}" id="mSort"></i></th>
 			<th>狀態</th>
 			<th>功能</th>
 		</tr>
@@ -72,7 +72,7 @@
 			<!-- current page -->
 			<li class="page-item active">
 				<button class="page-link" class="sr-only" id="page-btn"
-					name="currentPage" value="${page.currentPage}">${page.currentPage}</button>
+					name="currentPage" value="${page.currentPage}">${page.currentPage}/${page.totalPageCount}</button>
 			</li>
 
 			<c:if test="${page.currentPage ne page.totalPageCount}">
@@ -87,8 +87,8 @@
 				<button class="page-link last" id="page-botton-last"
 					value="${page.totalPageCount}">最末頁</button>
 			</li>
-			<li class="page-item last"><span>結果${page.totalCount}筆,共${page.totalPageCount}頁</span>
-			</li>
+<%-- 			<li class="page-item last"><span>結果${page.totalCount}筆,共${page.totalPageCount}頁</span> --%>
+<!-- 			</li> -->
 		</ul>
 	</nav>
 </div>

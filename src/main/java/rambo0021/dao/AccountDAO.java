@@ -9,7 +9,7 @@ import rambo0021.pojo.IdentityBean;
 import rambo0021.pojo.Page;
 import rambo0021.pojo.Sort;
 
-public interface AcountDAO {
+public interface AccountDAO {
 
 	List<AccountBean> userList(int start, int pageSize);
 	AccountBean userDetail(String username);
@@ -30,4 +30,5 @@ public interface AcountDAO {
 	List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize,Sort aSort);
 	int getSize(String hql);
 	String delAccount(AccountBean aBean);
+	List<IdentityBean> getidList();
 }
