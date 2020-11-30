@@ -34,13 +34,13 @@ public class H_Service {
 	}
 
 	@Transactional(rollbackFor = {Throwable.class})
-	public Hotel insert(Hotel bean) {
+	public String insert(Hotel bean) {
 		return hotelDao.insert(bean);
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type) {
-		return hotelDao.update(sn, Name, Region, Address, Tel, Dbroom, Qdroom, Description, Opentime, Type);
+	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type,byte[] pic) {
+		return hotelDao.update(sn, Name, Region, Address, Tel, Dbroom, Qdroom, Description, Opentime, Type ,pic );
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
@@ -54,10 +54,10 @@ public class H_Service {
 		return hotelDao.updateStatus(sn,Status);
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
-	public List<HotelView> sort(int first, int count,String orderfiled ,String name, String region, String type ,String order){
-		return hotelDao.sort(first,count,orderfiled,name,region,type,order);
-	}
+//	@Transactional(rollbackFor = {Throwable.class})
+//	public List<HotelView> sort(int first, int count,String orderfiled ,String name, String region, String type ,String order){
+//		return hotelDao.sort(first,count,orderfiled,name,region,type,order);
+//	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
 	public int getSize() {
@@ -72,6 +72,11 @@ public class H_Service {
 	@Transactional(rollbackFor = {Throwable.class})
 	public int howMuchData(String name, String region, String type){
 		return hotelDao.howMuchData(name, region, type);
+	}
+
+	@Transactional(rollbackFor = { Throwable.class })
+	public byte[] getPic(BigDecimal sn) {
+		return hotelDao.getPic(sn);
 	}
 	
 }

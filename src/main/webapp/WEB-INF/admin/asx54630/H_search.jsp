@@ -29,7 +29,7 @@
             <script type="text/javascript">
 				currentPage = ${hpage.currentPage};
 				totalPage = ${hpage.totalPageCount};
-				$("#page-btn").text(currentPage);
+				$("#page-btn").text(currentPage+"/"+totalPage);
 
 				if(currentPage == 1){
 					$(".page-link.first").attr("disabled", true);
