@@ -42,7 +42,7 @@
 					</c:choose></td>
 				<td>
 					<form
-						action="<%=application.getContextPath()%>/admin/displayAccountPage"
+						action="<%=application.getContextPath()%>/admin/displayAccount"
 						method="POST">
 						<button type="submit" class="btn btn-warning">修改</button>
 						<button type="button" id="delAcc" class="btn btn-danger">刪除</button>
