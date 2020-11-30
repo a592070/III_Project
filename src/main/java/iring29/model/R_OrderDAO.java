@@ -47,13 +47,13 @@ public class R_OrderDAO {
 	}
 	
 	//update order
-	public R_Order_List updateOrder(BigDecimal id, String cus_name, String cus_phone, Timestamp ts) {
+	public R_Order_List updateOrder(BigDecimal id, String cus_name, String cus_phone, Timestamp ts, BigDecimal customer_num) {
 		R_Order_List result = sessionFactory.getCurrentSession().get(R_Order_List.class, id);
 		if(result != null) {
 			result.setCus_name(cus_name);
 			result.setCus_phone(cus_phone);
 			result.setBookt_time(ts);
-			
+			result.setCustomer_num(customer_num);
 			return result;
 		}
 		return result;

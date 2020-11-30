@@ -63,11 +63,11 @@ td {
 										<tr>
 										
 										<!-- 大訂單 -->
-										<th><div>
+										<th><div>大訂單號
 											<button id="page-botton" class="Bid-btn">
 											<i class="fa fa-fw fa-sort" id="uSort"></i>
 											</button>
-											<Input type='hidden' name='order' id="order" value=''>大訂單號
+											<Input type='hidden' name='order' id="order" value=''>
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='order_id'>
 					<script>
 						$('.Bid-btn').click(function(){
@@ -82,11 +82,11 @@ td {
 									</div></th>
 									
 									<!-- 小訂單 -->
-									<th><div>
+									<th><div>餐廳訂單號
 										<button id="page-botton" class="Rid-btn">
 										<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
-											<Input type='hidden' name='order' id="order" value=''>餐廳訂單號
+											<Input type='hidden' name='order' id="order" value=''>
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='id'>
 					<script>
 						$('.Rid-btn').click(function(){
@@ -106,11 +106,11 @@ td {
 											<th class="d-none d-md-table-cell">訂位時間</th>
 											
 									<!-- 狀態 -->
-									<th><div>
+									<th><div>狀態
 										<button id="page-botton" class="timeid-btn">
 											<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
-											<Input type='hidden' name='order' id="order" value=''>狀態
+											<Input type='hidden' name='order' id="order" value=''>
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='book_time'>
 					<script>
 						$('.timeid-btn').click(function(){
@@ -182,7 +182,7 @@ td {
   											      </button>											
   											    </div>
   											    <div class="modal-body">
-  											      是否確認刪除餐廳訂單 ${r.id} 資料？
+  											      確認刪除餐廳訂單 ${r.id} 資料？
      											</div>											
  											     <div class="modal-footer">
    											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -227,7 +227,7 @@ td {
 							
 							<!-- current page -->
 								<li class="page-item active">
-									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}</button>
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}/${totalPage}</button>
 								</li>
 						
 							<!-- NEXT -->
@@ -267,7 +267,7 @@ td {
 								$("#tbody").empty();
 								$("#page-btn").remove();
 								var current_page = "";
-								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage +'</button>';
+								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage + '/' + response.page.totalPageCount +'</button>';
 								$('.page-item.active').html(current_page);
 								currentPage = response.page.currentPage;
 
@@ -281,7 +281,7 @@ td {
 								if(cgpage == totalPage){
 									currentPage = totalPage;
 									$('#page-btn').empty();
-									$('#page-btn').html(currentPage);
+									$('#page-btn').html(currentPage+ '/' + totalPage);
 								}
 
 								if(currentPage == 1){
@@ -344,7 +344,7 @@ td {
 									res_context += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
 									res_context += '<span aria-hidden="true">&times;</span></button></div>';
 									res_context += '<div class="modal-body">';
-									res_context += '是否確認刪除餐廳訂單'+ response.Rlist[i].id +'資料？';
+									res_context += '確認刪除餐廳訂單'+ response.Rlist[i].id +'資料？';
 									res_context += '</div><div class="modal-footer">';
 									res_context += '<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>';
 									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" >';
