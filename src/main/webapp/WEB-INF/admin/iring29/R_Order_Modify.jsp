@@ -56,7 +56,7 @@ h5{
 					action="<%=pageContext.getServletContext().getContextPath()%>/admin/RestaurantList"
 					method="GET">
 					<div class="div-back">
-						<button type="submit" class="btn btn-primary">回餐廳列表</button>
+						<button type="submit" class="btn btn-primary">回餐廳訂單列表</button>
 					</div>
 				</FORM>
 
@@ -89,8 +89,32 @@ h5{
 
 					<div class="col-md-6 mb-3">
 						<label for="phone"><h5>下訂者電話</h5></label> 
-						<textarea class="form-control" name="cus_phone"	id="cus_phone" cols="80" rows="1">${ROList.cus_phone} </textarea>
+						<textarea class="form-control" name="cus_phone"	id="cus_phone" cols="80" rows="1">${ROList.cus_phone}</textarea>
 
+					</div>
+					
+					<div class="col-md-6 mb-3">
+						<label for="phone"><h5>訂位人數</h5></label> 
+<%-- 						<textarea class="form-control" name="cus_phone"	id="cus_phone" cols="80" rows="1">${ROList.customer_num}</textarea> --%>
+						<select name="customer_num" id="p_num" class="form-control">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						</select>
+					<script type="text/javascript">
+						var num  =  ${ROList.customer_num};
+						console.log("type" + typeof(num));
+        				var opts=document.getElementById("p_num");
+						console.log("num" + opts[num].value);
+       					opts[num-1].selected=true;
+   					</script>
 					</div>
 					<hr>
 
@@ -163,24 +187,44 @@ h5{
 					<hr>
 					<h4 class="mb-3">總金額 500 元</h4>
 					<hr>
-					<h4 class="mb-3">訂單狀態&nbsp;</h4>
-					<hr>
-					<div class="modify_div">
-						<button class="btn btn-warning" name="confirm" value="confrim"
-							onclick="confrimModify()">確認修改</button>
-					</div>
+<!-- 					<div class="modify_div"> -->
+<!-- 						<button class="btn btn-warning" name="confirm" value="confrim" -->
+<!-- 							onclick="confrimModify()">確認修改</button> -->
+<!-- 					</div> -->
+					
+									<div class="modify_div">
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#訂單${ROList.id}">
+											  送出修改
+											</button>
+									</div>
+											<!-- Modal -->
+											<div class="modal fade" id="訂單${ROList.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ 											 <div class="modal-dialog modal-dialog-centered" role="document">
+  											  <div class="modal-content">
+ 											     <div class="modal-header">
+ 											       <h5 class="modal-title" id="exampleModalLabel">修改提醒</h5>
+ 											       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  											        <span aria-hidden="true">&times;</span>											
+  											      </button>											
+  											    </div>
+  											    <div class="modal-body">
+  											      是否確認修改餐廳餐廳餐廳  ${ROList.id}  資料？
+     											</div>											
+ 											     <div class="modal-footer">
+   											     	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+   											     	<button type="submit" class="btn btn-primary" onclick="confrimModify()">確認</button>
+   											   </div>
+  											  </div>
+  											</div>
+											</div>
+
 					
 					<script type="text/javascript"> 
 					 function confrimModify(){ 
-						 if (confirm("確定送出修改 ? ") ) { 
 								document.forms["modifyR"].action="<%=application.getContextPath()%>/admin/ROrderModify";
 								document.forms["modifyR"].method = "POST";
 								document.forms["modifyR"].submit();
-								
-								return;
-							} else {
-								return;
-							}
 						}
 
 			

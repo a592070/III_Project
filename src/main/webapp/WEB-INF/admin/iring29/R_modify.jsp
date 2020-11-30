@@ -413,23 +413,43 @@ pre {
 
 					</div>
 
-					<div class="modify_div">
-						<button class="btn btn-warning" id="confirm" name="confirm" value="confrim" onclick="confrimModify()">確認修改</button>
+<!-- 					<div class="modify_div"> -->
+<!-- 						<button class="btn btn-warning" id="confirm" name="confirm" value="confrim" onclick="confrimModify()">確認修改</button> -->
 
-					</div>
-				
+<!-- 					</div> -->
+									<div class="modify_div">
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#餐廳${RBean.r_sn}">
+											 送出修改
+											</button>
+									</div>
+											<!-- Modal -->
+											<div class="modal fade" id="餐廳${RBean.r_sn}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ 											 <div class="modal-dialog modal-dialog-centered" role="document">
+  											  <div class="modal-content">
+ 											     <div class="modal-header">
+ 											       <h5 class="modal-title" id="exampleModalLabel">修改提醒</h5>
+ 											       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  											        <span aria-hidden="true">&times;</span>											
+  											      </button>											
+  											    </div>
+  											    <div class="modal-body">
+  											      確認修改  ${RBean.name}  餐廳資料？
+     											</div>											
+ 											     <div class="modal-footer">
+   											     	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+   											     	<button type="button" class="btn btn-primary" onclick="confrimModify()">確認</button>
+   											   </div>
+  											  </div>
+  											</div>
+											</div>				
 
 		<script type="text/javascript"> 
 		function confrimModify(){ 
-			if (confirm("確定送出修改 ? ") ) { 
 				document.forms["modifyR"].action="<%=application.getContextPath()%>/admin/ModifyRestaurant";
 				document.forms["modifyR"].method = "POST";
 				document.forms["modifyR"].submit();
-								
-				return;
-			} else {
-				return;
-			}
+			
 		}
 						
 		</script>

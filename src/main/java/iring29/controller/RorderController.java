@@ -120,16 +120,17 @@ public class RorderController {
 							  @RequestParam(name = "cus_name") String cus_name,
 							  @RequestParam(name = "cus_phone") String cus_phone, 
 							  @RequestParam(name = "book_date") String book_date,
-							  @RequestParam(name = "book_time") String book_time, Model m) {
+							  @RequestParam(name = "book_time") String book_time,
+							  @RequestParam(name = "customer_num") BigDecimal customer_num,Model m) {
 		String booktime = book_date +" " + book_time + ":00" ;
 		Timestamp ts = Timestamp.valueOf(booktime);
 		
-		rOrderService.updateOrder(id, cus_name, cus_phone, ts);
+		rOrderService.updateOrder(id, cus_name, cus_phone, ts, customer_num);
 		R_OrderList_VO ROList = rOrderService.Detail_OderList(id);
 		m.addAttribute("ROList", ROList);
 		m.addAttribute("date", book_date);
 		m.addAttribute("time",book_time);
-		
+		m.addAttribute("customer_num",customer_num);
 		return "iring29/R_Order_Modify";
 	}
 	

@@ -358,7 +358,8 @@ pre {
 								
 								<div>
 									<p class="p_result">
-										<textarea name="username" id="username" cols="80" rows="5"></textarea>
+										<span id="checkid"></span><br>
+										<textarea name="username" id="userName" cols="80" rows="5" onblur="ajaxusr()"></textarea>
 									</p>
 								</div>
 
@@ -368,11 +369,38 @@ pre {
 
 					</div>
 
-					<div class="modify_div">
-						<button class="btn btn-warning" id="confirm" name="confirm" value="confrim"
-							onclick="confrimModify()" disabled="">確認新增</button>
+<!-- 					<div class="modify_div"> -->
+<!-- 						<button class="btn btn-warning" id="confirm" name="confirm" value="confrim" -->
+<!-- 							onclick="confrimModify()" disabled="">確認新增</button> -->
+<!-- 					</div> -->
+										<div class="modify_div">
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#createR"  id="confirm" name="confirm" value="confrim"  disabled="">
+											  新增餐廳
+											</button>
+										</div>
 
-					</div>
+											<!-- Modal -->
+											<div class="modal fade" id="createR" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ 											 <div class="modal-dialog modal-dialog-centered" role="document">
+  											  <div class="modal-content">
+ 											     <div class="modal-header">
+ 											       <h5 class="modal-title" id="exampleModalLabel">新增提醒</h5>
+ 											       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  											        <span aria-hidden="true">&times;</span>											
+  											      </button>											
+  											    </div>
+  											    <div class="modal-body">
+  											      是否確認新增餐廳資料？
+     											</div>											
+ 											     <div class="modal-footer">
+   											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+   											     <button type="button" class="btn btn-primary" onclick="confrimModify()">確認</button>
+   											   </div>
+  											  </div>
+  											</div>
+											</div>
+					
 
 					<script type="text/javascript"> 
 					 function checkdata(){
@@ -399,19 +427,57 @@ pre {
 						 }
 					 
 					 function confrimModify(){ 
-						 if (confirm("確定新增餐聽 ? ") ) { 
 								document.forms["modifyR"].action="<%=application.getContextPath()%>/admin/CreateRestaurant";
 								document.forms["modifyR"].method = "POST";
 								document.forms["modifyR"].submit();
-								
-								return;
-							} else {
-								return;
-							}
 						}
 
 					</script>
+					
+					
+		<script>
+        function ajaxusr() {
+            let username = document.getElementById("userName").value;
+              $.ajax(
+                    {
+                        type: 'POST',
+                        data: { "userName": username },
+                        url: '${pageContext.servletContext.contextPath}/admin/checkUser',
+                        dataType: 'json',
+                        success:function(response){
+                            checkusr(response);                   
+                        }
+                    }
+                )
+            
+        }function checkusr(response){
+            console.log(response)
+            let username = document.getElementById("userName").value;
+            let sp = document.getElementById("checkid");
+            if (username == "") {
+            	console.log("userName = "+document.getElementById("userName").value)
+            	document.getElementById("userName").value="";
+                sp.innerHTML = "請注意，帳號沒有填寫喔"
+                sp.style.color = "red";
+                sp.style.fontSize = "13px";
+                sp.style.fontStyle = "italic";
+                document.getElementById("confirm").disabled = false;
+            }else if(!response){
+                sp.innerHTML = "帳號不存在，請重新輸入"
+                sp.style.color = "red";
+                sp.style.fontSize = "13px";
+                sp.style.fontStyle = "italic";
+                document.getElementById("confirm").disabled = true;
 
+            }else{
+                console.log("response = "+response)
+            	console.log(document.getElementById("userName").value);
+            	sp.innerHTML = "";
+            	document.getElementById("confirm").disabled = false;
+                }
+
+        }
+        </script>
 		
 				</div>
 			</div>
