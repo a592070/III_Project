@@ -87,11 +87,11 @@
             <thead>
             <tr>
                 <th><div>
+							<Input type='hidden' name='order' id="order" value=''>ID
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='SN'> 
 							<button id="sort" class="id-btn">
 								<i class="fa fa-fw fa-sort" id="uSort"></i>
 							</button> 
-							<Input type='hidden' name='order' id="order" value=''>ID
-							<Input type='hidden' name='orderfiled' id="orderfiled" value='SN'> 
 						<script>
 						$('.id-btn').click(function(){
 							var order = $('#order').val();
@@ -109,11 +109,11 @@
                 <th>地址</th>
                 <th>住宿類型</th>                                            
                 <th><div>
+							<Input type='hidden' name='order' id="order" value=''>狀態
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='STATUS'> 
 							<button id="sort1" class="status-btn">
 							<i class="fa fa-fw fa-sort" id="uSort"></i>
 							</button> 
-							<Input type='hidden' name='order' id="order" value=''>狀態
-							<Input type='hidden' name='orderfiled' id="orderfiled" value='STATUS'> 
 						<script>
 						$('.status-btn').click(function(){
 							var order = $('#order').val();
@@ -170,20 +170,20 @@
 							
 								<!--previous -->
 								<li class="page-item previous" id="pBtn">
-<!-- 									<button class="page-link previous " id="page-previous" value="previous">&laquo;</button> -->
-										<button class="page-link previous " id="page-previous" value="previous">上一頁</button>
+									<button class="page-link previous " id="page-previous" value="previous">&laquo;</button>
+<!-- 										<button class="page-link previous " id="page-previous" value="previous">上一頁</button> -->
 								</li>
 							
 							
 								<!--current page -->
-								<li class="page-item">
+								<li class="page-item active">
 									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}/${totalPage}</button>
 								</li>
 						
 								<!--NEXT -->
 								<li class="page-item next" id ="nBtn">
-<!-- 									<button class="page-link next" id="page-next" value="next">&raquo;</button> -->
-									<button class="page-link next" id="page-next" value="next">下一頁</button>
+									<button class="page-link next" id="page-next" value="next">&raquo;</button>
+<!-- 									<button class="page-link next" id="page-next" value="next">下一頁</button> -->
 								</li>
 							
 							

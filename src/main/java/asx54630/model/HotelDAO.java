@@ -113,7 +113,7 @@ public class HotelDAO {
 
 	}
 	
-	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type) { //修改
+	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type, byte[] Pic) { //修改
 		Session session = sessionFactory.getCurrentSession();
 		Hotel result = session.get(Hotel.class, sn);
 		if(result != null) {
@@ -126,6 +126,7 @@ public class HotelDAO {
 			result.setDESCRIPTION(Description);
 			result.setOPENTIME(Opentime);
 			result.setTYPE(Type);
+			result.setPIC(Pic);
 		}
 		return result;
 	}
@@ -153,6 +154,13 @@ public class HotelDAO {
 		}
 		return false;
 		
+	}
+
+	public byte[] getPic(BigDecimal sn) { //取得圖片
+		Session session = sessionFactory.getCurrentSession();
+		Query<byte[]> query = session.createQuery("select PIC from Hotel where SN =?1", byte[].class);
+		query.setParameter(1, sn);
+		return query.uniqueResult();
 	}
 
 }

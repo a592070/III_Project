@@ -211,23 +211,23 @@ pre {
 								<input type="hidden" value="${hoteldetail.SN}" name="upId" id="dataId">
 								 <p class="modify-img">
 									<label for="r-name">請選擇欲修改圖片上傳</label> 
-									<input type="file" id="pic" name="pic">
-									<Input type='hidden' name='r_sn' value=''>
+									<input type="file" id="uppic" name="uppic" value="${hoteldetail.PIC}">
 								</p>
 								<div class="div_img">
-									<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic"> 
+									<img id="preview_Hpic" src="<%=application.getContextPath()%>/admin/hotelPic"> 
 								</div>
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-								<script> 
-								$("#pic").change(function(){ 
+								<script>
+
+								$("#uppic").change(function(){ 
 					                 readURL(this); 
 									            }); 
  					            function readURL(input){ 
  					                if(input.files && input.files[0]){ 
  					                    var reader = new FileReader(); 
  					                    reader.onload = function (e) { 
- 					                        $("#preview_Rpic").attr('src', e.target.result);
+ 					                        $("#preview_Hpic").attr('src', e.target.result);
  					                    } 
  					                    reader.readAsDataURL(input.files[0]); 
  					                } 
