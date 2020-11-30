@@ -138,7 +138,7 @@ public class RorderController {
 	@RequestMapping(path = "DeleteOrder", method = RequestMethod.POST)
 	public String DelOrder(@RequestParam("rid") BigDecimal id, Model m) {
 		String result = rOrderService.deleteOrder(id);
-		m.addAttribute("result",result);
+//		m.addAttribute("result",result);
 		return "redirect:RestaurantList";
 	}
 }
