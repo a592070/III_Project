@@ -26,6 +26,7 @@
 
 	<mvc:default-servlet-handler />
 	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
+	<mvc:resources mapping="/direngine-master/**" location="/WEB-INF/direngine-master/"/>
 
 	<mvc:annotation-driven>
 		<mvc:message-converters>

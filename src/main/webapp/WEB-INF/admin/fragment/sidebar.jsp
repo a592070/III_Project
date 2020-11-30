@@ -70,7 +70,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="Tindex.controller">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/Tindex.controller">
                             <i class="mdi mdi-car"></i>
                             <span class="nav-text">租車</span>
                         </a>

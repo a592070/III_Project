@@ -1,24 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Search</title>
-<script src="${pageContext.servletContext.contextPath}/static/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<title>找餐廳</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <c:import url="/WEB-INF/admin/fragment/user_ref.jsp" />
 <style>
 * {
 	margin: 0;
 	padding: 0;
 }
 
+body{
+	margin:0px;
+	padding:0px;
+	background:#fff url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat;
+	background-size: cover;　
+}    
+
 .div_box {
 	margin: 50px auto;
+	padding-top: 100px;
+	padding-bottom: 250px;
 	width: 500px;
 	/* height: 400px; */
 	/* border: 1px solid black; */
@@ -26,33 +31,34 @@
 
 .div_search {
 	width: 500px auto;
-	border: 1px solid black;
-	/* display: flex; */
+	background-color: white;
+ 	border-radius: 10px; 
 }
 
 .search {
 	/* width: 500px; */
 	text-align: center;
-	border-bottom: solid 1px #c1c0c1;
+	border-bottom: dashed 1px #c1c0c1;
 	cursor: pointer;
-	padding: 20px;
+	padding: 25px;
 }
 
 .search_date {
 	/* width: 500px; */
 	text-align: center;
-	border-bottom: solid 1px #c1c0c1;
+	border-bottom: dashed 1px #c1c0c1;
 	cursor: pointer;
 	padding: 25px;
 }
 
 .sp_search {
-	/* border: 1px solid black; */
 	width: 100px;
 	float: left;
 	padding-top: 10px;
 	margin-left: 50px;
 	text-align: right;
+	color:black;
+	font-size: 15px;
 }
 .sp_search-1{
 	width: 100px;
@@ -61,6 +67,8 @@
 	margin-left: 50px;
 	margin-right: 28px;
 	text-align: right;
+	color:black;
+	font-size: 15px;
 }
 #inputState.form-control{
 	width: 250px;
@@ -74,13 +82,14 @@ input {
 button {
 	padding: 5px;
 	margin-left: 10px;
-}
+	width:100px;
+}    
 </style>
 </head>
-
 <body>
-<c:import url="/WEB-INF/admin/fragment/FrontHeader.jsp" />
 
+    <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
+    
 	<FORM
 		ACTION="<%=pageContext.getServletContext().getContextPath()%>/SearchRestaurant"
 		method="post">
@@ -154,12 +163,13 @@ button {
 					</select>
 				</div>
 				<div class="search">
-					<button name="QUERY" type="SUBMIT" value="QUERY" class="btn btn-success">Search</button>
+					<button name="QUERY" type="SUBMIT" value="QUERY" class="btn btn-success">找餐廳</button>
 				</div>
 			</div>
 
 		</div>
 	</FORM>
-</body>
 
+</body>
+	 <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
 </html>

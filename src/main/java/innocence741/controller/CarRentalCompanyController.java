@@ -31,7 +31,7 @@ import innocence741.model.CarRentalCompanyViewDAO;
 import innocence741.service.CarRentalCompanyViewService;
 import rambo0021.pojo.AccountBean;
 
-@Controller @Lazy
+@Controller @Lazy @RequestMapping("/admin")
 public class CarRentalCompanyController {
 	
 	@Autowired
@@ -107,7 +107,7 @@ public class CarRentalCompanyController {
 	throws SQLException, IOException {
 		
 		boolean flag = false;
-
+		
 		CarRentalCompany cBean = new CarRentalCompany();
 		cBean.setSn_rentalcompany(sn_rentalcompany);
 		cBean.setName_company(name_company);

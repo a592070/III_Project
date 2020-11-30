@@ -32,9 +32,12 @@ public class Hotel {
 	private BigDecimal RATING;
 	private String ACCOUNT;
 	private String STATUS;
+	private String PIC_URL;
+	private byte[] PIC;
 	
-	
-	public Hotel(BigDecimal sn, String name, String region, String address, String tel, BigDecimal dbroom, BigDecimal quadroom, String description, String openTime, String type, BigDecimal rating, String account, String status) {
+
+
+	public Hotel(BigDecimal sn, String name, String region, String address, String tel, BigDecimal dbroom, BigDecimal quadroom, String description, String openTime, String type, BigDecimal rating, String account, String status,String pic_url,byte[] pic) {
 		this.SN = sn;
 		this.NAME = name;
 		this.REGION = region;
@@ -48,6 +51,8 @@ public class Hotel {
 		this.RATING = rating;
 		this.ACCOUNT = account;
 		this.STATUS = status;
+		this.PIC_URL = pic_url;
+		this.PIC = pic;
 	}
 	
 	public Hotel() {
@@ -55,7 +60,7 @@ public class Hotel {
 	}
 	
 	@Id @Column(name="SN")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public BigDecimal getSN() {
 		return SN;
 	}
@@ -173,5 +178,22 @@ public class Hotel {
 		STATUS = sTATUS;
 	}
 	
+	@Column(name = "PIC_URL")
+	public String getPIC_URL() {
+		return PIC_URL;
+	}
 
+	public void setPIC_URL(String pIC_URL) {
+		PIC_URL = pIC_URL;
+	}
+	
+	@Column(name = "PIC")
+	public byte[] getPIC() {
+		return PIC;
+	}
+
+	public void setPIC(byte[] pIC) {
+		PIC = pIC;
+	}
+	
 }

@@ -62,7 +62,11 @@ public class HotelDAO {
 
 	public List<HotelView> selectAll(int first, int count, String name, String region, String type, String orderfiled, String order){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
-		Query<HotelView> query = session.createQuery("From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order, HotelView.class);
+		String hql = "From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order ;
+		if(orderfiled.equals("STATUS")) {
+			hql += ", SN";
+		}
+		Query<HotelView> query = session.createQuery(hql, HotelView.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
@@ -72,32 +76,44 @@ public class HotelDAO {
 		return list;
 	}
 	
-	public List<HotelView> sort(int first, int count, String orderfiled ,String name, String region, String type ,String order){ //排序
-		Session session = sessionFactory.getCurrentSession();
-		Query<HotelView> query = session.createQuery("From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order , HotelView.class);
-		query.setParameter(0, "%" + name + "%");
-		query.setParameter(1, "%" + region + "%");
-		query.setParameter(2, "%" + type + "%");
-		query.setFirstResult(first);
-		query.setMaxResults(count);
-		List<HotelView> list = query.list();
-		
-		return list;
-	}
+//	public List<HotelView> sort(int first, int count, String orderfiled ,String name, String region, String type ,String order){ //排序
+//		Session session = sessionFactory.getCurrentSession();
+//		String hql = "From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 order by "+ orderfiled +" "+ order ;
+//		if(orderfiled.equals("STATUS")) {
+//			hql += ", SN";
+//		}
+//		Query<HotelView> query = session.createQuery(hql, HotelView.class);
+//		query.setParameter(0, "%" + name + "%");
+//		query.setParameter(1, "%" + region + "%");
+//		query.setParameter(2, "%" + type + "%");
+//		query.setFirstResult(first);
+//		query.setMaxResults(count);
+//		List<HotelView> list = query.list();
+//		
+//		return list;
+//	}
 	
 
-	public Hotel insert(Hotel bean) { //新增
+	public String insert(Hotel bean) { //新增
 		Session session = sessionFactory.getCurrentSession();
-		Hotel result = session.get(Hotel.class, bean.getSN());
 		
-		if (result == null) {
+		try{
 			session.save(bean);
-			return bean;
+			return "新增成功";
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "新增失敗";
 		}
-		return null;
+	
+		
+//		if (result == null) {
+//			session.save(bean);
+//			return bean;
+//		}
+
 	}
 	
-	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type) { //修改
+	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type, byte[] Pic) { //修改
 		Session session = sessionFactory.getCurrentSession();
 		Hotel result = session.get(Hotel.class, sn);
 		if(result != null) {
@@ -110,6 +126,7 @@ public class HotelDAO {
 			result.setDESCRIPTION(Description);
 			result.setOPENTIME(Opentime);
 			result.setTYPE(Type);
+			result.setPIC(Pic);
 		}
 		return result;
 	}
@@ -137,6 +154,13 @@ public class HotelDAO {
 		}
 		return false;
 		
+	}
+
+	public byte[] getPic(BigDecimal sn) { //取得圖片
+		Session session = sessionFactory.getCurrentSession();
+		Query<byte[]> query = session.createQuery("select PIC from Hotel where SN =?1", byte[].class);
+		query.setParameter(1, sn);
+		return query.uniqueResult();
 	}
 
 }
