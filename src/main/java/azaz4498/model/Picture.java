@@ -28,22 +28,19 @@ public class Picture implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private Integer id;
-	@Column(name = "FILENAME")
 	private String picFileName;
-	@Column(name = "URL")
 	private String picUrl;
 	private Integer refId;
-	@Column(name = "PICTURE")
 	private byte[] picture;
 	private Article article;
 	
 	public Picture() {
 	}
-
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getId() {
 		return id;
 	}
@@ -51,7 +48,7 @@ public class Picture implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	@Column(name = "FILENAME")
 	public String getPicFileName() {
 		return picFileName;
 	}
@@ -59,7 +56,7 @@ public class Picture implements Serializable{
 	public void setPicFileName(String picFileName) {
 		this.picFileName = picFileName;
 	}
-
+	@Column(name = "URL")
 	public String getPicUrl() {
 		return picUrl;
 	}
@@ -77,7 +74,7 @@ public class Picture implements Serializable{
 	public void setRefId(Integer refId) {
 		this.refId = refId;
 	}
-
+	@Column(name = "PICTURE")
 	public byte[] getPicture() {
 		return picture;
 	}

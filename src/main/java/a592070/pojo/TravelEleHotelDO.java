@@ -12,7 +12,7 @@ public class TravelEleHotelDO {
 
     private Timestamp time;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "H_ID", referencedColumnName = "SN")
     private HotelVO hotel;
 

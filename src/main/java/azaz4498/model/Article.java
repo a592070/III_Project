@@ -2,9 +2,7 @@ package azaz4498.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -56,8 +54,8 @@ public class Article implements Serializable {
 		this.artStatus = artStatus;
 	}
 
-	private List<Comment> comments = new ArrayList<Comment>();
-	private List<Picture> pictures = new ArrayList<Picture>();
+	private Set<Comment> comments = new LinkedHashSet<>();
+	private Set<Picture> pictures = new LinkedHashSet<>();
 	private ArticleType articleType;
 
 	public Article() {
@@ -140,21 +138,22 @@ public class Article implements Serializable {
 
 	
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
-	public List<Comment> getComments() {
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
+	public Set<Comment> getComments() {
 		return comments;
 	}
 
-	public void setComments(List<Comment> comments) {
+	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
-	public List<Picture> getPictures() {
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "article")
+	public Set<Picture> getPictures() {
 		return pictures;
 	}
 
-	public void setPictures(List<Picture> pictures) {
+	public void setPictures(Set<Picture> pictures) {
 		this.pictures = pictures;
 	}
 

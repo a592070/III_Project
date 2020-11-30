@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core_1_1" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Student
@@ -79,31 +79,31 @@
                             <el-form-item label="ID" prop="sn" v-bind:hidden="isInsert">
                                 <el-input v-model="attractionData.sn" disabled></el-input>
                             </el-form-item>
-                            <el-form-item label="Name" prop="name">
+                            <el-form-item label="名稱" prop="name">
                                 <el-input v-model="attractionData.name"></el-input>
                             </el-form-item>
-                            <el-form-item label="Tel" prop="tel">
+                            <el-form-item label="電話" prop="tel">
                                 <el-input v-model="attractionData.tel"></el-input>
                             </el-form-item>
-                            <el-form-item label="Address" prop="address">
+                            <el-form-item label="地址" prop="address">
                                 <el-input v-model="attractionData.address"></el-input>
                             </el-form-item>
-                            <el-form-item label="Region" prop="region">
+                            <el-form-item label="地區" prop="region">
                                 <el-select v-model="attractionData.region" placeholder="選擇地區" >
                                     <el-option label="--請選擇--" disabled></el-option>
                                     <el-option v-for="ele in region" v-bind:key="ele" :value="ele"></el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="Px" prop="px">
+                            <el-form-item label="Px 經度" prop="px">
                                 <el-input v-model="attractionData.px"></el-input>
                             </el-form-item>
-                            <el-form-item label="Py" prop="py">
+                            <el-form-item label="Py 緯度" prop="py">
                                 <el-input v-model="attractionData.py"></el-input>
                             </el-form-item>
 <%--                            <el-form-item label="picture_url" prop="pictureUrl">--%>
 <%--                                <el-input v-model="attractionPic.picUrl"></el-input>--%>
 <%--                            </el-form-item>--%>
-                            <el-form-item label="Picture" prop="picture">
+                            <el-form-item label="圖片" prop="picture">
                                 <el-tag type="warning">限制 {{pictureLimit}} 張圖片</el-tag>
 <%--                                <el-image--%>
 <%--                                        style="width: 300px; height: 300px"--%>
@@ -127,39 +127,39 @@
                                     <el-image width="100%" :src="imageUrl" alt="" lazy></el-image>
                                 </el-dialog>
                             </el-form-item>
-                            <el-form-item label="TotalDescribe" prop="toldescribe">
+                            <el-form-item label="詳細描述" prop="toldescribe">
                                 <el-input v-model="attractionData.toldescribe"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
-                            <el-form-item label="Description" prop="description">
+                            <el-form-item label="簡述" prop="description">
                                 <el-input v-model="attractionData.description"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
-                            <el-form-item label="TravellingInfo" prop="travellingInfo">
+                            <el-form-item label="旅遊資訊" prop="travellingInfo">
                                 <el-input v-model="attractionData.travellingInfo"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
-                            <el-form-item label="TicketInfo" prop="ticketInfo">
+                            <el-form-item label="門票資訊" prop="ticketInfo">
                                 <el-input v-model="attractionData.ticketInfo"
                                           type="textarea"
                                           :autosize="{ minRows: 2}"></el-input>
                             </el-form-item>
-                            <el-form-item label="Keywords" prop="keywords">
+                            <el-form-item label="關鍵字" prop="keywords">
                                 <el-input v-model="attractionData.keywords"></el-input>
                             </el-form-item>
-                            <el-form-item label="Remarks" prop="remarks">
+                            <el-form-item label="備註" prop="remarks">
                                 <el-input v-model="attractionData.remarks" type="textarea"></el-input>
                             </el-form-item>
-                            <el-form-item label="Rating" prop="rating">
+                            <el-form-item label="評分" prop="rating">
                                 <el-input v-model="attractionData.rating"></el-input>
                             </el-form-item>
-                            <el-form-item label="OpenTime" prop="openTime">
+                            <el-form-item label="開放時間" prop="openTime">
                                 <el-input v-model="attractionData.openTime" type="textarea"></el-input>
                             </el-form-item>
-                            <el-form-item label="Status" prop="status">
+                            <el-form-item label="啟用狀態" prop="status">
                                 <label class="switch switch-text switch-success switch-pill form-control-label">
                                     <input type="checkbox" class="switch-input form-check-input" v-bind:checked="attractionData.status" v-on:click="()=>attractionData.status=!attractionData.status">
                                     <span class="switch-label" data-on="On" data-off="Off"></span>
