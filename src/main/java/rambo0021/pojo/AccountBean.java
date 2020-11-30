@@ -65,21 +65,6 @@ public class AccountBean {
 	public AccountBean() {
 
 	}
-	
-
-	public AccountBean(String userName, String password, String email, byte[] picture, Date modify_Date,
-			String nickName, Date register, String status) {
-		super();
-		this.userName = userName;
-		this.password = password;
-		this.email = email;
-		this.picture = picture;
-		this.modify_Date = modify_Date;
-		this.nickName = nickName;
-		this.register = register;
-		this.status = status;
-	}
-
 
 	public String getUserName() {
 		return userName;

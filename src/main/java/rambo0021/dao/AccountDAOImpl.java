@@ -16,7 +16,7 @@ import rambo0021.pojo.IdentityBean;
 import rambo0021.pojo.Page;
 import rambo0021.pojo.Sort;
 
-public class AccountDAOImpl implements AccountDAO {
+public class AccountDAOImpl implements AcountDAO {
 	@Autowired
 	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
@@ -148,23 +148,23 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public String delAccount(AccountBean aBean) {
 		Session session = sessionFactory.getCurrentSession();
-		if (aBean.getOrderTable() != null) {
-			for (OrderTable oBean : aBean.getOrderTable()) {
-				oBean.setAccountBean(null);
-				System.out.println("設定null");
+		if (aBean.getOrderTable()!=null) 
+			{   
+				for (OrderTable oBean : aBean.getOrderTable()) {
+					oBean.setAccountBean(null);
+					System.out.println("設定null");
+				}
+				
 			}
-
-		}
 		session.update(aBean);
 		session.remove(aBean);
 		return "刪除成功";
 	}
-
 	@Override
 	public String delAccount(String username) {
 		Session session = sessionFactory.getCurrentSession();
 		AccountBean aBean = session.get(AccountBean.class, username);
-
+		
 		if (aBean != null) {
 			System.out.println("123");
 //			if (!aBean.getOrderTable().isEmpty()) 
@@ -219,29 +219,11 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize,
-			Sort aSort) {
+	public List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize,Sort aSort) {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "From AccountListViewBean  WHERE userName like ?0 and iName like ?1 and email like ?2 order by ";
-		
-		if (!"default".equals(aSort.getiSort())) {
-			hql += " iName " + aSort.getiSort()+",";
-		}
-		if (!"default".equals(aSort.geteSort())) {
-			hql += " email " + aSort.geteSort()+",";
-		}
-		if (!"default".equals(aSort.getrSort())) {
-			hql += " register " + aSort.getrSort()+",";
-		}
-		if (!"default".equals(aSort.getmSort())) {
-			hql += " modify_Date " + aSort.getmSort()+",";
-		}
-		if (!"default".equals(aSort.getuSort())) {
-			hql += " userName " + aSort.getuSort();
-		}else {
-			hql += "userName";
-		}
-		System.out.println("aorder by"+hql);
+		String hql = "From AccountListViewBean WHERE userName like ?0 and iName like ?1 and email like ?2 order by userName";
+//		String hql="From AccountBean WHERE userName like ?0 and email like ?1";
+//		if()
 
 		Query<AccountListViewBean> query = session.createQuery(hql, AccountListViewBean.class);
 		query.setParameter(0, "%" + username + "%");
@@ -253,12 +235,6 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public int getSize(String hql) {
 		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
-	}
-
-	@Override
-	public List<IdentityBean> getidList() {
-		String hql="From IdentityBean order by id";
-		return sessionFactory.getCurrentSession().createQuery(hql, IdentityBean.class).list();
 	}
 
 }
