@@ -106,6 +106,7 @@ h2 {
 .p_result {
 	padding: 10px 30px;
 	color: black;
+	clear:both;
 }
 
 .rating {
@@ -143,8 +144,9 @@ h3 {
 }
 
 .btn.btn-light {
-	height: 35px;
+	color:lightgray;
 }
+
 
 .div-1 {
 	padding: 5px;
@@ -180,6 +182,21 @@ pre {
 .form-control{
 	width: 650px;
 }
+
+#must_have.res_result{
+	padding-right:0;
+ 	float:left; 
+}
+#idsp{
+	float:left; 
+	color:red;
+	font-size:13px;
+	font-style:italic;
+}
+.d_flex{
+ 	display: flex;
+ 	align-items: center;
+ }
 </style>
 
 </head>
@@ -200,6 +217,7 @@ pre {
 					method="GET">
 					<div class="div-back">
 						<button type="submit" class="btn btn-primary">回餐廳列表</button>
+						<button type="button" class="btn btn-light" id="putdata" onclick="insertdata()">帶入資料</button>
 					</div>
 				</FORM>
 
@@ -244,9 +262,9 @@ pre {
 									<h4 class="res_data">餐廳名稱</h4>
 								</div>
 								<div>
-									<h4 class="res_result">請輸入餐廳名稱</h4>
+									<div class="d_flex"><h4 class="res_result" id="must_have">請輸入餐廳名稱</h4><span id="idsp">&nbsp;*必填</span></div>
 									<p class="p_result">
-										<textarea name="name" id="name" cols="80" rows="5"></textarea>
+										<textarea name="name" id="name" cols="80" rows="5" onblur="checkdata()"></textarea>
 									</p>
 								</div>
 
@@ -255,9 +273,9 @@ pre {
 								</div>
 
 								<div>
-									<h4 class="res_result">請選擇餐廳地區</h4>
+									<div class="d_flex"><h4 class="res_result" id="must_have">請選擇餐廳地區</h4><span id="idsp">&nbsp;*必填</span></div>
 									<p class="p_result">
-							<select name="region" id="region" class="form-control">
+							<select name="region" id="region" class="form-control" onblur="checkdata()">
 								<option value="">請選擇地區</option>
 								<option value="基隆">基隆</option>
 								<option value="新北">新北</option>
@@ -351,12 +369,35 @@ pre {
 					</div>
 
 					<div class="modify_div">
-						<button class="btn btn-warning" name="confirm" value="confrim"
-							onclick="confrimModify()">確認新增</button>
+						<button class="btn btn-warning" id="confirm" name="confirm" value="confrim"
+							onclick="confrimModify()" disabled="">確認新增</button>
 
 					</div>
 
 					<script type="text/javascript"> 
+					 function checkdata(){
+						 let name = document.getElementById("name").value;
+						 let region = document.getElementById("region").value;
+						 console.log("name = "+ name)
+						 console.log("region = "+ region)
+						 if(name != "" && region != ""){
+							 	console.log("in")
+								document.getElementById("confirm").disabled = false;
+							 }
+						 }
+					 function insertdata(){
+						 console.log("in data")
+ 						 document.getElementById("name").value = "麥當當";
+ 						 document.getElementById("region")[4].selected = "selected";
+ 						 document.getElementById("address").value = "桃園市桃園區中正路50號";
+ 						 document.getElementById("transportation").value = "";
+ 						 document.getElementById("serviceinfo").value = "浪漫約會, 商業聚餐, 家庭聚餐, 團體聚餐, 朋友聚餐, 生日慶祝";
+ 						 document.getElementById("type").value = "西式料理";
+ 						 document.getElementById("opentime").value = "全年無休";
+ 						 document.getElementById("description").value = "經典、歷史悠久的速食連鎖店，以漢堡、薯條與奶昔聞名";
+ 						 document.getElementById("confirm").disabled = false;
+						 }
+					 
 					 function confrimModify(){ 
 						 if (confirm("確定新增餐聽 ? ") ) { 
 								document.forms["modifyR"].action="<%=application.getContextPath()%>/admin/CreateRestaurant";
@@ -369,11 +410,9 @@ pre {
 							}
 						}
 
-			
-						
 					</script>
 
-
+		
 				</div>
 			</div>
 		</div>

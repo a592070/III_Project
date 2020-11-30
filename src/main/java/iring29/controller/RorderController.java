@@ -138,6 +138,6 @@ public class RorderController {
 	public String DelOrder(@RequestParam("rid") BigDecimal id, Model m) {
 		String result = rOrderService.deleteOrder(id);
 		m.addAttribute("result",result);
-		return "iring29/OrderResult";
+		return "redirect:RestaurantList";
 	}
 }
