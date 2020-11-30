@@ -238,7 +238,12 @@ pre {
 			<!-- 					<button type="submit" class="btn btn-light">修改</button> -->
 								</p>
 								<div class="div_img">
-									<img id="preview_Rpic" src="<%=application.getContextPath()%>/admin/ShowPic">
+									<c:if test="${!empty RBean.pic}">
+										<img id="preview_Rpic" src="<%=application.getContextPath()%>/admin/ShowPic">
+									</c:if>
+									<c:if test="${empty RBean.pic}">
+										<img id="preview_Rpic" src="<%=application.getContextPath()%>/assets/img/iring29/Restaurant_img.png">
+									</c:if>
 								</div>
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
