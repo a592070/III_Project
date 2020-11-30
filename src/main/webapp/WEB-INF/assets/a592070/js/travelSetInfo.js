@@ -1,7 +1,7 @@
 const App = new Vue({
     el: '#app',
     components: {
-        'app-world': httpVueLoader(context+'/assets/a592070/js/components/myComponent.vue')
+        'main': httpVueLoader(context+'/assets/a592070/js/components/main.vue')
     },
 })
 // export default App;
