@@ -63,12 +63,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
   href="${pageContext.request.contextPath}/assets/img/favicon.png"
   rel="shortcut icon"
 />
-<%--
 <script
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn8TFXGg17HAUcNpkwtxxyT9Io9B_NcM"
   defer
 ></script>
---%>
 <script src="${pageContext.request.contextPath}/assets/plugins/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap/js/bootstrap-datetimepicker.js"></script>
