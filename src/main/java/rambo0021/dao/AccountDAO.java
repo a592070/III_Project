@@ -1,4 +1,4 @@
-package rambo0021.serive;
+package rambo0021.dao;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +9,7 @@ import rambo0021.pojo.IdentityBean;
 import rambo0021.pojo.Page;
 import rambo0021.pojo.Sort;
 
-public interface AccountService {
+public interface AccountDAO {
 
 	List<AccountBean> userList(int start, int pageSize);
 	AccountBean userDetail(String username);
@@ -22,12 +22,12 @@ public interface AccountService {
 	String udAccountModify(String username, Date modify);
 	String delAccountPic(String username);
 	String enableAccount(String username,String status);
-	String disableAccount(String username,String status);
+	String disableAccount(String usernamem,String status);
 	String delAccount(String username);
 	String modifyAccount(String username, String password, int identity, String email,String nickName);
 	String registered(AccountBean aBean, IdentityBean iBean);
 	boolean login(String username, String password);
-	List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize, Sort aSort);
+	List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize,Sort aSort);
 	int getSize(String hql);
 	String delAccount(AccountBean aBean);
 	List<IdentityBean> getidList();
