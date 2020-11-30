@@ -241,10 +241,10 @@ pre {
 					</div>
 <!-- ||||||||||||||| -->
                     
-                    <!-- <div>
-                        <h4 class="res_result">帳號狀態</h4>
-                        <p class="p_result"><textarea name="accessible_carrentalcompany" id="accessible_carrentalcompany" cols="80" rows="5"></textarea></p>
-                    </div> -->
+                    <div>
+                        <!-- <h4 class="res_result">帳號狀態</h4> -->
+                        <p class="p_result"><textarea name="accessible_carrentalcompany" id="accessible_carrentalcompany" cols="80" rows="5" style="display: none;"></textarea></p>
+                    </div>
 					
 
                     
@@ -266,7 +266,32 @@ pre {
 				</div>
 			</div>
  		</div>
-    </div>
+	</div>
+	
+	<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="display:none" id="modal">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+ <div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLongTitle">確認修改</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+ <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" id="modal-body">
+  
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal" >取消</button>
+  <button type="button" class="btn btn-primary" id="confirm">確認</button>
+</div>
+ </div>
+</div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <script>
@@ -321,29 +346,34 @@ pre {
         $("#updateData").click(function(event){
             var form1 = $(this).parents('form');
             var formData = new FormData(form1[0]);
-            console.log("why")
+			$("#modal").click();
+			$("#confirm").click(function(){
+				console.log("why")
 
-            $.ajax({
-                    
-                 type:"POST",
-                 url: "update.carrentalcompany.controller",
-                 data: formData, 
-                 processData : false, 
-                 contentType : false,
-                 dataType: "json",
+				$.ajax({
+						
+					type:"POST",
+					url: "update.carrentalcompany.controller",
+					data: formData, 
+					processData : false, 
+					contentType : false,
+					dataType: "json",
 
-                 success : (response) => {
-                    console.log("haha");
-                    alert("修改成功");
+					success : (response) => {
+						console.log("haha");
+						alert("修改成功");
+						$("#close").click();
+					},
 
-                 },
+					error:function(xhr, ajaxOptions, thrownError){
 
-                 error:function(xhr, ajaxOptions, thrownError){
+						console.log(xhr.status+"\n"+thrownError);
+						$("#close").click();
 
-                     console.log(xhr.status+"\n"+thrownError);
-                 }
+					}
 
-             });
+				});
+			});
 
         })
 
@@ -374,7 +404,7 @@ pre {
 
             }
 
-
+	
 
 
     </script>
