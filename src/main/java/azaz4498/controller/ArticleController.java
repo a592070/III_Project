@@ -13,6 +13,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import global.Constant;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -202,8 +203,9 @@ public class ArticleController {
 		Map<String, String> map = new HashMap<String, String>();
 		String fileName = uploadFile.getOriginalFilename();
 		String finalFileName = UUID.randomUUID()+fileName.substring(fileName.lastIndexOf("."));
-		
-		String path = request.getServletContext().getRealPath("/img/azaz4498")+File.separator+finalFileName;
+
+		String targetUrl = "/img/azaz4498"+File.separator+finalFileName;
+		String path = request.getServletContext().getRealPath(Constant.WEB_INF_PATH+targetUrl);
 		
 		File file = new File(path);
 		InputStream is = uploadFile.getInputStream();

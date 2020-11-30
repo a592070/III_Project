@@ -11,15 +11,36 @@
 <head>
     <title>Title</title>
 
-    <script src="//vuejs.org/js/vue.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <script src="//unpkg.com/element-ui"></script>
+    <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
+    <script src="//vuejs.org/js/vue.min.js"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<%--    <script src="//unpkg.com/element-ui"></script>--%>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
     <script>
         ELEMENT.locale(ELEMENT.lang.en);
     </script>
-    <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
+
+    <style>
+        .infinite-list-wrapper .list-item+.list-item {
+            margin-top: 10px;
+        }
+        .infinite-list-wrapper .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            background: #fff6f6;
+            color: #ff8484;
+        }
+        .infinite-list-wrapper {
+            height: 500px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
 <div class="wrapper">
@@ -177,35 +198,32 @@
                             <div>
                                 <el-drawer
                                         title="Travel Set Detail"
-                                        :before-close="handleClose"
-                                        :visible.sync="dialog"
+                                        :before-close="handleCloseTravelSet"
+                                        :visible.sync="travelSetDialog"
                                         custom-class="demo-drawer"
                                         ref="drawer"
                                         size="70%"
                                         :show-close="false">
                                     <div>
-                                        <el-form :model="travelSetDetail">
+                                        <el-form :model="travelSetDetail" ref="travelSetDetail">
                                             <el-tabs type="border-card">
                                                 <el-tab-pane label="基本設定">
-                                                    <el-form-item label="編號" :label-width="formLabelWidth">
+                                                    <el-form-item label="編號" :label-width="formLabelWidth" prop="travelSetDetail.sn">
                                                         <el-input v-model="travelSetDetail.sn" disabled></el-input>
                                                     </el-form-item>
-                                                    <el-form-item label="創建者" :label-width="formLabelWidth">
+                                                    <el-form-item label="創建者" :label-width="formLabelWidth" prop="travelSetDetail.createdUser">
                                                         <el-input v-model="travelSetDetail.createdUser" disabled></el-input>
                                                     </el-form-item>
-                                                    <el-form-item label="名稱" :label-width="formLabelWidth">
+                                                    <el-form-item label="名稱" :label-width="formLabelWidth" prop="travelSetDetail.name">
                                                         <el-input v-model="travelSetDetail.name"></el-input>
                                                     </el-form-item>
-                                                    <el-form-item label="詳細" :label-width="formLabelWidth">
+                                                    <el-form-item label="詳細" :label-width="formLabelWidth" prop="travelSetDetail.description">
                                                         <el-input type="textarea" v-model="travelSetDetail.description"></el-input>
                                                     </el-form-item>
-                                                    <el-form-item label="優先級" :label-width="formLabelWidth">
+                                                    <el-form-item label="優先級" :label-width="formLabelWidth" prop="travelSetDetail.priority">
                                                         <el-slider v-model="travelSetDetail.priority" :step="10" style="width: 300px"></el-slider>
-<%--                                                        <el-input v-model="travelSetDetail.priority"></el-input>--%>
                                                     </el-form-item>
                                                     <el-form-item label="啟用" :label-width="formLabelWidth">
-<%--                                                        <el-input v-model="travelSetDetail.status"></el-input>--%>
-
                                                         <label class="switch switch-text switch-success switch-pill form-control-label">
                                                             <input type="checkbox" class="switch-input form-check-input" v-bind:checked="travelSetDetail.status" v-on:click="handleSwitchStatus(travelSetDetail)">
                                                             <span class="switch-label" data-on="On" data-off="Off"></span>
@@ -216,24 +234,24 @@
                                                 <el-tab-pane label="景點規劃">
                                                     <el-row v-for="item in travelSetDetail.travelEleAttractions">
                                                         <el-col :span="4">
-                                                            <el-form-item label="編號" :label-width="formLabelWidth">
+                                                            <el-form-item label="編號" :label-width="formLabelWidth" prop="item.sn">
                                                                 <el-input v-model="item.sn" disabled></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="4">
-                                                            <el-form-item label="景點ID" :label-width="formLabelWidth">
+                                                            <el-form-item label="景點ID" :label-width="formLabelWidth" prop="item.id">
                                                                 <el-input v-model="item.id" @focus="selectItemID(item)"></el-input>
 <%--                                                                <el-button type="text" @click="selectItemID"></el-button>--%>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="4">
-                                                            <el-form-item label="名稱" :label-width="formLabelWidth">
+                                                            <el-form-item label="名稱" :label-width="formLabelWidth" prop="item.name">
                                                                 <el-input v-model="item.name" disabled></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="2">      </el-col>
                                                         <el-col :span="8">
-                                                            <el-form-item label="預定時間" :label-width="formLabelWidth">
+                                                            <el-form-item label="預定時間" :label-width="formLabelWidth" prop="item.time">
                                                                 <el-date-picker
                                                                         v-model="item.time"
                                                                         type="datetime"
@@ -242,31 +260,31 @@
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="2">
-                                                            <el-button @click.prevent="removeFromItem(travelSetDetail.travelEleAttractions, item)">删 除</el-button>
+                                                            <el-button @click.prevent="removeTravelSetFromItem(travelSetDetail.travelEleAttractions, item)">删 除</el-button>
                                                         </el-col>
                                                     </el-row>
-                                                    <el-button @click="addFromItem(travelSetDetail.travelEleAttractions)">新 增</el-button>
+                                                    <el-button @click="addTravelSetFromItem(travelSetDetail.travelEleAttractions)">新 增</el-button>
                                                 </el-tab-pane>
                                                 <el-tab-pane label="餐廳規劃">
                                                     <el-row v-for="item in travelSetDetail.travelEleRestaurants">
                                                         <el-col :span="4">
-                                                            <el-form-item label="編號" :label-width="formLabelWidth">
+                                                            <el-form-item label="編號" :label-width="formLabelWidth" prop="item.sn">
                                                                 <el-input v-model="item.sn" disabled></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="4">
-                                                            <el-form-item label="餐廳ID" :label-width="formLabelWidth">
+                                                            <el-form-item label="餐廳ID" :label-width="formLabelWidth" prop="item.id">
                                                                 <el-input v-model="item.id" autocomplete="off"></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="4">
-                                                            <el-form-item label="名稱" :label-width="formLabelWidth">
+                                                            <el-form-item label="名稱" :label-width="formLabelWidth" prop="item.name">
                                                                 <el-input v-model="item.name" disabled></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="2">      </el-col>
                                                         <el-col :span="8">
-                                                            <el-form-item label="預定時間" :label-width="formLabelWidth">
+                                                            <el-form-item label="預定時間" :label-width="formLabelWidth" prop="item.time">
                                                                 <el-date-picker
                                                                         v-model="item.time"
                                                                         type="datetime"
@@ -275,31 +293,31 @@
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="2">
-                                                            <el-button @click.prevent="removeFromItem(travelSetDetail.travelEleRestaurants, item)">删 除</el-button>
+                                                            <el-button @click.prevent="removeTravelSetFromItem(travelSetDetail.travelEleRestaurants, item)">删 除</el-button>
                                                         </el-col>
                                                     </el-row>
-                                                    <el-button @click="addFromItem(travelSetDetail.travelEleRestaurants)">新 增</el-button>
+                                                    <el-button @click="addTravelSetFromItem(travelSetDetail.travelEleRestaurants)">新 增</el-button>
                                                 </el-tab-pane>
                                                 <el-tab-pane label="旅館規劃">
                                                     <el-row v-for="item in travelSetDetail.travelEleHotels">
                                                         <el-col :span="4">
-                                                            <el-form-item label="編號" :label-width="formLabelWidth">
+                                                            <el-form-item label="編號" :label-width="formLabelWidth" prop="item.sn">
                                                                 <el-input v-model="item.sn" disabled></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="4">
-                                                            <el-form-item label="旅館ID" :label-width="formLabelWidth">
+                                                            <el-form-item label="旅館ID" :label-width="formLabelWidth" prop="item.id">
                                                                 <el-input v-model="item.id" autocomplete="off"></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="4">
-                                                            <el-form-item label="名稱" :label-width="formLabelWidth">
+                                                            <el-form-item label="名稱" :label-width="formLabelWidth" prop="item.name">
                                                                 <el-input v-model="item.name" disabled></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="2">      </el-col>
                                                         <el-col :span="8">
-                                                            <el-form-item label="預定時間" :label-width="formLabelWidth">
+                                                            <el-form-item label="預定時間" :label-width="formLabelWidth" prop="item.time">
                                                                 <el-date-picker
                                                                         v-model="item.time"
                                                                         type="datetime"
@@ -308,31 +326,31 @@
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="2">
-                                                            <el-button @click.prevent="removeFromItem(travelSetDetail.travelEleHotels, item)">删 除</el-button>
+                                                            <el-button @click.prevent="removeTravelSetItem(travelSetDetail.travelEleHotels, item)">删 除</el-button>
                                                         </el-col>
                                                     </el-row>
-                                                    <el-button @click="addFromItem(travelSetDetail.travelEleHotels)">新 增</el-button>
+                                                    <el-button @click="addTravelSetItem(travelSetDetail.travelEleHotels)">新 增</el-button>
                                                 </el-tab-pane>
                                                 <el-tab-pane label="租車規劃">
                                                     <el-row v-for="item in travelSetDetail.travelEleCars">
                                                         <el-col :span="4">
-                                                            <el-form-item label="ID" :label-width="formLabelWidth">
+                                                            <el-form-item label="ID" :label-width="formLabelWidth" prop="item.sn">
                                                                 <el-input v-model="item.sn" disabled></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="4">
-                                                            <el-form-item label="旅館ID" :label-width="formLabelWidth">
-                                                                <el-input v-model="item.cId" autocomplete="off"></el-input>
+                                                            <el-form-item label="旅館ID" :label-width="formLabelWidth" prop="item.id">
+                                                                <el-input v-model="item.id" autocomplete="off"></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="4">
-                                                            <el-form-item label="名稱" :label-width="formLabelWidth">
+                                                            <el-form-item label="名稱" :label-width="formLabelWidth" prop="item.name">
                                                                 <el-input v-model="item.name" disabled></el-input>
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="2">      </el-col>
                                                         <el-col :span="8">
-                                                            <el-form-item label="預定時間" :label-width="formLabelWidth">
+                                                            <el-form-item label="預定時間" :label-width="formLabelWidth" prop="item.time">
                                                                 <el-date-picker
                                                                         v-model="item.time"
                                                                         type="datetime"
@@ -341,16 +359,17 @@
                                                             </el-form-item>
                                                         </el-col>
                                                         <el-col :span="2">
-                                                            <el-button @click.prevent="removeFromItem(travelSetDetail.travelEleCars, item)">删 除</el-button>
+                                                            <el-button @click.prevent="removeTravelSetFormItem(travelSetDetail.travelEleCars, item)">删 除</el-button>
                                                         </el-col>
                                                     </el-row>
-                                                    <el-button @click="addFromItem(travelSetDetail.travelEleCars)">新 增</el-button>
+                                                    <el-button @click="addTravelSetFormItem(travelSetDetail.travelEleCars)">新 增</el-button>
                                                 </el-tab-pane>
                                             </el-tabs>
                                         </el-form>
                                         <div >
-                                            <el-button @click="cancelForm">取 消 關 閉</el-button>
-                                            <el-button type="primary" @click="$refs.drawer.closeDrawer()" :loading="loading">{{ loading ? '提交中 ...' : '保 存' }}</el-button>
+                                            <el-button @click="cancelTravelSetForm">取 消 關 閉</el-button>
+                                            <el-button type="primary" @click="$refs.drawer.closeTravelSetDrawer()" :loading="travelSetFromLoading">{{ loading ? '提交中 ...' : '保 存' }}</el-button>
+                                            <el-button v-on:click="resetTravelSetForm('travelSetDetail')">重 置</el-button>
                                         </div>
                                     </div>
                                 </el-drawer>
@@ -359,34 +378,67 @@
                                 <el-dialog
                                         title="選 擇 目 標 ID"
                                         :append-to-body="true"
-                                        :visible.sync="isSelectItem">
-                                    <div class="search-form d-none d-lg-inline-block col-4">
-                                        <span>當前搜尋: {{}}</span>
-                                        <div class="input-group">
-                                            <el-button icon="el-icon-search" v-on:click="">搜尋</el-button>
-                                            <input type="text" name="query" class="form-control"
-                                                   autofocus ="off"
-                                                   placeholder="keywords..."/>
+                                        :visible.sync="isSelectTravelSetItem"
+                                        :destroy-on-close="true">
+
+<%--                                    <el-table :data="selectItemData">--%>
+<%--                                        <el-table-column property="sn" label="ID" width="150"></el-table-column>--%>
+<%--                                        <el-table-column property="name" label="Name" width="200"></el-table-column>--%>
+<%--                                        <el-table-column property="address" label="Address" ></el-table-column>--%>
+<%--                                        <el-table-column--%>
+<%--                                                fixed="right"--%>
+<%--                                                label="Action"--%>
+<%--                                                width="120">--%>
+<%--                                            <template slot-scope="scope">--%>
+<%--                                                <el-button--%>
+<%--                                                        @click.native.prevent="addItemToTravelset(scope.$index, selectItemData)"--%>
+<%--                                                        type="text"--%>
+<%--                                                        size="small">--%>
+<%--                                                    添加--%>
+<%--                                                </el-button>--%>
+<%--                                            </template>--%>
+<%--                                        </el-table-column>--%>
+<%--                                    </el-table>--%>
+
+                                    <div class="infinite-list-wrapper" style="overflow:auto">
+                                        <div class="search-form d-none d-lg-inline-block col-4">
+                                            <span>當前搜尋: {{}}</span>
+                                            <div class="input-group">
+                                                <el-button icon="el-icon-search" v-on:click="">搜尋</el-button>
+                                                <input type="text" name="query" class="form-control"
+                                                       autofocus ="off"
+                                                       placeholder="keywords..."/>
+                                            </div>
                                         </div>
+                                        <ul
+                                                class="list"
+                                                class="list-group"
+                                                v-infinite-scroll="selectTravelSetItemLoad"
+                                                infinite-scroll-disabled="selectTravelSetItemDisabled">
+                                            <li v-for="i in selectTravelSetItemData"
+<%--                                                class="list-item">--%>
+                                                class="list-group-item list-group-item-action list-group-item-light">
+                                                <el-row>
+                                                    <el-col :span="4">{{i.sn}}
+                                                    </el-col>
+                                                    <el-col :span="8">{{i.name}}
+                                                    </el-col>
+                                                    <el-col :span="8">{{i.address}}
+                                                    </el-col>
+                                                    <el-col :span="4">
+                                                        <el-button
+                                                                @click.native.prevent="addItemToTravelSet(i)"
+                                                                type="text"
+                                                                size="small">
+                                                            添加
+                                                        </el-button>
+                                                    </el-col>
+                                                </el-row>
+                                            </li>
+                                        </ul>
+                                        <p v-if="selectTravelSetItemLoading">加载中...</p>
+                                        <p v-if="selectTravelSetItemNoMore">没有更多了</p>
                                     </div>
-                                    <el-table :data="selectItemData">
-                                        <el-table-column property="sn" label="ID" width="150"></el-table-column>
-                                        <el-table-column property="name" label="Name" width="200"></el-table-column>
-                                        <el-table-column property="address" label="Address" ></el-table-column>
-                                        <el-table-column
-                                                fixed="right"
-                                                label="Action"
-                                                width="120">
-                                            <template slot-scope="scope">
-                                                <el-button
-                                                        @click.native.prevent="addItemToTravelset(scope.$index, selectItemData)"
-                                                        type="text"
-                                                        size="small">
-                                                    添加
-                                                </el-button>
-                                            </template>
-                                        </el-table-column>
-                                    </el-table>
                                 </el-dialog >
                             </div>
 
@@ -403,6 +455,7 @@
                                 </el-pagination>
                             </div>
                         </div>
+                            <Mycomponent></Mycomponent>
 
                         </div>
                     </div>
@@ -412,9 +465,10 @@
     </div>
 </div>
 
-
 <script type="text/javascript">
-    var vm = new Vue({
+
+    const Mycomponent = httpVueLoader('${pageContext.servletContext.contextPath}/assets/vueComponent/myComponent.vue')
+    const vm = new Vue({
         el: '#app',
         data() {
             return {
@@ -505,12 +559,14 @@
                     }
                 ],
 
-                dialog: false,
+                travelSetDialog: false,
+                travelSetFromLoading: false,
                 formLabelWidth: '80px',
                 timer: null,
-                isSelectItem: false,
-                selectItemData: {},
-                currentSelectItem: {},
+                isSelectTravelSetItem: false,
+                selectTravelSetItemLoading: false,
+                selectTravelSetItemData: {},
+                currentSelectTravelSetItem: {},
                 travelSetDetail: {
                     sn: '',
                     createdUser: '',
@@ -560,15 +616,26 @@
             this.testData();
             this.loading = false;
         },
+        components: {
+            Mycomponent
+        },
+        computed: {
+            selectTravelSetItemNoMore () {
+                return this.selectTravelSetItemData.length >= 21
+            },
+            selectTravelSetItemDisabled () {
+                return this.selectTravelSetItemLoading || this.selectTravelSetItemNoMore
+            }
+        },
         methods: {
             initData(){
             },
             handleInsert(){
-                this.dialog = true;
+                this.travelSetDialog = true;
             },
             handleEdit(index, row) {
                 console.log(index, row);
-                this.dialog = true;
+                this.travelSetDialog = true;
             },
             handleDelete(index, row) {
                 console.log(index, row);
@@ -640,70 +707,124 @@
             testRemove1(index, row){
                 console.log(index, row);
             },
-            handleClose(done) {
-                if (this.loading) {
+            handleCloseTravelSet(done) {
+                if (this.travelSetFromLoading) {
                     return;
                 }
                 this.$confirm('確定要提交表單?')
                     .then(_ => {
-                        this.loading = true;
+                        this.travelSetFromLoading = true;
                         this.timer = setTimeout(() => {
                             done();
                             // 动画关闭需要一定的时间
                             setTimeout(() => {
-                                this.loading = false;
+                                this.travelSetFromLoading = false;
                             }, 400);
                         }, 2000);
                     })
                     .catch(_ => {});
             },
-            cancelForm() {
-                this.loading = false;
-                this.dialog = false;
+            cancelTravelSetForm() {
+                this.travelSetFromLoading = false;
+                this.travelSetDialog = false;
                 clearTimeout(this.timer);
             },
-            removeFromItem(items, item) {
+            removeTravelSetFromItem(items, item) {
                 console.log(item);
-                var index = items.indexOf(item)
+                let index = items.indexOf(item)
                 if (index !== -1) {
                     items.splice(index, 1)
                 }
                 console.log(items);
             },
-            addFromItem(items) {
+            addTravelSetFromItem(items) {
                 items.push({
-                    aId: '',
+                    id: 987,
                     name: 'new',
                     time: Date.now()
                 });
                 console.log(items);
-                this.selectItemID(items[-1]);
+                this.selectTravelSetItemID(items[items.length-1]);
             },
-            handleCloseInner(){
-                this.isSelectItem = false;
+            handleCloseTravelSetItem(){
+                this.isSelectTravelSetItem = false;
             },
-            selectItemID(item){
-                this.isSelectItem = true;
-                this.currentSelectItem = item;
-                this.selectItemData = [
+            selectTravelSetItemID(item){
+                this.isSelectTravelSetItem = true;
+                this.currentSelectTravelSetItem = item;
+                this.selectTravelSetItemData = [
                     {
                         sn: 1987,
                         name: '景點99號',
                         address: '臺中市421后里區三豐路五段333號'
                     },
                     {
-                        sn: 19897,
+                        sn: 19898,
+                        name: '景點999號',
+                        address: '臺中市426新社區協成村協中街263號'
+                    },
+                    {
+                        sn: 19899,
+                        name: '景點999號',
+                        address: '臺中市426新社區協成村協中街263號'
+                    },
+                    {
+                        sn: 19900,
+                        name: '景點999號',
+                        address: '臺中市426新社區協成村協中街263號'
+                    },
+                    {
+                        sn: 19901,
+                        name: '景點999號',
+                        address: '臺中市426新社區協成村協中街263號'
+                    },
+                    {
+                        sn: 19902,
                         name: '景點999號',
                         address: '臺中市426新社區協成村協中街263號'
                     }
                 ];
             },
-            addItemToTravelset(index, rows){
+            selectTravelSetItemLoad () {
+                this.selectTravelSetItemLoading = true
+
+                setTimeout(() => {
+                    let addItem = [
+                        {
+                            sn: 200001,
+                            name: '景點999號',
+                            address: '臺中市426新社區協成村協中街263號'
+                        },
+                        {
+                            sn: 200002,
+                            name: '景點999號',
+                            address: '臺中市426新社區協成村協中街263號'
+                        },
+                        {
+                            sn: 200003,
+                            name: '景點999號',
+                            address: '臺中市426新社區協成村協中街263號'
+                        }
+                    ];
+                    for (let i = 0; i < addItem.length; i++) {
+                        this.selectTravelSetItemData.push(addItem[i]);
+                    }
+                    this.selectTravelSetItemLoading = false
+                }, 500)
+            },
+            addItemToTravelSet(index, rows){
                 console.log(rows[index]);
                 let selected = rows[index];
-                this.currentSelectItem.id = selected.sn;
-                this.currentSelectItem.name = selected.name;
-                this.handleCloseInner();
+                this.currentSelectTravelSetItem.id = selected.sn;
+                this.currentSelectTravelSetItem.name = selected.name;
+                this.handleCloseTravelSetItem();
+            },
+            addItemToTravelSet(i){
+                console.log(i);
+                let selected = i;
+                this.currentSelectTravelSetItem.id = selected.sn;
+                this.currentSelectTravelSetItem.name = selected.name;
+                this.handleCloseTravelSetItem();
             },
             testData(){
                 this.tableData = [
