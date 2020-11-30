@@ -195,6 +195,9 @@ pre {
  	display: flex;
  	align-items: center;
  }
+ .btn.btn-danger{
+ 	margin:30px;
+ }
  
 </style>
 
@@ -445,9 +448,13 @@ pre {
 <!-- 					</div> -->
 									<div class="modify_div">
 											<!-- Button trigger modal -->
+											<form action="<%=application.getContextPath()%>/admin/DisplayRestaurant" method="POST">
 											<button type="button" class="btn btn-warning" id="confirm" data-toggle="modal" data-target="#餐廳${RBean.r_sn}">
 											 送出修改
 											</button>
+													<button type="submit" class="btn btn-danger">資料重置</button>
+													<Input type='hidden' name='r_sn' value='${RBean.r_sn}'>
+											</form>
 									</div>
 											<!-- Modal -->
 											<div class="modal fade" id="餐廳${RBean.r_sn}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
