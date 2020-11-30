@@ -180,6 +180,22 @@ pre {
 .form-control{
 	width: 650px;
 }
+
+#must_have.res_result{
+	padding-right:0;
+ 	float:left; 
+}
+#regionsp{
+	float:left; 
+	color:red;
+	font-size:13px;
+	font-style:italic;
+}
+.d_flex{
+ 	display: flex;
+ 	align-items: center;
+ }
+ 
 </style>
 
 </head>
@@ -227,14 +243,6 @@ pre {
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 								<script>
- 								$("#pic").ready(function(){
-//  									var pic = $("#pic").val();
- 									var pic = $("#preview_Rpic").attr("src");
- 									console.log("pic = " +pic);
-// 										if(pic == ""){
-<%-- 											 $("#preview_Rpic").attr('src', '<%=application.getContextPath()%>/assets/img/iring29/Restaurant_img.png'); --%>
-// 											}
- 									})
 								
 								$("#pic").change(function(){
 					                 readURL(this);
@@ -255,7 +263,7 @@ pre {
 								</div>
 
 								<div>
-									<h4 class="res_result">地區</h4>
+									<div class="d_flex"><h4 class="res_result" id="must_have">地區</h4><span id="regionsp">&nbsp;*必填</span></div>
 									<p class="p_result">
 							<select name="region" id="region" class="form-control">
 								<option value="">請選擇地區</option>
@@ -340,6 +348,19 @@ pre {
 								document.getElementById("region")[18].selected=true;
 								break;
 								}
+
+							$("#region").change(function(){
+								regionCg(this);
+				            });
+				            function regionCg(input){
+				                if($("#region").val() == ""){
+				                	$("#regionsp").html('&nbsp;*請選擇餐廳所在地區');
+				                	$("#confirm").attr('disabled',true);
+				                }else{
+				                	$("#regionsp").html('&nbsp;*必填');
+				                	$("#confirm").attr('disabled',false);
+					                }
+				            }							
 							</script>
 									</p>
 								</div>
@@ -419,7 +440,7 @@ pre {
 <!-- 					</div> -->
 									<div class="modify_div">
 											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#餐廳${RBean.r_sn}">
+											<button type="button" class="btn btn-warning" id="confirm" data-toggle="modal" data-target="#餐廳${RBean.r_sn}">
 											 送出修改
 											</button>
 									</div>

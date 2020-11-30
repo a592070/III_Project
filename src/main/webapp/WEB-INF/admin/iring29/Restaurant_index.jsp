@@ -23,6 +23,7 @@ body{
 .div_box {
 	margin: 50px auto;
 	padding-top: 100px;
+	padding-bottom: 250px;
 	width: 500px;
 	/* height: 400px; */
 	/* border: 1px solid black; */
@@ -31,21 +32,21 @@ body{
 .div_search {
 	width: 500px auto;
 	background-color: white;
-	border-radius: 20px;
+ 	border-radius: 10px; 
 }
 
 .search {
 	/* width: 500px; */
 	text-align: center;
-	border-bottom: solid 1px #c1c0c1;
+	border-bottom: dashed 1px #c1c0c1;
 	cursor: pointer;
-	padding: 20px;
+	padding: 25px;
 }
 
 .search_date {
 	/* width: 500px; */
 	text-align: center;
-	border-bottom: solid 1px #c1c0c1;
+	border-bottom: dashed 1px #c1c0c1;
 	cursor: pointer;
 	padding: 25px;
 }
@@ -168,8 +169,7 @@ button {
 
 		</div>
 	</FORM>
-	
-	 <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
 
 </body>
+	 <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
 </html>
