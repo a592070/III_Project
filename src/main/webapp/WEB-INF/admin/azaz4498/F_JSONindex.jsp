@@ -57,28 +57,14 @@ h2 {
 	integrity="sha512-2C6AmJKgt4B+bQc08/TwUeFKkq8CsBNlTaNcNgUmsDJSU1Fg+R6azDbho+ZzuxEkJnCjLZQMozSq3y97ZmgwjA=="
 	crossorigin="anonymous" />
 
-<!-- load jQuery and tablesorter scripts -->
-<!-- <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"
-      integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg=="
-      crossorigin="anonymous"
-    ></script> -->
-<!-- <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/parsers/parser-input-select.min.js"
-      integrity="sha512-1yWDRolEDA6z68VeUHdXNFZhWYteCOlutcPMPuDtX1f7/doKecWLx87shPRKx8zmxdWA0FV9mNRUr9NnSwzwyw=="
-      crossorigin="anonymous"
-    ></script> -->
-<!--pager-->
-<!-- <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/extras/jquery.tablesorter.pager.min.js"
-      integrity="sha512-y845ijdup9lDunrcSRQAlFdQICHVhkB5UNguWRX8A3L+guxO7Oow0poojw0PLckhcKij++h85bnyro80fjR9+A=="
-      crossorigin="anonymous" -->
->
+
+
 </script>
 </head>
 
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
-	<div class="mobile-sticky-body-overlay"></div>
+	
+	
 
 	<div class="wrapper">
 		<c:import url="/WEB-INF/admin/fragment/sidebar.jsp" />
@@ -92,7 +78,9 @@ h2 {
 						<button id="search_btn">
 							<span class="input-group-text bg-primary text-white"> 搜尋 </span>
 						</button>
-						<button id="clear_btn"></button>
+						<button id="clear_btn">
+							<a class="input-group-text bg-primary text-white" href="${pageContext.servletContext.contextPath}/Forum"> 清空搜尋條件 </a>
+						</button>
 					</div>
 					<form method="GET" class="mr-5">
 						<select name="articleType" id="typeSelect" class="form-control">
@@ -113,9 +101,7 @@ h2 {
 
 				<!-- </div> -->
 				<h2>文章列表</h2>
-				<span>
-					<a href="${pageContext.servletContext.contextPath}/Forum">回列表</a>
-				</span>
+				
 				<div class="box">
 					<div class="table-responsive">
 						<table class="table table-striped table-sm tablesorter" id="articleTable">
@@ -147,6 +133,26 @@ h2 {
 							</ul>
 						</nav>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--modal-->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">確認刪除</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					是否確認刪除?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-pill">確認</button>
+					<button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
@@ -189,9 +195,11 @@ h2 {
 														});
 											});
 							//刪除文章
+							
+
 							$("tbody").on("click", ".delete_btn", function() {
 								var currId = $(this).val();
-								var desicion = confirm("確定要刪除此筆資料?");
+								$(".modal-body").text("確認要刪除 ID為 "+currId+"的資料");
 								if (desicion) {
 									$(this).closest("tr").remove();
 									$.ajax({
@@ -311,7 +319,7 @@ h2 {
               element.artId +
               "'>"
 														+ "<span class='mdi mdi-pencil-box-outline'></span>修改</button>"
-														+ "<button class='delete_btn btn btn-danger' name='artId' value='" +
+														+ "<button class='delete_btn btn btn-danger' data-toggle='modal' data-target='#deleteModal' name='artId' value='" +
               element.artId +
               "'>"
 														+ "<span class='mdi mdi-delete'></span>刪除</button>"
