@@ -1,17 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%--
-  Created by IntelliJ IDEA.
-  User: Student
-  Date: 2020/10/29
-  Time: 上午 09:28s
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
+
 
 
 
@@ -84,7 +78,7 @@ h2 {
 						<div class="col-lg-6">
 							<div class="card card-default">
 								<div class="card-header card-header-border-bottom">
-									<h1>文章修改</h1>
+									<h1>文章新增</h1>
 									<br />
 									<div>
 										<a href="${pageContext.servletContext.contextPath}/admin/Forum">回列表</a>
@@ -92,14 +86,13 @@ h2 {
 								</div>
 
 								<div class="card-body">
-									<form id=edit_form action=${pageContext.servletContext.contextPath}/admin/edit.controller method="POST">
-										<input type="hidden" name="artId" id="artId" value="${artBean[0].artId }">
-										<input type="hidden" name="userid" value="${artBean[0].artUserId }">
+									<form id=edit_form action=${pageContext.servletContext.contextPath}/admin/newArticle.controller method="POST">
+										
 
 										<div class="form-group">
 											<label for="fname"><h3>標題</h3></label>
 											<input type="text" name="articleTitle" id="title" class="form-control"
-												value="${artBean[0].artTitle }">
+												value="">
 										</div>
 										<div class="form-group">
 											<label for="typeSelect"><h3>分類</h3></label> <select class="form-control" id="typeSelect" name="typeSelect">
@@ -116,21 +109,43 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="content"><h3>內容</h3></label>
-											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
+											<textarea class="form-control" id="editor" rows="15" name="articleContent"></textarea>
 										</div>
 
+										
+										
+										
+
+										<!-- <div class="form-group">
+											<label for="exampleFormControlFile1">Example file
+												input</label> <input type="file" class="form-control-file"
+												id="exampleFormControlFile1">
+										</div> -->
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
-											<button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editModal">送出修改</button>
-											<button class="btn btn-primary" onclick="redo()">重置</button>
-											<button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button>
+											<button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editModal">送出</button>
+											<button class="btn btn-primary btn-default" onclick="redo()">清空</button>
 										</div>
+										
+
 									</form>
+									
 								</div>
 							</div>
+
+
+
+
 						</div>
+
 					</div>
 				</div>
+
+
+
+
 			</div>
+
+
 		</div>
 	</div>
 
@@ -139,13 +154,13 @@ h2 {
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="editModalLabel">確認修改文章內容</h5>
+					<h5 class="modal-title" id="editModalLabel">確認新增文章</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					是否確認修改?
+					是否確認新增?
 				</div>
 				<div class="modal-footer">
 					<button id="modal_confirm" type="button" class="btn btn-primary">確認</button>
@@ -155,38 +170,25 @@ h2 {
 		</div>
 	</div>
 	<script type="text/javascript">
-		
-		window.onload = getDefaultType();
-		let currId = $("#artId").val();
-		
 
-		function getDefaultType() {//判斷文章類型 修改下拉選單預設值
-			
-			var typeSelect = document.getElementById("typeSelect");
-			var options = typeSelect.getElementsByTagName("option");
-			var selectedType = '${artBean[0].articleType.typeId}';
-			console.log(selectedType);
-			if(selectedType==0){
-				options[8].selected = true;
-			}else{
-				options[selectedType].selected = true;
-			};
-			
-		}
-
-		
 		$("#modal_confirm").on("click",function(){
 			$("#edit_form").submit();
+			
 		})
+
+		
+
+		
+		
 </script>
 	
 	
-
-<script>
+	<script>
 	function MyCustomUploadAdapterPlugin( editor ) {
     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
         return new MyUploadAdapter( loader );
-    };}
+    };
+}
 
 
 		ClassicEditor
@@ -233,7 +235,7 @@ h2 {
 				},
 				licenseKey: '', 
 
-				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/admin/imgUpload/'+currId},
+				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/admin/imgUpload'},
 				
 			
         	})
@@ -249,22 +251,17 @@ h2 {
 			
 			//重置的function
 			function redo(){
-			document.getElementById("title").value = "${artBean[0].artTitle }";
-			editor.setData( '${artBean[0].artContent }');
-			getDefaultType();
+			document.getElementById("title").value = "";
+			editor.setData( '');
+			var options = typeSelect.getElementsByTagName("option");
+			options[0].selected=true;
 			event.preventDefault();
+
+
 		}
-		function preview(){
-		event.preventDefault
-		var artTitle = $("#title").val();
-		var artType = $("option").find(":selected").text();
-		var artContent=editor.getData();
-		console.log(artTitle);
-		console.log(artType);
-		console.log(artContent);
-	}
 </script>
 <script>
+
 	class MyUploadAdapter {
 	constructor(loader) {
 		this.loader = loader;
@@ -303,6 +300,7 @@ h2 {
 abort() {
 }
 }
+	
 </script>
 
 	
