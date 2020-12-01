@@ -1,7 +1,6 @@
 package iring29.controller;
 
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,9 +24,10 @@ import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
 import iring29.service.F_RestaurantService;
 import utils.StringUtil;
+import java.util.Base64;
 
 @Controller
-@SessionAttributes(names = { "res_data", "res_data_region" })
+@SessionAttributes(names = { "res_data", "res_data_region"})
 public class F_RestaurantController {
 
 	@Autowired
@@ -89,13 +90,22 @@ public class F_RestaurantController {
 		session.setAttribute("res_data", res_data);
 		return "iring29/DisplayRestaurant";
 	}
+	
 	@RequestMapping(path = "/ShowRPic")
-	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("res_data_region") Restaurant r) {
-		System.out.println("in pic" + r.getName());
+	public ResponseEntity<byte[]> ShowPic(@ModelAttribute("res_data_region") Restaurant_VO r) {
+		System.out.println("in pic " + r.getName());
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
-
+		
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(path = "/DisplayPic")
+	public String DisplayPic(@ModelAttribute("res_data_region") Restaurant_VO r) {
+		System.out.println("in pic " + r.getName());
+		String pic = Base64.getEncoder().encodeToString(r.getPic());
+		
+		return pic;
 	}
 
 	

@@ -39,7 +39,10 @@ h3{
 .div_box{
 	text-align: center;
 }
-
+/* img{ */
+/* 	height:200px; */
+/* 	width:200px; */
+/* } */
 </style>
 
 </head>
@@ -155,17 +158,9 @@ h3{
           		<div class="col-md-4 ">
 		    				<div class="destination">
 		    				<c:if test="${!empty res.pic}">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" >
-		    					<img id="ItemPreview" src="">
+		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" id="pic" style="background-image: url('<%=application.getContextPath()%>/DisplayPic');" >
 		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
-    							<!-- not yet ready -->
-    							<script type="text/javascript">
-    								window.onload = function() {
-        								console.log("in pic")
-    									document.getElementById("ItemPreview").src = "";
-    								};
-    							</script>
+    							<span class="icon-search2" ></span>
     						</div>
 		    					</a>
 		    				</c:if>
@@ -197,10 +192,18 @@ h3{
 		    						<p>${res.type}</p>
 		    						</div>
 		    						<hr>
+		    						<FORM action="<%=pageContext.getServletContext().getContextPath()%>/DisplyRestaurant" method="POST">
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>${res.region}</span> 
-		    							<span class="ml-auto"><a href="#">訂位去</a></span>
+		    							<span class="ml-auto"><button type="submit" class="btn btn-success">訂位去</button></span>
+		    							<Input type='hidden' name='restaurant_name' value='${res.name}'>
+										<Input type='hidden' name='book_date' value='${book_date}'>
+										<Input type='hidden' name='person_numer' value='${person_numer}'>
 		    						</p>
+		    						</FORM>
+		    						<script>
+										
+		    						</script>
 		    					</div>
 		    				</div>
 		    			</div>
