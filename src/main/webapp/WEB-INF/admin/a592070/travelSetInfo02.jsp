@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core_1_1" %>
 <%--
   Created by IntelliJ IDEA.
   User: Student
@@ -13,16 +14,15 @@
     <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://unpkg.com/vuex"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/layer/layer.js"></script>
     <script>
         ELEMENT.locale(ELEMENT.lang.en);
     </script>
-    <script type="text/javascript">
-        const context = "${pageContext.servletContext.contextPath}";
-    </script>
-    <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/js/travelSetInfo.js"></script>
+
     <style>
         .infinite-list-wrapper .list-item+.list-item {
             margin-top: 10px;
@@ -40,6 +40,14 @@
             text-align: center;
         }
     </style>
+
+    <script type="text/javascript">
+        const context = "${pageContext.servletContext.contextPath}";
+    </script>
+    <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/js/travelSetInfo.js"></script>
+    <script>
+        <%--import App from '${pageContext.servletContext.contextPath}/assets/a592070/js/travelSetInfo.js';--%>
+    </script>
 </head>
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
 
@@ -52,7 +60,7 @@
 
         <%--CONTENT--%>
         <div class="content-wrapper" id="app">
-        <main></main>
+        <index></index>
         </div>
     </div>
 </div>

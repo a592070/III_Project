@@ -10,9 +10,9 @@
       <div class="row justify-content-between">
         <!--系統推薦選擇-->
         <el-header style="text-align: left; font-size: 12px">
-          <el-select v-model="currentUser" placeholder="選擇使用者" @change="handleSelectedUser(currentUser)">
-            <el-option label="--請選擇--" disabled></el-option>
-            <el-option v-for="ele in user" v-bind:key="ele" :value="ele" ></el-option>
+          <el-select v-model="currentUser" value-key="id" placeholder="選擇使用者" @change="handleSelectedUser(currentUser)">
+            <el-option label="--請選擇--" disabled :value="null"></el-option>
+            <el-option v-for="(item, index) in user"  :label="item" :value="item" :key="item"></el-option>
           </el-select>
         </el-header>
 
@@ -52,7 +52,7 @@
             label="創建者"
             prop="createdUser"
             width="100"
-            show-overflow-tooltip="true"
+            show-overflow-tooltip
             sortable='custom'
             :sort-orders="['descending', 'ascending']">
         </el-table-column>
@@ -60,7 +60,7 @@
             label="名稱"
             prop="name"
             width="100"
-            show-overflow-tooltip="true"
+            show-overflow-tooltip
             sortable='custom'
             :sort-orders="['descending', 'ascending']">
         </el-table-column>
@@ -68,7 +68,7 @@
             label="描述"
             prop="description"
             width="150"
-            show-overflow-tooltip="true">
+            show-overflow-tooltip>
         </el-table-column>
         <el-table-column
             label="創建時間"
@@ -152,10 +152,43 @@
         </div>
       </div>
     </div>
+
+    <el-drawer
+        title="Travel Set Detail"
+        :before-close="handleCloseTravelSet"
+        :visible.sync="getTravelSetDialog"
+        custom-class="demo-drawer"
+        ref="drawer"
+        size="70%"
+        :show-close="false">
+
+<!--        <travel-set-detail :travelsetdialog="travelSetDialog"></travel-set-detail>-->
+        <travel-set-detail ></travel-set-detail>
+      <div>
+        <el-button type="primary" v-on:click="cancelTravelSetForm">取 消 關 閉</el-button>
+        <el-button type="primary" @click="$refs.drawer.closeDrawer()"
+                   :loading="travelSetFormLoading">{{ travelSetFormLoading ? '提交中 ...' : '保 存' }}
+        </el-button>
+
+      </div>
+    </el-drawer>
+
   </div>
 </template>
 <script>
+
+// import TravelSetDetail from "./travelSetDetail";
+// Vue.components({
+//   "travel-set-detail": {
+//     props: ["travelSetDialog"],
+//     template: httpVueLoader(context+'/assets/a592070/js/components/travelSetDetail.vue')
+//   }
+// })
 module.exports = {
+  name: "TravelSetInfo",
+  components: {
+    "travel-set-detail": httpVueLoader(context + '/assets/a592070/js/components/travelSetDetail02.vue')
+  },
   data() {
     return {
       loading: true,
@@ -163,6 +196,7 @@ module.exports = {
       sortParams: {},
       currentSearch: '',
       currentUser: null,
+      // travelSetDialog: false,
       user: ["全部", "系統", "一般使用者"],
       pageData: {
         currentPage: null,
@@ -243,7 +277,8 @@ module.exports = {
             ]);
           }
         }
-      ]
+      ],
+      travelSetFormLoading: false,
     }
   },
   created: function () {
@@ -251,15 +286,22 @@ module.exports = {
     this.testData();
     this.loading = false;
   },
+  computed: {
+    getTravelSetDialog(){
+      return this.$store.getters.getTravelSetDialog;
+    }
+  },
   methods: {
     initData() {
     },
     handleInsert() {
-      this.travelSetDialog = true;
+      // this.travelSetDialog = true;
+      this.$store.commit("toggleTravelSetDialog");
     },
     handleEdit(index, row) {
       console.log(index, row);
-      this.travelSetDialog = true;
+      // this.travelSetDialog = true;
+      this.$store.commit("toggleTravelSetDialog");
     },
     handleDelete(index, row) {
       console.log(index, row);
@@ -323,10 +365,18 @@ module.exports = {
     handleSwitchStatus(value) {
       console.log(value.status);
       value.status = !value.status;
-      this.$message({
-        type: 'success',
-        message: '狀態更改成功!'
-      });
+      if(value.status){
+        this.$message({
+          type: 'success',
+          message: '已成功啟用!'
+        });
+      }else{
+        this.$message({
+          type: 'info',
+          message: '已成功停用'
+        });
+      }
+
     },
     testRemove1(index, row) {
       console.log(index, row);
@@ -343,60 +393,31 @@ module.exports = {
           priority: 50,
           status: true
         }];
-      this.travelSetDetail = {
-        sn: 1,
-        createdUser: 'system',
-        name: '桃園一日遊',
-        description: '桃園一日遊，好好玩!!!..!!!!!!!!!!!!!.!!!!!!!!!!!!',
-        createdTime: '2020-10-12 10:31:33.000000',
-        updateTime: '2020-10-12 10:42:14.892000',
-        priority: 50,
-        status: true,
-        travelEleAttractions: [
-          {
-            sn: 99,
-            id: 123,
-            name: '景點1號',
-            time: '2020-11-26 19:20:51.000000'
-          },
-          {
-            sn: 199,
-            id: 1234,
-            name: '景點2號',
-            time: '2020-11-26 19:20:51.000000'
-          }
-        ],
-        travelEleRestaurants: [
-          {
-            sn: 299,
-            id: 234,
-            name: '餐廳1號',
-            time: '2020-11-26 19:20:51.000000'
-          }
-        ],
-        travelEleHotels: [
-          {
-            sn: 399,
-            id: 345,
-            name: '旅館1號',
-            time: '2020-11-26 19:20:51.000000'
-          },
-          {
-            sn: 499,
-            id: 3456,
-            name: '旅館2號',
-            time: '2020-11-26 19:20:51.000000'
-          }
-        ],
-        travelEleCars: [
-          {
-            sn: 599,
-            id: 456,
-            name: '租車1號',
-            time: '2020-11-26 19:20:51.000000'
-          }
-        ]
-      };
+    },
+    handleCloseTravelSet(done) {
+      if (this.travelSetFormLoading) {
+        return;
+      }
+      this.$confirm('確定要提交表單?')
+          .then(_ => {
+            this.travelSetFormLoading = true;
+            this.timer = setTimeout(() => {
+              done();
+              // 动画关闭需要一定的时间
+              setTimeout(() => {
+                this.travelSetFormLoading = false;
+              }, 400);
+            }, 2000);
+          })
+          .catch(_ => {
+          });
+    },
+    cancelTravelSetForm() {
+      console.log("cancel")
+      this.travelSetFormLoading = false;
+      // this.travelsetdialog = false;
+      this.$store.commit('toggleTravelSetDialog');
+      clearTimeout(this.timer);
     }
   }
 }
