@@ -127,6 +127,7 @@ h2 {
 										</div> -->
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
 											<button class="btn btn-primary btn-default" onclick="confirmEdit()">送出修改</button>
+											<button class="btn btn-primary btn-default" onclick="redo()">重置</button>
 											<!-- <button type="submit" class="btn btn-secondary btn-default">Cancel</button> -->
 										</div>
 										
@@ -187,9 +188,17 @@ h2 {
 			}
 
 		}
-		 
-         
-	 </script>
+
+		function redo(){
+			document.getElementById("title").value = "${artBean[0].artTitle }";
+			editor.setData( '${artBean[0].artContent }');
+			getDefaultType();
+			event.preventDefault();
+
+
+		}
+		
+</script>
 	
 	
 	<script>

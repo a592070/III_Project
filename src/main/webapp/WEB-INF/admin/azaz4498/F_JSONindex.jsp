@@ -99,7 +99,7 @@ h2 {
 
 
 
-				<!-- </div> -->
+				
 				<h2>文章列表</h2>
 				
 				<div class="box">
@@ -139,7 +139,7 @@ h2 {
 	</div>
 	<!--modal-->
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="deleteModalLabel">確認刪除</h5>
@@ -151,12 +151,13 @@ h2 {
 					是否確認刪除?
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary btn-pill">確認</button>
-					<button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">取消</button>
+					<button id="modal_confirm" type="button" class="btn btn-primary">確認</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
 	</div>
+
 
 	<script>
 		//文章列表
@@ -194,14 +195,16 @@ h2 {
 															},
 														});
 											});
-							//刪除文章
 							
-
+							//刪除文章
 							$("tbody").on("click", ".delete_btn", function() {
 								var currId = $(this).val();
-								$(".modal-body").text("確認要刪除 ID為 "+currId+"的資料");
-								if (desicion) {
-									$(this).closest("tr").remove();
+								var currTR = $(this).closest("tr");
+								$(".modal-body").text("確認要刪除 ID為 "+currId+"的文章?");
+								
+								$("#modal_confirm").on("click",function(){
+									$("#deleteModal").modal("hide");
+									currTR.remove();
 									$.ajax({
 										type : "POST",
 										url : "delete.controller",
@@ -211,30 +214,23 @@ h2 {
 										success : function(response) {
 										},
 									});
-								} else {
-									return;
-								}
+								});
 							});
+								
+								
+								
 							//編輯文章
-							$("tbody")
-									.on(
-											"click",
-											".edit_btn",
-											function() {
-												var currId = $(this).val();
-
-												$
-														.ajax({
-															type : "GET",
-															url : "editPage.controller",
-															data : {
-																artId : currId
-															},
-															success : function(
-																	response) {
-																window.location.href = "editPage.controller?artId="
-																		+ currId;
-															},
+							$("tbody").on("click",".edit_btn",function() {
+								var currId = $(this).val();
+									$.ajax({
+										type : "GET",
+										url : "editPage.controller",
+										data : {
+											artId : currId
+											},
+											success : function(
+												response) {
+													window.location.href = "editPage.controller?artId="+ currId;},
 														});
 											});
 							//更改status
