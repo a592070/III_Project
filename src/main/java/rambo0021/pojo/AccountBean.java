@@ -19,11 +19,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import global.pojo.OrderTable;
 import iring29.model.Restaurant;
+import utils.StringUtil;
 
 
 
@@ -65,6 +67,21 @@ public class AccountBean {
 	public AccountBean() {
 
 	}
+	
+
+	public AccountBean(String userName, String password, String email, byte[] picture, Date modify_Date,
+			String nickName, Date register, String status) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.picture = picture;
+		this.modify_Date = modify_Date;
+		this.nickName = nickName;
+		this.register = register;
+		this.status = status;
+	}
+
 
 	public String getUserName() {
 		return userName;

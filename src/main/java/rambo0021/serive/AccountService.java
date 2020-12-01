@@ -30,4 +30,5 @@ public interface AccountService {
 	List<AccountListViewBean> search(String username, String identity, String email, int start, int pageSize, Sort aSort);
 	int getSize(String hql);
 	String delAccount(AccountBean aBean);
+	List<IdentityBean> getidList();
 }
