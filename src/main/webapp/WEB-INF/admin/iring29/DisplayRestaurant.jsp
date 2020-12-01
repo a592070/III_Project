@@ -279,15 +279,6 @@ img{
     <!-- Room Details Section End -->
 </div>
 
-    <!-- Js Plugins -->
-<%--     <script src="${pageContext.request.contextPath}/sona-master/js/jquery-3.3.1.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/sona-master/js/bootstrap.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/sona-master/js/jquery.magnific-popup.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/sona-master/js/jquery.nice-select.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/sona-master/js/jquery-ui.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/sona-master/js/jquery.slicknav.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/sona-master/js/owl.carousel.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/sona-master/js/main.js"></script> --%>
-
 </body>
+	 <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
 </html>

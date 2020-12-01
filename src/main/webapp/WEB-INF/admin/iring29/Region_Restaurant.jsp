@@ -154,7 +154,7 @@ h3{
           <div class="col-lg-9">
           	<div class="row">
           	
-          	<c:forEach var="res" items="${res_data_region}">
+          	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ">
 		    				<div class="destination">
 		    				<c:if test="${!empty res.pic}">
