@@ -13,6 +13,9 @@
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
 </head>
 
 
@@ -24,9 +27,10 @@
 		<c:import url="/WEB-INF/admin/fragment/sidebar.jsp" />
 		<div class="page-wrapper">
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
- <%-- -- <div class="content-wrapper"></div>  -------------------------------以下為個人內容-------------------------- --%>
+ <%----------------------------------------以下為個人內容-------------------------------%>
 <!-- 		<div class="container"> -->
-        
+		<div class="content-wrapper">
+        	<div class="box" >
         <div class="mx-auto my-3" style="width: 1200px">
             <form class="form-inline mx-4"  id="form">
                 <div class="form-group mb-2">
@@ -83,15 +87,16 @@
   <!--------------------------------------------以上為搜尋列----------------------------------------------------------->  
   <!--------------------------------------------以下為飯店內容--------------------------------------------------------->
         <br>
-        <table class="table" id="table">
+        <div class="table-responsive">
+        <table class="table table-striped table-sm" id="table">
             <thead>
             <tr>
                 <th><div>
+							<Input type='hidden' name='order' id="order" value=''>ID
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='SN'> 
 							<button id="sort" class="id-btn">
 								<i class="fa fa-fw fa-sort" id="uSort"></i>
 							</button> 
-							<Input type='hidden' name='order' id="order" value=''>ID
-							<Input type='hidden' name='orderfiled' id="orderfiled" value='SN'> 
 						<script>
 						$('.id-btn').click(function(){
 							var order = $('#order').val();
@@ -109,11 +114,11 @@
                 <th>地址</th>
                 <th>住宿類型</th>                                            
                 <th><div>
+							<Input type='hidden' name='order' id="order" value=''>狀態
+							<Input type='hidden' name='orderfiled' id="orderfiled" value='STATUS'> 
 							<button id="sort1" class="status-btn">
 							<i class="fa fa-fw fa-sort" id="uSort"></i>
 							</button> 
-							<Input type='hidden' name='order' id="order" value=''>狀態
-							<Input type='hidden' name='orderfiled' id="orderfiled" value='STATUS'> 
 						<script>
 						$('.status-btn').click(function(){
 							var order = $('#order').val();
@@ -152,13 +157,37 @@
 	      			</c:choose>
 	      			</label></td> <%-- 開關(綠色) --%> 
                 <td><button type="button" class="btn btn-warning mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
-               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}','${hotels.NAME}')">刪除</button></td>
+               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Hotel${hotels.SN}" >刪除</button>
+               
+               		<div class="modal fade" id="Hotel${hotels.SN}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        			 <div class="modal-dialog modal-dialog-centered" role="document">
+         			  <div class="modal-content">
+         			    <div class="modal-header">
+             			  <h5 class="modal-title" id="exampleModalCenterTitle">刪除提醒</h5>
+             			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               				  <span aria-hidden="true">&times;</span>
+              			  </button>
+           			  	</div>
+            		 <div class="modal-body">
+                		<form action="hoteldelete" method="POST">
+                   		 <div class="form-group">
+                    	  <h4>是否確認刪除  ${hotels.NAME} 住宿資料?</h4>
+                    	 </div>
+               			 <div class="modal-footer">
+                 	 		<button type="submit" class="btn btn-primary">確認</button>
+                  			<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+               			 </div>
+                 	 	</form> 
+            		 </div>
+          		 </div>
+       	  		</div>
+      		 </div></td>
             </tr>
             </c:forEach> 
 
          </t1body>
         </table>
-        
+        </div>
         <div>
 				<nav aria-label="...">
 					<ul class="pagination">
@@ -170,20 +199,20 @@
 							
 								<!--previous -->
 								<li class="page-item previous" id="pBtn">
-<!-- 									<button class="page-link previous " id="page-previous" value="previous">&laquo;</button> -->
-										<button class="page-link previous " id="page-previous" value="previous">上一頁</button>
+									<button class="page-link previous " id="page-previous" value="previous">&laquo;</button>
+<!-- 										<button class="page-link previous " id="page-previous" value="previous">上一頁</button> -->
 								</li>
 							
 							
 								<!--current page -->
-								<li class="page-item">
+								<li class="page-item active">
 									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}/${totalPage}</button>
 								</li>
 						
 								<!--NEXT -->
 								<li class="page-item next" id ="nBtn">
-<!-- 									<button class="page-link next" id="page-next" value="next">&raquo;</button> -->
-									<button class="page-link next" id="page-next" value="next">下一頁</button>
+									<button class="page-link next" id="page-next" value="next">&raquo;</button>
+<!-- 									<button class="page-link next" id="page-next" value="next">下一頁</button> -->
 								</li>
 							
 							
@@ -247,6 +276,7 @@
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
 			var order = $("#order").val()
+			var currentPage=1
 			$("#tbody").children().remove();
 			$.ajax(
 					{
@@ -270,6 +300,7 @@
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
 			var order = $("#order").val()
+			var currentPage=1
 			$("#tbody").children().remove();
 			$.ajax(
 					{
@@ -293,6 +324,7 @@
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
 			var order = $("#order").val()
+			var currentPage=1
 			$("#tbody").children().remove();
 			$.ajax(
 					{
@@ -363,7 +395,6 @@
 			var typekeywd = $("#typekeywd").val()
 			var order = $("#order").val()
 			var pagebotton = $("#page-first").val()
-			//var currentPage = $("#page-btn").val()
 			currentPage = 1;
 			console.log("keyword =" + keyword);
 			console.log("regionkeywd =" + regionkeywd);
@@ -394,7 +425,6 @@
 			var typekeywd = $("#typekeywd").val()
 			var order = $("#order").val()
 			var pagebotton = $("#page-previous").val()
-			//var currentPage = $("#page-btn").val()
 			currentPage--;
 			console.log("keyword =" + keyword);
 			console.log("regionkeywd =" + regionkeywd);
@@ -425,7 +455,6 @@
 			var typekeywd = $("#typekeywd").val()
 			var order = $("#order").val()
 			var pagebotton = $("#page-next").val()
-			//var currentPage = $("#page-btn").val()
 			currentPage++;
 			console.log("keyword =" + keyword);
 			console.log("regionkeywd =" + regionkeywd);
@@ -490,11 +519,6 @@
 
 		}
 		
-		function clickdelete(id,name){
-
-			$("#deleteId").val(id);
-			$("#deleteName").val(name);
-		}
 
 		$('#resetkeyword').click(function(){
 			console.log("clear");
@@ -506,34 +530,35 @@
 		
 		</script> 
 		
-		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-           <div class="modal-content">
-             <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalCenterTitle">刪除</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-               </button>
-             </div>
-             <div class="modal-body">
-                <form action="hoteldelete" method="POST">
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label"></label>
-                      <input type="hidden" id = "deleteId" value="" name="deleteId">
-                      <input type="hidden" id = "deleteName" value="" name="deleteName">
-                      <p id="testid"></p>
-                      <h4>是否確認刪除?</h4>
-                    </div>
-               		 <div class="modal-footer">
-                 	 <button type="submit" class="btn btn-primary">確認</button>
-                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-               		 </div>
-                  </form> 
-             </div>
-           </div>
-         </div>
-       </div>
- 
+<!-- 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
+<!--          <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<!--            <div class="modal-content"> -->
+<!--              <div class="modal-header"> -->
+<!--                <h5 class="modal-title" id="exampleModalCenterTitle">刪除</h5> -->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--                  <span aria-hidden="true">&times;</span> -->
+<!--                </button> -->
+<!--              </div> -->
+<!--              <div class="modal-body"> -->
+<!--                 <form action="hoteldelete" method="POST"> -->
+<!--                     <div class="form-group"> -->
+<!--                       <label for="recipient-name" class="col-form-label"></label> -->
+<!--                       <input type="hidden" id = "deleteId" value="" name="deleteId"> -->
+<!--                       <input type="hidden" id = "deleteName" value="" name="deleteName"> -->
+<!--                       <p id="testid"></p> -->
+<!--                       <h4>是否確認刪除?</h4> -->
+<!--                     </div> -->
+<!--                		 <div class="modal-footer"> -->
+<!--                  	 <button type="submit" class="btn btn-primary">確認</button> -->
+<!--                   	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button> -->
+<!--                		 </div> -->
+<!--                   </form>  -->
+<!--              </div> -->
+<!--            </div> -->
+<!--          </div> -->
+<!--        </div> -->
+				</div>	
+ 			</div>
 		</div>
 	</div>
 

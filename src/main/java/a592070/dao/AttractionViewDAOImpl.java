@@ -78,8 +78,8 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
                 "where (do.sn=vo.sn) and (do.region like :region) and " +
                 "( str(do.sn) like :keyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
                 "order by vo."+orderFiled;
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
         if(descending) hql += " desc";
+        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
         query.setParameter("keyword", keyWords);
@@ -108,8 +108,8 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
         filedValue = "%" + filedValue + "%";
 
         String hql = "select vo from AttractionDO do, AttractionVO vo where (do.sn=vo.sn) and (do."+filedName+" like ?1 ) order by vo."+orderFiled;
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
         if(descending) hql += " desc";
+        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
@@ -125,8 +125,8 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     public List<AttractionVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending){
 
         String hql = "from AttractionVO order by "+orderFiled;
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", sn";
         if(descending) hql += " desc";
+        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", sn";
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
 

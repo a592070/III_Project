@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 import org.hibernate.type.NumericBooleanType;
 import utils.StringUtil;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,7 +44,8 @@ public class AttractionDO {
 //    private byte[] picture;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "attraction", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attraction", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     private List<AttractionPictureDO> attractionPic = new ArrayList<>();
 
     @Column(name = "TICKETINFO")

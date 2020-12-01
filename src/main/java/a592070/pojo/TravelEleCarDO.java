@@ -11,7 +11,7 @@ public class TravelEleCarDO {
 
     private Timestamp time;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "C_ID", referencedColumnName = "SN")
     private CarVO car;
 

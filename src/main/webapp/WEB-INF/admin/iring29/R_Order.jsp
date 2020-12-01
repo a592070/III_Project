@@ -41,6 +41,7 @@ td {
 		<c:import url="/WEB-INF/admin/fragment/sidebar.jsp" />
 		<div class="page-wrapper" id="page" >
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
+			<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 			<div class="content-wrapper">
 
 				<div class="row">
@@ -62,16 +63,11 @@ td {
 										<tr>
 										
 										<!-- 大訂單 -->
-											<th><div>
-										<button id="page-botton" class="Bid-btn">
-											<svg width="2em" height="1em" viewBox="0 0 16 16"
-													class="bi bi-arrow-down-up" fill="currentColor"
-													xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-											</svg>
-										</button>
-											<Input type='hidden' name='order' id="order" value=''>大訂單號
+										<th><div>大訂單號
+											<button id="page-botton" class="Bid-btn">
+											<i class="fa fa-fw fa-sort" id="uSort"></i>
+											</button>
+											<Input type='hidden' name='order' id="order" value=''>
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='order_id'>
 					<script>
 						$('.Bid-btn').click(function(){
@@ -86,16 +82,11 @@ td {
 									</div></th>
 									
 									<!-- 小訂單 -->
-											<th><div>
+									<th><div>餐廳訂單號
 										<button id="page-botton" class="Rid-btn">
-											<svg width="2em" height="1em" viewBox="0 0 16 16"
-													class="bi bi-arrow-down-up" fill="currentColor"
-													xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-											</svg>
+										<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
-											<Input type='hidden' name='order' id="order" value=''>餐廳訂單號
+											<Input type='hidden' name='order' id="order" value=''>
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='id'>
 					<script>
 						$('.Rid-btn').click(function(){
@@ -115,16 +106,11 @@ td {
 											<th class="d-none d-md-table-cell">訂位時間</th>
 											
 									<!-- 狀態 -->
-											<th><div>
+									<th><div>狀態
 										<button id="page-botton" class="timeid-btn">
-											<svg width="2em" height="1em" viewBox="0 0 16 16"
-													class="bi bi-arrow-down-up" fill="currentColor"
-													xmlns="http://www.w3.org/2000/svg">
-											<path fill-rule="evenodd"
-														d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-											</svg>
+											<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
-											<Input type='hidden' name='order' id="order" value=''>狀態
+											<Input type='hidden' name='order' id="order" value=''>
 											<Input type='hidden' name='orderFiled' id="orderFiled" value='book_time'>
 					<script>
 						$('.timeid-btn').click(function(){
@@ -174,16 +160,44 @@ td {
 												</form>
 												</td>
 												<td>
-												<form id="statuss" name="statuss"
-												action="<%=application.getContextPath()%>/admin/DeleteOrder"
-												method="POST" onsubmit="return confirm('確認是否刪除此訂單資料？');">
-												<button type="submit" class="btn btn-danger">刪除</button>
-												<Input type='hidden' name='rid' value='${r.id}'>
-												</form></td>
+<!-- 												<form id="statuss" name="statuss" -->
+<%-- 												action="<%=application.getContextPath()%>/admin/DeleteOrder" --%>
+<!-- 												method="POST" onsubmit="return confirm('確認是否刪除此訂單資料？');"> -->
+<!-- 												<button type="submit" class="btn btn-danger">刪除</button> -->
+<%-- 												<Input type='hidden' name='rid' value='${r.id}'> --%>
+<!-- 												</form> -->
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#訂單${r.id}">
+											  刪除
+											</button>
+
+											<!-- Modal -->
+											<div class="modal fade" id="訂單${r.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ 											 <div class="modal-dialog modal-dialog-centered" role="document">
+  											  <div class="modal-content">
+ 											     <div class="modal-header">
+ 											       <h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>
+ 											       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  											        <span aria-hidden="true">&times;</span>											
+  											      </button>											
+  											    </div>
+  											    <div class="modal-body">
+  											      確認刪除餐廳訂單 ${r.id} 資料？
+     											</div>											
+ 											     <div class="modal-footer">
+   											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+   											     <form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" >
+   											     	<button type="submit" class="btn btn-primary">確認</button>
+   											     	<Input type='hidden' name='rid' value='${r.id}'>
+   											     </form>
+   											   </div>
+  											  </div>
+  											</div>
+											</div>
+												</td>
 
 											</tr>
 
-											<!-- <td><span class="badge badge-warning">Delayed</span></td> -->
 
 										</c:forEach>
 									</tbody>
@@ -213,7 +227,7 @@ td {
 							
 							<!-- current page -->
 								<li class="page-item active">
-									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}</button>
+									<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="${currentPage}">${currentPage}/${totalPage}</button>
 								</li>
 						
 							<!-- NEXT -->
@@ -253,7 +267,7 @@ td {
 								$("#tbody").empty();
 								$("#page-btn").remove();
 								var current_page = "";
-								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage +'</button>';
+								current_page += '<button class="page-link" class="sr-only" id="page-btn" name="currentPage" value="">' + response.page.currentPage + '/' + response.page.totalPageCount +'</button>';
 								$('.page-item.active').html(current_page);
 								currentPage = response.page.currentPage;
 
@@ -267,7 +281,7 @@ td {
 								if(cgpage == totalPage){
 									currentPage = totalPage;
 									$('#page-btn').empty();
-									$('#page-btn').html(currentPage);
+									$('#page-btn').html(currentPage+ '/' + totalPage);
 								}
 
 								if(currentPage == 1){
@@ -319,12 +333,30 @@ td {
 									res_context += '<button type="submit" class="btn btn-warning"  disabled>修改</button>';
 										}	
 									res_context += '</form></td>';
-									res_context += '<td><div class="delete">';
-									var del = "確認是否刪除此訂單資料？";
-									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" onsubmit="return confirm(`del`);">';
-									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
-									res_context += '<Input type="hidden" name="rid" value="'+ response.Rlist[i].id + '">';
-									res_context += '</form></td>';
+									res_context += '<td>';
+									res_context += '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#訂單'+ response.Rlist[i].id +'">';
+									res_context += '刪除</button>';
+									res_context += '<div class="modal fade" id="訂單'+ response.Rlist[i].id +'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">';
+									res_context += '<div class="modal-dialog modal-dialog-centered" role="document">';
+									res_context += '<div class="modal-content">';
+									res_context += '<div class="modal-header">';
+									res_context += '<h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>';
+									res_context += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+									res_context += '<span aria-hidden="true">&times;</span></button></div>';
+									res_context += '<div class="modal-body">';
+									res_context += '確認刪除餐廳訂單'+ response.Rlist[i].id +'資料？';
+									res_context += '</div><div class="modal-footer">';
+									res_context += '<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>';
+									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" >';
+									res_context += '<button type="submit" class="btn btn-primary">確認</button>';
+									res_context += '<Input type="hidden" name="rid" value="'+ response.Rlist[i].id +'">';
+									res_context += '</form></div></div></div></div>';
+// 									var del = "確認是否刪除此訂單資料？";
+<%-- 									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" onsubmit="return confirm(`del`);">'; --%>
+// 									res_context += '<button type="submit" class="btn btn-danger">刪除</button>';
+// 									res_context += '<Input type="hidden" name="rid" value="'+ response.Rlist[i].id + '">';
+// 									res_context += '</form>';
+									res_context += '</td>';
 									}
 									$("#tbody").html(res_context);
 								console.log(currentPage);

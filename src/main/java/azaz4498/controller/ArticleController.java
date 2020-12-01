@@ -1,8 +1,12 @@
 package azaz4498.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +14,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.StyleConstants.CharacterConstants;
 
+import global.Constant;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,6 +63,8 @@ public class ArticleController {
 	ArticleTypeService articleTypeService;
 	@Autowired
 	PictureService pictureService;
+	@Autowired
+	private ServletContext context;
 
 	@RequestMapping(path = "/Forum")
 	public String ForumEntry(Model m) {
@@ -201,29 +211,32 @@ public class ArticleController {
 	public @ResponseBody Map<String, String> imgUpload(@RequestParam(name = "upload")MultipartFile uploadFile,HttpServletRequest request) throws IOException{
 		Map<String, String> map = new HashMap<String, String>();
 		String fileName = uploadFile.getOriginalFilename();
-		String finalFileName = UUID.randomUUID()+fileName.substring(fileName.lastIndexOf("."));
+		String fileType = fileName.substring(fileName.lastIndexOf("."));
+		String finalFileName = UUID.randomUUID()+fileType;
+		String targetUrl = "/img/azaz4498"+File.separator+finalFileName;
 		
-		String path = request.getServletContext().getRealPath("/img/azaz4498")+File.separator+finalFileName;
+		
+		
+		String path =request.getServletContext().getRealPath(targetUrl);
+		
 		
 		File file = new File(path);
 		InputStream is = uploadFile.getInputStream();
 		byte[] bytes = FileCopyUtils.copyToByteArray(is);
 		uploadFile.transferTo(file);
 		
-		Picture picture = new Picture();
-		picture.setPicFileName(finalFileName);
-		picture.setPicUrl(path);
-		picture.setPicture(bytes);
-		Integer articleId = 41;
-		picture.setRefId(articleId);
+//		Picture picture = new Picture();
+//		picture.setPicFileName(finalFileName);
+//		picture.setPicUrl(path);
+//		picture.setPicture(bytes);
+//		Integer articleId = 41;
+//		picture.setRefId(articleId);
+//		
+//		Integer picId = pictureService.addPic(picture).getId();
+		String imgPath = "showPic/"+finalFileName;
 		
-		Integer picId = pictureService.addPic(picture).getId();
-		String imgPath = "showPic/"+picId;
 		
 		
-		
-//		articleService.uploadImg(41, bytes, path);
-		System.out.println(path);
 		
 		map.put("finalFileName", finalFileName);
 		map.put("url", imgPath);
@@ -234,14 +247,27 @@ public class ArticleController {
 		
 		
 	}
-	@RequestMapping(path="/showPic/{id}",method = RequestMethod.GET)
-	public ResponseEntity<byte[]> showImg(@PathVariable(name = "id")Integer id) throws IOException{
+	@RequestMapping(path="/showPic/{fileName}",method = RequestMethod.GET)
+	public ResponseEntity<byte[]> showImg(@PathVariable(name = "fileName")String fileName) throws IOException{
 		HttpHeaders headers = new HttpHeaders();
-		Picture picture = pictureService.getPic(id);
+//		Picture picture = pictureService.getPic(id);
+		
+		String targetUrl = "/img/azaz4498/"+fileName;
+		System.out.println(fileName);
+		System.out.println(targetUrl);
+		
+		String path = context.getRealPath(targetUrl);
+		
+		
+		FileInputStream fis = new FileInputStream(path);
+		byte[] bytes = FileCopyUtils.copyToByteArray(fis);
 		
 		headers.setContentType(MediaType.IMAGE_JPEG);
+		headers.setContentType(MediaType.IMAGE_PNG);
 		
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(picture.getPicture(),headers,HttpStatus.OK);
+		
+		
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(bytes,headers,HttpStatus.OK);
 		
 		return responseEntity;
 		

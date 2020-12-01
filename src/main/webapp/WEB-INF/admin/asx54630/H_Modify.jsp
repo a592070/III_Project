@@ -211,23 +211,23 @@ pre {
 								<input type="hidden" value="${hoteldetail.SN}" name="upId" id="dataId">
 								 <p class="modify-img">
 									<label for="r-name">請選擇欲修改圖片上傳</label> 
-									<input type="file" id="pic" name="pic">
-									<Input type='hidden' name='r_sn' value=''>
+									<input type="file" id="uppic" name="uppic" value="${hoteldetail.PIC}">
 								</p>
 								<div class="div_img">
-									<img id="preview_Rpic" src="<%=application.getContextPath()%>/ShowPic"> 
+									<img id="preview_Hpic" src="<%=application.getContextPath()%>/admin/hotelPic"> 
 								</div>
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-								<script> 
-								$("#pic").change(function(){ 
+								<script>
+
+								$("#uppic").change(function(){ 
 					                 readURL(this); 
 									            }); 
  					            function readURL(input){ 
  					                if(input.files && input.files[0]){ 
  					                    var reader = new FileReader(); 
  					                    reader.onload = function (e) { 
- 					                        $("#preview_Rpic").attr('src', e.target.result);
+ 					                        $("#preview_Hpic").attr('src', e.target.result);
  					                    } 
  					                    reader.readAsDataURL(input.files[0]); 
  					                } 
@@ -409,21 +409,39 @@ pre {
 
 					<div class="modify_div">
 						<button class="btn btn-warning" name="confirm" value="confrim"
-						onclick="confrimModify()">確認修改</button>
+						data-toggle="modal" data-target="#exampleModalCenter">確認修改</button>
 
 					</div>
+			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        		 <div class="modal-dialog modal-dialog-centered" role="document">
+         		  <div class="modal-content">
+           		 	 <div class="modal-header">
+             			 <h5 class="modal-title" id="exampleModalCenterTitle">修改提醒</h5>
+               			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               		  <span aria-hidden="true">&times;</span>
+              		 </button>
+             		</div>
+            		 <div class="modal-body">
+                      <h4>是否確認修改 ${hoteldetail.NAME} 住宿資料?</h4>
+                    </div>
+               		 <div class="modal-footer">
+                 	 <button type="submit" class="btn btn-primary" onclick="confrimModify()">確認</button>
+                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+               		 </div>
+                  </form> 
+             </div>
+           </div>
+         </div>
+       </div>
 	
 				<script type="text/javascript"> 
-					 function confrimModify(){ 
-						 if (confirm("確定送出修改 ? ") ) { 
+					 function confrimModify(){  
 								document.forms["modifyH"].action="<%=application.getContextPath()%>/admin/hotelupdate";
 								document.forms["modifyH"].method = "POST";
 								document.forms["modifyH"].submit();
 								
 								return;
-							} else {
-								return;
-							}
+							
 						}
 					 </script>
 

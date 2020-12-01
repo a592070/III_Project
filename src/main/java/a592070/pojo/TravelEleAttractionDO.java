@@ -16,7 +16,7 @@ public class TravelEleAttractionDO {
 //    @Column(name = "time")@Temporal(TemporalType.TIMESTAMP)
 //    private Date utilTime;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "A_ID", referencedColumnName = "SN")
     private AttractionVO attraction;
 
