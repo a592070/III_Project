@@ -44,6 +44,9 @@ h3{
 .btn.btn-warning{
 	border-radius: 5px;
 	font-size: 10px;
+	background: #f85959;
+	border: 1px solid #f85959;
+    color: #fff;
 }
 </style>
 </head>
@@ -181,11 +184,16 @@ h3{
           	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ">
 		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://img.etimg.com/thumb/msid-75176755,width-640,resizemode-4,imgsize-612672/effect-of-coronavirus-on-food.jpg');">
+		    				<FORM id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://img.etimg.com/thumb/msid-75176755,width-640,resizemode-4,imgsize-612672/effect-of-coronavirus-on-food.jpg');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
-    						</div>
+    								<span class="icon-search2"></span>
+    								</div>
 		    					</a>
+		    					<Input type='hidden' name='restaurant_name' value='${res.name}'>
+								<Input type='hidden' name='book_date' value='${book_date}'>
+								<Input type='hidden' name='person_number' value='${person_number}'>
+		    				</FORM>
 		    					<div class="text p-3">
 		    						<FORM action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
 		    						<div class="R_info">
@@ -193,16 +201,16 @@ h3{
 		    							<div class="one">
 				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
 				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
+				    							<i class="icon-star" ></i>
+				    							<i class="icon-star" ></i>
+				    							<i class="icon-star" ></i>
+				    							<i class="icon-star-o" ></i>
+				    							<i class="icon-star-o" ></i>
+				    							<span id="test${res.rating}" >${res.rating}</span>
 				    						</p>
 			    						</div>
 			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
+<!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
 		    							</div>
 		    						</div>
 		    						<p>${res.type}</p>

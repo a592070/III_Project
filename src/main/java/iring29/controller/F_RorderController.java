@@ -25,7 +25,7 @@ public class F_RorderController {
 	
 	@RequestMapping(path = "PrepareOrder", method = RequestMethod.POST)
 	public String PrepareOrder(@RequestParam(value = "time") String time,
-							   @RequestParam(value = "bookdate") String book_date, 
+							   @RequestParam(value = "book_date") String book_date, 
 							   @RequestParam(value = "b_name") String b_name, 
 							   @RequestParam(value = "b_phone") String b_phone, 
 							   @RequestParam(value = "person_number") BigDecimal person_number,

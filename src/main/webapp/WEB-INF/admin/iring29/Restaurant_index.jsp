@@ -84,6 +84,9 @@ button {
 	margin-left: 10px;
 	width:100px;
 }    
+.form-control{
+	width: 250px;
+}
 </style>
 </head>
 <body>
@@ -122,12 +125,12 @@ button {
 					</select>
 				</div>
 				<div class="search">
-					<span class="sp_search">餐廳名稱搜尋</span> <input type="text"
-						name="restaurant_name" placeholder="請輸入關鍵字">
+					<span class="sp_search-1">餐廳名稱搜尋</span> <input type="text"
+						name="restaurant_name" placeholder="請輸入關鍵字" class="form-control">
 				</div>
 				<div class="search_date">
-					<span class="sp_search">日期</span> 
-					<input type="date" name="book_date" id="theDate" min="">
+					<span class="sp_search-1">日期</span> 
+					<input type="date" name="book_date" id="theDate" min="" class="form-control">
 					<script>
 						var date = new Date();
 

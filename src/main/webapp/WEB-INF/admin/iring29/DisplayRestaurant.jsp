@@ -53,6 +53,10 @@ img{
 	height:52px;
 }
 
+.room-booking form button {
+    color: #ffffff;
+    background: #dfa974;
+}
 </style>
 </head>
 <body>
@@ -90,7 +94,7 @@ img{
                                         <i class="icon_star"></i>
                                         <i class="icon_star-half_alt"></i>
                                     </div>
-                                    	<a href="#">我要訂位</a>
+                                    	<a href="#">放入購物車</a>
                                 </div>
                             </div>
 <!--                             <h2>159$<span>/Pernight</span></h2> -->
@@ -195,7 +199,7 @@ img{
                 <div class="col-lg-4">
                     <div class="room-booking">
                         <h3>訂位資料</h3>
-                        <form action="#">
+                        <form action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
                             <div class="check-date">
                                 <label for="date-in">日期:</label>
                                 <input type="date" name="book_date" id="theDate" class="date-input hasDatepicker">
@@ -228,7 +232,7 @@ img{
                             </div>
                             <div class="check-date">
                                 <label for="date-out">時間:</label>
-                                <select id=sel name="book_time"  class="form-control">
+                                <select id=sel name="time"  class="form-control">
 							<option value="11:00">11:00</option>
 							<option value="12:00">12:00</option>
 							<option value="13:00">13:00</option>
@@ -267,9 +271,9 @@ img{
                             </div>
                             <div class="select-option">
                                 <label for="room">請輸入訂位者電話:</label>
-                                <input type="text" id="b-phone" onblur="checkPhone()" name="b_phone" placeholder="09xx-xxxxxx">
+                                <input type="text" id="b-phone" onblur="checkPhone()" name="b_phone" placeholder="09xxxxxxxx">
                             </div>
-                            <button type="submit">先放入購物車，看其他</button>
+                            <button type="submit" class="orderbtn">我要訂位</button>
                         </form>
                     </div>
                 </div>
