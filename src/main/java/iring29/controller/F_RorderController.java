@@ -31,9 +31,12 @@ public class F_RorderController {
 							   @RequestParam(value = "person_number") BigDecimal person_number,
 							   HttpSession session) {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		if(OTBean == null) {
 //		String book_date = (String) session.getAttribute("book_date");
+			OTBean = new OrderTable();
+		}
 		R_Order_List rOBean = new R_Order_List();
-		OrderTable OTBean = new OrderTable();
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		System.out.println("bookdate = " + book_date);
 		String tsStr = book_date +" " + time + ":00";
