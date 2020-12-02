@@ -44,6 +44,7 @@ img{
     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .bg-dark {
      background-color: transparent !important; 
@@ -87,12 +88,27 @@ img{
                             <div class="rd-title">
                                 <h3>${res_data.name}</h3>
                                 <div class="rdt-right">
-                                    <div class="rating">
-                                        <i class="icon_star"></i>
-                                        <i class="icon_star"></i>
-                                        <i class="icon_star"></i>
-                                        <i class="icon_star"></i>
-                                        <i class="icon_star-half_alt"></i>
+                                    <div class="rating" id="rating">
+<!--                                         <i class="icon_star"></i> -->
+<!--                                         <i class="icon_star"></i> -->
+<!--                                         <i class="icon_star"></i> -->
+<!--                                         <i class="icon_star"></i> -->
+<!--                                         <i class="icon_star-half_alt"></i> -->
+                                        <span>${res_data.rating}</span>
+                                      <script>
+										var star = Math.floor("${res_data.rating}");
+										console.log("star = " + star);
+										var tags = "";
+										var half = " <i class='icon_star-half_alt'>";
+										var zerostar = "";
+										for(var i = 0; i < star; i++){
+											tags += " <i class='icon_star'>";
+											}
+										for(var j =( star + 1 ); j < 5 ; j++){
+											zerostar += " <i class='fa fa-star-o'>";
+											}
+										$("#rating").prepend(tags, half, zerostar);
+                                      </script>
                                     </div>
                                     	<a href="#">放入購物車</a>
                                 </div>
@@ -145,6 +161,7 @@ img{
 <!--                                     <i class="icon_star"></i> -->
 <!--                                     <i class="icon_star"></i> -->
 <!--                                     <i class="icon_star-half_alt"></i> -->
+
                                 </div>
                                 <h5></h5>
                                 <p></p>

@@ -201,33 +201,15 @@ h3{
 		    							<div class="one">
 				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
 				    						<p class="rate"  id="test${res.rating}" >
-				    							<i id="stars0" class="icon-star"></i>
-				    							<i id="stars1" class="icon-star"></i>
-				    							<i id="stars2" class="icon-star"></i>
-				    							<i id="stars3" class="icon-star"></i>
-				    							<i id="stars4" class="icon-star-o"></i>
+				    							<i id="stars" class="icon-star" ></i>
+				    							<i id="stars" class="icon-star" ></i>
+				    							<i id="stars" class="icon-star" ></i>
+				    							<i id="stars" class="icon-star" ></i>
+				    							<i id="stars" class="icon-star-o" ></i>
 				    							<span>${res.rating}</span>
 				    						</p>
 				    						<script>
-// 				    						var star = Math.floor("${res.rating}");
-// 				    						for( i = 0; i < star ; i++){
-// 												$("#test${res.rating}").html("<i class='icon-star'></i>");
-// 					    						}
-// 												var p = document.getElementById("test${res.rating}");
-// 												var star = Math.floor("${res.rating}");//取最大整數
-// 												console.log(star);
-// 												var tags = document.getElementsByClassName("stars");
-// 												for( i = 0; i < star ; i++){
-// 													var tag1 = p.createElement("span");
-// 													tags[i].setAttribute("class", "icon-star");//將節點上增加class樣式
-// 													tags[i].className("icon-star");
-// 													p.innerHTML="<i class='icon-star'>";
-// 													}
-// 												for( j = star; j < 5; j++){
-// 													var tag2 = p.createElement("i");
-// 													tags[j].setAttribute("class", "icon-star-o");//將節點上增加class樣式
-// 													tags[i].className("icon-star-o");
-// 													}
+				    						
 				    						</script>
 			    						</div>
 			    						<div class="two">
