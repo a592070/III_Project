@@ -84,7 +84,12 @@ body{
 </head>
 <body>
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
-    
+    <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
 <section class="cart_area">
 	<div class="container">
 		<div class="row">

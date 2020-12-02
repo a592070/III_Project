@@ -32,9 +32,14 @@ public class F_RorderController {
 							   HttpSession session) {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		if(OTBean == null) {
 //		String book_date = (String) session.getAttribute("book_date");
 			OTBean = new OrderTable();
+			cartnum = 0;
+		}
+		if(cartnum == null) {
+			cartnum = 0;
 		}
 		R_Order_List rOBean = new R_Order_List();
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
@@ -49,7 +54,10 @@ public class F_RorderController {
 		rOBean.setDeposit(BigDecimal.valueOf(500));
 		rOBean.setRestaurant(res_data);
 		OTBean.addR_Order_Lists(rOBean);
+		cartnum = cartnum + 1;
+		System.out.println("cart num = " +cartnum);
 		session.setAttribute("OTBean", OTBean);
+		session.setAttribute("cartnum", cartnum);
 		return "iring29/ShoppingCart";
 	}
 	

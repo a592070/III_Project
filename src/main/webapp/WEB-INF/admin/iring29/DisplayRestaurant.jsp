@@ -110,7 +110,10 @@ img{
 										$("#rating").prepend(tags, half, zerostar);
                                       </script>
                                     </div>
-                                    	<a href="#">放入購物車</a>
+                                    <form id="shop_cart" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
+                                    	<a href="javascript:document.getElementById('shop_cart').submit();">放入購物車</a>
+                                    	<Input type='hidden' name='time' value=''>
+                                    </form>
                                 </div>
                             </div>
 <!--                             <h2>159$<span>/Pernight</span></h2> -->
@@ -216,7 +219,7 @@ img{
                 <div class="col-lg-4">
                     <div class="room-booking">
                         <h3>訂位資料</h3>
-                        <form action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
+                        <form class="booking2" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
                             <div class="check-date">
                                 <label for="date-in">日期:</label>
                                 <input type="date" name="book_date" id="theDate" class="date-input hasDatepicker">
@@ -291,12 +294,14 @@ img{
                                 <input type="text" id="b-phone" onblur="checkPhone()" name="b_phone" placeholder="09xxxxxxxx">
                             </div>
                             <button id="order" type="button" class="orderbtn">我要訂位</button>
+                            <Input type='hidden' name='cartnum' value=''>
                             <script>
                             var item = 0;
 								$("#order").click(function(){
-									item ++;
-									console.log("item = " + item)
-									$(".nav-shop__circle").html(item);
+// 									item ++;
+// 									console.log("item = " + item)
+// 									$(".nav-shop__circle").html(item);
+									$(".booking2").submit();
 									})
                             </script>
                         </form>

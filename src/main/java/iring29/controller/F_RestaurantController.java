@@ -106,11 +106,13 @@ public class F_RestaurantController {
 	}
 	
 	@RequestMapping(path = "/DisplayPic")
-	public String DisplayPic(@ModelAttribute("res_data_region") Restaurant_VO r) {
-		System.out.println("in pic " + r.getName());
-		String pic = Base64.getEncoder().encodeToString(r.getPic());
-		
-		return pic;
+	public ResponseEntity<byte[]> DisplayPic(@ModelAttribute("pic") byte[] r) {
+		System.out.println("in pic ");
+//		String pic = Base64.getEncoder().encodeToString(r);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+//		System.out.println("pic = " + pic);
+		return new ResponseEntity<byte[]>(r, headers, HttpStatus.OK);
 	}
 
 	
