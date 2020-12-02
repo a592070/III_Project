@@ -272,8 +272,10 @@ td{
         })
 
         $("#carRentalCompany").on("click", ".dropData", function(){
-            var form1 = $(this).parents('form');
-            var formData = new FormData(form1[0]);
+            // var form1 = $(this).parents('form');
+            var td1 = $(this).parents('td').siblings('.sn_rentalcompany').text();
+            console.log(td1)
+            // var formData = new FormData(form1[0]);
             $("#modal").click();
 			$("#confirm").click(function(){
 
@@ -281,9 +283,9 @@ td{
         
                 type:"POST",   
                 url: "delCarRentalCompany",        
-                data: formData,
-                processData : false, 
-                contentType : false,
+                data: "sn_rentalcompany="+td1,
+                // processData : false, 
+                // contentType : false,
                 dataType: "json",   
 
                 success : (response) => {
