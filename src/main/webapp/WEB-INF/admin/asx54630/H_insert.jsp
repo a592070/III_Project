@@ -143,7 +143,7 @@ h3 {
 }
 
 .btn.btn-light {
-	height: 35px;
+	color:lightgray;
 }
 
 .div-1 {
@@ -197,6 +197,7 @@ pre {
 			<form action="hotelindex" method="GET">
 					<div class="div-back">
 						<button type="submit" class="btn btn-primary">回旅館列表</button>
+						<button type="button" class="btn btn-light" id="putdata" onclick="insertdata()">帶入資料</button>
 					</div>
 				</form>
 			<div class="container">
@@ -212,7 +213,7 @@ pre {
  								<p class="modify-img">
 									<label for="r-name">請選擇欲修改圖片上傳</label>
  									<input type="file" id="uppic" name="uppic">									
- 								<button type="submit" class="btn btn-light">修改</button> 
+<!--  								<button type="submit" class="btn btn-light">修改</button>  -->
 								</p>
 								<div class="div_img">
 									<img id="preview_Hpic" src="<%=application.getContextPath()%>/hotelPic">
@@ -327,21 +328,52 @@ pre {
 
 					<div class="modify_div">
 						<button class="btn btn-warning" name="confirm" value="confrim"
-						onclick="confrimCreate()">確認新增</button>
-
+						data-toggle="modal" data-target="#exampleModalCenter">確認新增</button>
 					</div>
+					</div>
+					<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        		 	 <div class="modal-dialog modal-dialog-centered" role="document">
+         		  	  <div class="modal-content">
+           		 	   <div class="modal-header">
+             			 <h5 class="modal-title" id="exampleModalCenterTitle">新增提醒</h5>
+               			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               		       <span aria-hidden="true">&times;</span>
+              		      </button>
+             			</div>
+            		  <div class="modal-body">
+                      	<h4>是否確認新增住宿資料?</h4>
+                      </div>
+               		 <div class="modal-footer">
+                 	 <button type="submit" class="btn btn-primary" onclick="confrimCreate()">確認</button>
+                  	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+               		 </div>
+                  </form> 
+             </div>
+           </div>
+         </div>
+       </div>
 	
 				<script type="text/javascript"> 
+				 function insertdata(){
+					 console.log("in data")
+						 document.getElementById("dataName").value = "我家大飯店";
+						 document.getElementById("upRegion")[3].selected = "selected";
+						 document.getElementById("dataAddress").value = "桃園市桃園區民生路800號";
+						 document.getElementById("dataTel").value = "03-30678";
+						 document.getElementById("dataDbroom").value = "2500";
+						 document.getElementById("dataQdroom").value = "3000";
+						 document.getElementById("dataDescription").value = "歡迎來到我家大飯店! 我們致力於讓客戶有回到家的感覺!";
+						 document.getElementById("dataOpentime").value = "全年無休";
+						 document.getElementById("upType")[1].selected = "selected";
+					 }
+
+				
 					 function confrimCreate(){ 
-						 if (confirm("確定送出新增 ? ") ) { 
 								document.forms["createH"].action="<%=application.getContextPath()%>/admin/hotelcreate";
 								document.forms["createH"].method = "POST";
 								document.forms["createH"].submit();
 								
 								return;
-							} else {
-								return;
-							}
 						}
 					 </script>
 
