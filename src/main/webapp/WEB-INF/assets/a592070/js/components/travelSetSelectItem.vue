@@ -57,12 +57,19 @@ module.exports = {
     },
     DisabledSelectTravelSetItem() {
       return this.selectTravelSetItemLoading || this.selectTravelSetItemNoMore
+    },
+    getTravelSetSelectDialog(){
+      return this.$store.getTravelSetSelectDialog;
+    },
+    getTravelSetSelectItem(){
+      return this.$store.getTravelSetSelectItem;
     }
   },
   methods: {
     addItemToTravelSet(index, rows) {
       console.log(rows[index]);
       let selected = rows[index];
+      this.currentSelectTravelSetItem = this.getTravelSetSelectItem;
       this.currentSelectTravelSetItem.id = selected.sn;
       this.currentSelectTravelSetItem.name = selected.name;
       this.handleCloseTravelSetItem();
@@ -70,6 +77,7 @@ module.exports = {
     addItemToTravelSet(i) {
       console.log(i);
       let selected = i;
+      this.currentSelectTravelSetItem = this.getTravelSetSelectItem;
       this.currentSelectTravelSetItem.id = selected.sn;
       this.currentSelectTravelSetItem.name = selected.name;
       this.handleCloseTravelSetItem();

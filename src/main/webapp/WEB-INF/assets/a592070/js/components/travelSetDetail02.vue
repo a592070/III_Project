@@ -336,6 +336,7 @@ module.exports = {
     },
     selectTravelSetItemID(item) {
       console.log(item);
+      this.$store.commit("setTravelSetSelectItem", item);
     },
     testData(){
       let data = {
@@ -395,8 +396,8 @@ module.exports = {
           }
         ]
       };
-      this.$store.commit("setTravelSetDetail", data);
       this.travelSetDetail = this.getTravelSetDetail();
+      this.$store.commit("setTravelSetDetail", this.travelSetDetail);
     },
     getTravelSetDetail(){
       return this.$store.getters.getTravelSetDetail;

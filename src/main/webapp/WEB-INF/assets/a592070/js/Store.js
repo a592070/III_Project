@@ -4,6 +4,16 @@ const store = new Vuex.Store({
         storeData: "HHHHello",
         travelSetDialog: false,
         travelSetSelectDialog: false,
+        travelSetInfo: {
+            sn: 0,
+            createdUser: '',
+            name: '',
+            description: '',
+            createdTime: '',
+            updateTime: '',
+            priority: 0,
+            status: false
+        },
         travelSetDetail: {
             info: {
                 sn: 0,
@@ -13,7 +23,7 @@ const store = new Vuex.Store({
                 createdTime: '',
                 updateTime: '',
                 priority: 0,
-                status: false,
+                status: false
             },
             travelEleAttractions: [
                 {
@@ -47,12 +57,18 @@ const store = new Vuex.Store({
                     time: ''
                 }
             ]
+        },
+        travelSetSelectItem: {
+            sn: 0,
+            name: ''
         }
     },
     getters: {
         getTravelSetDialog: (state) => state.travelSetDialog,
         getTravelSetSelectDialog: (state) => state.travelSetSelectDialog,
-        getTravelSetDetail: (state) => state.travelSetDetail
+        getTravelSetDetail: (state) => state.travelSetDetail,
+        getTravelSetSelectItem: (state) => state.travelSetSelectItem,
+        getTravelSetInfo: (state) => state.travelSetInfo
     },
     mutations: {
         toggleTravelSetDialog(state){
@@ -63,6 +79,12 @@ const store = new Vuex.Store({
         },
         setTravelSetDetail(state, newTravelSetDetail){
             state.travelSetDetail = newTravelSetDetail;
+        },
+        setTravelSetSelectItem(state, newTravelSetSelectItem){
+            state.travelSetSelectItem = newTravelSetSelectItem;
+        },
+        setTravelSetInfo(state, newTravelSetInfo){
+            state.travelSetInfo = newTravelSetInfo;
         }
     }
 })
