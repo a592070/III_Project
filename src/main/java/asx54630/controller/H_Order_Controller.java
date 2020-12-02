@@ -80,6 +80,8 @@ public class H_Order_Controller {
 		
 		int firstIndex = (hpage.getCurrentPage()-1)*hpage.gethPageSize();
 		List<HotelOrder_VO> hotelOdata = hOService.sort(firstIndex,hpage.gethPageSize(),orderfiled,order);
+		Date date = new Date(System.currentTimeMillis());
+		System.out.println("date = " + date);
 		// 1->0 2->10  (currentPage-1)*pagesize=
 		// 1->10 2->20 (currentPage)*pagesize
 		
@@ -87,6 +89,7 @@ public class H_Order_Controller {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("hotelOdata", hotelOdata);
 		mav.addObject("hpage", hpage);
+		mav.addObject("date", date);
 		mav.setViewName("asx54630/H_order_search");
 		
 		return mav;
@@ -124,9 +127,9 @@ public class H_Order_Controller {
 	public String processHotelDelete(@RequestParam(name = "deleteId") BigDecimal deleteSn,Model m) {
 		
 		boolean hoteldelete = hOService.delete(deleteSn);
-		m.addAttribute("hoteldelete", hoteldelete);		
+//		m.addAttribute("hoteldelete", hoteldelete);		
 		
-		return "redirect:hotelindex";
+		return "redirect:hotelOrderindex";
 		}
 	
 

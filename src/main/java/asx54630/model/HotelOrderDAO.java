@@ -73,9 +73,9 @@ public class HotelOrderDAO {
 		return result;
 	}
 	
-	public boolean delete(BigDecimal sn) { //刪除
+	public boolean delete(BigDecimal SN_ORDER) { //刪除
 		Session session = sessionFactory.getCurrentSession();
-		HotelOrder result = session.get(HotelOrder.class, sn);
+		HotelOrder result = session.get(HotelOrder.class, SN_ORDER);
 		if(result != null) {
 			session.delete(result);
 			return true;

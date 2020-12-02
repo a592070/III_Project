@@ -37,8 +37,8 @@ public class H_Order_Service {
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public boolean delete(BigDecimal sn) {
-		return hotelOrderDao.delete(sn);
+	public boolean delete(BigDecimal SN_ORDER) {
+		return hotelOrderDao.delete(SN_ORDER);
 		
 	}
 		

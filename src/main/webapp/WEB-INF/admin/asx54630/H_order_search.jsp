@@ -48,16 +48,17 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">確認刪除餐廳訂單 ${hotels.SN_ORDER} 資料？</div>
+						<div class="modal-body">確認刪除飯店訂單 ${hotels.SN_ORDER} 資料？</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">取消</button>
 							<form id="statuss" name="statuss"
 								action="<%=application.getContextPath()%>/admin/hotelOrderdelete"
 								method="POST">
+								<input type="hidden" value="${hotels.SN_ORDER}" name="deleteId">
 								<button type="submit" class="btn btn-primary">確認</button>
 								<Input type='hidden' name='rid' value='${hotels.SN_ORDER}'>
 							</form>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">取消</button>
 						</div>
 					</div>
 				</div>
@@ -69,14 +70,8 @@
 
 </c:forEach>
 <script type="text/javascript">
-	currentPage = $
-	{
-		hpage.currentPage
-	};
-	totalPage = $
-	{
-		hpage.totalPageCount
-	};
+	currentPage = ${hpage.currentPage};
+	totalPage = ${hpage.totalPageCount};
 	$("#page-btn").text(currentPage + "/" + totalPage);
 
 	if (currentPage == 1) {

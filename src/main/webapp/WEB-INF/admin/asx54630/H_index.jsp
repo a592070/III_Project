@@ -29,12 +29,12 @@
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
  <%----------------------------------------以下為個人內容-------------------------------%>
 		<div class="content-wrapper">
-		<div class="container">
+		<div class="content">
 		 <div class="row">
 		  <div class="col-12">
         	<div class="box" >
         <div class="mx-auto my-3" style="width: 1200px">
-            <form class="form-inline mx-4"  id="form">
+            <form class="form-inline "  id="form">
                 <div class="form-group mb-2">
                   <h5>輸入關鍵字:</h5>
                 </div>
@@ -172,6 +172,7 @@
            			  	</div>
             		 <div class="modal-body">
                 		<form action="hoteldelete" method="POST">
+                		<input type="hidden" value="${hotels.SN}" name="deleteId">
                    		 <div class="form-group">
                     	  <h4>是否確認刪除  ${hotels.NAME} 住宿資料?</h4>
                     	 </div>

@@ -19,34 +19,35 @@ import global.pojo.OrderTable;
 @Table(name = "H_ORDERLIST_VIEW")
 public class HotelOrder_VO {
 	
-	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "SN_ORDER")
+	
 	private BigDecimal SN_ORDER;
-	@Column(name = "ORDER_ID")
+	
 	private BigDecimal ORDER_ID;
-	@Column(name = "NAME")
+	
 	private String NAME;
-	@Column(name = "DOUBLE_ROOM")
+	
 	private BigDecimal DOUBLE_ROOM;
-	@Column(name = "QUADRUPLE_ROOM")
+	
 	private BigDecimal QUADRUPLE_ROOM;
-	@Column(name = "CHECK_IN")
+	
 	private Date CHECK_IN;
-	@Column(name = "CHECK_OUT")
+	
 	private Date CHECK_OUT;
-	@Column(name = "CLIENT_NAME")
+	
 	private String CLIENT_NAME;
-	@Column(name = "CLIENT_PHONE")
+
 	private String CLIENT_PHONE;
-	@Column(name = "H_PRICE")
+	
 	private BigDecimal H_PRICE;
-	@Column(name = "USERNAME")
+	
 	private String USERNAME;
 	
 	public HotelOrder_VO() {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "SN_ORDER")
 	public BigDecimal getSN_ORDER() {
 		return SN_ORDER;
 	}
@@ -55,6 +56,7 @@ public class HotelOrder_VO {
 		SN_ORDER = sN_ORDER;
 	}
 
+	@Column(name = "ORDER_ID")
 	public BigDecimal getORDER_ID() {
 		return ORDER_ID;
 	}
@@ -63,6 +65,7 @@ public class HotelOrder_VO {
 		ORDER_ID = oRDER_ID;
 	}
 
+	@Column(name = "NAME")
 	public String getNAME() {
 		return NAME;
 	}
@@ -71,6 +74,7 @@ public class HotelOrder_VO {
 		NAME = nAME;
 	}
 
+	@Column(name = "DOUBLE_ROOM")
 	public BigDecimal getDOUBLE_ROOM() {
 		return DOUBLE_ROOM;
 	}
@@ -79,6 +83,7 @@ public class HotelOrder_VO {
 		DOUBLE_ROOM = dOUBLE_ROOM;
 	}
 
+	@Column(name = "QUADRUPLE_ROOM")
 	public BigDecimal getQUADRUPLE_ROOM() {
 		return QUADRUPLE_ROOM;
 	}
@@ -87,6 +92,7 @@ public class HotelOrder_VO {
 		QUADRUPLE_ROOM = qUADRUPLE_ROOM;
 	}
 
+	@Column(name = "CHECK_IN")
 	public Date getCHECK_IN() {
 		return CHECK_IN;
 	}
@@ -95,6 +101,7 @@ public class HotelOrder_VO {
 		CHECK_IN = cHECK_IN;
 	}
 
+	@Column(name = "CHECK_OUT")
 	public Date getCHECK_OUT() {
 		return CHECK_OUT;
 	}
@@ -103,6 +110,7 @@ public class HotelOrder_VO {
 		CHECK_OUT = cHECK_OUT;
 	}
 
+	@Column(name = "CLIENT_NAME")
 	public String getCLIENT_NAME() {
 		return CLIENT_NAME;
 	}
@@ -111,6 +119,7 @@ public class HotelOrder_VO {
 		CLIENT_NAME = cLIENT_NAME;
 	}
 
+	@Column(name = "CLIENT_PHONE")
 	public String getCLIENT_PHONE() {
 		return CLIENT_PHONE;
 	}
@@ -119,6 +128,7 @@ public class HotelOrder_VO {
 		CLIENT_PHONE = cLIENT_PHONE;
 	}
 
+	@Column(name = "H_PRICE")
 	public BigDecimal getH_PRICE() {
 		return H_PRICE;
 	}
@@ -127,6 +137,7 @@ public class HotelOrder_VO {
 		H_PRICE = h_PRICE;
 	}
 
+	@Column(name = "USERNAME")
 	public String getUSERNAME() {
 		return USERNAME;
 	}

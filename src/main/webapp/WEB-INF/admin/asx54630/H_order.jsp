@@ -64,15 +64,15 @@ td {
 										
 										<!-- 大訂單 -->
 										<th><div>大訂單號
-											<button id="sort" class="Bid-btn">
+											<button id="sortID" class="Bid-btn">
 											<i class="fa fa-fw fa-sort" id="uSort"></i>
 											</button>
 											<Input type='hidden' name='order' id="order" value=''>
-											<Input type='hidden' name='orderFiled' id="orderFiled" value='ORDER_ID'>
+											<Input type='hidden' name='orderfiled' id="orderfiled" value='ORDER_ID'>
 					<script>
 						$('.Bid-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled').val('ORDER_ID');
+							$('#orderfiled').val('ORDER_ID');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));
@@ -83,15 +83,15 @@ td {
 									
 									<!-- 小訂單 -->
 									<th><div>飯店訂單號
-										<button id="sort" class="Rid-btn">
+										<button id="sortSN" class="Rid-btn">
 										<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
 											<Input type='hidden' name='order' id="order" value=''>
-											<Input type='hidden' name='orderFiled' id="orderFiled" value='SN_ORDER'>
+											<Input type='hidden' name='orderfiled' id="orderfiled" value='SN_ORDER'>
 					<script>
 						$('.Rid-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled').val('SN_ORDER');
+							$('#orderfiled').val('SN_ORDER');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));
@@ -107,15 +107,15 @@ td {
 											
 									<!-- 狀態 -->
 									<th><div>狀態
-										<button id="sort" class="timeid-btn">
+										<button id="sortStatus" class="timeid-btn">
 											<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
 											<Input type='hidden' name='order' id="order" value=''>
-											<Input type='hidden' name='orderFiled' id="orderFiled" value="CHECK_OUT">
+											<Input type='hidden' name='orderfiled' id="orderfiled" value="CHECK_OUT">
 					<script>
 						$('.timeid-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled').val('CHECK_OUT');
+							$('#orderfiled').val('CHECK_OUT');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));
@@ -159,33 +159,32 @@ td {
 												</td>
 												<td>
 											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#訂單${hotels.SN_ORDER}">
-											  刪除
-											</button>
-
-											<!-- Modal -->
-											<div class="modal fade" id="訂單${hotels.SN_ORDER}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
- 											 <div class="modal-dialog modal-dialog-centered" role="document">
-  											  <div class="modal-content">
- 											     <div class="modal-header">
- 											       <h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>
- 											       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  											        <span aria-hidden="true">&times;</span>											
-  											      </button>											
-  											    </div>
-  											    <div class="modal-body">
-  											      確認刪除飯店訂單 ${hotels.SN_ORDER} 資料？
-     											</div>											
- 											     <div class="modal-footer">
-   											     <form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/hotelOrderdelete" method="POST" >
-   											     	<button type="submit" class="btn btn-primary">確認</button>
-   											     	<Input type='hidden' name='rid' value='${hotels.SN_ORDER}'>
-   											     </form>
-   											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-   											   </div>
-  											  </div>
-  											</div>
-											</div>
+											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Hotel${hotels.SN_ORDER}" >刪除</button>
+               
+               								<div class="modal fade" id="Hotel${hotels.SN_ORDER}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        									 <div class="modal-dialog modal-dialog-centered" role="document">
+         			  							<div class="modal-content">
+         			   							 <div class="modal-header">
+             			 						 <h5 class="modal-title" id="exampleModalCenterTitle">刪除提醒</h5>
+             			  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               				  						<span aria-hidden="true">&times;</span>
+              			 						 </button>
+           			  							</div>
+            									 <div class="modal-body">
+                								<form action="hotelOrderdelete" method="POST">
+                								<input type="hidden" value="${hotels.SN_ORDER}" name="deleteId">
+                   								 <div class="form-group">
+                    	 						 <h4>是否確認刪除  ${hotels.SN_ORDER} 住宿資料?</h4>
+                    						 </div>
+               									 <div class="modal-footer">
+                 	 						<button type="submit" class="btn btn-primary">確認</button>
+                  							<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+               			 			</div>
+                 	 			</form> 
+            				 </div>
+          		 			</div>
+       	  				 </div>
+      		 			</div>
 												</td>
 
 											</tr>
@@ -197,12 +196,8 @@ td {
 							</div>
 							
 						</div>
-					</div>
-				</div>
-
-			</div>
-
-        <div>
+						 
+						 <div>
 				<nav aria-label="...">
 					<ul class="pagination">
 						
@@ -239,11 +234,17 @@ td {
 					</ul>
 				</nav>
 			</div>
+					</div>
+				</div>
+
+			</div>
+
+        
 			<script type="text/javascript"> 
       		 var currentPage = 1;
 			 var totalPage = 1;
 		
-			$("#sort").click(function () {
+			$("#sortID").click(function () {
 			console.log("編號排序")
 			var orderfiled = $("#orderfiled").val()
 			var order = $("#order").val()
@@ -263,7 +264,27 @@ td {
 				)
 			})
 		
-			$("#sort1").click(function () {
+			$("#sortSN").click(function () {
+			console.log("排序狀態")
+			var orderfiled = $("#orderfiled").val()
+			var order = $("#order").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelOrderPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+			})
+			
+			$("#sortStatus").click(function () {
 			console.log("排序狀態")
 			var orderfiled = $("#orderfiled").val()
 			var order = $("#order").val()
