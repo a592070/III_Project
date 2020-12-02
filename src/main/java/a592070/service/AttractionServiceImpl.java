@@ -21,21 +21,39 @@ public class AttractionServiceImpl implements AttractionService{
     private AttractionDAO dao;
 
     @Override
+//    @Transactional(readOnly = true)
     public AttractionDO getEle(Integer id){
-        return getEle(id, false);
+        return getEle(id, getFromDatabase);
     }
 
     @Override
-    public AttractionDO getEle(Integer id, boolean findFromPersistence) {
+//    @Transactional(readOnly = true)
+    public AttractionDO getEle(Integer id, int findFromPersistence) {
+//        if(id == null || id==0) return null;
+//        if(findFromPersistence == this.findFromPersistence) return dao.getEle(id, true);
+//        return dao.getEle(id, false);
+        return getEle(id, findFromPersistence, false);
+    }
+    @Override
+//    @Transactional(readOnly = true)
+    public AttractionDO getEle(Integer id, int findFromPersistence, boolean loadPicture) {
         if(id == null || id==0) return null;
-        return dao.getEle(id, findFromPersistence);
+
+        AttractionDO attractionDO;
+        if(findFromPersistence == this.findFromPersistence){
+            attractionDO = dao.getEle(id, true);
+        }else{
+            attractionDO = dao.getEle(id, false);
+        }
+        if(loadPicture) attractionDO.getAttractionPic().size();
+        return attractionDO;
     }
 
     @Override
     public AttractionDO save(AttractionDO attractionDO) {
         if(attractionDO.getSn() == null || attractionDO.getSn()==0){
             Integer insertPk = dao.insert(attractionDO);
-            return getEle(insertPk, true);
+            return getEle(insertPk, findFromPersistence);
         }
         return dao.update(attractionDO);
     }

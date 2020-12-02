@@ -4,22 +4,28 @@ import a592070.pojo.*;
 
 import java.util.List;
 
-public interface TravelSetDAO {
-    List<TravelSetDO> listTravelSet(String created, int available);
+public interface TravelSetDAO{
+    TravelSetDO getTravelSetByID(int id, int available, boolean findFromPersistence, boolean loadFetch);
 
-    TravelSetDO getTravelSetByID(int id, int available);
+    int getSize(int available);
+    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, int available);
 
-    List<TravelEleAttractionDO> getAttractionSetByID(int id);
+    int getSizeByCreated(String created, int available);
+    List<TravelSetDO> listTravelSetByCreated(String created, int available);
 
-    List<TravelEleCarDO> getCarSetByID(int id);
+//    List<TravelEleAttractionDO> getAttractionSet(int id);
+//    List<TravelEleCarDO> getCarSet(int id);
+//    List<TravelEleHotelDO> getHotelSet(int id);
+//    List<TravelEleRestaurantDO> getRestaurantSet(int id);
 
-    List<TravelEleHotelDO> getHotelSetByID(int id);
+    int getSizeByKeywords(String keyWords);
+    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled, boolean descending);
 
-    List<TravelEleRestaurantDO> getRestaurantSetByID(int id);
+//    int getSizeByFiled(String filedName, String filedValue);
+//    List<TravelSetDO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending);
+
 
     TravelSetDO addTravelSet(TravelSetDO travelSetDO);
-
     TravelSetDO updateTravelSet(TravelSetDO travelSetDO);
-
     boolean setTravelSetUnavailable(int sn);
 }

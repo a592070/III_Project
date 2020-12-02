@@ -171,23 +171,25 @@
         </el-button>
 
       </div>
+      <el-dialog
+          title="選 擇 目 標 ID"
+          :append-to-body="true"
+          :visible.sync="getTravelSetSelectDialog"
+          @close="()=>this.$store.commit('toggleTravelSetSelectDialog')"
+          :destroy-on-close="true">
+        <travel-set-select-item></travel-set-select-item>
+      </el-dialog>
     </el-drawer>
 
   </div>
 </template>
 <script>
 
-// import TravelSetDetail from "./travelSetDetail";
-// Vue.components({
-//   "travel-set-detail": {
-//     props: ["travelSetDialog"],
-//     template: httpVueLoader(context+'/assets/a592070/js/components/travelSetDetail.vue')
-//   }
-// })
 module.exports = {
   name: "TravelSetInfo",
   components: {
-    "travel-set-detail": httpVueLoader(context + '/assets/a592070/js/components/travelSetDetail02.vue')
+    "travel-set-detail": httpVueLoader(context + '/assets/a592070/js/components/travelSetDetail02.vue'),
+    "travel-set-select-item": httpVueLoader(context + '/assets/a592070/js/components/travelSetSelectItem.vue')
   },
   data() {
     return {
@@ -289,6 +291,9 @@ module.exports = {
   computed: {
     getTravelSetDialog(){
       return this.$store.getters.getTravelSetDialog;
+    },
+    getTravelSetSelectDialog(){
+      return this.$store.getters.getTravelSetSelectDialog;
     }
   },
   methods: {
@@ -381,6 +386,35 @@ module.exports = {
     testRemove1(index, row) {
       console.log(index, row);
     },
+    handleCloseTravelSet(done) {
+      if (this.travelSetFormLoading) {
+        return;
+      }
+      this.$confirm('確定要提交表單?')
+          .then(_ => {
+            this.travelSetFormLoading = true;
+            this.timer = setTimeout(() => {
+              done();
+              // 动画关闭需要一定的时间
+              setTimeout(() => {
+                let temp = this.$store.getters.getTravelSetDetail.info;
+                console.log(temp);
+                this.$store.commit("setTravelSetInfo", temp);
+                this.travelSetFormLoading = false;
+                this.$store.commit('toggleTravelSetDialog');
+              }, 400);
+            }, 1000);
+          })
+          .catch(_ => {
+          });
+    },
+    cancelTravelSetForm() {
+      console.log("cancel")
+      this.travelSetFormLoading = false;
+      // this.travelsetdialog = false;
+      this.$store.commit('toggleTravelSetDialog');
+      clearTimeout(this.timer);
+    },
     testData() {
       this.tableData = [
         {
@@ -393,31 +427,6 @@ module.exports = {
           priority: 50,
           status: true
         }];
-    },
-    handleCloseTravelSet(done) {
-      if (this.travelSetFormLoading) {
-        return;
-      }
-      this.$confirm('確定要提交表單?')
-          .then(_ => {
-            this.travelSetFormLoading = true;
-            this.timer = setTimeout(() => {
-              done();
-              // 动画关闭需要一定的时间
-              setTimeout(() => {
-                this.travelSetFormLoading = false;
-              }, 400);
-            }, 2000);
-          })
-          .catch(_ => {
-          });
-    },
-    cancelTravelSetForm() {
-      console.log("cancel")
-      this.travelSetFormLoading = false;
-      // this.travelsetdialog = false;
-      this.$store.commit('toggleTravelSetDialog');
-      clearTimeout(this.timer);
     }
   }
 }

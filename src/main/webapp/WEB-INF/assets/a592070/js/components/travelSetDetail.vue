@@ -411,7 +411,8 @@ module.exports = {
       this.selectTravelSetItemID(items[items.length - 1]);
     },
     handleCloseTravelSetItem() {
-      this.isSelectTravelSetItem = false;
+      // this.isSelectTravelSetItem = false;
+      this.$store.commit("toggleTravelSetSelectDialog");
     },
     selectTravelSetItemID(item) {
       this.isSelectTravelSetItem = true;

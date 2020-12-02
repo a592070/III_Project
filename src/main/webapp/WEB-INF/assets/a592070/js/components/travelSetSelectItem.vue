@@ -60,9 +60,6 @@ module.exports = {
     },
     getTravelSetSelectDialog(){
       return this.$store.getTravelSetSelectDialog;
-    },
-    getTravelSetSelectItem(){
-      return this.$store.getTravelSetSelectItem;
     }
   },
   methods: {
@@ -81,6 +78,12 @@ module.exports = {
       this.currentSelectTravelSetItem.id = selected.sn;
       this.currentSelectTravelSetItem.name = selected.name;
       this.handleCloseTravelSetItem();
+    },
+    getTravelSetSelectItem(){
+      return this.$store.getTravelSetSelectItem;
+    },
+    setTravelSetSelectItem(newTravelSetSelectItem){
+      this.$store.commit("setTravelSetSelectItem", newTravelSetSelectItem)
     },
     loadSelectTravelSetItem() {
       this.selectTravelSetItemLoading = true

@@ -227,13 +227,13 @@
         </el-tab-pane>
       </el-tabs>
 
-    <el-dialog
-        title="選 擇 目 標 ID"
-        :append-to-body="true"
-        :visible.sync="getTravelSetSelectDialog"
-        :destroy-on-close="true">
-      <travel-set-select-item></travel-set-select-item>
-    </el-dialog>
+<!--    <el-dialog-->
+<!--        title="選 擇 目 標 ID"-->
+<!--        :append-to-body="true"-->
+<!--        :visible.sync="getTravelSetSelectDialog"-->
+<!--        :destroy-on-close="true">-->
+<!--      <travel-set-select-item></travel-set-select-item>-->
+<!--    </el-dialog>-->
   </div>
 </template>
 
@@ -316,6 +316,7 @@ module.exports = {
     resetTravelSetForm(formName){
       console.log(this.$refs[formName]);
       this.$refs[formName].resetFields();
+      this.setTravelSetDetail(this.travelSetDetail);
     },
     addTravelSetFormItem(items) {
       items.push({
@@ -333,10 +334,12 @@ module.exports = {
         items.splice(index, 1)
       }
       console.log(items);
+      this.setTravelSetDetail(this.travelSetDetail);
     },
     selectTravelSetItemID(item) {
       console.log(item);
-      this.$store.commit("setTravelSetSelectItem", item);
+      this.setTravelSetSelectItem(item);
+      this.$store.commit("toggleTravelSetSelectDialog");
     },
     testData(){
       let data = {
@@ -396,11 +399,17 @@ module.exports = {
           }
         ]
       };
-      this.travelSetDetail = this.getTravelSetDetail();
-      this.$store.commit("setTravelSetDetail", this.travelSetDetail);
+      this.travelSetDetail = data;
+      this.setTravelSetDetail(this.travelSetDetail);
     },
     getTravelSetDetail(){
       return this.$store.getters.getTravelSetDetail;
+    },
+    setTravelSetDetail(newTravelSetDetail){
+      this.$store.commit("setTravelSetDetail", newTravelSetDetail);
+    },
+    setTravelSetSelectItem(newTravelSetSelectItem) {
+      this.$store.commit("setTravelSetSelectItem", newTravelSetSelectItem);
     }
   }
 }

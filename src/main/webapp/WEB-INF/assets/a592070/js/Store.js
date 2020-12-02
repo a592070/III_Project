@@ -4,7 +4,7 @@ const store = new Vuex.Store({
         storeData: "HHHHello",
         travelSetDialog: false,
         travelSetSelectDialog: false,
-        travelSetInfo: {
+        currentEditTravelSetInfo: {
             sn: 0,
             createdUser: '',
             name: '',
@@ -14,7 +14,7 @@ const store = new Vuex.Store({
             priority: 0,
             status: false
         },
-        travelSetDetail: {
+        currentEditTravelSetDetail: {
             info: {
                 sn: 0,
                 createdUser: '',
@@ -58,7 +58,7 @@ const store = new Vuex.Store({
                 }
             ]
         },
-        travelSetSelectItem: {
+        currentEditTravelSetSelectItem: {
             sn: 0,
             name: ''
         }
@@ -66,9 +66,9 @@ const store = new Vuex.Store({
     getters: {
         getTravelSetDialog: (state) => state.travelSetDialog,
         getTravelSetSelectDialog: (state) => state.travelSetSelectDialog,
-        getTravelSetDetail: (state) => state.travelSetDetail,
-        getTravelSetSelectItem: (state) => state.travelSetSelectItem,
-        getTravelSetInfo: (state) => state.travelSetInfo
+        getTravelSetDetail: (state) => state.currentEditTravelSetDetail,
+        getTravelSetSelectItem: (state) => state.currentEditTravelSetSelectItem,
+        getTravelSetInfo: (state) => state.currentEditTravelSetInfo
     },
     mutations: {
         toggleTravelSetDialog(state){
@@ -78,13 +78,13 @@ const store = new Vuex.Store({
             state.travelSetSelectDialog = !state.travelSetSelectDialog;
         },
         setTravelSetDetail(state, newTravelSetDetail){
-            state.travelSetDetail = newTravelSetDetail;
+            state.currentEditTravelSetDetail = newTravelSetDetail;
         },
         setTravelSetSelectItem(state, newTravelSetSelectItem){
-            state.travelSetSelectItem = newTravelSetSelectItem;
+            state.currentEditTravelSetSelectItem = newTravelSetSelectItem;
         },
         setTravelSetInfo(state, newTravelSetInfo){
-            state.travelSetInfo = newTravelSetInfo;
+            state.currentEditTravelSetInfo = newTravelSetInfo;
         }
     }
 })

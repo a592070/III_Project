@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface AttractionService {
+    int getFromDatabase = 0;
+    int findFromPersistence = 1;
     AttractionDO getEle(Integer id);
-    AttractionDO getEle(Integer id, boolean findFromPersistence);
+    AttractionDO getEle(Integer id, int findFromPersistence);
+    AttractionDO getEle(Integer id, int findFromPersistence, boolean loadPicture);
     AttractionDO save(AttractionDO attractionDO);
 //    AttractionDO insert(AttractionDO attractionDO);
 //    AttractionDO update(AttractionDO attractionDO);
