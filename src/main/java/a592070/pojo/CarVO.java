@@ -9,7 +9,7 @@ import javax.persistence.*;
 @JsonSerialize(using = CarVOJsonSerializer.class)
 @JsonDeserialize(using = CarVOJsonDeserializer.class)
 @Entity
-@Table(name = "CarView")
+@Table(name = "TRAVEL_SET_CARVIEW")
 @Immutable
 public class CarVO {
     @Id

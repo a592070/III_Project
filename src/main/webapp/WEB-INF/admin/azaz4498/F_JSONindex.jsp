@@ -10,7 +10,7 @@ User: Student Date: 2020/10/29 Time: 上午 09:28 To change this template use Fi
 <title>論壇管理</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
-<c:import url="/WEB-INF/admin/fragment/Forum_ref.jsp" />
+<c:import url="/WEB-INF/admin/fragment/azaz4498_ref/Forum_ref.jsp" />
 <style>
 .sp_search-1 {
 	float: left;
@@ -79,23 +79,32 @@ h2 {
 							<span class="input-group-text bg-primary text-white"> 搜尋 </span>
 						</button>
 						<button id="clear_btn">
-							<a class="input-group-text bg-primary text-white" href="${pageContext.servletContext.contextPath}/Forum"> 清空搜尋條件 </a>
+							<a class="input-group-text bg-primary text-white" href="${pageContext.servletContext.contextPath}/admin/Forum"> 清空搜尋條件 </a>
 						</button>
 					</div>
-					<form method="GET" class="mr-5">
-						<select name="articleType" id="typeSelect" class="form-control">
-							<option value="">選擇類型</option>
-							<option value="1">旅遊</option>
-							<option value="2">住宿</option>
-							<option value="3">美食</option>
-							<option value="4">景點</option>
-							<option value="5">交通</option>
-							<option value="6">行程</option>
-							<option value="7">購物</option>
-							<option value="0">其他</option>
-						</select>
-					</form>
+					<div class="form-inline">
+						<form method="GET" class="mr-5">
+							<select name="articleType" id="typeSelect" class="form-control">
+								<option value="">選擇類型</option>
+								<option value="1">旅遊</option>
+								<option value="2">住宿</option>
+								<option value="3">美食</option>
+								<option value="4">景點</option>
+								<option value="5">交通</option>
+								<option value="6">行程</option>
+								<option value="7">購物</option>
+								<option value="0">其他</option>
+							</select>
+						</form>
+						<form action="newArticlePage.controller" method="GET">
+							<button id="newArticle_btn">
+								<span class="input-group-text bg-success text-white"> 新增文章 </span>
+							</button>
+						</form>
+					</div>
+					
 				</div>
+				
 
 
 
@@ -157,6 +166,7 @@ h2 {
 			</div>
 		</div>
 	</div>
+	<!--modal end-->
 
 
 	<script>

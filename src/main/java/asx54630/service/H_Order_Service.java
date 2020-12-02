@@ -1,83 +1,58 @@
 package asx54630.service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import asx54630.model.Hotel;
-import asx54630.model.HotelDAO;
-import asx54630.model.HotelView;
+
+import asx54630.model.HotelOrder;
+import asx54630.model.HotelOrderDAO;
+import asx54630.model.HotelOrder_VO;
 
 @Service("hOService")
 public class H_Order_Service {
 
 	@Autowired
-	private HotelDAO hotelDao;
+	private HotelOrderDAO hotelOrderDao;
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public List<HotelView> selectAll(int first, int count, String name, String region, String type, String orderfiled, String order) {
+	public List<HotelOrder_VO> sort(int first, int count, String orderfiled, String order) {
 
-		return hotelDao.selectAll(first,count, name, region, type, orderfiled, order);
+		return hotelOrderDao.sort(first,count, orderfiled, order);
 	}
 
 	@Transactional(rollbackFor = {Throwable.class})
-	public Hotel hotelDetail(BigDecimal sn) {
-		return hotelDao.hotelDetail(sn);
+	public HotelOrder hotelDetail(BigDecimal sn) {
+		return hotelOrderDao.hotelDetail(sn);
 	}
 
+	
 	@Transactional(rollbackFor = {Throwable.class})
-	public Hotel hotelHomePage(String account) {
-		return hotelDao.hotelHomePage(account);
-	}
-
-	@Transactional(rollbackFor = {Throwable.class})
-	public String insert(Hotel bean) {
-		return hotelDao.insert(bean);
+	public HotelOrder update(BigDecimal sn,String Name,String Phone,BigDecimal Dbroom,BigDecimal Qdroom,Date Checkin,Date Checkout) {
+		return hotelOrderDao.update(sn, Name, Phone, Dbroom, Qdroom, Checkin, Checkout);
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public Hotel update(BigDecimal sn,String Name,String Region,String Address,String Tel,BigDecimal Dbroom,BigDecimal Qdroom,String Description,String Opentime,String Type,byte[] pic) {
-		return hotelDao.update(sn, Name, Region, Address, Tel, Dbroom, Qdroom, Description, Opentime, Type ,pic );
-	}
-	
-	@Transactional(rollbackFor = {Throwable.class})
-	public boolean delete(BigDecimal sn) {
-		return hotelDao.delete(sn);
+	public boolean delete(BigDecimal SN_ORDER) {
+		return hotelOrderDao.delete(SN_ORDER);
 		
 	}
-	
-	@Transactional(rollbackFor = {Throwable.class})
-	public Hotel updateStatus(BigDecimal sn,String Status) {
-		return hotelDao.updateStatus(sn,Status);
-	}
-	
-//	@Transactional(rollbackFor = {Throwable.class})
-//	public List<HotelView> sort(int first, int count,String orderfiled ,String name, String region, String type ,String order){
-//		return hotelDao.sort(first,count,orderfiled,name,region,type,order);
-//	}
-	
+		
 	@Transactional(rollbackFor = {Throwable.class})
 	public int getSize() {
-		return hotelDao.getSize();
+		return hotelOrderDao.getSize();
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public List<HotelView> totalHotel(int first, int count) {
-		return hotelDao.totalHotel(first,count);
+	public List<HotelOrder_VO> totalHotel(int first, int count) {
+		return hotelOrderDao.totalHotel(first,count);
 	}
 	
-	@Transactional(rollbackFor = {Throwable.class})
-	public int howMuchData(String name, String region, String type){
-		return hotelDao.howMuchData(name, region, type);
-	}
 
-	@Transactional(rollbackFor = { Throwable.class })
-	public byte[] getPic(BigDecimal sn) {
-		return hotelDao.getPic(sn);
-	}
 	
 }
 

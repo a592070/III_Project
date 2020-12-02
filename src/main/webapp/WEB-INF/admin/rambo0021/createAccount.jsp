@@ -72,7 +72,7 @@
 		}
 
 		.middle {
-			border: 1px solid gray;
+			border-top: 1px solid gray;
 		}
 	</style>
 </head>
@@ -86,12 +86,12 @@
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
 				<div class="container">
-					<div class="box">
+					<div class="box" style="border:0px">
 						<div style="border-width: 0px">
 							<button type="submit" class="btn btn-primary"
 								onclick="location.href='${pageContext.servletContext.contextPath}/admin/accountPage'">回用戶列表</button>
 						</div>
-						<div>
+						<div class="box">
 							<form method="POST" id="aForm" enctype="multipart/form-data"
 								action="<%=application.getContextPath()%>/admin/createAccount">
 								<h2 class="title">新增帳號</h2>
@@ -109,17 +109,17 @@
 										src="<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png">
 								</div>
 
-								<div class="middle">
-									<h4 class="account_result">帳號</h4>
-									<input type="text" id="username" name="username" placeholder="請輸入帳號">
+								<div class="middle form-group">
+									<h4 class="account_result">帳號</h4><img class="img" id="idfimg" src="" style="width: 13px"><span id="idsp"></span><br/>
+									<input class="form-control" type="text" id="username" name="username" placeholder="請輸入帳號" style='width: 300px'>
 								</div>
-								<div class="middle">
-									<h4 class="account_result">密碼</h4>
-									<input type="password" id="password" name="password" placeholder="請輸入密碼">
+								<div class="middle form-group">
+									<h4 class="account_result">密碼</h4><img class="img" id="idfimg" src="" style="width: 13px"><span id="idsp"></span><br />
+									<input class="form-control" type="password" id="password" name="password" placeholder="請輸入密碼" style='width: 300px'>
 								</div>
-								<div class="middle">
+								<div class="middle form-group">
 									<h4 class="account_result">身分</h4>
-									<div class="input-group mb-3" style='width: 250px'>
+									<div class="input-group mb-3" style='width: 300px'>
 										<select class="custom-select" name="identity" id="identity">
 											<c:forEach var="i" items="${idList}">
 												<option value="${i.id}" id="${i.id}">${i.name}</option>
@@ -127,14 +127,14 @@
 										</select>
 									</div>
 								</div>
-								<div class="middle">
+								<div class="middle form-group">
 									<h4 class="account_result">Email</h4>
-									<input type="text" id="email" name="email" style='width: 200px'
+									<input class="form-control" type="text" id="email" name="email" style='width:300px'
 										placeholder="請輸入email" />
 								</div>
-								<div class="middle">
+								<div class="middle form-group">
 									<h4 class="account_result">暱稱</h4>
-									<input type="text" id="nickName" name="nickName" style='width: 100px'
+									<input class="form-control" type="text" id="nickName" name="nickName" style='width: 300px'
 										placeholder="請輸入暱稱" />
 								</div>
 								<!-- <div class="middle">
@@ -145,7 +145,7 @@
 									<h4 class="account_result">最後修改日期</h4>
 									<p class="p_result" id="mData">${userDetail.modify_DateString}</p>
 								</div> -->
-								<div>
+								<div class="middle form-group">
 									<h4 class="account_result">狀態</h4>
 									<label class="switch switch-text switch-success switch-pill form-control-label">
 										<input type="checkbox" class="switch-input form-check-input" id="checkbox"
@@ -197,6 +197,10 @@
 			}
 
 		}
+		$("#username,#password").on("keyup change",function () {
+			
+			
+		})
 	</script>
 </body>
 

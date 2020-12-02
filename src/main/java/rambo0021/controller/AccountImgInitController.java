@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.AccountListViewBean;
 import rambo0021.serive.AccountService;
 
 @Controller
@@ -28,8 +29,8 @@ public class AccountImgInitController {
 	public @ResponseBody String initImg() {
 		InputStream imgis = null;
 		int size=service.getSize("select count(userName) From AccountListViewBean");
-		List<AccountBean> userList = service.userList(0, size);
-		for (AccountBean accountBean : userList) {
+		List<AccountListViewBean> userList = service.userList(0, size);
+		for (AccountListViewBean accountBean : userList) {
 			int filename = (int) (Math.random() * 3)+1;
 			String realPath = servletContext.getRealPath("/assets/img/initAccImg/" + String.valueOf(filename) + ".jpg");
 			System.out.println(realPath);

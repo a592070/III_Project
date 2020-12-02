@@ -39,6 +39,9 @@
 h5{
 	color:black
 }
+.btn.btn-danger{
+ 	margin:30px;
+ }
 </style>
 
 </head>
@@ -194,9 +197,13 @@ h5{
 					
 									<div class="modify_div">
 											<!-- Button trigger modal -->
+											<form action="<%=application.getContextPath()%>/admin/ROrderDisplay" method="POST">
 											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#訂單${ROList.id}">
 											  送出修改
 											</button>
+											<button type="submit" class="btn btn-danger">資料重置</button>
+											<Input type='hidden' name='rid' value='${ROList.id}'>
+											</form>
 									</div>
 											<!-- Modal -->
 											<div class="modal fade" id="訂單${ROList.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

@@ -78,7 +78,7 @@
 
 
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/Forum">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/Forum">
                             <i class="mdi mdi-reddit"></i>
                             <span class="nav-text">論壇管理</span>
                         </a>
@@ -102,7 +102,7 @@
 
 
                                 <li>
-                                    <a class="sidenav-item-link" href="#">
+                                    <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/hotelOrderindex">
                                         <span class="nav-text">旅館訂單</span>
                                     </a>
                                 </li>

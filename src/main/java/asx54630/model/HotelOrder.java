@@ -30,9 +30,9 @@ public class HotelOrder {
 	private BigDecimal SN_ORDER;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORDER_ID")
-	private OrderTable oTable;
+	private OrderTable orderTable;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SN")
+	@JoinColumn(name = "ORDER_HOTEL_ID")
 	private Hotel hotel;
 	@Column(name = "DOUBLE_ROOM")
 	private BigDecimal DOUBLE_ROOM;
@@ -60,18 +60,18 @@ public class HotelOrder {
 	}
 
 
-	public void setSN_ORDER(BigDecimal sN_ORDER) {
-		SN_ORDER = sN_ORDER;
+	public void setSN_ORDER(BigDecimal SN_ORDER) {
+		this.SN_ORDER = SN_ORDER;
 	}
 
 
 	public OrderTable getoTable() {
-		return oTable;
+		return orderTable;
 	}
 
 
-	public void setoTable(OrderTable oTable) {
-		this.oTable = oTable;
+	public void setoTable(OrderTable orderTable) {
+		this.orderTable = orderTable;
 	}
 
 
