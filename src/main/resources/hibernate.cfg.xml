@@ -64,6 +64,8 @@
 		<mapping class="asx54630.model.Hotel"/>
 		<mapping class="asx54630.model.HotelView"/>
 		<mapping class="asx54630.model.HotelPage"/>
+		<mapping class="asx54630.model.HotelOrder"/>
+		<mapping class="asx54630.model.HotelOrder_VO"/>
 		<mapping class="global.pojo.OrderTable"/>
 
 

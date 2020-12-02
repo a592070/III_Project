@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Restaurant Order List</title>
+<title>Hotel Order List</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style type="text/css">
@@ -64,15 +64,15 @@ td {
 										
 										<!-- 大訂單 -->
 										<th><div>大訂單號
-											<button id="page-botton" class="Bid-btn">
+											<button id="sort" class="Bid-btn">
 											<i class="fa fa-fw fa-sort" id="uSort"></i>
 											</button>
 											<Input type='hidden' name='order' id="order" value=''>
-											<Input type='hidden' name='orderFiled' id="orderFiled" value='order_id'>
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='ORDER_ID'>
 					<script>
 						$('.Bid-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled').val('order_id');
+							$('#orderFiled').val('ORDER_ID');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));
@@ -82,16 +82,16 @@ td {
 									</div></th>
 									
 									<!-- 小訂單 -->
-									<th><div>餐廳訂單號
-										<button id="page-botton" class="Rid-btn">
+									<th><div>飯店訂單號
+										<button id="sort" class="Rid-btn">
 										<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
 											<Input type='hidden' name='order' id="order" value=''>
-											<Input type='hidden' name='orderFiled' id="orderFiled" value='id'>
+											<Input type='hidden' name='orderFiled' id="orderFiled" value='SN_ORDER'>
 					<script>
 						$('.Rid-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled').val('id');
+							$('#orderFiled').val('SN_ORDER');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));
@@ -101,21 +101,21 @@ td {
 									</div></th>
 											<th class="rname">飯店名稱</th>
 											<th class="d-none d-md-table-cell">房間數:雙人房</th>
-											
-									
 											<th class="d-none d-md-table-cell">房間數:四人房</th>
+											<th class="d-none d-md-table-cell">入住日期</th>
+											<th class="d-none d-md-table-cell">退房日期</th>
 											
 									<!-- 狀態 -->
 									<th><div>狀態
-										<button id="page-botton" class="timeid-btn">
+										<button id="sort" class="timeid-btn">
 											<i class="fa fa-fw fa-sort" id="uSort"></i>
 										</button>
 											<Input type='hidden' name='order' id="order" value=''>
-											<Input type='hidden' name='orderFiled' id="orderFiled" value='book_time'>
+											<Input type='hidden' name='orderFiled' id="orderFiled" value="CHECK_OUT">
 					<script>
 						$('.timeid-btn').click(function(){
 							var order = $('#order').val();
-							$('#orderFiled').val('book_time');
+							$('#orderFiled').val('CHECK_OUT');
 							if(order == "" || order == "ASC"){
 								$('#order').val("DESC");
 							}else($('#order').val("ASC"));
@@ -128,45 +128,43 @@ td {
 										</tr>
 									</thead>
 									<tbody id="tbody">
-										<c:forEach var="r" items="${Rlist}">
+										<c:forEach var="hotels" items="${hotelOdata}">
 											<tr>
-												<td class="Brid">${r.order_id}</td>
-												<td class="rid">${r.id}</td>
-												<td class="rname">${r.name}</td>
-												<td>${r.customer_num}</td>
-												<td>
-												<c:set var="booktime" value="${r.book_time}" />
-												<c:set var="BT" value="${fn:substring(booktime, 0, 16)}" />
-												${BT}
-												</td>
+												<td class="Brid">${hotels.SN_ORDER}</td>
+												<td class="rid">${hotels.ORDER_ID}</td>
+												<td class="rname">${hotels.NAME}</td>
+												<td>${hotels.DOUBLE_ROOM}</td>
+												<td>${hotels.QUADRUPLE_ROOM}</td>
+												<td>${hotels.CHECK_IN}</td>
+												<td>${hotels.CHECK_OUT}</td>
 												
-												<c:if test="${r.book_time > ts}">
+												<c:if test="${hotels.CHECK_OUT > date}">
 													<td><span class="badge badge-success">訂單待完成</span></td>
 												</c:if>
-												<c:if test="${r.book_time < ts}">
+												<c:if test="${hotels.CHECK_OUT < date}">
 													<td><span class="badge badge-secondary">訂單已完成</span></td>
 												</c:if>
 												
 												
 												<td>
-												<form action="<%=application.getContextPath()%>/admin/ROrderDisplay" method="POST">
-												<c:if test="${r.book_time > ts}">
+												<form action="<%=application.getContextPath()%>/admin/hotelOrderdetail" method="POST">
+												<c:if test="${hotels.CHECK_OUT > date}">
 													<button type="submit" class="btn btn-warning">修改</button>
-													<Input type='hidden' name='rid' value='${r.id}'>
+													<Input type='hidden' name='rid' value='${hotels.SN_ORDER}'>
 												</c:if>
-												<c:if test="${r.book_time < ts}">
+												<c:if test="${hotels.CHECK_OUT < date}">
 													<button type="submit" class="btn btn-warning"  disabled>修改</button>
 												</c:if>
 												</form>
 												</td>
 												<td>
 											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#訂單${r.id}">
+											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#訂單${hotels.SN_ORDER}">
 											  刪除
 											</button>
 
 											<!-- Modal -->
-											<div class="modal fade" id="訂單${r.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+											<div class="modal fade" id="訂單${hotels.SN_ORDER}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
  											 <div class="modal-dialog modal-dialog-centered" role="document">
   											  <div class="modal-content">
  											     <div class="modal-header">
@@ -176,14 +174,14 @@ td {
   											      </button>											
   											    </div>
   											    <div class="modal-body">
-  											      確認刪除餐廳訂單 ${r.id} 資料？
+  											      確認刪除飯店訂單 ${hotels.SN_ORDER} 資料？
      											</div>											
  											     <div class="modal-footer">
-   											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-   											     <form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" >
+   											     <form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/hotelOrderdelete" method="POST" >
    											     	<button type="submit" class="btn btn-primary">確認</button>
-   											     	<Input type='hidden' name='rid' value='${r.id}'>
+   											     	<Input type='hidden' name='rid' value='${hotels.SN_ORDER}'>
    											     </form>
+   											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
    											   </div>
   											  </div>
   											</div>
@@ -241,6 +239,160 @@ td {
 					</ul>
 				</nav>
 			</div>
+			<script type="text/javascript"> 
+      		 var currentPage = 1;
+			 var totalPage = 1;
+		
+			$("#sort").click(function () {
+			console.log("編號排序")
+			var orderfiled = $("#orderfiled").val()
+			var order = $("#order").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "order": order, "currentPage" : currentPage  },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelOrderPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+			})
+		
+			$("#sort1").click(function () {
+			console.log("排序狀態")
+			var orderfiled = $("#orderfiled").val()
+			var order = $("#order").val()
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelOrderPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+			})
+		
+ 			$("#page-first").click(function () {
+			console.log("第一頁")
+			var orderfiled = $("#orderfiled").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-first").val()
+			currentPage = 1;
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			console.log("totalPage =" + totalPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelOrderPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+			})
+		
+			$("#page-previous").click(function () {
+			console.log("前一頁")
+			var orderfiled = $("#orderfiled").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-previous").val()
+			currentPage--;
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			console.log("totalPage =" + totalPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelOrderPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+			})
+		
+			$("#page-next").click(function () {
+			console.log("下一頁")
+			var orderfiled = $("#orderfiled").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-next").val()
+			currentPage++;
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			console.log("totalPage =" + totalPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelOrderPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response);
+						}
+
+					}
+				)
+			})
+		
+			$("#page-last").click(function () {
+			console.log("末頁")
+			var orderfiled = $("#orderfiled").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-last").val()
+			//var currentPage = $("#page-btn").val()
+			currentPage = totalPage;
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			console.log("totalPage =" + totalPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelOrderPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+			})
+		
+			function clickdetail(id){
+
+			document.location.href="${pageContext.servletContext.contextPath}/admin/hoteldetail?detailsn="+id;
+
+			}
+		
 			
+			</script> 
+		
+			</div>
+		</div>
 </body>
 </html>			

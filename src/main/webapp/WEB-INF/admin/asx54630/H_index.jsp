@@ -28,8 +28,10 @@
 		<div class="page-wrapper">
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
  <%----------------------------------------以下為個人內容-------------------------------%>
-<!-- 		<div class="container"> -->
 		<div class="content-wrapper">
+		<div class="container">
+		 <div class="row">
+		  <div class="col-12">
         	<div class="box" >
         <div class="mx-auto my-3" style="width: 1200px">
             <form class="form-inline mx-4"  id="form">
@@ -185,7 +187,7 @@
             </tr>
             </c:forEach> 
 
-         </t1body>
+         </tbody>
         </table>
         </div>
         <div>
@@ -465,7 +467,7 @@
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage },
 						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
 						dataType: 'html',
 						success: function (response) {
@@ -557,8 +559,11 @@
 <!--            </div> -->
 <!--          </div> -->
 <!--        </div> -->
-				</div>	
- 			</div>
+					</div>	
+ 				</div>
+			 </div>
+		  </div>
+		  </div>
 		</div>
 	</div>
 

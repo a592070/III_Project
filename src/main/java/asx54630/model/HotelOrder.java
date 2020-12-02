@@ -30,7 +30,7 @@ public class HotelOrder {
 	private BigDecimal SN_ORDER;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORDER_ID")
-	private OrderTable oTable;
+	private OrderTable orderTable;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SN")
 	private Hotel hotel;
@@ -66,12 +66,12 @@ public class HotelOrder {
 
 
 	public OrderTable getoTable() {
-		return oTable;
+		return orderTable;
 	}
 
 
 	public void setoTable(OrderTable oTable) {
-		this.oTable = oTable;
+		this.orderTable = orderTable;
 	}
 
 

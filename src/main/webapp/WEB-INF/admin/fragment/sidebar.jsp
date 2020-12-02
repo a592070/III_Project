@@ -102,7 +102,7 @@
 
 
                                 <li>
-                                    <a class="sidenav-item-link" href="#">
+                                    <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/hotelOrderindex">
                                         <span class="nav-text">旅館訂單</span>
                                     </a>
                                 </li>
