@@ -15,5 +15,4 @@ public class TravelSetVO {
     private String name;
     private Integer available;
 
-    private
 }

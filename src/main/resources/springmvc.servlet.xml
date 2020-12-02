@@ -67,5 +67,10 @@
 		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
 
-
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<bean class="global.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>
