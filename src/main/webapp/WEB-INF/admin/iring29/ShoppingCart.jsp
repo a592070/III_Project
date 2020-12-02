@@ -24,7 +24,7 @@ body{
 } 
 .cart_area{
  	background:white; 
-	margin:50px 120px;
+	margin:100px 120px;
 	padding-left:100px;
 	padding-top:50px;
 	padding-bottom:70px;
@@ -57,13 +57,17 @@ body{
 	width:950px;
 }
 .div_title{
-	width:450px;
+	width:150px;
+	padding-top:10px;
+}
+.content{
+	width:250px;
 	padding-top:10px;
 }
 .div_title.input{
 	width:130px;
 	padding-top:10px;
-	float:left;
+/* 	float:left; */
 }
 .form-control.data{
 	width:250px;
@@ -71,8 +75,9 @@ body{
 .media-heading{
 	height: 30px;
 }
-#deposit{
+.deposit{
 	width:80px;
+	text-align: center;
 }
 </style>
 
@@ -189,6 +194,7 @@ body{
 						</tr>
 						<tr>
 							<th><h5>餐廳資訊</h5></th>
+							<th><h5></h5></th>
 							<th><h5>訂位時間</h5></th>
 							<th class="text-center"><h5>訂位人數</h5></th>
 							<th class="text-center"><h5>價格</h5></th>
@@ -201,17 +207,23 @@ body{
 							<td class="col-sm-8 col-md-6">
 								<div class="media">
 									<div class="media-body">
-										<div class="div_title"><h5 class="media-heading">餐廳名稱&emsp;&emsp;&emsp;${R.restaurant.name}</h5></div>
-										<div class="div_title"><h5 class="media-heading">餐廳地址&emsp;&emsp;&emsp;${R.restaurant.address}</h5></div>
+										<div class="div_title"><h5 class="media-heading">餐廳名稱&emsp;&emsp;&emsp;</h5></div>
+										<div class="div_title"><h5 class="media-heading">餐廳地址&emsp;&emsp;&emsp;</h5></div>
 										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂位人姓名&emsp;</h5></div>
-										<input class="form-control data" value="${R.cus_name}"></div>
+										</div>
 										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_p">訂位人電話&emsp;</h5></div> 
-										<input class="form-control data" value="${R.cus_phone}"></div>
+										</div>
 									</div>
 								</div>
 							</td>
+							<td>
+							<div class="content"><h5>${R.restaurant.name}</h5></div>
+							<div class="content"><h5>${R.restaurant.address}</h5></div>
+							<div class="content"><h5><input class="form-control data" value="${R.cus_name}"></h5></div>
+							<div class="content"><h5><input class="form-control data" value="${R.cus_phone}"></h5></div>
+							</td>
 							<td class="col-sm-1 col-md-1" >
-								<input type="date" name="book_date" id="theDate" class="form-control">
+								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control">
 								<c:set var="booktime" value="${R.bookt_time}" />
 								<c:set var="bd" value="${fn:substring(booktime, 0, 10)}" />
 								<c:set var="bt" value="${fn:substring(booktime, 11, 16)}" />
@@ -229,11 +241,11 @@ body{
 
 						var today = year + "-" + month + "-" + day;
 						
-						document.getElementById("theDate").value = "${bd}";
-						document.getElementById("theDate").min = today;
+						document.getElementById("theDate${R.restaurant.name}").value = "${bd}";
+						document.getElementById("theDate${R.restaurant.name}").min = today;
 					</script>
 <!-- 					<div class="div_title time"> -->
-						<select id=sel name="book_time" class="form-control time">
+						<select id="sel${R.restaurant.name}" name="book_time" class="form-control time">
 							<option value="11:00">11:00</option>
 							<option value="12:00">12:00</option>
 							<option value="13:00">13:00</option>
@@ -249,34 +261,34 @@ body{
 							console.log("time = " + "${bt}");
 							switch ("${bt}"){
 							case'11:00':
-								document.getElementById("sel")[0].selected=true;
+								document.getElementById("sel${R.restaurant.name}")[0].selected=true;
 								break;
 							case'12:00':
-								document.getElementById("sel")[1].selected=true;
+								document.getElementById("sel${R.restaurant.name}")[1].selected=true;
 								break;
 							case'13:00':
-								document.getElementById("sel")[2].selected=true;
+								document.getElementById("sel${R.restaurant.name}")[2].selected=true;
 								break;
 							case'14:00':
-								document.getElementById("sel")[3].selected=true;
+								document.getElementById("sel${R.restaurant.name}")[3].selected=true;
 								break;
 							case'17:00':
-								document.getElementById("sel")[4].selected=true;
+								document.getElementById("sel${R.restaurant.name}")[4].selected=true;
 								break;
 							case'18:00':
-								document.getElementById("sel")[5].selected=true;
+								document.getElementById("sel${R.restaurant.name}")[5].selected=true;
 								break;
 							case'19:00':
-								document.getElementById("sel")[6].selected=true;
+								document.getElementById("sel${R.restaurant.name}")[6].selected=true;
 								break;
 							case'20:00':
-								document.getElementById("sel")[7].selected=true;
+								document.getElementById("sel${R.restaurant.name}")[7].selected=true;
 								break;
 							}
 							
 						</script>
 							<td class="col-sm-1 col-md-1 text-center">
-							<select name="person_number" id="p_num" class="form-control p_num">
+							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -292,15 +304,13 @@ body{
 						var num  =  ${R.customer_num};
 						console.log("num = " + num);
 						console.log("type" + typeof(num));
-        				var opts=document.getElementById("p_num");
+        				var opts=document.getElementById("p_num${R.restaurant.name}");
 						console.log("num" + opts[num].value);
        					opts[num-1].selected=true;
-       					var price = ${R.deposit};
-       					console.log("price = " + price);
    					</script>
 							</td>
 							<td class="col-sm-1 col-md-1">
-								<h5 id="deposit">&nbsp;&nbsp;&nbsp;&nbsp;${R.deposit}</h5>
+								<h5 class="deposit">${R.deposit}</h5>
 							</td>
 							<td class="col-sm-1 col-md-1">
 								<button type="button" class="btn btn-danger">
@@ -317,15 +327,23 @@ body{
 							<td> </td>
 							<td><h4>小計</h4></td>
 							<td class="text-right">
-							<h3 id="tPrice"><strong>$24.59</strong></h3></td>
+							<h3 id="tPrice"><strong></strong></h3></td>
 						</tr>
 					</tbody>
 				</table>
 					<script type="text/javascript">
-						var deposit = document.getElementById("deposit");
+						var deposit = document.getElementsByClassName("deposit");
+						console.log("deposit size = " + deposit.length);
+						var size = 0;
+						for(var i = 0; i < deposit.length; i++ ){
+							size += parseInt(deposit[i].innerHTML);
+							console.log("money = " + size);
+							console.log("money = " + deposit[i].innerHTML);
+							}
 // 						var size  =  ${size}.legnth;
 // 						console.log("size = " + size);
-        				size = 500;
+//         				size = 500;
+// 						size = deposit.value
         				document.getElementById("tPrice").innerHTML = size;
         				
    					</script>
