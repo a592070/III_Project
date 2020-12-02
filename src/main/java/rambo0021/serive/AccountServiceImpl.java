@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
 	private AccountDAO dao;
 
 	@Override
-	public List<AccountBean> userList(int start, int pageSize) {
+	public List<AccountListViewBean> userList(int start, int pageSize) {
 		return dao.userList(start,pageSize);
 	}
 
@@ -98,7 +98,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public boolean login(String username, String password) {
+	public String login(String username, String password) {
 		return dao.login(username,password);
 	}
 

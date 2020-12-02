@@ -1,5 +1,6 @@
 package a592070.dao;
 
+import a592070.fieldenum.AttractionFiledName;
 import a592070.pojo.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,6 +8,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.io.Serializable;
 import java.util.List;
 
 public class TravelSetDAOImpl implements TravelSetDAO{
@@ -18,95 +21,164 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelSetDO> listTravelSet(String created, int available){
-        String hql = "from TravelSetDO where createdUser=?1 and available=?2 order by priority desc ";
-        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
-        query.setParameter(1, created);
-        query.setParameter(2, available);
+    public TravelSetDO getTravelSetByID(Integer id, boolean findFromPersistence){
+        Session session = sessionFactory.getCurrentSession();
 
-        List<TravelSetDO> list = query.list();
-
-        return list;
-    }
-
-    @Override
-    public TravelSetDO getTravelSetByID(int id, int available){
-        String hql = "from TravelSetDO where sn=?1 and available=?2 order by sn";
-        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
-        query.setParameter(1, id);
-        query.setParameter(2, available);
-
-        TravelSetDO travelSetDO = query.uniqueResultOptional().orElse(null);
-
+        TravelSetDO travelSetDO;
+        if(findFromPersistence) {
+            travelSetDO = session.get(TravelSetDO.class, id);
+        }else{
+            travelSetDO = session.find(TravelSetDO.class, id);
+        }
         return travelSetDO;
     }
 
     @Override
-    public List<TravelEleAttractionDO> getAttractionSetByID(int id){
-        String hql = "from TravelEleAttractionDO where travelSetDO.sn = ?1";
-        Query<TravelEleAttractionDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelEleAttractionDO.class);
-        query.setParameter(1, id);
+    public int getSize() {
+        String hql = "select count(sn) from TravelSetDO";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public int getSize(boolean available) {
+        String hql = "select count(sn) from TravelSetDO where available=:available";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("available", available);
+
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
+        String hql = "from TravelSetDO order by "+orderFiled;
+        if(descending) hql += " desc";
+        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", sn";
+
+        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
 
         return query.list();
     }
 
     @Override
-    public List<TravelEleCarDO> getCarSetByID(int id) {
-        String hql = "from TravelEleCarDO where travelSetDO.id = ?1";
-        Query<TravelEleCarDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelEleCarDO.class);
-        query.setParameter(1, id);
+    public List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available) {
+        String hql = "from TravelSetDO where available=:available order by "+orderFiled;
+        if(descending) hql += " desc";
+        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", sn";
+
+        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        query.setParameter("available", available);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
 
         return query.list();
     }
 
     @Override
-    public List<TravelEleHotelDO> getHotelSetByID(int id) {
-        String hql = "from TravelEleHotelDO where travelSetDO.id = ?1";
-        Query<TravelEleHotelDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelEleHotelDO.class);
-        query.setParameter(1, id);
+    public int getSizeByCreated(String created) {
+        String hql = "select count(sn) from TravelSetDO where createdUser=:created";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("created", created);
+        return query.uniqueResult().intValue();
+    }
 
+    @Override
+    public int getSizeByCreated(String created, boolean available) {
+        String hql = "select count(sn) from TravelSetDO where createdUser=:created";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("created", created);
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending) {
+        String hql = "from TravelSetDO where createdUser=:created ";
+        hql += "order by "+orderFiled;
+        if(descending) hql += " desc, sn";
+        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        query.setParameter("created", created);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
         return query.list();
     }
 
     @Override
-    public List<TravelEleRestaurantDO> getRestaurantSetByID(int id) {
-        String hql = "from TravelEleRestaurantDO where travelSetDO.id = ?1";
-        Query<TravelEleRestaurantDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelEleRestaurantDO.class);
-        query.setParameter(1, id);
-
+    public List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, boolean available, String orderFiled, boolean descending) {
+        String hql = "from TravelSetDO where createdUser=:created and available=:available ";
+        hql += "order by "+orderFiled;
+        if(descending) hql += " desc, sn";
+        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        query.setParameter("created", created);
+        query.setParameter("available", available);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
         return query.list();
     }
 
     @Override
-    public TravelSetDO addTravelSet(TravelSetDO travelSetDO){
-        try {
-            travelSetDO.setAvailable(1);
-            sessionFactory.getCurrentSession().save(travelSetDO);
-            return travelSetDO;
-        }catch (Exception e){
-            return null;
-        }
+    public int getSizeByKeywords(String keyWords) {
+        String hql = "select count(sn) from TravelSetDO " +
+                "where str(sn) like :keyWords or createdUser like :keyWords or description like :keyWords or name like :keyWords";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keyWords", keyWords);
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public int getSizeByKeywords(String keyWords, boolean available) {
+        String hql = "select count(sn) from TravelSetDO " +
+                "where available=:available and " +
+                "(str(sn) like :keyWords or createdUser like :keyWords or description like :keyWords or name like :keyWords)";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keyWords", keyWords);
+        query.setParameter("available", available);
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean available) {
+        String hql = "from TravelSetDO where str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords ";
+        hql += "order by "+orderFiled;
+        if(descending) hql += " desc, sn";
+        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        query.setParameter("keywords", keywords);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+        return query.list();
+    }
+
+    @Override
+    public List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending) {
+        String hql = "from TravelSetDO " +
+                "where available=:available and " +
+                "(str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords)";
+        hql += "order by "+orderFiled;
+        if(descending) hql += " desc, sn";
+        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        query.setParameter("keywords", keywords);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+        return query.list();
+    }
+
+    @Override
+    public Integer addTravelSet(TravelSetDO travelSetDO){
+        return (Integer)sessionFactory.getCurrentSession().save(travelSetDO);
     }
 
     @Override
     public TravelSetDO updateTravelSet(TravelSetDO travelSetDO) {
-        travelSetDO.setAvailable(1);
-        try{
-            sessionFactory.getCurrentSession().update(travelSetDO);
-            return travelSetDO;
-        }catch (Exception e){
-            return null;
-        }
+        sessionFactory.getCurrentSession().merge(travelSetDO);
+        return travelSetDO;
     }
 
     @Override
-    public boolean setTravelSetUnavailable(int sn) {
-        try {
-            TravelSetDO travelSetDO = sessionFactory.getCurrentSession().get(TravelSetDO.class, sn);
-            travelSetDO.setAvailable(0);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public void switchTravelSetAvailable(Integer sn) {
+        TravelSetDO travelSetDO = getTravelSetByID(sn, true);
+        travelSetDO.setAvailable(!travelSetDO.getAvailable());
     }
 }

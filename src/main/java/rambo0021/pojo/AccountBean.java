@@ -140,7 +140,7 @@ public class AccountBean {
 		if(modify_Date ==null) {
 			Date2="未知";
 		}else {
-			Date2 = sdf.format(modify_Date);
+			Date2 = sdf.format(register);
 		}
 		return Date2;
 	}
