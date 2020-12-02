@@ -112,15 +112,6 @@ h2 {
 											<textarea class="form-control" id="editor" rows="15" name="articleContent"></textarea>
 										</div>
 
-										
-										
-										
-
-										<!-- <div class="form-group">
-											<label for="exampleFormControlFile1">Example file
-												input</label> <input type="file" class="form-control-file"
-												id="exampleFormControlFile1">
-										</div> -->
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
 											<button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editModal">送出</button>
 											<button class="btn btn-primary btn-default" onclick="redo()">清空</button>
@@ -169,12 +160,14 @@ h2 {
 			</div>
 		</div>
 	</div>
+	<!--modal end-->
 	<script type="text/javascript">
-
+		<!--modal confirm button-->
 		$("#modal_confirm").on("click",function(){
 			$("#edit_form").submit();
 			
 		})
+		<!--modal confirm button end-->
 
 		
 
@@ -184,13 +177,12 @@ h2 {
 	
 	
 	<script>
+	<!--editor confing-->
 	function MyCustomUploadAdapterPlugin( editor ) {
     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
         return new MyUploadAdapter( loader );
     };
 }
-
-
 		ClassicEditor
     		.create( document.querySelector( '#editor' ),{
 				extraPlugins: [  MyCustomUploadAdapterPlugin ],
@@ -248,8 +240,9 @@ h2 {
         				console.error( error );
     		
 			});
+			<!--editor confing end-->
 			
-			//重置的function
+			<!--redo btn function-->
 			function redo(){
 			document.getElementById("title").value = "";
 			editor.setData( '');
@@ -259,9 +252,10 @@ h2 {
 
 
 		}
+			<!--redo btn function end-->
 </script>
 <script>
-
+<!--imgUploadApdater-->
 	class MyUploadAdapter {
 	constructor(loader) {
 		this.loader = loader;
@@ -300,7 +294,7 @@ h2 {
 abort() {
 }
 }
-	
+<!--imgUploadApdater End-->
 </script>
 
 	

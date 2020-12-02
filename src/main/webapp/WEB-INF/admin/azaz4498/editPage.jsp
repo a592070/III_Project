@@ -154,6 +154,7 @@ h2 {
 			</div>
 		</div>
 	</div>
+	<!--modal End-->
 	<script type="text/javascript">
 		
 		window.onload = getDefaultType();
@@ -174,7 +175,7 @@ h2 {
 			
 		}
 
-		
+		//modal 確認後送出表單
 		$("#modal_confirm").on("click",function(){
 			$("#edit_form").submit();
 		})
@@ -183,6 +184,7 @@ h2 {
 	
 
 <script>
+<!--editor config-->
 	function MyCustomUploadAdapterPlugin( editor ) {
     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
         return new MyUploadAdapter( loader );
@@ -246,25 +248,29 @@ h2 {
         				console.error( error );
     		
 			});
-			
-			//重置的function
+			<!--editor config end-->
+			<!--redo btn function-->
 			function redo(){
-			document.getElementById("title").value = "${artBean[0].artTitle }";
-			editor.setData( '${artBean[0].artContent }');
-			getDefaultType();
+				document.getElementById("title").value = "${artBean[0].artTitle }";
+				editor.setData( '${artBean[0].artContent }');
+				getDefaultType();
+				event.preventDefault();
+			}
+			<!--redo btn function end-->
+			<!--preview btn function-->
+			function preview(){
 			event.preventDefault();
+			var artTitle = $("#title").val();
+			var artType = $("#typeSelect").find(":selected").text();
+			var artContent=editor.getData();
+			console.log(artTitle);
+			console.log(artType);
+			console.log(artContent);
 		}
-		function preview(){
-		event.preventDefault
-		var artTitle = $("#title").val();
-		var artType = $("option").find(":selected").text();
-		var artContent=editor.getData();
-		console.log(artTitle);
-		console.log(artType);
-		console.log(artContent);
-	}
+			<!--preview btn function end-->
 </script>
 <script>
+	<!--imgUploadApdater-->
 	class MyUploadAdapter {
 	constructor(loader) {
 		this.loader = loader;
@@ -303,6 +309,7 @@ h2 {
 abort() {
 }
 }
+<!--imgUploadApdater End-->
 </script>
 
 	
