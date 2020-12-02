@@ -74,6 +74,11 @@
 		.middle {
 			border-top: 1px solid gray;
 		}
+
+		.div_flex {
+			display: flex;
+			align-items: center;
+		}
 	</style>
 </head>
 
@@ -90,6 +95,7 @@
 						<div style="border-width: 0px">
 							<button type="submit" class="btn btn-primary"
 								onclick="location.href='${pageContext.servletContext.contextPath}/admin/accountPage'">回用戶列表</button>
+							<button type="button" class="btn btn-light" id="insertData">輸入資料</button>
 						</div>
 						<div class="box">
 							<form method="POST" id="aForm" enctype="multipart/form-data"
@@ -110,12 +116,20 @@
 								</div>
 
 								<div class="middle form-group">
-									<h4 class="account_result">帳號</h4><img class="img" id="idfimg" src="" style="width: 13px"><span id="idsp"></span><br/>
-									<input class="form-control" type="text" id="username" name="username" placeholder="請輸入帳號" style='width: 300px'>
+									<div class="div_flex">
+										<h4 class="account_result">帳號</h4><img class="img" id="aimg" src=""
+											style="width: 13px"><span id="asp"></span>
+									</div>
+									<input class="form-control" type="text" id="username" name="username"
+										placeholder="請輸入帳號" style='width: 300px'>
 								</div>
 								<div class="middle form-group">
-									<h4 class="account_result">密碼</h4><img class="img" id="idfimg" src="" style="width: 13px"><span id="idsp"></span><br />
-									<input class="form-control" type="password" id="password" name="password" placeholder="請輸入密碼" style='width: 300px'>
+									<div class="div_flex">
+										<h4 class="account_result">密碼</h4><img class="img" id="pimg" src=""
+											style="width: 13px"><span id="psp"></span>
+									</div>
+									<input class="form-control" type="password" id="password" name="password"
+										placeholder="請輸入密碼" style='width: 300px'>
 								</div>
 								<div class="middle form-group">
 									<h4 class="account_result">身分</h4>
@@ -128,14 +142,17 @@
 									</div>
 								</div>
 								<div class="middle form-group">
-									<h4 class="account_result">Email</h4>
+									<div class="div_flex">
+										<h4 class="account_result">Email</h4><img class="img" id="eimg" src=""
+											style="width: 13px"><span id="esp"></span>
+									</div>
 									<input class="form-control" type="text" id="email" name="email" style='width:300px'
 										placeholder="請輸入email" />
 								</div>
 								<div class="middle form-group">
 									<h4 class="account_result">暱稱</h4>
-									<input class="form-control" type="text" id="nickName" name="nickName" style='width: 300px'
-										placeholder="請輸入暱稱" />
+									<input class="form-control" type="text" id="nickName" name="nickName"
+										style='width: 300px' placeholder="請輸入暱稱" />
 								</div>
 								<!-- <div class="middle">
 									<h4 class="account_result">註冊日期</h4>
@@ -155,7 +172,7 @@
 									</label>
 								</div>
 								<div class="middle">
-									<button type="submit" class="btn btn-primary">新增</button>
+									<button type="submit" class="btn btn-primary" id="submit" disabled>新增</button>
 								</div>
 							</form>
 						</div>
@@ -165,12 +182,15 @@
 		</div>
 	</div>
 	<script>
-        $("#checkbox").click(function(){
+		var f1 = false;
+		var f2 = false;
+		var f3 = false;
+		$("#checkbox").click(function () {
 			var status = $(this).val()
 			if (status == "啟用") {
-			$(this).val("禁用");
-			}else if(status == "禁用"){
-			$(this).val("啟用")
+				$(this).val("禁用");
+			} else if (status == "禁用") {
+				$(this).val("啟用")
 			}
 			console.log($("#checkbox").val())
 		})
@@ -197,9 +217,103 @@
 			}
 
 		}
-		$("#username,#password").on("keyup change",function () {
-			
-			
+		$("#delImg").click(function(){
+			$("#userPic").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png")
+		})
+		//帳號check
+		$("#email,#password,#username").on("keyup change blur", function () {
+			var status;
+			$("#aimg").attr("src", "");
+			$("#asp").text("");
+			var username = $("#username").val();
+			if (username == "") {
+				$("#aimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/error.png");
+				$("#asp").text("帳號不能為空");
+				$("#asp").css({ "color": "red", "fontSize": "13px", "fontStyle": "italic" });
+				$("#submit").attr("disabled", true)
+				return;
+			}
+			$.ajax(
+				{
+					type: 'POST',
+					data: { "userName": username },
+					url: '${pageContext.servletContext.contextPath}/admin/checkUser',
+					dataType: 'json',
+					success: function (response) {
+						checkusr(response);
+
+					}
+				}
+			)
+		})
+		function checkusr(response) {
+			if (response) {
+				console.log(response);
+				$("#aimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/error.png");
+				$("#asp").text("帳號重複");
+				$("#asp").css({ "color": "red", "fontSize": "13px", "fontStyle": "italic" });
+				$("#submit").attr("disabled", true)
+			} else {
+				$("#aimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/check.png");
+				$("#asp").text("帳號可以使用");
+				$("#asp").css({ "color": "black", "fontSize": "13px", "fontStyle": "italic" });
+				// $("#submit").attr("disabled", false)
+				f1 = true;
+				if (f1 && f2 && f3) {
+					$("#submit").attr("disabled", false);
+				}
+			}
+		}
+		$("#email,#password,#username").on("keyup change blur", function () {
+			var password = $("#password").val();
+			if (password == "") {
+				$("#pimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/error.png");
+				$("#psp").text("密碼不能為空");
+				$("#psp").css({ "color": "red", "fontSize": "13px", "fontStyle": "italic" });
+				$("#submit").attr("disabled", true)
+				return;
+			}
+			$("#pimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/check.png");
+			$("#psp").text("密碼可以使用");
+			$("#psp").css({ "color": "black", "fontSize": "13px", "fontStyle": "italic" });
+			// $("#submit").attr("disabled", false)
+			f2 = true;
+			if (f1 && f2 && f3) {
+				$("#submit").attr("disabled", false);
+			}
+		})
+		$("#email,#password,#username").on("keyup change blur", function () {
+			var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			var email = $('#email').val();
+			if (email == "") {
+				$("#eimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/error.png");
+				$("#esp").text("email不能為空");
+				$("#esp").css({ "color": "red", "fontSize": "13px", "fontStyle": "italic" });
+				$("#submit").attr("disabled", true);
+			} else if (!regex.test(email)) {
+				$("#eimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/error.png");
+				$("#esp").text("email格式不正確");
+				$("#esp").css({ "color": "red", "fontSize": "13px", "fontStyle": "italic" });
+				$("#submit").attr("disabled", true);
+			} else {
+				$("#eimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/check.png");
+				$("#esp").text("email格式正確");
+				$("#esp").css({ "color": "black", "fontSize": "13px", "fontStyle": "italic" });
+				// $("#submit").attr("disabled", false);
+				f3 = true;
+				if (f1 && f2 && f3) {
+					$("#submit").attr("disabled", false);
+				}
+			}
+		})
+		$("#insertData").click(function(){
+			console.log("輸入資料")
+			$("#username").val("iiiEEIT124")
+			$("#password").val("iiiEEIT124")
+			$("#identity").val("2")
+			$("#email").val("test@iii.edu.tw")
+			$('#nickName').val("測試帳號")
+			$("#email,#password,#username").blur()
 		})
 	</script>
 </body>
