@@ -43,7 +43,7 @@
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="<%=application.getContextPath()%>/admin/displayAccountPage?username=${adminBean.userName}">
                                 <i class="mdi mdi-account"></i> 個人頁面
                             </a>
                         </li>

@@ -1,5 +1,6 @@
 package rambo0021.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,16 +23,16 @@ public class AccountDAOImpl implements AccountDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<AccountBean> userList(int start, int pageSize) {
+	public List<AccountListViewBean> userList(int start, int pageSize) {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "From AccountBean order by userName";
-		Query<AccountBean> query = session.createQuery(hql, AccountBean.class);
+		String hql = "From AccountListViewBean order by userName";
+		Query<AccountListViewBean> query = session.createQuery(hql, AccountListViewBean.class);
 		// 找第幾筆
 		query.setFirstResult(start);
 		// 從第幾筆開始count筆
 		query.setMaxResults(pageSize);
 
-		List<AccountBean> list = query.list();
+		List<AccountListViewBean> list = query.list();
 		return list;
 	}
 
@@ -46,6 +47,7 @@ public class AccountDAOImpl implements AccountDAO {
 		Session session = sessionFactory.getCurrentSession();
 		AccountBean aBean = session.get(AccountBean.class, username);
 		if (aBean != null) {
+			aBean.setModify_Date(new Date());
 			aBean.setPicture(img);
 			return "修改成功";
 		}
@@ -120,6 +122,7 @@ public class AccountDAOImpl implements AccountDAO {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
 		if (aBean != null) {
 			aBean.setPicture(null);
+			aBean.setModify_Date(new Date());
 			return "設定成功";
 		}
 		return "設定失敗";
@@ -149,11 +152,7 @@ public class AccountDAOImpl implements AccountDAO {
 	public String delAccount(AccountBean aBean) {
 		Session session = sessionFactory.getCurrentSession();
 		if (aBean.getOrderTable() != null) {
-			for (OrderTable oBean : aBean.getOrderTable()) {
-				oBean.setAccountBean(null);
-				System.out.println("設定null");
-			}
-
+			aBean.setOrderTable(new ArrayList<>());
 		}
 		session.update(aBean);
 		session.remove(aBean);
@@ -166,7 +165,6 @@ public class AccountDAOImpl implements AccountDAO {
 		AccountBean aBean = session.get(AccountBean.class, username);
 
 		if (aBean != null) {
-			System.out.println("123");
 //			if (!aBean.getOrderTable().isEmpty()) 
 //			{
 //				for (OrderTable oBean : aBean.getOrderTable())
@@ -191,6 +189,7 @@ public class AccountDAOImpl implements AccountDAO {
 			aBean.setIdentityBean(iBean);
 			aBean.setEmail(email);
 			aBean.setNickName(nickName);
+			aBean.setModify_Date(new Date());
 			return "修改成功";
 		}
 		return "修改失敗";
@@ -209,13 +208,21 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public boolean login(String username, String password) {
+	public String login(String username, String password) {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
-		if (aBean != null && aBean.getPassword().equals(SHA2DAO.getSHA256(password))
-				&& aBean.getIdentityBean().getId() == 1) {
-			return true;
-		}
-		return false;
+	    if(aBean == null || !aBean.getPassword().equals(SHA2DAO.getSHA256(password)) || aBean.getIdentityBean().getId() != 1){
+	    	return "帳號或密碼錯誤,或此帳號非管理員";
+	    }else if(!"啟用".equals(aBean.getStatus())) {
+	    	return "此帳號已被禁用";
+	    }else {
+	    	return "登入成功";
+	    }
+	
+//		if (aBean != null && aBean.getPassword().equals(SHA2DAO.getSHA256(password))
+//				&& aBean.getIdentityBean().getId() == 1) {
+//			return true;
+//		}
+//		return false;
 	}
 
 	@Override
