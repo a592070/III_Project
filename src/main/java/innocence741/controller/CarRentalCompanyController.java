@@ -107,7 +107,7 @@ public class CarRentalCompanyController {
 	throws SQLException, IOException {
 		
 		boolean flag = false;
-
+		
 		CarRentalCompany cBean = new CarRentalCompany();
 		cBean.setSn_rentalcompany(sn_rentalcompany);
 		cBean.setName_company(name_company);

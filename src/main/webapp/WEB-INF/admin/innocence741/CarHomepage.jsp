@@ -242,8 +242,8 @@ pre {
 <!-- ||||||||||||||| -->
                     
                     <div>
-                        <!-- <h4 class="res_result">帳號狀態</h4> -->
-                        <p class="p_result"><textarea name="accessible_carrentalcompany" id="accessible_carrentalcompany" cols="80" rows="5" style="display: none;"></textarea></p>
+                        <h4 class="res_result">帳號狀態</h4>
+                        <p class="p_result"><textarea name="accessible_carrentalcompany" id="accessible_carrentalcompany" cols="80" rows="5" >1</textarea></p>
                     </div>
 					
 

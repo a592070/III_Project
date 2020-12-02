@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
-import rambo0021.dao.AcountDAO;
+import rambo0021.dao.AccountDAO;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
@@ -18,7 +18,7 @@ import rambo0021.pojo.Sort;
 public class AccountServiceImpl implements AccountService {
 	@Autowired
 	@Qualifier("accountDao")
-	private AcountDAO dao;
+	private AccountDAO dao;
 
 	@Override
 	public List<AccountBean> userList(int start, int pageSize) {
@@ -110,6 +110,11 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public int getSize(String hql) {
 		return dao.getSize(hql);
+	}
+
+	@Override
+	public List<IdentityBean> getidList() {
+		return dao.getidList();
 	}
 
 
