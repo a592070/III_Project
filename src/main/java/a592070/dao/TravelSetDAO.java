@@ -5,21 +5,22 @@ import a592070.pojo.*;
 import java.util.List;
 
 public interface TravelSetDAO {
-    List<TravelSetDO> listTravelSet(String created, int available);
+    List<TravelSetDO> listTravelSet(String created, Integer available);
 
-    TravelSetDO getTravelSetByID(int id, int available);
+    TravelSetDO getTravelSetByID(Integer id, Integer available);
+    TravelSetDO getTravelSetByID(Integer id, boolean findFromPersistence);
 
-    List<TravelEleAttractionDO> getAttractionSetByID(int id);
+    List<TravelEleAttractionDO> getAttractionSetByID(Integer id);
 
-    List<TravelEleCarDO> getCarSetByID(int id);
+    List<TravelEleCarDO> getCarSetByID(Integer id);
 
-    List<TravelEleHotelDO> getHotelSetByID(int id);
+    List<TravelEleHotelDO> getHotelSetByID(Integer id);
 
-    List<TravelEleRestaurantDO> getRestaurantSetByID(int id);
+    List<TravelEleRestaurantDO> getRestaurantSetByID(Integer id);
 
     TravelSetDO addTravelSet(TravelSetDO travelSetDO);
 
     TravelSetDO updateTravelSet(TravelSetDO travelSetDO);
 
-    boolean setTravelSetUnavailable(int sn);
+    boolean setTravelSetUnavailable(Integer sn);
 }
