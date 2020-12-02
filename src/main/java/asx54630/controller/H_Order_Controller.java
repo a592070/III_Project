@@ -96,28 +96,28 @@ public class H_Order_Controller {
 		}
 
 	
-	@RequestMapping(path = "/hotelOrderdetail", method = RequestMethod.GET) //查詢單筆_給修改用
+	@RequestMapping(path = "/hotelOrderdetail", method = RequestMethod.POST) //查詢單筆_給修改用
 	public String processHotelDetail(@RequestParam(name = "detailsn") BigDecimal detailsn,Model m) {
 			
-		HotelOrder hotelOdetail = hOService.hotelDetail(detailsn);
+		HotelOrder_VO hotelOdetail = hOService.hotelDetail(detailsn);
 		m.addAttribute("hotelOdetail", hotelOdetail);
 		
-		return "asx54630/H_Modify";
+		return "asx54630/H_Order_Modify";
 		}	
 	
 	
 	@RequestMapping(path = "/hotelOrderupdate", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //修改
-	public String processHotelUpdate(@RequestParam(name = "upId") BigDecimal updateSn,
-									 @RequestParam(name = "upName") String updateName,
-									 @RequestParam(name = "upPhone") String updatePhone,
-									 @RequestParam(name = "upCheckin") Date updateCheckin,
-									 @RequestParam(name = "upCheckout") Date updateCheckout,
-									 @RequestParam(name = "upDBroom") BigDecimal updateDBroom,
-									 @RequestParam(name = "upQDroom") BigDecimal updateQDroom,Model m) throws IOException {
+	public String processHotelUpdate(@RequestParam(name = "id") BigDecimal updateSn,
+									 @RequestParam(name = "CHECK_IN") String CHECK_IN,
+									 @RequestParam(name = "CHECK_OUT") String CHECK_OUT,
+									 @RequestParam(name = "CLIENT_NAME") Date CLIENT_NAME,
+									 @RequestParam(name = "CLIENT_PHONE") Date CLIENT_PHONE,
+									 @RequestParam(name = "DOUBLE_ROOM") BigDecimal updateDBroom,
+									 @RequestParam(name = "QUADRUPLE_ROOM") BigDecimal updateQDroom,Model m) throws IOException {
 		
 
 		
-		HotelOrder hotelOdetail = hOService.update(updateSn,updateName,updatePhone,updateDBroom,updateQDroom,updateCheckin,updateCheckout);
+		HotelOrder hotelOdetail = hOService.update(updateSn,CHECK_IN,CHECK_OUT,updateDBroom,updateQDroom,CLIENT_NAME,CLIENT_PHONE);
 		m.addAttribute("hotelOdetail", hotelOdetail);
 		
 		return "asx54630/H_Modify";
