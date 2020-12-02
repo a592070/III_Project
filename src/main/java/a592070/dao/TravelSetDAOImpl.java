@@ -18,7 +18,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelSetDO> listTravelSet(String created, int available){
+    public List<TravelSetDO> listTravelSet(String created, Integer available){
         String hql = "from TravelSetDO where createdUser=?1 and available=?2 order by priority desc ";
         Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
         query.setParameter(1, created);
@@ -30,7 +30,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public TravelSetDO getTravelSetByID(int id, int available){
+    public TravelSetDO getTravelSetByID(Integer id, Integer available){
         String hql = "from TravelSetDO where sn=?1 and available=?2 order by sn";
         Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
         query.setParameter(1, id);
@@ -40,9 +40,13 @@ public class TravelSetDAOImpl implements TravelSetDAO{
 
         return travelSetDO;
     }
+    @Override
+    public TravelSetDO getTravelSetByID(Integer id, boolean findFromPersistence){
+        return sessionFactory.getCurrentSession().find(TravelSetDO.class, id);
+    }
 
     @Override
-    public List<TravelEleAttractionDO> getAttractionSetByID(int id){
+    public List<TravelEleAttractionDO> getAttractionSetByID(Integer id){
         String hql = "from TravelEleAttractionDO where travelSetDO.sn = ?1";
         Query<TravelEleAttractionDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelEleAttractionDO.class);
         query.setParameter(1, id);
@@ -51,7 +55,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelEleCarDO> getCarSetByID(int id) {
+    public List<TravelEleCarDO> getCarSetByID(Integer id) {
         String hql = "from TravelEleCarDO where travelSetDO.id = ?1";
         Query<TravelEleCarDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelEleCarDO.class);
         query.setParameter(1, id);
@@ -60,7 +64,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelEleHotelDO> getHotelSetByID(int id) {
+    public List<TravelEleHotelDO> getHotelSetByID(Integer id) {
         String hql = "from TravelEleHotelDO where travelSetDO.id = ?1";
         Query<TravelEleHotelDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelEleHotelDO.class);
         query.setParameter(1, id);
@@ -69,7 +73,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelEleRestaurantDO> getRestaurantSetByID(int id) {
+    public List<TravelEleRestaurantDO> getRestaurantSetByID(Integer id) {
         String hql = "from TravelEleRestaurantDO where travelSetDO.id = ?1";
         Query<TravelEleRestaurantDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelEleRestaurantDO.class);
         query.setParameter(1, id);
@@ -100,7 +104,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public boolean setTravelSetUnavailable(int sn) {
+    public boolean setTravelSetUnavailable(Integer sn) {
         try {
             TravelSetDO travelSetDO = sessionFactory.getCurrentSession().get(TravelSetDO.class, sn);
             travelSetDO.setAvailable(0);
