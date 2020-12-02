@@ -11,10 +11,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
-
-
-
 
 <title>論壇管理</title>
 
@@ -63,7 +59,11 @@ h2 {
 }
 .ck-editor__editable_inline {
     min-height: 350px;
+	min-width: 600px;
 }
+.ck-editor__top {
+        min-width: 600px;
+    }
 </style>
 
 </head>
@@ -82,7 +82,7 @@ h2 {
 				<div class="content">
 					<div class="row">
 						<div class="col-lg-6">
-							<div class="card card-default">
+							<div class="card card-default" style="width: 1000px;">
 								<div class="card-header card-header-border-bottom">
 									<h1>文章修改</h1>
 									<br />
@@ -103,11 +103,12 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="userId"><h3>作者</h3></label>
-											<input type="text" name="articleUserId" id="userId" class="form-control"
-												value="${artBean[0].artUserId }" disabled>
+											<input type="text" name="userid" id="userId" class="form-control"
+												value="${artBean[0].artUserId }" readonly="true">
 										</div>
 										<div class="form-group">
-											<label for="typeSelect"><h3>分類</h3></label> <select class="form-control" id="typeSelect" name="typeSelect">
+											<label for="typeSelect"><h3>分類</h3></label> 
+											<select class="form-control" id="typeSelect" name="typeSelect">
 												<option value="">選擇類型</option>
 												<option value="1">旅遊</option>
 												<option value="2">住宿</option>
@@ -121,13 +122,14 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="content"><h3>內容</h3></label>
-											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
+											<textarea class="form-control" id="editor" cols="100" name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
 											<button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editModal">送出修改</button>
-											<button class="btn btn-primary" onclick="redo()">重置</button>
-											<!-- <button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button> -->
+											<button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button>
+											<button class="btn btn-danger" onclick="redo()">重置</button>
+											
 										</div>
 									</form>
 								</div>
@@ -253,8 +255,8 @@ h2 {
         				console.error( error );
     		
 			});
-			<!--editor config end-->
-			<!--redo btn function-->
+			<!--editor config end -->
+			<!-- redo btn function -->
 			function redo(){
 				document.getElementById("title").value = "${artBean[0].artTitle }";
 				editor.setData( '${artBean[0].artContent }');
@@ -262,22 +264,33 @@ h2 {
 				event.preventDefault();
 			}
 			<!--redo btn function end-->
+
 			<!--preview btn function-->
 			function preview(){
 			event.preventDefault();
-			var previewForm = new FormData();
+			var previewForm = document.createElement("form");
+			previewForm.method="POST";
+			previewForm.action="preview.controller"
 			var artTitle = $("#title").val();
 			var artType = $("#typeSelect").find(":selected").text();
-			var artUserId = $("#userId").val();
+			var artUserId = $("#userid").val();
 			var artContent=editor.getData();
 			
-			previewForm.append("arTitle",artTitle);
-			previewForm.append("artType",artType);
-			previewForm.append("artUserid",artUserId);
-			previewForm.append("artContent",artContent);
-			previewForm.attr("action","preview.controller")
-			previewForm.attr("method","POST")
-			previewForm.submit();
+			
+			$.each(args,function(key,value){
+                input = $("<input type='hidden'>");
+                input.attr({"name":key});
+                input.val(value);
+                previewForm.append(input);
+            });
+                
+            };
+			
+			
+			
+			
+			
+			
 			
 		}
 			<!--preview btn function end-->

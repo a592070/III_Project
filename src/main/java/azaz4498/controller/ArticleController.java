@@ -62,14 +62,17 @@ public class ArticleController {
 		return "azaz4498/articlePreview";
 	}
 	@RequestMapping(path = "/preview.controller", method = RequestMethod.POST)
-	public String articlePreview(Model m, @RequestParam(name = "artTitle")String artTitle,@RequestParam(name = "artContent")String artContent, @RequestParam(name = "artUserid")String artUserid, @RequestParam(name = "artType")String artType ) {
-		m.addAttribute("artTitle", artTitle);
-		m.addAttribute("artContent", artContent);
-		m.addAttribute("artUserid",artUserid);
-		m.addAttribute("artType", artType);
+	@ResponseBody
+	public Map<String, Object> articlePreview(@RequestParam(name = "artTitle")String artTitle,@RequestParam(name = "artContent")String artContent, @RequestParam(name = "artUserid")String artUserid, @RequestParam(name = "artType")String artType ) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		
+		map.put("artTitle", artTitle);
+		map.put("artContent", artContent);
+		map.put("artUserid",artUserid);
+		map.put("artType", artType);
 		
 		
-		return "azaz4498/articlePreview";
+		return map;
 		
 	}
 	

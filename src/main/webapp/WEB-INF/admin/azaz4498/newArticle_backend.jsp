@@ -57,7 +57,11 @@ h2 {
 }
 .ck-editor__editable_inline {
     min-height: 350px;
+	min-width: 600px;
 }
+.ck-editor__top {
+        min-width: 600px;
+    }
 </style>
 
 </head>
@@ -76,7 +80,7 @@ h2 {
 				<div class="content">
 					<div class="row">
 						<div class="col-lg-6">
-							<div class="card card-default">
+							<div class="card card-default" style="width: 1000px;">
 								<div class="card-header card-header-border-bottom">
 									<h1>文章新增</h1>
 									<br />
