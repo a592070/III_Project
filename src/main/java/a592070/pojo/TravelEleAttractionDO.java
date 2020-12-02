@@ -1,11 +1,13 @@
 package a592070.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "TRAVEL_ELE_A")
 public class TravelEleAttractionDO {
@@ -20,6 +22,7 @@ public class TravelEleAttractionDO {
     @JoinColumn(name = "A_ID", referencedColumnName = "SN")
     private AttractionVO attraction;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRAVEL_ID", referencedColumnName = "SN")
     private TravelSetDO travelSetDO;

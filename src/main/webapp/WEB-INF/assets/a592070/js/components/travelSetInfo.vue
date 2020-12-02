@@ -284,8 +284,8 @@ module.exports = {
     }
   },
   created: function () {
-    // this.initData();
-    this.testData();
+    this.initData();
+    // this.testData();
     this.loading = false;
   },
   computed: {
@@ -298,6 +298,12 @@ module.exports = {
   },
   methods: {
     initData() {
+      axios.get('${pageContext.servletContext.contextPath}/admin/travelSet/list/1')
+          .then(response => {
+            this.tableData = response.data.tableData;
+            this.pageData = response.data.pageData;
+            this.loading = false;
+          });
     },
     handleInsert() {
       // this.travelSetDialog = true;

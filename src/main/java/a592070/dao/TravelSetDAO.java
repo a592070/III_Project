@@ -5,17 +5,17 @@ import a592070.pojo.*;
 import java.util.List;
 
 public interface TravelSetDAO{
-    TravelSetDO getTravelSetByID(Integer id, boolean findFromPersistence);
+    TravelSetDO getTravelSetByID(Integer id, boolean loadFetch, boolean findFromPersistence);
 
     int getSize();
     int getSize(boolean available);
     List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending);
-    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available);
+    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean status);
 
     int getSizeByCreated(String created);
     int getSizeByCreated(String created, boolean available);
     List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending);
-    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, boolean available, String orderFiled, boolean descending);
+    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending, boolean status);
 
 //    List<TravelEleAttractionDO> getAttractionSet(int id);
 //    List<TravelEleCarDO> getCarSet(int id);
@@ -25,7 +25,7 @@ public interface TravelSetDAO{
     int getSizeByKeywords(String keyWords);
     int getSizeByKeywords(String keyWords, boolean available);
     List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending);
-    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean available);
+    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean status);
 
 //    int getSizeByFiled(String filedName, String filedValue);
 //    List<TravelSetDO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending);
@@ -33,5 +33,6 @@ public interface TravelSetDAO{
 
     Integer addTravelSet(TravelSetDO travelSetDO);
     TravelSetDO updateTravelSet(TravelSetDO travelSetDO);
-    void switchTravelSetAvailable(Integer sn);
+    void removeTravelSet(TravelSetDO travelSetDO);
+    void switchTravelSetStatus(Integer sn);
 }

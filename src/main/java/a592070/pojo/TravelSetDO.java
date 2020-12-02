@@ -1,5 +1,7 @@
 package a592070.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.*;
 import utils.StringUtil;
 
@@ -13,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "TRAVEL_SET")
 @DynamicInsert@DynamicUpdate
@@ -20,8 +23,11 @@ public class TravelSetDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
-    @Column(name = "CREATED")
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CREATED", referencedColumnName = "USERNAME")
     private String createdUser;
+
     private String description;
     private Integer priority;
     @Column(name = "CREATED_TIME")
@@ -31,7 +37,7 @@ public class TravelSetDO {
     private String name;
     @Type(type = "org.hibernate.type.NumericBooleanType")
     @Column(name = "available", nullable = false)
-    private boolean available;
+    private boolean status;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @Fetch(FetchMode.SUBSELECT)
@@ -46,15 +52,23 @@ public class TravelSetDO {
 //    @Fetch(FetchMode.SUBSELECT)
 //    private Set<TravelEleAttractionDO> travelAttractions2 = new LinkedHashSet<>();
 
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<TravelEleCarDO> travelCars = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<TravelEleHotelDO> travelHotels = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<TravelEleRestaurantDO> travelRestaurants = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<TravelEleAttractionDO> travelAttractions = new ArrayList<>();
@@ -124,12 +138,12 @@ public class TravelSetDO {
         this.updateTime = updateTime;
     }
 
-    public boolean getAvailable() {
-        return available;
+    public boolean getStatus() {
+        return status;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 //    public Set<TravelEleCarDO> getTravelCars2() {
@@ -218,7 +232,7 @@ public class TravelSetDO {
                 ", createdTime=" + createdTime +
                 ", updateTime=" + updateTime +
                 ", name='" + name + '\'' +
-                ", available=" + available +
+                ", status=" + status +
                 '}';
     }
 }

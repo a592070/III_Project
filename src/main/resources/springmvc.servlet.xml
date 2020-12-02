@@ -13,6 +13,7 @@
 	<import resource="classpath:sqlBeans.xml" />
 	<import resource="classpath:exampleBeans.xml" />
 	<import resource="classpath:a592070.beans.xml"/>
+<!--	<import resource="classpath:a592070.beans.test.xml"/>-->
 	<import resource="classpath:iring29.beans.xml"/>
 	<import resource="classpath:azaz4498.beans.xml"/>
 	<import resource="classpath:rambo0021.beans.xml" />
@@ -54,13 +55,13 @@
 	</mvc:cors>
 
 	<!--登入攔截器設定-->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<!--攔截所有/admin 下的請求-->
-			<mvc:mapping path="/admin/**"/>
-			<bean class="global.LoginInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
+<!--	<mvc:interceptors>-->
+<!--		<mvc:interceptor>-->
+<!--			&lt;!&ndash;攔截所有/admin 下的請求&ndash;&gt;-->
+<!--			<mvc:mapping path="/admin/**"/>-->
+<!--			<bean class="global.LoginInterceptor"/>-->
+<!--		</mvc:interceptor>-->
+<!--	</mvc:interceptors>-->
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->
 	<bean
