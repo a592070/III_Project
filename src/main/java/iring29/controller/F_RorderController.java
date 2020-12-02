@@ -25,15 +25,18 @@ public class F_RorderController {
 	
 	@RequestMapping(path = "PrepareOrder", method = RequestMethod.POST)
 	public String PrepareOrder(@RequestParam(value = "time") String time,
-							   @RequestParam(value = "bookdate") String book_date, 
+							   @RequestParam(value = "book_date") String book_date, 
 							   @RequestParam(value = "b_name") String b_name, 
 							   @RequestParam(value = "b_phone") String b_phone, 
 							   @RequestParam(value = "person_number") BigDecimal person_number,
 							   HttpSession session) {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		if(OTBean == null) {
 //		String book_date = (String) session.getAttribute("book_date");
+			OTBean = new OrderTable();
+		}
 		R_Order_List rOBean = new R_Order_List();
-		OrderTable OTBean = new OrderTable();
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		System.out.println("bookdate = " + book_date);
 		String tsStr = book_date +" " + time + ":00";

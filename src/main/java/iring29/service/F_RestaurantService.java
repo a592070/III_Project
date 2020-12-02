@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import iring29.model.F_RestaurantDAO;
 import iring29.model.Restaurant;
-import iring29.model.Show_RView;
+import iring29.model.Restaurant_VO;
 
 public class F_RestaurantService {
 
@@ -23,7 +23,7 @@ public class F_RestaurantService {
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> findMulti_Name_Region(String name, String region) {
+	public List<Restaurant_VO> findMulti_Name_Region(String name, String region) {
 		return f_RDao.findMulti_Name_Region(name, region);
 	}
 	
@@ -33,7 +33,7 @@ public class F_RestaurantService {
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> findRegion(String region) {
+	public List<Restaurant_VO> findRegion(String region) {
 		return f_RDao.findRegion(region);
 	}
 	
@@ -43,7 +43,7 @@ public class F_RestaurantService {
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Show_RView> findMulti_R(String name) {
+	public List<Restaurant_VO> findMulti_R(String name) {
 		return f_RDao.findMulti_R(name);
 	}
 	

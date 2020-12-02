@@ -47,7 +47,7 @@ public class ArticleDAO {
 	}
 
 	// 新增文章
-	public void newArticle(String title, Integer typeId, String content, String userId) throws SQLException {
+	public Article newArticle(String title, Integer typeId, String content, String userId) throws SQLException {
 		Article article = new Article();
 		ArticleType type = new ArticleType();
 		article.setArtTitle(title);
@@ -60,6 +60,7 @@ public class ArticleDAO {
 		article.setArticleType(type);
 		sessionFactory.getCurrentSession().save(article);
 		System.out.println("New article created !");
+		return article;
 
 	}
 
