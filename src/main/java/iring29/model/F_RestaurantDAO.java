@@ -15,18 +15,18 @@ public class F_RestaurantDAO {
 	}
 	
 		// find multiple restaurant by restaurant name & region
-		public List<Show_RView> findMulti_Name_Region(String name, String region) {
-			Query query = sessionFactory.getCurrentSession().createQuery("from Show_RView where name like ?0 and region = ?1");
+		public List<Restaurant_VO> findMulti_Name_Region(String name, String region) {
+			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region = ?1");
 			query.setParameter(0, "%" + name + "%");
 			query.setParameter(1, region);
-			List<Show_RView> rView = query.getResultList();
+			List<Restaurant_VO> rView = query.getResultList();
 			return rView;
 
 		}
 		
 		// search how many Restaurant
 		public int numRestaurant(String name) {
-			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Show_RView where name like ?0", Integer.class);
+			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Restaurant_VO where name like ?0", Integer.class);
 			query.setParameter(0, "%" + name + "%");
 
 			return query.uniqueResult().intValue();
@@ -34,12 +34,12 @@ public class F_RestaurantDAO {
 		}
 
 		// find multiple restaurant by restaurant name
-		public List<Show_RView> findMulti_R(String name) {
-			Query query = sessionFactory.getCurrentSession().createQuery("from Show_RView where name like ?0");
+		public List<Restaurant_VO> findMulti_R(String name) {
+			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0");
 			System.out.println("start findMulti_R");
 			query.setParameter(0, "%" + name + "%");
 
-			List<Show_RView> rBeans = query.list();
+			List<Restaurant_VO> rBeans = query.list();
 			return rBeans;
 		}
 		
@@ -53,11 +53,11 @@ public class F_RestaurantDAO {
 		}
 
 		// find restaurant by region
-		public List<Show_RView> findRegion(String region) {
-			Query query = sessionFactory.getCurrentSession().createQuery("from Show_RView where region = ?0");
+		public List<Restaurant_VO> findRegion(String region) {
+			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where region = ?0");
 			System.out.println("start findRegion");
 			query.setParameter(0, region);
-			List<Show_RView> rView = query.list();
+			List<Restaurant_VO> rView = query.list();
 			return rView;
 		}
 }
