@@ -4,22 +4,34 @@ import a592070.pojo.*;
 
 import java.util.List;
 
-public interface TravelSetDAO {
-    List<TravelSetDO> listTravelSet(String created, int available);
+public interface TravelSetDAO{
+    TravelSetDO getTravelSetByID(Integer id, boolean findFromPersistence);
 
-    TravelSetDO getTravelSetByID(int id, int available);
+    int getSize();
+    int getSize(boolean available);
+    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending);
+    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available);
 
-    List<TravelEleAttractionDO> getAttractionSetByID(int id);
+    int getSizeByCreated(String created);
+    int getSizeByCreated(String created, boolean available);
+    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending);
+    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, boolean available, String orderFiled, boolean descending);
 
-    List<TravelEleCarDO> getCarSetByID(int id);
+//    List<TravelEleAttractionDO> getAttractionSet(int id);
+//    List<TravelEleCarDO> getCarSet(int id);
+//    List<TravelEleHotelDO> getHotelSet(int id);
+//    List<TravelEleRestaurantDO> getRestaurantSet(int id);
 
-    List<TravelEleHotelDO> getHotelSetByID(int id);
+    int getSizeByKeywords(String keyWords);
+    int getSizeByKeywords(String keyWords, boolean available);
+    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending);
+    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean available);
 
-    List<TravelEleRestaurantDO> getRestaurantSetByID(int id);
+//    int getSizeByFiled(String filedName, String filedValue);
+//    List<TravelSetDO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending);
 
-    TravelSetDO addTravelSet(TravelSetDO travelSetDO);
 
+    Integer addTravelSet(TravelSetDO travelSetDO);
     TravelSetDO updateTravelSet(TravelSetDO travelSetDO);
-
-    boolean setTravelSetUnavailable(int sn);
+    void switchTravelSetAvailable(Integer sn);
 }

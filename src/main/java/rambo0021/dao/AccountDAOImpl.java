@@ -209,6 +209,8 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public String login(String username, String password) {
+//		String hql = "from AccountBean where userName=:username and password=:password and identityBean.id=:idebtity";
+//		sessionFactory.getCurrentSession().createQuery(hql);
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
 	    if(aBean == null || !aBean.getPassword().equals(SHA2DAO.getSHA256(password)) || aBean.getIdentityBean().getId() != 1){
 	    	return "帳號或密碼錯誤,或此帳號非管理員";
