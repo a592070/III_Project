@@ -290,7 +290,15 @@ img{
                                 <label for="room">請輸入訂位者電話:</label>
                                 <input type="text" id="b-phone" onblur="checkPhone()" name="b_phone" placeholder="09xxxxxxxx">
                             </div>
-                            <button type="submit" class="orderbtn">我要訂位</button>
+                            <button id="order" type="button" class="orderbtn">我要訂位</button>
+                            <script>
+                            var item = 0;
+								$("#order").click(function(){
+									item ++;
+									console.log("item = " + item)
+									$(".nav-shop__circle").html(item);
+									})
+                            </script>
                         </form>
                     </div>
                 </div>
