@@ -5,13 +5,17 @@ import a592070.pojo.*;
 import java.util.List;
 
 public interface TravelSetDAO{
-    TravelSetDO getTravelSetByID(int id, int available, boolean findFromPersistence, boolean loadFetch);
+    TravelSetDO getTravelSetByID(Integer id, boolean findFromPersistence);
 
-    int getSize(int available);
-    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, int available);
+    int getSize();
+    int getSize(boolean available);
+    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending);
+    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available);
 
-    int getSizeByCreated(String created, int available);
-    List<TravelSetDO> listTravelSetByCreated(String created, int available);
+    int getSizeByCreated(String created);
+    int getSizeByCreated(String created, boolean available);
+    List<TravelSetDO> listTravelSetByCreated(String created);
+    List<TravelSetDO> listTravelSetByCreated(String created, boolean available);
 
 //    List<TravelEleAttractionDO> getAttractionSet(int id);
 //    List<TravelEleCarDO> getCarSet(int id);
@@ -19,6 +23,8 @@ public interface TravelSetDAO{
 //    List<TravelEleRestaurantDO> getRestaurantSet(int id);
 
     int getSizeByKeywords(String keyWords);
+    int getSizeByKeywords(String keyWords, boolean available);
+    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled, boolean descending, boolean available);
     List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled, boolean descending);
 
 //    int getSizeByFiled(String filedName, String filedValue);

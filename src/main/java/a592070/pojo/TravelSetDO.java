@@ -1,12 +1,12 @@
 package a592070.pojo;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 import utils.StringUtil;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -29,7 +29,9 @@ public class TravelSetDO {
     @Column(name = "UPDATE_TIME")
     private Timestamp updateTime;
     private String name;
-    private Integer available;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "available", nullable = false)
+    private boolean available;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @Fetch(FetchMode.SUBSELECT)
@@ -122,11 +124,11 @@ public class TravelSetDO {
         this.updateTime = updateTime;
     }
 
-    public Integer getAvailable() {
+    public boolean getAvailable() {
         return available;
     }
 
-    public void setAvailable(Integer available) {
+    public void setAvailable(boolean available) {
         this.available = available;
     }
 
