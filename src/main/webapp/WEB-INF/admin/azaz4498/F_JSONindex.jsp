@@ -71,7 +71,6 @@ h2 {
 		<div class="page-wrapper">
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
-				
 				<div class="d-flex justify-content-between">
 					<div class="form-inline">
 						<input type="text" class="form-control keyword_input" placeholder="輸入文章標題或作者..." aria-label="search" name="keyword" />
@@ -167,6 +166,7 @@ h2 {
 			</div>
 		</div>
 	</div>
+	<!--modal end-->
 
 
 	<script>
