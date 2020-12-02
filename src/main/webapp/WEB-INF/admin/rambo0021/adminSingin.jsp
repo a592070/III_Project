@@ -5,12 +5,12 @@
 <html>
 
 <head>
-<head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title></title>
+<title>後臺系統登入</title>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 
 
@@ -78,7 +78,7 @@
 					</div>
 					<div class="card-body p-5">
 
-						<h4 class="text-dark mb-5">登入</h4>
+						<h4 class="text-dark mb-5">管理後臺登入</h4>
 						<form action="${pageContext.servletContext.contextPath}/admin/login" method="POST">
 							<div class="row">
 								<div class="form-group col-md-12 mb-4">
@@ -98,17 +98,17 @@
 											</label>
 
 										</div> -->
-										<p>
+										<!--<p>
 											<a class="text-blue" href="#">忘記密碼?</a>
-										</p>
+										</p>-->
 									</div>
+									<div class="g-recaptcha" data-sitekey="6LdOeNYZAAAAAPAEKRkJYgqKjU79n5B90Jnw2Q06"></div>
 									<button type="submit"
 										class="btn btn-lg btn-primary btn-block mb-4">登入</button>
-									<Font color='red' size="-1"> ${ErrorMsgKey.LoginError}</Font>
-									<p>
-										還沒有帳號 ? <a class="text-blue"
-											href="${pageContext.servletContext.contextPath}/admin/singup">註冊</a>
-									</p>
+<!-- 									<p> -->
+<!-- 										還沒有帳號 ? <a class="text-blue" -->
+<%-- 											href="${pageContext.servletContext.contextPath}/admin/singup">註冊</a> --%>
+<!-- 									</p> -->
 								</div>
 							</div>
 						</form>
@@ -117,6 +117,32 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="loginModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle" style="color: black;">登入信息</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modal-body" style="color:red; text-align: center;">
+					<h3>${ErrorMsgKey.LoginError}</h3>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">確認</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	<c:if test="${!empty ErrorMsgKey.LoginError}">
+      $("#loginModalCenter").modal('show');
+    </c:if>
+	</script>
 </body>
 
 </html>

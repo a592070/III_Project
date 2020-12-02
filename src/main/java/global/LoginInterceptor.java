@@ -2,6 +2,7 @@ package global;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import rambo0021.pojo.AccountBean;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,18 +11,24 @@ import javax.servlet.http.HttpSession;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(request.getRequestURI().contains("/admin/login")) {
-            System.out.println("/login.do");
+//        System.out.println(request.getRequestURI());
+
+        // 符合請求URI 可以通過 預設singin、login頁面可以通過
+        if(request.getRequestURI().contains("/admin/singin") || request.getRequestURI().contains("/admin/login")) {
             return true;
         }
 
         HttpSession httpSession = request.getSession();
-        if(httpSession.getAttribute("userinfo") != null){
-            System.out.println("userinfo not null");
-            return true;
+        AccountBean loginUser = (AccountBean) httpSession.getAttribute(Constant.ADMIN_BEAN);
+        // 檢查session AccountBean是否存在，檢查身分
+        if(loginUser != null){
+//            System.out.println(loginUser.getUserName());
+//            System.out.println(loginUser.getIdentityBean().getName());
+            if(loginUser.getIdentityBean().getId() == 1) return true;
         }
 
-        request.getRequestDispatcher("/admin/login").forward(request,response);
+        // 其他 導回 login頁面
+        request.getRequestDispatcher("/admin/singin").forward(request,response);
         return false;
     }
 }

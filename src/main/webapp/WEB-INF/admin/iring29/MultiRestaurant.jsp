@@ -26,6 +26,8 @@ body{
  	background:white; 
 	margin:150px;
 /* 	padding-top:30 50px; */
+	padding-left:25px;
+	padding-right:25px;
 }
 .R_info{
 	height:250px;
@@ -36,36 +38,21 @@ h3{
 .div_box{
 	text-align: center;
 }
-
+.heading.mb-4{
+	height:50px;
+}
+.btn.btn-warning{
+	border-radius: 5px;
+	font-size: 10px;
+	background: #f85959;
+	border: 1px solid #f85959;
+    color: #fff;
+}
 </style>
 </head>
 <body>
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
-
-<%-- 	<c:forEach var="res" items="${Multi_Rdata}"> --%>
-<!-- 		<FORM -->
-<%-- 			action="<%=pageContext.getServletContext().getContextPath()%>/DisplyRestaurant" --%>
-<!-- 			method="POST"> -->
-<!-- 			<div class="div1"> -->
-<!-- 				<div class="div2"> -->
-<%-- 					<h4>${res.name}</h4>  --%>
-<%-- 					<span class="sp_result">${res.region}</span> --%>
-
-<!-- 					<span class="sp_result">region</span> -->
-<%-- 					<span class="sp_result">rating：${res.rating}</span> --%>
-<%-- 					<span class="sp_result">${res.type}</span> --%>
-
-<!-- 				</div> -->
-<!-- 				<div class='go-btn'><button name="go" value="go" class="btn btn-success">Go</button></div> -->
-				
-<%-- 				<Input type='hidden' name='restaurant_name' value='${res.name}'> --%>
-<%-- 				<Input type='hidden' name='book_date' value='${book_date}'> --%>
-<%-- 				<Input type='hidden' name='person_numer' value='${person_numer}'> --%>
-
-<!-- 			</div> -->
-<!-- 		</FORM> -->
-<%-- 	</c:forEach> --%>
-
+    
 	<!-- body -->
 	<div class="Rbody">
 	 <section class="ftco-section ftco-degree-bg">
@@ -73,37 +60,85 @@ h3{
         <div class="row">
         	<div class="col-lg-3 sidebar">
         		<div class="sidebar-wrap bg-light">
-        			<h3 class="heading mb-4">Find City</h3>
-        			<form action="#">
+        			<h3 class="heading mb-4">找餐廳</h3>
+        			<FORM ACTION="<%=pageContext.getServletContext().getContextPath()%>/SearchRestaurant" method="post">
         				<div class="fields">
 		              <div class="form-group">
-		                <input type="text" class="form-control" placeholder="Destination, City">
+		              <span class="sp_search">地區搜尋</span> 
+		                <select name="region_name" id="region" class="form-control">
+								<option value="">請選擇地區</option>
+								<option value="基隆">基隆</option>
+								<option value="新北">新北</option>
+								<option value="台北">台北</option>
+								<option value="桃園">桃園</option>
+								<option value="新竹">新竹</option>
+								<option value="苗栗">苗栗</option>
+								<option value="台中">台中</option>
+								<option value="彰化">彰化</option>
+								<option value="南投">南投</option>
+								<option value="雲林">雲林</option>
+								<option value="嘉義">嘉義</option>
+								<option value="台南">台南</option>
+								<option value="高雄">高雄</option>
+								<option value="屏東">屏東</option>
+								<option value="宜蘭">宜蘭</option>
+								<option value="花蓮">花蓮</option>
+								<option value="台東">台東</option>
+								<option value="澎湖">澎湖</option>
+								<option value="金門">金門</option>
+								<option value="連江">連江</option>
+							</select>
 		              </div>
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
-	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="" id="" class="form-control" placeholder="Keyword search">
-	                      <option value="">Select Location</option>
-	                      <option value="">San Francisco USA</option>
-	                      <option value="">Berlin Germany</option>
-	                      <option value="">Lodon United Kingdom</option>
-	                      <option value="">Paris Italy</option>
-	                    </select>
+						<span class="sp_search">餐廳名稱搜尋</span> 
+						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字" class="form-control">
 	                  </div>
 		              </div>
 		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="Date from">
+		              <span class="sp_search">用餐日期</span> 
+		                <input type="date" name="book_date" id="theDate" min="" class="form-control">
+					<script>
+						var date = new Date();
+
+						var day = date.getDate();
+						var month = date.getMonth() + 1;
+						var year = date.getFullYear();
+
+						if (month < 10)
+							month = "0" + month;
+						if (day < 10)
+							day = "0" + day;
+
+						var today = year + "-" + month + "-" + day;
+						console.log(typeof(today));
+						document.getElementById("theDate").value = today;
+						document.getElementById("theDate").min = today;
+						
+					</script>
 		              </div>
 		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="Date to">
+		              <span class="sp_search">用餐人數</span> 
+		                <select name="person_number" id="inputState" class="form-control">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+					</select>
 		              </div>
 		              <div class="form-group">
 		              </div>
 		              <div class="form-group">
-		                <input type="submit" value="Search" class="btn btn-primary py-3 px-5">
+		                <input type="submit" value="找餐廳" class="btn btn-primary py-3 px-5">
 		              </div>
 		            </div>
-	            </form>
+	            </FORM>
         		</div>
         		<div class="sidebar-wrap bg-light ">
         			<h3 class="heading mb-4">Star Rating</h3>
@@ -146,39 +181,52 @@ h3{
           <div class="col-lg-9">
           	<div class="row">
           	
-          	<c:forEach var="res" items="${Multi_Rdata}">
+          	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ">
 		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://img.etimg.com/thumb/msid-75176755,width-640,resizemode-4,imgsize-612672/effect-of-coronavirus-on-food.jpg');">
+		    				<FORM id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://img.etimg.com/thumb/msid-75176755,width-640,resizemode-4,imgsize-612672/effect-of-coronavirus-on-food.jpg');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
-    						</div>
+    								<span class="icon-search2"></span>
+    								</div>
 		    					</a>
+		    					<Input type='hidden' name='restaurant_name' value='${res.name}'>
+								<Input type='hidden' name='book_date' value='${book_date}'>
+								<Input type='hidden' name='person_number' value='${person_number}'>
+		    				</FORM>
 		    					<div class="text p-3">
+		    						<FORM action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
 		    						<div class="R_info">
 		    						<div class="d-flex">
 		    							<div class="one">
 				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
+				    						<p class="rate"  id="test${res.rating}" >
+				    							<i id="stars" class="icon-star" ></i>
+				    							<i id="stars" class="icon-star" ></i>
+				    							<i id="stars" class="icon-star" ></i>
+				    							<i id="stars" class="icon-star" ></i>
+				    							<i id="stars" class="icon-star-o" ></i>
+				    							<span>${res.rating}</span>
 				    						</p>
+				    						<script>
+				    						
+				    						</script>
 			    						</div>
 			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
+<!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
 		    							</div>
 		    						</div>
 		    						<p>${res.type}</p>
 		    						</div>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-		    							<span class="ml-auto"><a href="#">訂位去</a></span>
+		    							<span><i class="icon-map-o"></i>&emsp;${res.region}</span> 
+		    							<span class="ml-auto"><button type="submit" class="btn btn-warning">訂位去</button></span>
+		    							<Input type='hidden' name='restaurant_name' value='${res.name}'>
+										<Input type='hidden' name='book_date' value='${book_date}'>
+										<Input type='hidden' name='person_number' value='${person_number}'>
 		    						</p>
+		    						</FORM>
 		    					</div>
 		    				</div>
 		    			</div>

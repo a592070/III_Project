@@ -32,8 +32,8 @@ public class ArticleService {
 	}
 
 	// 新增文章
-	public void newArticle(String title, Integer typeId, String content, String userId) throws SQLException {
-		aDao.newArticle(title, typeId, content, userId);
+	public Article newArticle(String title, Integer typeId, String content, String userId) throws SQLException {
+		return aDao.newArticle(title, typeId, content, userId);
 	}
 
 	// 編輯文章

@@ -5,7 +5,7 @@
   Created by IntelliJ IDEA.
   User: Student
   Date: 2020/10/29
-  Time: 上午 09:28
+  Time: 上午 09:28s
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
@@ -19,6 +19,7 @@
 <title>論壇管理</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
+<c:import url="/WEB-INF/admin/fragment/azaz4498_ref/Forum_ref.jsp" />
 
 <style>
 .sp_search-1 {
@@ -60,6 +61,9 @@ h2 {
 	padding-left: 50px;
 	padding-top: 50px;
 }
+.ck-editor__editable_inline {
+    min-height: 350px;
+}
 </style>
 
 </head>
@@ -83,19 +87,24 @@ h2 {
 									<h1>文章修改</h1>
 									<br />
 									<div>
-										<a href="${pageContext.servletContext.contextPath}/Forum">回列表</a>
+										<a href="${pageContext.servletContext.contextPath}/admin/Forum">回列表</a>
 									</div>
 								</div>
 
 								<div class="card-body">
-									<form action=${pageContext.servletContext.contextPath}/edit.controller method="POST">
-										<input type="hidden" name="artId" value="${artBean[0].artId }">
-										<input type="hidden" name="userid" value="${artBean[0].artUserId }">
+									<form id=edit_form action=${pageContext.servletContext.contextPath}/admin/edit.controller method="POST">
+										<input type="hidden" name="artId" id="artId" value="${artBean[0].artId }">
+										
 
 										<div class="form-group">
 											<label for="fname"><h3>標題</h3></label>
-											<input type="text" name="articleTitle" id="title" onblur="showEditTitle()" class="form-control"
+											<input type="text" name="articleTitle" id="title" class="form-control"
 												value="${artBean[0].artTitle }">
+										</div>
+										<div class="form-group">
+											<label for="userId"><h3>作者</h3></label>
+											<input type="text" name="articleUserId" id="userId" class="form-control"
+												value="${artBean[0].artUserId }" disabled>
 										</div>
 										<div class="form-group">
 											<label for="typeSelect"><h3>分類</h3></label> <select class="form-control" id="typeSelect" name="typeSelect">
@@ -115,88 +124,76 @@ h2 {
 											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
-										
-										
-										
-
-										<!-- <div class="form-group">
-											<label for="exampleFormControlFile1">Example file
-												input</label> <input type="file" class="form-control-file"
-												id="exampleFormControlFile1">
-										</div> -->
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
-											<button class="btn btn-primary btn-default" onclick="confirmEdit()">送出修改</button>
-											<!-- <button type="submit" class="btn btn-secondary btn-default">Cancel</button> -->
+											<button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editModal">送出修改</button>
+											<button class="btn btn-primary" onclick="redo()">重置</button>
+											<!-- <button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button> -->
 										</div>
-										
-
 									</form>
-									
 								</div>
 							</div>
-
-
-
-
 						</div>
-
 					</div>
 				</div>
-
-
-
-
 			</div>
-
-
 		</div>
 	</div>
+
+	<!--modal-->
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editModalLabel">確認修改文章內容</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					是否確認修改?
+				</div>
+				<div class="modal-footer">
+					<button id="modal_confirm" type="button" class="btn btn-primary">確認</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--modal End-->
 	<script type="text/javascript">
+		
 		window.onload = getDefaultType();
+		let currId = $("#artId").val();
+		
 
 		function getDefaultType() {//判斷文章類型 修改下拉選單預設值
+			
 			var typeSelect = document.getElementById("typeSelect");
 			var options = typeSelect.getElementsByTagName("option");
-			var selectedType = ${artBean[0].articleType.typeId};
-			options[selectedType].selected = true;
-		}
-
-		function showEditTitle() {
-			var originTitle = document.getElementById("title").value;
-			if (originTitle == "${artBean[0].artTitle }") {
-			} else {
-				var choice = confirm("確定要將標題修改為:\n"
-						+ document.getElementById("title").value);
-				if (choice) {
-
-				} else
-					document.getElementById("title").value = "${artBean[0].artTitle }";
-			}
-			
-
-		}
-
-		function confirmEdit(){
-			var desicion = confirm("確定要送出修改?");
-			if(desicion){
-				$(this).submit();
-
+			var selectedType = '${artBean[0].articleType.typeId}';
+			console.log(selectedType);
+			if(selectedType==0){
+				options[8].selected = true;
 			}else{
-				event.preventDefault();
-			}
-
+				options[selectedType].selected = true;
+			};
+			
 		}
-		 
-         
-	 </script>
+
+		//modal 確認後送出表單
+		$("#modal_confirm").on("click",function(){
+			$("#edit_form").submit();
+		})
+</script>
 	
 	
-	<script>
+
+<script>
+<!--editor config-->
 	function MyCustomUploadAdapterPlugin( editor ) {
     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
         return new MyUploadAdapter( loader );
-    };
-}
+    };}
 
 
 		ClassicEditor
@@ -226,8 +223,13 @@ h2 {
 					toolbar: [
 						'imageTextAlternative',
 						'imageStyle:full',
-						'imageStyle:side'
-					]
+						'imageStyle:side',
+						'|',
+						'imageStyle:alignLeft',
+						'imageStyle:alignCenter',
+						'imageStyle:alignRight',
+					],
+					styles:['full','alignLeft','alignCenter','alignRight','side']
 				},
 				table: {
 					contentToolbar: [
@@ -238,7 +240,7 @@ h2 {
 				},
 				licenseKey: '', 
 
-				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/imgUpload'},
+				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/admin/imgUpload/'+currId},
 				
 			
         	})
@@ -251,9 +253,37 @@ h2 {
         				console.error( error );
     		
 			});
+			<!--editor config end-->
+			<!--redo btn function-->
+			function redo(){
+				document.getElementById("title").value = "${artBean[0].artTitle }";
+				editor.setData( '${artBean[0].artContent }');
+				getDefaultType();
+				event.preventDefault();
+			}
+			<!--redo btn function end-->
+			<!--preview btn function-->
+			function preview(){
+			event.preventDefault();
+			var previewForm = new FormData();
+			var artTitle = $("#title").val();
+			var artType = $("#typeSelect").find(":selected").text();
+			var artUserId = $("#userId").val();
+			var artContent=editor.getData();
+			
+			previewForm.append("arTitle",artTitle);
+			previewForm.append("artType",artType);
+			previewForm.append("artUserid",artUserId);
+			previewForm.append("artContent",artContent);
+			previewForm.attr("action","preview.controller")
+			previewForm.attr("method","POST")
+			previewForm.submit();
+			
+		}
+			<!--preview btn function end-->
 </script>
 <script>
-
+	<!--imgUploadApdater-->
 	class MyUploadAdapter {
 	constructor(loader) {
 		this.loader = loader;
@@ -264,8 +294,9 @@ h2 {
 		return this.loader.file
 		.then(file=>new Promise((resolve, reject) => {
 			const data = new FormData();
+			
 			data.append('upload', file);
-			data.append('allowSize', 10)//允许图片上传的大小/兆
+			data.append('allowSize', 10);//允许图片上传的大小/兆
 			$.ajax({
 			url: 'imgUpload',
 			type: 'POST',
@@ -275,7 +306,6 @@ h2 {
 			processData: false,
 			contentType: false,
 			success: function (data) {
-				
 						if (data.res) {
 							resolve({ 
 								default: data.url
@@ -292,7 +322,7 @@ h2 {
 abort() {
 }
 }
-	
+<!--imgUploadApdater End-->
 </script>
 
 	
