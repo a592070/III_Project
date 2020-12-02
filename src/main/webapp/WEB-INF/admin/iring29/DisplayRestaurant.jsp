@@ -99,13 +99,13 @@ img{
 										var star = Math.floor("${res_data.rating}");
 										console.log("star = " + star);
 										var tags = "";
-										var half = " <i class='icon_star-half_alt'>";
+										var half = " <i class='icon_star-half_alt'></i>";
 										var zerostar = "";
 										for(var i = 0; i < star; i++){
-											tags += " <i class='icon_star'>";
+											tags += " <i class='icon_star'></i>";
 											}
 										for(var j =( star + 1 ); j < 5 ; j++){
-											zerostar += " <i class='fa fa-star-o'>";
+											zerostar += " <i class='fa fa-star-o'></i>";
 											}
 										$("#rating").prepend(tags, half, zerostar);
                                       </script>

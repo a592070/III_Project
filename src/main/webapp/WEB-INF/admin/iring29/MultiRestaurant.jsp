@@ -200,16 +200,27 @@ h3{
 		    						<div class="d-flex">
 		    							<div class="one">
 				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
-				    						<p class="rate"  id="test${res.rating}" >
-				    							<i id="stars" class="icon-star" ></i>
-				    							<i id="stars" class="icon-star" ></i>
-				    							<i id="stars" class="icon-star" ></i>
-				    							<i id="stars" class="icon-star" ></i>
-				    							<i id="stars" class="icon-star-o" ></i>
+				    						<p class="rate"  id="test${res.r_sn}" >
+<!-- 				    							<i id="stars" class="icon-star" ></i> -->
+<!-- 				    							<i id="stars" class="icon-star" ></i> -->
+<!-- 				    							<i id="stars" class="icon-star" ></i> -->
+<!-- 				    							<i id="stars" class="icon-star" ></i> -->
+<!-- 				    							<i id="stars" class="icon-star-o" ></i> -->
 				    							<span>${res.rating}</span>
 				    						</p>
 				    						<script>
-				    						
+				    						var star = Math.floor("${res.rating}");
+											console.log("star = " + star);
+											var tags = "";
+											var half = "<i class='fa fa-star-half_alt'></i>";
+											var zerostar = "";
+											for(var i = 0; i < star; i++){
+												tags += "<i class='icon-star'></i></span>";
+												}
+											for(var j = star; j < 5 ; j++){
+												zerostar += "<i class='fa fa-star-o'></i>";
+												}
+											$("#test${res.r_sn}").prepend(tags, zerostar);
 				    						</script>
 			    						</div>
 			    						<div class="two">
