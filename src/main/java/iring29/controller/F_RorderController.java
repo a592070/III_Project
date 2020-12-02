@@ -18,12 +18,12 @@ import iring29.model.Restaurant;
 public class F_RorderController {
 
 	
-	@RequestMapping(path = "OrderList", method = RequestMethod.POST)
+	@RequestMapping(path = "/OrderList", method = RequestMethod.POST)
 	public String PlaceOrder() {
 		return "iring29/OrderList";
 	}
 	
-	@RequestMapping(path = "PrepareOrder", method = RequestMethod.POST)
+	@RequestMapping(path = "/PrepareOrder", method = RequestMethod.POST)
 	public String PrepareOrder(@RequestParam(value = "time") String time,
 							   @RequestParam(value = "book_date") String book_date, 
 							   @RequestParam(value = "b_name") String b_name, 
@@ -50,6 +50,11 @@ public class F_RorderController {
 		rOBean.setRestaurant(res_data);
 		OTBean.addR_Order_Lists(rOBean);
 		session.setAttribute("OTBean", OTBean);
+		return "iring29/ShoppingCart";
+	}
+	
+	@RequestMapping(path = "/ShoppingCart", method = RequestMethod.POST)
+	public String ShoppingCart(HttpSession session) {
 		return "iring29/ShoppingCart";
 	}
 }

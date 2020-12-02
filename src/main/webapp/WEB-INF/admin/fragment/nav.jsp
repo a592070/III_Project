@@ -25,7 +25,12 @@
           <li class="nav-item"><a href="" class="nav-link">找交通</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">論壇</a></li>
           <li class="nav-item"><a href="contact.html" class="nav-link">聯絡我</a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link"><i class="icon-shopping-cart"></i></a></li>
+          <li class="nav-item">
+          <FORM id="shoppingcart" action="<%=application.getContextPath()%>/ShoppingCart" method="POST">
+          <a href="javascript:document.getElementById('shoppingcart').submit();" class="nav-link">
+          	<i class="icon-shopping-cart"></i>
+          		<span class="nav-shop__circle"></span>
+          	</a></FORM></li>
         </ul>
       </div>
     </div>
