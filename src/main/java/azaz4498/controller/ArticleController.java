@@ -13,6 +13,7 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.catalina.tribes.membership.McastService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -61,18 +62,15 @@ public class ArticleController {
 	public String previewPageTest() {
 		return "azaz4498/articlePreview";
 	}
-	@RequestMapping(path = "/preview.controller", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> articlePreview(@RequestParam(name = "artTitle")String artTitle,@RequestParam(name = "artContent")String artContent, @RequestParam(name = "artUserid")String artUserid, @RequestParam(name = "artType")String artType ) {
-		Map<String,Object> map = new HashMap<String, Object>();
-		
-		map.put("artTitle", artTitle);
-		map.put("artContent", artContent);
-		map.put("artUserid",artUserid);
-		map.put("artType", artType);
+	@RequestMapping(path = "/admin/preview.controller", method = RequestMethod.POST)
+	public String articlePreview(Model m,@RequestParam(name = "artTitle")String artTitle,@RequestParam(name = "artContent")String artContent, @RequestParam(name = "artUserid")String artUserid, @RequestParam(name = "artType")String artType ) {
+		m.addAttribute("artTitle", artTitle);
+		m.addAttribute("artContent", artContent);
+		m.addAttribute("artUserid",artUserid);
+		m.addAttribute("artType", artType);
 		
 		
-		return map;
+		return "azaz4498/articlePreview";
 		
 	}
 	
@@ -228,9 +226,9 @@ public class ArticleController {
 		return "redirect:/admin/Forum";
 	}
 
-	@RequestMapping(path = "/admin/imgUpload/{artId}", method = RequestMethod.POST)
+	@RequestMapping(value = {"/admin/imgUpload/{artId}","/admin/imgUpload"}, method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> imgUpload(@RequestParam(name = "upload") MultipartFile uploadFile,
-			HttpServletRequest request, @PathVariable(name = "artId") Integer articleId) throws IOException {
+			HttpServletRequest request, @PathVariable(name = "artId",required = false) Integer articleId) throws IOException {
 		Map<String, String> map = new HashMap<String, String>();
 
 		String fileName = uploadFile.getOriginalFilename();

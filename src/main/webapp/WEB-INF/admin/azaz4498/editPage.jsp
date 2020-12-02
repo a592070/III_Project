@@ -103,8 +103,8 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="userId"><h3>作者</h3></label>
-											<input type="text" name="userid" id="userId" class="form-control"
-												value="${artBean[0].artUserId }" readonly="true">
+											<input type="text" name="userid" id="userid" class="form-control"
+												value="${artBean[0].artUserId }" readonly="value">
 										</div>
 										<div class="form-group">
 											<label for="typeSelect"><h3>分類</h3></label> 
@@ -200,7 +200,9 @@ h2 {
 
 		ClassicEditor
     		.create( document.querySelector( '#editor' ),{
-				extraPlugins: [  MyCustomUploadAdapterPlugin ],
+				extraPlugins: [  MyCustomUploadAdapterPlugin],
+				
+				
 				toolbar: {
 					items: [
 						'heading',
@@ -211,6 +213,7 @@ h2 {
 						'link',
 						'bulletedList',
 						'numberedList',
+						'imageInsert',
 						'|',
 						'imageUpload',
 						'blockQuote',
@@ -239,6 +242,10 @@ h2 {
 						'tableRow',
 						'mergeTableCells'
 					]
+				},
+				mediaEmbed: {
+					previewsInData: true
+					// 設定影片為可見的格式
 				},
 				licenseKey: '', 
 
@@ -269,30 +276,36 @@ h2 {
 			function preview(){
 			event.preventDefault();
 			var previewForm = document.createElement("form");
+			$(document.body).append(previewForm);
 			previewForm.method="POST";
 			previewForm.action="preview.controller"
 			var artTitle = $("#title").val();
 			var artType = $("#typeSelect").find(":selected").text();
-			var artUserId = $("#userid").val();
+			var artUserid = $("#userid").val();
 			var artContent=editor.getData();
+			var obj={"artTitle":artTitle,"artType":artType,"artUserid":artUserid,"artContent":artContent};
+			console.log(obj);
+			$.each(obj,function(key,value){
+				$('<input>', {
+				type: 'hidden',
+				name: key,
+				value: value
+			}).appendTo(previewForm);
+
+			});
+			previewForm.submit();
 			
-			
-			$.each(args,function(key,value){
-                input = $("<input type='hidden'>");
-                input.attr({"name":key});
-                input.val(value);
-                previewForm.append(input);
-            });
-                
+			// $.ajax({
+			// 	url:'preview.controller',
+			// 	type:'POST',
+			// 	data:{"artTitle":artTitle,"artType":artType,"artUserid":artUserid,"artContent":artContent},
+			// 	success: function(response){
+			// 		console.log(response);
+			// 		window.open(response);
+			// 	}
+			// });
+
             };
-			
-			
-			
-			
-			
-			
-			
-		}
 			<!--preview btn function end-->
 </script>
 <script>

@@ -69,14 +69,58 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 ftco-animate">
+            <h2 class="mb-3">${artTitle}</h2>
+            <p>
+              我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+              我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+            </p>
+            <p>
+              <img
+                src="direngine-master/images/image_7.jpg"
+                alt=""
+                class="img-fluid"
+              />
+            </p>
+            <p>
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+            </p>
+            <h2 class="mb-3 mt-5">#2. Creative WordPress Themes</h2>
+            <p>
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+            </p>
+            <p>
+              <img
+                src="direngine-master/images/image_8.jpg"
+                alt=""
+                class="img-fluid"
+              />
+            </p>
+            <p>
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+            </p>
+            <p>
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+            </p>
+            <p>
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+            </p>
+            <p>
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
+            </p>
             <div class="tag-widget post-tag-container mb-5 mt-5">
               <div class="tagcloud">
-                <a href="#" class="tag-cloud-link">${artType}</a>
+                <a href="#" class="tag-cloud-link">Life</a>
+                <a href="#" class="tag-cloud-link">Sport</a>
+                <a href="#" class="tag-cloud-link">Tech</a>
+                <a href="#" class="tag-cloud-link">Travel</a>
               </div>
             </div>
-            <h2 class="mb-3">${artTitle}</h2>
-              ${artContent}
-            
 
             <div class="about-author d-flex p-5 bg-light">
               <div class="bio align-self-md-center mr-5">
@@ -84,13 +128,13 @@
                   src="direngine-master/images/person_1.jpg"
                   alt="Image placeholder"
                   class="img-fluid mb-4"
-                  width="150" height="150"
+                  width="200" height="200"
                 />
               </div>
               <div class="desc align-self-md-center">
-                <h3 style="font-family:'Noto Sans TC', sans-serif ;">${artUserid}</h3>
+                <h3 style="font-family:'Noto Sans TC', sans-serif ;">作者名稱</h3>
                 <p>
-                    我是作者啦:D 
+                    我是作者啦:D 我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D
                 </p>
               </div>
             </div>
