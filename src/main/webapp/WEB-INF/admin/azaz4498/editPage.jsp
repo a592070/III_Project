@@ -94,12 +94,17 @@ h2 {
 								<div class="card-body">
 									<form id=edit_form action=${pageContext.servletContext.contextPath}/admin/edit.controller method="POST">
 										<input type="hidden" name="artId" id="artId" value="${artBean[0].artId }">
-										<input type="hidden" name="userid" value="${artBean[0].artUserId }">
+										
 
 										<div class="form-group">
 											<label for="fname"><h3>標題</h3></label>
 											<input type="text" name="articleTitle" id="title" class="form-control"
 												value="${artBean[0].artTitle }">
+										</div>
+										<div class="form-group">
+											<label for="userId"><h3>作者</h3></label>
+											<input type="text" name="articleUserId" id="userId" class="form-control"
+												value="${artBean[0].artUserId }" disabled>
 										</div>
 										<div class="form-group">
 											<label for="typeSelect"><h3>分類</h3></label> <select class="form-control" id="typeSelect" name="typeSelect">
@@ -122,7 +127,7 @@ h2 {
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
 											<button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editModal">送出修改</button>
 											<button class="btn btn-primary" onclick="redo()">重置</button>
-											<button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button>
+											<!-- <button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button> -->
 										</div>
 									</form>
 								</div>
@@ -260,12 +265,20 @@ h2 {
 			<!--preview btn function-->
 			function preview(){
 			event.preventDefault();
+			var previewForm = new FormData();
 			var artTitle = $("#title").val();
 			var artType = $("#typeSelect").find(":selected").text();
+			var artUserId = $("#userId").val();
 			var artContent=editor.getData();
-			console.log(artTitle);
-			console.log(artType);
-			console.log(artContent);
+			
+			previewForm.append("arTitle",artTitle);
+			previewForm.append("artType",artType);
+			previewForm.append("artUserid",artUserId);
+			previewForm.append("artContent",artContent);
+			previewForm.attr("action","preview.controller")
+			previewForm.attr("method","POST")
+			previewForm.submit();
+			
 		}
 			<!--preview btn function end-->
 </script>
