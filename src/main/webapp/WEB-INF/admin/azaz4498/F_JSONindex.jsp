@@ -201,6 +201,7 @@ h2 {
 															},
 															success : function(
 																	response) {
+																console.log(response);
 																showList(response);
 															},
 														});
@@ -342,7 +343,7 @@ h2 {
 					checkboxClss : "checked",
 					sortReset : true,
 					sortRestart : true,
-					debug : true,
+					debug : false,
 					headers : {
 						1 : {
 							sorter : false
