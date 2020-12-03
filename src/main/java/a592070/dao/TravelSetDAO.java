@@ -9,23 +9,29 @@ public interface TravelSetDAO{
 
     int getSize();
     int getSize(boolean available);
-    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending);
-    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean status);
+    List<TravelSetVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending);
+    List<TravelSetVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean status);
 
-    int getSizeByCreated(String created);
-    int getSizeByCreated(String created, boolean available);
-    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending);
-    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending, boolean status);
+    int getSizeByIdentity(Integer identity);
+    int getSizeByIdentity(Integer identity, boolean status);
+    List<TravelSetVO> listTravelSetByIdentity(int firstIndex, int resultSize, Integer identity, String orderFiled, boolean descending);
+    List<TravelSetVO> listTravelSetByIdentity(int firstIndex, int resultSize, Integer identity, String orderFiled, boolean descending, boolean status);
 
 //    List<TravelEleAttractionDO> getAttractionSet(int id);
 //    List<TravelEleCarDO> getCarSet(int id);
 //    List<TravelEleHotelDO> getHotelSet(int id);
 //    List<TravelEleRestaurantDO> getRestaurantSet(int id);
 
-    int getSizeByKeywords(String keyWords);
-    int getSizeByKeywords(String keyWords, boolean available);
-    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending);
-    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean status);
+    int getSizeByKeywords(String keywords);
+    int getSizeByKeywords(String keywords, boolean status);
+    List<TravelSetVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending);
+    List<TravelSetVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean status);
+
+
+    int getSizeBySelect(Integer identity, String keywords);
+    int getSizeBySelect(Integer identity, String keywords, boolean status);
+    List<TravelSetVO> listBySelect(int firstIndex, int resultSize, Integer identity, String keywords, String orderFiled, boolean descending);
+    List<TravelSetVO> listBySelect(int firstIndex, int resultSize, Integer identity, String keywords, String orderFiled, boolean descending, boolean status);
 
 //    int getSizeByFiled(String filedName, String filedValue);
 //    List<TravelSetDO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending);

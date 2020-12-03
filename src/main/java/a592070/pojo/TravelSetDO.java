@@ -3,6 +3,7 @@ package a592070.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.*;
+import rambo0021.pojo.AccountBean;
 import utils.StringUtil;
 
 import javax.persistence.*;
@@ -26,15 +27,16 @@ public class TravelSetDO {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREATED", referencedColumnName = "USERNAME")
-    private String createdUser;
+    private AccountBean createdUser;
 
+    private String name;
     private String description;
+
     private Integer priority;
     @Column(name = "CREATED_TIME")
     private Timestamp createdTime;
     @Column(name = "UPDATE_TIME")
     private Timestamp updateTime;
-    private String name;
     @Type(type = "org.hibernate.type.NumericBooleanType")
     @Column(name = "available", nullable = false)
     private boolean status;
@@ -94,11 +96,11 @@ public class TravelSetDO {
         this.name = name;
     }
 
-    public String getCreatedUser() {
+    public AccountBean getCreatedUser() {
         return createdUser;
     }
 
-    public void setCreatedUser(String createdUser) {
+    public void setCreatedUser(AccountBean createdUser) {
         this.createdUser = createdUser;
     }
 
@@ -182,6 +184,14 @@ public class TravelSetDO {
     public void addTravelCars(TravelEleCarDO travelEleCarDO){
         this.travelCars.add(travelEleCarDO);
     }
+    public void addTravelCars(Integer carID){
+        CarVO carVO = new CarVO();
+        carVO.setSn(carID);
+        TravelEleCarDO travelEleDO = new TravelEleCarDO();
+        travelEleDO.setCar(carVO);
+        travelEleDO.setTravelSetDO(this);
+        this.travelCars.add(travelEleDO);
+    }
     public List<TravelEleCarDO> getTravelCars() {
         return travelCars;
     }
@@ -192,6 +202,14 @@ public class TravelSetDO {
 
     public void addTravelHotels(TravelEleHotelDO travelEleHotelDO){
         this.travelHotels.add(travelEleHotelDO);
+    }
+    public void addTravelHotels(Integer hotelID){
+        HotelVO hotelVO = new HotelVO();
+        hotelVO.setSn(hotelID);
+        TravelEleHotelDO travelEleDO = new TravelEleHotelDO();
+        travelEleDO.setHotel(hotelVO);
+        travelEleDO.setTravelSetDO(this);
+        this.travelHotels.add(travelEleDO);
     }
     public List<TravelEleHotelDO> getTravelHotels() {
         return travelHotels;
@@ -204,6 +222,14 @@ public class TravelSetDO {
     public void addTravelRestaurants(TravelEleRestaurantDO travelEleRestaurantDO){
         this.travelRestaurants.add(travelEleRestaurantDO);
     }
+    public void addTravelRestaurants(Integer restaurantID){
+        RestaurantVO restaurantVO = new RestaurantVO();
+        restaurantVO.setSn(restaurantID);
+        TravelEleRestaurantDO travelEleDO = new TravelEleRestaurantDO();
+        travelEleDO.setRestaurant(restaurantVO);
+        travelEleDO.setTravelSetDO(this);
+        this.travelRestaurants.add(travelEleDO);
+    }
     public List<TravelEleRestaurantDO> getTravelRestaurants() {
         return travelRestaurants;
     }
@@ -214,6 +240,14 @@ public class TravelSetDO {
 
     public void addTravelAttractions(TravelEleAttractionDO travelEleAttractionDO){
         this.travelAttractions.add(travelEleAttractionDO);
+    }
+    public void addTravelAttractions(Integer attractionID){
+        AttractionVO attractionVO = new AttractionVO();
+        attractionVO.setSn(attractionID);
+        TravelEleAttractionDO travelEleDO = new TravelEleAttractionDO();
+        travelEleDO.setAttraction(attractionVO);
+        travelEleDO.setTravelSetDO(this);
+        this.travelAttractions.add(travelEleDO);
     }
     public List<TravelEleAttractionDO> getTravelAttractions() {
         return travelAttractions;

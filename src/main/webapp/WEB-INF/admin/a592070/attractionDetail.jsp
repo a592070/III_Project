@@ -54,6 +54,44 @@
             /*height: 300px;*/
             display: block;
         }
+        .gotop-index {
+            /*position: fixed;*/
+            /*right: 2.5rem;*/
+            /*bottom: 4rem;*/
+            /*display: block;*/
+            /*width: 1em;*/
+            /*height: 1em;*/
+            /*font-size: 35px;*/
+            /*background: #fff;*/
+            /*box-shadow: 0px 0px 4px #acbdd7;*/
+            /*display: flex;*/
+            /*border-radius: 50%;*/
+            /*z-index: 999;*/
+
+        }
+        .gotop-a {
+            /*display: block;*/
+            /*width: 1.5rem;*/
+            /*height: 5rem;*/
+            /*!*background: url(~@/assets/images/icon-top.gif) no-repeat 0 0;*!*/
+            /*background-size: 0.5rem;*/
+            /*margin: auto;*/
+
+            position: fixed;
+            background-color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: #409eff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 0 6px rgba(0,0,0,.12);
+            cursor: pointer;
+            z-index: 5;
+        }
+
     </style>
     <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
 </head>
@@ -67,13 +105,25 @@
 
         <%--CONTENT--%>
         <div class="content-wrapper" id="app">
+            <el-page-header  @back="goBack" v-if="isInsert" content="新 增 頁 面" style="position: fixed;">
+            </el-page-header>
+            <el-page-header @back="goBack" v-else content="修 改 頁 面" style="position: fixed;">
+            </el-page-header>
             <div class="content">
                 <div class="row">
                     <div class="col-12">
-                        <el-page-header @back="goBack" v-if="isInsert" content="新 增 頁 面">
-                        </el-page-header>
-                        <el-page-header @back="goBack" v-else content="修 改 頁 面">
-                        </el-page-header>
+
+
+                        <div class="gotop-index" v-show="btnFlag">
+                            <div class="gotop-a" style="right: 25px; bottom: 150px;">
+                                <a href="javascript:;" class="el-icon-caret-top" @click="backTop"></a>
+                            </div>
+                        </div>
+
+<%--                        <div style="height: 100%; overflow: scroll;"></div>--%>
+<%--                        <el-backtop @back="goBack" target=".content .row .col-12"></el-backtop>--%>
+
+
 
                         <el-form label-width="180px" :model="attractionData" ref="attractionData" >
                             <el-form-item label="ID" prop="sn" v-bind:hidden="isInsert">
@@ -162,7 +212,7 @@
                             <el-form-item label="啟用狀態" prop="status">
                                 <label class="switch switch-text switch-success switch-pill form-control-label">
                                     <input type="checkbox" class="switch-input form-check-input" v-bind:checked="attractionData.status" v-on:click="()=>attractionData.status=!attractionData.status">
-                                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                                    <span class="switch-label" data-on="啟用" data-off="禁用"></span>
                                     <span class="switch-handle"></span>
                                 </label>
                             </el-form-item>
@@ -185,6 +235,7 @@
         el: '#app',
         data() {
             return {
+                btnFlag: false,
                 isInsert: true,
                 attractionData: {
                     sn: '',
@@ -224,6 +275,12 @@
             </c:if>
             if(!this.isInsert) this.getAttractionData(this);
             this.getRegionData()
+        },
+        mounted(){
+            window.addEventListener("scroll", this.scrollToTop, true);
+        },
+        destroyed(){
+            window.removeEventListener("scroll", this.scrollToTop, true);
         },
         methods: {
             initData(){
@@ -348,8 +405,33 @@
             goBack() {
                 console.log('go back');
                 window.location.href = "${pageContext.servletContext.contextPath}/admin/attraction";
+            },
+            backTop() {
+                const that = this;
+                let timer = setInterval(() => {
+                    let ispeed = Math.floor(-that.scrollTop / 5);
+                    document.documentElement.scrollTop = document.body.scrollTop =
+                        that.scrollTop + ispeed;
+                    if (that.scrollTop === 0) {
+                        clearInterval(timer);
+                    }
+                }, 16);
+            },
+            // 为了计算距离顶部的高度，当高度大于60显示回顶部图标，小于60则隐藏
+            scrollToTop() {
+                console.log(123);
+                const that = this;
+                let scrollTop =
+                    window.pageYOffset ||
+                    document.documentElement.scrollTop ||
+                    document.body.scrollTop;
+                that.scrollTop = scrollTop;
+                if (that.scrollTop > 30) {
+                    that.btnFlag = true;
+                } else {
+                    that.btnFlag = false;
+                }
             }
-
         }
     });
 </script>

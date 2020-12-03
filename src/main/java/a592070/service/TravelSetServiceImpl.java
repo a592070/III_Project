@@ -2,6 +2,7 @@ package a592070.service;
 
 import a592070.dao.TravelSetDAO;
 import a592070.pojo.TravelSetDO;
+import a592070.pojo.TravelSetVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,83 +37,76 @@ public class TravelSetServiceImpl implements TravelSetService{
 
 
     @Override
-    public List<TravelSetDO> listByRownum(int currentPage, int resultSize) {
+    public List<TravelSetVO> listByRownum(int currentPage, int resultSize) {
         return listByRownum(currentPage, resultSize, SN);
     }
     @Override
-    public List<TravelSetDO> listByRownum(int currentPage, int resultSize, String orderFiled) {
+    public List<TravelSetVO> listByRownum(int currentPage, int resultSize, String orderFiled) {
         return listByRownum(currentPage, resultSize, orderFiled, false);
     }
     @Override
-    public List<TravelSetDO> listByRownum(int currentPage, int pageSize, String orderFiled, boolean descending) {
+    public List<TravelSetVO> listByRownum(int currentPage, int pageSize, String orderFiled, boolean descending) {
         int index = (currentPage-1)* pageSize;
         return dao.listByRownum(index, pageSize, orderFiled, descending);
     }
 
     @Override
-    public List<TravelSetDO> listByRownumWithStatus(int currentPage, int pageSize, boolean status) {
+    public List<TravelSetVO> listByRownumWithStatus(int currentPage, int pageSize, boolean status) {
         return listByRownumWithStatus(currentPage, pageSize, status, SN);
     }
     @Override
-    public List<TravelSetDO> listByRownumWithStatus(int currentPage, int pageSize, boolean status, String orderFiled) {
+    public List<TravelSetVO> listByRownumWithStatus(int currentPage, int pageSize, boolean status, String orderFiled) {
         return listByRownumWithStatus(currentPage, pageSize, status, orderFiled, false);
     }
 
     @Override
-    public List<TravelSetDO> listByRownumWithStatus(int currentPage, int pageSize, boolean status, String orderFiled, boolean descending) {
+    public List<TravelSetVO> listByRownumWithStatus(int currentPage, int pageSize, boolean status, String orderFiled, boolean descending) {
         int index = (currentPage-1)* pageSize;
         return dao.listByRownum(index, pageSize, orderFiled, descending, status);
     }
 
 
     @Override
-    public int getSizeByCreated(String created) {
-        if(StringUtil.isEmpty(created)) return getSize();
-        return dao.getSizeByCreated(created);
+    public int getSizeByIdentity(Integer identity) {
+        if(identity == null || identity==0) return getSize();
+        return dao.getSizeByIdentity(identity);
     }
     @Override
-    public int getSizeByCreatedUserWithStatus(String created, boolean status) {
-        if(StringUtil.isEmpty(created)) getSizeWithStatus(status);
-        return dao.getSizeByCreated(created, status);
+    public int getSizeByIdentityWithStatus(Integer identity, boolean status) {
+        if(identity == null || identity==0) getSizeWithStatus(status);
+        return dao.getSizeByIdentity(identity, status);
     }
 
     @Override
-    public List<TravelSetDO> listTravelSetByCreatedUserWithStatus(int currentPage, int pageSize, String created, boolean status) {
-        return listTravelSetByCreatedUserWithStatus(currentPage, pageSize, created, status, SN);
+    public List<TravelSetVO> listByIdentityWithStatus(int currentPage, int pageSize, Integer identity, boolean status) {
+        return listByIdentityWithStatus(currentPage, pageSize, identity, status, SN);
     }
     @Override
-    public List<TravelSetDO> listTravelSetByCreatedUserWithStatus(int currentPage, int pageSize, String created, boolean status, String orderFiled) {
-        return listTravelSetByCreatedUserWithStatus(currentPage, pageSize, created, status, orderFiled, false);
+    public List<TravelSetVO> listByIdentityWithStatus(int currentPage, int pageSize, Integer identity, boolean status, String orderFiled) {
+        return listByIdentityWithStatus(currentPage, pageSize, identity, status, orderFiled, false);
     }
     @Override
-    public List<TravelSetDO> listTravelSetByCreatedUserWithStatus(int currentPage, int pageSize, String created, boolean status, String orderFiled, boolean descending) {
-        if(StringUtil.isEmpty(created)) {
-            created="%%";
-        }else{
-            created = new StringBuffer().append("%").append(created).append("%").toString();
-        }
+    public List<TravelSetVO> listByIdentityWithStatus(int currentPage, int pageSize, Integer identity, boolean status, String orderFiled, boolean descending) {
+        if(identity == null || identity==0) return listByRownumWithStatus(currentPage, pageSize, status, orderFiled, descending);
         int index = (currentPage-1)* pageSize;
-        return dao.listTravelSetByCreated(index, pageSize, created, orderFiled, descending, status);
+        return dao.listTravelSetByIdentity(index, pageSize, identity, orderFiled, descending, status);
     }
 
 
     @Override
-    public List<TravelSetDO> listTravelSetByCreated(int currentPage, int pageSize, String created) {
-        return listTravelSetByCreated(currentPage, pageSize, created, SN);
+    public List<TravelSetVO> listByIdentity(int currentPage, int pageSize, Integer identity) {
+        return listByIdentity(currentPage, pageSize, identity, SN);
     }
     @Override
-    public List<TravelSetDO> listTravelSetByCreated(int currentPage, int pageSize, String created, String orderFiled) {
-        return listTravelSetByCreated(currentPage, pageSize, created, orderFiled, false);
+    public List<TravelSetVO> listByIdentity(int currentPage, int pageSize, Integer identity, String orderFiled) {
+        return listByIdentity(currentPage, pageSize, identity, orderFiled, false);
     }
     @Override
-    public List<TravelSetDO> listTravelSetByCreated(int currentPage, int pageSize, String created, String orderFiled, boolean descending) {
-        if(StringUtil.isEmpty(created)) {
-            created="%%";
-        }else{
-            created = new StringBuffer().append("%").append(created).append("%").toString();
-        }
+    public List<TravelSetVO> listByIdentity(int currentPage, int pageSize, Integer identity, String orderFiled, boolean descending) {
+        if(identity == null || identity==0) return listByRownum(currentPage, pageSize, orderFiled, descending);
+
         int index = (currentPage-1)* pageSize;
-        return dao.listTravelSetByCreated(index, pageSize, created, orderFiled, descending);
+        return dao.listTravelSetByIdentity(index, pageSize, identity, orderFiled, descending);
     }
 
 
@@ -130,49 +124,97 @@ public class TravelSetServiceImpl implements TravelSetService{
     }
 
     @Override
-    public List<TravelSetDO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status) {
+    public List<TravelSetVO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status) {
         return listByKeywordsWithStatus(currentPage, pageSize, keywords, status, SN);
     }
 
     @Override
-    public List<TravelSetDO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status, String orderFiled) {
+    public List<TravelSetVO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status, String orderFiled) {
         return listByKeywordsWithStatus(currentPage, pageSize, keywords, status, orderFiled, false);
     }
 
     @Override
-    public List<TravelSetDO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status, String orderFiled, boolean descending) {
-        if(StringUtil.isEmpty(keywords) || "all".equals(keywords)) {
-            keywords="%%";
-        }else{
-            keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
-        }
+    public List<TravelSetVO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status, String orderFiled, boolean descending) {
+        if(StringUtil.isEmpty(keywords) || "all".equals(keywords)) return listByRownumWithStatus(currentPage, pageSize, status, orderFiled, descending);
+
+        keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
         int index = (currentPage-1)* pageSize;
         return dao.listByKeywords(index, pageSize, keywords, orderFiled, descending, status);
     }
 
 
     @Override
-    public List<TravelSetDO> listByKeywords(int currentPage, int pageSize, String keywords) {
+    public List<TravelSetVO> listByKeywords(int currentPage, int pageSize, String keywords) {
         return listByKeywords(currentPage, pageSize  , keywords, SN);
     }
     @Override
-    public List<TravelSetDO> listByKeywords(int currentPage, int pageSize, String keywords, String orderFiled) {
+    public List<TravelSetVO> listByKeywords(int currentPage, int pageSize, String keywords, String orderFiled) {
         return listByKeywords(currentPage, pageSize, keywords, orderFiled, false);
     }
     @Override
-    public List<TravelSetDO> listByKeywords(int currentPage, int pageSize, String keywords, String orderFiled, boolean descending) {
-        if(StringUtil.isEmpty(keywords) || "all".equals(keywords)) {
-            keywords="%%";
-        }else{
-            keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
-        }
+    public List<TravelSetVO> listByKeywords(int currentPage, int pageSize, String keywords, String orderFiled, boolean descending) {
+        if(StringUtil.isEmpty(keywords) || "all".equals(keywords)) return listByRownum(currentPage, pageSize, orderFiled, descending);
+
+        keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
         int index = (currentPage-1)* pageSize;
         return dao.listByKeywords(index, pageSize, keywords, orderFiled, descending);
     }
 
+    @Override
+    public int getSizeBySelect(Integer identity, String keywords) {
+        if(identity == null || identity==0) return getSizeByKeywords(keywords);
+        if(StringUtil.isEmpty(keywords)) return getSizeByIdentity(identity);
 
+        keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
+        return dao.getSizeBySelect(identity, keywords);
+    }
 
+    @Override
+    public int getSizeBySelectWithStatus(Integer identity, String keywords, boolean status) {
+        if(identity == null || identity==0) return getSizeByKeywordsWithStatus(keywords, status);
+        if(StringUtil.isEmpty(keywords)) return getSizeByIdentityWithStatus(identity, status);
 
+        keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
+        return dao.getSizeBySelect(identity, keywords, status);
+    }
+
+    @Override
+    public List<TravelSetVO> listBySelect(int currentPage, int pageSize, Integer identity, String keywords) {
+        return listBySelect(currentPage, pageSize, identity, keywords, SN);
+    }
+
+    @Override
+    public List<TravelSetVO> listBySelect(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled) {
+        return listBySelect(currentPage, pageSize, identity, keywords, orderFiled, false);
+    }
+
+    @Override
+    public List<TravelSetVO> listBySelect(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean descending) {
+        if(identity == null || identity==0) return listByKeywords(currentPage, pageSize, keywords, orderFiled, descending);
+        if(StringUtil.isEmpty(keywords)) return listByKeywords(currentPage, pageSize, keywords, orderFiled, descending);
+
+        keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
+        int index = (currentPage-1)* pageSize;
+        return dao.listBySelect(index, pageSize, identity, keywords, orderFiled, descending);
+    }
+
+    @Override
+    public List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, boolean status) {
+        return listBySelectWithStatus(currentPage, pageSize, identity, keywords, SN, status);
+    }
+
+    @Override
+    public List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean status) {
+        return listBySelectWithStatus(currentPage, pageSize, identity, keywords, orderFiled, false, status);
+    }
+
+    @Override
+    public List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean descending, boolean status) {
+
+        keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
+        int index = (currentPage-1)* pageSize;
+        return dao.listBySelect(index, pageSize, identity, keywords, orderFiled, descending, status);
+    }
 
     @Override
     public TravelSetDO addTravelSet(TravelSetDO travelSetDO) {

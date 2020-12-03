@@ -4,6 +4,7 @@ import a592070.fieldenum.AttractionFiledName;
 import a592070.pojo.AttractionDO;
 import a592070.pojo.AttractionVO;
 import a592070.pojo.TravelSetDO;
+import a592070.pojo.TravelSetVO;
 import a592070.service.AttractionService;
 import a592070.service.TravelSetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,23 +44,24 @@ public class TravelSetController {
         pageSupport.setTotalSize(service.getSize());
         pageSupport.setCurrentPage(page);
 
-        List<TravelSetDO> list = service.listByRownum(pageSupport.getCurrentPage(), pageSupport.getPageSize());
+        List<TravelSetVO> list = service.listByRownum(pageSupport.getCurrentPage(), pageSupport.getPageSize());
         Map<String, Object> map = new HashMap<>();
         map.put("tableData", list);
         map.put("pageData", pageSupport);
         return map;
     }
 
-    @RequestMapping("/admin/travelSet/list/{page}/{keywords}")
+    @RequestMapping("/admin/travelSet/list/{page}/{identity}/{keywords}")
     public Map<String, Object> getTravelSetListByKeywords(@PathVariable("page") Integer page,
-                                                           @PathVariable(name="keywords", required = false) String keywords,
+                                                          @PathVariable(name="identity", required = false) Integer identity,
+                                                          @PathVariable(name="keywords", required = false) String keywords,
                                                            @RequestParam(name="sortColumn", required = false) String sortColumn,
                                                            @RequestParam(name = "order", required = false) String order){
         PageSupport pageSupport = new PageSupport();
         pageSupport.setPageSize(PAGE_SIZE);
         pageSupport.setCurrentPage(page);
 
-        List<TravelSetDO> list;
+        List<TravelSetVO> list;
 
         if(StringUtil.isEmpty(sortColumn) || "sn".equals(sortColumn)) {
             sortColumn = SN;
@@ -85,9 +87,9 @@ public class TravelSetController {
         }
 
 
-        pageSupport.setTotalSize(service.getSizeByKeywords(keywords));
+        pageSupport.setTotalSize(service.getSizeBySelect(identity, keywords));
 
-        list = service.listByKeywords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, sortColumn, desc);
+        list = service.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), identity, keywords, sortColumn, desc);
 
         Map<String, Object> map = new HashMap<>();
         map.put("tableData", list);

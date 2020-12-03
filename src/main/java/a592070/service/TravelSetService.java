@@ -1,12 +1,14 @@
 package a592070.service;
 
 import a592070.pojo.TravelSetDO;
+import a592070.pojo.TravelSetVO;
 
 import java.util.List;
 
 public interface TravelSetService {
     String SN = "sn";
     String CREATED_USER = "createdUser";
+    String IDENTITY = "identity";
     String DESCRIPTION = "description";
     String PRIORITY = "priority";
     String CREATED_TIME = "createdTime";
@@ -20,33 +22,42 @@ public interface TravelSetService {
 
     int getSize();
     int getSizeWithStatus(boolean available);
-    List<TravelSetDO> listByRownum(int firstIndex, int resultSize);
-    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled);
-    List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending);
-    List<TravelSetDO> listByRownumWithStatus(int firstIndex, int resultSize, boolean status);
-    List<TravelSetDO> listByRownumWithStatus(int firstIndex, int resultSize, boolean status, String orderFiled);
-    List<TravelSetDO> listByRownumWithStatus(int firstIndex, int resultSize, boolean status, String orderFiled, boolean descending);
+    List<TravelSetVO> listByRownum(int currentPage, int pageSize);
+    List<TravelSetVO> listByRownum(int currentPage, int pageSize, String orderFiled);
+    List<TravelSetVO> listByRownum(int currentPage, int pageSize, String orderFiled, boolean descending);
+    List<TravelSetVO> listByRownumWithStatus(int currentPage, int pageSize, boolean status);
+    List<TravelSetVO> listByRownumWithStatus(int currentPage, int pageSize, boolean status, String orderFiled);
+    List<TravelSetVO> listByRownumWithStatus(int currentPage, int pageSize, boolean status, String orderFiled, boolean descending);
 
-    int getSizeByCreated(String created);
-    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created);
-    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled);
-    List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending);
+    int getSizeByIdentity(Integer identity);
+    List<TravelSetVO> listByIdentity(int currentPage, int pageSize, Integer identity);
+    List<TravelSetVO> listByIdentity(int currentPage, int pageSize, Integer identity, String orderFiled);
+    List<TravelSetVO> listByIdentity(int currentPage, int pageSize, Integer identity, String orderFiled, boolean descending);
 
-    int getSizeByCreatedUserWithStatus(String created, boolean available);
-    List<TravelSetDO> listTravelSetByCreatedUserWithStatus(int firstIndex, int resultSize, String created, boolean status);
-    List<TravelSetDO> listTravelSetByCreatedUserWithStatus(int firstIndex, int resultSize, String created, boolean status, String orderFiled);
-    List<TravelSetDO> listTravelSetByCreatedUserWithStatus(int firstIndex, int resultSize, String created, boolean status, String orderFiled, boolean descending);
+    int getSizeByIdentityWithStatus(Integer identity, boolean available);
+    List<TravelSetVO> listByIdentityWithStatus(int currentPage, int pageSize, Integer identity, boolean status);
+    List<TravelSetVO> listByIdentityWithStatus(int currentPage, int pageSize, Integer identity, boolean status, String orderFiled);
+    List<TravelSetVO> listByIdentityWithStatus(int currentPage, int pageSize, Integer identity, boolean status, String orderFiled, boolean descending);
 
     int getSizeByKeywords(String keywords);
-    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords);
-    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled);
-    List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending);
+    List<TravelSetVO> listByKeywords(int currentPage, int pageSize, String keywords);
+    List<TravelSetVO> listByKeywords(int currentPage, int pageSize, String keywords, String orderFiled);
+    List<TravelSetVO> listByKeywords(int currentPage, int pageSize, String keywords, String orderFiled, boolean descending);
 
     int getSizeByKeywordsWithStatus(String keywords, boolean available);
-    List<TravelSetDO> listByKeywordsWithStatus(int firstIndex, int resultSize, String keywords, boolean status);
-    List<TravelSetDO> listByKeywordsWithStatus(int firstIndex, int resultSize, String keywords, boolean status, String orderFiled);
-    List<TravelSetDO> listByKeywordsWithStatus(int firstIndex, int resultSize, String keywords, boolean status, String orderFiled, boolean descending);
+    List<TravelSetVO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status);
+    List<TravelSetVO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status, String orderFiled);
+    List<TravelSetVO> listByKeywordsWithStatus(int currentPage, int pageSize, String keywords, boolean status, String orderFiled, boolean descending);
 
+
+    int getSizeBySelect(Integer identity, String keywords);
+    int getSizeBySelectWithStatus(Integer identity, String keywords, boolean status);
+    List<TravelSetVO> listBySelect(int currentPage, int pageSize, Integer identity, String keywords);
+    List<TravelSetVO> listBySelect(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled);
+    List<TravelSetVO> listBySelect(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean descending);
+    List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, boolean status);
+    List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean status);
+    List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean descending, boolean status);
 
     TravelSetDO addTravelSet(TravelSetDO travelSetDO);
     TravelSetDO updateTravelSet(TravelSetDO travelSetDO);

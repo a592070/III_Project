@@ -23,7 +23,32 @@
 	      			</c:choose>
 	      			</label></td> <%-- 開關(綠色) --%> 
                 <td><button type="button" class="btn btn-warning mb-2"  onclick="clickdetail('${hotels.SN}')">修改</button></td>
-               <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" onclick="clickdelete('${hotels.SN}')">刪除</button></td>
+                <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Hotel${hotels.SN}" >刪除</button>
+               
+               		<div class="modal fade" id="Hotel${hotels.SN}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        			 <div class="modal-dialog modal-dialog-centered" role="document">
+         			  <div class="modal-content">
+         			    <div class="modal-header">
+             			  <h5 class="modal-title" id="exampleModalCenterTitle">刪除提醒</h5>
+             			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               				  <span aria-hidden="true">&times;</span>
+              			  </button>
+           			  	</div>
+            		 <div class="modal-body">
+                		<form action="hoteldelete" method="POST">
+                		<input type="hidden" value="${hotels.SN}" name="deleteId">
+                   		 <div class="form-group">
+                    	  <h4>是否確認刪除  ${hotels.NAME} 住宿資料?</h4>
+                    	 </div>
+               			 <div class="modal-footer">
+                 	 		<button type="submit" class="btn btn-primary">確認</button>
+                  			<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+               			 </div>
+                 	 	</form> 
+            		 </div>
+          		 </div>
+       	  		</div>
+      		 </div></td>
             </tr>
             </c:forEach>
             <script type="text/javascript">

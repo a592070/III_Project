@@ -59,12 +59,12 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
-        String hql = "from TravelSetDO order by "+orderFiled;
+    public List<TravelSetVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
+        String hql = "from TravelSetVO order by "+orderFiled;
         if(descending) hql += " desc";
         if(!SN.equals(orderFiled)) hql += ", sn";
 
-        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        Query<TravelSetVO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetVO.class);
 
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
@@ -73,12 +73,12 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelSetDO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean status) {
-        String hql = "from TravelSetDO where status=:status order by "+orderFiled;
+    public List<TravelSetVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean status) {
+        String hql = "from TravelSetVO where status=:status order by "+orderFiled;
         if(descending) hql += " desc";
         if(!SN.equals(orderFiled)) hql += ", sn";
 
-        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        Query<TravelSetVO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetVO.class);
         query.setParameter("status", status);
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
@@ -87,45 +87,43 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public int getSizeByCreated(String created) {
-        String hql = "select count(sn) from TravelSetDO where createdUser=:created ";
+    public int getSizeByIdentity(Integer identity) {
+        String hql = "select count(sn) from TravelSetVO where identity=:identity ";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("created", created);
+        query.setParameter("identity", identity);
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public int getSizeByCreated(String created, boolean status) {
-        String hql = "select count(sn) from TravelSetDO where createdUser=:created and status=:status ";
+    public int getSizeByIdentity( Integer identity, boolean status) {
+        String hql = "select count(sn) from TravelSetVO where identity=:identity and status=:status ";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("created", created);
+        query.setParameter("identity", identity);
         query.setParameter("status", status);
         return query.uniqueResult().intValue();
     }
 
-    @Override
-    public List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending) {
-        String hql = "from TravelSetDO where createdUser=:created ";
+    public List<TravelSetVO> listTravelSetByIdentity(int firstIndex, int resultSize, Integer identity, String orderFiled, boolean descending) {
+        String hql = "from TravelSetVO where identity=:identity ";
         hql += "order by "+orderFiled;
         if(descending) hql += " desc";
         if(!SN.equals(orderFiled)) hql += ", sn";
 
-        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
-        query.setParameter("created", created);
+        Query<TravelSetVO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetVO.class);
+        query.setParameter("identity", identity);
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
         return query.list();
     }
 
-    @Override
-    public List<TravelSetDO> listTravelSetByCreated(int firstIndex, int resultSize, String created, String orderFiled, boolean descending, boolean status) {
-        String hql = "from TravelSetDO where createdUser=:created and status=:status ";
+    public List<TravelSetVO> listTravelSetByIdentity(int firstIndex, int resultSize, Integer identity, String orderFiled, boolean descending, boolean status) {
+        String hql = "from TravelSetVO where identity=:identity and status=:status ";
         hql += "order by "+orderFiled;
         if(descending) hql += " desc";
         if(!SN.equals(orderFiled)) hql += ", sn";
 
-        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
-        query.setParameter("created", created);
+        Query<TravelSetVO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetVO.class);
+        query.setParameter("identity", identity);
         query.setParameter("status", status);
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
@@ -134,7 +132,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
 
     @Override
     public int getSizeByKeywords(String keyWords) {
-        String hql = "select count(sn) from TravelSetDO " +
+        String hql = "select count(sn) from TravelSetVO " +
                 "where str(sn) like :keyWords or createdUser like :keyWords or description like :keyWords or name like :keyWords ";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
         query.setParameter("keyWords", keyWords);
@@ -143,7 +141,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
 
     @Override
     public int getSizeByKeywords(String keyWords, boolean status) {
-        String hql = "select count(sn) from TravelSetDO " +
+        String hql = "select count(sn) from TravelSetVO " +
                 "where status=:status and " +
                 "(str(sn) like :keyWords or createdUser like :keyWords or description like :keyWords or name like :keyWords) ";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
@@ -153,13 +151,13 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending) {
-        String hql = "from TravelSetDO where str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords ";
+    public List<TravelSetVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending) {
+        String hql = "from TravelSetVO where str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords ";
         hql += "order by "+orderFiled;
         if(descending) hql += " desc";
         if(!SN.equals(orderFiled)) hql += ", sn";
 
-        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        Query<TravelSetVO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetVO.class);
         query.setParameter("keywords", keywords);
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
@@ -167,15 +165,71 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public List<TravelSetDO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean status) {
-        String hql = "from TravelSetDO " +
+    public List<TravelSetVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean status) {
+        String hql = "from TravelSetVO " +
                 "where status=:status and " +
                 "(str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords) ";
         hql += "order by "+orderFiled;
         if(descending) hql += " desc";
         if(!SN.equals(orderFiled)) hql += ", sn";
 
-        Query<TravelSetDO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetDO.class);
+        Query<TravelSetVO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetVO.class);
+        query.setParameter("keywords", keywords);
+        query.setParameter("status", status);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+        return query.list();
+    }
+
+    @Override
+    public int getSizeBySelect(Integer identity, String keywords) {
+        String hql = "select count(sn) from TravelSetVO " +
+                "where identity=:identity and ( str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords )";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("identity", identity);
+        query.setParameter("keywords", keywords);
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public int getSizeBySelect(Integer identity, String keywords, boolean status) {
+        String hql = "select count(sn) from TravelSetVO " +
+                "where identity=:identity and status=:status and " +
+                "(str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords) ";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keywords", keywords);
+        query.setParameter("identity", identity);
+        query.setParameter("status", status);
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public List<TravelSetVO> listBySelect(int firstIndex, int resultSize, Integer identity, String keywords, String orderFiled, boolean descending) {
+        String hql = "from TravelSetVO where identity=:identity and " +
+                "( str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords ) ";
+        hql += "order by "+orderFiled;
+        if(descending) hql += " desc";
+        if(!SN.equals(orderFiled)) hql += ", sn";
+
+        Query<TravelSetVO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetVO.class);
+        query.setParameter("identity", identity);
+        query.setParameter("keywords", keywords);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+        return query.list();
+    }
+
+    @Override
+    public List<TravelSetVO> listBySelect(int firstIndex, int resultSize, Integer identity, String keywords, String orderFiled, boolean descending, boolean status) {
+        String hql = "from TravelSetVO " +
+                "where identity=:identity and status=:status and " +
+                "(str(sn) like :keywords or createdUser like :keywords or description like :keywords or name like :keywords) ";
+        hql += "order by "+orderFiled;
+        if(descending) hql += " desc";
+        if(!SN.equals(orderFiled)) hql += ", sn";
+
+        Query<TravelSetVO> query = sessionFactory.getCurrentSession().createQuery(hql, TravelSetVO.class);
+        query.setParameter("identity", identity);
         query.setParameter("keywords", keywords);
         query.setParameter("status", status);
         query.setFirstResult(firstIndex);

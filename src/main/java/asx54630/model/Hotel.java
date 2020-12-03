@@ -1,17 +1,24 @@
 package asx54630.model;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
+
+import iring29.model.R_Order_List;
 
 @Entity
 @Table(name = "HOTEL")
@@ -34,7 +41,7 @@ public class Hotel {
 	private String STATUS;
 	private String PIC_URL;
 	private byte[] PIC;
-	
+	private Set<HotelOrder> hSets = new HashSet<HotelOrder>();
 
 
 	public Hotel(BigDecimal sn, String name, String region, String address, String tel, BigDecimal dbroom, BigDecimal quadroom, String description, String openTime, String type, BigDecimal rating, String account, String status,String pic_url,byte[] pic) {
@@ -195,5 +202,15 @@ public class Hotel {
 	public void setPIC(byte[] pIC) {
 		PIC = pIC;
 	}
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotel")
+	public Set<HotelOrder> gethSets() {
+		return hSets;
+	}
+
+	public void sethSets(Set<HotelOrder> hSets) {
+		this.hSets = hSets;
+	}
+	
 	
 }
