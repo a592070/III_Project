@@ -484,12 +484,12 @@ body{
 							<td>
 								<button type="button" class="btn btn-default">
 									<span class="glyphicon glyphicon-shopping-cart"></span>
-									Continue Shopping
+									繼續逛
 								</button>
 							</td>
 							<td>
 								<button type="button" class="btn btn-success">
-									Checkout <span class="glyphicon glyphicon-play"></span>
+									我要結帳 <span class="glyphicon glyphicon-play"></span>
 								</button>
 							</td>
 						</tr>

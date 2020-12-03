@@ -112,7 +112,11 @@ img{
                                     </div>
                                     <form id="shop_cart" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
                                     	<a href="javascript:document.getElementById('shop_cart').submit();">放入購物車</a>
-                                    	<Input type='hidden' name='time' value=''>
+                                    	<Input type='hidden' name='time' value='11:00'>
+                                    	<Input type='hidden' name='book_date' value='${book_date}'>
+                                    	<Input type='hidden' name='b_name' value=''>
+                                    	<Input type='hidden' name='b_phone' value=''>
+                                    	<Input type='hidden' name='person_number' value='${person_number}'>
                                     </form>
                                 </div>
                             </div>
