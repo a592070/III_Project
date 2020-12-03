@@ -21,6 +21,13 @@
 h3{
 	height:80px;
 }
+.btn.btn-warning{
+	border-radius: 5px;
+	font-size: 10px;
+	background: #f85959;
+	border: 1px solid #f85959;
+    color: #fff;
+}
 </style>    
 
 </head>
@@ -175,7 +182,7 @@ h3{
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
 		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
+		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     									<span class="icon-search2"></span>
     								</div>
@@ -272,18 +279,22 @@ h3{
 		              <ul>
 		                <li><a href="#">&lt;</a></li>
 		              <c:forEach var="page"  begin="${userPage.currentPage}" end="${userPage.totalPageCount}">
-		              	<li><a href="#">${page}</a></li>
+		              	<li id="${page}"><a href="#">${page}</a></li>
 		              </c:forEach>
 <!-- 		                <li class="active"><span>1</span></li> -->
 <!-- 		                <li><a href="#">2</a></li> -->
 <!-- 		                <li><a href="#">3</a></li> -->
 <!-- 		                <li><a href="#">4</a></li> -->
 <!-- 		                <li><a href="#">5</a></li> -->
-		                <li><a href="#">&gt;</a></li>
+<!-- 		                <li><a href="#">&gt;</a></li> -->
 		              </ul>
 		            </div>
 		          </div>
 		        </div>  <!-- .Page -->
+		        <script>
+				$("#${userPage.currentPage}").attr("class","active");
+				$("#${userPage.currentPage}").remove("a");
+		        </script>
           </div> <!-- .col-md-8 -->
         </div>
       </div>
