@@ -33,11 +33,11 @@ public class H_Order_Controller {
 	
 	@RequestMapping(path = "/hotelOrderindex", method = RequestMethod.GET)
 	public String processHotelorderPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
-		hpage.sethPageSize(PAGESIZE);
-		int size = hOService.getSize();
+		hpage.sethPageSize(PAGESIZE); //設定一頁幾筆
+		int size = hOService.getSize(); //初始資料總筆數
 		System.out.println(size);
-		hpage.sethTotalCount(size);
-		hpage.sethCurrentPage(currentPage);
+		hpage.sethTotalCount(size); //設定總筆數
+		hpage.sethCurrentPage(currentPage); //設定當前頁數
 		
 		if (currentPage == 1) {
 			currentPage = 1;
@@ -108,19 +108,26 @@ public class H_Order_Controller {
 	
 	@RequestMapping(path = "/hotelOrderupdate", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //修改
 	public String processHotelUpdate(@RequestParam(name = "id") BigDecimal updateSn,
-									 @RequestParam(name = "CHECK_IN") String CHECK_IN,
-									 @RequestParam(name = "CHECK_OUT") String CHECK_OUT,
-									 @RequestParam(name = "CLIENT_NAME") Date CLIENT_NAME,
-									 @RequestParam(name = "CLIENT_PHONE") Date CLIENT_PHONE,
+									 @RequestParam(name = "CHECK_IN") Date CHECK_IN,
+									 @RequestParam(name = "CHECK_OUT") Date CHECK_OUT,
+									 @RequestParam(name = "CLIENT_NAME") String CLIENT_NAME,
+									 @RequestParam(name = "CLIENT_PHONE") String CLIENT_PHONE,
 									 @RequestParam(name = "DOUBLE_ROOM") BigDecimal updateDBroom,
 									 @RequestParam(name = "QUADRUPLE_ROOM") BigDecimal updateQDroom,Model m) throws IOException {
 		
-
+		System.out.println(updateSn);
+		System.out.println(CHECK_IN);
+		System.out.println(CHECK_OUT);
+		System.out.println(CLIENT_NAME);
+		System.out.println(CLIENT_PHONE);
+		System.out.println(updateDBroom);
+		System.out.println(updateQDroom);
 		
-		HotelOrder hotelOdetail = hOService.update(updateSn,CHECK_IN,CHECK_OUT,updateDBroom,updateQDroom,CLIENT_NAME,CLIENT_PHONE);
+		
+		HotelOrder hotelOdetail = hOService.update(updateSn,CLIENT_NAME,CLIENT_PHONE,updateDBroom,updateQDroom,CHECK_IN,CHECK_OUT);
 		m.addAttribute("hotelOdetail", hotelOdetail);
 		
-		return "asx54630/H_Modify";
+		return "redirect:hotelOrderindex";
 		}
 	
 	@RequestMapping(path = "/hotelOrderdelete", method = RequestMethod.POST) //刪除

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Modify Restaurant Order</title>
+<title>Modify Hotel Order</title>
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style type="text/css">
 .col-md-8.order-md-1 {
@@ -55,7 +55,7 @@ h5{
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
 
-				<FORM id="RHome" name="RHome"
+				<FORM id="H_Home" name="H_Home"
 					action="<%=pageContext.getServletContext().getContextPath()%>/admin/hotelOrderindex"
 					method="GET">
 					<div class="div-back">
@@ -70,7 +70,7 @@ h5{
 					<h4 class="mb-3 font-color">大訂單號碼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4 color="black">${hotelOdetail.ORDER_ID}</h4>
 					<hr>
 					<h4 class="mb-3 font-color">餐廳訂單號碼&nbsp;&nbsp;&nbsp;</h4><h4 color="black">${hotelOdetail.SN_ORDER}</h4>
-					<Input type='hidden' name='id' value='${hotelOdetail.SN_ORDER}'>
+					<Input type='hidden' name="id" value='${hotelOdetail.SN_ORDER}'>
 					<Input type='hidden' name='order_id' value='${hotelOdetail.ORDER_ID}'>
 					<hr>
 					<h4 class="mb-3">餐廳名稱&nbsp;</h4>
@@ -86,12 +86,12 @@ h5{
 					<h4 class="mb-3">訂單資料</h4>
 					<div class="col-md-6 mb-3">
 						<label for="ordername"><h5>入住日期</h5></label> 
-						<textarea class="form-control" name="CHECK_IN"	id="CHECK_IN" cols="80" rows="1">${hotelOdetail.CHECK_IN}</textarea>
+						<input class="form-control" type="date" name="CHECK_IN"	id="CHECK_IN" cols="80" rows="1" value="${hotelOdetail.CHECK_IN}">
 
 					</div>
 					<div class="col-md-6 mb-3">
 						<label for="ordername"><h5>退房日期</h5></label> 
-						<textarea class="form-control" name="CHECK_OUT"	id="CHECK_OUT" cols="80" rows="1">${hotelOdetail.CHECK_OUT}</textarea>
+						<input class="form-control" type="date" name="CHECK_OUT" id="CHECK_OUT" cols="80" rows="1" value="${hotelOdetail.CHECK_OUT}">
 
 					</div>
 					<div class="row"></div>
@@ -146,7 +146,7 @@ h5{
   											      </button>											
   											    </div>
   											    <div class="modal-body">
-  											      是否確認修改餐廳餐廳餐廳  ${hotelOdetail.SN_ORDER}  資料？
+  											      是否確認修改飯店  ${hotelOdetail.SN_ORDER} 資料？
      											</div>											
  											     <div class="modal-footer">
    											     	<button type="submit" class="btn btn-primary" onclick="confrimModify()">確認</button>
