@@ -1,5 +1,6 @@
 package iring29.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -59,5 +60,13 @@ public class F_RestaurantDAO {
 			query.setParameter(0, region);
 			List<Restaurant_VO> rView = query.list();
 			return rView;
+		}
+		
+		//get pic
+		public byte[] getPic(BigDecimal r_sn) {
+			Query query = sessionFactory.getCurrentSession().createQuery("select pic from Restaurant_VO where r_sn = ?0");
+			query.setParameter(0, r_sn);
+			byte[] pic = (byte[]) query.uniqueResult();
+			return pic;
 		}
 }

@@ -12,7 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +28,8 @@ import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
 import iring29.service.F_RestaurantService;
 import utils.StringUtil;
+
+import java.math.BigDecimal;
 import java.util.Base64;
 
 @Controller
@@ -37,7 +41,7 @@ public class F_RestaurantController {
 
 	@RequestMapping(path = "/Restaurant_index")
 	public String RestaurantDisplay() {
-		return "iring29/Restaurant";
+		return "iring29/Restaurant_index";
 	}
 
 	@RequestMapping(path = "/SearchRestaurant", method = RequestMethod.POST)
@@ -105,14 +109,15 @@ public class F_RestaurantController {
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 	
-	@RequestMapping(path = "/DisplayPic")
-	public ResponseEntity<byte[]> DisplayPic(@ModelAttribute("pic") byte[] r) {
+	@GetMapping("/Restaurant/pic/{res.r_sn}")
+	@ResponseBody
+	public ResponseEntity<byte[]> DisplayPic(@PathVariable(name = "res.r_sn") BigDecimal r_sn) {
 		System.out.println("in pic ");
-//		String pic = Base64.getEncoder().encodeToString(r);
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
-//		System.out.println("pic = " + pic);
-		return new ResponseEntity<byte[]>(r, headers, HttpStatus.OK);
+		
+		return new ResponseEntity<byte[]>(F_Serivce.getPic(r_sn), headers, HttpStatus.OK);
 	}
 
 	

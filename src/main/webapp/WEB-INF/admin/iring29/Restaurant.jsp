@@ -14,7 +14,7 @@
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
     
-    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/bg_6.jpg');">
+    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/res_index.jpg');">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
@@ -149,208 +149,105 @@
 							</form>
         		</div>
           </div>
+          
+          <!-- Display stores -->
           	<div class="col-lg-9">
           	<div class="row">
+          	
+          	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('direngine-master/images/bg_6.jpg');">
+		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     							<span class="icon-search2"></span>
     								</div>
 		    					</a>
+		    					<Input type='hidden' name='restaurant_name' value='${res.name}'>
+								<Input type='hidden' name='book_date' value='${book_date}'>
+								<Input type='hidden' name='person_number' value='${person_number}'>
+		    				</form>
 		    					<div class="text p-3">
+		    						<form action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
 		    						<div class="d-flex">
 		    							<div class="one">
-				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
+				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
+				    						<p class="rate" id="test${res.r_sn}" >
+				    							<span>${res.rating}</span>
 				    						</p>
+				    						<script>
+				    						var star = Math.floor("${res.rating}");
+											console.log("star = " + star);
+											var tags = "";
+											var half = "<i class='fa fa-star-half_alt'></i>";
+											var zerostar = "";
+											for(var i = 0; i < star; i++){
+												tags += "<i class='icon-star'></i></span>";
+												}
+											for(var j = star; j < 5 ; j++){
+												zerostar += "<i class='fa fa-star-o'></i>";
+												}
+											$("#test${res.r_sn}").prepend(tags, zerostar);
+				    						</script>
 			    						</div>
 			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
+<!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
 		    							</div>
 		    						</div>
-		    						<p>Far far away, behind the word mountains, far from the countries</p>
+		    						<p>${res.type}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-		    							<span class="ml-auto"><a href="#">Book Now</a></span>
+		    							<span><i class="icon-map-o"></i>&emsp;${res.region}</span> 
+		    							<span class="ml-auto"><button type="submit" class="btn btn-warning">訂位去</button></span>
+		    							<Input type='hidden' name='restaurant_name' value='${res.name}'>
+										<Input type='hidden' name='book_date' value='${book_date}'>
+										<Input type='hidden' name='person_number' value='${person_number}'>
 		    						</p>
+		    					</form>
 		    					</div>
 		    				</div>
 		    			</div>
-		    			<div class="col-md-4 ftco-animate">
-		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-2.jpg);">
-		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
-    						</div>
-		    					</a>
-		    					<div class="text p-3">
-		    						<div class="d-flex">
-		    							<div class="one">
-				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
-				    						</p>
-			    						</div>
-			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
-		    							</div>
-		    						</div>
-		    						<p>Far far away, behind the word mountains, far from the countries</p>
-		    						<hr>
-		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-		    							<span class="ml-auto"><a href="#">Book Now</a></span>
-		    						</p>
-		    					</div>
-		    				</div>
-		    			</div>
-		    			<div class="col-md-4 ftco-animate">
-		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-3.jpg);">
-		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
-    						</div>
-		    					</a>
-		    					<div class="text p-3">
-		    						<div class="d-flex">
-		    							<div class="one">
-				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
-				    						</p>
-			    						</div>
-			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
-		    							</div>
-		    						</div>
-		    						<p>Far far away, behind the word mountains, far from the countries</p>
-		    						<hr>
-		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-		    							<span class="ml-auto"><a href="#">Book Now</a></span>
-		    						</p>
-		    					</div>
-		    				</div>
-		    			</div>
-		    			<div class="col-md-4 ftco-animate">
-		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-4.jpg);">
-		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
-    						</div>
-		    					</a>
-		    					<div class="text p-3">
-		    						<div class="d-flex">
-		    							<div class="one">
-				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
-				    						</p>
-			    						</div>
-			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
-		    							</div>
-		    						</div>
-		    						<p>Far far away, behind the word mountains, far from the countries</p>
-		    						<hr>
-		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-		    							<span class="ml-auto"><a href="#">Book Now</a></span>
-		    						</p>
-		    					</div>
-		    				</div>
-		    			</div>
-		    			<div class="col-md-4 ftco-animate">
-		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-5.jpg);">
-		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
-    						</div>
-		    					</a>
-		    					<div class="text p-3">
-		    						<div class="d-flex">
-		    							<div class="one">
-				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
-				    						</p>
-			    						</div>
-			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
-		    							</div>
-		    						</div>
-		    						<p>Far far away, behind the word mountains, far from the countries</p>
-		    						<hr>
-		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-		    							<span class="ml-auto"><a href="#">Book Now</a></span>
-		    						</p>
-		    					</div>
-		    				</div>
-		    			</div>
-		    			<div class="col-md-4 ftco-animate">
-		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-6.jpg);">
-		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
-    						</div>
-		    					</a>
-		    					<div class="text p-3">
-		    						<div class="d-flex">
-		    							<div class="one">
-				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
-				    						</p>
-			    						</div>
-			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
-		    							</div>
-		    						</div>
-		    						<p>Far far away, behind the word mountains, far from the countries</p>
-		    						<hr>
-		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-		    							<span class="ml-auto"><a href="#">Book Now</a></span>
-		    						</p>
-		    					</div>
-		    				</div>
-		    			</div>
+		    			</c:forEach>
+		    			
+<!-- 		    			<div class="col-md-4 ftco-animate"> -->
+<!-- 		    				<div class="destination"> -->
+<!-- 		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-2.jpg);"> -->
+<!-- 		    						<div class="icon d-flex justify-content-center align-items-center"> -->
+<!--     							<span class="icon-search2"></span> -->
+<!--     						</div> -->
+<!-- 		    					</a> -->
+<!-- 		    					<div class="text p-3"> -->
+<!-- 		    						<div class="d-flex"> -->
+<!-- 		    							<div class="one"> -->
+<!-- 				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3> -->
+<!-- 				    						<p class="rate"> -->
+<!-- 				    							<i class="icon-star"></i> -->
+<!-- 				    							<i class="icon-star"></i> -->
+<!-- 				    							<i class="icon-star"></i> -->
+<!-- 				    							<i class="icon-star"></i> -->
+<!-- 				    							<i class="icon-star-o"></i> -->
+<!-- 				    							<span>8 Rating</span> -->
+<!-- 				    						</p> -->
+<!-- 			    						</div> -->
+<!-- 			    						<div class="two"> -->
+<!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
+<!-- 		    							</div> -->
+<!-- 		    						</div> -->
+<!-- 		    						<p>Far far away, behind the word mountains, far from the countries</p> -->
+<!-- 		    						<hr> -->
+<!-- 		    						<p class="bottom-area d-flex"> -->
+<!-- 		    							<span><i class="icon-map-o"></i> Miami, Fl</span>  -->
+<!-- 		    							<span class="ml-auto"><a href="#">Book Now</a></span> -->
+<!-- 		    						</p> -->
+<!-- 		    					</div> -->
+<!-- 		    				</div> -->
+<!-- 		    			</div> -->
+		    			
+		    			
+		    			
           	</div>
-          	<div class="row mt-5">
+          	<!-- Page -->
+          		<div class="row mt-5">
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
@@ -364,7 +261,7 @@
 		              </ul>
 		            </div>
 		          </div>
-		        </div>
+		        </div>  <!-- .Page -->
           </div> <!-- .col-md-8 -->
         </div>
       </div>
@@ -379,6 +276,5 @@
     
     <!-- import js -->
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
-    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/Forum_ref.jsp" />
 </body>
 </html>

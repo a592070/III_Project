@@ -185,7 +185,7 @@ h3{
           		<div class="col-md-4 ">
 		    				<div class="destination">
 		    				<FORM id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
-		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('data:image/jpg;base64,'+'<%=application.getContextPath()%>/DisplayPic');">
+		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     								<span class="icon-search2"></span>
     								<script type="text/javascript">

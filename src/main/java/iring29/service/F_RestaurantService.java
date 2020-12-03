@@ -1,5 +1,6 @@
 package iring29.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,9 @@ public class F_RestaurantService {
 		return f_RDao.findMulti_R(name);
 	}
 	
+	@Transactional(rollbackFor = { Throwable.class })
+	public byte[] getPic(BigDecimal r_sn) {
+		return f_RDao.getPic(r_sn);
+	}
 }
 

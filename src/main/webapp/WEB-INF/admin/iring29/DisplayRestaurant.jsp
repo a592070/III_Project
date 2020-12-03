@@ -23,7 +23,7 @@ body{
 }    
 .box{
  	background:white; 
-	margin:50px 120px;
+	margin:120px 120px;
 }
 img{
 	width:700px;
