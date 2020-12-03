@@ -37,7 +37,7 @@ public class F_RestaurantController {
 
 	@RequestMapping(path = "/Restaurant_index")
 	public String RestaurantDisplay() {
-		return "iring29/Restaurant_index";
+		return "iring29/Restaurant";
 	}
 
 	@RequestMapping(path = "/SearchRestaurant", method = RequestMethod.POST)
