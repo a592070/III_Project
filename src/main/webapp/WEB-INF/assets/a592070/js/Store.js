@@ -2,8 +2,11 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         storeData: "HHHHello",
+        travelSetInfoLoading: true,
         travelSetDialog: false,
+        travelSetDetailLoading: true,
         travelSetSelectDialog: false,
+        travelSetSelectLoading: true,
         currentEditTravelSetInfo: {
             sn: 0,
             createdUser: '',
@@ -15,7 +18,7 @@ const store = new Vuex.Store({
             status: false
         },
         currentEditTravelSetDetail: {
-            info: {
+            travelSetInfo: {
                 sn: 0,
                 createdUser: '',
                 name: '',
@@ -25,36 +28,44 @@ const store = new Vuex.Store({
                 priority: 0,
                 status: false
             },
-            travelEleAttractions: [
+            travelSetAttractions: [
                 {
                     sn: 0,
-                    id: 0,
-                    name: '',
-                    time: ''
+                    time: '',
+                    attraction: {
+                        sn: 0,
+                        name: ''
+                    }
                 }
             ],
-            travelEleRestaurants: [
+            travelSetRestaurants: [
                 {
                     sn: 0,
-                    id: 0,
-                    name: '',
-                    time: ''
+                    time: '',
+                    restaurant: {
+                        sn: 0,
+                        name: ''
+                    }
                 }
             ],
-            travelEleHotels: [
+            travelSetHotels: [
                 {
                     sn: 0,
-                    id: 0,
-                    name: '',
-                    time: ''
+                    time: '',
+                    hotel: {
+                        sn: 0,
+                        name: ''
+                    }
                 }
             ],
-            travelEleCars: [
+            travelSetCars: [
                 {
                     sn: 0,
-                    id: 0,
-                    name: '',
-                    time: ''
+                    time: '',
+                    car: {
+                        sn: 0,
+                        name: ''
+                    }
                 }
             ]
         },
@@ -64,28 +75,46 @@ const store = new Vuex.Store({
         }
     },
     getters: {
+        getTravelSetInfoLoading: (state) => state.travelSetInfoLoading,
         getTravelSetDialog: (state) => state.travelSetDialog,
+        getTravelSetDetailLoading: (state) => state.travelSetDetailLoading,
+
         getTravelSetSelectDialog: (state) => state.travelSetSelectDialog,
+        getTravelSetSelectLoading: (state) => state.travelSetSelectLoading,
+
         getTravelSetDetail: (state) => state.currentEditTravelSetDetail,
         getTravelSetSelectItem: (state) => state.currentEditTravelSetSelectItem,
         getTravelSetInfo: (state) => state.currentEditTravelSetInfo
     },
     mutations: {
+        toggleTravelSetInfoLoading(state){
+            state.travelSetInfoLoading = !state.travelSetInfoLoading;
+        },
         toggleTravelSetDialog(state){
             state.travelSetDialog = !state.travelSetDialog;
         },
+        toggleTravelSetDetailLoading(state){
+            state.travelSetDetailLoading = !state.travelSetDetailLoading;
+        },
+
+
         toggleTravelSetSelectDialog(state){
             state.travelSetSelectDialog = !state.travelSetSelectDialog;
         },
-        setTravelSetDetail(state, newTravelSetDetail){
-            state.currentEditTravelSetDetail = newTravelSetDetail;
+        toggleTravelSetSelectLoading(state){
+            state.travelSetSelectLoading = !state.travelSetSelectLoading;
         },
-        setTravelSetSelectItem(state, newTravelSetSelectItem){
-            state.currentEditTravelSetSelectItem = newTravelSetSelectItem;
-        },
+
         setTravelSetInfo(state, newTravelSetInfo){
             state.currentEditTravelSetInfo = newTravelSetInfo;
+        },
+        setTravelSetDetail(state, newTravelSetDetail){
+            this.state.currentEditTravelSetDetail = newTravelSetDetail;
+        },
+        setTravelSetSelectItem(state, newTravelSetSelectItem){
+            this.state.currentEditTravelSetSelectItem = newTravelSetSelectItem;
         }
+
     }
 })
 export default store;

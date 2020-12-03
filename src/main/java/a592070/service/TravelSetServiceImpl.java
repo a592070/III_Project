@@ -10,7 +10,7 @@ import utils.StringUtil;
 
 import java.util.List;
 
-@Transactional(rollbackFor = {Exception.class}, transactionManager="transactionManager")
+@Transactional(rollbackFor = {Exception.class})
 public class TravelSetServiceImpl implements TravelSetService{
     @Autowired@Qualifier("travelSetDao")
     private TravelSetDAO dao;
@@ -191,7 +191,7 @@ public class TravelSetServiceImpl implements TravelSetService{
     @Override
     public List<TravelSetVO> listBySelect(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean descending) {
         if(identity == null || identity==0) return listByKeywords(currentPage, pageSize, keywords, orderFiled, descending);
-        if(StringUtil.isEmpty(keywords)) return listByKeywords(currentPage, pageSize, keywords, orderFiled, descending);
+        if(StringUtil.isEmpty(keywords)) return listByIdentity(currentPage, pageSize, identity, orderFiled, descending);
 
         keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
         int index = (currentPage-1)* pageSize;
@@ -210,6 +210,8 @@ public class TravelSetServiceImpl implements TravelSetService{
 
     @Override
     public List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean descending, boolean status) {
+        if(identity == null || identity==0) return listByKeywordsWithStatus(currentPage, pageSize, keywords, status, orderFiled, descending);
+        if(StringUtil.isEmpty(keywords)) return listByIdentityWithStatus(currentPage, pageSize, identity, status, orderFiled, descending);
 
         keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
         int index = (currentPage-1)* pageSize;

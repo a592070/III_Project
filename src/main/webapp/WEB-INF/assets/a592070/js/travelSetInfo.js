@@ -1,4 +1,4 @@
-import store from '/III_Project_war_exploded/assets/a592070/js/Store.js';
+// import store from '/III_Project_war_exploded/assets/a592070/js/Store.js';
 
 Vue.use(httpVueLoader);
 var App = new Vue({
@@ -6,6 +6,6 @@ var App = new Vue({
     components: {
         'index': httpVueLoader(context+'/assets/a592070/js/components/main.vue')
     },
-    store
+    store: context + '/assets/a592070/js/Store.js'
 })
 export default App;

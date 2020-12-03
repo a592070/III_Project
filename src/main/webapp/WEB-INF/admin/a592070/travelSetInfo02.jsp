@@ -45,9 +45,7 @@
         const context = "${pageContext.servletContext.contextPath}";
     </script>
     <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/js/travelSetInfo.js"></script>
-    <script>
-        <%--import App from '${pageContext.servletContext.contextPath}/assets/a592070/js/travelSetInfo.js';--%>
-    </script>
+
 </head>
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
 
@@ -64,5 +62,16 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    // Vue.use(httpVueLoader);
+    // var App = new Vue({
+    //     el: '#app',
+    //     components: {
+    //         'index': httpVueLoader(context+'/assets/a592070/js/components/main.vue')
+    //     },
+    //     store: httpVueLoader(context + '/assets/a592070/js/Store.js')
+    // })
+</script>
 </body>
 </html>

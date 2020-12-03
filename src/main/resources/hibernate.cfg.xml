@@ -42,6 +42,7 @@
 		<mapping class="a592070.pojo.TravelEleHotelDO"/>
 		<mapping class="a592070.pojo.TravelEleCarDO"/>
 		<mapping class="a592070.pojo.TravelSetDO"/>
+		<mapping class="a592070.pojo.TravelSetVO"/>
 		<mapping class="iring29.model.Show_RView"/>
 		<mapping class="iring29.model.Restaurant"/>
 <!-- 		<mapping class="iring29.model.R_Order_VO"/> -->

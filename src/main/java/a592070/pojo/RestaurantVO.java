@@ -7,7 +7,7 @@ import utils.StringUtil;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@JsonDeserialize(using = RestaurantVOJsonDeserializer.class)
+//@JsonDeserialize(using = RestaurantVOJsonDeserializer.class)
 @Entity
 @Table(name = "TRAVEL_SET_RESTAURANTVIEW")
 @Immutable

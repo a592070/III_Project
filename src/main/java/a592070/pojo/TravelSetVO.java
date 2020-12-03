@@ -21,9 +21,13 @@ public class TravelSetVO {
     private String name;
     private String description;
     @Column(name = "CREATED_TIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
+
     @Column(name = "UPDATE_TIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+
     private Integer priority;
     @Type(type = "org.hibernate.type.NumericBooleanType")
     @Column(name = "STATUS", nullable = false)
@@ -96,7 +100,7 @@ public class TravelSetVO {
         this.priority = priority;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

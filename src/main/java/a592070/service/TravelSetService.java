@@ -14,7 +14,9 @@ public interface TravelSetService {
     String CREATED_TIME = "createdTime";
     String UPDATE_TIME = "updateTime";
     String NAME = "name";
-    String AVAILABLE = "available";
+    String STATUS = "status";
+
+    int ADMIN_ID = 1;
 
 
     TravelSetDO getEle(Integer id, boolean loadFetch);

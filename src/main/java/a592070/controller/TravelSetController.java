@@ -44,14 +44,18 @@ public class TravelSetController {
         pageSupport.setTotalSize(service.getSize());
         pageSupport.setCurrentPage(page);
 
-        List<TravelSetVO> list = service.listByRownum(pageSupport.getCurrentPage(), pageSupport.getPageSize());
         Map<String, Object> map = new HashMap<>();
-        map.put("tableData", list);
-        map.put("pageData", pageSupport);
+        try{
+            List<TravelSetVO> list = service.listByRownum(pageSupport.getCurrentPage(), pageSupport.getPageSize());
+            map.put("tableData", list);
+            map.put("pageData", pageSupport);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return map;
     }
 
-    @RequestMapping("/admin/travelSet/list/{page}/{identity}/{keywords}")
+    @RequestMapping({"/admin/travelSet/list/{page}/{identity}/{keywords}", "/admin/travelSet/list/{page}/{identity}"})
     public Map<String, Object> getTravelSetListByKeywords(@PathVariable("page") Integer page,
                                                           @PathVariable(name="identity", required = false) Integer identity,
                                                           @PathVariable(name="keywords", required = false) String keywords,
@@ -76,7 +80,7 @@ public class TravelSetController {
         }else if("priority".equals(sortColumn)){
             sortColumn = PRIORITY;
         }else if("status".equals(sortColumn)){
-            sortColumn = AVAILABLE;
+            sortColumn = STATUS;
         }
 
         boolean desc;
@@ -85,7 +89,6 @@ public class TravelSetController {
         }else{
             desc = true;
         }
-
 
         pageSupport.setTotalSize(service.getSizeBySelect(identity, keywords));
 
@@ -99,15 +102,19 @@ public class TravelSetController {
 
     @RequestMapping("/admin/travelSet/entity/{id}")
     public Map<String, Object> getTravelSet(@PathVariable(name = "id") Integer id) {
-        TravelSetDO travelSetDO = service.getEle(id, true);
-
         Map<String, Object> map = new HashMap<>();
-        map.put("travelSetData", travelSetDO);
-        map.put("travelSetAttractions", travelSetDO.getTravelAttractions());
-        map.put("travelSetCars", travelSetDO.getTravelCars());
-        map.put("travelSetHotels", travelSetDO.getTravelHotels());
-        map.put("travelSetRestaurants", travelSetDO.getTravelRestaurants());
+        try {
+            TravelSetDO travelSetDO = service.getEle(id, true);
 
+            map.put("travelSetInfo", travelSetDO);
+            map.put("travelSetAttractions", travelSetDO.getTravelAttractions());
+            map.put("travelSetCars", travelSetDO.getTravelCars());
+            map.put("travelSetHotels", travelSetDO.getTravelHotels());
+            map.put("travelSetRestaurants", travelSetDO.getTravelRestaurants());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(map);
         return map;
     }
 

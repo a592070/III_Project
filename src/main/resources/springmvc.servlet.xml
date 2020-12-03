@@ -40,6 +40,8 @@
 				<property name="objectMapper">
 					<bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
 						<property name="failOnEmptyBeans" value="false"/>
+						<property name="failOnUnknownProperties" value="false"/>
+<!--						<property name="featuresToEnable" value="com.fasterxml.jackson.databind.SerializationFeature.WRAP_ROOT_VALUE"/>-->
 					</bean>
 				</property>
 			</bean>

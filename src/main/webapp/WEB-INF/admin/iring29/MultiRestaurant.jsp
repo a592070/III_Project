@@ -186,8 +186,8 @@ h3{
 		    				<div class="destination">
 		    				<FORM id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
 <%--		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://img.etimg.com/thumb/msid-75176755,width-640,resizemode-4,imgsize-612672/effect-of-coronavirus-on-food.jpg');">--%>
-<%--		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('${pageContext.servletContext.contextPath}/restaurant/pic/${res.r_sn}');">--%>
-		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('${pageContext.servletContext.contextPath}/attraction/pic/1/08299ea3-9700-317d-b8c5-dd9de05ff5ca.jpg');">
+		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('${pageContext.servletContext.contextPath}/restaurant/pic/${res.r_sn}');">
+<%--		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('${pageContext.servletContext.contextPath}/attraction/pic/1/08299ea3-9700-317d-b8c5-dd9de05ff5ca.jpg');">--%>
 		    						<div class="icon d-flex justify-content-center align-items-center">
     								<span class="icon-search2"></span>
     								</div>
