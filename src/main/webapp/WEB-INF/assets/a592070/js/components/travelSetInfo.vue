@@ -284,9 +284,9 @@ module.exports = {
     }
   },
   created: function () {
-    // this.initData();
-    this.testData();
-    this.loading = false;
+    this.initData();
+    // this.testData();
+    // this.loading = false;
   },
   computed: {
     getTravelSetDialog(){
@@ -298,35 +298,12 @@ module.exports = {
   },
   methods: {
     initData() {
-    },
-    handleInsert() {
-      // this.travelSetDialog = true;
-      this.$store.commit("toggleTravelSetDialog");
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-      // this.travelSetDialog = true;
-      this.$store.commit("toggleTravelSetDialog");
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-      this.$confirm('此操作將永久刪除資料, 是否繼續?', '提示', {
-        confirmButtonText: '去死吧',
-        cancelButtonText: '手滑了...',
-        type: 'warning',
-        center: true
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '刪除成功!'
-        });
-
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消刪除'
-        });
-      });
+      axios.get(context+'/admin/travelSet/list/1')
+          .then(response => {
+            this.tableData = response.data.tableData;
+            this.pageData = response.data.pageData;
+            this.loading = false;
+          });
     },
     handleSearch() {
       console.log(this.search);
@@ -339,6 +316,16 @@ module.exports = {
       this.currentUser = user;
       this.pageData.currentPage = 1;
 
+      this.handleSelectedData();
+    },
+    handleSelectPage(value) {
+      this.pageData.currentPage = value;
+
+      this.handleSelectedData();
+    },
+    sortChange: function (column, prop, order) {
+      console.log(column + '-' + column.prop + '-' + column.order);
+      this.sortParams = {"sortColumn": column.prop, "order": column.order};
       this.handleSelectedData();
     },
     handleSelectedData() {
@@ -356,35 +343,98 @@ module.exports = {
 
       let params = this.sortParams;
       console.log(params);
+      url = context+'/admin/travelSet/list/1';
+      axios.get(url, {params})
+          .then(response => {
+            this.tableData = response.data.tableData;
+            this.pageData = response.data.pageData;
+            this.currentSearch = this.search;
+            // this.search = "";
+            this.loading = false;
+          });
+
+
       this.loading = false;
-    },
-    handleSelectPage(value) {
-      this.pageData.currentPage = value;
-      this.handleSelectedData();
-    },
-    sortChange: function (column, prop, order) {
-      console.log(column + '-' + column.prop + '-' + column.order);
-      this.sortParams = {"sortColumn": column.prop, "order": column.order};
-      this.handleSelectedData();
     },
     handleSwitchStatus(value) {
       console.log(value.status);
-      value.status = !value.status;
-      if(value.status){
-        this.$message({
-          type: 'success',
-          message: '已成功啟用!'
-        });
-      }else{
-        this.$message({
-          type: 'info',
-          message: '已成功停用'
-        });
-      }
+
+      let url = context+'/admin/travelSet/status/'+value.sn;
+      axios.post(url)
+          .then(response => {
+            if(response.data){
+              value.status = !value.status;
+              const h = this.$createElement;
+              this.$message({
+                message: h('p', null, [
+                  h('i', { style: 'color: teal' }, value.name),
+                  h('span', null, '狀態更改成功 ')
+                ])
+              });
+            }else{
+              this.$message.error(value.name+': 狀態更改失敗');
+            }
+          });
+      // if(value.status){
+      //   this.$message({
+      //     type: 'success',
+      //     message: '已成功啟用!'
+      //   });
+      // }else{
+      //   this.$message({
+      //     type: 'info',
+      //     message: '已成功停用'
+      //   });
+      // }
 
     },
-    testRemove1(index, row) {
+
+
+
+
+    handleInsert() {
+      // this.travelSetDialog = true;
+      this.$store.commit("toggleTravelSetDialog");
+    },
+    handleEdit(index, row) {
       console.log(index, row);
+      // this.travelSetDialog = true;
+      this.$store.commit("toggleTravelSetDialog");
+      this.$store.commit("setCurrentEditTravelSetInfo", row);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+      this.$confirm('此操作將永久刪除資料, 是否繼續?', '提示', {
+        confirmButtonText: '去死吧',
+        cancelButtonText: '手滑了...',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        let url = context+'/admin/travelSet/delete/'+row.sn;
+        axios.delete(url)
+            .then(response => {
+              if(response.data == true){
+                this.$message({
+                  type: 'success',
+                  message: '刪除成功!'
+                });
+
+                // 更新清單頁面
+                this.handleSelectedData();
+                // window.location.reload();
+              }else{
+                this.$message({
+                  type: 'info',
+                  message: '刪除失敗!!'
+                });
+              }
+            });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消刪除'
+        });
+      });
     },
     handleCloseTravelSet(done) {
       if (this.travelSetFormLoading) {
@@ -393,17 +443,40 @@ module.exports = {
       this.$confirm('確定要提交表單?')
           .then(_ => {
             this.travelSetFormLoading = true;
-            this.timer = setTimeout(() => {
-              done();
-              // 动画关闭需要一定的时间
-              setTimeout(() => {
-                let temp = this.$store.getters.getTravelSetDetail.info;
-                console.log(temp);
-                this.$store.commit("setTravelSetInfo", temp);
+
+            let temp = this.$store.getters.getTravelSetDetail.info;
+            console.log(temp);
+            this.$store.commit("setTravelSetInfo", temp);
+
+            let url = context+"/admin/travelSet/save/"+temp.sn;
+            let param = this.$store.getters.getCurrentEditTravelSetDetail;
+            axios.post(url, {param})
+                .then(response => {
+              if(response.data == true){
                 this.travelSetFormLoading = false;
                 this.$store.commit('toggleTravelSetDialog');
-              }, 400);
-            }, 1000);
+
+                this.$message({
+                  type: 'success',
+                  message: '提交成功!'
+                });
+
+                // 更新清單頁面
+                this.handleSelectedData();
+              }else{
+                this.$message({
+                  type: 'info',
+                  message: '提交失敗!!'
+                });
+              }
+            });
+
+            // this.timer = setTimeout(() => {
+            //   done();
+            //   // 动画关闭需要一定的时间
+            //   setTimeout(() => {
+            //   }, 400);
+            // }, 1000);
           })
           .catch(_ => {
           });
