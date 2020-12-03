@@ -245,6 +245,7 @@ module.exports = {
   },
   data() {
     return {
+      loading: true,
       formLabelWidth: '80px',
       timer: null,
       isSelectTravelSetItem: false,
@@ -297,6 +298,11 @@ module.exports = {
       }
     }
   },
+  created: function () {
+    this.initData();
+    // this.testData();
+    // this.loading = false;
+  },
   mounted: function () {
     this.testData();
   },
@@ -313,6 +319,15 @@ module.exports = {
     }
   },
   methods: {
+    initData() {
+      let currentEditTravelSet = this.$store.getCurrentEditTravelSetInfo;
+      axios.get('${pageContext.servletContext.contextPath}/admin/travelSet/entity/'+currentEditTravelSet.sn)
+          .then(response => {
+            this.tableData = response.data.tableData;
+            this.pageData = response.data.pageData;
+            this.loading = false;
+          });
+    },
     resetTravelSetForm(formName){
       console.log(this.$refs[formName]);
       this.$refs[formName].resetFields();
@@ -320,12 +335,13 @@ module.exports = {
     },
     addTravelSetFormItem(items) {
       items.push({
-        id: 987,
+        id: 0,
         name: 'new',
         time: Date.now()
       });
       console.log(items);
       this.selectTravelSetItemID(items[items.length - 1]);
+
     },
     removeTravelSetFormItem(items, item) {
       console.log(item);
