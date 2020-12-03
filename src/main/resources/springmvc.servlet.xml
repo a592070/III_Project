@@ -27,7 +27,8 @@
 	<mvc:default-servlet-handler />
 	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
 	<mvc:resources mapping="/direngine-master/**" location="/WEB-INF/direngine-master/"/>
-	<mvc:resources mapping="/sona-master/**" location="/WEB-INF/sona-master/"/>
+	<mvc:resources mapping="/admin/direngine-master/**" location="/WEB-INF/direngine-master/"/>
+	
 
 	<mvc:annotation-driven>
 		<mvc:message-converters>
@@ -53,6 +54,14 @@
 					 max-age="3600" />
 	</mvc:cors>
 
+	<!--登入攔截器設定-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!--攔截所有/admin 下的請求-->
+			<mvc:mapping path="/admin/**"/>
+			<bean class="global.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->
 	<bean
@@ -67,6 +76,8 @@
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
+
+
 
 
 </beans>

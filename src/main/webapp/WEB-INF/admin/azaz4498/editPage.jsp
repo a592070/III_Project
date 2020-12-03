@@ -11,10 +11,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
-
-
-
 
 <title>論壇管理</title>
 
@@ -63,7 +59,11 @@ h2 {
 }
 .ck-editor__editable_inline {
     min-height: 350px;
+	min-width: 600px;
 }
+.ck-editor__top {
+        min-width: 600px;
+    }
 </style>
 
 </head>
@@ -82,7 +82,7 @@ h2 {
 				<div class="content">
 					<div class="row">
 						<div class="col-lg-6">
-							<div class="card card-default">
+							<div class="card card-default" style="width: 1000px;">
 								<div class="card-header card-header-border-bottom">
 									<h1>文章修改</h1>
 									<br />
@@ -94,7 +94,7 @@ h2 {
 								<div class="card-body">
 									<form id=edit_form action=${pageContext.servletContext.contextPath}/admin/edit.controller method="POST">
 										<input type="hidden" name="artId" id="artId" value="${artBean[0].artId }">
-										<input type="hidden" name="userid" value="${artBean[0].artUserId }">
+										
 
 										<div class="form-group">
 											<label for="fname"><h3>標題</h3></label>
@@ -102,7 +102,13 @@ h2 {
 												value="${artBean[0].artTitle }">
 										</div>
 										<div class="form-group">
-											<label for="typeSelect"><h3>分類</h3></label> <select class="form-control" id="typeSelect" name="typeSelect">
+											<label for="userId"><h3>作者</h3></label>
+											<input type="text" name="userid" id="userid" class="form-control"
+												value="${artBean[0].artUserId }" readonly="value">
+										</div>
+										<div class="form-group">
+											<label for="typeSelect"><h3>分類</h3></label> 
+											<select class="form-control" id="typeSelect" name="typeSelect">
 												<option value="">選擇類型</option>
 												<option value="1">旅遊</option>
 												<option value="2">住宿</option>
@@ -116,13 +122,14 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="content"><h3>內容</h3></label>
-											<textarea class="form-control" id="editor" rows="15" name="articleContent">${artBean[0].artContent }</textarea>
+											<textarea class="form-control" id="editor" cols="100" name="articleContent">${artBean[0].artContent }</textarea>
 										</div>
 
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
 											<button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editModal">送出修改</button>
-											<button class="btn btn-primary" onclick="redo()">重置</button>
 											<button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button>
+											<button class="btn btn-danger" onclick="redo()">重置</button>
+											
 										</div>
 									</form>
 								</div>
@@ -154,6 +161,7 @@ h2 {
 			</div>
 		</div>
 	</div>
+	<!--modal End-->
 	<script type="text/javascript">
 		
 		window.onload = getDefaultType();
@@ -174,7 +182,7 @@ h2 {
 			
 		}
 
-		
+		//modal 確認後送出表單
 		$("#modal_confirm").on("click",function(){
 			$("#edit_form").submit();
 		})
@@ -183,6 +191,7 @@ h2 {
 	
 
 <script>
+<!--editor config-->
 	function MyCustomUploadAdapterPlugin( editor ) {
     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
         return new MyUploadAdapter( loader );
@@ -191,7 +200,9 @@ h2 {
 
 		ClassicEditor
     		.create( document.querySelector( '#editor' ),{
-				extraPlugins: [  MyCustomUploadAdapterPlugin ],
+				extraPlugins: [  MyCustomUploadAdapterPlugin],
+				
+				
 				toolbar: {
 					items: [
 						'heading',
@@ -202,6 +213,7 @@ h2 {
 						'link',
 						'bulletedList',
 						'numberedList',
+						'imageInsert',
 						'|',
 						'imageUpload',
 						'blockQuote',
@@ -231,6 +243,10 @@ h2 {
 						'mergeTableCells'
 					]
 				},
+				mediaEmbed: {
+					previewsInData: true
+					// 設定影片為可見的格式
+				},
 				licenseKey: '', 
 
 				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/admin/imgUpload/'+currId},
@@ -246,25 +262,54 @@ h2 {
         				console.error( error );
     		
 			});
-			
-			//重置的function
+			<!--editor config end -->
+			<!-- redo btn function -->
 			function redo(){
-			document.getElementById("title").value = "${artBean[0].artTitle }";
-			editor.setData( '${artBean[0].artContent }');
-			getDefaultType();
+				document.getElementById("title").value = "${artBean[0].artTitle }";
+				editor.setData( '${artBean[0].artContent }');
+				getDefaultType();
+				event.preventDefault();
+			}
+			<!--redo btn function end-->
+
+			<!--preview btn function-->
+			function preview(){
 			event.preventDefault();
-		}
-		function preview(){
-		event.preventDefault
-		var artTitle = $("#title").val();
-		var artType = $("option").find(":selected").text();
-		var artContent=editor.getData();
-		console.log(artTitle);
-		console.log(artType);
-		console.log(artContent);
-	}
+			var previewForm = document.createElement("form");
+			$(document.body).append(previewForm);
+			previewForm.method="POST";
+			previewForm.action="preview.controller"
+			var artTitle = $("#title").val();
+			var artType = $("#typeSelect").find(":selected").text();
+			var artUserid = $("#userid").val();
+			var artContent=editor.getData();
+			var obj={"artTitle":artTitle,"artType":artType,"artUserid":artUserid,"artContent":artContent};
+			console.log(obj);
+			$.each(obj,function(key,value){
+				$('<input>', {
+				type: 'hidden',
+				name: key,
+				value: value
+			}).appendTo(previewForm);
+
+			});
+			previewForm.submit();
+			
+			// $.ajax({
+			// 	url:'preview.controller',
+			// 	type:'POST',
+			// 	data:{"artTitle":artTitle,"artType":artType,"artUserid":artUserid,"artContent":artContent},
+			// 	success: function(response){
+			// 		console.log(response);
+			// 		window.open(response);
+			// 	}
+			// });
+
+            };
+			<!--preview btn function end-->
 </script>
 <script>
+	<!--imgUploadApdater-->
 	class MyUploadAdapter {
 	constructor(loader) {
 		this.loader = loader;
@@ -303,6 +348,7 @@ h2 {
 abort() {
 }
 }
+<!--imgUploadApdater End-->
 </script>
 
 	

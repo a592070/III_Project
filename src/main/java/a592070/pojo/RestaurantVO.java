@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @JsonDeserialize(using = RestaurantVOJsonDeserializer.class)
 @Entity
-@Table(name = "RestaurantView")
+@Table(name = "TRAVEL_SET_RESTAURANTVIEW")
 @Immutable
 public class RestaurantVO {
     @Id

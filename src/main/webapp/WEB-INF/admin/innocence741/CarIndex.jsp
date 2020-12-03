@@ -129,7 +129,9 @@ td{
 
 			    </div>
 				<h2>租車公司列表</h2>
-                <div id="carRentalCompany"></div>
+                <div id="carRentalCompany">
+                    <table id="carRentalCompanyTable" class="table table-striped table-sm"></table>
+                </div>
 
 
 
@@ -185,39 +187,36 @@ td{
 
                             data = [];
                             data.push(
-                                $("<table></table>").addClass('table table-striped table-sm').append(
-                                    $("<tr></tr>").append(
-                                        $("<td></td>").append(
-                                            $("<input>").attr("value",response[i]["sn_rentalcompany"]).attr("name","sn_rentalcompany").attr("readonly","true").attr("size",6)
-                                       ),
-                                       $("<td></td>").append(
-                                           $("<input>").attr("value",response[i]["name_company"]).attr("name","name_company").attr("readonly","true").attr("size",30)
-                                       ),
-                                       $("<td></td>").append(
-                                           $("<input>").attr("value",response[i]["address"]).attr("name","address").attr("readonly","true").attr("size",45)
-                                       ),
-                                        // $("<td></td>").append(
-                                        //     $("<input>").attr("value",response[i]["compantAccount"]).attr("name","compantAccount").attr("readonly","true")
-                                        // ),
-                                        $("<td></td>").append(
-                                            $("<label>").addClass('switch switch-text switch-success switch-pill form-control-label').append(
-                                                $("<input>").attr("type","checkbox").addClass('switch-input form-check-input').attr("checked","checked"),
-                                                $("<span>").addClass('switch-label').attr("data-on","啟用").attr("data-off","禁用"),
-                                                $("<span>").addClass('switch-handle')
-                                            )
-                                        ),
-                                        $("<td></td>").append(
-                                            $("<input>").attr("value","修改").attr("type","button").addClass('updateData btn btn-warning')
-                                        ),
-                                        $("<td></td>").append(
-                                            $("<input>").attr("value","刪除").attr("type","button").addClass('dropData btn btn-danger')
+                            
+                                $("<tr></tr>").append(
+                                    $("<td></td>").text(response[i]["sn_rentalcompany"]).attr("name","sn_rentalcompany").addClass('sn_rentalcompany')
+                                   ,
+                                   $("<td></td>").text(response[i]["name_company"]).attr("name","name_company")
+                                   ,
+                                   $("<td></td>").text(response[i]["address"]).attr("name","address")
+                                   ,
+                                    // $("<td></td>").append(
+                                    //     $("<input>").attr("value",response[i]["compantAccount"]).attr("name","compantAccount").attr("readonly","true")
+                                    // ),
+                                    $("<td></td>").append(
+                                        $("<label>").addClass('switch switch-text switch-success switch-pill form-control-label').append(
+                                            $("<input>").attr("type","checkbox").addClass('switch-input form-check-input').attr("checked","checked"),
+                                            $("<span>").addClass('switch-label').attr("data-on","啟用").attr("data-off","禁用"),
+                                            $("<span>").addClass('switch-handle')
                                         )
+                                    ),
+                                    $("<td></td>").append(
+                                        $("<input>").attr("value","修改").attr("type","button").addClass('updateData btn btn-warning')
+                                    ),
+                                    $("<td></td>").append(
+                                        $("<input>").attr("value","刪除").attr("type","button").addClass('dropData btn btn-danger')
                                     )
                                 )
+                                
                             );
-                            $("#carRentalCompany").append(div);
-                            $(".carRentalCompanyDiv").eq(i).append(form);
-                            $(".carRentalCompanyForm").eq(i).append(data);
+                            $("#carRentalCompanyTable").append(data);
+                            // $(".carRentalCompanyDiv").eq(i).append(form);
+                            // $(".carRentalCompanyForm").eq(i).append(data);
 
                         }
                         //------------------------correct method-----------------------------
@@ -263,17 +262,20 @@ td{
 
 
         $("#carRentalCompany").on("click", ".updateData", function(){
-            var form1 = $(this).parents('form');
-            var formData = new FormData(form1[0]);
-            strCookies = formData.get('sn_rentalcompany');
+            var td1 = $(this).parents('td').siblings('.sn_rentalcompany').text();
+            console.log(td1)
+            // var formData = new FormData(form1[0]);
+            strCookies = td1;
             Cookies.set('CRC', strCookies);
             window.location="\THomepageindex.controller";
 
         })
 
         $("#carRentalCompany").on("click", ".dropData", function(){
-            var form1 = $(this).parents('form');
-            var formData = new FormData(form1[0]);
+            // var form1 = $(this).parents('form');
+            var td1 = $(this).parents('td').siblings('.sn_rentalcompany').text();
+            console.log(td1)
+            // var formData = new FormData(form1[0]);
             $("#modal").click();
 			$("#confirm").click(function(){
 
@@ -281,9 +283,9 @@ td{
         
                 type:"POST",   
                 url: "delCarRentalCompany",        
-                data: formData,
-                processData : false, 
-                contentType : false,
+                data: "sn_rentalcompany="+td1,
+                // processData : false, 
+                // contentType : false,
                 dataType: "json",   
 
                 success : (response) => {

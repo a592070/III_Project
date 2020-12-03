@@ -127,7 +127,8 @@ public class AttractionController {
     }
     @RequestMapping("/admin/attraction/entity/{id}")
     public Map<String, Object> getAttraction(@PathVariable(name = "id") int id) {
-        AttractionDO attractionDO = service.getEle(id);
+        AttractionDO attractionDO = service.getEle(id, AttractionService.getFromDatabase, true);
+
         Map<String, Object> map = new HashMap<>();
         map.put("attractionData", attractionDO);
         // /assets/attraction/xxx
@@ -172,7 +173,7 @@ public class AttractionController {
                 attractionDO.setSn(null);
             }else{
                 // find from Persistence
-                AttractionDO originDo = service.getEle(attractionDO.getSn(), true);
+                AttractionDO originDo = service.getEle(attractionDO.getSn(), AttractionService.findFromPersistence, true);
                 if(originDo != null) attractionDO.setAttractionPic(originDo.getAttractionPic());
             }
 

@@ -54,14 +54,14 @@ public class AccountController {
 	@Autowired
 	@Qualifier("accSort")
 	private Sort aSort;
-
+    //我是測試文字
 	//帳號清單頁面
 	@RequestMapping(path = "/accountPage", method = RequestMethod.GET)
 	public String AccountPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
 		int size=service.getSize("select count(userName) From AccountListViewBean");
 		aPage.setTotalCount(size);
 		aPage.setCurrentPage(currentPage);   
-		List<AccountBean> userList = service.userList(aPage.getStart(),aPage.getPageSize());
+		List<AccountListViewBean> userList = service.userList(aPage.getStart(),aPage.getPageSize());
 		List<IdentityBean> idList = service.getidList();
 		m.addAttribute("userList", userList);
 		m.addAttribute("page", aPage);
@@ -106,7 +106,7 @@ public class AccountController {
 		m.addAttribute("result", result);
 		return "rambo0021/result";
 	}
-	//
+	//寫出圖片至前端
 	@RequestMapping(path = "/ShowAccountPic")
 	public @ResponseBody ResponseEntity<byte[]> ShowAccountPic(@ModelAttribute("userDetail") AccountBean userDetail)
 			throws IOException {
@@ -114,7 +114,7 @@ public class AccountController {
 		headers.setContentType(MediaType.IMAGE_PNG);
 		return new ResponseEntity<byte[]>(userDetail.getPicture(), headers, HttpStatus.OK);
 	}
-
+    //修改圖片
 	@RequestMapping(path = "/udAccountImg")
 	public @ResponseBody String udAccountImg(@RequestParam String username, @RequestParam("Apicture") MultipartFile img,
 			Model m) throws IOException {

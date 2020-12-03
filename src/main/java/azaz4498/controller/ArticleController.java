@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -60,12 +61,23 @@ public class ArticleController {
 	public String previewPageTest() {
 		return "azaz4498/articlePreview";
 	}
+	@RequestMapping(path = "/admin/preview.controller", method = RequestMethod.POST)
+	public String articlePreview(Model m,@RequestParam(name = "artTitle")String artTitle,@RequestParam(name = "artContent")String artContent, @RequestParam(name = "artUserid")String artUserid, @RequestParam(name = "artType")String artType ) {
+		m.addAttribute("artTitle", artTitle);
+		m.addAttribute("artContent", artContent);
+		m.addAttribute("artUserid",artUserid);
+		m.addAttribute("artType", artType);
+		
+		
+		return "azaz4498/articlePreview";
+		
+	}
+	
 	@RequestMapping(path = "/admin/Forum")
 	public String ForumEntry(Model m) {
 		m.addAttribute("artBean", articleService.showAllArticles());
 //		return "azaz4498/F_index";
 		return "azaz4498/F_JSONindex";
-
 	}
 
 	@RequestMapping(path = "/admin/Article.controller.json", method = RequestMethod.GET, produces = {
@@ -213,9 +225,9 @@ public class ArticleController {
 		return "redirect:/admin/Forum";
 	}
 
-	@RequestMapping(path = "/admin/imgUpload/{artId}", method = RequestMethod.POST)
+	@RequestMapping(value = {"/admin/imgUpload/{artId}","/admin/imgUpload"}, method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> imgUpload(@RequestParam(name = "upload") MultipartFile uploadFile,
-			HttpServletRequest request, @PathVariable(name = "artId") Integer articleId) throws IOException {
+			HttpServletRequest request, @PathVariable(name = "artId",required = false) Integer articleId) throws IOException {
 		Map<String, String> map = new HashMap<String, String>();
 
 		String fileName = uploadFile.getOriginalFilename();

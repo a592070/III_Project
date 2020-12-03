@@ -12,6 +12,8 @@ public class Constant {
 
     public static final String CHATROOM_CLIENTS = "chatRoomClients";
     public static final String LOGIN = "Login";
+    public static final String ADMIN_BEAN = "adminBean";
+
     public static final String HISTORY_MESSAGE = "historyMsg";
 
     public static final String WEB_INF_PATH = "/WEB-INF";
