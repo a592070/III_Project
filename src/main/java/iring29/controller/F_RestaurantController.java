@@ -26,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
+import iring29.model.UserPage;
 import iring29.service.F_RestaurantService;
+import oracle.net.aso.m;
 import utils.StringUtil;
 
 import java.math.BigDecimal;
@@ -38,10 +40,28 @@ public class F_RestaurantController {
 
 	@Autowired
 	private F_RestaurantService F_Serivce;
+	
+	@Autowired
+	private UserPage userPage;
+	
+	private int start = 0;
 
 	@RequestMapping(path = "/Restaurant_index")
-	public String RestaurantDisplay() {
-		return "iring29/Restaurant_index";
+	public String RestaurantDisplay(Model m) {
+		String name = "";
+//		int currentPage = 1;
+		int size = F_Serivce.numRestaurant(name);
+		userPage.setTotalCount(size);
+//		int pageSize = userPage.getPageSize();
+//		int totalPage = userPage.getTotalPageCount();
+		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), name);
+		
+		m.addAttribute("res_data", res_data);
+		m.addAttribute("userPage", userPage);
+//		m.addAttribute("currentPage", currentPage);
+//		m.addAttribute("totalPage", totalPage);
+		
+		return "iring29/Restaurant";
 	}
 
 	@RequestMapping(path = "/SearchRestaurant", method = RequestMethod.POST)
@@ -68,10 +88,10 @@ public class F_RestaurantController {
 				session.setAttribute("person_number", person_number);
 				return "iring29/DisplayRestaurant";
 			} else if (num > 1) {
-				List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_R(restaurant_name);
-				session.setAttribute("res_data", Multi_Rdata);
-				session.setAttribute("book_date", book_date);
-				session.setAttribute("person_number", person_number);
+//				List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_R(restaurant_name);
+//				session.setAttribute("res_data", Multi_Rdata);
+//				session.setAttribute("book_date", book_date);
+//				session.setAttribute("person_number", person_number);
 				return "iring29/MultiRestaurant";
 
 			} else {

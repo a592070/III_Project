@@ -8,8 +8,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>找餐廳</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
+<style type="text/css">
+.R_info{
+	height:250px;
+}
+.one{
+	height:120px;
+}
+.type{
+	height:50px;
+}
+h3{
+	height:80px;
+}
+</style>    
+
 </head>
 <body>
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 	
     <!-- Start nav -->
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
@@ -160,7 +177,7 @@
 		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
 		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
-    							<span class="icon-search2"></span>
+    									<span class="icon-search2"></span>
     								</div>
 		    					</a>
 		    					<Input type='hidden' name='restaurant_name' value='${res.name}'>
@@ -169,6 +186,7 @@
 		    				</form>
 		    					<div class="text p-3">
 		    						<form action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    						<div class="R_info">
 		    						<div class="d-flex">
 		    							<div class="one">
 				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
@@ -194,7 +212,7 @@
 <!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
 		    							</div>
 		    						</div>
-		    						<p>${res.type}</p>
+		    						<p class="type">${res.type}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>&emsp;${res.region}</span> 
@@ -203,6 +221,7 @@
 										<Input type='hidden' name='book_date' value='${book_date}'>
 										<Input type='hidden' name='person_number' value='${person_number}'>
 		    						</p>
+		    						</div>
 		    					</form>
 		    					</div>
 		    				</div>
@@ -252,11 +271,14 @@
 		            <div class="block-27">
 		              <ul>
 		                <li><a href="#">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
+		              <c:forEach var="page"  begin="${userPage.currentPage}" end="${userPage.totalPageCount}">
+		              	<li><a href="#">${page}</a></li>
+		              </c:forEach>
+<!-- 		                <li class="active"><span>1</span></li> -->
+<!-- 		                <li><a href="#">2</a></li> -->
+<!-- 		                <li><a href="#">3</a></li> -->
+<!-- 		                <li><a href="#">4</a></li> -->
+<!-- 		                <li><a href="#">5</a></li> -->
 		                <li><a href="#">&gt;</a></li>
 		              </ul>
 		            </div>

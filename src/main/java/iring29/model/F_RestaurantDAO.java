@@ -35,13 +35,16 @@ public class F_RestaurantDAO {
 		}
 
 		// find multiple restaurant by restaurant name
-		public List<Restaurant_VO> findMulti_R(String name) {
-			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0");
+		public List<Restaurant_VO> findMulti_R(int first, int count, String name) {
+			Query<Restaurant_VO> query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0", Restaurant_VO.class);
 			System.out.println("start findMulti_R");
 			query.setParameter(0, "%" + name + "%");
-
-			List<Restaurant_VO> rBeans = query.list();
-			return rBeans;
+			// 找第幾筆
+			query.setFirstResult(first);
+			// 從第幾筆開始count筆
+			query.setMaxResults(count);
+			
+			return query.list();
 		}
 		
 		// find specific restaurant by restaurant name

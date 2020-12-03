@@ -44,8 +44,8 @@ public class F_RestaurantService {
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Restaurant_VO> findMulti_R(String name) {
-		return f_RDao.findMulti_R(name);
+	public List<Restaurant_VO> findMulti_R(int first, int count,String name) {
+		return f_RDao.findMulti_R(first, count, name);
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
