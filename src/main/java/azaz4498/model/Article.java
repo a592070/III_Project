@@ -170,8 +170,10 @@ public class Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Article [artCreTime=" + artCreTime + "]";
+		return "Article [artContent=" + artContent + "]";
 	}
+
+	
 
 	
 
