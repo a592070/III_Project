@@ -28,7 +28,7 @@ public class F_RestaurantDAO {
 		
 		// search how many Restaurant
 		public int numRestaurant(String name, String region) {
-			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Restaurant_VO where name like ?0 and region like?1", Integer.class);
+			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Restaurant_VO where name like ?0 and region like?1 and status = 'Y'", Integer.class);
 			query.setParameter(0, "%" + name + "%");
 			query.setParameter(1, "%" + region + "%");
 			return query.uniqueResult().intValue();
@@ -37,7 +37,7 @@ public class F_RestaurantDAO {
 
 		// find multiple restaurant by restaurant name
 		public List<Restaurant_VO> findMulti_R(int first,int count, String name, String region) {
-			Query<Restaurant_VO> query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region like ?1 order by r_sn", Restaurant_VO.class);
+			Query<Restaurant_VO> query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region like ?1 and status = 'Y' order by r_sn", Restaurant_VO.class);
 			System.out.println("start findMulti_R");
 			query.setParameter(0, "%" + name + "%");
 			query.setParameter(1, "%" + region + "%");

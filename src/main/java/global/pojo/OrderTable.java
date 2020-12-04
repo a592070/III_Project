@@ -31,10 +31,11 @@ import rambo0021.pojo.AccountBean;
 @Table(name = "ORDER_TABLE")
 public class OrderTable {
 
-	@Id
+	@Id@Column(name = "ORDER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private BigDecimal order_id;
-	@Column(name = "ORDER_DATE")
+//	@Column(name = "ORDER_DATE")
+	@Transient
 	private Timestamp order_date;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERNAME")
