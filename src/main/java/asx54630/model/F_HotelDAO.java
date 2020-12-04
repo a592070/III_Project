@@ -26,9 +26,9 @@ public class F_HotelDAO {
 		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
 	}
 	
-	public List<HotelView> totalHotel(int first, int count) {
+	public List<Hotel> totalHotel(int first, int count) {
 		Session session = sessionFactory.getCurrentSession();
-		Query<HotelView> query = session.createQuery("from HotelView order by SN", HotelView.class);
+		Query<Hotel> query = session.createQuery("from Hotel order by SN", Hotel.class);
 		// 找第幾筆
 		query.setFirstResult(first);
 		// 從第幾筆開始count筆

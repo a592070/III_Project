@@ -76,12 +76,12 @@ public class H_Controller {
 	
 	
 	@RequestMapping(path = "/hotelPage", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //分頁.搜尋.排序
-	public ModelAndView processHotelPage(@RequestParam(name = "keyword",required = false) String keyword,
+	public String processHotelPage(@RequestParam(name = "keyword",required = false) String keyword,
 										@RequestParam(name = "regionkeywd",required = false) String regionkeywd,
 										@RequestParam(name = "typekeywd",required = false) String typekeywd,
 										@RequestParam(name = "currentPage") int currentPage,
 										@RequestParam(name = "orderfiled") String orderfiled,
-										@RequestParam(name = "order") String order) {
+										@RequestParam(name = "order") String order,Model m) {
 
 		hpage.sethPageSize(PAGESIZE);
 		int size = hService.howMuchData(keyword, regionkeywd, typekeywd);
@@ -95,12 +95,14 @@ public class H_Controller {
 		// 1->10 2->20 (currentPage)*pagesize
 		
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("hoteldata", hoteldata);
-		mav.addObject("hpage", hpage);
-		mav.setViewName("asx54630/H_search");
+//		ModelAndView mav = new ModelAndView();
+		m.addAttribute("hoteldata", hoteldata);
+		m.addAttribute("hpage", hpage);
+//		mav.addObject("hoteldata", hoteldata);
+//		mav.addObject("hpage", hpage);
+//		mav.setViewName("asx54630/H_search");
 		
-		return mav;
+		return "asx54630/H_search";
 		}
 	
 //	@RequestMapping(path = "/hotelselect", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //查詢

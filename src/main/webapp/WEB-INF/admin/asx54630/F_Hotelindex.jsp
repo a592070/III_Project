@@ -82,10 +82,10 @@
 		                <input type="text" class="form-control" placeholder="輸入關鍵字...">
 		              </div>
 		              <div class="form-group">
-		                <input type="date" id="checkin_date" class="form-control" placeholder="幾號入住?" value="">
+		                <input type="text" id="checkin_date" class="form-control" placeholder="幾號入住?" value="">
 		              </div>
 		              <div class="form-group">
-		                <input type="date" id="checkin_date" class="form-control" placeholder="幾號退房?" value="">
+		                <input type="text" id="checkin_date" class="form-control" placeholder="幾號退房?" value="">
 		              </div>
 		              <div class="form-group">
 		                <input type="submit" value="找住宿" class="btn btn-primary py-3 px-5">
@@ -129,8 +129,10 @@
 							</form>
         		</div>
           </div>
+
           <div class="col-lg-9">
           	<div class="row">
+          	<c:forEach var="hotels" items="${hoteldata}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
 		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://i.imgur.com/D690ggE.jpg');">
@@ -141,7 +143,7 @@
 		    					<div class="text p-3">
 		    						<div class="d-flex">
 		    							<div class="one">
-				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
+				    						<h3><a href="hotel-single.html">${hotels.NAME}</a></h3>
 				    						<p class="rate">
 				    							<i class="icon-star"></i>
 				    							<i class="icon-star"></i>
@@ -155,16 +157,16 @@
 			    							<span class="price per-price">$40<br><small>/night</small></span>
 		    							</div>
 		    						</div>
-		    						<p>Far far away, behind the word mountains, far from the countries</p>
+		    						<p>${hotels.TYPE}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
+		    							<span><i class="icon-map-o"></i>&emsp;${hotels.REGION}</span> 
 		    							<span class="ml-auto"><a href="#">Book Now</a></span>
 		    						</p>
 		    					</div>
 		    				</div>
 		    			</div>
-		    			
+		    		</c:forEach>
           	</div>
           	<div class="row mt-5">
 		          <div class="col text-center">
@@ -172,6 +174,7 @@
 		              <ul>
 		                <li><a href="#">&lt;</a></li>
 		                <li class="active"><span>1</span></li>
+<!-- 						<li><input type="button" value="Submit" id="button-1"/></li> -->
 		                <li><a href="#">2</a></li>
 		                <li><a href="#">3</a></li>
 		                <li><a href="#">4</a></li>
@@ -181,7 +184,9 @@
 		            </div>
 		          </div>
 		        </div>
-          </div> <!-- .col-md-8 -->
+          </div> 
+         
+          <!-- .col-md-8 -->
         </div>
       </div>
     </section> <!-- .section -->
@@ -248,6 +253,11 @@
         </div>
       </div>
     </footer>
+    
+    <script type="text/javascript">
+	
+
+    </script>
     
   
 
