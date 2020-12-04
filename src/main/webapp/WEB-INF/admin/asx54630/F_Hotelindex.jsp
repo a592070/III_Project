@@ -21,7 +21,7 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="index.html">Home</a></span> <span>Hotel</span></p>
+            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 台灣</span></p>
             <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Hotels</h1>
           </div>
         </div>
@@ -172,7 +172,7 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
-		                <li><a href="#">&lt;</a></li>
+		                <li><a href="#" id="">&lt;</a></li>
 		                <li class="active"><span>1</span></li>
 <!-- 						<li><input type="button" value="Submit" id="button-1"/></li> -->
 		                <li><a href="#">2</a></li>
@@ -185,6 +185,67 @@
 		          </div>
 		        </div>
           </div> 
+          <script type="text/javascript">
+         $("#page-previous").click(function () {
+			console.log("前一頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-previous").val()
+			currentPage--;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response)
+
+						}
+
+					}
+				)
+		})
+		
+		$("#page-next").click(function () {
+			console.log("下一頁")
+			var orderfiled = $("#orderfiled").val()
+			var keyword = $("#keyword").val()
+			var regionkeywd = $("#regionkeywd").val()
+			var typekeywd = $("#typekeywd").val()
+			var order = $("#order").val()
+			var pagebotton = $("#page-next").val()
+			currentPage++;
+			console.log("keyword =" + keyword);
+			console.log("regionkeywd =" + regionkeywd);
+			console.log("typekeywd =" + typekeywd);
+			console.log("pagebotton =" + pagebotton);
+			console.log("currentPage =" + currentPage);
+			$("#tbody").children().remove();
+			$.ajax(
+					{
+						type: 'POST',
+						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						dataType: 'html',
+						success: function (response) {
+							$("#tbody").append(response);
+
+						}
+
+					}
+				)
+		})
+		</script>
          
           <!-- .col-md-8 -->
         </div>
