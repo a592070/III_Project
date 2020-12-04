@@ -1,6 +1,7 @@
 package iring29.model;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -75,5 +76,6 @@ public class Restaurant_VO {
 	public void setPic(byte[] pic) {
 		this.pic = pic;
 	}
+
 
 }

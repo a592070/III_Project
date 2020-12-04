@@ -5,41 +5,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>找餐廳</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<c:import url="/WEB-INF/admin/fragment/user_ref.jsp" />   
-
-<style>
-* {
-	margin: 0;
-	padding: 0;
-}
-
-body{
-	margin:0px;
-	padding:0px;
-	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat;
-	background-size: cover;　
-}    
-
-.Rbody{
- 	background:white; 
-	margin:150px;
-/* 	padding-top:30 50px; */
-	padding-left:25px;
-	padding-right:25px;
-}
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
+<style type="text/css">
 .R_info{
 	height:250px;
 }
-h3{
-	height:100px;
+.one{
+	height:120px;
 }
-.div_box{
-	text-align: center;
-}
-.heading.mb-4{
+.type{
 	height:50px;
+}
+h3{
+	height:80px;
 }
 .btn.btn-warning{
 	border-radius: 5px;
@@ -48,25 +28,55 @@ h3{
 	border: 1px solid #f85959;
     color: #fff;
 }
-</style>
+
+/* .block-27 ul li button{ */
+/* 	color: #f85959; */
+/*     text-align: center; */
+/*     display: inline-block; */
+/*     width: 40px; */
+/*     height: 40px; */
+/*     line-height: 40px; */
+/*     border-radius: 50%; */
+/*     border: 1px solid #fdd3d3; */
+/*     background-color: transparent; */
+/* } */
+</style>    
+
 </head>
 <body>
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 	
+    <!-- Start nav -->
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
+    <!-- END nav -->
     
-	<!-- body -->
-	<div class="Rbody">
-	 <section class="ftco-section ftco-degree-bg">
+    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/res_index.jpg');">
+      <div class="overlay"></div>
       <div class="container">
-        <div class="row">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+          <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 台灣</span></p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">探索臺灣的美食</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <section class="ftco-section ftco-degree-bg">
+      <div class="container">
+        <div class="row" id="index">
         	<div class="col-lg-3 sidebar">
-        		<div class="sidebar-wrap bg-light">
+        		<div class="sidebar-wrap bg-light ftco-animate">
         			<h3 class="heading mb-4">找餐廳</h3>
-        			<FORM ACTION="<%=pageContext.getServletContext().getContextPath()%>/SearchRestaurant" method="post">
+        			<form action="<%=pageContext.getServletContext().getContextPath()%>/SearchRestaurant" method="post">
         				<div class="fields">
 		              <div class="form-group">
-		              <span class="sp_search">地區搜尋</span> 
-		                <select name="region_name" id="region" class="form-control">
-								<option value="">請選擇地區</option>
+		                <div class="select-wrap one-third">
+	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+	                    <span class="sp_search">地區搜尋</span> 
+	                    <select name="region_name" id="region" class="form-control">
+	                      <option value="">請選擇地區</option>
 								<option value="基隆">基隆</option>
 								<option value="新北">新北</option>
 								<option value="台北">台北</option>
@@ -87,38 +97,39 @@ h3{
 								<option value="澎湖">澎湖</option>
 								<option value="金門">金門</option>
 								<option value="連江">連江</option>
-							</select>
+	                    </select>
+	                  </div>
 		              </div>
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
 						<span class="sp_search">餐廳名稱搜尋</span> 
-						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字" class="form-control">
-	                  </div>
+						<input type="text" name="restaurant_name" id="restaurant_name" placeholder="請輸入關鍵字" class="form-control">
 		              </div>
 		              <div class="form-group">
-		              <span class="sp_search">用餐日期</span> 
+		                <span class="sp_search">用餐日期</span> 
 		                <input type="date" name="book_date" id="theDate" min="" class="form-control">
-					<script>
-						var date = new Date();
+							<script>
+								var date = new Date();
 
-						var day = date.getDate();
-						var month = date.getMonth() + 1;
-						var year = date.getFullYear();
+								var day = date.getDate();
+								var month = date.getMonth() + 1;
+								var year = date.getFullYear();
 
-						if (month < 10)
-							month = "0" + month;
-						if (day < 10)
-							day = "0" + day;
+								if (month < 10)
+									month = "0" + month;
+								if (day < 10)
+									day = "0" + day;
 
-						var today = year + "-" + month + "-" + day;
-						console.log(typeof(today));
-						document.getElementById("theDate").value = today;
-						document.getElementById("theDate").min = today;
+								var today = year + "-" + month + "-" + day;
+								console.log(typeof(today));
+								document.getElementById("theDate").value = today;
+								document.getElementById("theDate").min = today;
 						
-					</script>
+							</script>
+		              </div>
 		              </div>
 		              <div class="form-group">
-		              <span class="sp_search">用餐人數</span> 
+		              	<span class="sp_search">用餐人數</span> 
 		                <select name="person_number" id="inputState" class="form-control">
 						<option value="1">1</option>
 						<option value="2">2</option>
@@ -130,17 +141,15 @@ h3{
 						<option value="8">8</option>
 						<option value="9">9</option>
 						<option value="10">10</option>
-					</select>
-		              </div>
-		              <div class="form-group">
+						</select>
 		              </div>
 		              <div class="form-group">
 		                <input type="submit" value="找餐廳" class="btn btn-primary py-3 px-5">
 		              </div>
 		            </div>
-	            </FORM>
+	            </form>
         		</div>
-        		<div class="sidebar-wrap bg-light ">
+        		<div class="sidebar-wrap bg-light ftco-animate">
         			<h3 class="heading mb-4">Star Rating</h3>
         			<form method="post" class="star-rating">
 							  <div class="form-check">
@@ -178,39 +187,32 @@ h3{
           </div>
           
           <!-- Display stores -->
-          <div class="col-lg-9">
+          	<div class="col-lg-9" id="r_content">
           	<div class="row">
           	
           	<c:forEach var="res" items="${res_data}">
-          		<div class="col-md-4 ">
+          		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    				<FORM id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
 		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
-    								<span class="icon-search2"></span>
-    								<script type="text/javascript">
-//     								console.log("pic = " + Base64.encode("${res.pic}"));
-    								</script>
+    									<span class="icon-search2"></span>
     								</div>
 		    					</a>
 		    					<Input type='hidden' name='restaurant_name' value='${res.name}'>
 								<Input type='hidden' name='book_date' value='${book_date}'>
 								<Input type='hidden' name='person_number' value='${person_number}'>
-		    				</FORM>
+		    				</form>
 		    					<div class="text p-3">
-		    						<FORM action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    						<form action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
 		    						<div class="R_info">
 		    						<div class="d-flex">
 		    							<div class="one">
 				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
-				    						<p class="rate"  id="test${res.r_sn}" >
-<!-- 				    							<i id="stars" class="icon-star" ></i> -->
-<!-- 				    							<i id="stars" class="icon-star" ></i> -->
-<!-- 				    							<i id="stars" class="icon-star" ></i> -->
-<!-- 				    							<i id="stars" class="icon-star" ></i> -->
-<!-- 				    							<i id="stars" class="icon-star-o" ></i> -->
+				    						<p class="rate" id="test${res.r_sn}" >
 				    							<span>${res.rating}</span>
 				    						</p>
+			    						</div>
 				    						<script>
 				    						var star = Math.floor("${res.rating}");
 											console.log("star = " + star);
@@ -225,13 +227,11 @@ h3{
 												}
 											$("#test${res.r_sn}").prepend(tags, zerostar);
 				    						</script>
-			    						</div>
 			    						<div class="two">
 <!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
 		    							</div>
 		    						</div>
-		    						<p>${res.type}</p>
-		    						</div>
+		    						<p class="type">${res.type}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>&emsp;${res.region}</span> 
@@ -240,50 +240,70 @@ h3{
 										<Input type='hidden' name='book_date' value='${book_date}'>
 										<Input type='hidden' name='person_number' value='${person_number}'>
 		    						</p>
-		    						</FORM>
+		    						</div>
+		    					</form>
 		    					</div>
 		    				</div>
 		    			</div>
-		    			</c:forEach>
-		    			
-		    			
+		    			</c:forEach>		    			
           	</div>
-          	<div class="row mt-5">
+          	<!-- Page -->
+          		<div class="row mt-5">
 		          <div class="col text-center">
-		            <div class="block-27">
+		            <div class="block-27" id="pageinfo">
 		              <ul>
-		                <li><a href="#">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
-		                <li><a href="#">&gt;</a></li>
+		                <li><a href="javascript:;" id="page-botton">&lt;</a></li>
+		              <c:forEach var="page"  begin="1" end="${userPage.totalPageCount}">
+		              	<li id="${page}" value="${page}"><a href="#" onclick="return false" id="clickbtn" >${page}</a></li>
+		              </c:forEach>
+		              	<li><a href="javascript:;" id="page-botton">&gt;</a></li>
 		              </ul>
-		<br>                     
-      	<div class="div_box">
-		<div class="search">
-		
-		<FORM  action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_index" >
-			<button class="btn btn-success">重新查詢</button>
-		</FORM>
-		
-		</div>
-		</div>
-		            </div>		              
-		          </div>		        
-		        </div>
-          </div> 
-          <!-- .col-md-8 -->
+		            </div>
+		          </div>
+		        </div>  <!-- .Page -->
+		        <script>
+				$("#${userPage.currentPage}").attr("class","active");
+				$("#${userPage.currentPage}").remove("a");
+		        </script>
+          </div> <!-- .col-md-8 -->
+          
+          <script>
+          $("#index").on('click', '#clickbtn', function (e) {
+			
+				var region_name = $("#region").val();
+				var restaurant_name = $("#restaurant_name").val();
+				var book_date = $("#theDate").val();
+				var person_number = $("#inputState").val();
+				var currentPage = (e.target.text);
+				console.log(region_name, restaurant_name, book_date, person_number, currentPage)
+				$.ajax(
+	                    {
+	                        type: 'POST',
+	                        data: { "region_name":region_name, "restaurant_name":restaurant_name, "book_date":book_date,"person_number":person_number ,"currentPage": currentPage},
+	                        url: '${pageContext.servletContext.contextPath}/SearchRestaurant',
+	                        dataType: 'html',
+	                        success:function(response){
+	                            $("#r_content").children().remove();
+	                            $("#r_content").append(response);
+	                        }
+	                    }
+	                )
+				})
+          
+          </script>
+          
         </div>
       </div>
-
     </section> 
     <!-- .section -->
-	</div>
 
-	
+  <!-- footer -->
+     <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
 
-
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>    
+    
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
 </body>
 </html>
