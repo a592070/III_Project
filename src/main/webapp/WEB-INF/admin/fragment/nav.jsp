@@ -16,6 +16,11 @@
     position: absolute;
     top: -0.5px;
 }
+.ftco-navbar-light.scrolled .nav-link .icon-shopping-cart{
+    padding-top: 0.9rem !important;
+    padding-bottom: 0.9rem !important;
+    color: #000000 !important;
+}
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">

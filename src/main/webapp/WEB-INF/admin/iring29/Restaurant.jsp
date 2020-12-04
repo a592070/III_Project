@@ -28,6 +28,18 @@ h3{
 	border: 1px solid #f85959;
     color: #fff;
 }
+
+/* .block-27 ul li button{ */
+/* 	color: #f85959; */
+/*     text-align: center; */
+/*     display: inline-block; */
+/*     width: 40px; */
+/*     height: 40px; */
+/*     line-height: 40px; */
+/*     border-radius: 50%; */
+/*     border: 1px solid #fdd3d3; */
+/*     background-color: transparent; */
+/* } */
 </style>    
 
 </head>
@@ -53,7 +65,7 @@ h3{
 
     <section class="ftco-section ftco-degree-bg">
       <div class="container">
-        <div class="row">
+        <div class="row" id="index">
         	<div class="col-lg-3 sidebar">
         		<div class="sidebar-wrap bg-light ftco-animate">
         			<h3 class="heading mb-4">找餐廳</h3>
@@ -91,7 +103,7 @@ h3{
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
 						<span class="sp_search">餐廳名稱搜尋</span> 
-						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字" class="form-control">
+						<input type="text" name="restaurant_name" id="restaurant_name" placeholder="請輸入關鍵字" class="form-control">
 		              </div>
 		              <div class="form-group">
 		                <span class="sp_search">用餐日期</span> 
@@ -175,7 +187,7 @@ h3{
           </div>
           
           <!-- Display stores -->
-          	<div class="col-lg-9">
+          	<div class="col-lg-9" id="r_content">
           	<div class="row">
           	
           	<c:forEach var="res" items="${res_data}">
@@ -200,6 +212,7 @@ h3{
 				    						<p class="rate" id="test${res.r_sn}" >
 				    							<span>${res.rating}</span>
 				    						</p>
+			    						</div>
 				    						<script>
 				    						var star = Math.floor("${res.rating}");
 											console.log("star = " + star);
@@ -214,7 +227,6 @@ h3{
 												}
 											$("#test${res.r_sn}").prepend(tags, zerostar);
 				    						</script>
-			    						</div>
 			    						<div class="two">
 <!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
 		    							</div>
@@ -233,60 +245,18 @@ h3{
 		    					</div>
 		    				</div>
 		    			</div>
-		    			</c:forEach>
-		    			
-<!-- 		    			<div class="col-md-4 ftco-animate"> -->
-<!-- 		    				<div class="destination"> -->
-<!-- 		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-2.jpg);"> -->
-<!-- 		    						<div class="icon d-flex justify-content-center align-items-center"> -->
-<!--     							<span class="icon-search2"></span> -->
-<!--     						</div> -->
-<!-- 		    					</a> -->
-<!-- 		    					<div class="text p-3"> -->
-<!-- 		    						<div class="d-flex"> -->
-<!-- 		    							<div class="one"> -->
-<!-- 				    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3> -->
-<!-- 				    						<p class="rate"> -->
-<!-- 				    							<i class="icon-star"></i> -->
-<!-- 				    							<i class="icon-star"></i> -->
-<!-- 				    							<i class="icon-star"></i> -->
-<!-- 				    							<i class="icon-star"></i> -->
-<!-- 				    							<i class="icon-star-o"></i> -->
-<!-- 				    							<span>8 Rating</span> -->
-<!-- 				    						</p> -->
-<!-- 			    						</div> -->
-<!-- 			    						<div class="two"> -->
-<!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
-<!-- 		    							</div> -->
-<!-- 		    						</div> -->
-<!-- 		    						<p>Far far away, behind the word mountains, far from the countries</p> -->
-<!-- 		    						<hr> -->
-<!-- 		    						<p class="bottom-area d-flex"> -->
-<!-- 		    							<span><i class="icon-map-o"></i> Miami, Fl</span>  -->
-<!-- 		    							<span class="ml-auto"><a href="#">Book Now</a></span> -->
-<!-- 		    						</p> -->
-<!-- 		    					</div> -->
-<!-- 		    				</div> -->
-<!-- 		    			</div> -->
-		    			
-		    			
-		    			
+		    			</c:forEach>		    			
           	</div>
           	<!-- Page -->
           		<div class="row mt-5">
 		          <div class="col text-center">
-		            <div class="block-27">
+		            <div class="block-27" id="pageinfo">
 		              <ul>
-		                <li><a href="#">&lt;</a></li>
-		              <c:forEach var="page"  begin="${userPage.currentPage}" end="${userPage.totalPageCount}">
-		              	<li id="${page}"><a href="#">${page}</a></li>
+		                <li><a href="javascript:;" id="page-botton">&lt;</a></li>
+		              <c:forEach var="page"  begin="1" end="${userPage.totalPageCount}">
+		              	<li id="${page}" value="${page}"><a href="#" onclick="return false" id="clickbtn" >${page}</a></li>
 		              </c:forEach>
-<!-- 		                <li class="active"><span>1</span></li> -->
-<!-- 		                <li><a href="#">2</a></li> -->
-<!-- 		                <li><a href="#">3</a></li> -->
-<!-- 		                <li><a href="#">4</a></li> -->
-<!-- 		                <li><a href="#">5</a></li> -->
-<!-- 		                <li><a href="#">&gt;</a></li> -->
+		              	<li><a href="javascript:;" id="page-botton">&gt;</a></li>
 		              </ul>
 		            </div>
 		          </div>
@@ -296,6 +266,32 @@ h3{
 				$("#${userPage.currentPage}").remove("a");
 		        </script>
           </div> <!-- .col-md-8 -->
+          
+          <script>
+          $("#index").on('click', '#clickbtn', function (e) {
+			
+				var region_name = $("#region").val();
+				var restaurant_name = $("#restaurant_name").val();
+				var book_date = $("#theDate").val();
+				var person_number = $("#inputState").val();
+				var currentPage = (e.target.text);
+				console.log(region_name, restaurant_name, book_date, person_number, currentPage)
+				$.ajax(
+	                    {
+	                        type: 'POST',
+	                        data: { "region_name":region_name, "restaurant_name":restaurant_name, "book_date":book_date,"person_number":person_number ,"currentPage": currentPage},
+	                        url: '${pageContext.servletContext.contextPath}/SearchRestaurant',
+	                        dataType: 'html',
+	                        success:function(response){
+	                            $("#r_content").children().remove();
+	                            $("#r_content").append(response);
+	                        }
+	                    }
+	                )
+				})
+          
+          </script>
+          
         </div>
       </div>
     </section> 

@@ -23,29 +23,29 @@ public class F_RestaurantService {
 		this.f_RDao = f_RDao;
 	}
 	
-	@Transactional(rollbackFor = { Throwable.class })
-	public List<Restaurant_VO> findMulti_Name_Region(String name, String region) {
-		return f_RDao.findMulti_Name_Region(name, region);
-	}
+//	@Transactional(rollbackFor = { Throwable.class })
+//	public List<Restaurant_VO> findMulti_Name_Region(String name, String region) {
+//		return f_RDao.findMulti_Name_Region(name, region);
+//	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
 	public Restaurant findRestaurant(String name) {
 		return f_RDao.findRestaurant(name);
 	}
 	
+//	@Transactional(rollbackFor = { Throwable.class })
+//	public List<Restaurant_VO> findRegion(String region) {
+//		return f_RDao.findRegion(region);
+//	}
+	
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Restaurant_VO> findRegion(String region) {
-		return f_RDao.findRegion(region);
+	public int numRestaurant(String name, String region) {
+		return f_RDao.numRestaurant(name, region);
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public int numRestaurant(String name) {
-		return f_RDao.numRestaurant(name);
-	}
-	
-	@Transactional(rollbackFor = { Throwable.class })
-	public List<Restaurant_VO> findMulti_R(int first, int count,String name) {
-		return f_RDao.findMulti_R(first, count, name);
+	public List<Restaurant_VO> findMulti_R(int first, int count, String name, String region) {
+		return f_RDao.findMulti_R(first, count, name, region);
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
