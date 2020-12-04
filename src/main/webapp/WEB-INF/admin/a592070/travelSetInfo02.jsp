@@ -13,12 +13,11 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
     <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/http-vue-loader"></script>
     <script src="https://unpkg.com/vuex"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/layer/layer.js"></script>
     <script>
         ELEMENT.locale(ELEMENT.lang.en);
     </script>
@@ -63,15 +62,5 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    // Vue.use(httpVueLoader);
-    // var App = new Vue({
-    //     el: '#app',
-    //     components: {
-    //         'index': httpVueLoader(context+'/assets/a592070/js/components/main.vue')
-    //     },
-    //     store: httpVueLoader(context + '/assets/a592070/js/Store.js')
-    // })
-</script>
 </body>
 </html>

@@ -256,6 +256,60 @@ module.exports = {
   components: {
     "travel-set-select-item": httpVueLoader(context + '/assets/a592070/js/components/travelSetSelectItem.vue')
   },
+  props: {
+    initTravelSetDetail: {
+      travelSetInfo: {
+        sn: 0,
+        createdUser: '',
+        name: '',
+        description: '',
+        createdTime: '',
+        updateTime: '',
+        priority: 0,
+        status: false
+      },
+      travelSetAttractions: [
+        {
+          sn: 0,
+          time: '',
+          attraction: {
+            sn: 0,
+            name: ''
+          }
+        }
+      ],
+      travelSetRestaurants: [
+        {
+          sn: 0,
+          time: '',
+          restaurant: {
+            sn: 0,
+            name: ''
+          }
+        }
+      ],
+      travelSetHotels: [
+        {
+          sn: 0,
+          time: '',
+          hotel: {
+            sn: 0,
+            name: ''
+          }
+        }
+      ],
+      travelSetCars: [
+        {
+          sn: 0,
+          time: '',
+          car: {
+            sn: 0,
+            name: ''
+          }
+        }
+      ]
+    }
+  },
   data() {
     return {
       loading: true,
@@ -265,62 +319,11 @@ module.exports = {
       selectTravelSetItemLoading: false,
       selectTravelSetItemData: {},
       currentSelectTravelSetItem: {},
-      travelSetDetail: {
-        travelSetInfo: {
-          sn: 0,
-          createdUser: '',
-          name: '',
-          description: '',
-          createdTime: '',
-          updateTime: '',
-          priority: 0,
-          status: false
-        },
-        travelSetAttractions: [
-          {
-            sn: 0,
-            time: '',
-            attraction: {
-              sn: 0,
-              name: ''
-            }
-          }
-        ],
-        travelSetRestaurants: [
-          {
-            sn: 0,
-            time: '',
-            restaurant: {
-              sn: 0,
-              name: ''
-            }
-          }
-        ],
-        travelSetHotels: [
-          {
-            sn: 0,
-            time: '',
-            hotel: {
-              sn: 0,
-              name: ''
-            }
-          }
-        ],
-        travelSetCars: [
-          {
-            sn: 0,
-            time: '',
-            car: {
-              sn: 0,
-              name: ''
-            }
-          }
-        ]
-      }
+      travelSetDetail: this.initTravelSetDetail
     }
   },
   created: function () {
-    this.initData();
+    // this.initData();
     // this.testData();
     // this.loading = false;
   },
@@ -353,7 +356,8 @@ module.exports = {
             this.$store.commit("setTravelSetDetail", response.data);
 
 
-            this.travelSetDetail = this.$store.state.currentEditTravelSetDetail;
+            // this.travelSetDetail = this.$store.state.currentEditTravelSetDetail;
+            this.travelSetDetail = this.$store.getters.getTravelSetDetail;
             console.log(this.travelSetDetail)
             this.loading = false;
           });

@@ -1,4 +1,4 @@
-Vue.use(Vuex);
+Vue.use(vuex);
 const store = new Vuex.Store({
     state: {
         storeData: "HHHHello",
@@ -109,10 +109,10 @@ const store = new Vuex.Store({
             state.currentEditTravelSetInfo = newTravelSetInfo;
         },
         setTravelSetDetail(state, newTravelSetDetail){
-            this.state.currentEditTravelSetDetail = newTravelSetDetail;
+            state.currentEditTravelSetDetail = newTravelSetDetail;
         },
         setTravelSetSelectItem(state, newTravelSetSelectItem){
-            this.state.currentEditTravelSetSelectItem = newTravelSetSelectItem;
+            state.currentEditTravelSetSelectItem = newTravelSetSelectItem;
         }
 
     }
