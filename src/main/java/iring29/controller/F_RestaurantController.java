@@ -33,7 +33,9 @@ import oracle.net.aso.m;
 import utils.StringUtil;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 
 @Controller
@@ -49,10 +51,15 @@ public class F_RestaurantController {
 	private int start = 0;
 
 	@RequestMapping(path = "/Restaurant_index")
-	public String RestaurantDisplay(Model m) {
+	public String RestaurantDisplay(HttpSession session, Model m) {
 		String name = "";
 		String region = "";
 		start = 0;
+		Date date = new Date();
+	    SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy-MM-dd");       
+	       
+	    String book_date = bartDateFormat.format(date);  
+	    int person_number = 1;
 		int size = F_Serivce.numRestaurant(name, region);
 		userPage.setTotalCount(size);
 		userPage.setCurrentPage(1);
@@ -60,7 +67,8 @@ public class F_RestaurantController {
 		
 		m.addAttribute("res_data", res_data);
 		m.addAttribute("userPage", userPage);
-		
+		session.setAttribute("book_date", book_date);
+		session.setAttribute("person_number", person_number);
 		return "iring29/Restaurant";
 	}
 

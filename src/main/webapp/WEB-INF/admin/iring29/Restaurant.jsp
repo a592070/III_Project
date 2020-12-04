@@ -53,7 +53,12 @@ h3{
     <!-- Start nav -->
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
-    
+    <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
     <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/res_index.jpg');">
       <div class="overlay"></div>
       <div class="container">

@@ -33,7 +33,7 @@ public class R_Order_List {
 	@Column(name = "CUS_PHONE")
 	private String cus_phone;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ORDER_ID")
+	@JoinColumn(name = "ORDER_ID",referencedColumnName = "ORDER_ID")
 	private OrderTable oTable;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "R_SN")

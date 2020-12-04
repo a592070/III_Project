@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import global.pojo.OrderTable;
+
 public class F_RestaurantDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -71,5 +73,26 @@ public class F_RestaurantDAO {
 			query.setParameter(0, r_sn);
 			byte[] pic = (byte[]) query.uniqueResult();
 			return pic;
+		}
+		
+		//create order
+		public boolean createOrder(OrderTable otBean) {
+			boolean flag = false;
+			try {
+				System.out.println("create order");
+				sessionFactory.getCurrentSession().save(otBean);
+				flag = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("fail to create order.");
+			}
+			return flag;
+		}
+		
+		//find order
+		public OrderTable findOrder(){
+			Query query = sessionFactory.getCurrentSession().createQuery("from OrderTable where order_id = (select max(ot.order_id) from OrderTable ot)", OrderTable.class);
+			OrderTable ot = (OrderTable) query.uniqueResult();
+			return ot;
 		}
 }

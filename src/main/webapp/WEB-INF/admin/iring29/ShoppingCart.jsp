@@ -481,17 +481,24 @@ body{
 					<tbody>
 						<tr>
 							<td  class="total"> </td>
+							<td></td>
+							<td></td>
 							<td>
-								<button type="button" class="btn btn-default">
+							<form action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_index">
+								<button type="button" class="btn btn-primary">
 									<span class="glyphicon glyphicon-shopping-cart"></span>
 									繼續逛
 								</button>
+							</form>
 							</td>
 							<td>
-								<button type="button" class="btn btn-success">
+							<form action="<%=pageContext.getServletContext().getContextPath()%>/ShowOrderList" method="POST">
+								<button type="submit" class="btn btn-success">
 									我要結帳 <span class="glyphicon glyphicon-play"></span>
 								</button>
+							</form>
 							</td>
+							<td></td>
 						</tr>
 
 					</tbody>

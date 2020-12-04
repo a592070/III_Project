@@ -2,9 +2,11 @@ package iring29.controller;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import global.pojo.OrderTable;
 import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
+import iring29.service.F_RestaurantService;
+import oracle.net.aso.m;
 
 @Controller
 public class F_RorderController {
 
+	@Autowired
+	private F_RestaurantService F_Serivce;
 	
 	@RequestMapping(path = "/OrderList", method = RequestMethod.POST)
 	public String PlaceOrder() {
@@ -64,5 +70,15 @@ public class F_RorderController {
 	@RequestMapping(path = "/ShoppingCart", method = RequestMethod.POST)
 	public String ShoppingCart(HttpSession session) {
 		return "iring29/ShoppingCart";
+	}
+	
+	@RequestMapping(path = "/ShowOrderList", method = RequestMethod.POST)
+	public String placeOrder(HttpSession session) {
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		F_Serivce.createOrder(OTBean);
+		OrderTable otBean = F_Serivce.findOrder();
+		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
+		session.setAttribute("res_lists", res_lists);
+		return "iring29/OrderDetail";
 	}
 }
