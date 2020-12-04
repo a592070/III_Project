@@ -61,6 +61,9 @@ img{
 </style>
 </head>
 <body>
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
+    <!-- Start nav -->    
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
 
 <div class="box">
@@ -99,15 +102,15 @@ img{
 										var star = Math.floor("${res_data.rating}");
 										console.log("star = " + star);
 										var tags = "";
-										var half = " <i class='icon_star-half_alt'></i>";
+// 										var half = " <i class='icon_star-half_alt'></i>";
 										var zerostar = "";
 										for(var i = 0; i < star; i++){
 											tags += " <i class='icon_star'></i>";
 											}
-										for(var j =( star + 1 ); j < 5 ; j++){
+										for(var j = star ; j < 5 ; j++){
 											zerostar += " <i class='fa fa-star-o'></i>";
 											}
-										$("#rating").prepend(tags, half, zerostar);
+										$("#rating").prepend(tags, zerostar);
                                       </script>
                                     </div>
                                     <form id="shop_cart" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">

@@ -52,8 +52,10 @@ public class F_RestaurantController {
 	public String RestaurantDisplay(Model m) {
 		String name = "";
 		String region = "";
+		start = 0;
 		int size = F_Serivce.numRestaurant(name, region);
 		userPage.setTotalCount(size);
+		userPage.setCurrentPage(1);
 		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), name, region);
 		
 		m.addAttribute("res_data", res_data);
@@ -70,8 +72,8 @@ public class F_RestaurantController {
 								    			  @RequestParam(name = "currentPage") Integer currentPage,
 								    			  HttpSession session, Model m) {
 		
-		System.out.println("restaurant_name = " + restaurant_name);
-		System.out.println("currentPage = " + currentPage);
+//		System.out.println("restaurant_name = " + restaurant_name);
+//		System.out.println("currentPage = " + currentPage);
 		int size = F_Serivce.numRestaurant(restaurant_name, region_name);
 		userPage.setTotalCount(size);
 		userPage.setCurrentPage(currentPage);
@@ -80,53 +82,18 @@ public class F_RestaurantController {
 		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), restaurant_name, region_name);
 		
 //		session.setAttribute("res_data", res_data);
-//		session.setAttribute("book_date", book_date);
-//		session.setAttribute("person_number", person_number);
+		session.setAttribute("book_date", book_date);
+		session.setAttribute("person_number", person_number);
 		m.addAttribute("res_data", res_data);
-		m.addAttribute("book_date", book_date);
-		m.addAttribute("person_number", person_number);
+//		m.addAttribute("book_date", book_date);
+//		m.addAttribute("person_number", person_number);
 		m.addAttribute("userPage", userPage);
 		
 //		Map<String, Object> map = new HashMap<>();
 //		map.put("res_data", res_data);
 //		map.put("userPage",userPage);
 		return "iring29/appendPage";
-		
-//		if (!StringUtil.isEmpty(region_name) && !StringUtil.isEmpty(restaurant_name)) {
-//			List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_Name_Region(restaurant_name, region_name);
-//			session.setAttribute("res_data", Multi_Rdata);
-//			session.setAttribute("book_date", book_date);
-//			session.setAttribute("person_number", person_number);
-//			return "iring29/MultiRestaurant";
-//
-//		}  else if (restaurant_name != null && region_name == null || restaurant_name != "" && region_name == "") {
-//			int num = F_Serivce.numRestaurant(restaurant_name);
-//			if (num == 1) {
-//				Restaurant res_data = F_Serivce.findRestaurant(restaurant_name);
-//				session.setAttribute("res_data", res_data);
-//				session.setAttribute("book_date", book_date);
-//				session.setAttribute("person_number", person_number);
-//				return "iring29/DisplayRestaurant";
-//			} else if (num > 1) {
-//				List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_R(restaurant_name);
-//				session.setAttribute("res_data", Multi_Rdata);
-//				session.setAttribute("book_date", book_date);
-//				session.setAttribute("person_number", person_number);
-//				return "iring29/MultiRestaurant";
-//
-//			} else {
-//				return "iring29/BackHome";
-//			}
-//		} else if (region_name != null && restaurant_name == null|| region_name != "" && restaurant_name == "") {
-//			List<Restaurant_VO> res_data_region = F_Serivce.findRegion(region_name);
-//			m.addAttribute("res_data", res_data_region);
-//			session.setAttribute("book_date", book_date);
-//			session.setAttribute("person_number", person_number);
-//			return "iring29/MultiRestaurant";
-//
-//		}else {
-//			return "iring29/Restaurant_index";
-//		}
+
 	}
 	
 	@RequestMapping(path = "/DisplayRestaurant", method = RequestMethod.POST)
