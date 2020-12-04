@@ -13,6 +13,10 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.catalina.tribes.membership.McastService;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -84,8 +88,20 @@ public class ArticleController {
 			"application/json; charset=UTF-8" })
 	public @ResponseBody List<Article> showArticles() {
 		List<Article> artList = articleService.showAllArticles();
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("list",artList);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("list",artList);
+		for (Article article : artList) {
+			String content = article.getArtContent();
+			Document doc = Jsoup.parse(content);
+			Element ele = doc.getElementsByTag("img").first();
+			if (ele==null) {
+				ele.absUrl(attributeKey)
+			}
+			System.out.println(ele);
+		}
+		
+		
 		return artList;
 
 	}

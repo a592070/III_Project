@@ -56,13 +56,13 @@
 	</mvc:cors>
 
 	<!--登入攔截器設定-->
-	<mvc:interceptors>
-		<mvc:interceptor>
+	<!-- <mvc:interceptors>
+		<mvc:interceptor> -->
 			<!--攔截所有/admin 下的請求-->
-			<mvc:mapping path="/admin/**"/>
+			<!-- <mvc:mapping path="/admin/**"/>
 			<bean class="global.LoginInterceptor"/>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->
 	<bean
