@@ -2,6 +2,7 @@ package iring29.controller;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,9 +27,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
+import iring29.model.UserPage;
 import iring29.service.F_RestaurantService;
+import oracle.net.aso.m;
 import utils.StringUtil;
+
+import java.math.BigDecimal;
 import java.util.Base64;
+import java.util.HashMap;
 
 @Controller
 //@SessionAttributes(names = { "res_data" })
@@ -34,55 +42,91 @@ public class F_RestaurantController {
 
 	@Autowired
 	private F_RestaurantService F_Serivce;
+	
+	@Autowired
+	private UserPage userPage;
+	
+	private int start = 0;
 
 	@RequestMapping(path = "/Restaurant_index")
-	public String RestaurantDisplay() {
-		return "iring29/Restaurant_index";
+	public String RestaurantDisplay(Model m) {
+		String name = "";
+		String region = "";
+		int size = F_Serivce.numRestaurant(name, region);
+		userPage.setTotalCount(size);
+		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), name, region);
+		
+		m.addAttribute("res_data", res_data);
+		m.addAttribute("userPage", userPage);
+		
+		return "iring29/Restaurant";
 	}
 
 	@RequestMapping(path = "/SearchRestaurant", method = RequestMethod.POST)
 	public String DisplayRestaurant(@RequestParam(name = "region_name") String region_name,
-								    @RequestParam(name = "restaurant_name") String restaurant_name, 
-								    @RequestParam(name = "book_date") String book_date,
-								    @RequestParam(name = "person_number") Integer person_number,
-								    HttpSession session, Model m) {
-//		session.removeAttribute("res_data");
+								    			  @RequestParam(name = "restaurant_name") String restaurant_name, 
+								    			  @RequestParam(name = "book_date") String book_date,
+								    			  @RequestParam(name = "person_number") Integer person_number,
+								    			  @RequestParam(name = "currentPage") Integer currentPage,
+								    			  HttpSession session, Model m) {
 		
-		if (!StringUtil.isEmpty(region_name) && !StringUtil.isEmpty(restaurant_name)) {
-			List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_Name_Region(restaurant_name, region_name);
-			session.setAttribute("res_data", Multi_Rdata);
-			session.setAttribute("book_date", book_date);
-			session.setAttribute("person_number", person_number);
-			return "iring29/MultiRestaurant";
-
-		}  else if (restaurant_name != null && region_name == null || restaurant_name != "" && region_name == "") {
-			int num = F_Serivce.numRestaurant(restaurant_name);
-			if (num == 1) {
-				Restaurant res_data = F_Serivce.findRestaurant(restaurant_name);
-				session.setAttribute("res_data", res_data);
-				session.setAttribute("book_date", book_date);
-				session.setAttribute("person_number", person_number);
-				return "iring29/DisplayRestaurant";
-			} else if (num > 1) {
-				List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_R(restaurant_name);
-				session.setAttribute("res_data", Multi_Rdata);
-				session.setAttribute("book_date", book_date);
-				session.setAttribute("person_number", person_number);
-				return "iring29/MultiRestaurant";
-
-			} else {
-				return "iring29/BackHome";
-			}
-		} else if (region_name != null && restaurant_name == null|| region_name != "" && restaurant_name == "") {
-			List<Restaurant_VO> res_data_region = F_Serivce.findRegion(region_name);
-			m.addAttribute("res_data", res_data_region);
-			session.setAttribute("book_date", book_date);
-			session.setAttribute("person_number", person_number);
-			return "iring29/MultiRestaurant";
-
-		}else {
-			return "iring29/Restaurant_index";
-		}
+		System.out.println("restaurant_name = " + restaurant_name);
+		System.out.println("currentPage = " + currentPage);
+		int size = F_Serivce.numRestaurant(restaurant_name, region_name);
+		userPage.setTotalCount(size);
+		userPage.setCurrentPage(currentPage);
+		start = (currentPage - 1)* userPage.getPageSize();
+		
+		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), restaurant_name, region_name);
+		
+//		session.setAttribute("res_data", res_data);
+//		session.setAttribute("book_date", book_date);
+//		session.setAttribute("person_number", person_number);
+		m.addAttribute("res_data", res_data);
+		m.addAttribute("book_date", book_date);
+		m.addAttribute("person_number", person_number);
+		m.addAttribute("userPage", userPage);
+		
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("res_data", res_data);
+//		map.put("userPage",userPage);
+		return "iring29/appendPage";
+		
+//		if (!StringUtil.isEmpty(region_name) && !StringUtil.isEmpty(restaurant_name)) {
+//			List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_Name_Region(restaurant_name, region_name);
+//			session.setAttribute("res_data", Multi_Rdata);
+//			session.setAttribute("book_date", book_date);
+//			session.setAttribute("person_number", person_number);
+//			return "iring29/MultiRestaurant";
+//
+//		}  else if (restaurant_name != null && region_name == null || restaurant_name != "" && region_name == "") {
+//			int num = F_Serivce.numRestaurant(restaurant_name);
+//			if (num == 1) {
+//				Restaurant res_data = F_Serivce.findRestaurant(restaurant_name);
+//				session.setAttribute("res_data", res_data);
+//				session.setAttribute("book_date", book_date);
+//				session.setAttribute("person_number", person_number);
+//				return "iring29/DisplayRestaurant";
+//			} else if (num > 1) {
+//				List<Restaurant_VO> Multi_Rdata = F_Serivce.findMulti_R(restaurant_name);
+//				session.setAttribute("res_data", Multi_Rdata);
+//				session.setAttribute("book_date", book_date);
+//				session.setAttribute("person_number", person_number);
+//				return "iring29/MultiRestaurant";
+//
+//			} else {
+//				return "iring29/BackHome";
+//			}
+//		} else if (region_name != null && restaurant_name == null|| region_name != "" && restaurant_name == "") {
+//			List<Restaurant_VO> res_data_region = F_Serivce.findRegion(region_name);
+//			m.addAttribute("res_data", res_data_region);
+//			session.setAttribute("book_date", book_date);
+//			session.setAttribute("person_number", person_number);
+//			return "iring29/MultiRestaurant";
+//
+//		}else {
+//			return "iring29/Restaurant_index";
+//		}
 	}
 	
 	@RequestMapping(path = "/DisplayRestaurant", method = RequestMethod.POST)
@@ -105,12 +149,15 @@ public class F_RestaurantController {
 		return new ResponseEntity<byte[]>(r.getPic(), headers, HttpStatus.OK);
 	}
 	
-	@RequestMapping(path = "/DisplayPic")
-	public String DisplayPic(@ModelAttribute("res_data_region") Restaurant_VO r) {
-		System.out.println("in pic " + r.getName());
-		String pic = Base64.getEncoder().encodeToString(r.getPic());
+	@GetMapping("/Restaurant/pic/{res.r_sn}")
+	@ResponseBody
+	public ResponseEntity<byte[]> DisplayPic(@PathVariable(name = "res.r_sn") BigDecimal r_sn) {
+		System.out.println("in pic ");
 		
-		return pic;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		
+		return new ResponseEntity<byte[]>(F_Serivce.getPic(r_sn), headers, HttpStatus.OK);
 	}
 
 	

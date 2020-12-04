@@ -12,6 +12,7 @@
 	<bean id="ModifyDAO" class="iring29.model.ModifyDAO" scope="session" />
 	<bean id="ModifyService" class="iring29.service.ModifyService" scope="session"/>
 	<bean id="Page" class="iring29.model.Page" scope="session"/>
+	<bean id="UserPage" class="iring29.model.UserPage" scope="session"/>
 	<bean id="restaurantController" class="iring29.controller.RestaurantController" scope="session"></bean>
 	<bean id="F_restaurantController" class="iring29.controller.F_RestaurantController" scope="session"></bean>
 	<bean id="R_OrderDAO" class="iring29.model.R_OrderDAO" scope="session"></bean>

@@ -18,12 +18,12 @@ import iring29.model.Restaurant;
 public class F_RorderController {
 
 	
-	@RequestMapping(path = "OrderList", method = RequestMethod.POST)
+	@RequestMapping(path = "/OrderList", method = RequestMethod.POST)
 	public String PlaceOrder() {
 		return "iring29/OrderList";
 	}
 	
-	@RequestMapping(path = "PrepareOrder", method = RequestMethod.POST)
+	@RequestMapping(path = "/PrepareOrder", method = RequestMethod.POST)
 	public String PrepareOrder(@RequestParam(value = "time") String time,
 							   @RequestParam(value = "book_date") String book_date, 
 							   @RequestParam(value = "b_name") String b_name, 
@@ -32,9 +32,14 @@ public class F_RorderController {
 							   HttpSession session) {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		if(OTBean == null) {
 //		String book_date = (String) session.getAttribute("book_date");
 			OTBean = new OrderTable();
+			cartnum = 0;
+		}
+		if(cartnum == null) {
+			cartnum = 0;
 		}
 		R_Order_List rOBean = new R_Order_List();
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
@@ -49,7 +54,15 @@ public class F_RorderController {
 		rOBean.setDeposit(BigDecimal.valueOf(500));
 		rOBean.setRestaurant(res_data);
 		OTBean.addR_Order_Lists(rOBean);
+		cartnum = cartnum + 1;
+		System.out.println("cart num = " +cartnum);
 		session.setAttribute("OTBean", OTBean);
+		session.setAttribute("cartnum", cartnum);
+		return "iring29/ShoppingCart";
+	}
+	
+	@RequestMapping(path = "/ShoppingCart", method = RequestMethod.POST)
+	public String ShoppingCart(HttpSession session) {
 		return "iring29/ShoppingCart";
 	}
 }
