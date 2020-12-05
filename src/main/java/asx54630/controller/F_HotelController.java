@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import asx54630.model.Hotel;
@@ -50,4 +51,28 @@ public class F_HotelController {
 		
 		return "asx54630/F_Hotelindex";
 	}
+	
+	@RequestMapping(path = "/F_hotelPage", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //分頁.搜尋.排序
+	public String processFHotelPage(@RequestParam(name = "keyword",required = false) String keyword,
+										@RequestParam(name = "regionkeywd",required = false) String regionkeywd,
+										@RequestParam(name = "typekeywd",required = false) String typekeywd,
+										@RequestParam(name = "currentPage") int currentPage,Model m) {
+
+		hpage.sethPageSize(PAGESIZE);
+		int size = f_hotelservice.howMuchData(keyword, regionkeywd, typekeywd);
+		System.out.println(size);
+		hpage.sethTotalCount(size);
+		hpage.sethCurrentPage(currentPage);
+		
+		int firstIndex = (hpage.getCurrentPage()-1)*hpage.gethPageSize();
+		List<Hotel> hoteldata = f_hotelservice.selectAll(firstIndex,hpage.gethPageSize(),keyword, regionkeywd,typekeywd);
+		// 1->0 2->10  (currentPage-1)*pagesize=
+		// 1->10 2->20 (currentPage)*pagesize
+		
+		m.addAttribute("hoteldata", hoteldata);
+		m.addAttribute("hpage", hpage);
+
+		
+		return "asx54630/F_HotelSearch";
+		}
 }

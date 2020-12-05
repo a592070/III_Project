@@ -45,19 +45,17 @@ public class F_HotelDAO {
 		return query.uniqueResult().intValue();
 	}
 	
-	public List<HotelView> selectAll(int first, int count, String name, String region, String type, String orderfiled, String order){ //查詢多筆
+	public List<Hotel> selectAll(int first, int count, String name, String region, String type){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2" ;
-		if(orderfiled.equals("STATUS")) {
-			hql += ", SN";
-		}
-		Query<HotelView> query = session.createQuery(hql, HotelView.class);
+		String hql = "From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2" ;
+
+		Query<Hotel> query = session.createQuery(hql, Hotel.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
 		query.setFirstResult(first);
 		query.setMaxResults(count);
-		List<HotelView> list = query.list();
+		List<Hotel> list = query.list();
 		return list;
 	}
 	

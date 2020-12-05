@@ -27,4 +27,9 @@ public class F_HotelService {
 	public List<Hotel> totalHotel(int first, int count) {
 		return f_hotelDao.totalHotel(first,count);
 	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public List<Hotel> selectAll(int first, int count, String name, String region, String type){
+		return f_hotelDao.selectAll(first, count, name, region, type);
+	}
 }

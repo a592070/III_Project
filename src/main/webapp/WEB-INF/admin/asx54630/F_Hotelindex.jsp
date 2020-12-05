@@ -40,7 +40,7 @@
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
 	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="" id="" class="form-control" placeholder="地區搜尋">
+	                    <select name="regionkeywd" id="regionkeywd" class="form-control">
 	                      <option value="">選擇地區...</option>
                           <option value="基隆市">基隆市</option>
                        	  <option value="新北市">新北市</option>
@@ -70,7 +70,7 @@
 		           	  <div class="form-group">
 		                <div class="select-wrap one-third">
 	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="" id="" class="form-control" placeholder="類型搜尋">
+	                    <select name="typekeywd" id="typekeywd" class="form-control" placeholder="類型搜尋">
                      	 <option value="">選擇類型...</option>
                      	 <option value="飯店">飯店</option>
                       	 <option value="民宿">民宿</option>
@@ -79,14 +79,14 @@
 	                  </div>
 		              </div>
 		              <div class="form-group">
-		                <input type="text" class="form-control" placeholder="輸入關鍵字...">
+		                <input type="text" class="form-control" name="keyword" id="keyword" placeholder="輸入關鍵字...">
 		              </div>
-		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="幾號入住?" value="">
-		              </div>
-		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="幾號退房?" value="">
-		              </div>
+<!-- 		              <div class="form-group"> -->
+<!-- 		                <input type="text" id="checkin_date" class="form-control" placeholder="幾號入住?" value=""> -->
+<!-- 		              </div> -->
+<!-- 		              <div class="form-group"> -->
+<!-- 		                <input type="text" id="checkin_date" class="form-control" placeholder="幾號退房?" value=""> -->
+<!-- 		              </div> -->
 		              <div class="form-group">
 		                <input type="submit" value="找住宿" class="btn btn-primary py-3 px-5">
 		              </div>
@@ -130,7 +130,7 @@
         		</div>
           </div>
 
-          <div class="col-lg-9">
+          <div class="col-lg-9" id="h_content">
           	<div class="row">
           	<c:forEach var="hotels" items="${hoteldata}">
           		<div class="col-md-4 ftco-animate">
@@ -172,27 +172,30 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
-		                <li><a href="#" id="">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-<!-- 						<li><input type="button" value="Submit" id="button-1"/></li> -->
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
-		                <li><a href="#">&gt;</a></li>
+		                <li><a herf="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
+<!-- 		                <li class="active"><span>1</span></li> -->
+<%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
+		                <li><a herf="#">${currentPage}</a></li>
+<%-- 		                </c:forEach> --%>
+		                <li><a herf="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
 		              </ul>
 		            </div>
 		          </div>
 		        </div>
+
           </div> 
           <script type="text/javascript">
-         $("#page-previous").click(function () {
+          	var currentPage = 1;
+  		  	var totalPage = 1;
+          
+          
+         	function previousPage() {
 			console.log("前一頁")
-			var orderfiled = $("#orderfiled").val()
+// 			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
-			var order = $("#order").val()
+// 			var order = $("#order").val()
 			var pagebotton = $("#page-previous").val()
 			currentPage--;
 			console.log("keyword =" + keyword);
@@ -200,29 +203,30 @@
 			console.log("typekeywd =" + typekeywd);
 			console.log("pagebotton =" + pagebotton);
 			console.log("currentPage =" + currentPage);
-			$("#tbody").children().remove();
+// 			$("#h_content").children().remove();
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "pagebotton" : pagebotton, "currentPage" : currentPage },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
 						dataType: 'html',
 						success: function (response) {
-							$("#tbody").append(response)
+							$("#h_content").children().remove();
+							$("#h_content").append(response)
 
 						}
 
 					}
 				)
-		})
+		}
 		
-		$("#page-next").click(function () {
+         	function nextPage() {
 			console.log("下一頁")
-			var orderfiled = $("#orderfiled").val()
+// 			var orderfiled = $("#orderfiled").val()
 			var keyword = $("#keyword").val()
 			var regionkeywd = $("#regionkeywd").val()
 			var typekeywd = $("#typekeywd").val()
-			var order = $("#order").val()
+// 			var order = $("#order").val()
 			var pagebotton = $("#page-next").val()
 			currentPage++;
 			console.log("keyword =" + keyword);
@@ -230,21 +234,23 @@
 			console.log("typekeywd =" + typekeywd);
 			console.log("pagebotton =" + pagebotton);
 			console.log("currentPage =" + currentPage);
-			$("#tbody").children().remove();
+// 			$("#h_content").children().remove();
 			$.ajax(
 					{
 						type: 'POST',
-						data: { "orderfiled": orderfiled,"keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "order": order, "currentPage" : currentPage },
-						url: '${pageContext.servletContext.contextPath}/admin/hotelPage',
+						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "pagebotton" : pagebotton, "currentPage" : currentPage },
+						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
 						dataType: 'html',
 						success: function (response) {
-							$("#tbody").append(response);
+							$("#h_content").children().remove();
+							$("#h_content").append(response);
+							
 
 						}
 
 					}
 				)
-		})
+		}
 		</script>
          
           <!-- .col-md-8 -->
