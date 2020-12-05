@@ -43,7 +43,6 @@ public class OrderTable {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "oTable", orphanRemoval=true)
 	private Set<R_Order_List> r_Order_Lists;
 
-
 //	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order_table", cascade = CascadeType.ALL, orphanRemoval=true)
 	@Transient
 	Set<T_Order_List> t_Order_Lists;

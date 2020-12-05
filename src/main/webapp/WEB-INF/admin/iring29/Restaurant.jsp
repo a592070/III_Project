@@ -281,7 +281,7 @@ h3{
           
           $("#index").on('click', '#clickbtn', function (e) {
 
-        	  $("html,body").animate({ scrollTop: $("#index").offset().top - 160 },200)
+        	  $("html,body").animate({ scrollTop: $("#index").offset().top - 160 },800)
     			
 				var region_name = $("#region").val();
 				var restaurant_name = $("#restaurant_name").val();

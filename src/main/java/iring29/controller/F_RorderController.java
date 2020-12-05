@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.pojo.OrderTable;
 import iring29.model.R_Order_List;
@@ -67,11 +68,38 @@ public class F_RorderController {
 		return "iring29/ShoppingCart";
 	}
 	
+	//shopping cart頁面修改資料
+	@RequestMapping(path = "/modifyOrderInfo", method = RequestMethod.POST)
+	public @ResponseBody String modifyOrderInfo(@RequestParam(value = "r_sn") BigDecimal r_sn,
+								  @RequestParam(value = "time") String time,
+			   					  @RequestParam(value = "book_date") String book_date, 
+			   					  @RequestParam(value = "b_name") String b_name, 
+			   					  @RequestParam(value = "b_phone") String b_phone, 
+			   					  @RequestParam(value = "person_number") BigDecimal person_number,
+			   					  HttpSession session){
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		Set<R_Order_List> Rlists = OTBean.getR_Order_Lists();
+		for(R_Order_List r : Rlists) {
+			if(r.getRestaurant().getR_sn().equals(r_sn)) {
+				Timestamp ts = new Timestamp(System.currentTimeMillis());
+				String tsStr = book_date +" " + time + ":00";
+				ts = Timestamp.valueOf(tsStr);
+				r.setBookt_time(ts);
+				r.setCus_name(b_name);
+				r.setCus_phone(b_phone);
+				r.setCustomer_num(person_number);
+			}
+		}
+		session.setAttribute("OTBean", OTBean);
+		return "modify";
+	}
+	
 	@RequestMapping(path = "/ShoppingCart", method = RequestMethod.POST)
 	public String ShoppingCart(HttpSession session) {
 		return "iring29/ShoppingCart";
 	}
 	
+	//訂單成立後
 	@RequestMapping(path = "/ShowOrderList", method = RequestMethod.POST)
 	public String placeOrder(HttpSession session) {
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
