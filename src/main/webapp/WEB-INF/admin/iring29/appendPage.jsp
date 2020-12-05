@@ -4,7 +4,7 @@
     <!-- import js -->
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
     
-		<div class="row">
+		<div class="row" id="rowheight">
           	
           	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ftco-animate">
@@ -69,11 +69,11 @@
 		          <div class="col text-center">
 		            <div class="block-27" id="pageinfo">
 		              <ul>
-		                <li><a href="javascript:;" id="page-botton">&lt;</a></li>
+<!-- 		                <li><a href="javascript:;" id="clickbtn">&lt;</a></li> -->
 		              <c:forEach var="page"  begin="1" end="${userPage.totalPageCount}">
 		              	<li id="${page}" value="${page}"><a href="#" onclick="return false" id="clickbtn" >${page}</a></li>
 		              </c:forEach>
-		              	<li><a href="javascript:;" id="page-botton">&gt;</a></li>
+<!-- 		              	<li><a href="javascript:;" id="clickbtn">&gt;</a></li> -->
 		              </ul>
 		            </div>
 		          </div>
