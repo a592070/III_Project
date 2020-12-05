@@ -56,7 +56,8 @@
 	width:85px;
 }
 .col-sm-12.col-md-10.col-md-offset-1{
-	width:1150px;
+	width:1100px;
+	margin-left: 100px;
 }
 .div_title{
 	width:150px;
@@ -109,7 +110,7 @@ h5{
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
             <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">準備開始旅程</h1>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">旅行就差一點點</h1>
           </div>
         </div>
       </div>

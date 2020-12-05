@@ -103,6 +103,7 @@ public class F_RorderController {
 	public String placeOrder(HttpSession session) {
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		F_Serivce.createOrder(OTBean);
+		session.removeAttribute("OTBean");
 		OrderTable otBean = F_Serivce.findOrder();
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
 		session.setAttribute("res_lists", res_lists);

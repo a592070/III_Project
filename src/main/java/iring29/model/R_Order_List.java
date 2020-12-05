@@ -33,10 +33,10 @@ public class R_Order_List {
 	private String cus_name;
 	@Column(name = "CUS_PHONE")
 	private String cus_phone;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ORDER_ID")
 	private OrderTable oTable;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "R_SN")
 	private Restaurant restaurant;
 	
