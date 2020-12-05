@@ -64,13 +64,19 @@ public class F_HotelController {
 		hpage.sethTotalCount(size);
 		hpage.sethCurrentPage(currentPage);
 		
+		
 		int firstIndex = (hpage.getCurrentPage()-1)*hpage.gethPageSize();
+		
+		int pageSize = hpage.gethPageSize();
+		int totalPage = hpage.getTotalPageCount();
 		List<Hotel> hoteldata = f_hotelservice.selectAll(firstIndex,hpage.gethPageSize(),keyword, regionkeywd,typekeywd);
 		// 1->0 2->10  (currentPage-1)*pagesize=
 		// 1->10 2->20 (currentPage)*pagesize
 		
 		m.addAttribute("hoteldata", hoteldata);
 		m.addAttribute("hpage", hpage);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("totalPage", totalPage);	
 
 		
 		return "asx54630/F_HotelSearch";

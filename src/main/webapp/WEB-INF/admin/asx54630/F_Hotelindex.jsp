@@ -130,8 +130,8 @@
         		</div>
           </div>
 
-          <div class="col-lg-9" id="h_content">
-          	<div class="row">
+          <div class="col-lg-9" id="h_data">
+          	<div class="row" >
           	<c:forEach var="hotels" items="${hoteldata}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
@@ -172,17 +172,21 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
+		              	<li><a class="first" href="javascript:;" id="firstBtn" onclick="firstPage()">1</a></li>
 		                <li><a class="previous" href="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
-<!-- 		                <li class="active"><span>1</span></li> -->
 <%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
-		                <li><a href="javascript:;"><span>${currentPage}</span></a></li>
+		                <li id="${currentPage}" value="${currentPage}"><a href="#" onclick="return false" >${currentPage}/${totalPage}</a></li>
 <%-- 		                </c:forEach> --%>
 		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
+		                <li><a class="last" href="javascript:;" id="lastBtn" onclick="lastPage()">${totalPage}</a></li>
 		              </ul>
 		            </div>
 		          </div>
 		        </div>
-
+		        <script>
+// 				$("#${currentPage}").attr("class","active");
+				$("#${currentPage}").remove("a");
+		        </script>
           </div> 
           <script type="text/javascript">
           	var currentPage = 1;
@@ -203,8 +207,8 @@
   							url: '${pageContext.servletContext.contextPath}/F_hotelPage',
   							dataType: 'html',
   							success: function (response) {
-  								$("#h_content").children().remove();
-  								$("#h_content").append(response)
+  								$("#h_data").children().remove();
+  								$("#h_data").append(response)
 
   							}
 
@@ -235,8 +239,8 @@
 						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
 						dataType: 'html',
 						success: function (response) {
-							$("#h_content").children().remove();
-							$("#h_content").append(response)
+							$("#h_data").children().remove();
+							$("#h_data").append(response)
 
 						}
 
@@ -266,8 +270,8 @@
 						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
 						dataType: 'html',
 						success: function (response) {
-							$("#h_content").children().remove();
-							$("#h_content").append(response);
+							$("#h_data").children().remove();
+							$("#h_data").append(response);
 							
 
 						}

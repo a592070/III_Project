@@ -22,13 +22,13 @@ public class F_HotelDAO {
 	}
 
 	public int getSize() { //初始資料總筆數
-		String hql = "select count(SN) from HotelView";
+		String hql = "select count(SN) from HotelView WHERE STATUS = '啟用' ";
 		return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
 	}
 	
 	public List<Hotel> totalHotel(int first, int count) {
 		Session session = sessionFactory.getCurrentSession();
-		Query<Hotel> query = session.createQuery("from Hotel order by SN", Hotel.class);
+		Query<Hotel> query = session.createQuery("from Hotel where STATUS = '啟用' order by SN", Hotel.class);
 		// 找第幾筆
 		query.setFirstResult(first);
 		// 從第幾筆開始count筆
@@ -38,7 +38,7 @@ public class F_HotelDAO {
 	
 	public int howMuchData(String name, String region, String type){ //查詢資料總筆數
 		Session session = sessionFactory.getCurrentSession();
-		Query<Long> query = session.createQuery("Select count(SN) From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2", Long.class);
+		Query<Long> query = session.createQuery("Select count(SN) From HotelView WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 and STATUS = '啟用'", Long.class);
 		query.setParameter(0, "%" + name + "%");
 		query.setParameter(1, "%" + region + "%");
 		query.setParameter(2, "%" + type + "%");
@@ -47,7 +47,7 @@ public class F_HotelDAO {
 	
 	public List<Hotel> selectAll(int first, int count, String name, String region, String type){ //查詢多筆
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2" ;
+		String hql = "From Hotel WHERE NAME like ?0 and REGION like ?1 and TYPE like ?2 and STATUS = '啟用' order by SN" ;
 
 		Query<Hotel> query = session.createQuery(hql, Hotel.class);
 		query.setParameter(0, "%" + name + "%");

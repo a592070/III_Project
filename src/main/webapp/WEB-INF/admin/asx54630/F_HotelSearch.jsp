@@ -46,16 +46,20 @@
 		            <div class="block-27">
 		              <ul>
 		                <li><a class="previous" href="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
-<!-- 		                <li class="active"><span>1</span></li> -->
 <%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
-		                <li><a href="javascript:;"><span>${currentPage}</span></a></li>
+		                <li id="${currentPage}" value="${currentPage}"><a href="#" onclick="return false" >${currentPage}/${totalPage}</a></li>
 <%-- 		                </c:forEach> --%>
 		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
 		              </ul>
 		            </div>
 		          </div>
 		        </div>
-		      <script type="text/javascript">
+		        <script>
+// 				$("#${currentPage}").attr("class","active");
+				$("#${currentPage}").remove("a");
+		        </script>
+          	
+          	<script type="text/javascript">
 					currentPage = ${hpage.currentPage};
 					totalPage = ${hpage.totalPageCount};
 // 				$("#page-btn").text(currentPage+"/"+totalPage);
@@ -76,6 +80,21 @@
 					$(".next").attr("disabled", false);
 					}
             </script>
+          	
+<!--           	<div class="row mt-5"> -->
+<!-- 		          <div class="col text-center"> -->
+<!-- 		            <div class="block-27"> -->
+<!-- 		              <ul> -->
+<!-- 		                <li><a class="previous" href="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li> -->
+<!-- 		                <li class="active"><span>1</span></li> -->
+<%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
+<%-- 		                <li id="${pages}" value="${pages}"><a href="#" onclick="return false" >${pages}</a></li> --%>
+<%-- 		                </c:forEach> --%>
+<!-- 		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li> -->
+<!-- 		              </ul> -->
+<!-- 		            </div> -->
+<!-- 		          </div> -->
+<!-- 		        </div> -->
 		        
 		        		       
 <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
