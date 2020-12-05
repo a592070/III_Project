@@ -41,7 +41,7 @@ public class OrderTable {
 	@JoinColumn(name = "USERNAME")
 	private AccountBean accountBean;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "oTable", orphanRemoval=true)
-	private Set<R_Order_List> r_Order_Lists = new HashSet<R_Order_List>();
+	private Set<R_Order_List> r_Order_Lists;
 
 
 //	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order_table", cascade = CascadeType.ALL, orphanRemoval=true)
@@ -72,10 +72,10 @@ public class OrderTable {
 	}
 
 
-//	public OrderTable() {
-//		super();
-//		r_Order_Lists = new HashSet<R_Order_List>();
-//	}
+	public OrderTable() {
+		super();
+		r_Order_Lists = new HashSet<R_Order_List>();
+	}
 	
 
 	public BigDecimal getOrder_id() {
