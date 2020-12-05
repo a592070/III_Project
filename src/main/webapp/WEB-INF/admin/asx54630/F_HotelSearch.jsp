@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+<c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 
 <div class="row">
           	<c:forEach var="hotels" items="${hoteldata}">
@@ -45,35 +45,37 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
-		                <li><a herf="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
+		                <li><a class="previous" href="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
 <!-- 		                <li class="active"><span>1</span></li> -->
 <%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
-		                <li ><a herf="#">${currentPage}</a></li>
+		                <li><a href="javascript:;"><span>${currentPage}</span></a></li>
 <%-- 		                </c:forEach> --%>
-		                <li><a herf="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
+		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
 		              </ul>
 		            </div>
 		          </div>
 		        </div>
-		        <script type="text/javascript">
-				currentPage = ${hpage.currentPage};
-				totalPage = ${hpage.totalPageCount};
+		      <script type="text/javascript">
+					currentPage = ${hpage.currentPage};
+					totalPage = ${hpage.totalPageCount};
 // 				$("#page-btn").text(currentPage+"/"+totalPage);
 
 				if(currentPage == 1){
 					$(".page-link.first").attr("disabled", true);
-					$(".page-link.previous").attr("disabled", true);						
+					$(".previous").attr("disabled", true);						
 				}else{
 					$(".page-link.first").attr("disabled", false);
-					$(".page-link.previous").attr("disabled", false);
+					$(".previous").attr("disabled", false);
 					}
 
 				if(currentPage == totalPage){
 					$(".page-link.last").attr("disabled", true);
-					$(".page-link.next").attr("disabled", true);						
+					$(".next").attr("disabled", true);						
 				}else{
 					$(".page-link.last").attr("disabled", false);
-					$(".page-link.next").attr("disabled", false);
+					$(".next").attr("disabled", false);
 					}
             </script>
+		        
+		        		       
 <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 

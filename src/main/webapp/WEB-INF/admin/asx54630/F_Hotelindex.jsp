@@ -35,7 +35,7 @@
         	<div class="col-lg-3 sidebar">
         		<div class="sidebar-wrap bg-light ftco-animate">
         			<h3 class="heading mb-4">找住宿</h3>
-        			<form action="#">
+        			<form id="form">
         				<div class="fields">
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
@@ -88,7 +88,7 @@
 <!-- 		                <input type="text" id="checkin_date" class="form-control" placeholder="幾號退房?" value=""> -->
 <!-- 		              </div> -->
 		              <div class="form-group">
-		                <input type="submit" value="找住宿" class="btn btn-primary py-3 px-5">
+		                <button type="button" id="search" onclick="HotelSearch()"  class="btn btn-primary py-3 px-5">找住宿</button>
 		              </div>
 		            </div>
 	            </form>
@@ -172,12 +172,12 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
-		                <li><a herf="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
+		                <li><a class="previous" href="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
 <!-- 		                <li class="active"><span>1</span></li> -->
 <%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
-		                <li><a herf="#">${currentPage}</a></li>
+		                <li><a href="javascript:;"><span>${currentPage}</span></a></li>
 <%-- 		                </c:forEach> --%>
-		                <li><a herf="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
+		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
 		              </ul>
 		            </div>
 		          </div>
@@ -187,7 +187,31 @@
           <script type="text/javascript">
           	var currentPage = 1;
   		  	var totalPage = 1;
-          
+
+  		  	function HotelSearch() {
+  				console.log("搜尋")
+//   				var orderfiled = $("#orderfiled").val()
+  				var keyword = $("#keyword").val()
+  				var regionkeywd = $("#regionkeywd").val()
+  				var typekeywd = $("#typekeywd").val()
+//   				var order = $("#order").val()
+  				var currentPage=1
+  				$.ajax(
+  						{
+  							type: 'POST',
+  							data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "currentPage" : currentPage },
+  							url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+  							dataType: 'html',
+  							success: function (response) {
+  								$("#h_content").children().remove();
+  								$("#h_content").append(response)
+
+  							}
+
+  						}
+  					)
+  			}
+  	            
           
          	function previousPage() {
 			console.log("前一頁")
