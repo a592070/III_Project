@@ -28,6 +28,8 @@ public class Restaurant_VO {
 	private String region;
 	@Column(name = "PIC")
 	private byte[] pic;
+	@Column(name = "STATUS")
+	private String statu;
 
 	public BigDecimal getR_sn() {
 		return r_sn;
@@ -75,6 +77,14 @@ public class Restaurant_VO {
 
 	public void setPic(byte[] pic) {
 		this.pic = pic;
+	}
+
+	public String getStatu() {
+		return statu;
+	}
+
+	public void setStatu(String statu) {
+		this.statu = statu;
 	}
 
 

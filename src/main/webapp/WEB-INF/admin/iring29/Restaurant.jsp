@@ -20,6 +20,7 @@
 }
 h3{
 	height:80px;
+	width:160px;
 }
 .btn.btn-warning{
 	border-radius: 5px;
@@ -27,6 +28,9 @@ h3{
 	background: #f85959;
 	border: 1px solid #f85959;
     color: #fff;
+}
+#rowheight{
+	height:1030px;
 }
 
 /* .block-27 ul li button{ */
@@ -49,7 +53,12 @@ h3{
     <!-- Start nav -->
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
-    
+    <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
     <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/res_index.jpg');">
       <div class="overlay"></div>
       <div class="container">
@@ -63,7 +72,7 @@ h3{
     </div>
 
 
-    <section class="ftco-section ftco-degree-bg">
+    <section class="ftco-section ftco-degree-bg" id="top">
       <div class="container">
         <div class="row" id="index">
         	<div class="col-lg-3 sidebar">
@@ -144,7 +153,7 @@ h3{
 						</select>
 		              </div>
 		              <div class="form-group">
-		                <input type="submit" value="找餐廳" class="btn btn-primary py-3 px-5">
+		                <input type="button" id="clickbtn" value="找餐廳" class="btn btn-primary py-3 px-5">
 		              </div>
 		            </div>
 	            </form>
@@ -188,7 +197,8 @@ h3{
           
           <!-- Display stores -->
           	<div class="col-lg-9" id="r_content">
-          	<div class="row">
+          	
+          	<div class="row" id="rowheight">
           	
           	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ftco-animate">
@@ -252,11 +262,11 @@ h3{
 		          <div class="col text-center">
 		            <div class="block-27" id="pageinfo">
 		              <ul>
-		                <li><a href="javascript:;" id="page-botton">&lt;</a></li>
+<!-- 		                <li><a href="javascript:;" id="clickbtn">&lt;</a></li> -->
 		              <c:forEach var="page"  begin="1" end="${userPage.totalPageCount}">
 		              	<li id="${page}" value="${page}"><a href="#" onclick="return false" id="clickbtn" >${page}</a></li>
 		              </c:forEach>
-		              	<li><a href="javascript:;" id="page-botton">&gt;</a></li>
+<!-- 		              	<li><a href="javascript:;" id="clickbtn">&gt;</a></li> -->
 		              </ul>
 		            </div>
 		          </div>
@@ -268,13 +278,22 @@ h3{
           </div> <!-- .col-md-8 -->
           
           <script>
+          
           $("#index").on('click', '#clickbtn', function (e) {
-			
+
+        	  $("html,body").animate({ scrollTop: $("#index").offset().top - 160 },800)
+    			
 				var region_name = $("#region").val();
 				var restaurant_name = $("#restaurant_name").val();
 				var book_date = $("#theDate").val();
 				var person_number = $("#inputState").val();
 				var currentPage = (e.target.text);
+				console.log("typeof(currentPage) = " + typeof(currentPage))
+				if(typeof(currentPage) == "undefined"){
+					currentPage = 1;
+					parseInt(currentPage);
+					console.log("cp = "+ currentPage)
+				}
 				console.log(region_name, restaurant_name, book_date, person_number, currentPage)
 				$.ajax(
 	                    {
@@ -289,6 +308,7 @@ h3{
 	                    }
 	                )
 				})
+				
           
           </script>
           

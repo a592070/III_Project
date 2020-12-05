@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import global.pojo.OrderTable;
 import iring29.model.F_RestaurantDAO;
 import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
@@ -51,6 +52,16 @@ public class F_RestaurantService {
 	@Transactional(rollbackFor = { Throwable.class })
 	public byte[] getPic(BigDecimal r_sn) {
 		return f_RDao.getPic(r_sn);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public boolean createOrder(OrderTable otBean) {
+		return f_RDao.createOrder(otBean);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public OrderTable findOrder(){
+		return f_RDao.findOrder();
 	}
 }
 
