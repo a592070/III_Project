@@ -51,7 +51,7 @@
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
               <span class="mr-2">探索台灣</span>
-             
+
               
             </p>
             <h1
