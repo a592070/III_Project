@@ -8,43 +8,45 @@
 <meta charset="UTF-8">
 <title>FUN TAIWAN - 購物車</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<c:import url="/WEB-INF/admin/fragment/user_ref.jsp" /> 
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 
 <style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-}
+/* * { */
+/* 	margin: 0; */
+/* 	padding: 0; */
+/* } */
 
-body{
-	margin:0px;
-	padding:0px;
-	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat;
-	background-size: cover;　
-} 
-.cart_area{
- 	background:white; 
-	margin:100px 120px;
-	padding-left:100px;
-	padding-top:50px;
-	padding-bottom:70px;
-}
+/* body{ */
+/* 	margin:0px; */
+/* 	padding:0px; */
+/* 	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat; */
+/* 	background-size: cover;　 */
+/* }  */
+/* .cart_area{ */
+/*  	background:white;  */
+/* 	margin:100px 120px; */
+/* 	padding-left:100px; */
+/* 	padding-top:50px; */
+/* 	padding-bottom:70px; */
+/* } */
 </style>
 
 <!-- CSS STYLE -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/flaticon.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/style.css" type="text/css">
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/bootstrap.min.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/font-awesome.min.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/elegant-icons.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/flaticon.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/owl.carousel.min.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/nice-select.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/jquery-ui.min.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/magnific-popup.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/slicknav.min.css" type="text/css"> --%>
+<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/style.css" type="text/css"> --%>
 <style>
-.bg-dark {
-     background-color: transparent !important; 
+.cart_area{
+	margin:auto;
+	margin-top:50px;
+	width:1100px;
 }
 .form-control.time{
 	width:100px;
@@ -54,7 +56,7 @@ body{
 	width:85px;
 }
 .col-sm-12.col-md-10.col-md-offset-1{
-	width:950px;
+	width:1150px;
 }
 .div_title{
 	width:150px;
@@ -79,10 +81,20 @@ body{
 	width:80px;
 	text-align: center;
 }
+h5{
+	font-size:16px;
+}
+.form-control{
+	font-size:16px;
+}
+
 </style>
 
 </head>
 <body>
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 	
+    
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <script>
     $(".nav-shop__circle").html('${cartnum}');
@@ -90,6 +102,18 @@ body{
     console.log("nu = " + ${cartnum});
 // 	   console.log("num");
     </script>
+    <!-- background -->
+    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/shopping.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+          <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">準備開始旅程</h1>
+          </div>
+        </div>
+      </div>
+    </div><!-- .background -->
 <section class="cart_area">
 	<div class="container">
 		<div class="row">
@@ -341,7 +365,7 @@ body{
 							</td>
 							<td class="col-sm-1 col-md-1">
 								<button type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove"></span>下次再訂
+									<span class="glyphicon glyphicon-remove"></span>移除
 								</button>
 							</td>
 						</tr>
@@ -355,7 +379,8 @@ body{
 							<td> </td>
 							<td><h4>小計</h4></td>
 							<td class="text-right">
-							<h3 id="tPrice"><strong></strong></h3></td>
+							<h3><strong id="tPrice"></strong></h3></td>
+							<td> </td>
 						</tr>
 					</tbody>
 				</table>
@@ -526,5 +551,13 @@ body{
 		</div>
 	</div>
 </section>
+  <!-- footer -->
+     <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>    
+    
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
 </body>
 </html>
