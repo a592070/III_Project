@@ -72,7 +72,7 @@ h3{
     </div>
 
 
-    <section class="ftco-section ftco-degree-bg">
+    <section class="ftco-section ftco-degree-bg" id="top">
       <div class="container">
         <div class="row" id="index">
         	<div class="col-lg-3 sidebar">
@@ -197,6 +197,7 @@ h3{
           
           <!-- Display stores -->
           	<div class="col-lg-9" id="r_content">
+          	
           	<div class="row" id="rowheight">
           	
           	<c:forEach var="res" items="${res_data}">
@@ -277,8 +278,11 @@ h3{
           </div> <!-- .col-md-8 -->
           
           <script>
+          
           $("#index").on('click', '#clickbtn', function (e) {
-			
+
+        	  $("html,body").animate({ scrollTop: $("#index").offset().top - 160 },200)
+    			
 				var region_name = $("#region").val();
 				var restaurant_name = $("#restaurant_name").val();
 				var book_date = $("#theDate").val();
@@ -304,6 +308,7 @@ h3{
 	                    }
 	                )
 				})
+				
           
           </script>
           
