@@ -172,13 +172,13 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
-		              	<li><a class="first" href="javascript:;" id="firstBtn" >1</a></li>
+		              	<li><a class="first" href="javascript:;" id="firstBtn" >首頁</a></li>
 		                <li><a class="previous" href="javascript:;" id="previousBtn" >&lt;</a></li>
 <%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
 		                <li id="${currentPage}" value="${currentPage}"><a href="#" onclick="return false" >${currentPage}/${totalPage}</a></li>
 <%-- 		                </c:forEach> --%>
 		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
-		                <li><a class="last" href="javascript:;" id="lastBtn" onclick="lastPage()" >${totalPage}</a></li>
+		                <li><a class="last" href="javascript:;" id="lastBtn" onclick="lastPage()">頁尾</a></li>
 		              </ul>
 		            </div>
 		          </div>
