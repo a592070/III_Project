@@ -10,11 +10,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
-
-      p {
-        font-family: "Noto Sans TC", sans-serif;
-      }
-
       h2 {
         font-family: "Noto Sans TC", sans-serif;
       }
@@ -28,6 +23,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
   <body>
     <!-- Start nav -->
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
+
     <!-- END nav -->
 
     <div
@@ -93,36 +89,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
             </div>
           </div>
 
-          <div class="col-md-3 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a
-                href="blog-single.html"
-                class="block-20"
-                style="
-                  background-image: url('direngine-master/images/image_8.jpg');
-                "
-              >
-              </a>
-              <div class="text p-4">
-                <span class="tag">Tips, Travel</span>
-                <h3 class="heading mt-3">
-                  <a href="#"
-                    >Even the all-powerful Pointing has no control about the
-                    blind texts</a
-                  >
-                </h3>
-                <div class="meta mb-3">
-                  <div><a href="#">August 12, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div>
-                    <a href="#" class="meta-chat"
-                      ><span class="icon-chat"></span> 3</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
         <!--分頁-->
         <div class="row mt-5">
@@ -169,30 +136,33 @@ contentType="text/html;charset=UTF-8" language="java"%>
         />
       </svg>
     </div>
-
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <script>
-      $(document).ready(function () {
+      $(window).on("load",function () {
         $.ajax({
           type: "GET",
           url: "Article.controller.json",
+          async:false,
           success: function (response) {
             showList(response);
+            
           },
         });
       });
+      </script>
+      <script>
       function showList(response) {
-        $("#articleGrid").empty();
+        
         $.each(response.list, function (index, element) {
           var currArtId = element.artId;
           var imgPath = response.coverPic[currArtId];
-          $("#articleGrid").append(
-            "<div class='col-md-3 d-flex ftco-animate'>" +
+          console.log(imgPath);
+          var content = "<div class='col-md-3 d-flex ftco-animate'>" +
               "<div class='blog-entry align-self-stretch'>" +
               "<a href='#' class='block-20' style='background-image: " +
-              "url('" +
+              'url(' +
               imgPath +
-              "')" +
-              ':">' +
+              ");'>"+
               "</a>" +
               "<div class='text p-4 d-block'>" +
               "<span class='tag'>" +
@@ -202,11 +172,12 @@ contentType="text/html;charset=UTF-8" language="java"%>
               "<a href='#'>" +
               element.artTitle +
               "</a></h3>" +
+              "<div class='meta mb-3'>"+
               "<div><a href='#'>" +
               element.artCreTime +
               "</a></div>" +
               "<div><a href='#'>" +
-              element.artId +
+              element.artUserId +
               "</a></div>" +
               "</div>" +
               "<a href='#'' class='meta-chat'>" +
@@ -214,10 +185,9 @@ contentType="text/html;charset=UTF-8" language="java"%>
               element.artCommNum +
               "</a>" +
               "</div></div></div></div></div>"
-          );
+              $(content).appendTo("#articleGrid");
         });
       }
     </script>
-    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
   </body>
 </html>
