@@ -67,14 +67,13 @@ public class AdminSingController {
 			m.addAttribute("ErrorMsgKey", errorMsgMap);
 			return "rambo0021/adminSingin";
 		}
-
+        //-----------------
 		String status = service.login(username, password);
 		if ("登入成功".equals(status)) {
 			AccountBean adminBean = service.userDetail(username);
 			m.addAttribute("adminBean", adminBean);
 			return "redirect:/admin/accountPage";
 		}
-
 		errorMsgMap.put("LoginError", status);
 		m.addAttribute("ErrorMsgKey", errorMsgMap);
 		return "rambo0021/adminSingin";

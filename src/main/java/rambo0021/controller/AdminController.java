@@ -38,7 +38,7 @@ import rambo0021.serive.DateService;
 @Lazy
 @SessionAttributes(names = { "userDetail" })
 @RequestMapping("/admin")
-public class AccountController {
+public class AdminController {
 	@Autowired
 	@Qualifier("accountService")
 	private AccountService service;
