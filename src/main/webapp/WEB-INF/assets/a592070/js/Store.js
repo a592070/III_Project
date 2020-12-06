@@ -5,8 +5,6 @@ const store = new Vuex.Store({
         travelSetInfoLoading: true,
         travelSetDialog: false,
         travelSetDetailLoading: true,
-        travelSetSelectDialog: false,
-        travelSetSelectLoading: true,
         currentEditTravelSetInfo: {
             sn: 0,
             createdUser: '',
@@ -18,56 +16,11 @@ const store = new Vuex.Store({
             status: false
         },
         currentEditTravelSetDetail: {
-            travelSetInfo: {
-                sn: 0,
-                createdUser: '',
-                name: '',
-                description: '',
-                createdTime: '',
-                updateTime: '',
-                priority: 0,
-                status: false
-            },
-            travelSetAttractions: [
-                {
-                    sn: 0,
-                    time: '',
-                    attraction: {
-                        sn: 0,
-                        name: ''
-                    }
-                }
-            ],
-            travelSetRestaurants: [
-                {
-                    sn: 0,
-                    time: '',
-                    restaurant: {
-                        sn: 0,
-                        name: ''
-                    }
-                }
-            ],
-            travelSetHotels: [
-                {
-                    sn: 0,
-                    time: '',
-                    hotel: {
-                        sn: 0,
-                        name: ''
-                    }
-                }
-            ],
-            travelSetCars: [
-                {
-                    sn: 0,
-                    time: '',
-                    car: {
-                        sn: 0,
-                        name: ''
-                    }
-                }
-            ]
+            travelSetInfo: {},
+            travelSetAttractions: [],
+            travelSetRestaurants: [],
+            travelSetHotels: [],
+            travelSetCars: []
         },
         currentEditTravelSetSelectItem: {
             sn: 0,
@@ -79,42 +32,56 @@ const store = new Vuex.Store({
         getTravelSetDialog: (state) => state.travelSetDialog,
         getTravelSetDetailLoading: (state) => state.travelSetDetailLoading,
 
-        getTravelSetSelectDialog: (state) => state.travelSetSelectDialog,
-        getTravelSetSelectLoading: (state) => state.travelSetSelectLoading,
-
-        getTravelSetDetail: (state) => state.currentEditTravelSetDetail,
-        getTravelSetSelectItem: (state) => state.currentEditTravelSetSelectItem,
-        getTravelSetInfo: (state) => state.currentEditTravelSetInfo
+        getCurrentTravelSetDetail: (state) => state.currentEditTravelSetDetail,
+        getCurrentTravelSetSelectItem: (state) => state.currentEditTravelSetSelectItem,
+        getCurrentTravelSetInfo: (state) => state.currentEditTravelSetInfo
     },
     mutations: {
         toggleTravelSetInfoLoading(state){
             state.travelSetInfoLoading = !state.travelSetInfoLoading;
         },
         toggleTravelSetDialog(state){
+            console.log(state.travelSetDialog);
             state.travelSetDialog = !state.travelSetDialog;
+            console.log(state.travelSetDialog);
         },
         toggleTravelSetDetailLoading(state){
             state.travelSetDetailLoading = !state.travelSetDetailLoading;
         },
 
-
-        toggleTravelSetSelectDialog(state){
-            state.travelSetSelectDialog = !state.travelSetSelectDialog;
-        },
-        toggleTravelSetSelectLoading(state){
-            state.travelSetSelectLoading = !state.travelSetSelectLoading;
-        },
-
-        setTravelSetInfo(state, newTravelSetInfo){
+        setCurrentTravelSetInfo(state, newTravelSetInfo){
             state.currentEditTravelSetInfo = newTravelSetInfo;
         },
-        setTravelSetDetail(state, newTravelSetDetail){
-            state.currentEditTravelSetDetail = newTravelSetDetail;
+        setCurrentTravelSetDetail(state, newTravelSetDetail){
+            // state.currentEditTravelSetDetail.travelSetInfo = newTravelSetDetail.travelSetInfo;
+            // state.currentEditTravelSetDetail.travelSetAttractions = newTravelSetDetail.travelSetAttractions;
+            // state.currentEditTravelSetDetail.travelSetCars = newTravelSetDetail.travelSetCars;
+            // state.currentEditTravelSetDetail.travelSetHotels = newTravelSetDetail.travelSetHotels;
+            // state.currentEditTravelSetDetail.travelSetRestaurants = newTravelSetDetail.travelSetRestaurants;
+            // Vue.set(state.currentEditTravelSetDetail, travelSetInfo, newTravelSetDetail.travelSetInfo);
+            state.currentEditTravelSetDetail = newTravelSetDetail
         },
-        setTravelSetSelectItem(state, newTravelSetSelectItem){
+        setCurrentTravelSetSelectItem(state, newTravelSetSelectItem){
             state.currentEditTravelSetSelectItem = newTravelSetSelectItem;
         }
 
+    },
+    actions: {
+        selectedTravelSetDetailData(state, sn){
+            return fetch(context+'/admin/travelSet/entity/'+sn)
+                .then(response => response.json())
+                .then(data =>{
+                    console.log(data);
+                    let detail = {
+                        travelSetInfo: data.travelSetInfo,
+                        travelSetAttractions: data.travelSetAttractions,
+                        travelSetCars: data.travelSetCars,
+                        travelSetHotels: data.travelSetHotels,
+                        travelSetRestaurants: data.travelSetRestaurants}
+                    state.commit("setCurrentTravelSetDetail", data);
+                    console.log(state.getters.getCurrentTravelSetDetail);
+                });
+        }
     }
 })
 export default store;

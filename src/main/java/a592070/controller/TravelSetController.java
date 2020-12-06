@@ -114,7 +114,7 @@ public class TravelSetController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println(map);
+//        System.out.println(map);
         return map;
     }
 
