@@ -171,9 +171,7 @@ h2 {
 
 	<script>
 		//文章列表
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							$.ajax({
 								type : "GET",
 								url : "Article.controller.json",
@@ -201,7 +199,8 @@ h2 {
 															},
 															success : function(
 																	response) {
-																console.log(response);
+															
+																
 																showList(response);
 															},
 														});
@@ -223,6 +222,7 @@ h2 {
 											artId : currId
 										},
 										success : function(response) {
+											showList(response);
 										},
 									});
 								});
@@ -274,7 +274,7 @@ h2 {
 										articleType : type
 									},
 									success : function(response) {
-										console.log(response);
+										
 										showList(response);
 									},
 								});
@@ -286,8 +286,7 @@ h2 {
 	<script>
 		function showList(response) {
 			$("tbody").empty();
-			$
-					.each(
+			$.each(
 							response,
 							function(index, element) {
 								var currStatus = element.artStatus;
