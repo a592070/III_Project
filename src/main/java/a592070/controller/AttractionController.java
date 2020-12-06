@@ -163,7 +163,7 @@ public class AttractionController {
         return responseEntity;
     }
 
-    @PostMapping({"/admin/attraction/save/{id}", "/admin/attraction/save/", "/admin/attraction/save"})
+    @PutMapping({"/admin/attraction/save/{id}", "/admin/attraction/save/", "/admin/attraction/save"})
     public Map<String, Object> save(@PathVariable(name = "id", required = false) Integer id,
                               @RequestParam(name="file", required=false)MultipartFile[] multipartFile,
                               @RequestParam(name="removePicId", required = false) String removePicId,

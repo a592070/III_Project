@@ -9,7 +9,8 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "TRAVEL_ELE_C")
 public class TravelEleCarDO {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
 
     private Timestamp time;

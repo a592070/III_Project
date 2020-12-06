@@ -11,7 +11,8 @@ import java.util.Date;
 @Entity
 @Table(name = "TRAVEL_ELE_A")
 public class TravelEleAttractionDO {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
 
     private Timestamp time;

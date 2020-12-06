@@ -8,8 +8,8 @@ import utils.StringUtil;
 
 import javax.persistence.*;
 
-@JsonDeserialize(using = AttractionVOJsonDeserializer.class)
-@JsonSerialize(using = AttractionVOJsonSerializer.class)
+//@JsonDeserialize(using = AttractionVOJsonDeserializer.class)
+//@JsonSerialize(using = AttractionVOJsonSerializer.class)
 @Entity
 @Table(name = "AttractionView")
 @Immutable

@@ -1,12 +1,12 @@
 package a592070.controller;
 
 import a592070.fieldenum.AttractionFiledName;
-import a592070.pojo.AttractionDO;
-import a592070.pojo.AttractionVO;
-import a592070.pojo.TravelSetDO;
-import a592070.pojo.TravelSetVO;
+import a592070.pojo.*;
 import a592070.service.AttractionService;
 import a592070.service.TravelSetService;
+import a592070.service.ViewService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import global.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import utils.StringUtil;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,14 @@ public class TravelSetController {
     @Autowired@Qualifier("travelSetService")
     private TravelSetService service;
 
+    @Autowired@Qualifier("attractionViewService")
+    private ViewService<AttractionVO> attractionViewService;
+    @Autowired@Qualifier("carViewService")
+    private ViewService<CarVO> carViewService;
+    @Autowired@Qualifier("hotelViewService")
+    private ViewService<HotelVO> hotelViewService;
+    @Autowired@Qualifier("restaurantViewService")
+    private ViewService<RestaurantVO> restaurantViewService;
 
     @RequestMapping("/admin/travelSet/list/{page}")
     public Map<String, Object> getTravelSetList(@PathVariable("page") Integer page){
@@ -118,22 +127,63 @@ public class TravelSetController {
         return map;
     }
 
-    @PostMapping({"/admin/travelSet/save/{id}", "/admin/travelSet/save/", "/admin/travelSet/save"})
+    @PutMapping({"/admin/travelSet/save/{id}", "/admin/travelSet/save/", "/admin/travelSet/save"})
     public Map<String, Object> save(@PathVariable(name = "id", required = false) Integer id,
-                                    @RequestParam(name="travelSetData", required = false)String travelSetData) {
+                                    @RequestBody Map<String,String> params) {
         Map<String, Object> map = new HashMap<>();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            TravelSetDO travelSetDO = mapper.readValue(travelSetData, TravelSetDO.class);
+//            System.out.println(params);
+
+            TravelSetDO travelSetDO = mapper.readValue(params.get("travelSetInfo"), TravelSetDO.class);
+            List<TravelEleAttractionDO> eleAttractionDOList = mapper.readValue(params.get("travelSetAttractions"), new TypeReference<List<TravelEleAttractionDO>>(){});
+            List<TravelEleCarDO> eleCarDOList = mapper.readValue(params.get("travelSetCars"), new TypeReference<List<TravelEleCarDO>>(){});
+            List<TravelEleHotelDO> eleHotelDOList = mapper.readValue(params.get("travelSetHotels"), new TypeReference<List<TravelEleHotelDO>>(){});
+            List<TravelEleRestaurantDO> eleRestaurantDOList = mapper.readValue(params.get("travelSetRestaurants"), new TypeReference<List<TravelEleRestaurantDO>>(){});
 
             if(id == null || id.intValue() == 0) {
+                for (TravelEleAttractionDO ele : eleAttractionDOList) {
+                    ele.setSn(null);
+                    travelSetDO.addTravelAttractions(ele);
+                }
+                for (TravelEleCarDO ele : eleCarDOList) {
+                    ele.setSn(null);
+                    travelSetDO.addTravelCars(ele);
+                }
+                for (TravelEleHotelDO ele : eleHotelDOList) {
+                    ele.setSn(null);
+                    travelSetDO.addTravelHotels(ele);
+                }
+                for (TravelEleRestaurantDO ele : eleRestaurantDOList) {
+                    ele.setSn(null);
+                    travelSetDO.addTravelRestaurants(ele);
+                }
+
                 travelSetDO = service.addTravelSet(travelSetDO);
             }else{
+                for (TravelEleAttractionDO ele : eleAttractionDOList) {
+                    travelSetDO.addTravelAttractions(ele);
+                }
+                for (TravelEleCarDO ele : eleCarDOList) {
+                    travelSetDO.addTravelCars(ele);
+                }
+                for (TravelEleHotelDO ele : eleHotelDOList) {
+                    travelSetDO.addTravelHotels(ele);
+                }
+                for (TravelEleRestaurantDO ele : eleRestaurantDOList) {
+                    travelSetDO.addTravelRestaurants(ele);
+                }
+
                 travelSetDO = service.updateTravelSet(travelSetDO);
             }
 
 
-            map.put("travelSetData", travelSetDO);
+
+            map.put("travelSetInfo", travelSetDO);
+            map.put("travelSetAttractions", travelSetDO.getTravelAttractions());
+            map.put("travelSetCars", travelSetDO.getTravelCars());
+            map.put("travelSetHotels", travelSetDO.getTravelHotels());
+            map.put("travelSetRestaurants", travelSetDO.getTravelRestaurants());
             map.put("message", true);
 
             return map;
@@ -145,7 +195,7 @@ public class TravelSetController {
     }
 
 
-    @PutMapping("/admin/travelSet/status/{id}")
+    @PostMapping("/admin/travelSet/status/{id}")
     public boolean switchStatus(@PathVariable(name = "id") Integer id){
         boolean flag = false;
         try {
@@ -168,5 +218,44 @@ public class TravelSetController {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    /*
+    type {
+     0: attraction
+     1: restaurant
+     2: hotel
+     3: car
+     }
+     */
+    @GetMapping({"/admin/travelSet/{type}/{page}/{keywords}", "/admin/travelSet/{type}/{page}"})
+    public Map<String, Object> listTravelSetAttraction(
+            @PathVariable("type") int type,
+            @PathVariable("page") int page,
+            @PathVariable(name="keywords", required = false) String keywords){
+        PageSupport pageSupport = new PageSupport();
+        pageSupport.setPageSize(PAGE_SIZE);
+        pageSupport.setCurrentPage(page);
+
+        List list = new ArrayList();
+
+        if(type == 0){
+            pageSupport.setTotalSize(attractionViewService.getSizeByKeyWords(keywords));
+            list = attractionViewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+        }else if(type == 1){
+            pageSupport.setTotalSize(restaurantViewService.getSizeByKeyWords(keywords));
+            list = restaurantViewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+        }else if(type == 2){
+            pageSupport.setTotalSize(hotelViewService.getSizeByKeyWords(keywords));
+            list = hotelViewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+        }else if(type == 3){
+            pageSupport.setTotalSize(carViewService.getSizeByKeyWords(keywords));
+            list = carViewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("tableData", list);
+        map.put("pageData", pageSupport);
+        return map;
     }
 }

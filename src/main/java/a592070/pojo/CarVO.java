@@ -6,8 +6,8 @@ import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 
-//@JsonSerialize(using = CarVOJsonSerializer.class)
-//@JsonDeserialize(using = CarVOJsonDeserializer.class)
+@JsonSerialize(using = CarVOJsonSerializer.class)
+@JsonDeserialize(using = CarVOJsonDeserializer.class)
 @Entity
 @Table(name = "TRAVEL_SET_CARVIEW")
 @Immutable

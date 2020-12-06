@@ -36,7 +36,8 @@ public class TravelSetDO {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
 
-    @Column(name = "UPDATE_TIME", insertable = false, updatable = false)
+    @UpdateTimestamp
+    @Column(name = "UPDATE_TIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
@@ -192,6 +193,7 @@ public class TravelSetDO {
 
 
     public void addTravelCars(TravelEleCarDO travelEleCarDO){
+        travelEleCarDO.setTravelSetDO(this);
         this.travelCars.add(travelEleCarDO);
     }
     public void addTravelCars(Integer carID){
@@ -211,6 +213,7 @@ public class TravelSetDO {
 
 
     public void addTravelHotels(TravelEleHotelDO travelEleHotelDO){
+        travelEleHotelDO.setTravelSetDO(this);
         this.travelHotels.add(travelEleHotelDO);
     }
     public void addTravelHotels(Integer hotelID){
@@ -230,6 +233,7 @@ public class TravelSetDO {
 
 
     public void addTravelRestaurants(TravelEleRestaurantDO travelEleRestaurantDO){
+        travelEleRestaurantDO.setTravelSetDO(this);
         this.travelRestaurants.add(travelEleRestaurantDO);
     }
     public void addTravelRestaurants(Integer restaurantID){
@@ -249,6 +253,7 @@ public class TravelSetDO {
 
 
     public void addTravelAttractions(TravelEleAttractionDO travelEleAttractionDO){
+        travelEleAttractionDO.setTravelSetDO(this);
         this.travelAttractions.add(travelEleAttractionDO);
     }
     public void addTravelAttractions(Integer attractionID){

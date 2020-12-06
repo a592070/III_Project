@@ -2,6 +2,7 @@ package a592070.pojo;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Type;
 import utils.StringUtil;
 
 import javax.persistence.*;
@@ -22,6 +23,9 @@ public class HotelVO {
     private BigDecimal rating;
     private String description;
     private String region;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
     public HotelVO() {
     }
@@ -91,6 +95,14 @@ public class HotelVO {
         this.region = region;
     }
 
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "HotelVO{" +
@@ -102,6 +114,7 @@ public class HotelVO {
                 ", rating=" + rating +
                 ", description='" + description + '\'' +
                 ", region='" + region + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
