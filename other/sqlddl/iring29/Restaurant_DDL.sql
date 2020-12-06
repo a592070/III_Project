@@ -1,6 +1,10 @@
 --------------------------------------------------------
---  已建立檔案 -version:07 UPDATE: 2020/11/16
+--  已建立檔案 -version:08 UPDATE: 2020/12/2
 --------------------------------------------------------
+
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "III_TEAM_DBA"."RESTAURANTVIEW" ("R_SN", "NAME", "TYPE", "RATING", "REGION", "PIC") AS 
+  select R_SN, NAME, TYPE, RATING, REGION,PIC from RESTAURANT;
+
 --------------------------------------------------------
 --  DDL for Sequence RESTAURANT_SEQ
 --------------------------------------------------------

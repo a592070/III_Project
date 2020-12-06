@@ -216,7 +216,7 @@ h5{
   											      </button>											
   											    </div>
   											    <div class="modal-body">
-  											      是否確認修改餐廳餐廳餐廳  ${ROList.id}  資料？
+  											      是否確認修改餐廳    ${ROList.id}  資料？
      											</div>											
  											     <div class="modal-footer">
    											     	<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>

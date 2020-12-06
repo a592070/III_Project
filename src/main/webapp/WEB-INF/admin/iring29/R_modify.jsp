@@ -452,7 +452,7 @@ pre {
 											<button type="button" class="btn btn-warning" id="confirm" data-toggle="modal" data-target="#餐廳${RBean.r_sn}">
 											 送出修改
 											</button>
-													<button type="submit" class="btn btn-danger">資料重置</button>
+													<button type="submit" class="btn btn-danger" onclick="cancel()">資料重置</button>
 													<Input type='hidden' name='r_sn' value='${RBean.r_sn}'>
 											</form>
 									</div>
@@ -484,7 +484,10 @@ pre {
 				document.forms["modifyR"].submit();
 			
 		}
-						
+
+		function cancel(){
+			
+        }		
 		</script>
 
 		<script>
@@ -529,6 +532,8 @@ pre {
                 }
 
         }
+
+        
         </script>
 
 				</div>

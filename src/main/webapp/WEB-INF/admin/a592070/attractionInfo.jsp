@@ -48,7 +48,7 @@
 
 
                             <div class="card-header justify-content-between">
-                                <h2>Attraction Table</h2>
+                                <h2>景 點 列 表</h2>
                                 <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>
                             </div>
 
@@ -132,7 +132,7 @@
                                         <template slot-scope="scope">
                                         <label class="switch switch-text switch-success switch-pill form-control-label">
                                             <input type="checkbox" class="switch-input form-check-input" v-bind:checked="scope.row.status" v-on:click="handleSwitchStatus(scope.row)">
-                                            <span class="switch-label" data-on="On" data-off="Off"></span>
+                                            <span class="switch-label" data-on="啟用" data-off="禁用"></span>
                                             <span class="switch-handle"></span>
                                         </label>
                                         </template>
@@ -143,12 +143,12 @@
                                         <template slot-scope="scope">
                                             <el-button
                                                     size="medium"
-                                                    type="primary" icon="el-icon-edit"
+                                                    type="primary" icon="el-icon-edit" class="btn btn-warning"
                                                     @click="handleEdit(scope.$index, scope.row)">Edit
                                             </el-button>
                                             <el-button
                                                     size="medium"
-                                                    type="danger" icon="el-icon-delete"
+                                                    type="danger" icon="el-icon-delete" class="btn btn-danger"
                                                     @click="handleDelete(scope.$index, scope.row)"></el-button>
                                         </template>
                                     </el-table-column>
@@ -384,7 +384,7 @@
                 value.status = !value.status;
 
                 let url = '${pageContext.servletContext.contextPath}/admin/attraction/status/'+value.sn;
-                axios.post(url)
+                axios.put(url)
                     .then(response => {
                         if(response.data){
                             const h = this.$createElement;

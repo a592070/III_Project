@@ -185,9 +185,12 @@ h3{
           		<div class="col-md-4 ">
 		    				<div class="destination">
 		    				<FORM id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
-		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://img.etimg.com/thumb/msid-75176755,width-640,resizemode-4,imgsize-612672/effect-of-coronavirus-on-food.jpg');">
+		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     								<span class="icon-search2"></span>
+    								<script type="text/javascript">
+//     								console.log("pic = " + Base64.encode("${res.pic}"));
+    								</script>
     								</div>
 		    					</a>
 		    					<Input type='hidden' name='restaurant_name' value='${res.name}'>
@@ -200,16 +203,27 @@ h3{
 		    						<div class="d-flex">
 		    							<div class="one">
 				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
-				    						<p class="rate"  id="test${res.rating}" >
-				    							<i id="stars" class="icon-star" ></i>
-				    							<i id="stars" class="icon-star" ></i>
-				    							<i id="stars" class="icon-star" ></i>
-				    							<i id="stars" class="icon-star" ></i>
-				    							<i id="stars" class="icon-star-o" ></i>
+				    						<p class="rate"  id="test${res.r_sn}" >
+<!-- 				    							<i id="stars" class="icon-star" ></i> -->
+<!-- 				    							<i id="stars" class="icon-star" ></i> -->
+<!-- 				    							<i id="stars" class="icon-star" ></i> -->
+<!-- 				    							<i id="stars" class="icon-star" ></i> -->
+<!-- 				    							<i id="stars" class="icon-star-o" ></i> -->
 				    							<span>${res.rating}</span>
 				    						</p>
 				    						<script>
-				    						
+				    						var star = Math.floor("${res.rating}");
+											console.log("star = " + star);
+											var tags = "";
+											var half = "<i class='fa fa-star-half_alt'></i>";
+											var zerostar = "";
+											for(var i = 0; i < star; i++){
+												tags += "<i class='icon-star'></i></span>";
+												}
+											for(var j = star; j < 5 ; j++){
+												zerostar += "<i class='fa fa-star-o'></i>";
+												}
+											$("#test${res.r_sn}").prepend(tags, zerostar);
 				    						</script>
 			    						</div>
 			    						<div class="two">

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>找餐廳</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<c:import url="/WEB-INF/admin/fragment/user_ref.jsp" /> 
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     
 <style>
 * {
@@ -23,7 +23,7 @@ body{
 }    
 .box{
  	background:white; 
-	margin:50px 120px;
+	margin:120px 120px;
 }
 img{
 	width:700px;
@@ -58,11 +58,25 @@ img{
     color: #ffffff;
     background: #dfa974;
 }
+#idsp{
+	float:left; 
+	color:red;
+	font-size:13px;
+	font-style:italic;
+}
 </style>
 </head>
 <body>
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
+    <!-- Start nav -->    
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
-
+    <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
 <div class="box">
 <!-- Breadcrumb Section Begin -->
     <div class="breadcrumb-section">
@@ -99,18 +113,25 @@ img{
 										var star = Math.floor("${res_data.rating}");
 										console.log("star = " + star);
 										var tags = "";
-										var half = " <i class='icon_star-half_alt'>";
+// 										var half = " <i class='icon_star-half_alt'></i>";
 										var zerostar = "";
 										for(var i = 0; i < star; i++){
-											tags += " <i class='icon_star'>";
+											tags += " <i class='icon_star'></i>";
 											}
-										for(var j =( star + 1 ); j < 5 ; j++){
-											zerostar += " <i class='fa fa-star-o'>";
+										for(var j = star ; j < 5 ; j++){
+											zerostar += " <i class='fa fa-star-o'></i>";
 											}
-										$("#rating").prepend(tags, half, zerostar);
+										$("#rating").prepend(tags, zerostar);
                                       </script>
                                     </div>
-                                    	<a href="#">放入購物車</a>
+                                    <form id="shop_cart" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
+                                    	<a href="javascript:document.getElementById('shop_cart').submit();">放入購物車</a>
+                                    	<Input type='hidden' name='time' value='11:00'>
+                                    	<Input type='hidden' name='book_date' value='${book_date}'>
+                                    	<Input type='hidden' name='b_name' value=''>
+                                    	<Input type='hidden' name='b_phone' value=''>
+                                    	<Input type='hidden' name='person_number' value='${person_number}'>
+                                    </form>
                                 </div>
                             </div>
 <!--                             <h2>159$<span>/Pernight</span></h2> -->
@@ -216,7 +237,7 @@ img{
                 <div class="col-lg-4">
                     <div class="room-booking">
                         <h3>訂位資料</h3>
-                        <form action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
+                        <form class="booking2" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
                             <div class="check-date">
                                 <label for="date-in">日期:</label>
                                 <input type="date" name="book_date" id="theDate" class="date-input hasDatepicker">
@@ -283,14 +304,56 @@ img{
    								</script>
                             </div>
                             <div class="select-option">
-                                <label for="guest">請輸入訂位者姓名:</label>
-                                <input type="text" id="b-name" name="b_name" placeholder="">
+                                <label for="guest">請輸入訂位者姓名:</label><span id="idsp">&nbsp;*必填</span><span id="nameck">&nbsp;</span>
+                                <input type="text" id="b-name" name="b_name" placeholder="" onchange="checkinfo()">
                             </div>
                             <div class="select-option">
-                                <label for="room">請輸入訂位者電話:</label>
-                                <input type="text" id="b-phone" onblur="checkPhone()" name="b_phone" placeholder="09xxxxxxxx">
+                                <label for="room">請輸入訂位者電話:</label><span id="idsp">&nbsp;*必填</span><span id="phoneck">&nbsp;</span>
+                                <input type="text" id="b-phone" name="b_phone" placeholder="09xxxxxxxx" onchange="checkinfo()">
                             </div>
-                            <button type="submit" class="orderbtn">我要訂位</button>
+                            <button id="order" type="button" class="orderbtn">我要訂位</button>
+                            <Input type='hidden' name='cartnum' value=''>
+                            <script>
+                            var item = 0;
+								$("#order").click(function(){
+									var name = $("#b-name").val();
+									var phone = $("#b-phone").val();
+									if($("#b-name").val() == ""){
+										$("#nameck").html("&nbsp;<font color='red'>請輸入訂位者姓名</font>");
+									}else{
+										$("#nameck").html("");
+										}
+									if($("#b-phone").val() == ""){
+										$("#phoneck").html("&nbsp;<font color='red'>請輸入手機號碼</font>");
+									}else if(!$("#b-phone").val().match(/^09[0-9]{8}$/)){
+										$("#phoneck").html("&nbsp;<font color='red'>手機號碼格式不正確！</font>");
+									}else {
+										$("#phoneck").html("");
+									}
+									console.log("t or f = " + (!$("#b-phone").val().match(/^09[0-9]{8}$/)))
+									if(name != "" && phone != "" && (!$("#b-phone").val().match(/^09[0-9]{8}$/)) == false){
+										$(".booking2").submit();
+									}
+									})
+									
+							function checkinfo(){
+									var name = $("#b-name").val();
+									var phone = $("#b-phone").val();
+									if($("#b-name").val() == ""){
+										$("#nameck").html("&nbsp;<font color='red'>請輸入訂位者姓名</font>");
+									}else{
+										$("#nameck").html("");
+										}
+									if($("#b-phone").val() == ""){
+										$("#phoneck").html("&nbsp;<font color='red'>請輸入手機號碼</font>");
+									}else if(!$("#b-phone").val().match(/^09[0-9]{8}$/)){
+										$("#phoneck").html("&nbsp;<font color='red'>手機號碼格式不正確！</font>");
+									}else {
+										$("#phoneck").html("");
+									}
+									console.log("name = " + name + "phone = " + phone);
+									}
+                            </script>
                         </form>
                     </div>
                 </div>

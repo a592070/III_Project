@@ -84,7 +84,12 @@ body{
 </head>
 <body>
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
-    
+    <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
 <section class="cart_area">
 	<div class="container">
 		<div class="row">
@@ -217,13 +222,14 @@ body{
 								</div>
 							</td>
 							<td>
+							<Input type='hidden' name='book_date' id="r_sn${R.restaurant.r_sn}" value='${R.restaurant.r_sn}'>
 							<div class="content"><h5>${R.restaurant.name}</h5></div>
 							<div class="content"><h5>${R.restaurant.address}</h5></div>
-							<div class="content"><h5><input class="form-control data" value="${R.cus_name}"></h5></div>
-							<div class="content"><h5><input class="form-control data" value="${R.cus_phone}"></h5></div>
+							<div class="content"><h5><input class="form-control data" value="${R.cus_name}" id="cus_name${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
+							<div class="content"><h5><input class="form-control data" value="${R.cus_phone}" id="cus_phone${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
 							</td>
 							<td class="col-sm-1 col-md-1" >
-								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control">
+								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control ${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()">
 								<c:set var="booktime" value="${R.bookt_time}" />
 								<c:set var="bd" value="${fn:substring(booktime, 0, 10)}" />
 								<c:set var="bt" value="${fn:substring(booktime, 11, 16)}" />
@@ -244,8 +250,7 @@ body{
 						document.getElementById("theDate${R.restaurant.name}").value = "${bd}";
 						document.getElementById("theDate${R.restaurant.name}").min = today;
 					</script>
-<!-- 					<div class="div_title time"> -->
-						<select id="sel${R.restaurant.name}" name="book_time" class="form-control time">
+						<select id="sel${R.restaurant.name}" name="book_time" class="form-control time ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}()">
 							<option value="11:00">11:00</option>
 							<option value="12:00">12:00</option>
 							<option value="13:00">13:00</option>
@@ -255,7 +260,6 @@ body{
 							<option value="19:00">19:00</option>
 							<option value="20:00">20:00</option>
 						</select>
-<!-- 					</div> -->
 							</td>
 						<script>
 							console.log("time = " + "${bt}");
@@ -288,7 +292,7 @@ body{
 							
 						</script>
 							<td class="col-sm-1 col-md-1 text-center">
-							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num">
+							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}()">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -299,7 +303,7 @@ body{
 						<option value="8">8</option>
 						<option value="9">9</option>
 						<option value="10">10</option>
-					</select>
+							</select>
 					<script type="text/javascript">
 						var num  =  ${R.customer_num};
 						console.log("num = " + num);
@@ -307,6 +311,29 @@ body{
         				var opts=document.getElementById("p_num${R.restaurant.name}");
 						console.log("num" + opts[num].value);
        					opts[num-1].selected=true;
+   					</script>
+   					<script>
+   					function changeinfo${R.restaurant.r_sn}(){
+						var sn = $("#r_sn${R.restaurant.r_sn}").val();
+						var name = $("#cus_name${R.restaurant.r_sn}").val();
+						var phone = $("#cus_phone${R.restaurant.r_sn}").val();
+						var bd = $(".form-control.${R.restaurant.r_sn}").val();
+						var bt = $(".form-control.time.${R.restaurant.r_sn}").val();
+						var pnum = $(".form-control.p_num.${R.restaurant.r_sn}").val();
+						console.log("sn = " + sn + ",name = " + name + ",phone = " + phone + ", bd = " + bd + ", bt = " + bt + ", pnum = " + pnum);
+						
+						$.ajax(
+			                    {
+			                        type: 'POST',
+			                        data: { "r_sn":sn, "time":bt, "book_date":bd,"person_number":pnum ,"b_name":name, "b_phone":phone, "person_number": pnum},
+			                        url: '${pageContext.servletContext.contextPath}/modifyOrderInfo',
+			                        dataType: 'json',
+			                        success:function(response){
+				                        console.log(response);
+			                        }
+			                    }
+			                )
+   					}
    					</script>
 							</td>
 							<td class="col-sm-1 col-md-1">
@@ -318,6 +345,7 @@ body{
 								</button>
 							</td>
 						</tr>
+						
 					</c:forEach>
 						
 
@@ -340,10 +368,6 @@ body{
 							console.log("money = " + size);
 							console.log("money = " + deposit[i].innerHTML);
 							}
-// 						var size  =  ${size}.legnth;
-// 						console.log("size = " + size);
-//         				size = 500;
-// 						size = deposit.value
         				document.getElementById("tPrice").innerHTML = size;
         				
    					</script>
@@ -476,17 +500,24 @@ body{
 					<tbody>
 						<tr>
 							<td  class="total"> </td>
+							<td></td>
+							<td></td>
 							<td>
-								<button type="button" class="btn btn-default">
+							<form action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_index">
+								<button type="button" class="btn btn-primary">
 									<span class="glyphicon glyphicon-shopping-cart"></span>
-									Continue Shopping
+									繼續逛
 								</button>
+							</form>
 							</td>
 							<td>
-								<button type="button" class="btn btn-success">
-									Checkout <span class="glyphicon glyphicon-play"></span>
+							<form action="<%=pageContext.getServletContext().getContextPath()%>/ShowOrderList" method="POST">
+								<button type="submit" class="btn btn-success">
+									我要結帳 <span class="glyphicon glyphicon-play"></span>
 								</button>
+							</form>
 							</td>
+							<td></td>
 						</tr>
 
 					</tbody>
