@@ -15,7 +15,14 @@ public class ArticleDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-
+	//顯示文章列表(非禁用)
+	public List<Article> showAvailableArticles(){
+		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article  WHERE ART_STATUS = 'enabled' Order by ART_ID",
+				Article.class);
+		List<Article> list = query.list();
+		return list;
+	}
+	
 	// 顯示文章列表
 	public List<Article> showAllArticles() {
 		
