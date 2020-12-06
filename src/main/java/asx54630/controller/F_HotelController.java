@@ -43,6 +43,7 @@ public class F_HotelController {
 		
 		int pageSize = hpage.gethPageSize();
 		int totalPage = hpage.getTotalPageCount();
+		currentPage = 1;
 		
 		List<Hotel> hoteldata = f_hotelservice.totalHotel(start, pageSize);
 		m.addAttribute("hoteldata", hoteldata);

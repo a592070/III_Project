@@ -69,11 +69,11 @@ h5{
 				<FORM  id="modifyH" name="modifyH" method="POST" enctype="multipart/form-data">
 					<h4 class="mb-3 font-color">大訂單號碼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4><h4 color="black">${hotelOdetail.ORDER_ID}</h4>
 					<hr>
-					<h4 class="mb-3 font-color">餐廳訂單號碼&nbsp;&nbsp;&nbsp;</h4><h4 color="black">${hotelOdetail.SN_ORDER}</h4>
+					<h4 class="mb-3 font-color">飯店訂單號碼&nbsp;&nbsp;&nbsp;</h4><h4 color="black">${hotelOdetail.SN_ORDER}</h4>
 					<Input type='hidden' name="id" value='${hotelOdetail.SN_ORDER}'>
 					<Input type='hidden' name='order_id' value='${hotelOdetail.ORDER_ID}'>
 					<hr>
-					<h4 class="mb-3">餐廳名稱&nbsp;</h4>
+					<h4 class="mb-3">飯店名稱&nbsp;</h4>
 					<h4>${hotelOdetail.NAME}</h4>
 					<hr>
 					<h4 class="mb-3">下訂帳號&nbsp;</h4>

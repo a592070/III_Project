@@ -45,11 +45,13 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
+		              	<li><a class="first" href="javascript:;" id="firstBtn" onclick="firstPage()">1</a></li>
 		                <li><a class="previous" href="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
 <%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
 		                <li id="${currentPage}" value="${currentPage}"><a href="#" onclick="return false" >${currentPage}/${totalPage}</a></li>
 <%-- 		                </c:forEach> --%>
 		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
+		                <li><a class="last" href="javascript:;" id="lastBtn" onclick="lastPage()">${totalPage}</a></li>
 		              </ul>
 		            </div>
 		          </div>
@@ -65,20 +67,14 @@
 // 				$("#page-btn").text(currentPage+"/"+totalPage);
 
 				if(currentPage == 1){
-					$(".page-link.first").attr("disabled", true);
-					$(".previous").attr("disabled", true);						
-				}else{
-					$(".page-link.first").attr("disabled", false);
-					$(".previous").attr("disabled", false);
-					}
+					$("#firstBtn").removeAttr('onclick');
+					$("#previousBtn").removeAttr('onclick');						
+				}
 
 				if(currentPage == totalPage){
-					$(".page-link.last").attr("disabled", true);
-					$(".next").attr("disabled", true);						
-				}else{
-					$(".page-link.last").attr("disabled", false);
-					$(".next").attr("disabled", false);
-					}
+					$("#nextBtn").removeAttr('onclick');
+					$("#lastBtn").removeAttr('onclick');						
+				}
             </script>
           	
 <!--           	<div class="row mt-5"> -->

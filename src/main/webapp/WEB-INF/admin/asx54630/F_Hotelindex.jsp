@@ -172,20 +172,27 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
-		              	<li><a class="first" href="javascript:;" id="firstBtn" onclick="firstPage()">1</a></li>
-		                <li><a class="previous" href="javascript:;" id="previousBtn" onclick="previousPage()">&lt;</a></li>
+		              	<li><a class="first" href="javascript:;" id="firstBtn" >1</a></li>
+		                <li><a class="previous" href="javascript:;" id="previousBtn" >&lt;</a></li>
 <%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
 		                <li id="${currentPage}" value="${currentPage}"><a href="#" onclick="return false" >${currentPage}/${totalPage}</a></li>
 <%-- 		                </c:forEach> --%>
 		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
-		                <li><a class="last" href="javascript:;" id="lastBtn" onclick="lastPage()">${totalPage}</a></li>
+		                <li><a class="last" href="javascript:;" id="lastBtn" onclick="lastPage()" >${totalPage}</a></li>
 		              </ul>
 		            </div>
 		          </div>
 		        </div>
-		        <script>
-// 				$("#${currentPage}").attr("class","active");
-				$("#${currentPage}").remove("a");
+		        <script type="text/javascript">
+				if(currentPage == 1){
+					$("#firstBtn").removeAttr('onclick');
+					$("#previousBtn").removeAttr('onclick');						
+				}
+
+				if(currentPage == totalPage){
+					$("#nextBtn").removeAttr('onclick');
+					$("#lastBtn").removeAttr('onclick');						
+				}
 		        </script>
           </div> 
           <script type="text/javascript">
@@ -215,7 +222,38 @@
   						}
   					)
   			}
-  	            
+
+         	function firstPage() {
+    			console.log("第一頁")
+//     			var orderfiled = $("#orderfiled").val()
+    			var keyword = $("#keyword").val()
+    			var regionkeywd = $("#regionkeywd").val()
+    			var typekeywd = $("#typekeywd").val()
+//     			var order = $("#order").val()
+    			var pagebotton = $("#page-previous").val()
+    			currentPage = 1;
+    			console.log("keyword =" + keyword);
+    			console.log("regionkeywd =" + regionkeywd);
+    			console.log("typekeywd =" + typekeywd);
+    			console.log("pagebotton =" + pagebotton);
+    			console.log("currentPage =" + currentPage);
+//     			$("#h_content").children().remove();
+    			$.ajax(
+    					{
+    						type: 'POST',
+    						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "pagebotton" : pagebotton, "currentPage" : currentPage },
+    						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+    						dataType: 'html',
+    						success: function (response) {
+    							$("#h_data").children().remove();
+    							$("#h_data").append(response)
+
+    						}
+
+    					}
+    				)
+    		}
+     	            
           
          	function previousPage() {
 			console.log("前一頁")
@@ -279,6 +317,40 @@
 					}
 				)
 		}
+
+         	function lastPage() {
+    			console.log("最末頁")
+//     			var orderfiled = $("#orderfiled").val()
+    			var keyword = $("#keyword").val()
+    			var regionkeywd = $("#regionkeywd").val()
+    			var typekeywd = $("#typekeywd").val()
+//     			var order = $("#order").val()
+    			var pagebotton = $("#page-next").val()
+    			currentPage = totalPage;
+    			console.log("keyword =" + keyword);
+    			console.log("regionkeywd =" + regionkeywd);
+    			console.log("typekeywd =" + typekeywd);
+    			console.log("pagebotton =" + pagebotton);
+    			console.log("currentPage =" + currentPage);
+//     			$("#h_content").children().remove();
+    			$.ajax(
+    					{
+    						type: 'POST',
+    						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "pagebotton" : pagebotton, "currentPage" : currentPage },
+    						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+    						dataType: 'html',
+    						success: function (response) {
+    							$("#h_data").children().remove();
+    							$("#h_data").append(response);
+    							
+
+    						}
+
+    					}
+    				)
+    		}
+
+    		
 		</script>
          
           <!-- .col-md-8 -->
