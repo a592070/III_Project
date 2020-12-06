@@ -142,11 +142,15 @@ public class AttractionController {
     @GetMapping("/attraction/pic/{id}/{fileName}")
     public ResponseEntity<byte[]> getPicture(@PathVariable(name = "id") Integer id,
                                              @PathVariable(name = "fileName") String fileName){
-//        List<AttractionPictureDO> picture = (List<AttractionPictureDO>)viewService.getPictures(id);
+        byte[] bytes = null;
 
+        // 從資料庫抓圖片
+//        List<AttractionPictureDO> picture = (List<AttractionPictureDO>)viewService.getPictures(id);
+//        if(picture.get(0) != null) bytes = picture.get(0).getPicture();
+
+        // 靜態資源抓圖片
         String path = Constant.ATTRACTION_PIC_PATH + File.separator + id + File.separator + fileName + ".jpg";
         String realPath = context.getRealPath(path);
-        byte[] bytes = null;
         try {
             bytes = IOUtils.pathToByteArray(realPath);
         } catch (IOException e) {
@@ -159,7 +163,7 @@ public class AttractionController {
         return responseEntity;
     }
 
-    @PostMapping({"/admin/attraction/save/{id}", "/admin/attraction/save/", "/admin/attraction/save"})
+    @PutMapping({"/admin/attraction/save/{id}", "/admin/attraction/save/", "/admin/attraction/save"})
     public Map<String, Object> save(@PathVariable(name = "id", required = false) Integer id,
                               @RequestParam(name="file", required=false)MultipartFile[] multipartFile,
                               @RequestParam(name="removePicId", required = false) String removePicId,

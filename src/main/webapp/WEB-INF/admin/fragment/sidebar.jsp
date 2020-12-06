@@ -119,6 +119,12 @@
                     </li>
 
 
+                    <li class="has-sub">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/travelSet">
+                            <i class="mdi mdi-calendar-edit"></i>
+                            <span class="nav-text">旅程管理</span>
+                        </a>
+                    </li>
                 </ul>
 
             </div>
