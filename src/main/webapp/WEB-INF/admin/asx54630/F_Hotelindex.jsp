@@ -90,6 +90,9 @@
 		              <div class="form-group">
 		                <button type="button" id="search" onclick="HotelSearch()"  class="btn btn-primary py-3 px-5">找住宿</button>
 		              </div>
+		              <div class="form-group">
+		                <button type="button"  onclick="resetkeyword()"  class="btn btn-primary py-3 px-5">清空選項</button>
+		              </div>
 		            </div>
 	            </form>
         		</div>
@@ -350,6 +353,13 @@
     				)
     		}
 
+    		function resetkeyword(){
+    			console.log("clear");
+    		  $("#keyword").val('');
+    		  $('#regionkeywd').val('');
+    		  $('#typekeywd').val('');
+    		}
+            	
     		
 		</script>
          
