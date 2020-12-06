@@ -351,7 +351,8 @@ module.exports = {
           .then(()=>{
             this.$store.commit("toggleTravelSetDialog");
             this.$store.commit('toggleTravelSetDetailLoading');
-          })
+          });
+      console.log(state.getters.getCurrentTravelSetDetail);
     },
     handleDelete(index, row) {
       console.log(index, row);

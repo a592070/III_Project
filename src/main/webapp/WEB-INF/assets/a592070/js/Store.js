@@ -53,13 +53,20 @@ const store = new Vuex.Store({
             state.currentEditTravelSetInfo = newTravelSetInfo;
         },
         setCurrentTravelSetDetail(state, newTravelSetDetail){
+            state.currentEditTravelSetDetail={
+                travelSetInfo: newTravelSetDetail.travelSetInfo,
+                travelSetAttractions: newTravelSetDetail.travelSetAttractions,
+                travelSetCars: newTravelSetDetail.travelSetCars,
+                travelSetHotels: newTravelSetDetail.travelSetHotels,
+                travelSetRestaurants: newTravelSetDetail.travelSetRestaurants
+            }
             // state.currentEditTravelSetDetail.travelSetInfo = newTravelSetDetail.travelSetInfo;
             // state.currentEditTravelSetDetail.travelSetAttractions = newTravelSetDetail.travelSetAttractions;
             // state.currentEditTravelSetDetail.travelSetCars = newTravelSetDetail.travelSetCars;
             // state.currentEditTravelSetDetail.travelSetHotels = newTravelSetDetail.travelSetHotels;
             // state.currentEditTravelSetDetail.travelSetRestaurants = newTravelSetDetail.travelSetRestaurants;
             // Vue.set(state.currentEditTravelSetDetail, travelSetInfo, newTravelSetDetail.travelSetInfo);
-            state.currentEditTravelSetDetail = newTravelSetDetail
+            // state.currentEditTravelSetDetail = newTravelSetDetail
         },
         setCurrentTravelSetSelectItem(state, newTravelSetSelectItem){
             state.currentEditTravelSetSelectItem = newTravelSetSelectItem;
