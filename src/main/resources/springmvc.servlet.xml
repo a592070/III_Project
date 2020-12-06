@@ -13,7 +13,6 @@
 	<import resource="classpath:sqlBeans.xml" />
 	<import resource="classpath:exampleBeans.xml" />
 	<import resource="classpath:a592070.beans.xml"/>
-<!--	<import resource="classpath:a592070.beans.test.xml"/>-->
 	<import resource="classpath:iring29.beans.xml"/>
 	<import resource="classpath:azaz4498.beans.xml"/>
 	<import resource="classpath:rambo0021.beans.xml" />
@@ -28,6 +27,7 @@
 	<mvc:default-servlet-handler />
 	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
 	<mvc:resources mapping="/direngine-master/**" location="/WEB-INF/direngine-master/"/>
+	<mvc:resources mapping="/sona-master/**" location="/WEB-INF/sona-master/"/>
 	<mvc:resources mapping="/admin/direngine-master/**" location="/WEB-INF/direngine-master/"/>
 	
 
@@ -40,8 +40,6 @@
 				<property name="objectMapper">
 					<bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
 						<property name="failOnEmptyBeans" value="false"/>
-						<property name="failOnUnknownProperties" value="false"/>
-<!--						<property name="featuresToEnable" value="com.fasterxml.jackson.databind.SerializationFeature.WRAP_ROOT_VALUE"/>-->
 					</bean>
 				</property>
 			</bean>
@@ -58,13 +56,13 @@
 	</mvc:cors>
 
 	<!--登入攔截器設定-->
-<!--	<mvc:interceptors>-->
-<!--		<mvc:interceptor>-->
-<!--			&lt;!&ndash;攔截所有/admin 下的請求&ndash;&gt;-->
-<!--			<mvc:mapping path="/admin/**"/>-->
-<!--			<bean class="global.LoginInterceptor"/>-->
-<!--		</mvc:interceptor>-->
-<!--	</mvc:interceptors>-->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor> -->
+			<!--攔截所有/admin 下的請求-->
+			<!-- <mvc:mapping path="/admin/**"/>
+			<bean class="global.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->
 	<bean

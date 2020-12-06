@@ -1,10 +1,13 @@
 package iring29.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import global.pojo.OrderTable;
 
 public class F_RestaurantDAO {
 	@Autowired
@@ -15,32 +18,35 @@ public class F_RestaurantDAO {
 	}
 	
 		// find multiple restaurant by restaurant name & region
-		public List<Restaurant_VO> findMulti_Name_Region(String name, String region) {
-			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region = ?1");
-			query.setParameter(0, "%" + name + "%");
-			query.setParameter(1, region);
-			List<Restaurant_VO> rView = query.getResultList();
-			return rView;
-
-		}
+//		public List<Restaurant_VO> findMulti_Name_Region(String name, String region) {
+//			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region = ?1");
+//			query.setParameter(0, "%" + name + "%");
+//			query.setParameter(1, region);
+//			List<Restaurant_VO> rView = query.getResultList();
+//			return rView;
+//		}
 		
 		// search how many Restaurant
-		public int numRestaurant(String name) {
-			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Restaurant_VO where name like ?0", Integer.class);
+		public int numRestaurant(String name, String region) {
+			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Restaurant_VO where name like ?0 and region like?1 and status = 'Y'", Integer.class);
 			query.setParameter(0, "%" + name + "%");
-
+			query.setParameter(1, "%" + region + "%");
 			return query.uniqueResult().intValue();
 
 		}
 
 		// find multiple restaurant by restaurant name
-		public List<Restaurant_VO> findMulti_R(String name) {
-			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0");
+		public List<Restaurant_VO> findMulti_R(int first,int count, String name, String region) {
+			Query<Restaurant_VO> query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region like ?1 and status = 'Y' order by r_sn", Restaurant_VO.class);
 			System.out.println("start findMulti_R");
 			query.setParameter(0, "%" + name + "%");
-
-			List<Restaurant_VO> rBeans = query.list();
-			return rBeans;
+			query.setParameter(1, "%" + region + "%");
+			// 找第幾筆
+			query.setFirstResult(first);
+			// 從第幾筆開始count筆
+			query.setMaxResults(count);
+			
+			return query.list();
 		}
 		
 		// find specific restaurant by restaurant name
@@ -53,11 +59,40 @@ public class F_RestaurantDAO {
 		}
 
 		// find restaurant by region
-		public List<Restaurant_VO> findRegion(String region) {
-			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where region = ?0");
-			System.out.println("start findRegion");
-			query.setParameter(0, region);
-			List<Restaurant_VO> rView = query.list();
-			return rView;
+//		public List<Restaurant_VO> findRegion(String region) {
+//			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where region = ?0");
+//			System.out.println("start findRegion");
+//			query.setParameter(0, region);
+//			List<Restaurant_VO> rView = query.list();
+//			return rView;
+//		}
+		
+		//get pic
+		public byte[] getPic(BigDecimal r_sn) {
+			Query query = sessionFactory.getCurrentSession().createQuery("select pic from Restaurant_VO where r_sn = ?0");
+			query.setParameter(0, r_sn);
+			byte[] pic = (byte[]) query.uniqueResult();
+			return pic;
+		}
+		
+		//create order
+		public boolean createOrder(OrderTable otBean) {
+			boolean flag = false;
+			try {
+				System.out.println("create order");
+				sessionFactory.getCurrentSession().save(otBean);
+				flag = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("fail to create order.");
+			}
+			return flag;
+		}
+		
+		//find order
+		public OrderTable findOrder(){
+			Query query = sessionFactory.getCurrentSession().createQuery("from OrderTable where order_id = (select max(ot.order_id) from OrderTable ot)", OrderTable.class);
+			OrderTable ot = (OrderTable) query.uniqueResult();
+			return ot;
 		}
 }

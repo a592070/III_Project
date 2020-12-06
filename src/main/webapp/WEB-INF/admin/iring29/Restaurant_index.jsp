@@ -92,7 +92,10 @@ button {
 <body>
 
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
-    
+    <script>
+    $(".nav-shop__circle").html(${cartnum});
+    console.log("cart num = " + ${cartnum}) 
+    </script>
 	<FORM
 		ACTION="<%=pageContext.getServletContext().getContextPath()%>/SearchRestaurant"
 		method="post">

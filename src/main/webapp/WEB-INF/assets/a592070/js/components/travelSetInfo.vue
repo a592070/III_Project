@@ -40,12 +40,14 @@
           :data="tableData"
           style="width: 100%"
           @sort-change='sortChange'
+          height
       >
         <el-table-column
             label="ID"
             prop="sn"
             width="75"
             sortable='custom'
+            fixed
             :sort-orders="['descending', 'ascending']">
         </el-table-column>
         <el-table-column
@@ -122,16 +124,17 @@
           </template>
         </el-table-column>
         <el-table-column
-            width="200"
-            align="right">
+            width="150"
+            align="right"
+            fixed="right">
           <template slot-scope="scope">
             <el-button
-                size="medium"
+                size="small"
                 type="primary" icon="el-icon-edit"
                 @click="handleEdit(scope.$index, scope.row)">Edit
             </el-button>
             <el-button
-                size="medium"
+                size="small"
                 type="danger" icon="el-icon-delete"
                 @click="handleDelete(scope.$index, scope.row)"></el-button>
           </template>
@@ -180,7 +183,7 @@
           v-if="getTravelSetDialog"
           @close="()=>this.$store.commit('toggleTravelSetSelectDialog')"
           :destroy-on-close="true">
-        <travel-set-select-item></travel-set-select-item>
+<!--        <travel-set-select-item></travel-set-select-item>-->
       </el-dialog>
     </el-drawer>
 
@@ -192,7 +195,7 @@ module.exports = {
   name: "TravelSetInfo",
   components: {
     "travel-set-detail": httpVueLoader(context + '/assets/a592070/js/components/travelSetDetail02.vue'),
-    "travel-set-select-item": httpVueLoader(context + '/assets/a592070/js/components/travelSetSelectItem.vue')
+    // "travel-set-select-item": httpVueLoader(context + '/assets/a592070/js/components/travelSetSelectItem.vue')
   },
   data() {
     return {

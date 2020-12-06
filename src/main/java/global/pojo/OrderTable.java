@@ -31,18 +31,17 @@ import rambo0021.pojo.AccountBean;
 @Table(name = "ORDER_TABLE")
 public class OrderTable {
 
-	@Id
+	@Id@Column(name = "ORDER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ORDER_ID")
 	private BigDecimal order_id;
-	@Column(name = "ORDER_DATE")
+//	@Column(name = "ORDER_DATE")
+	@Transient
 	private Timestamp order_date;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERNAME")
 	private AccountBean accountBean;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "oTable", orphanRemoval=true)
 	private Set<R_Order_List> r_Order_Lists;
-
 
 //	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order_table", cascade = CascadeType.ALL, orphanRemoval=true)
 	@Transient
@@ -111,6 +110,7 @@ public class OrderTable {
 	}
 	
 	public void addR_Order_Lists(R_Order_List rList) {
+		rList.setoTable(this);
 		this.r_Order_Lists.add(rList);
 	}
 	

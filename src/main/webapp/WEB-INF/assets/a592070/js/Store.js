@@ -1,4 +1,4 @@
-Vue.use(vuex);
+Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         storeData: "HHHHello",
