@@ -10,4 +10,8 @@ public class IndexController {
     public String welcomePage(){
         return "index";
     }
+    @RequestMapping(path = "/FunTaiwan")
+    public String UserIndex(){
+        return "UserIndex";
+    }
 }

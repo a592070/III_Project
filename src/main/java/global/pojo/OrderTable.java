@@ -42,6 +42,8 @@ public class OrderTable {
 	private AccountBean accountBean;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "oTable", orphanRemoval=true)
 	private Set<R_Order_List> r_Order_Lists;
+//	@Transient
+//	private R_Order_List r_Order_List;
 
 //	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order_table", cascade = CascadeType.ALL, orphanRemoval=true)
 	@Transient

@@ -44,7 +44,7 @@
 											$("#test${res.r_sn}").prepend(tags, zerostar);
 				    						</script>
 			    						<div class="two">
-<!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
+ 			    							<small>訂金&emsp;</small><span class="price per-price">${res.price}<br><small>/人</small></span>
 		    							</div>
 		    						</div>
 		    						<p class="type">${res.type}</p>
