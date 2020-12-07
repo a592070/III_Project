@@ -2,12 +2,13 @@ package a592070.pojo;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Type;
 import utils.StringUtil;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@JsonDeserialize(using = RestaurantVOJsonDeserializer.class)
+//@JsonDeserialize(using = RestaurantVOJsonDeserializer.class)
 @Entity
 @Table(name = "TRAVEL_SET_RESTAURANTVIEW")
 @Immutable
@@ -21,6 +22,9 @@ public class RestaurantVO {
     private String description;
     private BigDecimal rating;
     private String region;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
     public RestaurantVO() {
     }
@@ -83,6 +87,14 @@ public class RestaurantVO {
         this.region = region;
     }
 
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "RestaurantVO{" +
@@ -92,6 +104,8 @@ public class RestaurantVO {
                 ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +
+                ", region='" + region + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

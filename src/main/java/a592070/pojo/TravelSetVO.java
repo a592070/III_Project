@@ -17,12 +17,17 @@ public class TravelSetVO {
     private Integer sn;
     @Column(name = "CREATED_USER")
     private String createdUser;
+    private Integer identity;
     private String name;
     private String description;
     @Column(name = "CREATED_TIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
+
     @Column(name = "UPDATE_TIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+
     private Integer priority;
     @Type(type = "org.hibernate.type.NumericBooleanType")
     @Column(name = "STATUS", nullable = false)
@@ -63,6 +68,14 @@ public class TravelSetVO {
         this.createdUser = createdUser;
     }
 
+    public Integer getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(Integer identity) {
+        this.identity = identity;
+    }
+
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -87,7 +100,7 @@ public class TravelSetVO {
         this.priority = priority;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

@@ -15,8 +15,8 @@ public class CarVOJsonDeserializer extends JsonDeserializer {
         CarVO carVO = new CarVO();
         carVO.setSn(node.get("sn").intValue());
         carVO.setCarType(node.get("name").textValue());
-        carVO.setCompany(node.get("company").textValue());
-        carVO.setPrice(node.get("price").intValue());
+        if(node.get("company") != null) carVO.setCompany(node.get("company").textValue());
+        if(node.get("price") != null) carVO.setPrice(node.get("price").intValue());
         return carVO;
     }
 }

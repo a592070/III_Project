@@ -1,6 +1,9 @@
 package a592070.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.*;
+import rambo0021.pojo.AccountBean;
 import utils.StringUtil;
 
 import javax.persistence.*;
@@ -8,11 +11,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "TRAVEL_SET")
 @DynamicInsert@DynamicUpdate
@@ -20,18 +21,29 @@ public class TravelSetDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
-    @Column(name = "CREATED")
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "CREATED", referencedColumnName = "USERNAME")
+//    private AccountBean createdUser;
+    @Column(name="CREATED")
     private String createdUser;
-    private String description;
-    private Integer priority;
-    @Column(name = "CREATED_TIME")
-    private Timestamp createdTime;
-    @Column(name = "UPDATE_TIME")
-    private Timestamp updateTime;
+
     private String name;
+    private String description;
+
+    private Integer priority;
+    @Column(name = "CREATED_TIME", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime;
+
+    @UpdateTimestamp
+    @Column(name = "UPDATE_TIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateTime;
+
     @Type(type = "org.hibernate.type.NumericBooleanType")
     @Column(name = "available", nullable = false)
-    private boolean available;
+    private boolean status;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @Fetch(FetchMode.SUBSELECT)
@@ -46,15 +58,23 @@ public class TravelSetDO {
 //    @Fetch(FetchMode.SUBSELECT)
 //    private Set<TravelEleAttractionDO> travelAttractions2 = new LinkedHashSet<>();
 
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<TravelEleCarDO> travelCars = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<TravelEleHotelDO> travelHotels = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<TravelEleRestaurantDO> travelRestaurants = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<TravelEleAttractionDO> travelAttractions = new ArrayList<>();
@@ -80,10 +100,17 @@ public class TravelSetDO {
         this.name = name;
     }
 
+//    public AccountBean getCreatedUser() {
+//        return createdUser;
+//    }
+//    public void setCreatedUser(AccountBean createdUser) {
+//        this.createdUser = createdUser;
+//    }
+
+
     public String getCreatedUser() {
         return createdUser;
     }
-
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
@@ -105,31 +132,31 @@ public class TravelSetDO {
         this.priority = priority;
     }
 
-    public Timestamp getCreatedTime() {
-        if(createdTime == null) return new Timestamp(System.currentTimeMillis());
+    public Date getCreatedTime() {
+//        if(createdTime == null) return new Timestamp(System.currentTimeMillis());
         return createdTime;
     }
 
-    public void setCreatedTime(Timestamp createdTime) {
+    public void setCreatedTime(Date createdTime) {
 //        if(createdTime == null) this.createdTime = new Timestamp(System.currentTimeMillis());
         this.createdTime = createdTime;
     }
 
-    public Timestamp getUpdateTime() {
-        if(updateTime == null) return new Timestamp(System.currentTimeMillis());
+    public Date getUpdateTime() {
+//        if(updateTime == null) return new Timestamp(System.currentTimeMillis());
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    public boolean getAvailable() {
-        return available;
+    public boolean getStatus() {
+        return status;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 //    public Set<TravelEleCarDO> getTravelCars2() {
@@ -166,7 +193,16 @@ public class TravelSetDO {
 
 
     public void addTravelCars(TravelEleCarDO travelEleCarDO){
+        travelEleCarDO.setTravelSetDO(this);
         this.travelCars.add(travelEleCarDO);
+    }
+    public void addTravelCars(Integer carID){
+        CarVO carVO = new CarVO();
+        carVO.setSn(carID);
+        TravelEleCarDO travelEleDO = new TravelEleCarDO();
+        travelEleDO.setCar(carVO);
+        travelEleDO.setTravelSetDO(this);
+        this.travelCars.add(travelEleDO);
     }
     public List<TravelEleCarDO> getTravelCars() {
         return travelCars;
@@ -177,7 +213,16 @@ public class TravelSetDO {
 
 
     public void addTravelHotels(TravelEleHotelDO travelEleHotelDO){
+        travelEleHotelDO.setTravelSetDO(this);
         this.travelHotels.add(travelEleHotelDO);
+    }
+    public void addTravelHotels(Integer hotelID){
+        HotelVO hotelVO = new HotelVO();
+        hotelVO.setSn(hotelID);
+        TravelEleHotelDO travelEleDO = new TravelEleHotelDO();
+        travelEleDO.setHotel(hotelVO);
+        travelEleDO.setTravelSetDO(this);
+        this.travelHotels.add(travelEleDO);
     }
     public List<TravelEleHotelDO> getTravelHotels() {
         return travelHotels;
@@ -188,7 +233,16 @@ public class TravelSetDO {
 
 
     public void addTravelRestaurants(TravelEleRestaurantDO travelEleRestaurantDO){
+        travelEleRestaurantDO.setTravelSetDO(this);
         this.travelRestaurants.add(travelEleRestaurantDO);
+    }
+    public void addTravelRestaurants(Integer restaurantID){
+        RestaurantVO restaurantVO = new RestaurantVO();
+        restaurantVO.setSn(restaurantID);
+        TravelEleRestaurantDO travelEleDO = new TravelEleRestaurantDO();
+        travelEleDO.setRestaurant(restaurantVO);
+        travelEleDO.setTravelSetDO(this);
+        this.travelRestaurants.add(travelEleDO);
     }
     public List<TravelEleRestaurantDO> getTravelRestaurants() {
         return travelRestaurants;
@@ -199,7 +253,16 @@ public class TravelSetDO {
 
 
     public void addTravelAttractions(TravelEleAttractionDO travelEleAttractionDO){
+        travelEleAttractionDO.setTravelSetDO(this);
         this.travelAttractions.add(travelEleAttractionDO);
+    }
+    public void addTravelAttractions(Integer attractionID){
+        AttractionVO attractionVO = new AttractionVO();
+        attractionVO.setSn(attractionID);
+        TravelEleAttractionDO travelEleDO = new TravelEleAttractionDO();
+        travelEleDO.setAttraction(attractionVO);
+        travelEleDO.setTravelSetDO(this);
+        this.travelAttractions.add(travelEleDO);
     }
     public List<TravelEleAttractionDO> getTravelAttractions() {
         return travelAttractions;
@@ -212,13 +275,12 @@ public class TravelSetDO {
     public String toString() {
         return "TravelSetDO{" +
                 "sn=" + sn +
-                ", createdUser='" + createdUser + '\'' +
                 ", description='" + description + '\'' +
                 ", priority=" + priority +
                 ", createdTime=" + createdTime +
                 ", updateTime=" + updateTime +
                 ", name='" + name + '\'' +
-                ", available=" + available +
+                ", status=" + status +
                 '}';
     }
 }

@@ -15,7 +15,11 @@ import azaz4498.model.ArticleDAO;
 public class ArticleService {
 	@Autowired
 	private ArticleDAO aDao;
-
+	
+	//顯示文章列表(非禁用)
+	public List<Article> showAvailableArticles(){
+		return aDao.showAvailableArticles();
+	}
 	// 顯示文章列表
 	public List<Article> showAllArticles() {
 		return aDao.showAllArticles();
