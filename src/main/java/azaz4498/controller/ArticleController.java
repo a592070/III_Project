@@ -1,6 +1,7 @@
 package azaz4498.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,10 +64,10 @@ public class ArticleController {
 	}
 	@RequestMapping(path = "/Article.controller.json", method = RequestMethod.GET, produces = {
 			"application/json; charset=UTF-8" })
-	public @ResponseBody Map<String, Object> showArticles() {
+	public String showArticles(Model m) {
 		List<Article> artList = articleService.showAvailableArticles();
-		Map<String, Object> map = new HashMap<>();
-		Map<Integer, String> coverPic = new HashMap<>();
+		List<String> picList = new ArrayList<String>();
+//		Map<Integer, String> coverPic = new HashMap<>();
 		String defaultImgPath = "direngine-master/images/article_default.jpg";
 
 		for (Article article : artList) {// 遍歷article物件
@@ -77,21 +78,25 @@ public class ArticleController {
 				Element imgEle = doc.getElementsByTag("img").first();
 				if (imgEle != null) {// 判斷img標籤是否存在
 					if (imgEle.attr("stc").equals("")) {
-						coverPic.put(id, defaultImgPath);
+						picList.add(defaultImgPath);
+						
 					} else {
 						String coverImgPath = imgEle.attr("src");
-						coverPic.put(id, coverImgPath);
+						picList.add(coverImgPath);
 					}
 				} else {
-					coverPic.put(id, defaultImgPath);
+					picList.add(defaultImgPath);
+
 				}
 			} else {
-				coverPic.put(id, defaultImgPath);
+				picList.add(defaultImgPath);
+
+				
 			}
 		}
-		map.put("list", artList);
-		map.put("coverPic", coverPic);
-		return map;
+		m.addAttribute("list",artList);
+		m.addAttribute("picList", picList);
+		return "azaz4498/forum";
 
 	}
 
