@@ -31,6 +31,10 @@ public class HighSpeedRailController {
 	@Autowired
 	HighSpeedRailService highSpeedRailService;
 	
+	@RequestMapping(path = "/highspeedrail.controller", method = RequestMethod.GET)
+	public String highSpeedRail() {
+		return "innocence741/ajax_traffic";
+	}
 	
 	@RequestMapping(path = "/HsrServlet", method = RequestMethod.POST)
 	public void processAction1(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -53,6 +57,7 @@ public class HighSpeedRailController {
         
         PrintWriter out = response.getWriter();
         out.println(ujson.toString());
+        
 	}
 
 }
