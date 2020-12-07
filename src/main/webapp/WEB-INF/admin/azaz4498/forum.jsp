@@ -88,8 +88,35 @@ contentType="text/html;charset=UTF-8" language="java"%>
               </div>
             </div>
           </div>
+          <c:forEach var="article" items="${list}" varStatus="status">
+            <div class="col-md-3 d-flex ftco-animate">
+              <div class="blog-entry align-self-stretch">
+                <a
+                  href="blog-single.html"
+                  class="block-20"
+                  style="background-image: url('${picList[status.index]}')"
+                >
+                </a>
+                <div class="text p-4 d-block">
+                  <span class="tag">${article.articleType.typeName}</span>
 
-          
+                  <h3 class="heading mt-3">
+                    <a href="#">${article.artTitle}</a>
+                  </h3>
+                  <div class="meta mb-3">
+                    <div><a href="#">${article.artCreTime}</a></div>
+                    <div><a href="#">${article.artUserId}</a></div>
+                    <div>
+                      <a href="#" class="meta-chat"
+                        ><span class="icon-chat"></span>
+                        ${article.artCommNum}</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </c:forEach>
         </div>
         <!--分頁-->
         <div class="row mt-5">
@@ -137,7 +164,13 @@ contentType="text/html;charset=UTF-8" language="java"%>
       </svg>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script src="${pageContext.request.contextPath}/assets/tablesorter-2.31.3/js/jquery.tablesorter.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/tablesorter-2.31.3/js/extras/jquery.tablesorter.pager.js"></script>
     <script>
+      $("articleGrid").tablesorterPager({});
+    </script>
+
+    <!-- <script>
       $(window).on("load",function () {
         $.ajax({
           type: "GET",
@@ -149,8 +182,8 @@ contentType="text/html;charset=UTF-8" language="java"%>
           },
         });
       });
-      </script>
-      <script>
+      </script> -->
+    <!-- <script>
       function showList(response) {
         
         $.each(response.list, function (index, element) {
@@ -188,6 +221,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
               $(content).appendTo("#articleGrid");
         });
       }
-    </script>
+    </script> -->
   </body>
 </html>
