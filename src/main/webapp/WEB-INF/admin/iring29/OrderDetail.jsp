@@ -10,41 +10,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <c:import url="/WEB-INF/admin/fragment/user_ref.jsp" /> 
 
-<style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-}
-
-body{
-	margin:0px;
-	padding:0px;
-	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat;
-	background-size: cover;　
-} 
-.cart_area{
- 	background:white; 
-	margin:100px 120px;
-	padding-left:100px;
-	padding-top:50px;
-	padding-bottom:70px;
-}
-</style>
-
-<!-- CSS STYLE -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/flaticon.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/style.css" type="text/css">
 <style>
-.bg-dark {
-     background-color: transparent !important; 
+.cart_area {
+    margin: 50px auto;
+    margin-top: 50px; 
+    margin-left: 200px;
 }
 .form-control.time{
 	width:100px;
@@ -54,7 +24,7 @@ body{
 	width:85px;
 }
 .col-sm-12.col-md-10.col-md-offset-1{
-	width:950px;
+	width:1150px;
 }
 .div_title{
 	width:150px;
@@ -63,6 +33,7 @@ body{
 .content{
 	width:250px;
 	padding-top:10px;
+	padding-right: 10px;
 }
 .div_title.input{
 	width:130px;
@@ -73,16 +44,38 @@ body{
 	width:250px;
 }
 .media-heading{
-	height: 30px;
+	height: 48px;
 }
 .deposit{
 	width:80px;
 	text-align: center;
 }
+h5{
+	font-size:16px;
+	height:48px;
+}
+.form-control{
+	font-size:16px;
+}
+.col-sm-8.col-md-6{
+	width:130px;
+}
+
+.media-heading.line{
+	font-size:16px;
+	height:25px;
+}
+td.col-sm-1.col-md-1.text-center{
+	padding-left:50px;
+}
+</style>
 </style>
 
 </head>
 <body>
+   <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
+    
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <script>
     $(".nav-shop__circle").html("");
@@ -90,6 +83,20 @@ body{
     console.log("nu = " + ${cartnum});
 // 	   console.log("num");
     </script>
+    
+    <!-- background -->
+    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/order.jpeg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+          <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">訂單成立，開始旅行吧！</h1>
+          </div>
+        </div>
+      </div>
+    </div><!-- .background -->
+    
 <section class="cart_area">
 	<div class="container">
 		<div class="row">
@@ -193,51 +200,49 @@ body{
 		<div class="row">
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<table class="table table-hover">
+					<c:forEach var="R" items="${res_lists}">
 					<thead>
 						<tr>
-							<h2>訂餐廳</h2>
+							<h2>餐廳訂單訊息</h2>
 						</tr>
 						<tr>
-							<th><h5>餐廳資訊</h5></th>
-							<th><h5></h5></th>
-							<th><h5>訂位時間</h5></th>
-							<th class="text-center"><h5>訂位人數</h5></th>
-							<th class="text-center"><h5>價格</h5></th>
+							<th><h5 class="media-heading line">餐廳訂單&emsp;<strong>${R.id}</strong></h5></th>
+							<th><h5 class="media-heading line"></h5></th>
+							<th><h5 class="media-heading line">訂位時間</h5></th>
+							<th class="text-center"><h5 class="media-heading line">訂位人數</h5></th>
+							<th class="text-center"><h5 class="media-heading line">價格</h5></th>
 							<th> </th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="R" items="${res_lists}">
 						<tr>
 							<td class="col-sm-8 col-md-6">
 								<div class="media">
 									<div class="media-body">
 										<div class="div_title"><h5 class="media-heading">餐廳名稱&emsp;&emsp;&emsp;</h5></div>
 										<div class="div_title"><h5 class="media-heading">餐廳地址&emsp;&emsp;&emsp;</h5></div>
-										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂位人姓名&emsp;</h5></div>
-										</div>
-										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_p">訂位人電話&emsp;</h5></div> 
-										</div>
+										<div class="div_title"><h5 class="media-heading line">訂位人姓名&emsp;</h5></div>
+										<div class="div_title"><h5 class="media-heading line">訂位人電話&emsp;</h5></div>
 									</div>
 								</div>
 							</td>
 							<td>
 							<div class="content"><h5>${R.restaurant.name}</h5></div>
 							<div class="content"><h5>${R.restaurant.address}</h5></div>
-							<div class="content"><h5>${R.cus_name}</div>
-							<div class="content"><h5>${R.cus_phone}</div>
+							<div class="content"><h5 class="media-heading line">${R.cus_name}</h5></div>
+							<div class="content"><h5 class="media-heading line">${R.cus_phone}</h5></div>
 							</td>
 							<td class="col-sm-1 col-md-1" >
-								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control">
+<%-- 								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control"> --%>
 								<c:set var="booktime" value="${R.bookt_time}" />
 								<c:set var="bd" value="${fn:substring(booktime, 0, 10)}" />
 								<c:set var="bt" value="${fn:substring(booktime, 11, 16)}" />
-								${bd},${bt}
+								<h5>${bd}&emsp;${bt}</h5>
 							</td>
 					
-							<td class="col-sm-1 col-md-1 text-center">${R.customer_num}</td>
+							<td class="col-sm-1 col-md-1 text-center"><h5>${R.customer_num}&emsp;&emsp;</h5></td>
 							<td class="col-sm-1 col-md-1">
-								<h5 class="deposit">${R.deposit}</h5>
+								<h5><strong class="deposit">${R.deposit}</strong></h5>
 							</td>
 							<td class="col-sm-1 col-md-1"></td>
 						</tr>
@@ -250,7 +255,7 @@ body{
 							<td> </td>
 							<td><h4>小計</h4></td>
 							<td class="text-right">
-							<h3 id="tPrice"><strong></strong></h3></td>
+							<h3><strong id="tPrice"></strong></h3></td>
 						</tr>
 					</tbody>
 				</table>
@@ -263,10 +268,6 @@ body{
 							console.log("money = " + size);
 							console.log("money = " + deposit[i].innerHTML);
 							}
-// 						var size  =  ${size}.legnth;
-// 						console.log("size = " + size);
-//         				size = 500;
-// 						size = deposit.value
         				document.getElementById("tPrice").innerHTML = size;
         				
    					</script>
@@ -359,14 +360,15 @@ body{
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h3>Subtotal</h3></td>
+							<td><h3>SubTotal</h3></td>
 							<td class="text-right"><h3>
-									<strong>$24.59</strong>
+									<strong>$31.52</strong>
 								</h3></td>
 						</tr>
 
 					</tbody>
 				</table>
+				
 			</div>
 		</div>
 	</div>
@@ -380,13 +382,25 @@ body{
 					<tbody>
 						<tr>
 							<td class="total"> </td>
-							<td><h3>Total</h3></td>
-							<td class="text-right"><h3>
-									<strong>$31.53</strong>
-								</h3></td>
+							<td><h3>總金額</h3></td>
+							<td class="text-right"><h2>
+									<strong id="sumPrice"></strong>
+								</h2></td>
 						</tr>
-</tbody>
+					</tbody>
 				</table>
+				<!-- 總金額 -->
+					<script type="text/javascript">
+					var Rsum = document.getElementById("tPrice").innerHTML;
+					console.log("sum = " + Rsum);
+					document.getElementById("sumPrice").innerHTML = Rsum;
+					
+					function sumprice(){
+						var Rsum = document.getElementById("tPrice").innerHTML;
+						console.log("sum = " + Rsum);
+						document.getElementById("sumPrice").innerHTML = Rsum;
+					}
+					</script>
 			</div>
 		</div>
 	</div>
@@ -408,9 +422,9 @@ body{
 								</button>
 							</td>
 							<td>
-								<button type="button" class="btn btn-success">
-									我要結帳 <span class="glyphicon glyphicon-play"></span>
-								</button>
+<!-- 								<button type="button" class="btn btn-success"> -->
+<!-- 									我要結帳 <span class="glyphicon glyphicon-play"></span> -->
+<!-- 								</button> -->
 							</td>
 							<td></td>
 						</tr>
@@ -421,5 +435,13 @@ body{
 		</div>
 	</div>
 </section>
+	<!-- footer -->
+     <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>    
+    
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
 </body>
 </html>

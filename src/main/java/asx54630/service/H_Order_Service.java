@@ -26,7 +26,7 @@ public class H_Order_Service {
 	}
 
 	@Transactional(rollbackFor = {Throwable.class})
-	public HotelOrder hotelDetail(BigDecimal sn) {
+	public HotelOrder_VO hotelDetail(BigDecimal sn) {
 		return hotelOrderDao.hotelDetail(sn);
 	}
 

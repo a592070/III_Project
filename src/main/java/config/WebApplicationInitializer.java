@@ -14,7 +14,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
     public void onStartup(ServletContext servletContext) throws ServletException {
         // Load Spring web application configuration
         AnnotationConfigWebApplicationContext ac = new AnnotationConfigWebApplicationContext();
-        ac.register(config.AppConfig.class);
+        ac.register(AppConfig.class);
         ac.setServletContext(servletContext);
 //        ac.refresh();
 
@@ -34,12 +34,12 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{config.AppConfig.class};
+        return new Class[]{AppConfig.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{config.AppConfig.class};
+        return new Class[]{AppConfig.class};
     }
 
     @Override

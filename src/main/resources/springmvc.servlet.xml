@@ -25,10 +25,10 @@
 	<context:component-scan base-package="global"/>
 
 	<mvc:default-servlet-handler />
-	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
-	<mvc:resources mapping="/direngine-master/**" location="/WEB-INF/direngine-master/"/>
-	<mvc:resources mapping="/sona-master/**" location="/WEB-INF/sona-master/"/>
-	<mvc:resources mapping="/admin/direngine-master/**" location="/WEB-INF/direngine-master/"/>
+	<mvc:resources mapping="/assets/**" location="classpath:/WEB-INF/assets/"/>
+	<mvc:resources mapping="/direngine-master/**" location="classpath:/WEB-INF/direngine-master/"/>
+	<mvc:resources mapping="/sona-master/**" location="classpath:/WEB-INF/sona-master/"/>
+<!--	<mvc:resources mapping="/admin/direngine-master/**" location="classpath:/WEB-INF/direngine-master/"/>-->
 	
 
 	<mvc:annotation-driven>
