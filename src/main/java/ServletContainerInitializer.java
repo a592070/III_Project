@@ -30,7 +30,8 @@ public class ServletContainerInitializer extends SpringServletContainerInitializ
                                 ReflectionUtils.accessibleConstructor(waiClass).newInstance());
                     }
                     catch (Throwable ex) {
-                        throw new ServletException("Failed to instantiate WebApplicationInitializer class", ex);
+                        System.err.println("=============webAppInitializerClasses exception===========");
+//                        throw new ServletException("Failed to instantiate WebApplicationInitializer class", ex);
                     }
                 }
             }
