@@ -24,13 +24,9 @@ public class DispatcherController {
         if(id != null && id.intValue() != 0) model.addAttribute("id", id);
         return "a592070/attractionDetail";
     }
-    @RequestMapping({"/admin/travelSet"})
-    public String travelSetMain(){
-        return "a592070/travelSetInfo";
-    }
 
-    @RequestMapping({"/admin/test"})
-    public String test() throws JsonProcessingException {
+    @RequestMapping({"/admin/travelSet"})
+    public String test() {
         return "a592070/travelSetInfo02";
     }
 }

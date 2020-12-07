@@ -1,8 +1,12 @@
 package a592070.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.junit.Ignore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "TRAVEL_ELE_R")
 public class TravelEleRestaurantDO {
@@ -16,6 +20,7 @@ public class TravelEleRestaurantDO {
     @JoinColumn(name = "R_ID", referencedColumnName = "SN")
     private RestaurantVO restaurant;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRAVEL_ID", referencedColumnName = "SN")
     private TravelSetDO travelSetDO;

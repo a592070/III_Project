@@ -6,6 +6,7 @@ import a592070.pojo.RestaurantVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
+import utils.StringUtil;
 
 import java.util.List;
 @Transactional(rollbackFor = {Exception.class})
@@ -54,7 +55,8 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     }
     @Override
     public List<RestaurantVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled, boolean descending) {
-        return viewDAO.listByFiled(currentPage, pageSize, RestaurantFieldName.RESTAURANT_REGION, region, orderFiled, descending);
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listByFiled(index, pageSize, RestaurantFieldName.RESTAURANT_REGION, region, orderFiled, descending);
     }
 
 
@@ -64,20 +66,22 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     }
     @Override
     public List<RestaurantVO> list(int currentPage, int pageSize, String orderFiled) {
-        return viewDAO.listByRownum(currentPage, pageSize, orderFiled, false);
+        return list(currentPage, pageSize, orderFiled, false);
     }
     @Override
     public List<RestaurantVO> list(int currentPage, int pageSize, String orderFiled, boolean descending) {
-        return viewDAO.listByRownum(currentPage, pageSize, orderFiled, descending);
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listByRownum(index, pageSize, orderFiled, descending);
     }
 
 
     @Override
     public int getSizeByKeyWords(String keywords) {
-        return viewDAO.getSizeByKeywords(keywords, "");
+        return getSizeByKeyWords(keywords, "");
     }
     @Override
     public int getSizeByKeyWords(String keywords, String region) {
+        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return getSize();
         return viewDAO.getSizeByKeywords(keywords, region);
     }
     @Override
@@ -94,6 +98,8 @@ public class RestaurantViewServiceImpl implements ViewService<RestaurantVO> {
     }
     @Override
     public List<RestaurantVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, region, orderFiled, descending);
+        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return list(currentPage, pageSize, orderFiled, descending);
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled, descending);
     }
 }
