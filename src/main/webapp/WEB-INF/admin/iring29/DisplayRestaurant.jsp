@@ -18,7 +18,7 @@
 body{
 	margin:0px;
 	padding:0px;
-	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat;
+	background:url('direngine-master/images/AsianFood.jpg') center center fixed no-repeat;
 	background-size: cover;　
 }    
 .box{
