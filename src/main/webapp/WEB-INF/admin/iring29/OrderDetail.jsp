@@ -10,45 +10,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <c:import url="/WEB-INF/admin/fragment/user_ref.jsp" /> 
 
-<style type="text/css">
-/* * { */
-/* 	margin: 0; */
-/* 	padding: 0; */
-/* } */
-
-/* body{ */
-/* 	margin:0px; */
-/* 	padding:0px; */
-/* 	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat; */
-/* 	background-size: cover;　 */
-/* }  */
-/* .cart_area{ */
-/*  	background:white;  */
-/* 	margin:100px 120px; */
-/* 	padding-left:100px; */
-/* 	padding-top:50px; */
-/* 	padding-bottom:70px; */
-/* } */
-</style>
-
-<!-- CSS STYLE -->
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/bootstrap.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/font-awesome.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/elegant-icons.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/flaticon.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/owl.carousel.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/nice-select.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/jquery-ui.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/magnific-popup.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/slicknav.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/style.css" type="text/css"> --%>
 <style>
-<style>
-.cart_area{
-	margin:auto;
-	margin-top:50px;
-	width:1100px;
-	margin-left: 100px;
+.cart_area {
+    margin: 50px auto;
+    margin-top: 50px; 
+    margin-left: 200px;
 }
 .form-control.time{
 	width:100px;
@@ -240,11 +206,11 @@ td.col-sm-1.col-md-1.text-center{
 							<h2>餐廳訂單訊息</h2>
 						</tr>
 						<tr>
-							<th><h5>餐廳訂單&emsp;${R.id}</h5></th>
-							<th><h5></h5></th>
-							<th><h5>訂位時間</h5></th>
-							<th class="text-center"><h5>訂位人數</h5></th>
-							<th class="text-center"><h5>價格</h5></th>
+							<th><h5 class="media-heading line">餐廳訂單&emsp;<strong>${R.id}</strong></h5></th>
+							<th><h5 class="media-heading line"></h5></th>
+							<th><h5 class="media-heading line">訂位時間</h5></th>
+							<th class="text-center"><h5 class="media-heading line">訂位人數</h5></th>
+							<th class="text-center"><h5 class="media-heading line">價格</h5></th>
 							<th> </th>
 						</tr>
 					</thead>

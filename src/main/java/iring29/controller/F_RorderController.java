@@ -109,4 +109,24 @@ public class F_RorderController {
 		session.setAttribute("res_lists", res_lists);
 		return "iring29/OrderDetail";
 	}
+	
+	//移除預定餐廳
+	@RequestMapping(path = "/removeInfo", method = RequestMethod.POST)
+	public @ResponseBody String removeInfo(@RequestParam(value = "r_sn") BigDecimal r_sn, HttpSession session){
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		System.out.println("sn = " + r_sn);
+		OTBean.getR_Order_Lists().removeIf(ele->{
+			return r_sn.equals(ele.getRestaurant().getR_sn());
+		});
+		
+//		Set<R_Order_List> Rlists = OTBean.getR_Order_Lists();
+//		for(R_Order_List r : Rlists) {
+//			if(r.getRestaurant().getR_sn().equals(r_sn)) {
+//				
+//			}
+//		}
+		session.setAttribute("OTBean", OTBean);
+		return "remove";
+	}
+	
 }

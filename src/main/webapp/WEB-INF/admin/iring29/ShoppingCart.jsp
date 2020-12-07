@@ -10,38 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 
-<style type="text/css">
-/* * { */
-/* 	margin: 0; */
-/* 	padding: 0; */
-/* } */
 
-/* body{ */
-/* 	margin:0px; */
-/* 	padding:0px; */
-/* 	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat; */
-/* 	background-size: cover;　 */
-/* }  */
-/* .cart_area{ */
-/*  	background:white;  */
-/* 	margin:100px 120px; */
-/* 	padding-left:100px; */
-/* 	padding-top:50px; */
-/* 	padding-bottom:70px; */
-/* } */
-</style>
-
-<!-- CSS STYLE -->
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/bootstrap.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/font-awesome.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/elegant-icons.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/flaticon.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/owl.carousel.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/nice-select.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/jquery-ui.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/magnific-popup.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/slicknav.min.css" type="text/css"> --%>
-<%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/style.css" type="text/css"> --%>
 <style>
 .cart_area{
 	margin:auto;
@@ -238,7 +207,7 @@ h5{
 					</thead>
 					<tbody>
 					<c:forEach var="R" items="${OTBean.r_Order_Lists}">
-						<tr>
+						<tr id="orderInfo${R.restaurant.r_sn}">
 							<td class="col-sm-8 col-md-6">
 								<div class="media">
 									<div class="media-body">
@@ -347,7 +316,7 @@ h5{
 						var sn = $("#r_sn${R.restaurant.r_sn}").val();
 						var name = $("#cus_name${R.restaurant.r_sn}").val();
 						if(name == ""){
-							$(".n${R.restaurant.r_sn}").html("&nbsp;請輸入姓名");
+							$(".n${R.restaurant.r_sn}").html("<br>&nbsp;請輸入姓名");
 						}else {
 							$(".n${R.restaurant.r_sn}").html("");
 							}
@@ -363,7 +332,7 @@ h5{
 						var bt = $(".form-control.time.${R.restaurant.r_sn}").val();
 						var pnum = $(".form-control.p_num.${R.restaurant.r_sn}").val();
 						console.log("sn = " + sn + ",name = " + name + ",phone = " + phone + ", bd = " + bd + ", bt = " + bt + ", pnum = " + pnum);
-						
+						if($(".n${R.restaurant.r_sn}").val() == "" && $(".p${R.restaurant.r_sn}").val() == ""){
 						$.ajax(
 			                    {
 			                        type: 'POST',
@@ -375,18 +344,53 @@ h5{
 			                        }
 			                    }
 			                )
+						}
    					}
    					</script>
 							</td>
 							<td class="col-sm-1 col-md-1">
-								<h5 class="deposit">${R.deposit}</h5>
+								<h5 class="deposit" id="deposit${R.restaurant.r_sn}">${R.deposit}</h5>
 							</td>
 							<td class="col-sm-1 col-md-1">
-								<button type="button" class="btn btn-danger">
+								<button type="button" class="btn btn-danger" onclick="remove${R.restaurant.r_sn}(),totalprice()">
 									<span class="glyphicon glyphicon-remove"></span>移除
 								</button>
 							</td>
 						</tr>
+						
+						<script>
+							function remove${R.restaurant.r_sn}(){
+								var sn = $("#r_sn${R.restaurant.r_sn}").val();
+								$.ajax(
+					                    {
+					                        type: 'POST',
+					                        data: { "r_sn":sn},
+					                        url: '${pageContext.servletContext.contextPath}/removeInfo',
+					                        dataType: 'json',
+					                        success:function(response){
+						                        console.log(response);
+					                        }
+					                    }
+					                )
+					            $(".nav-shop__circle").html('${cartnum}'-1);
+					            $("#orderInfo${R.restaurant.r_sn}").remove();    
+								}
+						</script>
+						<script type="text/javascript">
+						function totalprice(){
+							console.log("in total")
+						var deposit = document.getElementsByClassName("deposit");
+						console.log("deposit size = " + deposit.length);
+						var size = 0;
+						for(var i = 0; i < deposit.length; i++ ){
+							size += parseInt(deposit[i].innerHTML);
+							console.log("money = " + size);
+							console.log("money = " + deposit[i].innerHTML);
+							}
+        				document.getElementById("tPrice").innerHTML = size;
+						}
+        				
+   						</script>
 						
 					</c:forEach>
 						

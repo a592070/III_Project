@@ -115,14 +115,6 @@ public class OrderTable {
 		rList.setoTable(this);
 		this.r_Order_Lists.add(rList);
 	}
-
-//	public R_Order_List getR_Order_List() {
-//		return r_Order_List;
-//	}
-//
-//	public void setR_Order_List(R_Order_List r_Order_List) {
-//		this.r_Order_List = r_Order_List;
-//	}
 	
 	
 
