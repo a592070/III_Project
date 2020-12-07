@@ -15,12 +15,80 @@ public class ArticleDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	//顯示文章列表(非禁用)
-	public List<Article> showAvailableArticles(){
+	//顯示總啟用筆數(前台)
+	public Integer getRecords() {
+		String query = "select count(ART_ID) from Article  WHERE ART_STATUS = 'enabled'";
+		Integer totalRecords = sessionFactory.getCurrentSession().createQuery(query,Long.class).uniqueResult().intValue();
+		
+		return totalRecords;
+	}
+	
+	// 顯示搜尋文章筆數(前台)
+		public Integer getSearchRecords(String keyword, Integer articleType) {
+			if (articleType != null) {
+				 String hql="select count(ART_ID) from Article where (ART_USERID LIKE ?1 OR ART_TITLE LIKE?2) AND ART_TYPE_ID LIKE ?3";
+				 Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql,Long.class);
+				 
+						
+				query.setParameter(1, "%" + keyword + "%");
+				query.setParameter(2, "%" + keyword + "%");
+				query.setParameter(3, articleType);
+				int totalRecords = query.uniqueResult().intValue();
+				return totalRecords;
+
+			} else {
+				String hql="select count(ART_ID) from Article where ART_USERID LIKE ?1 OR ART_TITLE LIKE?2";
+				Query<Long> query = sessionFactory.getCurrentSession()
+						.createQuery(hql,Long.class);
+				query.setParameter(1, "%" + keyword + "%");
+				query.setParameter(2, "%" + keyword + "%");
+				int totalRecords = query.uniqueResult().intValue();
+				return totalRecords;
+			}
+
+		}
+	
+	//顯示文章列表(非禁用)(前台)
+	public List<Article> showAvailableArticles(Integer index,Integer records){
 		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article  WHERE ART_STATUS = 'enabled' Order by ART_ID",
 				Article.class);
+		//資料從index開始
+		query.setFirstResult(index);
+		//每頁幾筆
+		query.setMaxResults(records);
 		List<Article> list = query.list();
 		return list;
+	}
+	
+	// 搜尋文章(前台)
+	public List<Article> searchArticleFrontend(String keyword, Integer articleType,Integer index,Integer records) {
+		if (articleType != null) {
+			Query<Article> query = sessionFactory.getCurrentSession().createQuery(
+					"From Article where (ART_USERID LIKE ?1 OR ART_TITLE LIKE?2) AND ART_TYPE_ID LIKE ?3",
+					Article.class);
+			query.setParameter(1, "%" + keyword + "%");
+			query.setParameter(2, "%" + keyword + "%");
+			query.setParameter(3, articleType);
+			//資料從index開始
+			query.setFirstResult(index);
+			//每頁幾筆
+			query.setMaxResults(records);
+			List<Article> list = query.list();
+			return list;
+
+		} else {
+			Query<Article> query = sessionFactory.getCurrentSession()
+					.createQuery("From Article where ART_USERID LIKE ?1 OR ART_TITLE LIKE?2", Article.class);
+			query.setParameter(1, "%" + keyword + "%");
+			query.setParameter(2, "%" + keyword + "%");
+			//資料從index開始
+			query.setFirstResult(index);
+			//每頁幾筆
+			query.setMaxResults(records);
+			List<Article> list = query.list();
+			return list;
+		}
+
 	}
 	
 	// 顯示文章列表
@@ -113,23 +181,6 @@ public class ArticleDAO {
 		return result;
 	}
 
-	// 查詢文章(依照Title)
-//	public List<Article> searchByTitle(String keyword) {
-//		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article where ART_TITLE LIKE ?1",
-//				Article.class);
-//		query.setParameter(1, "%" + keyword + "%");
-//		List<Article> list = query.list();
-//		return list;
-//	}
-
-	// 查詢文章(依照UserId)
-//	public List<Article> searchByUserId(String keyword) {
-//		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article where ART_USERID LIKE ?1",
-//				Article.class);
-//		query.setParameter(1, "%" + keyword + "%");
-//		List<Article> list = query.list();
-//		return list;
-//	}
 
 	// 搜尋文章
 	public List<Article> searchArticle(String keyword, Integer articleType) {

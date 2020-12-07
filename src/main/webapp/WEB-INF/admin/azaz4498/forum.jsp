@@ -60,7 +60,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
     <section class="ftco-section bg-light">
       <div class="container">
         <div class="row d-flex" id="articleGrid">
-          <div class="col-md-3 d-flex ftco-animate">
+          <!-- <div class="col-md-3 d-flex ftco-animate">
             <div class="blog-entry align-self-stretch">
               <a
                 href="blog-single.html"
@@ -87,8 +87,9 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <c:forEach var="article" items="${list}" varStatus="status">
+            
             <div class="col-md-3 d-flex ftco-animate">
               <div class="blog-entry align-self-stretch">
                 <a
@@ -116,20 +117,22 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 </div>
               </div>
             </div>
+          
           </c:forEach>
+        </table>
         </div>
         <!--分頁-->
         <div class="row mt-5">
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
+                <li id ="prev" class="prev"><a href="#">&lt;</a></li>
+                <!-- <li class="active"><span>1</span></li>
                 <li><a href="#">2</a></li>
                 <li><a href="#">3</a></li>
                 <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
+                <li><a href="#">5</a></li> -->
+                <li id ="next" class="next"><a href="">&gt;</a></li>
               </ul>
             </div>
           </div>
@@ -164,11 +167,40 @@ contentType="text/html;charset=UTF-8" language="java"%>
       </svg>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
-    <script src="${pageContext.request.contextPath}/assets/tablesorter-2.31.3/js/jquery.tablesorter.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/tablesorter-2.31.3/js/extras/jquery.tablesorter.pager.js"></script>
     <script>
-      $("articleGrid").tablesorterPager({});
+      var len = eval(${totalPages});
+      for(var i=1; i<=len;i++) {
+        var content = '<li><a href="#">'+i+'</a></li>'
+        $('#next').before(content);
+      };
     </script>
+    <script>
+      $('#next').on('click',function(){
+        console.log('next has been click');
+        var currPage=eval(${currPage});
+        var totalPage=eval(${totalPages});
+        
+
+        $.ajax({
+          type:"GET",
+          url:"Article.controller.json",
+          dataType:'html',
+          data:{
+            currPage: currPage+1,
+          },
+          success:function(response){
+            
+            console.log('currpage= '+currPage);
+            $('#articleGrid').children.remove();
+            $('#articleGrid').append(response);
+          },
+          
+        })
+
+      })
+
+    </script>
+    
 
     <!-- <script>
       $(window).on("load",function () {

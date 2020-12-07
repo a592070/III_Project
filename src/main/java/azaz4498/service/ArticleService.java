@@ -16,10 +16,22 @@ public class ArticleService {
 	@Autowired
 	private ArticleDAO aDao;
 	
-	//顯示文章列表(非禁用)
-	public List<Article> showAvailableArticles(){
-		return aDao.showAvailableArticles();
+	
+	public Integer getRecords() {
+		return aDao.getRecords();
 	}
+	public Integer getSearchRecords(String keyword, Integer articleType) {
+		return aDao.getSearchRecords(keyword, articleType);
+	}
+	//顯示文章列表(非禁用)(前台)
+	public List<Article> showAvailableArticles(Integer index,Integer records){
+		return aDao.showAvailableArticles(index, records);
+	}
+	//搜尋文章(前台)
+	public List<Article> searchArticlesFrontend(String keyword, Integer articleType,Integer index,Integer records) {
+		return aDao.searchArticleFrontend(keyword, articleType, index, records);
+	}
+	
 	// 顯示文章列表
 	public List<Article> showAllArticles() {
 		return aDao.showAllArticles();
@@ -45,7 +57,7 @@ public class ArticleService {
 			throws SQLException {
 		return aDao.articleEdit(title, content, articleId, userid, typeId);
 	}
-
+	//搜尋文章
 	public List<Article> searchArticles(String keyword, Integer articleType) {
 		return aDao.searchArticle(keyword, articleType);
 	}
