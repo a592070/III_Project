@@ -30,6 +30,8 @@ public class Restaurant_VO {
 	private byte[] pic;
 	@Column(name = "STATUS")
 	private String statu;
+	@Column(name = "PRICE")
+	private BigDecimal price;
 
 	public BigDecimal getR_sn() {
 		return r_sn;
@@ -87,5 +89,14 @@ public class Restaurant_VO {
 		this.statu = statu;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	
 
 }

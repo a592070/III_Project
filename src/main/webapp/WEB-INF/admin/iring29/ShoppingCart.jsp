@@ -8,43 +8,14 @@
 <meta charset="UTF-8">
 <title>FUN TAIWAN - 購物車</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<c:import url="/WEB-INF/admin/fragment/user_ref.jsp" /> 
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 
-<style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-}
 
-body{
-	margin:0px;
-	padding:0px;
-	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat;
-	background-size: cover;　
-} 
-.cart_area{
- 	background:white; 
-	margin:100px 120px;
-	padding-left:100px;
-	padding-top:50px;
-	padding-bottom:70px;
-}
-</style>
-
-<!-- CSS STYLE -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/flaticon.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/style.css" type="text/css">
 <style>
-.bg-dark {
-     background-color: transparent !important; 
+.cart_area{
+	margin:auto;
+	margin-top:50px;
+	width:1100px;
 }
 .form-control.time{
 	width:100px;
@@ -54,7 +25,8 @@ body{
 	width:85px;
 }
 .col-sm-12.col-md-10.col-md-offset-1{
-	width:950px;
+	width:1100px;
+	margin-left: 100px;
 }
 .div_title{
 	width:150px;
@@ -79,10 +51,25 @@ body{
 	width:80px;
 	text-align: center;
 }
+h5{
+	font-size:16px;
+}
+.form-control{
+	font-size:16px;
+}
+#idsp{
+	float:left; 
+	color:red;
+	font-size:13px;
+	font-style:italic;
+}
 </style>
 
 </head>
 <body>
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 	
+    
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <script>
     $(".nav-shop__circle").html('${cartnum}');
@@ -90,6 +77,18 @@ body{
     console.log("nu = " + ${cartnum});
 // 	   console.log("num");
     </script>
+    <!-- background -->
+    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/shopping.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+          <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
+            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">差一步，旅行即將開始</h1>
+          </div>
+        </div>
+      </div>
+    </div><!-- .background -->
 <section class="cart_area">
 	<div class="container">
 		<div class="row">
@@ -208,21 +207,22 @@ body{
 					</thead>
 					<tbody>
 					<c:forEach var="R" items="${OTBean.r_Order_Lists}">
-						<tr>
+						<tr id="orderInfo${R.restaurant.r_sn}">
 							<td class="col-sm-8 col-md-6">
 								<div class="media">
 									<div class="media-body">
 										<div class="div_title"><h5 class="media-heading">餐廳名稱&emsp;&emsp;&emsp;</h5></div>
 										<div class="div_title"><h5 class="media-heading">餐廳地址&emsp;&emsp;&emsp;</h5></div>
-										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂位人姓名&emsp;</h5></div>
+										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂位人姓名&emsp;<span id="idsp">&nbsp;*必填</span><span id="idsp" class="n${R.restaurant.r_sn}"></span></h5></div>
 										</div>
-										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_p">訂位人電話&emsp;</h5></div> 
+										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_p">訂位人電話&emsp;<span id="idsp">&nbsp;*必填<span id="idsp" class="p${R.restaurant.r_sn}"></span></span></h5></div> 
 										</div>
 									</div>
 								</div>
 							</td>
 							<td>
-							<Input type='hidden' name='book_date' id="r_sn${R.restaurant.r_sn}" value='${R.restaurant.r_sn}'>
+							<Input type='hidden' name='r_sn' id="r_sn${R.restaurant.r_sn}" value='${R.restaurant.r_sn}'>
+							<Input type='hidden' name='price' id="price${R.restaurant.r_sn}" value='${R.restaurant.price}'>
 							<div class="content"><h5>${R.restaurant.name}</h5></div>
 							<div class="content"><h5>${R.restaurant.address}</h5></div>
 							<div class="content"><h5><input class="form-control data" value="${R.cus_name}" id="cus_name${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
@@ -292,7 +292,7 @@ body{
 							
 						</script>
 							<td class="col-sm-1 col-md-1 text-center">
-							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}()">
+							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}(), totalprice(), sumprice()">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -312,16 +312,45 @@ body{
 						console.log("num" + opts[num].value);
        					opts[num-1].selected=true;
    					</script>
-   					<script>
-   					function changeinfo${R.restaurant.r_sn}(){
+   					
+							</td>
+							<td class="col-sm-1 col-md-1">
+								<h5 class="deposit" id="deposit${R.restaurant.r_sn}">${R.deposit}</h5>
+							</td>
+							<td class="col-sm-1 col-md-1">
+								<button type="button" class="btn btn-danger" onclick="remove${R.restaurant.r_sn}(), totalprice(), sumprice()">
+									<span class="glyphicon glyphicon-remove"></span>移除
+								</button>
+							</td>
+							
+						</tr>
+						<script>
+   						function changeinfo${R.restaurant.r_sn}(){
 						var sn = $("#r_sn${R.restaurant.r_sn}").val();
 						var name = $("#cus_name${R.restaurant.r_sn}").val();
+						if(name == ""){
+							$(".n${R.restaurant.r_sn}").html("&nbsp;請輸入姓名");
+						}else {
+							$(".n${R.restaurant.r_sn}").html("");
+							}
 						var phone = $("#cus_phone${R.restaurant.r_sn}").val();
+						if(phone == ""){
+							$(".p${R.restaurant.r_sn}").html("&nbsp;請輸入手機號碼");
+						}else if(!phone.match(/^09[0-9]{8}$/)){
+							$(".p${R.restaurant.r_sn}").html("&nbsp;手機號碼格式有誤");
+						}else{
+							$(".p${R.restaurant.r_sn}").html("");
+						}
 						var bd = $(".form-control.${R.restaurant.r_sn}").val();
 						var bt = $(".form-control.time.${R.restaurant.r_sn}").val();
 						var pnum = $(".form-control.p_num.${R.restaurant.r_sn}").val();
+						var price = $("#price${R.restaurant.r_sn}").val();
+						console.log("p = " + price);
+						price = parseInt(pnum) * parseInt(price);
+						console.log("price = " + price);
+						$("#deposit${R.restaurant.r_sn}").html(price);
 						console.log("sn = " + sn + ",name = " + name + ",phone = " + phone + ", bd = " + bd + ", bt = " + bt + ", pnum = " + pnum);
-						
+						if(name != "" && phone != "" && phone.match(/^09[0-9]{8}$/)){
 						$.ajax(
 			                    {
 			                        type: 'POST',
@@ -333,18 +362,42 @@ body{
 			                        }
 			                    }
 			                )
+						}
    					}
    					</script>
-							</td>
-							<td class="col-sm-1 col-md-1">
-								<h5 class="deposit">${R.deposit}</h5>
-							</td>
-							<td class="col-sm-1 col-md-1">
-								<button type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove"></span>下次再訂
-								</button>
-							</td>
-						</tr>
+						<script>
+							function remove${R.restaurant.r_sn}(){
+								var sn = $("#r_sn${R.restaurant.r_sn}").val();
+								$.ajax(
+					                    {
+					                        type: 'POST',
+					                        data: { "r_sn":sn},
+					                        url: '${pageContext.servletContext.contextPath}/removeInfo',
+					                        dataType: 'json',
+					                        success:function(response){
+						                        console.log(response);
+					                        }
+					                    }
+					                )
+					            $(".nav-shop__circle").html('${cartnum}'-1);
+					            $("#orderInfo${R.restaurant.r_sn}").remove();    
+								}
+						</script>
+						<script type="text/javascript">
+						function totalprice(){
+							console.log("in total")
+						var deposit = document.getElementsByClassName("deposit");
+						console.log("deposit size = " + deposit.length);
+						var size = 0;
+						for(var i = 0; i < deposit.length; i++ ){
+							size += parseInt(deposit[i].innerHTML);
+							console.log("money = " + size);
+							console.log("money = " + deposit[i].innerHTML);
+							}
+        				document.getElementById("tPrice").innerHTML = size;
+						}
+        				
+   						</script>
 						
 					</c:forEach>
 						
@@ -355,7 +408,8 @@ body{
 							<td> </td>
 							<td><h4>小計</h4></td>
 							<td class="text-right">
-							<h3 id="tPrice"><strong></strong></h3></td>
+							<h3 id="Rsum"><strong id="tPrice"></strong></h3></td>
+							<td> </td>
 						</tr>
 					</tbody>
 				</table>
@@ -465,9 +519,9 @@ body{
 									<strong>$24.59</strong>
 								</h3></td>
 						</tr>
-
 					</tbody>
 				</table>
+					
 			</div>
 		</div>
 	</div>
@@ -481,13 +535,26 @@ body{
 					<tbody>
 						<tr>
 							<td class="total"> </td>
-							<td><h3>Total</h3></td>
-							<td class="text-right"><h3>
-									<strong>$31.53</strong>
-								</h3></td>
+							<td><h3>總金額</h3></td>
+							<td class="text-right"><h2>
+									<strong id="sumPrice"></strong>
+								</h2></td>
 						</tr>
-</tbody>
+						
+					</tbody>
 				</table>
+				<!-- 總金額 -->
+					<script type="text/javascript">
+					var Rsum = document.getElementById("tPrice").innerHTML;
+					console.log("sum = " + Rsum);
+					document.getElementById("sumPrice").innerHTML = Rsum;
+					
+					function sumprice(){
+						var Rsum = document.getElementById("tPrice").innerHTML;
+						console.log("sum = " + Rsum);
+						document.getElementById("sumPrice").innerHTML = Rsum;
+					}
+					</script>
 			</div>
 		</div>
 	</div>
@@ -511,11 +578,33 @@ body{
 							</form>
 							</td>
 							<td>
-							<form action="<%=pageContext.getServletContext().getContextPath()%>/ShowOrderList" method="POST">
-								<button type="submit" class="btn btn-success">
-									我要結帳 <span class="glyphicon glyphicon-play"></span>
-								</button>
-							</form>
+							
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">
+							  我要結帳</button>
+
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  							<div class="modal-dialog modal-dialog-centered" role="document">
+    							<div class="modal-content">
+      							<div class="modal-header">
+        							<h5 class="modal-title" id="exampleModalLongTitle">結帳提醒</h5>
+        							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          							<span aria-hidden="true">&times;</span>
+        							</button>
+      								</div>
+      							<div class="modal-body">
+        							請務必確認訂單資訊是否填寫正確
+      							</div>
+      							<div class="modal-footer">
+        						<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        						<form action="<%=pageContext.getServletContext().getContextPath()%>/ShowOrderList" method="POST">
+        							<button type="submit" class="btn btn-info">確認</button>
+        						</form>
+      							</div>
+    							</div>
+  							</div>
+							</div><!-- .Button trigger modal -->
 							</td>
 							<td></td>
 						</tr>
@@ -526,5 +615,13 @@ body{
 		</div>
 	</div>
 </section>
+  <!-- footer -->
+     <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>    
+    
+    <!-- import js -->
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
 </body>
 </html>
