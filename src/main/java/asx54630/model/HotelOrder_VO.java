@@ -38,7 +38,7 @@ public class HotelOrder_VO {
 
 	private String CLIENT_PHONE;
 	
-	private BigDecimal H_PRICE;
+	private BigDecimal HPRICE;
 	
 	private String USERNAME;
 	
@@ -129,12 +129,12 @@ public class HotelOrder_VO {
 	}
 
 	@Column(name = "H_PRICE")
-	public BigDecimal getH_PRICE() {
-		return H_PRICE;
+	public BigDecimal getHPRICE() {
+		return HPRICE;
 	}
 
-	public void setH_PRICE(BigDecimal h_PRICE) {
-		H_PRICE = h_PRICE;
+	public void setHPRICE(BigDecimal hPRICE) {
+		HPRICE = hPRICE;
 	}
 
 	@Column(name = "USERNAME")

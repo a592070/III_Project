@@ -149,8 +149,8 @@ td {
 												<td>
 												<form action="<%=application.getContextPath()%>/admin/hotelOrderdetail" method="POST">
 												<c:if test="${hotels.CHECK_OUT > date}">
+													<Input type='hidden' name='detailsn' value='${hotels.SN_ORDER}'>
 													<button type="submit" class="btn btn-warning">修改</button>
-													<Input type='hidden' name='rid' value='${hotels.SN_ORDER}'>
 												</c:if>
 												<c:if test="${hotels.CHECK_OUT < date}">
 													<button type="submit" class="btn btn-warning"  disabled>修改</button>
