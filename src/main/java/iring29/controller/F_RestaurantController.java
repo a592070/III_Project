@@ -80,26 +80,24 @@ public class F_RestaurantController {
 								    			  @RequestParam(name = "currentPage") Integer currentPage,
 								    			  HttpSession session, Model m) {
 		
-//		System.out.println("restaurant_name = " + restaurant_name);
-//		System.out.println("currentPage = " + currentPage);
 		int size = F_Serivce.numRestaurant(restaurant_name, region_name);
+		System.out.println("size = " + size);
 		userPage.setTotalCount(size);
+		if(size == 0) {
+			userPage.setCurrentPage(1);
+			userPage.setTotalCount(size);
+		}
+		System.out.println("total page = " + userPage.getTotalPageCount());
 		userPage.setCurrentPage(currentPage);
 		start = (currentPage - 1)* userPage.getPageSize();
 		
 		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), restaurant_name, region_name);
 		
-//		session.setAttribute("res_data", res_data);
 		session.setAttribute("book_date", book_date);
 		session.setAttribute("person_number", person_number);
 		m.addAttribute("res_data", res_data);
-//		m.addAttribute("book_date", book_date);
-//		m.addAttribute("person_number", person_number);
 		m.addAttribute("userPage", userPage);
 		
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("res_data", res_data);
-//		map.put("userPage",userPage);
 		return "iring29/appendPage";
 
 	}
@@ -115,7 +113,6 @@ public class F_RestaurantController {
 	
 	@RequestMapping(path = "/ShowRPic")
 	public ResponseEntity<byte[]> ShowPic(HttpSession session) {
-//		@ModelAttribute("res_data") Restaurant r
 		Restaurant r = (Restaurant) session.getAttribute("res_data");
 		System.out.println("in pic " + r.getName());
 		HttpHeaders headers = new HttpHeaders();

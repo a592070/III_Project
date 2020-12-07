@@ -318,7 +318,7 @@ h5{
 								<h5 class="deposit" id="deposit${R.restaurant.r_sn}">${R.deposit}</h5>
 							</td>
 							<td class="col-sm-1 col-md-1">
-								<button type="button" class="btn btn-danger" onclick="remove${R.restaurant.r_sn}(),totalprice()">
+								<button type="button" class="btn btn-danger" onclick="remove${R.restaurant.r_sn}(), totalprice(), sumprice()">
 									<span class="glyphicon glyphicon-remove"></span>移除
 								</button>
 							</td>
@@ -350,7 +350,7 @@ h5{
 						console.log("price = " + price);
 						$("#deposit${R.restaurant.r_sn}").html(price);
 						console.log("sn = " + sn + ",name = " + name + ",phone = " + phone + ", bd = " + bd + ", bt = " + bt + ", pnum = " + pnum);
-						if(name != "" && phone != ""){
+						if(name != "" && phone != "" && phone.match(/^09[0-9]{8}$/)){
 						$.ajax(
 			                    {
 			                        type: 'POST',
@@ -408,7 +408,7 @@ h5{
 							<td> </td>
 							<td><h4>小計</h4></td>
 							<td class="text-right">
-							<h3><strong id="tPrice"></strong></h3></td>
+							<h3 id="Rsum"><strong id="tPrice"></strong></h3></td>
 							<td> </td>
 						</tr>
 					</tbody>
@@ -519,12 +519,9 @@ h5{
 									<strong>$24.59</strong>
 								</h3></td>
 						</tr>
-
 					</tbody>
 				</table>
-					<script type="text/javascript">
-						
-					</script>
+					
 			</div>
 		</div>
 	</div>
@@ -539,13 +536,25 @@ h5{
 						<tr>
 							<td class="total"> </td>
 							<td><h3>總金額</h3></td>
-							<td class="text-right"><h3>
+							<td class="text-right"><h2>
 									<strong id="sumPrice"></strong>
-								</h3></td>
+								</h2></td>
 						</tr>
-</tbody>
-				</table>
 						
+					</tbody>
+				</table>
+				<!-- 總金額 -->
+					<script type="text/javascript">
+					var Rsum = document.getElementById("tPrice").innerHTML;
+					console.log("sum = " + Rsum);
+					document.getElementById("sumPrice").innerHTML = Rsum;
+					
+					function sumprice(){
+						var Rsum = document.getElementById("tPrice").innerHTML;
+						console.log("sum = " + Rsum);
+						document.getElementById("sumPrice").innerHTML = Rsum;
+					}
+					</script>
 			</div>
 		</div>
 	</div>
