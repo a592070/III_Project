@@ -84,7 +84,7 @@ h5{
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
             <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">旅行近在咫尺</h1>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">差一步，旅行即將開始</h1>
           </div>
         </div>
       </div>
@@ -221,7 +221,8 @@ h5{
 								</div>
 							</td>
 							<td>
-							<Input type='hidden' name='book_date' id="r_sn${R.restaurant.r_sn}" value='${R.restaurant.r_sn}'>
+							<Input type='hidden' name='r_sn' id="r_sn${R.restaurant.r_sn}" value='${R.restaurant.r_sn}'>
+							<Input type='hidden' name='price' id="price${R.restaurant.r_sn}" value='${R.restaurant.price}'>
 							<div class="content"><h5>${R.restaurant.name}</h5></div>
 							<div class="content"><h5>${R.restaurant.address}</h5></div>
 							<div class="content"><h5><input class="form-control data" value="${R.cus_name}" id="cus_name${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
@@ -311,8 +312,20 @@ h5{
 						console.log("num" + opts[num].value);
        					opts[num-1].selected=true;
    					</script>
-   					<script>
-   					function changeinfo${R.restaurant.r_sn}(){
+   					
+							</td>
+							<td class="col-sm-1 col-md-1">
+								<h5 class="deposit" id="deposit${R.restaurant.r_sn}">${R.deposit}</h5>
+							</td>
+							<td class="col-sm-1 col-md-1">
+								<button type="button" class="btn btn-danger" onclick="remove${R.restaurant.r_sn}(),totalprice()">
+									<span class="glyphicon glyphicon-remove"></span>移除
+								</button>
+							</td>
+							
+						</tr>
+						<script>
+   						function changeinfo${R.restaurant.r_sn}(){
 						var sn = $("#r_sn${R.restaurant.r_sn}").val();
 						var name = $("#cus_name${R.restaurant.r_sn}").val();
 						if(name == ""){
@@ -331,6 +344,11 @@ h5{
 						var bd = $(".form-control.${R.restaurant.r_sn}").val();
 						var bt = $(".form-control.time.${R.restaurant.r_sn}").val();
 						var pnum = $(".form-control.p_num.${R.restaurant.r_sn}").val();
+						var price = $("#price${R.restaurant.r_sn}").val();
+						console.log("p = " + price);
+						price = parseInt(pnum) * parseInt(price);
+						console.log("price = " + price);
+						$("#deposit${R.restaurant.r_sn}").html(price);
 						console.log("sn = " + sn + ",name = " + name + ",phone = " + phone + ", bd = " + bd + ", bt = " + bt + ", pnum = " + pnum);
 						if($(".n${R.restaurant.r_sn}").val() == "" && $(".p${R.restaurant.r_sn}").val() == ""){
 						$.ajax(
@@ -347,17 +365,6 @@ h5{
 						}
    					}
    					</script>
-							</td>
-							<td class="col-sm-1 col-md-1">
-								<h5 class="deposit" id="deposit${R.restaurant.r_sn}">${R.deposit}</h5>
-							</td>
-							<td class="col-sm-1 col-md-1">
-								<button type="button" class="btn btn-danger" onclick="remove${R.restaurant.r_sn}(),totalprice()">
-									<span class="glyphicon glyphicon-remove"></span>移除
-								</button>
-							</td>
-						</tr>
-						
 						<script>
 							function remove${R.restaurant.r_sn}(){
 								var sn = $("#r_sn${R.restaurant.r_sn}").val();
@@ -558,11 +565,38 @@ h5{
 							</form>
 							</td>
 							<td>
-							<form action="<%=pageContext.getServletContext().getContextPath()%>/ShowOrderList" method="POST">
-								<button type="submit" class="btn btn-success">
-									我要結帳 <span class="glyphicon glyphicon-play"></span>
-								</button>
-							</form>
+<%-- 							<form action="<%=pageContext.getServletContext().getContextPath()%>/ShowOrderList" method="POST"> --%>
+<!-- 								<button type="submit" class="btn btn-success"> -->
+<!-- 									我要結帳 <span class="glyphicon glyphicon-play"></span> -->
+<!-- 								</button> -->
+<!-- 							</form> -->
+
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">
+							  我要結帳</button>
+
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  							<div class="modal-dialog modal-dialog-centered" role="document">
+    							<div class="modal-content">
+      							<div class="modal-header">
+        							<h5 class="modal-title" id="exampleModalLongTitle">結帳提醒</h5>
+        							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          							<span aria-hidden="true">&times;</span>
+        							</button>
+      								</div>
+      							<div class="modal-body">
+        							請務必確認訂單資訊是否填寫正確
+      							</div>
+      							<div class="modal-footer">
+        						<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        						<form action="<%=pageContext.getServletContext().getContextPath()%>/ShowOrderList" method="POST">
+        							<button type="submit" class="btn btn-info">確認</button>
+        						</form>
+      							</div>
+    							</div>
+  							</div>
+							</div><!-- .Button trigger modal -->
 							</td>
 							<td></td>
 						</tr>

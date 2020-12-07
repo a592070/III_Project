@@ -57,7 +57,8 @@ public class F_RorderController {
 		rOBean.setCus_name(b_name);
 		rOBean.setCus_phone(b_phone);
 		rOBean.setCustomer_num(person_number);
-		rOBean.setDeposit(BigDecimal.valueOf(500));
+		BigDecimal deposit = person_number.multiply(res_data.getPrice());
+		rOBean.setDeposit(deposit);
 		rOBean.setRestaurant(res_data);
 		OTBean.addR_Order_Lists(rOBean);
 		cartnum = cartnum + 1;
@@ -76,6 +77,7 @@ public class F_RorderController {
 			   					  @RequestParam(value = "b_phone") String b_phone, 
 			   					  @RequestParam(value = "person_number") BigDecimal person_number,
 			   					  HttpSession session){
+		
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Set<R_Order_List> Rlists = OTBean.getR_Order_Lists();
 		for(R_Order_List r : Rlists) {
@@ -87,6 +89,8 @@ public class F_RorderController {
 				r.setCus_name(b_name);
 				r.setCus_phone(b_phone);
 				r.setCustomer_num(person_number);
+				BigDecimal deposit = person_number.multiply(r.getRestaurant().getPrice());
+				r.setDeposit(deposit);
 			}
 		}
 		session.setAttribute("OTBean", OTBean);

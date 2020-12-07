@@ -33,17 +33,6 @@ h3{
 	height:1030px;
 }
 
-/* .block-27 ul li button{ */
-/* 	color: #f85959; */
-/*     text-align: center; */
-/*     display: inline-block; */
-/*     width: 40px; */
-/*     height: 40px; */
-/*     line-height: 40px; */
-/*     border-radius: 50%; */
-/*     border: 1px solid #fdd3d3; */
-/*     background-color: transparent; */
-/* } */
 </style>    
 
 </head>
@@ -158,41 +147,41 @@ h3{
 		            </div>
 	            </form>
         		</div>
-        		<div class="sidebar-wrap bg-light ftco-animate">
-        			<h3 class="heading mb-4">Star Rating</h3>
-        			<form method="post" class="star-rating">
-							  <div class="form-check">
-									<input type="checkbox" class="form-check-input" id="exampleCheck1">
-									<label class="form-check-label" for="exampleCheck1">
-										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
-									</label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						     </label>
-							  </div>
-							  <div class="form-check">
-							    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-							    </label>
-							  </div>
-							</form>
-        		</div>
+<!--         		<div class="sidebar-wrap bg-light ftco-animate"> -->
+<!--         			<h3 class="heading mb-4">Star Rating</h3> -->
+<!--         			<form method="post" class="star-rating"> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 									<input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 									<label class="form-check-label" for="exampleCheck1"> -->
+<!-- 										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p> -->
+<!-- 									</label> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
+<!-- 						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						      </label> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						     </label> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 							    <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						      </label> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 							    </label> -->
+<!-- 							  </div> -->
+<!-- 							</form> -->
+<!--         		</div> -->
           </div>
           
           <!-- Display stores -->
@@ -238,7 +227,7 @@ h3{
 											$("#test${res.r_sn}").prepend(tags, zerostar);
 				    						</script>
 			    						<div class="two">
-<!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
+			    							<small>訂金&emsp;</small><span class="price per-price">${res.price}<br><small>/人</small></span>
 		    							</div>
 		    						</div>
 		    						<p class="type">${res.type}</p>

@@ -69,7 +69,7 @@ public class R_Order_List {
 	}
 
 	public void setDeposit(BigDecimal deposit) {
-		this.deposit = BigDecimal.valueOf(500);
+		this.deposit = deposit;
 	}
 
 	public String getCus_name() {
