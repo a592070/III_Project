@@ -242,7 +242,7 @@ td.col-sm-1.col-md-1.text-center{
 					
 							<td class="col-sm-1 col-md-1 text-center"><h5>${R.customer_num}&emsp;&emsp;</h5></td>
 							<td class="col-sm-1 col-md-1">
-								<h5 class="deposit"><strong>${R.deposit}</strong></h5>
+								<h5><strong class="deposit">${R.deposit}</strong></h5>
 							</td>
 							<td class="col-sm-1 col-md-1"></td>
 						</tr>
@@ -255,7 +255,7 @@ td.col-sm-1.col-md-1.text-center{
 							<td> </td>
 							<td><h4>小計</h4></td>
 							<td class="text-right">
-							<h3 id="tPrice"><strong></strong></h3></td>
+							<h3><strong id="tPrice"></strong></h3></td>
 						</tr>
 					</tbody>
 				</table>
@@ -360,14 +360,15 @@ td.col-sm-1.col-md-1.text-center{
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h3>Subtotal</h3></td>
+							<td><h3>SubTotal</h3></td>
 							<td class="text-right"><h3>
-									<strong>$24.59</strong>
+									<strong>$31.52</strong>
 								</h3></td>
 						</tr>
 
 					</tbody>
 				</table>
+				
 			</div>
 		</div>
 	</div>
@@ -381,13 +382,25 @@ td.col-sm-1.col-md-1.text-center{
 					<tbody>
 						<tr>
 							<td class="total"> </td>
-							<td><h3>Total</h3></td>
-							<td class="text-right"><h3>
-									<strong>$31.53</strong>
-								</h3></td>
+							<td><h3>總金額</h3></td>
+							<td class="text-right"><h2>
+									<strong id="sumPrice"></strong>
+								</h2></td>
 						</tr>
-</tbody>
+					</tbody>
 				</table>
+				<!-- 總金額 -->
+					<script type="text/javascript">
+					var Rsum = document.getElementById("tPrice").innerHTML;
+					console.log("sum = " + Rsum);
+					document.getElementById("sumPrice").innerHTML = Rsum;
+					
+					function sumprice(){
+						var Rsum = document.getElementById("tPrice").innerHTML;
+						console.log("sum = " + Rsum);
+						document.getElementById("sumPrice").innerHTML = Rsum;
+					}
+					</script>
 			</div>
 		</div>
 	</div>
