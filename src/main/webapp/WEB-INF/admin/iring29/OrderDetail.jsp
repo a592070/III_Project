@@ -276,7 +276,7 @@ td.col-sm-1.col-md-1.text-center{
 					
 							<td class="col-sm-1 col-md-1 text-center"><h5>${R.customer_num}&emsp;&emsp;</h5></td>
 							<td class="col-sm-1 col-md-1">
-								<h5 class="deposit">${R.deposit}</h5>
+								<h5 class="deposit"><strong>${R.deposit}</strong></h5>
 							</td>
 							<td class="col-sm-1 col-md-1"></td>
 						</tr>

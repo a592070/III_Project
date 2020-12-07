@@ -88,7 +88,12 @@ h5{
 .form-control{
 	font-size:16px;
 }
-
+#idsp{
+	float:left; 
+	color:red;
+	font-size:13px;
+	font-style:italic;
+}
 </style>
 
 </head>
@@ -110,7 +115,7 @@ h5{
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
             <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">旅行就差一點點</h1>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">旅行近在咫尺</h1>
           </div>
         </div>
       </div>
@@ -239,9 +244,9 @@ h5{
 									<div class="media-body">
 										<div class="div_title"><h5 class="media-heading">餐廳名稱&emsp;&emsp;&emsp;</h5></div>
 										<div class="div_title"><h5 class="media-heading">餐廳地址&emsp;&emsp;&emsp;</h5></div>
-										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂位人姓名&emsp;</h5></div>
+										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂位人姓名&emsp;<span id="idsp">&nbsp;*必填<span id="idsp" class="n${R.restaurant.r_sn}"></span></span></h5></div>
 										</div>
-										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_p">訂位人電話&emsp;</h5></div> 
+										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_p">訂位人電話&emsp;<span id="idsp">&nbsp;*必填<span id="idsp" class="p${R.restaurant.r_sn}"></span></span></h5></div> 
 										</div>
 									</div>
 								</div>
@@ -341,7 +346,19 @@ h5{
    					function changeinfo${R.restaurant.r_sn}(){
 						var sn = $("#r_sn${R.restaurant.r_sn}").val();
 						var name = $("#cus_name${R.restaurant.r_sn}").val();
+						if(name == ""){
+							$(".n${R.restaurant.r_sn}").html("&nbsp;請輸入姓名");
+						}else {
+							$(".n${R.restaurant.r_sn}").html("");
+							}
 						var phone = $("#cus_phone${R.restaurant.r_sn}").val();
+						if(phone == ""){
+							$(".p${R.restaurant.r_sn}").html("&nbsp;請輸入手機號碼");
+						}else if(!phone.match(/^09[0-9]{8}$/)){
+							$(".p${R.restaurant.r_sn}").html("&nbsp;手機號碼格式有誤");
+						}else{
+							$(".p${R.restaurant.r_sn}").html("");
+						}
 						var bd = $(".form-control.${R.restaurant.r_sn}").val();
 						var bt = $(".form-control.time.${R.restaurant.r_sn}").val();
 						var pnum = $(".form-control.p_num.${R.restaurant.r_sn}").val();
