@@ -570,7 +570,7 @@ h5{
 							<td></td>
 							<td></td>
 							<td>
-							<form action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_index">
+							<form action="<%=pageContext.getServletContext().getContextPath()%>/UserIndex">
 								<button type="button" class="btn btn-primary">
 									<span class="glyphicon glyphicon-shopping-cart"></span>
 									繼續逛
@@ -580,8 +580,29 @@ h5{
 							<td>
 							
 							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="" id="check" onclick="checkbtn()">
 							  我要結帳</button>
+							  <!-- 判斷資料是否全部有填寫 -->
+							  <script type="text/javascript">
+							  function checkbtn(){
+									var totaldata = document.getElementsByClassName("form-control data");
+									console.log("otaldata =" + totaldata.length);
+									for(var j = 0; j < totaldata.length; j++){
+										console.log("value=" + totaldata[j].value);
+											if(totaldata[j].value == ""){
+												console.log("empty");
+												document.getElementById("check").setAttribute("data-target", "#checkagain");	
+												document.getElementById("check").setAttribute("type","button");
+												break;							
+											}else{
+												console.log("has data");
+												document.getElementById("check").setAttribute("data-target", "#exampleModalCenter");	
+												document.getElementById("check").setAttribute("type","button");					
+												}
+										}
+									
+								  }
+							  </script>
 
 							<!-- Modal -->
 							<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -605,6 +626,27 @@ h5{
     							</div>
   							</div>
 							</div><!-- .Button trigger modal -->
+							
+							<!-- Modal -->
+							<div class="modal fade" id="checkagain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  							<div class="modal-dialog modal-dialog-centered" role="document">
+    							<div class="modal-content">
+      							<div class="modal-header">
+        							<h5 class="modal-title" id="exampleModalLongTitle">結帳提醒</h5>
+        							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          							<span aria-hidden="true">&times;</span>
+        							</button>
+      								</div>
+      							<div class="modal-body">
+        							資料不齊全，請確認後再送出!
+      							</div>
+      							<div class="modal-footer">
+      							<button type="button" class="btn btn-info" data-dismiss="modal">確定</button>
+    							</div>
+    							</div>
+  							</div>
+							</div><!-- .Button trigger modal -->
+							
 							</td>
 							<td></td>
 						</tr>
