@@ -1,5 +1,6 @@
 package asx54630.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,10 @@ public class F_HotelService {
 	public List<Hotel> selectAll(int first, int count, String name, String region, String type){
 		return f_hotelDao.selectAll(first, count, name, region, type);
 	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public Hotel hotelDetail(BigDecimal sn) {
+		return f_hotelDao.hotelDetail(sn);
+	}
+
 }

@@ -1,5 +1,6 @@
 package asx54630.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -57,6 +58,11 @@ public class F_HotelDAO {
 		query.setMaxResults(count);
 		List<Hotel> list = query.list();
 		return list;
+	}
+	
+	public Hotel hotelDetail(BigDecimal sn) { //查詢單筆飯店詳細資料
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Hotel.class, sn);
 	}
 	
 }

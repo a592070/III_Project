@@ -1,5 +1,6 @@
 package asx54630.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,4 +83,16 @@ public class F_HotelController {
 		
 		return "asx54630/F_HotelSearch";
 		}
-}
+
+
+
+	@RequestMapping(path = "/F_hoteldetail", method = RequestMethod.GET) //查詢單筆_給修改用
+	public String processHotelDetail(@RequestParam(name = "detailsn") BigDecimal detailsn,Model m) {
+		
+	Hotel hoteldetail = f_hotelservice.hotelDetail(detailsn);
+	m.addAttribute("hoteldetail", hoteldetail);
+	
+	return "asx54630/F_HotelDetail";
+	}
+	
+}	
