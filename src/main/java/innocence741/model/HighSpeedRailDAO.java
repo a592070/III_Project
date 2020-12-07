@@ -7,7 +7,10 @@ import java.util.Objects;
 
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 
@@ -17,13 +20,18 @@ public class HighSpeedRailDAO {
 	private static List<HighSpeedRail> hsrlist;
 	private List<HighSpeedRail> hsrList2user =new ArrayList<HighSpeedRail>();
 	
-	private Session session;
-	
-	public HighSpeedRailDAO() {
-	}
+	private SessionFactory sessionFacory;
 
-	public HighSpeedRailDAO(Session session) throws SQLException {
-		this.session = session;
+	@Autowired
+	public HighSpeedRailDAO(@Qualifier("sessionFactory") SessionFactory sessionFacory) {
+		this.sessionFacory = sessionFacory;
+	}
+	
+//	public HighSpeedRailDAO() {
+//	}
+
+	public HighSpeedRailDAO() throws SQLException {
+		Session session = sessionFacory.getCurrentSession();
 		if (hsrlist == null || hsrlist.size() == 0) {
 			hsrInit();
 		}
@@ -31,6 +39,7 @@ public class HighSpeedRailDAO {
 	
 	public void hsrInit() throws SQLException {
 //		hsrlist = new ArrayList<>();
+		Session session = sessionFacory.getCurrentSession();
 		Query<HighSpeedRail> query = session.createQuery("From HighSpeedRail",HighSpeedRail.class);
 		hsrlist = query.list();
 	}
