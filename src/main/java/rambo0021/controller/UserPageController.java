@@ -16,5 +16,10 @@ public class UserPageController {
 	public String registrationPage() {
 		return "rambo0021/userSingup";
 	}
+	
+	@GetMapping("/singinPage")
+	public String singinPage() {
+		return "rambo0021/userSingin";
+	}
 
 }

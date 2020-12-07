@@ -305,11 +305,11 @@ img{
                             </div>
                             <div class="select-option">
                                 <label for="guest">請輸入訂位者姓名:</label><span id="idsp">&nbsp;*必填</span><span id="nameck">&nbsp;</span>
-                                <input type="text" id="b-name" name="b_name" placeholder="" onchange="checkinfo()">
+                                <input type="text" id="b-name" name="b_name" placeholder="" onchange="checkinfoN()">
                             </div>
                             <div class="select-option">
                                 <label for="room">請輸入訂位者電話:</label><span id="idsp">&nbsp;*必填</span><span id="phoneck">&nbsp;</span>
-                                <input type="text" id="b-phone" name="b_phone" placeholder="09xxxxxxxx" onchange="checkinfo()">
+                                <input type="text" id="b-phone" name="b_phone" placeholder="09xxxxxxxx" onchange="checkinfoP()">
                             </div>
                             <button id="order" type="button" class="orderbtn">我要訂位</button>
                             <Input type='hidden' name='cartnum' value=''>
@@ -319,14 +319,14 @@ img{
 									var name = $("#b-name").val();
 									var phone = $("#b-phone").val();
 									if($("#b-name").val() == ""){
-										$("#nameck").html("&nbsp;<font color='red'>請輸入訂位者姓名</font>");
+										$("#nameck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入訂位者姓名</font>");
 									}else{
 										$("#nameck").html("");
 										}
 									if($("#b-phone").val() == ""){
-										$("#phoneck").html("&nbsp;<font color='red'>請輸入手機號碼</font>");
+										$("#phoneck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入手機號碼</font>");
 									}else if(!$("#b-phone").val().match(/^09[0-9]{8}$/)){
-										$("#phoneck").html("&nbsp;<font color='red'>手機號碼格式不正確！</font>");
+										$("#phoneck").html("&nbsp;<font color='red' id='idsp'>&nbsp;手機號碼格式不正確！</font>");
 									}else {
 										$("#phoneck").html("");
 									}
@@ -336,23 +336,26 @@ img{
 									}
 									})
 									
-							function checkinfo(){
+							function checkinfoN(){
 									var name = $("#b-name").val();
-									var phone = $("#b-phone").val();
 									if($("#b-name").val() == ""){
-										$("#nameck").html("&nbsp;<font color='red'>請輸入訂位者姓名</font>");
+										$("#nameck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入訂位者姓名</font>");
 									}else{
 										$("#nameck").html("");
 										}
+									console.log("name = " + name);
+									}
+							function checkinfoP(){
+									var phone = $("#b-phone").val();
 									if($("#b-phone").val() == ""){
-										$("#phoneck").html("&nbsp;<font color='red'>請輸入手機號碼</font>");
+										$("#phoneck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入手機號碼</font>");
 									}else if(!$("#b-phone").val().match(/^09[0-9]{8}$/)){
-										$("#phoneck").html("&nbsp;<font color='red'>手機號碼格式不正確！</font>");
+										$("#phoneck").html("&nbsp;<font color='red' id='idsp'>&nbsp;手機號碼格式不正確！</font>");
 									}else {
 										$("#phoneck").html("");
 									}
-									console.log("name = " + name + "phone = " + phone);
-									}
+									console.log("phone = " + phone);
+							}
                             </script>
                         </form>
                     </div>

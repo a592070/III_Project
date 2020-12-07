@@ -24,7 +24,7 @@
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a class="navbar-brand" href="index.html">FUN TAIWAN</a>
+      <a class="navbar-brand" href="<%=application.getContextPath()%>/FunTaiwan">FUN TAIWAN</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> Menu
       </button>
@@ -34,7 +34,7 @@
           <li class="nav-item"><a href="index.html" class="nav-link">首頁</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">關於我</a></li>
           <li class="nav-item"><a href="tour.html" class="nav-link">景點</a></li>
-          <li class="nav-item"><a href="" class="nav-link">找住宿</a></li>
+          <li class="nav-item"><a href="<%=application.getContextPath()%>/Hotel_index" class="nav-link">找住宿</a></li>
           <li class="nav-item"><a href="<%=application.getContextPath()%>/Restaurant_index" class="nav-link">找餐廳</a></li>
           <li class="nav-item"><a href="" class="nav-link">找交通</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">論壇</a></li>

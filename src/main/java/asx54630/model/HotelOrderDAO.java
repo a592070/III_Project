@@ -35,9 +35,9 @@ public class HotelOrderDAO {
 	}
 	
 	
-	public HotelOrder hotelDetail(BigDecimal sn) { //查詢單筆飯店詳細資料
+	public HotelOrder_VO hotelDetail(BigDecimal sn) { //查詢單筆飯店詳細資料
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(HotelOrder.class, sn);
+		return session.get(HotelOrder_VO.class, sn);
 	}
 	
 

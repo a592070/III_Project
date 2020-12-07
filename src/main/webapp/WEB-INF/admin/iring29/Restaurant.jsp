@@ -33,17 +33,6 @@ h3{
 	height:1030px;
 }
 
-/* .block-27 ul li button{ */
-/* 	color: #f85959; */
-/*     text-align: center; */
-/*     display: inline-block; */
-/*     width: 40px; */
-/*     height: 40px; */
-/*     line-height: 40px; */
-/*     border-radius: 50%; */
-/*     border: 1px solid #fdd3d3; */
-/*     background-color: transparent; */
-/* } */
 </style>    
 
 </head>
@@ -59,12 +48,12 @@ h3{
     console.log("nu = " + ${cartnum});
 // 	   console.log("num");
     </script>
-    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/res_index.jpg');">
+    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/AsianFood.jpg');">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 台灣</span></p>
+            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
             <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">探索臺灣的美食</h1>
           </div>
         </div>
@@ -158,41 +147,41 @@ h3{
 		            </div>
 	            </form>
         		</div>
-        		<div class="sidebar-wrap bg-light ftco-animate">
-        			<h3 class="heading mb-4">Star Rating</h3>
-        			<form method="post" class="star-rating">
-							  <div class="form-check">
-									<input type="checkbox" class="form-check-input" id="exampleCheck1">
-									<label class="form-check-label" for="exampleCheck1">
-										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
-									</label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						     </label>
-							  </div>
-							  <div class="form-check">
-							    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-							    </label>
-							  </div>
-							</form>
-        		</div>
+<!--         		<div class="sidebar-wrap bg-light ftco-animate"> -->
+<!--         			<h3 class="heading mb-4">Star Rating</h3> -->
+<!--         			<form method="post" class="star-rating"> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 									<input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 									<label class="form-check-label" for="exampleCheck1"> -->
+<!-- 										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p> -->
+<!-- 									</label> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
+<!-- 						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						      </label> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						     </label> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 							    <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						      </label> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="form-check"> -->
+<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 							    </label> -->
+<!-- 							  </div> -->
+<!-- 							</form> -->
+<!--         		</div> -->
           </div>
           
           <!-- Display stores -->
@@ -238,7 +227,7 @@ h3{
 											$("#test${res.r_sn}").prepend(tags, zerostar);
 				    						</script>
 			    						<div class="two">
-<!-- 			    							<span class="price per-price">$40<br><small>/night</small></span> -->
+			    							<small>訂金&emsp;</small><span class="price per-price">${res.price}<br><small>/人</small></span>
 		    							</div>
 		    						</div>
 		    						<p class="type">${res.type}</p>
@@ -281,7 +270,7 @@ h3{
           
           $("#index").on('click', '#clickbtn', function (e) {
 
-        	  $("html,body").animate({ scrollTop: $("#index").offset().top - 160 },800)
+        	  $("html,body").animate({ scrollTop: $("#index").offset().top - 160 },600)
     			
 				var region_name = $("#region").val();
 				var restaurant_name = $("#restaurant_name").val();

@@ -113,7 +113,7 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
 
     @Override
     public List<HotelVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
-        String hql = "from CarVO order by "+orderFiled;
+        String hql = "from HotelVO order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);

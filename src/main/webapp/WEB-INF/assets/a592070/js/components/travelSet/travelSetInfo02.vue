@@ -12,7 +12,7 @@
         <el-header style="text-align: left; font-size: 12px">
           <el-select v-model="currentUser" value-key="id" placeholder="選擇使用者" @change="handleSelectedUser(currentUser)">
             <el-option label="--請選擇--" disabled :value="null"></el-option>
-            <el-option v-for="(item, index) in user"  :label="item" :value="item" :key="item"></el-option>
+            <el-option v-for="(item, index) in user"  :label="item" :value="index" :key="item"></el-option>
           </el-select>
         </el-header>
 
@@ -33,19 +33,22 @@
 
       <!--表格內容-->
       <el-table
-          v-loading="loading"
-          element-loading-text="唉呦威..."
-          element-loading-spinner="el-icon-loading"
-          element-loading-background="rgba(0, 0, 0, 0.8)"
+          stripe
           :data="tableData"
           style="width: 100%"
           @sort-change='sortChange'
+          height
+          v-loading='travelSetInfoLoading'
+          element-loading-text="唉呦威..."
+          element-loading-spinner="el-icon-loading"
+          element-loading-background="rgba(0, 0, 0, 0.8)"
       >
         <el-table-column
             label="ID"
             prop="sn"
             width="75"
             sortable='custom'
+            fixed
             :sort-orders="['descending', 'ascending']">
         </el-table-column>
         <el-table-column
@@ -122,16 +125,17 @@
           </template>
         </el-table-column>
         <el-table-column
-            width="200"
-            align="right">
+            width="150"
+            align="right"
+            fixed="right">
           <template slot-scope="scope">
             <el-button
-                size="medium"
+                size="small"
                 type="primary" icon="el-icon-edit"
                 @click="handleEdit(scope.$index, scope.row)">Edit
             </el-button>
             <el-button
-                size="medium"
+                size="small"
                 type="danger" icon="el-icon-delete"
                 @click="handleDelete(scope.$index, scope.row)"></el-button>
           </template>
@@ -152,53 +156,19 @@
         </div>
       </div>
     </div>
-
-    <el-drawer
-        title="Travel Set Detail"
-        :before-close="handleCloseTravelSet"
-        :visible.sync="getTravelSetDialog"
-        custom-class="demo-drawer"
-        ref="drawer"
-        size="70%"
-        :show-close="false">
-
-<!--        <travel-set-detail :travelsetdialog="travelSetDialog"></travel-set-detail>-->
-        <travel-set-detail ></travel-set-detail>
-      <div>
-        <el-button type="primary" v-on:click="cancelTravelSetForm">取 消 關 閉</el-button>
-        <el-button type="primary" @click="$refs.drawer.closeDrawer()"
-                   :loading="travelSetFormLoading">{{ travelSetFormLoading ? '提交中 ...' : '保 存' }}
-        </el-button>
-
-      </div>
-      <el-dialog
-          title="選 擇 目 標 ID"
-          :append-to-body="true"
-          :visible.sync="getTravelSetSelectDialog"
-          @close="()=>this.$store.commit('toggleTravelSetSelectDialog')"
-          :destroy-on-close="true">
-        <travel-set-select-item></travel-set-select-item>
-      </el-dialog>
-    </el-drawer>
-
   </div>
 </template>
+
 <script>
 
 module.exports = {
-  name: "TravelSetInfo",
-  components: {
-    "travel-set-detail": httpVueLoader(context + '/assets/a592070/js/components/travelSetDetail02.vue'),
-    "travel-set-select-item": httpVueLoader(context + '/assets/a592070/js/components/travelSetSelectItem.vue')
-  },
   data() {
     return {
-      loading: true,
+      // loading: this.travelSetInfoLoading,
       search: '',
       sortParams: {},
       currentSearch: '',
       currentUser: null,
-      // travelSetDialog: false,
       user: ["全部", "系統", "一般使用者"],
       pageData: {
         currentPage: null,
@@ -280,33 +250,25 @@ module.exports = {
           }
         }
       ],
-      travelSetFormLoading: false,
     }
   },
   created: function () {
     this.initData();
-    // this.testData();
-    // this.loading = false;
   },
-  computed: {
-    getTravelSetDialog(){
-      return this.$store.getters.getTravelSetDialog;
-    },
-    getTravelSetSelectDialog(){
-      return this.$store.getters.getTravelSetSelectDialog;
-    }
-  },
+  computed: Vuex.mapState(['travelSetInfoLoading', 'travelSetInfo']),
   methods: {
     initData() {
       axios.get(context+'/admin/travelSet/list/1')
           .then(response => {
-            this.tableData = response.data.tableData;
+            this.$store.commit('setTravelSetInfo', response.data.tableData);
+
+            this.tableData = this.travelSetInfo;
             this.pageData = response.data.pageData;
-            this.loading = false;
-          });
+          })
+          .then(()=>this.$store.commit('toggleTravelSetInfoLoading', false));
+
     },
     handleSearch() {
-      console.log(this.search);
       this.pageData.currentPage = 1;
 
       this.handleSelectedData();
@@ -329,35 +291,36 @@ module.exports = {
       this.handleSelectedData();
     },
     handleSelectedData() {
-      this.loading = true;
+      this.$store.commit('toggleTravelSetInfoLoading', true);
       let url;
 
       let user = this.currentUser
-      if (!user || user == "全部") {
-        user = "all";
+      if (!user) {
+        user = 0;
       }
       let keyword = this.search;
       if (!this.search || this.search == '') {
+        url = context + '/admin/travelSet/list/'+this.pageData.currentPage+'/'+user;
       } else {
+        url = context + '/admin/travelSet/list/'+this.pageData.currentPage+'/'+user+'/'+keyword;
       }
 
       let params = this.sortParams;
       console.log(params);
-      url = context+'/admin/travelSet/list/1';
       axios.get(url, {params})
           .then(response => {
-            this.tableData = response.data.tableData;
+            this.$store.commit('setTravelSetInfo', response.data.tableData);
+
+            this.tableData = this.travelSetInfo;
+            // this.tableData = response.data.tableData;
             this.pageData = response.data.pageData;
             this.currentSearch = this.search;
-            // this.search = "";
-            this.loading = false;
-          });
+          })
+          .then(()=>this.$store.commit('toggleTravelSetInfoLoading', false));
 
-
-      this.loading = false;
     },
     handleSwitchStatus(value) {
-      console.log(value.status);
+      this.$store.commit('toggleTravelSetInfoLoading', true)
 
       let url = context+'/admin/travelSet/status/'+value.sn;
       axios.post(url)
@@ -374,18 +337,8 @@ module.exports = {
             }else{
               this.$message.error(value.name+': 狀態更改失敗');
             }
-          });
-      // if(value.status){
-      //   this.$message({
-      //     type: 'success',
-      //     message: '已成功啟用!'
-      //   });
-      // }else{
-      //   this.$message({
-      //     type: 'info',
-      //     message: '已成功停用'
-      //   });
-      // }
+          })
+          .then(()=>this.$store.commit('toggleTravelSetInfoLoading', false));
 
     },
 
@@ -393,26 +346,32 @@ module.exports = {
 
 
     handleInsert() {
-      // this.travelSetDialog = true;
-      this.$store.commit("toggleTravelSetDialog");
+      this.$store.commit('initTravelSteDetail');
+      this.$store.commit("toggleTravelSetDialog", true);
+      this.$store.commit('toggleTravelSetDetailLoading', false);
     },
     handleEdit(index, row) {
-      console.log(index, row);
-      // this.travelSetDialog = true;
-      this.$store.commit("toggleTravelSetDialog");
-      this.$store.commit("setCurrentEditTravelSetInfo", row);
+      this.$store.commit("setCurrentTravelSetInfo", row);
+      this.$store.dispatch('selectedTravelSetDetailData', row.sn)
+          .then(()=>{
+            this.$store.commit("toggleTravelSetDialog", true);
+            this.$store.commit('toggleTravelSetDetailLoading', false);
+          });
     },
     handleDelete(index, row) {
-      console.log(index, row);
       this.$confirm('此操作將永久刪除資料, 是否繼續?', '提示', {
         confirmButtonText: '去死吧',
         cancelButtonText: '手滑了...',
         type: 'warning',
         center: true
       }).then(() => {
+        this.$store.commit('toggleTravelSetInfoLoading', true);
+
         let url = context+'/admin/travelSet/delete/'+row.sn;
         axios.delete(url)
             .then(response => {
+              this.$store.commit('toggleTravelSetInfoLoading', false);
+
               if(response.data == true){
                 this.$message({
                   type: 'success',
@@ -436,71 +395,7 @@ module.exports = {
         });
       });
     },
-    handleCloseTravelSet(done) {
-      if (this.travelSetFormLoading) {
-        return;
-      }
-      this.$confirm('確定要提交表單?')
-          .then(_ => {
-            this.travelSetFormLoading = true;
 
-            let temp = this.$store.getters.getTravelSetDetail.info;
-            console.log(temp);
-            this.$store.commit("setTravelSetInfo", temp);
-
-            let url = context+"/admin/travelSet/save/"+temp.sn;
-            let param = this.$store.getters.getCurrentEditTravelSetDetail;
-            axios.post(url, {param})
-                .then(response => {
-              if(response.data == true){
-                this.travelSetFormLoading = false;
-                this.$store.commit('toggleTravelSetDialog');
-
-                this.$message({
-                  type: 'success',
-                  message: '提交成功!'
-                });
-
-                // 更新清單頁面
-                this.handleSelectedData();
-              }else{
-                this.$message({
-                  type: 'info',
-                  message: '提交失敗!!'
-                });
-              }
-            });
-
-            // this.timer = setTimeout(() => {
-            //   done();
-            //   // 动画关闭需要一定的时间
-            //   setTimeout(() => {
-            //   }, 400);
-            // }, 1000);
-          })
-          .catch(_ => {
-          });
-    },
-    cancelTravelSetForm() {
-      console.log("cancel")
-      this.travelSetFormLoading = false;
-      // this.travelsetdialog = false;
-      this.$store.commit('toggleTravelSetDialog');
-      clearTimeout(this.timer);
-    },
-    testData() {
-      this.tableData = [
-        {
-          sn: 1,
-          createdUser: 'system',
-          name: '桃園一日遊',
-          description: '桃園一日遊，好好玩!!!..!!!!!!!!!!!!!.!!!!!!!!!!!!',
-          createdTime: '2020-10-12 10:31:33.000000',
-          updateTime: '2020-10-12 10:42:14.892000',
-          priority: 50,
-          status: true
-        }];
-    }
   }
 }
 </script>

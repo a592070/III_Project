@@ -537,7 +537,6 @@
         el: '#app',
         data() {
             return {
-                .
                 loading: true,
                 search: '',
                 sortParams: {},

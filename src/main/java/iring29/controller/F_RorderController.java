@@ -17,7 +17,6 @@ import global.pojo.OrderTable;
 import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
 import iring29.service.F_RestaurantService;
-import oracle.net.aso.m;
 
 @Controller
 public class F_RorderController {
@@ -58,7 +57,8 @@ public class F_RorderController {
 		rOBean.setCus_name(b_name);
 		rOBean.setCus_phone(b_phone);
 		rOBean.setCustomer_num(person_number);
-		rOBean.setDeposit(BigDecimal.valueOf(500));
+		BigDecimal deposit = person_number.multiply(res_data.getPrice());
+		rOBean.setDeposit(deposit);
 		rOBean.setRestaurant(res_data);
 		OTBean.addR_Order_Lists(rOBean);
 		cartnum = cartnum + 1;
@@ -77,6 +77,7 @@ public class F_RorderController {
 			   					  @RequestParam(value = "b_phone") String b_phone, 
 			   					  @RequestParam(value = "person_number") BigDecimal person_number,
 			   					  HttpSession session){
+		
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Set<R_Order_List> Rlists = OTBean.getR_Order_Lists();
 		for(R_Order_List r : Rlists) {
@@ -88,6 +89,8 @@ public class F_RorderController {
 				r.setCus_name(b_name);
 				r.setCus_phone(b_phone);
 				r.setCustomer_num(person_number);
+				BigDecimal deposit = person_number.multiply(r.getRestaurant().getPrice());
+				r.setDeposit(deposit);
 			}
 		}
 		session.setAttribute("OTBean", OTBean);
@@ -104,9 +107,34 @@ public class F_RorderController {
 	public String placeOrder(HttpSession session) {
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		F_Serivce.createOrder(OTBean);
+		session.removeAttribute("OTBean");
 		OrderTable otBean = F_Serivce.findOrder();
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
 		session.setAttribute("res_lists", res_lists);
+		session.removeAttribute("cartnum");
 		return "iring29/OrderDetail";
 	}
+	
+	//移除預定餐廳
+	@RequestMapping(path = "/removeInfo", method = RequestMethod.POST)
+	public @ResponseBody String removeInfo(@RequestParam(value = "r_sn") BigDecimal r_sn, HttpSession session){
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		cartnum = cartnum - 1;
+		System.out.println("sn = " + r_sn);
+		OTBean.getR_Order_Lists().removeIf(ele->{
+			return r_sn.equals(ele.getRestaurant().getR_sn());
+		});
+		
+//		Set<R_Order_List> Rlists = OTBean.getR_Order_Lists();
+//		for(R_Order_List r : Rlists) {
+//			if(r.getRestaurant().getR_sn().equals(r_sn)) {
+//				
+//			}
+//		}
+		session.setAttribute("OTBean", OTBean);
+		session.setAttribute("cartnum", cartnum);
+		return "remove";
+	}
+	
 }
