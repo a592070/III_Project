@@ -268,10 +268,6 @@ td.col-sm-1.col-md-1.text-center{
 							console.log("money = " + size);
 							console.log("money = " + deposit[i].innerHTML);
 							}
-// 						var size  =  ${size}.legnth;
-// 						console.log("size = " + size);
-//         				size = 500;
-// 						size = deposit.value
         				document.getElementById("tPrice").innerHTML = size;
         				
    					</script>

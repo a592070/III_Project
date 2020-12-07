@@ -111,6 +111,7 @@ public class F_RorderController {
 		OrderTable otBean = F_Serivce.findOrder();
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
 		session.setAttribute("res_lists", res_lists);
+		session.removeAttribute("cartnum");
 		return "iring29/OrderDetail";
 	}
 	
@@ -118,6 +119,8 @@ public class F_RorderController {
 	@RequestMapping(path = "/removeInfo", method = RequestMethod.POST)
 	public @ResponseBody String removeInfo(@RequestParam(value = "r_sn") BigDecimal r_sn, HttpSession session){
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		cartnum = cartnum - 1;
 		System.out.println("sn = " + r_sn);
 		OTBean.getR_Order_Lists().removeIf(ele->{
 			return r_sn.equals(ele.getRestaurant().getR_sn());
@@ -130,6 +133,7 @@ public class F_RorderController {
 //			}
 //		}
 		session.setAttribute("OTBean", OTBean);
+		session.setAttribute("cartnum", cartnum);
 		return "remove";
 	}
 	

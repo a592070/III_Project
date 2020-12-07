@@ -213,7 +213,7 @@ h5{
 									<div class="media-body">
 										<div class="div_title"><h5 class="media-heading">餐廳名稱&emsp;&emsp;&emsp;</h5></div>
 										<div class="div_title"><h5 class="media-heading">餐廳地址&emsp;&emsp;&emsp;</h5></div>
-										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂位人姓名&emsp;<span id="idsp">&nbsp;*必填<span id="idsp" class="n${R.restaurant.r_sn}"></span></span></h5></div>
+										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂位人姓名&emsp;<span id="idsp">&nbsp;*必填</span><span id="idsp" class="n${R.restaurant.r_sn}"></span></h5></div>
 										</div>
 										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_p">訂位人電話&emsp;<span id="idsp">&nbsp;*必填<span id="idsp" class="p${R.restaurant.r_sn}"></span></span></h5></div> 
 										</div>
@@ -292,7 +292,7 @@ h5{
 							
 						</script>
 							<td class="col-sm-1 col-md-1 text-center">
-							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}()">
+							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}(), totalprice()">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -329,7 +329,7 @@ h5{
 						var sn = $("#r_sn${R.restaurant.r_sn}").val();
 						var name = $("#cus_name${R.restaurant.r_sn}").val();
 						if(name == ""){
-							$(".n${R.restaurant.r_sn}").html("<br>&nbsp;請輸入姓名");
+							$(".n${R.restaurant.r_sn}").html("&nbsp;請輸入姓名");
 						}else {
 							$(".n${R.restaurant.r_sn}").html("");
 							}
@@ -350,7 +350,7 @@ h5{
 						console.log("price = " + price);
 						$("#deposit${R.restaurant.r_sn}").html(price);
 						console.log("sn = " + sn + ",name = " + name + ",phone = " + phone + ", bd = " + bd + ", bt = " + bt + ", pnum = " + pnum);
-						if($(".n${R.restaurant.r_sn}").val() == "" && $(".p${R.restaurant.r_sn}").val() == ""){
+						if(name != "" && phone != ""){
 						$.ajax(
 			                    {
 			                        type: 'POST',
@@ -522,6 +522,9 @@ h5{
 
 					</tbody>
 				</table>
+					<script type="text/javascript">
+						
+					</script>
 			</div>
 		</div>
 	</div>
@@ -535,13 +538,14 @@ h5{
 					<tbody>
 						<tr>
 							<td class="total"> </td>
-							<td><h3>Total</h3></td>
+							<td><h3>總金額</h3></td>
 							<td class="text-right"><h3>
-									<strong>$31.53</strong>
+									<strong id="sumPrice"></strong>
 								</h3></td>
 						</tr>
 </tbody>
 				</table>
+						
 			</div>
 		</div>
 	</div>
@@ -565,12 +569,7 @@ h5{
 							</form>
 							</td>
 							<td>
-<%-- 							<form action="<%=pageContext.getServletContext().getContextPath()%>/ShowOrderList" method="POST"> --%>
-<!-- 								<button type="submit" class="btn btn-success"> -->
-<!-- 									我要結帳 <span class="glyphicon glyphicon-play"></span> -->
-<!-- 								</button> -->
-<!-- 							</form> -->
-
+							
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">
 							  我要結帳</button>
