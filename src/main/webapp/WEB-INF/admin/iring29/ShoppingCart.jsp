@@ -292,7 +292,7 @@ h5{
 							
 						</script>
 							<td class="col-sm-1 col-md-1 text-center">
-							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}(), totalprice()">
+							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}(), totalprice(), sumprice()">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
