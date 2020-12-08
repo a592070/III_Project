@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,7 +40,7 @@ import rambo0021.serive.DateService;
 @Lazy
 @SessionAttributes(names = { "userDetail" })
 @RequestMapping("/admin")
-public class AccountController {
+public class AdminController {
 	@Autowired
 	@Qualifier("accountService")
 	private AccountService service;

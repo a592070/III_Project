@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import rambo0021.pojo.AccountBean;
+import utils.PictureSupport;
 
 
 public class RestaurantDAO {
@@ -187,5 +188,5 @@ public class RestaurantDAO {
 			return false; 
 		}
 	}
-
+	
 }

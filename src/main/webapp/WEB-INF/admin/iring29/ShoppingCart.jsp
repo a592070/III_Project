@@ -229,7 +229,7 @@ h5{
 							<div class="content"><h5><input class="form-control data" value="${R.cus_phone}" id="cus_phone${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
 							</td>
 							<td class="col-sm-1 col-md-1" >
-								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control ${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()">
+								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control ${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}(), tableck${R.restaurant.r_sn}()">
 								<c:set var="booktime" value="${R.bookt_time}" />
 								<c:set var="bd" value="${fn:substring(booktime, 0, 10)}" />
 								<c:set var="bt" value="${fn:substring(booktime, 11, 16)}" />
@@ -250,7 +250,7 @@ h5{
 						document.getElementById("theDate${R.restaurant.name}").value = "${bd}";
 						document.getElementById("theDate${R.restaurant.name}").min = today;
 					</script>
-						<select id="sel${R.restaurant.name}" name="book_time" class="form-control time ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}()">
+						<select id="sel${R.restaurant.name}" name="book_time" class="form-control time ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}(), tableck${R.restaurant.r_sn}()">
 							<option value="11:00">11:00</option>
 							<option value="12:00">12:00</option>
 							<option value="13:00">13:00</option>
@@ -324,6 +324,7 @@ h5{
 							</td>
 							
 						</tr>
+						<!-- 修改訂位者資料 & 檢查桌數-->
 						<script>
    						function changeinfo${R.restaurant.r_sn}(){
 						var sn = $("#r_sn${R.restaurant.r_sn}").val();
@@ -364,7 +365,53 @@ h5{
 			                )
 						}
    					}
+						//檢查桌數是否已滿
+   						function tableck${R.restaurant.r_sn}(){
+   	   	   					var bd = $(".form-control.${R.restaurant.r_sn}").val();
+   							var bt = $(".form-control.time.${R.restaurant.r_sn}").val();
+   							$.ajax(
+   				                    {
+   				                        type: 'GET',
+   				                        data: { "book_date":bd,"time":bt },
+   				                        url: '${pageContext.servletContext.contextPath}/checkTable',
+   				                        dataType: 'html',
+   				                        success:function(response){
+   				                        	console.log("r = " + response);
+   				                           if(response == "false"){
+   					                           console.log("in r = " + response);
+   				                        	   var res_context = "";
+   					                        	res_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+   					                        	$("#Rsum").html(res_context);
+   					                        	$("#tableckbtn").click();
+   				                        	   
+   					                        }
+   				                        }
+   				                    }
+   				                )
+   	   	   	   					}
+   	   					
    					</script>
+   					
+   								<!-- Modal -->
+									<div class="modal fade" id="tableresponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									抱歉 !   訂位已滿，請重新選擇日期及時段
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" data-dismiss="modal" class="btn btn-primary">確認</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal -->
 						<script>
 							function remove${R.restaurant.r_sn}(){
 								var sn = $("#r_sn${R.restaurant.r_sn}").val();
@@ -570,7 +617,7 @@ h5{
 							<td></td>
 							<td></td>
 							<td>
-							<form action="<%=pageContext.getServletContext().getContextPath()%>/Restaurant_index">
+							<form action="<%=pageContext.getServletContext().getContextPath()%>/UserIndex">
 								<button type="button" class="btn btn-primary">
 									<span class="glyphicon glyphicon-shopping-cart"></span>
 									繼續逛
@@ -580,8 +627,29 @@ h5{
 							<td>
 							
 							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="" id="check" onclick="checkbtn()">
 							  我要結帳</button>
+							  <!-- 判斷資料是否全部有填寫 -->
+							  <script type="text/javascript">
+							  function checkbtn(){
+									var totaldata = document.getElementsByClassName("form-control data");
+									console.log("otaldata =" + totaldata.length);
+									for(var j = 0; j < totaldata.length; j++){
+										console.log("value=" + totaldata[j].value);
+											if(totaldata[j].value == ""){
+												console.log("empty");
+												document.getElementById("check").setAttribute("data-target", "#checkagain");	
+												document.getElementById("check").setAttribute("type","button");
+												break;							
+											}else{
+												console.log("has data");
+												document.getElementById("check").setAttribute("data-target", "#exampleModalCenter");	
+												document.getElementById("check").setAttribute("type","button");					
+												}
+										}
+									
+								  }
+							  </script>
 
 							<!-- Modal -->
 							<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -605,6 +673,27 @@ h5{
     							</div>
   							</div>
 							</div><!-- .Button trigger modal -->
+							
+							<!-- Modal -->
+							<div class="modal fade" id="checkagain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  							<div class="modal-dialog modal-dialog-centered" role="document">
+    							<div class="modal-content">
+      							<div class="modal-header">
+        							<h5 class="modal-title" id="exampleModalLongTitle">結帳提醒</h5>
+        							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          							<span aria-hidden="true">&times;</span>
+        							</button>
+      								</div>
+      							<div class="modal-body">
+        							資料不齊全，請確認後再送出!
+      							</div>
+      							<div class="modal-footer">
+      							<button type="button" class="btn btn-info" data-dismiss="modal">確定</button>
+    							</div>
+    							</div>
+  							</div>
+							</div><!-- .Button trigger modal -->
+							
 							</td>
 							<td></td>
 						</tr>
