@@ -46,16 +46,12 @@ public class ArticleController {
 	@Autowired
 	private ForumPage forumPage;
 
-	@RequestMapping(path = "/preview.controller", method = RequestMethod.POST)
-	public String articlePreview(Model m, @RequestParam(name = "artTitle") String artTitle,
-			@RequestParam(name = "artContent") String artContent, @RequestParam(name = "artUserid") String artUserid,
-			@RequestParam(name = "artType") String artType) {
-		m.addAttribute("artTitle", artTitle);
-		m.addAttribute("artContent", artContent);
-		m.addAttribute("artUserid", artUserid);
-		m.addAttribute("artType", artType);
-
-		return "azaz4498/articlePreview";
+	@RequestMapping(path = "/articleDetail.controller", method = RequestMethod.GET)
+	public String articlePreview(Model m, @RequestParam(name = "artId") Integer artId) throws SQLException {
+		List<Article> recentArticles = articleService.showRecentArticles();
+		m.addAttribute("artList", articleService.showArticleById(artId));
+		m.addAttribute("recentArt",recentArticles);
+		return "azaz4498/articleDetail";
 
 	}
 
@@ -75,36 +71,38 @@ public class ArticleController {
 		Integer totalPage = forumPage.getTotalPageCount();
 		Integer index = (currPage-1)*records;
 		List<Article> artList = articleService.showAvailableArticles(index, records);
-		List<String> picList = new ArrayList<String>();
-		String defaultImgPath = "direngine-master/images/article_default.jpg";
-		for (Article article : artList) {// 遍歷article物件
-			String content = article.getArtContent();
-			if (content != null && !content.equals("")) {// 判斷文章內容是否為空
-				Document doc = Jsoup.parse(content);
-				Element imgEle = doc.getElementsByTag("img").first();
-				if (imgEle != null) {// 判斷img標籤是否存在
-					if (imgEle.attr("stc").equals("")) {
-						picList.add(defaultImgPath);
-						
-					} else {
-						String coverImgPath = imgEle.attr("src");
-						picList.add(coverImgPath);
-					}
-				} else {
-					picList.add(defaultImgPath);
-				}
-			} else {
-				picList.add(defaultImgPath);
-			}
-		}
+		List<String> picList = articleService.getCoverPicList(artList);
 		m.addAttribute("list",artList);
 		m.addAttribute("picList", picList);
 		m.addAttribute("totalPages", totalPage);
 		m.addAttribute("currPage",currPage);
+		System.out.println("=================");
+		for (Article article : artList) {
+			System.out.println(article.getArtCreTime());
+		}
+		System.out.println("=================");
 		
 		return "azaz4498/forum";
-
 	}
+	
+	@RequestMapping(path = "/Article.pagincontroller.json", method = RequestMethod.GET, produces = {
+		"application/json; charset=UTF-8" })
+	public String ArticlePagin(Model m,@RequestParam(value = "currPage", defaultValue = "1")Integer currPage) {
+	forumPage.setCurrentPage(currPage);
+	forumPage.setTotalCount(articleService.getRecords());
+	Integer records =forumPage.getPageSize();
+	Integer totalPage = forumPage.getTotalPageCount();
+	Integer index = (currPage-1)*records;
+	List<Article> artList = articleService.showAvailableArticles(index, records);
+	List<String> picList = articleService.getCoverPicList(artList);
+	m.addAttribute("list",artList);
+	m.addAttribute("picList", picList);
+	m.addAttribute("totalPages", totalPage);
+	m.addAttribute("currPage",currPage);
+	
+	return "azaz4498/articleGrid";
+	}
+	
 	@RequestMapping(path = "/articleSearch.json", method = RequestMethod.GET, produces = {
 	"application/json; charset=UTF-8" })
 	public  String articleSearchFrontend(Model m,
@@ -116,29 +114,7 @@ public class ArticleController {
 		Integer totalPage = forumPage.getTotalCount();
 		Integer index = (currPage-1)*records;
 		List<Article> artList = articleService.searchArticlesFrontend(keyword, articleType, index, records);
-		List<String> picList = new ArrayList<String>();
-		String defaultImgPath = "direngine-master/images/article_default.jpg";
-		for (Article article : artList) {// 遍歷article物件
-			String content = article.getArtContent();
-			if (content != null && !content.equals("")) {// 判斷文章內容是否為空
-				Document doc = Jsoup.parse(content);
-				Element imgEle = doc.getElementsByTag("img").first();
-				if (imgEle != null) {// 判斷img標籤是否存在
-					if (imgEle.attr("stc").equals("")) {
-						picList.add(defaultImgPath);
-						
-					} else {
-						String coverImgPath = imgEle.attr("src");
-						picList.add(coverImgPath);
-					}
-				} else {
-					picList.add(defaultImgPath);
-				}
-			} else {
-				picList.add(defaultImgPath);
-			}
-		}
-		
+		List<String> picList = articleService.getCoverPicList(artList);
 		m.addAttribute("list",artList);
 		m.addAttribute("picList", picList);
 		m.addAttribute("totalPages", totalPage);
@@ -146,6 +122,8 @@ public class ArticleController {
 		return "azaz4498/forum";
 		
 	}
+	
+	
 
 	@RequestMapping(path = "/artTypeSearch.json", method = RequestMethod.GET, produces = {
 			"application/json; charset=UTF-8" })

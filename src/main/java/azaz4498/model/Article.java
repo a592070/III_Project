@@ -171,10 +171,7 @@ public class Article implements Serializable {
 		this.articleType = articleType;
 	}
 
-	@Override
-	public String toString() {
-		return "Article [artContent=" + artContent + "]";
-	}
+	
 
 	
 

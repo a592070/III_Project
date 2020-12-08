@@ -23,6 +23,10 @@ public class ArticleService {
 	public Integer getSearchRecords(String keyword, Integer articleType) {
 		return aDao.getSearchRecords(keyword, articleType);
 	}
+	//顯示最近文章
+	public List<Article> showRecentArticles(){
+		return aDao.getRecentPost();
+	}
 	//顯示文章列表(非禁用)(前台)
 	public List<Article> showAvailableArticles(Integer index,Integer records){
 		return aDao.showAvailableArticles(index, records);
@@ -77,6 +81,9 @@ public class ArticleService {
 		return aDao.switchStatus(articleId);
 	}
 
-	// upload img
+	// getCoverpic
+	public List<String> getCoverPicList(List<Article> artList){
+		return aDao.getCoverPicList(artList);
+	}
 	
 }

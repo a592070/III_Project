@@ -3,10 +3,14 @@ package azaz4498.model;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
@@ -14,6 +18,42 @@ import org.springframework.context.annotation.Lazy;
 public class ArticleDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	public List<Article> getRecentPost() {
+		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article WHERE ART_STATUS = 'enabled' Order by ART_CRE_TIME DESC",Article.class);
+		query.setMaxResults(3);
+		List<Article> recentArticles = query.list();
+		return recentArticles;
+	}
+	
+	//找文章中圖片當封面
+	public List<String> getCoverPicList(List<Article> artList){
+		List<String> picList = new ArrayList<String>();
+		String defaultImgPath = "direngine-master/images/article_default.jpg";
+		for (Article article : artList) {
+			String content = article.getArtContent();
+			if (content != null && !content.equals("")) {// 判斷文章內容是否為空
+				Document doc = Jsoup.parse(content);
+				Element imgEle = doc.getElementsByTag("img").first();
+				if (imgEle != null) {// 判斷img標籤是否存在
+					if (imgEle.attr("stc").equals("")) {
+						picList.add(defaultImgPath);
+						
+					} else {
+						String coverImgPath = imgEle.attr("src");
+						picList.add(coverImgPath);
+					}
+				} else {
+					picList.add(defaultImgPath);
+				}
+			} else {
+				picList.add(defaultImgPath);
+			}
+		}
+		
+		return picList;
+		
+	}
 	
 	//顯示總啟用筆數(前台)
 	public Integer getRecords() {

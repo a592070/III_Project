@@ -10,7 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>文章預覽</title>
+    <title>文章頁面</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
@@ -69,50 +69,9 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 ftco-animate">
-            <h2 class="mb-3">${artTitle}</h2>
-            <p>
-              我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-              我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-            </p>
-            <p>
-              <img
-                src="direngine-master/images/image_7.jpg"
-                alt=""
-                class="img-fluid"
-              />
-            </p>
-            <p>
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-            </p>
-            <h2 class="mb-3 mt-5">#2. Creative WordPress Themes</h2>
-            <p>
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-            </p>
-            <p>
-              <img
-                src="direngine-master/images/image_8.jpg"
-                alt=""
-                class="img-fluid"
-              />
-            </p>
-            <p>
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-            </p>
-            <p>
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-            </p>
-            <p>
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-            </p>
-            <p>
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-                我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 我是內文 
-            </p>
+            <!-- <h2 class="mb-3">${artList.artTitle}</h2> -->
+            ${artList.artContent}
+
             <div class="tag-widget post-tag-container mb-5 mt-5">
               <div class="tagcloud">
                 <a href="#" class="tag-cloud-link">Life</a>
@@ -132,7 +91,7 @@
                 />
               </div>
               <div class="desc align-self-md-center">
-                <h3 style="font-family:'Noto Sans TC', sans-serif ;">作者名稱</h3>
+                <h3 style="font-family:'Noto Sans TC', sans-serif ;">${artList.artUserId}</h3>
                 <p>
                     我是作者啦:D 我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D
                 </p>
@@ -140,8 +99,9 @@
             </div>
 
             <div class="pt-5 mt-5">
-              <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;">6則評論</h3>
+              <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;">${artList.artCommNum}則評論</h3>
               <ul class="comment-list">
+
                 <li class="comment">
                   <div class="vcard bio">
                     <img
