@@ -29,6 +29,7 @@ public class F_RorderController {
 		return "iring29/OrderList";
 	}
 	
+	//prepare order
 	@RequestMapping(path = "/PrepareOrder", method = RequestMethod.POST)
 	public String PrepareOrder(@RequestParam(value = "time") String time,
 							   @RequestParam(value = "book_date") String book_date, 
@@ -65,6 +66,12 @@ public class F_RorderController {
 		System.out.println("cart num = " +cartnum);
 		session.setAttribute("OTBean", OTBean);
 		session.setAttribute("cartnum", cartnum);
+		return "redirect:Shoppingcart";
+	}
+	
+	//show order
+	@RequestMapping(path = "/Shoppingcart")
+	public String ShowCart() {
 		return "iring29/ShoppingCart";
 	}
 	
