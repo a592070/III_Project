@@ -1,5 +1,6 @@
 package innocence741.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,10 @@ public class HighSpeedRailService {
 
 	@Autowired
 	private HighSpeedRailDAO highSpeedRailDAO;
+	
+	public void hsrInit() throws SQLException {
+		highSpeedRailDAO.hsrInit();
+	}
 	
 	public List<HighSpeedRail> listHsrDO(){
 		return highSpeedRailDAO.listHsrDO();
