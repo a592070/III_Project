@@ -37,7 +37,7 @@
     </head>
  
     <body>
-    <jsp:include page="/fragment/header.jsp" />
+<%--     <jsp:include page="/fragment/header.jsp" /> --%>
         
  
         <div style="width: 800px; height: 100px; margin: 0 auto;">
@@ -135,7 +135,7 @@
         </div> 
      <!-- 加載Ajax -->
  
-     
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
  
@@ -188,7 +188,7 @@
 
                      type:"POST",                    //指定http參數傳輸格式為POST
 
-                     url: "../HsrServlet",        //請求目標的url，可在url內加上GET參數，如 www.xxxx.com?xx=yy&xxx=yyy
+                     url: "HsrServlet",        //請求目標的url，可在url內加上GET參數，如 www.xxxx.com?xx=yy&xxx=yyy
 
                      data: $("#formId").serialize(), //要傳給目標的data為id=formId的Form其序列化(serialize)為的值，之
 
