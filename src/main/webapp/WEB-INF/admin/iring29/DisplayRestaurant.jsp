@@ -156,7 +156,7 @@ img{
 									                        	$("#tableckbtn").click();
 								                        	   
 									                        }else{
-
+															//加入購物車
 									                        	$.ajax(
 													                    {
 													                        type: 'POST',

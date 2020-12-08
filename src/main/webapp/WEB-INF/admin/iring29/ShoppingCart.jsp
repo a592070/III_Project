@@ -365,7 +365,7 @@ h5{
 			                )
 						}
    					}
-
+						//檢查桌數是否已滿
    						function tableck${R.restaurant.r_sn}(){
    	   	   					var bd = $(".form-control.${R.restaurant.r_sn}").val();
    							var bt = $(".form-control.time.${R.restaurant.r_sn}").val();
@@ -392,7 +392,7 @@ h5{
    	   					
    					</script>
    					
-   					<!-- Modal -->
+   								<!-- Modal -->
 									<div class="modal fade" id="tableresponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   									<div class="modal-dialog modal-dialog-centered" role="document">
     									<div class="modal-content">
