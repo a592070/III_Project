@@ -62,9 +62,10 @@ public class AccountBean {
 	private List<OrderTable> orderTable = new ArrayList<OrderTable>();// 大訂單 
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "accountBean")
-    private Restaurant restaurant;
+    private Restaurant restaurant;	
 
 	public AccountBean() {
+
 	}
 	
 
