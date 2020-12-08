@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import iring29.model.R_Comment;
 import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
 import iring29.model.UserPage;
@@ -114,7 +115,9 @@ public class F_RestaurantController {
 		    				     HttpSession session, Model m) {
 		System.out.println("res name = " + restaurant_name);
 		Restaurant res_data = F_Serivce.findRestaurant(restaurant_name);
+		List<R_Comment> comment = F_Serivce.ResComment(res_data.getR_sn());
 		session.setAttribute("res_data", res_data);
+		session.setAttribute("comment", comment);
 		return "iring29/DisplayRestaurant";
 	}
 	

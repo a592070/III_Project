@@ -240,25 +240,29 @@ img{
                         </div>
                     </div>
                     <div class="rd-reviews">
-                        <h4></h4>
+                        <h4>Review</h4>
+                        <!-- review -->
+                        <c:forEach var="comm" items="${comment}">
                         <div class="review-item">
                             <div class="ri-pic">
-<!--                                 <img src="" alt=""> -->
+                                <img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" alt="">
                             </div>
                             <div class="ri-text">
-                                <span></span>
+                                <span>date</span>
                                 <div class="rating">
-<!--                                     <i class="icon_star"></i> -->
-<!--                                     <i class="icon_star"></i> -->
-<!--                                     <i class="icon_star"></i> -->
-<!--                                     <i class="icon_star"></i> -->
-<!--                                     <i class="icon_star-half_alt"></i> -->
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star-half_alt"></i>
 
                                 </div>
-                                <h5></h5>
-                                <p></p>
+                                <h5>name</h5>
+                                <p>${comm.com_content}</p>
                             </div>
                         </div>
+                        </c:forEach>
+                        <!-- .review -->
                         <div class="review-item">
                             <div class="ri-pic">
 <!--                                 <img src="" alt=""> -->

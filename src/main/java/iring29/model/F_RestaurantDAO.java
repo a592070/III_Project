@@ -93,5 +93,14 @@ public class F_RestaurantDAO {
 			}
 			return flag;
 		}
-
+		
+		//find restaurant comment
+		public List<R_Comment> ResComment(BigDecimal r_sn) {
+			Query<R_Comment> query = sessionFactory.getCurrentSession().createQuery("from R_Comment where r_sn = ?0 order by COM_DATE", R_Comment.class);
+			query.setParameter(0, r_sn);
+			query.setFirstResult(0);
+			query.setMaxResults(3);
+			
+			return query.list();
+		}
 }
