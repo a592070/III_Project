@@ -72,10 +72,8 @@ img{
     <!-- Start nav -->    
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <script>
-    $(".nav-shop__circle").html('${cartnum}');
-//     console.log($(".nav-shop__circle").val());
-    console.log("nu = " + ${cartnum});
-// 	   console.log("num");
+    	$(".nav-shop__circle").html('${cartnum}');
+    	console.log("nu = " + ${cartnum});
     </script>
 <div class="box">
 <!-- Breadcrumb Section Begin -->
@@ -124,14 +122,62 @@ img{
 										$("#rating").prepend(tags, zerostar);
                                       </script>
                                     </div>
-                                    <form id="shop_cart" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
-                                    	<a href="javascript:document.getElementById('shop_cart').submit();">放入購物車</a>
-                                    	<Input type='hidden' name='time' value='11:00'>
-                                    	<Input type='hidden' name='book_date' value='${book_date}'>
-                                    	<Input type='hidden' name='b_name' value=''>
-                                    	<Input type='hidden' name='b_phone' value=''>
-                                    	<Input type='hidden' name='person_number' value='${person_number}'>
-                                    </form>
+<%--                                     <form id="shop_cart" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST"> --%>
+<!--                                     	<a href="javascript:document.getElementById('shop_cart').submit();">放入購物車</a> -->
+<!--                                     	<Input type='hidden' name='time' value='11:00'> -->
+<%--                                     	<Input type='hidden' name='book_date' value='${book_date}'> --%>
+<!--                                     	<Input type='hidden' name='b_name' value=''> -->
+<!--                                     	<Input type='hidden' name='b_phone' value=''> -->
+<%--                                     	<Input type='hidden' name='person_number' value='${person_number}'> --%>
+<!--                                     </form> -->
+									<a href="javascript:void();" id="addCart">放入購物車</a>
+									<script>
+										$("#addCart").on('click',function(){
+											var thedate = $("#theDate").val();
+											var thetime = $("#sel").val();
+											var num = $("#p_num").val();
+											var name = $("#b-name").val();
+											var phone = $("#b-phone").val();
+											console.log("resule =" + thedate, thetime, num, name, phone);
+											$.ajax(
+								                    {
+								                        type: 'POST',
+								                        data: { "time":thetime, "book_date":thedate, "b_name":name,"b_phone":phone ,"person_number": num},
+								                        url: '${pageContext.servletContext.contextPath}/addOrder',
+								                        dataType: 'html',
+								                        success:function(response){
+									                        console.log("re = " + response);
+								                        	var res_context = "";
+								                        	res_context += '<button type="button" class="btn btn-primary" id="modalbtn" data-toggle="modal" data-target="#exampleModalCenter" style="display:none;"></button>';
+								                        	$("#rating").html(res_context);
+								                        	$("#modalbtn").click();
+								                        	$(".nav-shop__circle").html(response);
+								                        }
+								                    }
+								                )
+										});
+									</script>
+									<!-- Modal -->
+									<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									 已成功加入購物車 !          
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" data-dismiss="modal" class="btn btn-primary">確認</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal -->
+									
                                 </div>
                             </div>
 <!--                             <h2>159$<span>/Pernight</span></h2> -->
