@@ -42,10 +42,15 @@ public class HighSpeedRailController {
         String startPoint = request.getParameter("startPoint");
         String destination = request.getParameter("destination");
         String departureTime = request.getParameter("departureTime");
+        System.out.println("startPoint= "+ startPoint);
+        System.out.println("destination= "+ destination);
+        System.out.println("departureTime= "+ departureTime);
+
         
         
 		List<HighSpeedRail> list;
     	int price = 0;
+    	highSpeedRailService.hsrInit();
     	highSpeedRailService.searchHSR(startPoint, destination, departureTime);
 		list = highSpeedRailService.listHsrDO();
 		System.out.println(list.size());
