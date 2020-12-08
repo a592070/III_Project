@@ -8,7 +8,7 @@ import javax.servlet.ServletException;
 public class TomcatStarter {
 
     private static int port = 80;
-    private static String contextPath = "/team-project";
+    private static String contextPath = "/";
 
     public static void start() throws LifecycleException, ServletException {
         Tomcat tomcat = new Tomcat();
