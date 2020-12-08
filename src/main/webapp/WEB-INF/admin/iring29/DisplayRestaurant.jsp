@@ -18,7 +18,7 @@
 body{
 	margin:0px;
 	padding:0px;
-	background:url('https://www.taquerialascumbres.com/static/media/background2.3fec4658.jpg') center center fixed no-repeat;
+	background:url('direngine-master/images/AsianFood.jpg') center center fixed no-repeat;
 	background-size: cover;　
 }    
 .box{
@@ -72,10 +72,8 @@ img{
     <!-- Start nav -->    
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <script>
-    $(".nav-shop__circle").html('${cartnum}');
-//     console.log($(".nav-shop__circle").val());
-    console.log("nu = " + ${cartnum});
-// 	   console.log("num");
+    	$(".nav-shop__circle").html('${cartnum}');
+    	console.log("nu = " + ${cartnum});
     </script>
 <div class="box">
 <!-- Breadcrumb Section Begin -->
@@ -124,14 +122,87 @@ img{
 										$("#rating").prepend(tags, zerostar);
                                       </script>
                                     </div>
-                                    <form id="shop_cart" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST">
-                                    	<a href="javascript:document.getElementById('shop_cart').submit();">放入購物車</a>
-                                    	<Input type='hidden' name='time' value='11:00'>
-                                    	<Input type='hidden' name='book_date' value='${book_date}'>
-                                    	<Input type='hidden' name='b_name' value=''>
-                                    	<Input type='hidden' name='b_phone' value=''>
-                                    	<Input type='hidden' name='person_number' value='${person_number}'>
-                                    </form>
+<%--                                     <form id="shop_cart" action="<%=pageContext.getServletContext().getContextPath()%>/PrepareOrder" method="POST"> --%>
+<!--                                     	<a href="javascript:document.getElementById('shop_cart').submit();">放入購物車</a> -->
+<!--                                     	<Input type='hidden' name='time' value='11:00'> -->
+<%--                                     	<Input type='hidden' name='book_date' value='${book_date}'> --%>
+<!--                                     	<Input type='hidden' name='b_name' value=''> -->
+<!--                                     	<Input type='hidden' name='b_phone' value=''> -->
+<%--                                     	<Input type='hidden' name='person_number' value='${person_number}'> --%>
+<!--                                     </form> -->
+									<a href="javascript:void();" id="addCart">放入購物車</a>
+									<script>
+										$("#addCart").on('click',function(){
+											var thedate = $("#theDate").val();
+											var thetime = $("#sel").val();
+											var num = $("#p_num").val();
+											var name = $("#b-name").val();
+											var phone = $("#b-phone").val();
+											console.log("resule =" + thedate, thetime, num, name, phone);
+											//	檢查桌數
+											$.ajax(
+								                    {
+								                        type: 'GET',
+								                        data: { "book_date":thedate,"time":thetime },
+								                        url: '${pageContext.servletContext.contextPath}/checkTable',
+								                        dataType: 'html',
+								                        success:function(response){
+								                        	console.log("r = " + response);
+								                           if(response == "false"){
+									                           console.log("in r = " + response);
+								                        	   var res_context = "";
+									                        	res_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+									                        	$("#rating").html(res_context);
+									                        	$("#tableckbtn").click();
+								                        	   
+									                        }else{
+															//加入購物車
+									                        	$.ajax(
+													                    {
+													                        type: 'POST',
+													                        data: { "time":thetime, "book_date":thedate, "b_name":name,"b_phone":phone ,"person_number": num},
+													                        url: '${pageContext.servletContext.contextPath}/addOrder',
+													                        dataType: 'html',
+													                        success:function(response){
+														                        console.log("re = " + response);
+													                        	var res_context = "";
+													                        	res_context += '<button type="button" class="btn btn-primary" id="modalbtn" data-toggle="modal" data-target="#exampleModalCenter" style="display:none;"></button>';
+													                        	$("#rating").html(res_context);
+													                        	$("#modalbtn").click();
+													                        	$(".nav-shop__circle").html(response);
+													                        }
+													                    }
+													                )
+									                        	   
+										                    }
+								                        }
+								                    }
+								                )
+											
+											
+										});
+									</script>
+									<!-- Modal -->
+									<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									 已成功加入購物車 !          
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" data-dismiss="modal" class="btn btn-primary">確認</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal -->
+									
                                 </div>
                             </div>
 <!--                             <h2>159$<span>/Pernight</span></h2> -->
@@ -279,7 +350,7 @@ img{
 							<option value="18:00">18:00</option>
 							<option value="19:00">19:00</option>
 							<option value="20:00">20:00</option>
-						</select>
+								</select>
                             </div>
                             <div class="check-date">
                                 <label for="date-out">人數:</label>
@@ -318,6 +389,8 @@ img{
 								$("#order").click(function(){
 									var name = $("#b-name").val();
 									var phone = $("#b-phone").val();
+									var date = $("#theDate").val();
+									var time = $("#sel").val();
 									if($("#b-name").val() == ""){
 										$("#nameck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入訂位者姓名</font>");
 									}else{
@@ -332,7 +405,28 @@ img{
 									}
 									console.log("t or f = " + (!$("#b-phone").val().match(/^09[0-9]{8}$/)))
 									if(name != "" && phone != "" && (!$("#b-phone").val().match(/^09[0-9]{8}$/)) == false){
-										$(".booking2").submit();
+										$.ajax(
+							                    {
+							                        type: 'GET',
+							                        data: { "book_date":date,"time":time },
+							                        url: '${pageContext.servletContext.contextPath}/checkTable',
+							                        dataType: 'html',
+							                        success:function(response){
+							                        	console.log("r = " + response);
+							                           if(response == "false"){
+								                           console.log("in r = " + response);
+							                        	   var res_context = "";
+								                        	res_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+								                        	$("#rating").html(res_context);
+								                        	$("#tableckbtn").click();
+							                        	   
+								                        }else{
+								                        	   $(".booking2").submit();
+									                    }
+							                        }
+							                    }
+							                )
+										
 									}
 									})
 									
@@ -358,6 +452,28 @@ img{
 							}
                             </script>
                         </form>
+                        
+                        									
+									<!-- Modal -->
+									<div class="modal fade" id="tableresponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									抱歉 !   訂位已滿，請重新選擇日期及時段
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" data-dismiss="modal" class="btn btn-primary">確認</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal -->
                     </div>
                 </div>
             </div>
