@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import global.pojo.OrderTable;
+import utils.PictureSupport;
 
 public class F_RestaurantDAO {
 	@Autowired
@@ -95,4 +96,6 @@ public class F_RestaurantDAO {
 			OrderTable ot = (OrderTable) query.uniqueResult();
 			return ot;
 		}
+
+
 }

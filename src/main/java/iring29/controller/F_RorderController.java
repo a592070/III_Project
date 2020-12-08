@@ -68,6 +68,7 @@ public class F_RorderController {
 		return "redirect:Shoppingcart";
 	}
 	
+	//prepare order(" 加入購物車 " ) 使用
 	@RequestMapping(path = "/addOrder", method = RequestMethod.POST)
 	public @ResponseBody Integer AddOrder(@RequestParam(value = "time") String time,
 							   @RequestParam(value = "book_date") String book_date, 

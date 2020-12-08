@@ -325,7 +325,7 @@ img{
 							<option value="18:00">18:00</option>
 							<option value="19:00">19:00</option>
 							<option value="20:00">20:00</option>
-						</select>
+								</select>
                             </div>
                             <div class="check-date">
                                 <label for="date-out">人數:</label>
