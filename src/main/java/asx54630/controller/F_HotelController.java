@@ -50,6 +50,7 @@ public class F_HotelController {
 		m.addAttribute("hoteldata", hoteldata);
 		m.addAttribute("currentPage", currentPage);
 		m.addAttribute("totalPage", totalPage);		
+		m.addAttribute("hpage", hpage);		
 		
 		return "asx54630/F_Hotelindex";
 	}
