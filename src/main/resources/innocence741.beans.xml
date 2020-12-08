@@ -13,6 +13,8 @@
     
     <bean id="carRentalCompanyService" class="innocence741.service.CarRentalCompanyService" lazy-init="true" scope="session"/>
     <bean id="carRentalCompanyViewService" class="innocence741.service.CarRentalCompanyViewService" lazy-init="true" scope="session"/>
+    <bean id="highSpeedRailService" class="innocence741.service.HighSpeedRailService" lazy-init="true" scope="session"/>
+    
     
 	<context:component-scan base-package="innocence741.controller"></context:component-scan>    
     

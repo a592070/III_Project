@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
+import utils.StringUtil;
 
 import java.util.List;
 
@@ -29,16 +30,6 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
     }
 
     @Override
-    public List<byte[]> getPictures(Integer id) {
-        return null;
-    }
-
-    @Override
-    public byte[] getPicture(Integer id) {
-        return null;
-    }
-
-    @Override
     public int getSize() {
         return viewDAO.getSize();
     }
@@ -55,7 +46,8 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
     }
     @Override
     public List<CarVO> list(int currentPage, int pageSize, String orderFiled, boolean descending) {
-        return viewDAO.listByRownum(currentPage, pageSize, orderFiled, descending);
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listByRownum(index, pageSize, orderFiled, descending);
     }
 
     @Override
@@ -65,26 +57,29 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
 
     @Override
     public int getSizeByKeyWords(String keywords, String region) {
+        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return getSize();
         return viewDAO.getSizeByKeywords(keywords, "");
     }
 
     @Override
     public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords) {
-        return listByKeyWords(currentPage, pageSize, keywords, null, CarFieldName.CAR_ID);
+        return listByKeyWords(currentPage, pageSize, keywords, "", CarFieldName.CAR_ID);
     }
 
     @Override
     public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region) {
-        return listByKeyWords(currentPage, pageSize, keywords, null, CarFieldName.CAR_ID);
+        return listByKeyWords(currentPage, pageSize, keywords, region, CarFieldName.CAR_ID);
     }
 
     @Override
     public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
-        return listByKeyWords(currentPage, pageSize, keywords, null, orderFiled, false);
+        return listByKeyWords(currentPage, pageSize, keywords, region, orderFiled, false);
     }
     @Override
     public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, null, orderFiled, descending);
+        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return list(currentPage, pageSize, orderFiled, descending);
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled, descending);
     }
 
 
@@ -123,8 +118,20 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
     public List<CarVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled) {
         return null;
     }
+    @Deprecated
     @Override
     public List<CarVO> listByRegion(int currentPage, int pageSize, String region, String orderFiled, boolean descending) {
+        return null;
+    }
+    @Deprecated
+    @Override
+    public List<byte[]> getPictures(Integer id) {
+        return null;
+    }
+
+    @Deprecated
+    @Override
+    public byte[] getPicture(Integer id) {
         return null;
     }
 }

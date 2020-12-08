@@ -88,7 +88,7 @@
                     <li class="has-sub">
                         <a class="sidenav-item-link" role="button" href="javascript:void(0)" >
                             <i class="mdi mdi-book-open-page-variant"></i>
-                            <span class="nav-text">訂單管理(NOT WORK)</span>
+                            <span class="nav-text">訂單管理</span>
                         </a>
                         <ul id="order">
                             <div class="sub-menu">
@@ -119,6 +119,12 @@
                     </li>
 
 
+                    <li class="has-sub">
+                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/travelSet">
+                            <i class="mdi mdi-calendar-edit"></i>
+                            <span class="nav-text">旅程管理</span>
+                        </a>
+                    </li>
                 </ul>
 
             </div>

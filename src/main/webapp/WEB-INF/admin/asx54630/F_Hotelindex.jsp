@@ -10,8 +10,36 @@
 <!--     css -->
 	<c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 <!--     css -->
+<style type="text/css">
+
+.R_info{
+	height:250px;
+}
+.one{
+	height:120px;
+}
+.type{
+	height:50px;
+}
+h3{
+	height:80px;
+	width:160px;
+}
+.btn.btn-warning{
+	border-radius: 5px;
+	font-size: 10px;
+	background: #f85959;
+	border: 1px solid #f85959;
+    color: #fff;
+}
+#rowheight{
+	height:1030px;
+}
+
+</style>
   </head>
   <body>
+  <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
     <!-- strat nav -->
   <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
@@ -29,12 +57,12 @@
     </div>
 
 
-    <section class="ftco-section ftco-degree-bg">
+    <section class="ftco-section ftco-degree-bg" id="top">
       <div class="container">
-        <div class="row">
+        <div class="row" id="index">
         	<div class="col-lg-3 sidebar">
         		<div class="sidebar-wrap bg-light ftco-animate">
-        			<h3 class="heading mb-4">找住宿</h3>
+        			<h2 class="heading mb-4">找住宿</h2>
         			<form id="form">
         				<div class="fields">
 		              <div class="form-group">
@@ -91,46 +119,12 @@
 		                <button type="button" id="search" onclick="HotelSearch()"  class="btn btn-primary py-3 px-5">找住宿</button>
 		              </div>
 		              <div class="form-group">
-		                <button type="button"  onclick="resetkeyword()"  class="btn btn-primary py-3 px-5">清空選項</button>
+		                <button type="button"  onclick="resetkeyword()"  class="btn btn-success py-3 px-5">清空選項</button>
 		              </div>
 		            </div>
 	            </form>
         		</div>
-        		<div class="sidebar-wrap bg-light ftco-animate">
-        			<h3 class="heading mb-4">Star Rating</h3>
-        			<form method="post" class="star-rating">
-							  <div class="form-check">
-									<input type="checkbox" class="form-check-input" id="exampleCheck1">
-									<label class="form-check-label" for="exampleCheck1">
-										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
-									</label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						     </label>
-							  </div>
-							  <div class="form-check">
-							    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-							    </label>
-							  </div>
-							</form>
-        		</div>
+
           </div>
 
           <div class="col-lg-9" id="h_data">
@@ -138,7 +132,7 @@
           	<c:forEach var="hotels" items="${hoteldata}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://i.imgur.com/D690ggE.jpg');">
+		    					<a href="javascript:;" onclick="detailpage('${hotels.SN}')" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://i.imgur.com/D690ggE.jpg');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     							<span class="icon-search2"></span>
     						</div>
@@ -147,15 +141,24 @@
 		    						<div class="d-flex">
 		    							<div class="one">
 				    						<h3><a href="hotel-single.html">${hotels.NAME}</a></h3>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
+				    						<p class="rate" id="test${hotels.SN}">
+				    							<span>${hotels.RATING}</span>
 				    						</p>
 			    						</div>
+				    						<script>
+				    						var star = Math.floor("${hotels.RATING}");
+											console.log("star = " + star);
+											var tags = "";
+											var half = "<i class='fa fa-star-half_alt'></i>";
+											var zerostar = "";
+											for(var i = 0; i < star; i++){
+												tags += "<i class='icon-star'></i></span>";
+												}
+											for(var j = star; j < 5 ; j++){
+												zerostar += "<i class='fa fa-star-o'></i>";
+												}
+											$("#test${hotels.SN}").prepend(tags, zerostar);
+				    						</script>
 			    						<div class="two">
 			    							<span class="price per-price">$40<br><small>/night</small></span>
 		    							</div>
@@ -175,31 +178,23 @@
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
-		              	<li><a class="first" href="javascript:;" id="firstBtn" >首頁</a></li>
-		                <li><a class="previous" href="javascript:;" id="previousBtn" >&lt;</a></li>
-<%-- 		                <c:forEach var="pages" begin="1" end="${totalPage}"> --%>
-		                <li id="${currentPage}" value="${currentPage}"><a href="#" onclick="return false" >${currentPage}/${totalPage}</a></li>
-<%-- 		                </c:forEach> --%>
-		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li>
-		                <li><a class="last" href="javascript:;" id="lastBtn" onclick="lastPage()">頁尾</a></li>
+<!-- 		              	<li><a class="first" href="javascript:;" id="firstBtn" >首頁</a></li> -->
+<!-- 		                <li><a class="previous" href="javascript:;" id="previousBtn" >&lt;</a></li> -->
+		                <c:forEach var="pages" begin="1" end="${totalPage}">
+		                <li id="${pages}" value="${pages}"><a href="#" onclick="return false" id="clickbtn" >${pages}</a></li>
+		                </c:forEach>
+<!-- 		                <li><a class="next" href="javascript:;" id="nextBtn" onclick="nextPage()">&gt;</a></li> -->
+<!-- 		                <li><a class="last" href="javascript:;" id="lastBtn" onclick="lastPage()">頁尾</a></li> -->
 		              </ul>
 		            </div>
 		          </div>
 		        </div>
 		        <script type="text/javascript">
-				if(currentPage == 1){
-					$("#firstBtn").removeAttr('onclick');
-					$("#previousBtn").removeAttr('onclick');						
-				}
-
-				if(currentPage == totalPage){
-					$("#nextBtn").removeAttr('onclick');
-					$("#lastBtn").removeAttr('onclick');						
-				}
+				$("#${hpage.currentPage}").attr("class","active");
+				$("#${hpage.currentPage}").remove("a");
 		        </script>
           </div> 
-          <script type="text/javascript">
-          	var currentPage = 1;
+          <script>
   		  	var totalPage = 1;
 
   		  	function HotelSearch() {
@@ -209,7 +204,7 @@
   				var regionkeywd = $("#regionkeywd").val()
   				var typekeywd = $("#typekeywd").val()
 //   				var order = $("#order").val()
-  				var currentPage=1
+				var currentPage=1
   				$.ajax(
   						{
   							type: 'POST',
@@ -226,132 +221,35 @@
   					)
   			}
 
-         	function firstPage() {
-    			console.log("第一頁")
-//     			var orderfiled = $("#orderfiled").val()
-    			var keyword = $("#keyword").val()
-    			var regionkeywd = $("#regionkeywd").val()
-    			var typekeywd = $("#typekeywd").val()
-//     			var order = $("#order").val()
-    			var pagebotton = $("#page-previous").val()
-    			currentPage = 1;
-    			console.log("keyword =" + keyword);
-    			console.log("regionkeywd =" + regionkeywd);
-    			console.log("typekeywd =" + typekeywd);
-    			console.log("pagebotton =" + pagebotton);
-    			console.log("currentPage =" + currentPage);
-//     			$("#h_content").children().remove();
-    			$.ajax(
-    					{
-    						type: 'POST',
-    						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "pagebotton" : pagebotton, "currentPage" : currentPage },
-    						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
-    						dataType: 'html',
-    						success: function (response) {
-    							$("#h_data").children().remove();
-    							$("#h_data").append(response)
 
-    						}
+  		  $("#index").on('click', '#clickbtn', function (e) {
 
-    					}
-    				)
-    		}
-     	            
-          
-         	function previousPage() {
-			console.log("前一頁")
-// 			var orderfiled = $("#orderfiled").val()
-			var keyword = $("#keyword").val()
-			var regionkeywd = $("#regionkeywd").val()
-			var typekeywd = $("#typekeywd").val()
-// 			var order = $("#order").val()
-			var pagebotton = $("#page-previous").val()
-			currentPage--;
-			console.log("keyword =" + keyword);
-			console.log("regionkeywd =" + regionkeywd);
-			console.log("typekeywd =" + typekeywd);
-			console.log("pagebotton =" + pagebotton);
-			console.log("currentPage =" + currentPage);
-// 			$("#h_content").children().remove();
-			$.ajax(
-					{
-						type: 'POST',
-						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "pagebotton" : pagebotton, "currentPage" : currentPage },
-						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
-						dataType: 'html',
-						success: function (response) {
-							$("#h_data").children().remove();
-							$("#h_data").append(response)
-
-						}
-
-					}
-				)
-		}
-		
-         	function nextPage() {
-			console.log("下一頁")
-// 			var orderfiled = $("#orderfiled").val()
-			var keyword = $("#keyword").val()
-			var regionkeywd = $("#regionkeywd").val()
-			var typekeywd = $("#typekeywd").val()
-// 			var order = $("#order").val()
-			var pagebotton = $("#page-next").val()
-			currentPage++;
-			console.log("keyword =" + keyword);
-			console.log("regionkeywd =" + regionkeywd);
-			console.log("typekeywd =" + typekeywd);
-			console.log("pagebotton =" + pagebotton);
-			console.log("currentPage =" + currentPage);
-// 			$("#h_content").children().remove();
-			$.ajax(
-					{
-						type: 'POST',
-						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "pagebotton" : pagebotton, "currentPage" : currentPage },
-						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
-						dataType: 'html',
-						success: function (response) {
-							$("#h_data").children().remove();
-							$("#h_data").append(response);
-							
-
-						}
-
-					}
-				)
-		}
-
-         	function lastPage() {
-    			console.log("最末頁")
-//     			var orderfiled = $("#orderfiled").val()
-    			var keyword = $("#keyword").val()
-    			var regionkeywd = $("#regionkeywd").val()
-    			var typekeywd = $("#typekeywd").val()
-//     			var order = $("#order").val()
-    			var pagebotton = $("#page-next").val()
-    			currentPage = totalPage;
-    			console.log("keyword =" + keyword);
-    			console.log("regionkeywd =" + regionkeywd);
-    			console.log("typekeywd =" + typekeywd);
-    			console.log("pagebotton =" + pagebotton);
-    			console.log("currentPage =" + currentPage);
-//     			$("#h_content").children().remove();
-    			$.ajax(
-    					{
-    						type: 'POST',
-    						data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "pagebotton" : pagebotton, "currentPage" : currentPage },
-    						url: '${pageContext.servletContext.contextPath}/F_hotelPage',
-    						dataType: 'html',
-    						success: function (response) {
-    							$("#h_data").children().remove();
-    							$("#h_data").append(response);
-    							
-
-    						}
-
-    					}
-    				)
-    		}
+        	  $("html,body").animate({ scrollTop: $("#index").offset().top - 160 },600)
+    			
+				var keyword = $("#keyword").val();
+        	  	var regionkeywd = $("#regionkeywd").val();
+        	  	var typekeywd = $("#typekeywd").val();
+				var currentPage = (e.target.text);
+				console.log("typeof(currentPage) = " + typeof(currentPage))
+				if(typeof(currentPage) == "undefined"){
+					currentPage = 1;
+					parseInt(currentPage);
+					console.log("cp = "+ currentPage)
+				}
+				console.log(keyword, regionkeywd, typekeywd, currentPage)
+				$.ajax(
+	                    {
+	                        type: 'POST',
+	                        data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "currentPage" : currentPage },
+	                        url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+	                        dataType: 'html',
+	                        success:function(response){
+	                            $("#h_data").children().remove();
+	                            $("#h_data").append(response);
+	                        }
+	                    }
+	                )
+				})
 
     		function resetkeyword(){
     			console.log("clear");
@@ -359,6 +257,10 @@
     		  $('#regionkeywd').val('');
     		  $('#typekeywd').val('');
     		}
+
+    		function detailpage(id){
+    			document.location.href="${pageContext.servletContext.contextPath}/F_hoteldetail?detailsn="+id;
+        	}
             	
     		
 		</script>
@@ -368,68 +270,7 @@
       </div>
     </section> <!-- .section -->
 
-    <footer class="ftco-footer ftco-bg-dark ftco-section">
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">dirEngine</h2>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4 ml-md-5">
-              <h2 class="ftco-heading-2">Information</h2>
-              <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">About</a></li>
-                <li><a href="#" class="py-2 d-block">Service</a></li>
-                <li><a href="#" class="py-2 d-block">Terms and Conditions</a></li>
-                <li><a href="#" class="py-2 d-block">Become a partner</a></li>
-                <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
-                <li><a href="#" class="py-2 d-block">Privacy and Policy</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md">
-             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">Customer Support</h2>
-              <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">FAQ</a></li>
-                <li><a href="#" class="py-2 d-block">Payment Option</a></li>
-                <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
-                <li><a href="#" class="py-2 d-block">How it works</a></li>
-                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
-            	<div class="block-23 mb-3">
-	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-	              </ul>
-	            </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 text-center">
-
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-          </div>
-        </div>
-      </div>
-    </footer>
+	<c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
     
     <script type="text/javascript">
 	

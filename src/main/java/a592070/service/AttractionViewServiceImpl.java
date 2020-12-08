@@ -89,9 +89,7 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
     }
     @Override
     public int getSizeByKeyWords(String keywords, String region) {
-        if(StringUtil.isEmpty(keywords)) {
-            return getSize();
-        }
+        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return getSize();
         return viewDAO.getSizeByKeywords(keywords, region);
     }
     @Override
@@ -108,11 +106,9 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
     }
     @Override
     public List<AttractionVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
-        if(StringUtil.isEmpty(keywords)) keywords = "";
-        if(StringUtil.isEmpty(region)) region = "";
+        if(StringUtil.isEmpty(keywords)) return listByRegion(currentPage, pageSize, region, orderFiled, descending);
+        if(StringUtil.isEmpty(region) || "all".equals(region)) region="";
         int index = (currentPage-1)*pageSize;
-//        System.out.println(index);
-//        System.out.println(pageSize);
 
         return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled, descending);
     }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="attractionDao" class="a592070.dao.AttractionDAOImpl" lazy-init="true"/>
+    <bean id="attractionViewDao" class="a592070.dao.AttractionViewDAOImpl" lazy-init="true"/>
+    <bean id="carViewDao" class="a592070.dao.CarViewDAOImpl" lazy-init="true"/>
+    <bean id="hotelViewDao" class="a592070.dao.HotelViewDAOImpl" lazy-init="true" />
+    <bean id="restaurantViewDao" class="a592070.dao.RestaurantViewDAOImpl" lazy-init="true"/>
+    <bean id="regionDao" class="a592070.dao.RegionDAOImpl" lazy-init="true" />
+    <bean id="travelSetDao" class="a592070.dao.TravelSetDAOImpl" lazy-init="true"/>
+
+    <bean id="attractionService" class="a592070.service.AttractionServiceImpl" lazy-init="true" />
+    <bean id="attractionViewService" class="a592070.service.AttractionViewServiceImpl" lazy-init="true"/>
+    <bean id="carViewService" class="a592070.service.CarViewServiceImpl" lazy-init="true" />
+    <bean id="hotelViewService" class="a592070.service.HotelViewServiceImpl" lazy-init="true"/>
+    <bean id="restaurantViewService" class="a592070.service.RestaurantViewServiceImpl" lazy-init="true"/>
+
+    <bean id="regionService" class="a592070.service.RegionService" lazy-init="true"/>
+    <bean id="travelSetService" class="a592070.service.TravelSetServiceImpl" lazy-init="true"/>
+
+    <context:component-scan base-package="a592070.controller"/>
+</beans>

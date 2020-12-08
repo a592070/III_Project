@@ -6,6 +6,7 @@ import a592070.pojo.HotelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
+import utils.StringUtil;
 
 import java.util.List;
 @Transactional(rollbackFor = {Exception.class})
@@ -68,15 +69,17 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
     }
     @Override
     public List<HotelVO> list(int currentPage, int pageSize, String orderFiled, boolean descending) {
-        return viewDAO.listByRownum(currentPage, pageSize, orderFiled, descending);
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listByRownum(index, pageSize, orderFiled, descending);
     }
 
     @Override
     public int getSizeByKeyWords(String keywords) {
-        return viewDAO.getSizeByKeywords(keywords, "");
+        return getSizeByKeyWords(keywords, "");
     }
     @Override
     public int getSizeByKeyWords(String keywords, String region) {
+        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return getSize();
         return viewDAO.getSizeByKeywords(keywords, region);
     }
     @Override
@@ -93,6 +96,8 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
     }
     @Override
     public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
-        return viewDAO.listByKeywords(currentPage, pageSize, keywords, region, orderFiled, descending);
+        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return list(currentPage, pageSize, orderFiled, descending);
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled, descending);
     }
 }
