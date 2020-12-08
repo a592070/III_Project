@@ -35,7 +35,9 @@ import utils.StringUtil;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 @Controller
@@ -56,8 +58,13 @@ public class F_RestaurantController {
 		String region = "";
 		start = 0;
 		Date date = new Date();
+		Calendar calendar = new GregorianCalendar(); 
+		calendar.setTime(date); 
+		calendar.add(calendar.DATE,1); //把日期往后增加一天,整数  往后推,负数往前移动 
+		date=calendar.getTime(); //这个时间就是日期往后推一天的结果 
+		
 	    SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy-MM-dd");       
-	       
+	    
 	    String book_date = bartDateFormat.format(date);  
 	    int person_number = 1;
 		int size = F_Serivce.numRestaurant(name, region);
