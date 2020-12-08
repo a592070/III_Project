@@ -29,6 +29,7 @@ public class F_RorderController {
 		return "iring29/OrderList";
 	}
 	
+	//prepare order
 	@RequestMapping(path = "/PrepareOrder", method = RequestMethod.POST)
 	public String PrepareOrder(@RequestParam(value = "time") String time,
 							   @RequestParam(value = "book_date") String book_date, 
@@ -40,7 +41,6 @@ public class F_RorderController {
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		if(OTBean == null) {
-//		String book_date = (String) session.getAttribute("book_date");
 			OTBean = new OrderTable();
 			cartnum = 0;
 		}
@@ -65,6 +65,48 @@ public class F_RorderController {
 		System.out.println("cart num = " +cartnum);
 		session.setAttribute("OTBean", OTBean);
 		session.setAttribute("cartnum", cartnum);
+		return "redirect:Shoppingcart";
+	}
+	
+	//prepare order(" 加入購物車 " ) 使用
+	@RequestMapping(path = "/addOrder", method = RequestMethod.POST)
+	public @ResponseBody Integer AddOrder(@RequestParam(value = "time") String time,
+							   @RequestParam(value = "book_date") String book_date, 
+							   @RequestParam(value = "b_name") String b_name, 
+							   @RequestParam(value = "b_phone") String b_phone, 
+							   @RequestParam(value = "person_number") BigDecimal person_number,
+							   HttpSession session) {
+		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		if(OTBean == null) {
+			OTBean = new OrderTable();
+			cartnum = 0;
+		}
+		if(cartnum == null) {
+			cartnum = 0;
+		}
+		R_Order_List rOBean = new R_Order_List();
+		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		String tsStr = book_date +" " + time + ":00";
+		ts = Timestamp.valueOf(tsStr);
+		rOBean.setBookt_time(ts);
+		rOBean.setCus_name(b_name);
+		rOBean.setCus_phone(b_phone);
+		rOBean.setCustomer_num(person_number);
+		BigDecimal deposit = person_number.multiply(res_data.getPrice());
+		rOBean.setDeposit(deposit);
+		rOBean.setRestaurant(res_data);
+		OTBean.addR_Order_Lists(rOBean);
+		cartnum = cartnum + 1;
+		session.setAttribute("OTBean", OTBean);
+		session.setAttribute("cartnum", cartnum);
+		return cartnum;
+	}
+	
+	//show order
+	@RequestMapping(path = "/Shoppingcart")
+	public String ShowCart() {
 		return "iring29/ShoppingCart";
 	}
 	
@@ -125,16 +167,25 @@ public class F_RorderController {
 		OTBean.getR_Order_Lists().removeIf(ele->{
 			return r_sn.equals(ele.getRestaurant().getR_sn());
 		});
-		
-//		Set<R_Order_List> Rlists = OTBean.getR_Order_Lists();
-//		for(R_Order_List r : Rlists) {
-//			if(r.getRestaurant().getR_sn().equals(r_sn)) {
-//				
-//			}
-//		}
+
 		session.setAttribute("OTBean", OTBean);
 		session.setAttribute("cartnum", cartnum);
 		return "remove";
+	}
+	
+	@RequestMapping(path = "/checkTable")
+	public @ResponseBody Boolean checkTable(@RequestParam(value = "time") String time,
+											@RequestParam(value = "book_date") String book_date,
+											HttpSession session) {
+		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
+		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		String tsStr = book_date +" " + time + ":00";
+		ts = Timestamp.valueOf(tsStr);
+		System.out.println("ts = " + ts);
+		
+		boolean result = F_Serivce.TableNum(res_data.getR_sn(), ts);
+		System.out.println("result = " +result);
+		return result;
 	}
 	
 }

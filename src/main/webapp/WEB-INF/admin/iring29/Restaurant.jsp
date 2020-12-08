@@ -144,8 +144,10 @@ h3{
 		              <div class="form-group">
 		                <input type="button" id="clickbtn" value="找餐廳" class="btn btn-primary py-3 px-5">
 		              </div>
+		              
 		            </div>
 	            </form>
+		              
         		</div>
 <!--         		<div class="sidebar-wrap bg-light ftco-animate"> -->
 <!--         			<h3 class="heading mb-4">Star Rating</h3> -->
@@ -207,7 +209,7 @@ h3{
 		    						<div class="R_info">
 		    						<div class="d-flex">
 		    							<div class="one">
-				    						<h3><a href="hotel-single.html">${res.name}</a></h3>
+				    						<h3>${res.name}</h3>
 				    						<p class="rate" id="test${res.r_sn}" >
 				    							<span>${res.rating}</span>
 				    						</p>
@@ -271,7 +273,7 @@ h3{
           $("#index").on('click', '#clickbtn', function (e) {
 
         	  $("html,body").animate({ scrollTop: $("#index").offset().top - 160 },600)
-    			
+        	
 				var region_name = $("#region").val();
 				var restaurant_name = $("#restaurant_name").val();
 				var book_date = $("#theDate").val();
@@ -283,6 +285,7 @@ h3{
 					parseInt(currentPage);
 					console.log("cp = "+ currentPage)
 				}
+				
 				console.log(region_name, restaurant_name, book_date, person_number, currentPage)
 				$.ajax(
 	                    {
