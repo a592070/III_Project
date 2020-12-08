@@ -167,16 +167,25 @@ public class F_RorderController {
 		OTBean.getR_Order_Lists().removeIf(ele->{
 			return r_sn.equals(ele.getRestaurant().getR_sn());
 		});
-		
-//		Set<R_Order_List> Rlists = OTBean.getR_Order_Lists();
-//		for(R_Order_List r : Rlists) {
-//			if(r.getRestaurant().getR_sn().equals(r_sn)) {
-//				
-//			}
-//		}
+
 		session.setAttribute("OTBean", OTBean);
 		session.setAttribute("cartnum", cartnum);
 		return "remove";
+	}
+	
+	@RequestMapping(path = "/checkTable")
+	public @ResponseBody Boolean checkTable(@RequestParam(value = "time") String time,
+											@RequestParam(value = "book_date") String book_date,
+											HttpSession session) {
+		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
+		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		String tsStr = book_date +" " + time + ":00";
+		ts = Timestamp.valueOf(tsStr);
+		System.out.println("ts = " + ts);
+		
+		boolean result = F_Serivce.TableNum(res_data.getR_sn(), ts);
+		System.out.println("result = " +result);
+		return result;
 	}
 	
 }

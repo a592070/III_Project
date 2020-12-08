@@ -1,6 +1,7 @@
 package iring29.model;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -18,15 +19,6 @@ public class F_RestaurantDAO {
 		
 	}
 	
-		// find multiple restaurant by restaurant name & region
-//		public List<Restaurant_VO> findMulti_Name_Region(String name, String region) {
-//			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region = ?1");
-//			query.setParameter(0, "%" + name + "%");
-//			query.setParameter(1, region);
-//			List<Restaurant_VO> rView = query.getResultList();
-//			return rView;
-//		}
-		
 		// search how many Restaurant
 		public int numRestaurant(String name, String region) {
 			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Restaurant_VO where name like ?0 and region like?1 and status = 'Y'", Integer.class);
@@ -58,15 +50,6 @@ public class F_RestaurantDAO {
 			return rBean;
 			
 		}
-
-		// find restaurant by region
-//		public List<Restaurant_VO> findRegion(String region) {
-//			Query query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where region = ?0");
-//			System.out.println("start findRegion");
-//			query.setParameter(0, region);
-//			List<Restaurant_VO> rView = query.list();
-//			return rView;
-//		}
 		
 		//get pic
 		public byte[] getPic(BigDecimal r_sn) {
@@ -96,6 +79,19 @@ public class F_RestaurantDAO {
 			OrderTable ot = (OrderTable) query.uniqueResult();
 			return ot;
 		}
-
+		
+		//find table num
+		public boolean TableNum(BigDecimal r_sn, Timestamp ts) {
+			boolean flag = false;
+			Query query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from R_Order_List where r_sn = ?0 and book_time = ?1", Integer.class);
+			query.setParameter(0, r_sn );
+			query.setParameter(1, ts );
+			int num = (int) query.uniqueResult();
+			System.out.println("num = " + num);
+			if(num < 2) {
+				flag = true;
+			}
+			return flag;
+		}
 
 }
