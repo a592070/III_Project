@@ -142,5 +142,26 @@ public class F_RestaurantController {
 		return new ResponseEntity<byte[]>(F_Serivce.getPic(r_sn), headers, HttpStatus.OK);
 	}
 	
+	@RequestMapping(path = "/addComment", method = RequestMethod.POST)
+	public @ResponseBody boolean addComment(@RequestParam(name = "com_content") String comm, HttpSession session) {
+		Restaurant r = (Restaurant) session.getAttribute("res_data");
+		R_Comment comment = new R_Comment();
+		comment.setCom_content(comm);
+		comment.setRestaurant(r);
+		boolean addresult = F_Serivce.addComment(comment);
+		List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
+		session.setAttribute("comment", commentlist);
+		
+		return addresult;
+	}
+	
+	//re-flash comment
+	@RequestMapping(path = "/flashComment", method = RequestMethod.POST)
+	public String flashComment(HttpSession session) {
+		Restaurant r = (Restaurant) session.getAttribute("res_data");
+		List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
+		session.setAttribute("comment", commentlist);
+		return "iring29/comments";
+	}
 	
 }

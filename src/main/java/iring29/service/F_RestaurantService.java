@@ -65,5 +65,10 @@ public class F_RestaurantService {
 	public List<R_Comment> ResComment(BigDecimal r_sn) {
 		return f_RDao.ResComment(r_sn);
 	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public boolean addComment(R_Comment comm) {
+		return f_RDao.addComment(comm);
+	}
 }
 

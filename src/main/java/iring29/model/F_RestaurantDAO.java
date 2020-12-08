@@ -75,7 +75,7 @@ public class F_RestaurantDAO {
 		
 		//find order
 		public OrderTable findOrder(){
-			Query query = sessionFactory.getCurrentSession().createQuery("from OrderTable where order_id = (select max(ot.order_id) from OrderTable ot)", OrderTable.class);
+			Query<OrderTable> query = sessionFactory.getCurrentSession().createQuery("from OrderTable where order_id = (select max(ot.order_id) from OrderTable ot)", OrderTable.class);
 			OrderTable ot = (OrderTable) query.uniqueResult();
 			return ot;
 		}
@@ -83,7 +83,7 @@ public class F_RestaurantDAO {
 		//find table num
 		public boolean TableNum(BigDecimal r_sn, Timestamp ts) {
 			boolean flag = false;
-			Query query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from R_Order_List where r_sn = ?0 and book_time = ?1", Integer.class);
+			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from R_Order_List where r_sn = ?0 and book_time = ?1", Integer.class);
 			query.setParameter(0, r_sn );
 			query.setParameter(1, ts );
 			int num = (int) query.uniqueResult();
@@ -96,11 +96,24 @@ public class F_RestaurantDAO {
 		
 		//find restaurant comment
 		public List<R_Comment> ResComment(BigDecimal r_sn) {
-			Query<R_Comment> query = sessionFactory.getCurrentSession().createQuery("from R_Comment where r_sn = ?0 order by COM_DATE", R_Comment.class);
+			Query<R_Comment> query = sessionFactory.getCurrentSession().createQuery("from R_Comment where r_sn = ?0 order by COM_DATE desc", R_Comment.class);
 			query.setParameter(0, r_sn);
 			query.setFirstResult(0);
 			query.setMaxResults(3);
 			
 			return query.list();
+		}
+		
+		//add comment
+		public boolean addComment(R_Comment comm) {
+			boolean flag = false;
+			try {
+				sessionFactory.getCurrentSession().save(comm);
+				flag = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("fail to create comm.");
+			}
+			return flag;
 		}
 }

@@ -174,7 +174,7 @@ public class F_RorderController {
 	}
 	
 	@RequestMapping(path = "/checkTable")
-	public @ResponseBody Boolean checkTable(@RequestParam(value = "time") String time,
+	public @ResponseBody boolean checkTable(@RequestParam(value = "time") String time,
 											@RequestParam(value = "book_date") String book_date,
 											HttpSession session) {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");

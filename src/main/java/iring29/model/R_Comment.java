@@ -1,7 +1,7 @@
 package iring29.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import rambo0021.pojo.AccountBean;
 
@@ -29,8 +30,9 @@ public class R_Comment {
 	@JoinColumn(name = "R_SN")
 	private Restaurant restaurant;
 //	private AccountBean accountBean;
-	@Column(name = "COM_DATE")
-	private Date com_date;
+//	@Column(name = "COM_DATE")
+	@Transient
+	private Timestamp com_date;
 	@Column(name = "RATING")
 	private BigDecimal rating;
 
@@ -58,11 +60,11 @@ public class R_Comment {
 		this.restaurant = restaurant;
 	}
 
-	public Date getCom_date() {
+	public Timestamp getCom_date() {
 		return com_date;
 	}
 
-	public void setCom_date(Date com_date) {
+	public void setCom_date(Timestamp com_date) {
 		this.com_date = com_date;
 	}
 

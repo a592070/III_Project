@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,6 +64,12 @@ img{
 	color:red;
 	font-size:13px;
 	font-style:italic;
+}
+
+element.style {
+}
+.rd-reviews,.review-add {
+	margin-left: 50px;
 }
 </style>
 </head>
@@ -240,15 +247,19 @@ img{
                         </div>
                     </div>
                     <div class="rd-reviews">
-                        <h4>Review</h4>
+                        <h4>評論</h4>
                         <!-- review -->
-                        <c:forEach var="comm" items="${comment}">
-                        <div class="review-item">
+                        <div id="reviews">
+                        <c:forEach var="comm" items="${comment}" >
+                        <div class="review-item" id="${comm.com_id}">
                             <div class="ri-pic">
                                 <img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" alt="">
                             </div>
                             <div class="ri-text">
-                                <span>date</span>
+                            	<c:set var="time" value="${comm.com_date}" />
+								<c:set var="datetime" value="${fn:substring(time, 0, 10)}" />
+								<c:set var="hr_min" value="${fn:substring(time, 11, 16)}" />
+                                <span>${datetime}&emsp;${hr_min}</span>
                                 <div class="rating">
                                     <i class="icon_star"></i>
                                     <i class="icon_star"></i>
@@ -262,28 +273,13 @@ img{
                             </div>
                         </div>
                         </c:forEach>
-                        <!-- .review -->
-                        <div class="review-item">
-                            <div class="ri-pic">
-<!--                                 <img src="" alt=""> -->
-                            </div>
-                            <div class="ri-text">
-                                <span></span>
-                                <div class="rating">
-<!--                                     <i class="icon_star"></i> -->
-<!--                                     <i class="icon_star"></i> -->
-<!--                                     <i class="icon_star"></i> -->
-<!--                                     <i class="icon_star"></i> -->
-<!--                                     <i class="icon_star-half_alt"></i> -->
-                                </div>
-                                <h5></h5>
-                                <p></p>
-                            </div>
                         </div>
+                        <!-- .review -->
                     </div>
-                    <div class="review-add">
-                        <h4></h4>
-                        <form action="#" class="ra-form">
+                        
+                    <div class="review-add" id="review-add">
+                        <h4>歡迎寫下您的評論</h4>
+                        <form  class="ra-form">
                             <div class="row">
                                 <div class="col-lg-6">
 <!--                                     <input type="text" placeholder="Name*"> -->
@@ -293,7 +289,7 @@ img{
                                 </div>
                                 <div class="col-lg-12">
                                     <div>
-                                        <h5></h5>
+                                        <h5 id="comment_rating">您的評分</h5>
                                         <div class="rating">
 <!--                                             <i class="icon_star"></i> -->
 <!--                                             <i class="icon_star"></i> -->
@@ -302,12 +298,108 @@ img{
 <!--                                             <i class="icon_star-half_alt"></i> -->
                                         </div>
                                     </div>
-<!--                                     <textarea placeholder="Your Review"></textarea> -->
-<!--                                     <button type="submit">Submit Now</button> -->
+                                    <textarea placeholder="寫下您對於此餐廳的評論" id="r_comment"></textarea>
+                                    <button type="button" id="commbtn" onclick="sendcomment()">送出</button>
+                                    <!-- add comment -->
+                                    <script>
+										function sendcomment(){
+											var comment = $("#r_comment").val();
+											console.log("comment = " + comment);
+											$.ajax(
+								                    {
+								                        type: 'POST',
+								                        data: { "com_content":comment},
+								                        url: '${pageContext.servletContext.contextPath}/addComment',
+								                        dataType: 'json',
+								                        success:function(response){
+									                        console.log("re = " + response);
+								                        	var res_context = "";
+								                        	res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#addComment" style="display:none;"></button>';
+								                        	$("#comment_rating").html(res_context);
+								                        	$("#commentbtn").click();
+// 								                        	$(".review-add").empty();
+								                        	
+								                        }
+								                    }
+								                )
+											}
+                                    </script>
+                                    
+                                    <!-- Modal -->
+									<div class="modal fade" id="addComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									 新增成功，謝謝您的寶貴意見 !          
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" data-dismiss="modal" class="btn btn-primary" id="addcommbtn">確認</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal -->
+									<script>
+									 $(function () { $('#addComment').modal('hide')});
+									</script>
+									<script>
+									 $(function () { $('#addComment').on('hide.bs.modal', function () {
+										var list = $(".review-item");
+										console.log("size = " + list.size());
+										$("#reviews").remove();
+										$("#r_comment").val('');
+										$("#commbtn").attr("disabled",true);
+										$.ajax(
+							                    {
+							                        type: 'POST',
+							                        data: { },
+							                        url: '${pageContext.servletContext.contextPath}/flashComment',
+							                        dataType: 'html',
+							                        success:function(comm){
+// 							                        	var review = '';
+// 							                        	for(let x = 0; x < comm.length; x++){
+// 														review += '<div class="review-item">';
+// 														review += '<div class="ri-pic">';
+// 														review += '<img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" alt="">';
+// 														review += '</div>';
+// 														review += '<div class="ri-text">';
+// // 														review += '<c:set var="time" value="${comm.com_date}" />';
+// // 														review += '<c:set var="datetime" value="${fn:substring(time, 0, 10)}" />';
+// // 														review += '<c:set var="hr_min" value="${fn:substring(time, 11, 16)}" />';
+// 														review += '<span>time</span>';
+// 														review += '<div class="rating">';
+// 														review += '<i class="icon_star"></i>';
+// 														review += '<i class="icon_star"></i>';
+// 														review += '<i class="icon_star"></i>';
+// 														review += '<i class="icon_star"></i>';
+// 														review += '<i class="icon_star-half_alt"></i>';
+// 														review += '</div>';
+// 														review += '<h5>name</h5>';
+// 														review += '<p>'+ comm.com_content + '</p>';
+// 														review += '</div></div>';
+// 							                        	}
+														$(".rd-reviews").append(comm);
+							                        }
+							                    }
+										)
+										})
+									 });
+									</script>
                                 </div>
                             </div>
                         </form>
                     </div>
+      									<script>
+											$("#addcommbtn").click(function(){
+// 												$(".review-add").remove();
+												})
+      									</script>
                 </div>
                 <div class="col-lg-4">
                     <div class="room-booking">
