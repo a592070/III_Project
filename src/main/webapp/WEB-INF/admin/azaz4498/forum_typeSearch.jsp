@@ -8,7 +8,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
     <meta charset="UTF-8" />
     <title>Fun台灣 論壇</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
-    <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
       h2 {
@@ -21,7 +20,16 @@ contentType="text/html;charset=UTF-8" language="java"%>
       html {
         scroll-behavior: smooth;
       }
+      .fixed-btn {
+          position: fixed;
+          bottom: 20px;
+          right: 80px;
+          height: 100px;
+          z-index: 999;
+          
+      }
     </style>
+  <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -60,7 +68,8 @@ contentType="text/html;charset=UTF-8" language="java"%>
         </div>
       </div>
     </div>
-    <div class="row d-flex justify-content-center mt-5"><i class=" h3 fas fa-search fa-2x">${list[0].articleType.typeName}</i></div>
+    <input type="hidden" id="articleType" value="${list[0].articleType.typeId}">
+    <div class="row d-flex justify-content-center mt-5 mb-5"><i class="fas fa-search fa-2x">${list[0].articleType.typeName}</i></div>
     <section class="ftco-section bg-light" id="section">
       <div class="container" id="container">
         <div class="row d-flex" id="articleGrid">
@@ -71,7 +80,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
               <div class="blog-entry align-self-stretch">
                 <input type="hidden" class="artId" value="${article.artId}">
                 <a
-                  href="article/${article.artId}"
+                  href="<%=application.getContextPath()%>/article/${article.artId}"
                   class="block-20 artCoverPic"
                   style="background-image: url('../${picList[status.index]}')"
                 >
@@ -80,7 +89,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                   <span class="tag">${article.articleType.typeName}</span>
 
                   <h3 class="heading mt-3">
-                    <a href="article/${article.artId}">${article.artTitle}</a>
+                    <a href="<%=application.getContextPath()%>/article/${article.artId}">${article.artTitle}</a>
                   </h3>
                   <div class="meta mb-3">
                     <div><a href="#">${article.artCreTime}</a></div>
@@ -144,7 +153,21 @@ contentType="text/html;charset=UTF-8" language="java"%>
         />
       </svg>
     </div>
+    <!-- fixed btn-->
+    <div class="fixed-btn">
+      <a href="#" class="btn btn-primary" href="#" role="button"><i class="far fa-edit">撰寫文章</i></a>
+    </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script>
+      $(window).scroll(function() {
+    if($(document).scrollTop() > 600){
+        $(".fixed-btn").show();
+    } else {
+        $(".fixed-btn").hide();
+}
+});
+
+  </script>
     <script>
       var len = eval(${totalPages});
       var currPage= eval(${currPage});
@@ -186,13 +209,16 @@ contentType="text/html;charset=UTF-8" language="java"%>
       $('#next').on('click',function(){
         event.preventDefault();
         var totalPage=eval(${totalPages});
+        var typeId = $('#articleType').val();
+        console.log(typeId);
         
 
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: currPage+1,
+            typeId:typeId
           },
           success:function(response){
             $('#section').children().remove();
@@ -213,11 +239,13 @@ contentType="text/html;charset=UTF-8" language="java"%>
         // window.scrollTo({ top: 500, behavior: 'smooth' });
         //event.preventDefault();
         var totalPage=eval(${totalPages});
+        var typeId = $('#articleType').val();
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: currPage-1,
+            typeId :typeId
           },
           success:function(response){
             $('#section').children().remove();
@@ -230,13 +258,15 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
       $('.page').on('click',function(){
         console.log('page has been click');
+        var typeId = $('#articleType').val();
         event.preventDefault();
         var page = $(this).text();
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: page,
+            typeId: typeId
           },
           success:function(response){
             $('#section').children().remove();

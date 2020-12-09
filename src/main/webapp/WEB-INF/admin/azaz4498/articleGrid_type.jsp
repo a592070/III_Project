@@ -19,6 +19,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
         scroll-behavior: smooth;
       }
     </style>
+    <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -28,18 +29,18 @@ contentType="text/html;charset=UTF-8" language="java"%>
             <div class="col-md-3 d-flex ftco-animate">
               <div class="blog-entry align-self-stretch">
                 <input type="hidden" class="artId" value="${article.artId}">
-                <input type="hidden" class="typeId" value="${article.articleType.typeId}"
+                <input type="hidden" id="articleType" value="${article.articleType.typeId}">
                 <a
-                  href=""
+                  href="<%=application.getContextPath()%>/article/${article.artId}"
                   class="block-20 artCoverPic"
-                  style="background-image: url('${picList[status.index]}')"
+                  style="background-image: url('../${picList[status.index]}')"
                 >
                 </a>
                 <div class="text p-4 d-block">
                   <span class="tag">${article.articleType.typeName}</span>
 
                   <h3 class="heading mt-3">
-                    <a href="#">${article.artTitle}</a>
+                    <a href="<%=application.getContextPath()%>/article/${article.artId}">${article.artTitle}</a>
                   </h3>
                   <div class="meta mb-3">
                     <div><a href="#">${article.artCreTime}</a></div>
@@ -72,9 +73,9 @@ contentType="text/html;charset=UTF-8" language="java"%>
             </div>
           </div>
         </div>
-        <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+        <!-- <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> -->
       </body>
-   
+
 
     
     <script>
@@ -100,11 +101,11 @@ contentType="text/html;charset=UTF-8" language="java"%>
       $('#next').on('click',function(){
         event.preventDefault();
         var totalPage=eval(${totalPages});
-        var typeId = $('#typeId');
+        var typeId = $('#articleType').val();
 
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: currPage+1,
             typeId: typeId
@@ -127,11 +128,11 @@ contentType="text/html;charset=UTF-8" language="java"%>
         //window.scrollTo({ top: 500, behavior: 'smooth' });
         //event.preventDefault();
         var totalPage=eval(${totalPages});
-        var typeId = $('#typeId');
+        var typeId = $('#articleType').val();
         event.preventDefault();
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: currPage-1,
             typeId:typeId,
@@ -148,11 +149,11 @@ contentType="text/html;charset=UTF-8" language="java"%>
       $('.page').on('click',function(){
         console.log('page has been click');
         event.preventDefault();
-        var typeId = $('#typeId');
+        var typeId = $('#articleType').val();
         var page = $(this).text();
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: page,
             typeId:typeId,
@@ -168,59 +169,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
       })
 
     </script>
-    
-
-    <!-- <script>
-      $(window).on("load",function () {
-        $.ajax({
-          type: "GET",
-          url: "Article.controller.json",
-          async:false,
-          success: function (response) {
-            showList(response);
-            
-          },
-        });
-      });
-      </script> -->
-    <!-- <script>
-      function showList(response) {
-        
-        $.each(response.list, function (index, element) {
-          var currArtId = element.artId;
-          var imgPath = response.coverPic[currArtId];
-          console.log(imgPath);
-          var content = "<div class='col-md-3 d-flex ftco-animate'>" +
-              "<div class='blog-entry align-self-stretch'>" +
-              "<a href='#' class='block-20' style='background-image: " +
-              'url(' +
-              imgPath +
-              ");'>"+
-              "</a>" +
-              "<div class='text p-4 d-block'>" +
-              "<span class='tag'>" +
-              element.articleType.typeName +
-              "</span>" +
-              "<h3 class='heading mt-3>'" +
-              "<a href='#'>" +
-              element.artTitle +
-              "</a></h3>" +
-              "<div class='meta mb-3'>"+
-              "<div><a href='#'>" +
-              element.artCreTime +
-              "</a></div>" +
-              "<div><a href='#'>" +
-              element.artUserId +
-              "</a></div>" +
-              "</div>" +
-              "<a href='#'' class='meta-chat'>" +
-              "<span class='icon-chat'></span>" +
-              element.artCommNum +
-              "</a>" +
-              "</div></div></div></div></div>"
-              $(content).appendTo("#articleGrid");
-        });
-      }
-    </script> -->
+  
   </body>
 </html>
