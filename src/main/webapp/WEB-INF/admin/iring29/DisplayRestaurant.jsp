@@ -256,10 +256,7 @@ element.style {
                                 <img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" alt="">
                             </div>
                             <div class="ri-text">
-                            	<c:set var="time" value="${comm.com_date}" />
-								<c:set var="datetime" value="${fn:substring(time, 0, 10)}" />
-								<c:set var="hr_min" value="${fn:substring(time, 11, 16)}" />
-                                <span>${datetime}&emsp;${hr_min}</span>
+                                <span>${comm.com_dateString}</span>
                                 <div class="rating">
                                     <i class="icon_star"></i>
                                     <i class="icon_star"></i>

@@ -2,6 +2,7 @@ package iring29.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -108,6 +109,7 @@ public class F_RestaurantDAO {
 		public boolean addComment(R_Comment comm) {
 			boolean flag = false;
 			try {
+				comm.setCom_date(new Date());
 				sessionFactory.getCurrentSession().save(comm);
 				flag = true;
 			} catch (Exception e) {

@@ -2,6 +2,8 @@ package iring29.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +31,11 @@ public class R_Comment {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "R_SN")
 	private Restaurant restaurant;
+	
 //	private AccountBean accountBean;
-//	@Column(name = "COM_DATE")
-	@Transient
-	private Timestamp com_date;
+	
+	@Column(name = "COM_DATE")
+	private Date com_date;
 	@Column(name = "RATING")
 	private BigDecimal rating;
 
@@ -60,14 +63,6 @@ public class R_Comment {
 		this.restaurant = restaurant;
 	}
 
-	public Timestamp getCom_date() {
-		return com_date;
-	}
-
-	public void setCom_date(Timestamp com_date) {
-		this.com_date = com_date;
-	}
-
 	public BigDecimal getRating() {
 		return rating;
 	}
@@ -76,4 +71,26 @@ public class R_Comment {
 		this.rating = rating;
 	}
 
+	public Date getCom_date() {
+		return com_date;
+	}
+
+	public void setCom_date(Date com_date) {
+		this.com_date = com_date;
+	}
+
+	@Transient
+	public String getCom_dateString() {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setLenient(false);
+		String Date;
+		if(com_date ==null) {
+			Date="未知";
+		}else {
+			Date = sdf.format(com_date);
+		}
+		return Date;
+	}
+	
 }
