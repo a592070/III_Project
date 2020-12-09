@@ -20,7 +20,16 @@ contentType="text/html;charset=UTF-8" language="java"%>
       html {
         scroll-behavior: smooth;
       }
+      .fixed-btn {
+          position: fixed;
+          bottom: 20px;
+          right: 80px;
+          height: 100px;
+          z-index: 999;
+          
+      }
     </style>
+    <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -60,37 +69,13 @@ contentType="text/html;charset=UTF-8" language="java"%>
       </div>
     </div>
     
-    <section class="ftco-section bg-light" id="section">
+    
+
+    <section class="ftco-section bg-light " id="section">
+      <c:import url="/WEB-INF/admin/azaz4498/carousel.jsp"/>
       <div class="container" id="container">
         <div class="row d-flex" id="articleGrid">
-          <!-- <div class="col-md-3 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a
-                href="blog-single.html"
-                class="block-20"
-                style="
-                  background-image: url('direngine-master/images/image_1.jpg');
-                "
-              >
-              </a>
-              <div class="text p-4 d-block">
-                <span class="tag">文章分類</span>
-
-                <h3 class="heading mt-3">
-                  <a href="#">文章標題</a>
-                </h3>
-                <div class="meta mb-3">
-                  <div><a href="#">文章建立時間</a></div>
-                  <div><a href="#">文章作者</a></div>
-                  <div>
-                    <a href="#" class="meta-chat"
-                      ><span class="icon-chat"></span> 評論數3</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
+          
           <c:forEach var="article" items="${list}" varStatus="status">
             
             <div class="col-md-3 d-flex ftco-animate">
@@ -131,11 +116,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
             <div class="block-27">
               <ul>
                 <li id ="prev" class="prev"><a href="">&lt;</a></li>
-                <!-- <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li> -->
                 <li id ="next" class="next"><a href="">&gt;</a></li>
               </ul>
             </div>
@@ -143,7 +123,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
         </div>
       </div>
     </section>
-
     <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
 
     <!-- loader -->
@@ -170,7 +149,21 @@ contentType="text/html;charset=UTF-8" language="java"%>
         />
       </svg>
     </div>
+    <!-- fixed btn-->
+    <div class="fixed-btn">
+      <a href="#" class="btn btn-primary" href="#" role="button"><i class="far fa-edit">撰寫文章</i></a>
+    </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script>
+        $(window).scroll(function() {
+      if($(document).scrollTop() > 600){
+          $(".fixed-btn").show();
+      } else {
+          $(".fixed-btn").hide();
+  }
+});
+
+    </script>
     <script>
       var len = eval(${totalPages});
       var currPage= eval(${currPage});
@@ -187,27 +180,8 @@ contentType="text/html;charset=UTF-8" language="java"%>
       if(currPage==1){
         $('#prev').remove();
       }
-
-      // $('.artCoverPic').on('click',function(){
-      //   event.preventDefault();
-      //   var currArtId = $(this).prev().val();
-      //   $.ajax({
-      //     type:"GET",
-      //     url:"articleDetail.controller",
-      //     data:{
-      //       artId:currArtId
-      //     },
-      //     success:function(response){
-      //       window.location.href='articleDetail.controller?artId='+currArtId;
-      //     }
-
-      //   })
-      // })
-
-      
-
-
     </script>
+    
     <script>
       $('#next').on('click',function(){
         event.preventDefault();
@@ -227,8 +201,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
             
             window.scrollTo({ top: 600, behavior: 'smooth' });
 
-            
-            
           },
           
         })
@@ -273,68 +245,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
         })
 
       })
-
-      
-
     </script>
-    
-
-    <!-- <script>
-      $(window).on("load",function () {
-        $.ajax({
-          type: "GET",
-          url: "Article.controller.json",
-          async:false,
-          success: function (response) {
-            showList(response);
-            
-          },
-        });
-      });
-      </script> -->
-     <!--<script>
-      function showList(response) {
-        var rowStart ="<div class='row d-flex'>";
-        var rowEnd = "</div>";
-        $(rowStart).appendTo('#container');
-        
-        $.each(response.artlist, function (index, element) {
-          var currArtId = element.artId;
-          var imgPath = response.piclist[index];
-          console.log(imgPath);
-          var content =
-              "<div class='col-md-3 d-flex ftco-animate'>" +
-              "<div class='blog-entry align-self-stretch'>" +
-              "<a href='#' class='block-20' style='background-image: " +
-              'url(' +
-              imgPath +
-              ");'>"+
-              "</a>" +
-              "<div class='text p-4 d-block'>" +
-              "<span class='tag'>" +
-              element.articleType.typeName +
-              "</span>" +
-              "<h3 class='heading mt-3>'" +
-              "<a href='#'>" +
-              element.artTitle +
-              "</a></h3>" +
-              "<div class='meta mb-3'>"+
-              "<div><a href='#'>" +
-              element.artCreTime +
-              "</a></div>" +
-              "<div><a href='#'>" +
-              element.artUserId +
-              "</a></div>" +
-              "</div>" +
-              "<a href='#'' class='meta-chat'>" +
-              "<span class='icon-chat'></span>" +
-              element.artCommNum +
-              "</a>" +
-              "</div></div></div></div></div>"
-              $(content).appendTo("#container");
-        });
-        $(rowEnd).appendTo('#container');
-      }
-    </script -->
   </body>
 </html>

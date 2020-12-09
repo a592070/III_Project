@@ -23,8 +23,16 @@
         h3 {
             font-family: 'Noto Sans TC', sans-serif;
         }
+        .fixed-btn {
+          position: fixed;
+          bottom: 20px;
+          right: 80px;
+          height: 100px;
+          z-index: 999;
+          
+      }
     </style>
-    
+    <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -64,6 +72,9 @@
         </div>
       </div>
     </div>
+    
+
+
 
     <section class="ftco-section ftco-degree-bg">
       <div class="container">
@@ -72,7 +83,7 @@
              <h2 class="mb-3">${artList[0].artTitle}</h2>
              <div class="tag-widget post-tag-container mb-5 mt-5">
                <div class="tagcloud">
-                 <a href="#" class="tag-cloud-link">${artList[0].articleType.typeName}</a>
+                 <a href="<%=application.getContextPath()%>/typeSearch/${artList[0].articleType.typeId}" class="tag-cloud-link">${artList[0].articleType.typeName}</a>
                </div>
              </div>
             ${artList[0].artContent}
@@ -160,28 +171,28 @@
               <div class="categories">
                 <h3 style="font-family:'Noto Sans TC', sans-serif ;">文章分類</h3>
                 <li>
-                  <a href="../typeSearch/1" style="font-family:'Noto Sans TC', sans-serif ;">旅遊 <span>${typeCount.travel}</span></a>
+                  <a href="<%=application.getContextPath()%>/typeSearch/1" style="font-family:'Noto Sans TC', sans-serif ;">旅遊 <span>${typeCount.travel}</span></a>
                 </li>
                 <li>
-                  <a href="../typeSearch/2" style="font-family:'Noto Sans TC', sans-serif ;">住宿 <span>${typeCount.accommodation}</span></a>
+                  <a href="<%=application.getContextPath()%>/typeSearch/2" style="font-family:'Noto Sans TC', sans-serif ;">住宿 <span>${typeCount.accommodation}</span></a>
                 </li>
                 <li>
-                  <a href="../typeSearch/3" style="font-family:'Noto Sans TC', sans-serif ;">美食 <span>${typeCount.food}</span></a>
+                  <a href="<%=application.getContextPath()%>/typeSearch/3" style="font-family:'Noto Sans TC', sans-serif ;">美食 <span>${typeCount.food}</span></a>
                 </li>
                 <li>
-                  <a href="../typeSearch/4" style="font-family:'Noto Sans TC', sans-serif ;">景點 <span>${typeCount.scenery}</span></a>
+                  <a href="<%=application.getContextPath()%>/typeSearch/4" style="font-family:'Noto Sans TC', sans-serif ;">景點 <span>${typeCount.scenery}</span></a>
                 </li>
                 <li>
-                  <a href="../typeSearch/5" style="font-family:'Noto Sans TC', sans-serif ;">交通 <span>${typeCount.traffic}</span></a>
+                  <a href="<%=application.getContextPath()%>/typeSearch/5" style="font-family:'Noto Sans TC', sans-serif ;">交通 <span>${typeCount.traffic}</span></a>
                 </li>
                 <li>
-                  <a href="../typeSearch/6" style="font-family:'Noto Sans TC', sans-serif ;">行程 <span>${typeCount.itinerary}</span></a>
+                  <a href="<%=application.getContextPath()%>/typeSearch/6" style="font-family:'Noto Sans TC', sans-serif ;">行程 <span>${typeCount.itinerary}</span></a>
                 </li>
                 <li>
-                    <a href="../typeSearch/7" style="font-family:'Noto Sans TC', sans-serif ;">購物 <span>${typeCount.shopping}</span></a>
+                    <a href="<%=application.getContextPath()%>/typeSearch/7" style="font-family:'Noto Sans TC', sans-serif ;">購物 <span>${typeCount.shopping}</span></a>
                   </li>
                 <li>
-                    <a href="../typeSearch/0" style="font-family:'Noto Sans TC', sans-serif ;">其他 <span>${typeCount.others}</span></a>
+                    <a href="<%=application.getContextPath()%>/typeSearch/0" style="font-family:'Noto Sans TC', sans-serif ;">其他 <span>${typeCount.others}</span></a>
                   </li>
               </div>
             </div>
@@ -192,6 +203,7 @@
               <c:forEach var='recent' items='${recentArt}' varStatus='status'>
                 <div class="block-21 mb-4 d-flex">
                   <a
+                    href="<%=application.getContextPath()%>/article/${recent.artId}"
                     class="blog-img mr-4"
                     style="
                       background-image: url(<c:url value='/${recentArtPic[status.index]}'/>);
@@ -201,22 +213,22 @@
                   ></a>
                   <div class="text">
                     <h3 class="heading">
-                      <a href="#">
+                      <a href="<%=application.getContextPath()%>/article/${recent.artId}">
                         ${recent.artTitle}
                         </a
                       >
                     </h3>
                     <div class="meta">
                       <div>
-                        <a href="#"
+                        <a href=""
                           ><span class="icon-calendar"></span>${recent.artCreTime}</a
                         >
                       </div>
                       <div>
-                        <a href="#"><span class="icon-person"></span>${recent.artUserId}</a>
+                        <a href=""><span class="icon-person"></span>${recent.artUserId}</a>
                       </div>
                       <div>
-                        <a href="#"><span class="icon-chat"></span>${recent.artCommNum}</a>
+                        <a href=""><span class="icon-chat"></span>${recent.artCommNum}</a>
                       </div>
                     </div>
                   </div>
@@ -257,8 +269,21 @@
         />
       </svg>
     </div>
+    <!-- fixed btn-->
+    <div class="fixed-btn">
+      <a href="#" class="btn btn-primary" href="#" role="button"><i class="far fa-edit">撰寫文章</i></a>
+    </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script>
+      $(window).scroll(function() {
+    if($(document).scrollTop() > 600){
+        $(".fixed-btn").show();
+    } else {
+        $(".fixed-btn").hide();
+}
+});
 
+  </script>
     <script>
       $('#post_btn').on('click',function(){
         event.preventDefault();
@@ -305,5 +330,5 @@
       })
 
     </script>
-  </body>
+</body>
 </html>

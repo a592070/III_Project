@@ -23,6 +23,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
   <body>
       <div class="container" id="container">
+        <c:import url="/WEB-INF/admin/azaz4498/carousel.jsp"/>
         <div class="row d-flex" id="articleGrid">
           <c:forEach var="article" items="${list}" varStatus="status">
             <div class="col-md-3 d-flex ftco-animate">
@@ -73,7 +74,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
         </div>
         <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
       </body>
-   
+
 
     
     <script>
@@ -122,8 +123,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
       })
 
       $('#prev').on('click',function(){
-        //window.scrollTo({ top: 500, behavior: 'smooth' });
-        //event.preventDefault();
         var totalPage=eval(${totalPages});
         event.preventDefault();
         $.ajax({
@@ -164,57 +163,5 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </script>
     
 
-    <!-- <script>
-      $(window).on("load",function () {
-        $.ajax({
-          type: "GET",
-          url: "Article.controller.json",
-          async:false,
-          success: function (response) {
-            showList(response);
-            
-          },
-        });
-      });
-      </script> -->
-    <!-- <script>
-      function showList(response) {
-        
-        $.each(response.list, function (index, element) {
-          var currArtId = element.artId;
-          var imgPath = response.coverPic[currArtId];
-          console.log(imgPath);
-          var content = "<div class='col-md-3 d-flex ftco-animate'>" +
-              "<div class='blog-entry align-self-stretch'>" +
-              "<a href='#' class='block-20' style='background-image: " +
-              'url(' +
-              imgPath +
-              ");'>"+
-              "</a>" +
-              "<div class='text p-4 d-block'>" +
-              "<span class='tag'>" +
-              element.articleType.typeName +
-              "</span>" +
-              "<h3 class='heading mt-3>'" +
-              "<a href='#'>" +
-              element.artTitle +
-              "</a></h3>" +
-              "<div class='meta mb-3'>"+
-              "<div><a href='#'>" +
-              element.artCreTime +
-              "</a></div>" +
-              "<div><a href='#'>" +
-              element.artUserId +
-              "</a></div>" +
-              "</div>" +
-              "<a href='#'' class='meta-chat'>" +
-              "<span class='icon-chat'></span>" +
-              element.artCommNum +
-              "</a>" +
-              "</div></div></div></div></div>"
-              $(content).appendTo("#articleGrid");
-        });
-      }
-    </script> -->
   </body>
 </html>
