@@ -45,55 +45,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       <span class="oi oi-menu"></span> Menu
     </button>
 
-    <<<<<<< HEAD
-    <div class="collapse navbar-collapse" id="ftco-nav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a href="index.html" class="nav-link">首頁</a></li>
-        <li class="nav-item">
-          <a href="about.html" class="nav-link">關於我</a>
-        </li>
-        <li class="nav-item"><a href="tour.html" class="nav-link">景點</a></li>
-        <li class="nav-item">
-          <a
-            href="<%=application.getContextPath()%>/Hotel_index"
-            class="nav-link"
-            >找住宿</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            href="<%=application.getContextPath()%>/Restaurant_index"
-            class="nav-link"
-            >找餐廳</a
-          >
-        </li>
-        <li class="nav-item"><a href="" class="nav-link">找交通</a></li>
-        <li class="nav-item">
-          <a
-            href="<%=application.getContextPath()%>/forum_index"
-            class="nav-link"
-            >論壇</a
-          >
-        </li>
-        <li class="nav-item">
-          <a href="contact.html" class="nav-link">聯絡我</a>
-        </li>
-        <li class="nav-item">
-          <FORM
-            id="shoppingcart"
-            action="<%=application.getContextPath()%>/ShoppingCart"
-            method="POST"
-          >
-            <a
-              href="javascript:document.getElementById('shoppingcart').submit();"
-              class="nav-link"
-            >
-              <i class="icon-shopping-cart"></i
-              ><span class="nav-shop__circle"></span> </a
-          ></FORM>
-        </li>
-      </ul>
-      =======
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
@@ -121,7 +72,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           </li>
           <li class="nav-item"><a href="" class="nav-link">找交通</a></li>
           <li class="nav-item">
-            <a href="blog.html" class="nav-link">論壇</a>
+            <a href="<%=application.getContextPath()%>/forum_index" class="nav-link">論壇</a>
           </li>
           <c:if test="${empty userBean}">
             <li class="nav-item">
@@ -171,7 +122,6 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           </li>
         </ul>
       </div>
-      >>>>>>> master
     </div>
   </div>
 </nav>
