@@ -8,6 +8,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
     <meta charset="UTF-8" />
     <title>Fun台灣 論壇</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
+    <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
       h2 {
@@ -31,7 +32,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
     <div
       class="hero-wrap js-fullheight"
-      style="background-image: url('direngine-master/images/bg_6.jpg')"
+      style="background-image: url('../direngine-master/images/bg_6.jpg')"
     >
       <div class="overlay"></div>
       <div class="container">
@@ -59,38 +60,11 @@ contentType="text/html;charset=UTF-8" language="java"%>
         </div>
       </div>
     </div>
-    
+    <div class="row d-flex justify-content-center mt-5"><i class=" h3 fas fa-search fa-2x">${list[0].articleType.typeName}</i></div>
     <section class="ftco-section bg-light" id="section">
       <div class="container" id="container">
         <div class="row d-flex" id="articleGrid">
-          <!-- <div class="col-md-3 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a
-                href="blog-single.html"
-                class="block-20"
-                style="
-                  background-image: url('direngine-master/images/image_1.jpg');
-                "
-              >
-              </a>
-              <div class="text p-4 d-block">
-                <span class="tag">文章分類</span>
-
-                <h3 class="heading mt-3">
-                  <a href="#">文章標題</a>
-                </h3>
-                <div class="meta mb-3">
-                  <div><a href="#">文章建立時間</a></div>
-                  <div><a href="#">文章作者</a></div>
-                  <div>
-                    <a href="#" class="meta-chat"
-                      ><span class="icon-chat"></span> 評論數3</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
+          
           <c:forEach var="article" items="${list}" varStatus="status">
             
             <div class="col-md-3 d-flex ftco-animate">
@@ -99,7 +73,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 <a
                   href="article/${article.artId}"
                   class="block-20 artCoverPic"
-                  style="background-image: url('${picList[status.index]}')"
+                  style="background-image: url('../${picList[status.index]}')"
                 >
                 </a>
                 <div class="text p-4 d-block">

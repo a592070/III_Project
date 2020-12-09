@@ -1,21 +1,16 @@
 package azaz4498.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,13 +18,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import azaz4498.model.Article;
+import azaz4498.model.Comment;
+import azaz4498.model.ForumPage;
 import azaz4498.service.ArticleService;
 import azaz4498.service.ArticleTypeService;
+import azaz4498.service.CommentService;
 import azaz4498.service.PictureService;
 
 @Controller
 @Lazy
-@SessionAttributes(names = { "artBean", "typeBean" })
+@SessionAttributes(names = { "artBean", "typeBean", "artList", "commentList", "recentArt", "recentArtPic",
+		"typeCount" })
 public class ArticleController {
 	@Autowired
 	@Qualifier("ArticleService")
@@ -40,82 +39,95 @@ public class ArticleController {
 	@Autowired
 	PictureService pictureService;
 	@Autowired
+	CommentService commentService;
+	@Autowired
 	private ServletContext context;
+	@Autowired
+	private ForumPage forumPage;
 
-	@RequestMapping(path = "/preview.controller", method = RequestMethod.POST)
-	public String articlePreview(Model m, @RequestParam(name = "artTitle") String artTitle,
-			@RequestParam(name = "artContent") String artContent, @RequestParam(name = "artUserid") String artUserid,
-			@RequestParam(name = "artType") String artType) {
-		m.addAttribute("artTitle", artTitle);
-		m.addAttribute("artContent", artContent);
-		m.addAttribute("artUserid", artUserid);
-		m.addAttribute("artType", artType);
-
-		return "azaz4498/articlePreview";
+	@RequestMapping(path = {"/article/{artId}" ,"/typeSearch/article/{artId}"}, method = RequestMethod.GET)
+	public String articlePreview(Model m, @PathVariable(name = "artId") Integer artId) throws SQLException {
+		List<Article> recentArticles = articleService.showRecentArticles();
+		List<Comment> commentList = commentService.showCommentsByArticle(artId);
+		List<String> coverPicList = articleService.getCoverPicList(recentArticles);
+		m.addAttribute("artList", articleService.showArticleById(artId));
+		m.addAttribute("commentList", commentList);
+		m.addAttribute("recentArt", recentArticles);
+		m.addAttribute("recentArtPic", coverPicList);
+		m.addAttribute("typeCount", articleService.getTypeCount());
+		return "azaz4498/articleDetail";
 
 	}
 
-	
-	
-	@RequestMapping(path = "/frontTest",produces = {
-	"application/json; charset=UTF-8" })
-	public String Forum() {
-		return "azaz4498/forum";
-	}
-	@RequestMapping(path = "/Article.controller.json", method = RequestMethod.GET, produces = {
-			"application/json; charset=UTF-8" })
-	public String showArticles(Model m) {
-		List<Article> artList = articleService.showAvailableArticles();
-		List<String> picList = new ArrayList<String>();
-//		Map<Integer, String> coverPic = new HashMap<>();
-		String defaultImgPath = "direngine-master/images/article_default.jpg";
-
-		for (Article article : artList) {// 遍歷article物件
-			String content = article.getArtContent();
-			Integer id = article.getArtId();
-			if (content != null && !content.equals("")) {// 判斷文章內容是否為空
-				Document doc = Jsoup.parse(content);
-				Element imgEle = doc.getElementsByTag("img").first();
-				if (imgEle != null) {// 判斷img標籤是否存在
-					if (imgEle.attr("stc").equals("")) {
-						picList.add(defaultImgPath);
-						
-					} else {
-						String coverImgPath = imgEle.attr("src");
-						picList.add(coverImgPath);
-					}
-				} else {
-					picList.add(defaultImgPath);
-
-				}
-			} else {
-				picList.add(defaultImgPath);
-
-				
-			}
-		}
-		m.addAttribute("list",artList);
+	// 文章列表
+	@RequestMapping(path = "/forum_index", method = RequestMethod.GET, produces = { "application/json; charset=UTF-8" })
+	public String showArticles(Model m, @RequestParam(value = "currPage", defaultValue = "1") Integer currPage) {
+		forumPage.setCurrentPage(currPage);
+		forumPage.setTotalCount(articleService.getRecords());
+		Integer records = forumPage.getPageSize();
+		Integer totalPage = forumPage.getTotalPageCount();
+		Integer index = (currPage - 1) * records;
+		List<Article> artList = articleService.showAvailableArticles(index, records);
+		List<String> picList = articleService.getCoverPicList(artList);
+		m.addAttribute("list", artList);
 		m.addAttribute("picList", picList);
+		m.addAttribute("totalPages", totalPage);
+		m.addAttribute("currPage", currPage);
+
 		return "azaz4498/forum";
-
 	}
 
-	@RequestMapping(path = "/artTypeSearch.json", method = RequestMethod.GET, produces = {
+	// 換頁用
+	@RequestMapping(path = "/Article.pagincontroller.json", method = RequestMethod.GET, produces = {
 			"application/json; charset=UTF-8" })
-	public @ResponseBody List<Article> dispalyByTypeJSON(@RequestParam(name = "articleType") Integer typeId)
-			throws SQLException {
-		List<Article> artList = articleService.showArticlesByType(typeId);
-		return artList;
+	public String ArticlePagin(Model m, @RequestParam(value = "currPage", defaultValue = "1") Integer currPage,
+			@RequestParam(value = "typeId", required = false) Integer articleType) throws SQLException {
+		forumPage.setCurrentPage(currPage);
+		if (articleType!=null) {
+			forumPage.setTotalCount(articleService.getTypeSearchRecord(articleType));
+			Integer records = forumPage.getPageSize();
+			Integer totalPage = forumPage.getTotalPageCount();
+			Integer index = (currPage - 1) * records;
+			List<Article> artList = articleService.showArticlesByType(articleType, index, records);
+			List<String> picList = articleService.getCoverPicList(artList);
+			m.addAttribute("list", artList);
+			m.addAttribute("picList", picList);
+			m.addAttribute("totalPages", totalPage);
+			m.addAttribute("currPage", currPage);
+			return "azaz4498/articleGrid_type";
+		} else {
+
+			forumPage.setTotalCount(articleService.getRecords());
+			Integer records = forumPage.getPageSize();
+			Integer totalPage = forumPage.getTotalPageCount();
+			Integer index = (currPage - 1) * records;
+			List<Article> artList = articleService.showAvailableArticles(index, records);
+			List<String> picList = articleService.getCoverPicList(artList);
+			m.addAttribute("list", artList);
+			m.addAttribute("picList", picList);
+			m.addAttribute("totalPages", totalPage);
+			m.addAttribute("currPage", currPage);
+
+			return "azaz4498/articleGrid";
+		}
 	}
 
-	@RequestMapping(path = "/articleSearch.json", method = RequestMethod.GET, produces = {
-			"application/json; charset=UTF-8" })
-	public @ResponseBody List<Article> DisplayJSONResults(
-			@RequestParam(name = "keyword", defaultValue = "", required = false) String keyword,
-			@RequestParam(name = "articleType", defaultValue = "", required = false) Integer articleType) {
-		List<Article> artList = articleService.searchArticles(keyword, articleType);
-		return artList;
-
+	// 類別顯示
+	@RequestMapping(path = "/typeSearch/{articleType}", method = RequestMethod.GET)
+	public String typeSearch(@PathVariable(name = "articleType") Integer typeId, Model m,
+			@RequestParam(value = "currPage", defaultValue = "1") Integer currPage) throws SQLException {
+		forumPage.setCurrentPage(currPage);
+		forumPage.setTotalCount(articleService.getTypeSearchRecord(typeId));
+		Integer records = forumPage.getPageSize();
+		Integer totalPage = forumPage.getTotalPageCount();
+		Integer index = (currPage - 1) * records;
+		List<Article> artList = articleService.showArticlesByType(typeId, index, records);
+		List<String> picList = articleService.getCoverPicList(artList);
+		m.addAttribute("list", artList);
+		m.addAttribute("picList", picList);
+		m.addAttribute("totalPages", totalPage);
+		m.addAttribute("currPage", currPage);
+		return "azaz4498/forum_typeSearch";
 	}
 
 	@RequestMapping(path = "/editPage.controller")
@@ -160,9 +172,5 @@ public class ArticleController {
 		return artList;
 
 	}
-
-	
-
-	
 
 }
