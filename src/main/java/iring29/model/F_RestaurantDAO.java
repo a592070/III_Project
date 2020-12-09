@@ -65,6 +65,7 @@ public class F_RestaurantDAO {
 			boolean flag = false;
 			try {
 				System.out.println("create order");
+				otBean.setOrder_date(new Date());
 				sessionFactory.getCurrentSession().save(otBean);
 				flag = true;
 			} catch (Exception e) {

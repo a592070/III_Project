@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ecpay.payment.integration.AllInOne;
+import ecpay.payment.integration.domain.AioCheckOutALL;
 import global.pojo.OrderTable;
 import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
@@ -61,6 +63,7 @@ public class F_RorderController {
 		rOBean.setDeposit(deposit);
 		rOBean.setRestaurant(res_data);
 		OTBean.addR_Order_Lists(rOBean);
+		OTBean.setTotalPrice(OTBean.getTotalPrice().add(deposit));
 		cartnum = cartnum + 1;
 		System.out.println("cart num = " +cartnum);
 		session.setAttribute("OTBean", OTBean);
@@ -98,6 +101,7 @@ public class F_RorderController {
 		rOBean.setDeposit(deposit);
 		rOBean.setRestaurant(res_data);
 		OTBean.addR_Order_Lists(rOBean);
+		OTBean.setTotalPrice(OTBean.getTotalPrice().add(deposit));
 		cartnum = cartnum + 1;
 		session.setAttribute("OTBean", OTBean);
 		session.setAttribute("cartnum", cartnum);
@@ -133,6 +137,7 @@ public class F_RorderController {
 				r.setCustomer_num(person_number);
 				BigDecimal deposit = person_number.multiply(r.getRestaurant().getPrice());
 				r.setDeposit(deposit);
+				OTBean.setTotalPrice(OTBean.getTotalPrice().add(r.getDeposit()));
 			}
 		}
 		session.setAttribute("OTBean", OTBean);
@@ -154,6 +159,35 @@ public class F_RorderController {
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
 		session.setAttribute("res_lists", res_lists);
 		session.removeAttribute("cartnum");
+//		return "iring29/OrderDetail";
+		return "redirect:payment";
+	}
+	
+	@RequestMapping(path = "/payment")
+	//payment
+	public String payment(HttpSession session){
+		OrderTable otBean = F_Serivce.findOrder();
+		AllInOne pay = new AllInOne("");
+		AioCheckOutALL checkOut = new AioCheckOutALL();
+		checkOut.setMerchantID("2000132");
+		checkOut.setMerchantTradeNo("Fun" + otBean.getOrder_id().toString());
+		checkOut.setMerchantTradeDate(otBean.getOrder_dateString());
+		checkOut.setTotalAmount("100");
+		checkOut.setTradeDesc("Fun Taiwan 商城購物");
+		checkOut.setItemName("Fun Taiwan");
+//		checkOut.setReturnURL("https://10b30b05ae19.ngrok.io/showOrder");//資料確認用
+//		checkOut.setClientBackURL("/showOrder");// return 網址
+		String result = pay.aioCheckOut(checkOut, null);
+		System.out.println("payment result = " + result);
+		session.setAttribute("result", result);
+//		return "iring29/Payment";
+		return "iring29/OrderDetail";
+	}
+	
+	//orderlist detail
+	@RequestMapping(path = "/showOrder")
+	public String showOrder(HttpSession session) {
+		session.removeAttribute("result");
 		return "iring29/OrderDetail";
 	}
 	
