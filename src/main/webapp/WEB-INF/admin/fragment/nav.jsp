@@ -1,5 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
 .icon-shopping-cart{
@@ -38,7 +39,14 @@
           <li class="nav-item"><a href="<%=application.getContextPath()%>/Restaurant_index" class="nav-link">找餐廳</a></li>
           <li class="nav-item"><a href="" class="nav-link">找交通</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">論壇</a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link">聯絡我</a></li>
+          <c:if test="${empty userBean}">
+          <li class="nav-item"><a href="<%=application.getContextPath()%>/user/singinPage" class="nav-link">登入</a></li>
+          <li class="nav-item"><a href="<%=application.getContextPath()%>/user/registrationPage" class="nav-link">註冊</a></li>
+          </c:if>
+          <c:if test="${!empty userBean}">
+          <li class="nav-item"><a href="<%=application.getContextPath()%>/user/singout" class="nav-link">登出</a></li>
+          <li class="nav-item"><a href="<%=application.getContextPath()%>/user/registrationPage" class="nav-link">個人頁面</a></li>
+          </c:if>     
           <li class="nav-item">
           <FORM id="shoppingcart" action="<%=application.getContextPath()%>/ShoppingCart" method="POST">
           <a href="javascript:document.getElementById('shoppingcart').submit();" class="nav-link">

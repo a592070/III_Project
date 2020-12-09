@@ -63,6 +63,14 @@
 			<bean class="global.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors> -->
+	
+	<!--測試 -->
+<!-- 	<mvc:interceptors> -->
+<!--  		<mvc:interceptor>  -->
+<!-- 			<mvc:mapping path="/user/singinPage"/> -->
+<!-- 			<bean class="rambo0021.Testinterceptors"/> -->
+<!-- 		</mvc:interceptor> -->
+<!-- 	</mvc:interceptors> -->
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->
 	<bean
