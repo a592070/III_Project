@@ -10,8 +10,10 @@
 	
 	<c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 
-    <script src='//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script>
+    <!-- <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/Forum_ref.jsp" /> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link href='//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel='stylesheet'></link>
+
   </head>
   <body>
 	<c:import url="/WEB-INF/admin/fragment/nav.jsp" />
@@ -107,11 +109,11 @@
 		 
 				 <fieldset>
 		 
-					 <legend>查詢結果</legend>
+<!-- 					 <legend>查詢結果</legend> -->
 		 
 					 <div id="ajaxResponse" style="width: 800px; margin: 0 auto;">
 						<table id="ajaxTable" style="margin: 0 auto;" class="table table-striped table-sm">
-		
+							<thead><tr><th>列車號</th><th>出發時間</th><th>抵達時間</th><th>票價</th><th>訂票</th></tr></thead>
 						</table>
 					</div>
 		 
@@ -155,6 +157,7 @@
   <script src="js/main.js"></script>
 
 
+        <script src='//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script>
 
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 <script>
@@ -235,7 +238,8 @@
                         console.log(table.rows[0].cells[0].innerHTML);
 
 
-
+                        $('#ajaxTable').DataTable();
+                        tableData="";
                      },
 
                      //Ajax失敗後要執行的function，此例為印出錯誤訊息
@@ -246,7 +250,7 @@
                      }
 
                  });
-            
+                
             });
 
 
@@ -265,7 +269,7 @@
             })
 
 
-            $('#myTable').DataTable();
+            
      </script>
     
   </body>
