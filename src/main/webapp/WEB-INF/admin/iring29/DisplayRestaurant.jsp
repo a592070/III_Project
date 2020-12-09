@@ -260,16 +260,29 @@ element.style {
                             </div>
                             <div class="ri-text">
                                 <span>${comm.com_dateString}</span>
-                                <div class="rating">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star-half_alt"></i>
-
+                                <div class="rating" id="commrating${comm.com_id}">
+<!--                                     <i class="icon_star"></i> -->
+<!--                                     <i class="icon_star"></i> -->
+<!--                                     <i class="icon_star"></i> -->
+<!--                                     <i class="icon_star"></i> -->
+<!--                                     <i class="icon_star-half_alt"></i> -->
                                 </div>
                                 <h5>name</h5>
                                 <p>${comm.com_content}</p>
+                                <script>
+										var commstar = Math.floor("${comm.rating}");
+										console.log("star = " + commstar);
+										var commtags = "";
+// 										var half = " <i class='icon_star-half_alt'></i>";
+										var commzerostar = "";
+										for(var i = 0; i < commstar; i++){
+											commtags += " <i class='icon_star'></i>";
+											}
+										for(var j = commstar ; j < 5 ; j++){
+											commzerostar += " <i class='fa fa-star-o'></i>";
+											}
+										$("#commrating${comm.com_id}").prepend(commtags, commzerostar);
+                                </script>
                             </div>
                         </div>
                         </c:forEach>
@@ -297,11 +310,11 @@ element.style {
                                              <i id="starRating" class='fa fa-star-o'></i>
                                              <i id="starRating" class='fa fa-star-o'></i>
                                              <i id="starRating" class='fa fa-star-o'></i>
-<%--                                              <img id="img1" class="i" src="<%=application.getContextPath()%>/direngine-master/images/star.jpg" /> --%>
-                                             
+                                             <Input type='hidden' name='stars' id= 'stars' value=''>
                                          <script>
                                              var start = 0;
                                          $("i#starRating").on("mouseenter", function () {
+                                             start = 0;
                                              console.log("size = " + $("i#starRating").size())
                                              $("i#starRating").attr("class", "fa fa-star-o")
                                              let num = $("i#starRating").index($(this)) + 1;
@@ -320,7 +333,9 @@ element.style {
                                              for (let i = 0; i < num; i++) {
                                                  $("i#starRating").eq(i).attr("class", "icon_star")
                                              }
+                                             $("#stars").val(clicknum);
                                          })
+                                         
                                          </script>
                                         </div>
                                     </div>
@@ -330,18 +345,19 @@ element.style {
                                     <script>
 										function sendcomment(){
 											var comment = $("#r_comment").val();
-											console.log("comment = " + comment);
+											var stars = $("#stars").val();
+											console.log("comment = " + comment + ", stars = " + stars );
 											$.ajax(
 								                    {
 								                        type: 'POST',
-								                        data: { "com_content":comment},
+								                        data: { "com_content":comment, "rating":stars},
 								                        url: '${pageContext.servletContext.contextPath}/addComment',
 								                        dataType: 'json',
 								                        success:function(response){
 									                        console.log("re = " + response);
 								                        	var res_context = "";
 								                        	res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#addComment" style="display:none;"></button>';
-								                        	$("#comment_rating").html(res_context);
+								                        	$("#comment_rating").append(res_context);
 								                        	$("#commentbtn").click();
 								                        	
 								                        }
@@ -387,29 +403,8 @@ element.style {
 							                        url: '${pageContext.servletContext.contextPath}/flashComment',
 							                        dataType: 'html',
 							                        success:function(comm){
-// 							                        	var review = '';
-// 							                        	for(let x = 0; x < comm.length; x++){
-// 														review += '<div class="review-item">';
-// 														review += '<div class="ri-pic">';
-// 														review += '<img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" alt="">';
-// 														review += '</div>';
-// 														review += '<div class="ri-text">';
-// // 														review += '<c:set var="time" value="${comm.com_date}" />';
-// // 														review += '<c:set var="datetime" value="${fn:substring(time, 0, 10)}" />';
-// // 														review += '<c:set var="hr_min" value="${fn:substring(time, 11, 16)}" />';
-// 														review += '<span>time</span>';
-// 														review += '<div class="rating">';
-// 														review += '<i class="icon_star"></i>';
-// 														review += '<i class="icon_star"></i>';
-// 														review += '<i class="icon_star"></i>';
-// 														review += '<i class="icon_star"></i>';
-// 														review += '<i class="icon_star-half_alt"></i>';
-// 														review += '</div>';
-// 														review += '<h5>name</h5>';
-// 														review += '<p>'+ comm.com_content + '</p>';
-// 														review += '</div></div>';
-// 							                        	}
 														$(".rd-reviews").append(comm);
+														$("i#starRating").attr("class", "fa fa-star-o")
 							                        }
 							                    }
 										)

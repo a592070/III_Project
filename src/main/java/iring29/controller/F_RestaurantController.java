@@ -143,11 +143,14 @@ public class F_RestaurantController {
 	}
 	
 	@RequestMapping(path = "/addComment", method = RequestMethod.POST)
-	public @ResponseBody boolean addComment(@RequestParam(name = "com_content") String comm, HttpSession session) {
+	public @ResponseBody boolean addComment(@RequestParam(name = "com_content") String comm, 
+											@RequestParam(name = "rating") BigDecimal rating,
+										    HttpSession session) {
 		Restaurant r = (Restaurant) session.getAttribute("res_data");
 		R_Comment comment = new R_Comment();
 		comment.setCom_content(comm);
 		comment.setRestaurant(r);
+		comment.setRating(rating);
 		boolean addresult = F_Serivce.addComment(comment);
 		List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
 		session.setAttribute("comment", commentlist);
