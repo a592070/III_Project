@@ -91,48 +91,4 @@
   <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
-<script>
-  $("#submit").click(function () {
-    console.log("登入")
-    var form1 = $(this).parents('form');
-    var formData = new FormData(form1[0]);
-    
-    $.ajax({
-
-      type: "POST",
-      url: "${pageContext.servletContext.contextPath}/user/signin",
-      data: formData,
-      processData: false,
-      contentType: false,
-      dataType: "json",
-
-      success: (response) => {
-         console.log(response)
-         checkLogin(response)
-
-      }
-
-    })
-
-  })
-  function checkLogin(response){
-    if(response.LoginError){
-      grecaptcha.reset();
-      swal({
-            title: "登入失敗!",
-            text: response.LoginError,
-            icon: "warning",
-          });
-    }else{
-      swal({
-            title: "登入成功!",
-            icon: "success",
-            button: false
-          });
-          setTimeout(function () { location.href = response.reqURL; }, 2000);
-    }
-
-  }
-</script>
-
 </html>
