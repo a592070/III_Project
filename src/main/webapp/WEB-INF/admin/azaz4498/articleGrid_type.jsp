@@ -28,8 +28,9 @@ contentType="text/html;charset=UTF-8" language="java"%>
             <div class="col-md-3 d-flex ftco-animate">
               <div class="blog-entry align-self-stretch">
                 <input type="hidden" class="artId" value="${article.artId}">
+                <input type="hidden" class="typeId" value="${article.articleType.typeId}"
                 <a
-                  href="article/${article.artId}"
+                  href=""
                   class="block-20 artCoverPic"
                   style="background-image: url('${picList[status.index]}')"
                 >
@@ -38,13 +39,13 @@ contentType="text/html;charset=UTF-8" language="java"%>
                   <span class="tag">${article.articleType.typeName}</span>
 
                   <h3 class="heading mt-3">
-                    <a href="article/${article.artId}">${article.artTitle}</a>
+                    <a href="#">${article.artTitle}</a>
                   </h3>
                   <div class="meta mb-3">
                     <div><a href="#">${article.artCreTime}</a></div>
                     <div><a href="#">${article.artUserId}</a></div>
                     <div>
-                      <a href="" class="meta-chat"
+                      <a href="#" class="meta-chat"
                         ><span class="icon-chat"></span>
                         ${article.artCommNum}</a
                       >
@@ -99,13 +100,14 @@ contentType="text/html;charset=UTF-8" language="java"%>
       $('#next').on('click',function(){
         event.preventDefault();
         var totalPage=eval(${totalPages});
-        
+        var typeId = $('#typeId');
 
         $.ajax({
           type:"GET",
           url:"Article.pagincontroller.json",
           data:{
             currPage: currPage+1,
+            typeId: typeId
           },
           success:function(response){
             $('#section').children().remove();
@@ -125,12 +127,14 @@ contentType="text/html;charset=UTF-8" language="java"%>
         //window.scrollTo({ top: 500, behavior: 'smooth' });
         //event.preventDefault();
         var totalPage=eval(${totalPages});
+        var typeId = $('#typeId');
         event.preventDefault();
         $.ajax({
           type:"GET",
           url:"Article.pagincontroller.json",
           data:{
             currPage: currPage-1,
+            typeId:typeId,
           },
           success:function(response){
             $('#section').children().remove();
@@ -144,12 +148,14 @@ contentType="text/html;charset=UTF-8" language="java"%>
       $('.page').on('click',function(){
         console.log('page has been click');
         event.preventDefault();
+        var typeId = $('#typeId');
         var page = $(this).text();
         $.ajax({
           type:"GET",
           url:"Article.pagincontroller.json",
           data:{
             currPage: page,
+            typeId:typeId,
           },
           success:function(response){
             $('#section').children().remove();

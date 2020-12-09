@@ -2,6 +2,7 @@ package azaz4498.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,8 +18,15 @@ public class ArticleService {
 	private ArticleDAO aDao;
 	
 	
+	public Map<String, Integer> getTypeCount(){
+		return aDao.getTypeCount();
+	}
+	
 	public Integer getRecords() {
 		return aDao.getRecords();
+	}
+	public Integer getTypeSearchRecord(Integer articleType) {
+		return aDao.getTypeSearchRecords(articleType);
 	}
 	public Integer getSearchRecords(String keyword, Integer articleType) {
 		return aDao.getSearchRecords(keyword, articleType);
@@ -47,8 +55,8 @@ public class ArticleService {
 	}
 
 	// 依類型顯示文章
-	public List<Article> showArticlesByType(Integer typeId) throws SQLException {
-		return aDao.showArticlesByType(typeId);
+	public List<Article> showArticlesByType(Integer typeId,Integer index,Integer records) throws SQLException {
+		return aDao.showArticlesByType(typeId, index,records);
 	}
 
 	// 新增文章

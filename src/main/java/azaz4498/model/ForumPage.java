@@ -6,7 +6,7 @@ public class ForumPage {
 		// 總筆數
 		private int totalCount = 0;
 		// 每頁筆數
-		private int pageSize = 12;
+		private int pageSize = 8;
 		// 總頁數 totalCount/pageSize +1
 		private int totalPageCount = 1;
 

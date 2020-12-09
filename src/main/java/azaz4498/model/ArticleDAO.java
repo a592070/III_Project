@@ -4,7 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -13,6 +15,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+
+import azaz4498.forum_constant;
 
 @Lazy
 public class ArticleDAO {
@@ -24,6 +28,46 @@ public class ArticleDAO {
 		query.setMaxResults(3);
 		List<Article> recentArticles = query.list();
 		return recentArticles;
+	}
+	
+	public Map<String, Integer> getTypeCount(){
+		Map<String, Integer> typeCount = new HashMap<String, Integer>();
+		String hql = "select count(*) from Article WHERE ART_STATUS ='enabled' AND ART_TYPE_ID=?1";
+		Query<Long>query = sessionFactory.getCurrentSession().createQuery(hql,Long.class);
+		
+		query.setParameter(1, forum_constant.TYPE_TRAVLE);
+		Integer travel =query.uniqueResult().intValue();
+		
+		query.setParameter(1, forum_constant.TYPE_FOOD);
+		Integer food = query.uniqueResult().intValue();
+		
+		query.setParameter(1, forum_constant.TYPE_ACCOMMODATION);
+		Integer accommodation = query.uniqueResult().intValue();
+		
+		query.setParameter(1, forum_constant.TYPE_ITINERARY);
+		Integer itinerary = query.uniqueResult().intValue();
+		
+		query.setParameter(1, forum_constant.TYPE_OTHERS);
+		Integer others = query.uniqueResult().intValue();
+		
+		query.setParameter(1, forum_constant.TYPE_SCENERY);
+		Integer scenery = query.uniqueResult().intValue();
+		
+		query.setParameter(1, forum_constant.TYPE_SHOPPING);
+		Integer shooping = query.uniqueResult().intValue();
+		
+		query.setParameter(1, forum_constant.TYPE_TRAFFIC);
+		Integer traffic = query.uniqueResult().intValue();
+		
+		typeCount.put("travel", travel);
+		typeCount.put("food",food);
+		typeCount.put("accommodation",accommodation);
+		typeCount.put("itinerary",itinerary);
+		typeCount.put("others",others);
+		typeCount.put("scenery",scenery);
+		typeCount.put("shooping",shooping);
+		typeCount.put("traffic",traffic);
+		return typeCount;
 	}
 	
 	//找文章中圖片當封面
@@ -60,6 +104,14 @@ public class ArticleDAO {
 		String query = "select count(ART_ID) from Article  WHERE ART_STATUS = 'enabled'";
 		Integer totalRecords = sessionFactory.getCurrentSession().createQuery(query,Long.class).uniqueResult().intValue();
 		
+		return totalRecords;
+	}
+	//類別搜尋筆數(前台)
+	public Integer getTypeSearchRecords(Integer articleType) {
+		String hql = "select count(ART_ID) from Article where ART_TYPE_ID=?1";
+		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql,Long.class);
+		query.setParameter(1, articleType);
+		Integer totalRecords = query.uniqueResult().intValue();
 		return totalRecords;
 	}
 	
@@ -99,6 +151,7 @@ public class ArticleDAO {
 		List<Article> list = query.list();
 		return list;
 	}
+	
 	
 	// 搜尋文章(前台)
 	public List<Article> searchArticleFrontend(String keyword, Integer articleType,Integer index,Integer records) {
@@ -150,12 +203,14 @@ public class ArticleDAO {
 		return list;
 	}
 
-	// 依類型顯示文章
-	public List<Article> showArticlesByType(Integer typeId) throws SQLException {
+	// 依類型顯示文章(前台)
+	public List<Article> showArticlesByType(Integer typeId,Integer index,Integer records) throws SQLException {
 
 		Query<Article> query = sessionFactory.getCurrentSession()
-				.createQuery("From Article where ART_TYPE_ID=?1 Order by ART_ID", Article.class);
+				.createQuery("From Article where ART_TYPE_ID=?1 AND ART_STATUS = 'enabled'Order by ART_CRE_TIME", Article.class);
 		query.setParameter(1, typeId);
+		query.setMaxResults(records);
+		query.setFirstResult(index);
 		List<Article> list = query.list();
 		return list;
 

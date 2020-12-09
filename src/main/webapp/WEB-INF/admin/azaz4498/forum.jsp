@@ -97,7 +97,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
               <div class="blog-entry align-self-stretch">
                 <input type="hidden" class="artId" value="${article.artId}">
                 <a
-                  href=""
+                  href="article/${article.artId}"
                   class="block-20 artCoverPic"
                   style="background-image: url('${picList[status.index]}')"
                 >
@@ -106,7 +106,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                   <span class="tag">${article.articleType.typeName}</span>
 
                   <h3 class="heading mt-3">
-                    <a href="#">${article.artTitle}</a>
+                    <a href="article/${article.artId}">${article.artTitle}</a>
                   </h3>
                   <div class="meta mb-3">
                     <div><a href="#">${article.artCreTime}</a></div>
@@ -188,21 +188,21 @@ contentType="text/html;charset=UTF-8" language="java"%>
         $('#prev').remove();
       }
 
-      $('.artCoverPic').on('click',function(){
-        event.preventDefault();
-        var currArtId = $(this).prev().val();
-        $.ajax({
-          type:"GET",
-          url:"articleDetail.controller",
-          data:{
-            artId:currArtId
-          },
-          success:function(response){
-            window.location.href='articleDetail.controller?artId='+currArtId;
-          }
+      // $('.artCoverPic').on('click',function(){
+      //   event.preventDefault();
+      //   var currArtId = $(this).prev().val();
+      //   $.ajax({
+      //     type:"GET",
+      //     url:"articleDetail.controller",
+      //     data:{
+      //       artId:currArtId
+      //     },
+      //     success:function(response){
+      //       window.location.href='articleDetail.controller?artId='+currArtId;
+      //     }
 
-        })
-      })
+      //   })
+      // })
 
       
 

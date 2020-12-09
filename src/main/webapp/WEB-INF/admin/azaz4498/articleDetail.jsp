@@ -34,7 +34,7 @@
     
     <div
       class="hero-wrap js-fullheight"
-      style="background-image: url('direngine-master/images/bg_6.jpg')"
+      style="background-image: url(<c:url value='/direngine-master/images/bg_6.jpg'/>)"
     >
       <div class="overlay"></div>
       <div class="container">
@@ -69,162 +69,72 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 ftco-animate">
-            <!-- <h2 class="mb-3">${artList.artTitle}</h2> -->
-            ${artList.artContent}
+             <h2 class="mb-3">${artList[0].artTitle}</h2>
+             <div class="tag-widget post-tag-container mb-5 mt-5">
+               <div class="tagcloud">
+                 <a href="#" class="tag-cloud-link">${artList[0].articleType.typeName}</a>
+               </div>
+             </div>
+            ${artList[0].artContent}
 
-            <div class="tag-widget post-tag-container mb-5 mt-5">
-              <div class="tagcloud">
-                <a href="#" class="tag-cloud-link">Life</a>
-                <a href="#" class="tag-cloud-link">Sport</a>
-                <a href="#" class="tag-cloud-link">Tech</a>
-                <a href="#" class="tag-cloud-link">Travel</a>
-              </div>
-            </div>
 
             <div class="about-author d-flex p-5 bg-light">
               <div class="bio align-self-md-center mr-5">
                 <img
-                  src="direngine-master/images/person_1.jpg"
+                  src="<c:url value='/direngine-master/images/person_1.jpg'/>"
                   alt="Image placeholder"
                   class="img-fluid mb-4"
-                  width="200" height="200"
+                  width="100" height="100"
                 />
               </div>
               <div class="desc align-self-md-center">
-                <h3 style="font-family:'Noto Sans TC', sans-serif ;">${artList.artUserId}</h3>
+                <h3 style="font-family:'Noto Sans TC', sans-serif ;">${artList[0].artUserId}</h3>
                 <p>
-                    我是作者啦:D 我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D我是作者啦:D
+                    
                 </p>
               </div>
             </div>
 
             <div class="pt-5 mt-5">
-              <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;">${artList.artCommNum}則評論</h3>
+              <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;"><span id="commNum">${artList[0].artCommNum}</span>則評論</h3>
               <ul class="comment-list">
 
+                <c:forEach var="comment" items="${commentList}" varStatus="status">
                 <li class="comment">
                   <div class="vcard bio">
                     <img
-                      src="direngine-master/images/person_1.jpg"
+                      src="<c:url value='/direngine-master/images/person_1.jpg'/>"
                       alt="Image placeholder"
                     />
                   </div>
                   <div class="comment-body">
-                    <h3>John Doe</h3>
-                    <div class="meta">June 27, 2018 at 2:21pm</div>
+                    <h3>${comment.comUserId}</h3>
+                    <div class="meta">${comment.comDate}</div>
                     <p>
-                      我是評論 我是評論 我是評論 
+                      ${comment.comContent}
                     </p>
                     <p><a href="#" class="reply">回覆</a></p>
                   </div>
                 </li>
-
-                <li class="comment">
-                  <div class="vcard bio">
-                    <img
-                      src="direngine-master/images/person_1.jpg"
-                      alt="Image placeholder"
-                    />
-                  </div>
-                  <div class="comment-body">
-                    <h3>John Doe</h3>
-                    <div class="meta">June 27, 2018 at 2:21pm</div>
-                    <p>
-                        我是評論 我是評論 我是評論 
-                    </p>
-                    <p><a href="#" class="reply">回覆</a></p>
-                  </div>
-
-                  <ul class="children">
-                    <li class="comment">
-                      <div class="vcard bio">
-                        <img
-                          src="direngine-master/images/person_1.jpg"
-                          alt="Image placeholder"
-                        />
-                      </div>
-                      <div class="comment-body">
-                        <h3>John Doe</h3>
-                        <div class="meta">June 27, 2018 at 2:21pm</div>
-                        <p>
-                            我是評論 我是評論 我是評論 
-                        </p>
-                        <p><a href="#" class="reply">回覆</a></p>
-                      </div>
-
-                      <ul class="children">
-                        <li class="comment">
-                          <div class="vcard bio">
-                            <img
-                              src="direngine-master/images/person_1.jpg"
-                              alt="Image placeholder"
-                            />
-                          </div>
-                          <div class="comment-body">
-                            <h3>John Doe</h3>
-                            <div class="meta">June 27, 2018 at 2:21pm</div>
-                            <p>
-                                我是評論 我是評論 我是評論 
-                            </p>
-                            <p><a href="#" class="reply">回覆</a></p>
-                          </div>
-
-                          <ul class="children">
-                            <li class="comment">
-                              <div class="vcard bio">
-                                <img
-                                  src="direngine-master/images/person_1.jpg"
-                                  alt="Image placeholder"
-                                />
-                              </div>
-                              <div class="comment-body">
-                                <h3>John Doe</h3>
-                                <div class="meta">June 27, 2018 at 2:21pm</div>
-                                <p>
-                                    我是評論 我是評論 我是評論 
-                                </p>
-                                <p><a href="#" class="reply">回覆</a></p>
-                              </div>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-
-                <li class="comment">
-                  <div class="vcard bio">
-                    <img
-                      src="direngine-master/images/person_1.jpg"
-                      alt="Image placeholder"
-                    />
-                  </div>
-                  <div class="comment-body">
-                    <h3>John Doe</h3>
-                    <div class="meta">June 27, 2018 at 2:21pm</div>
-                    <p>
-                        我是評論 我是評論 我是評論 
-                    </p>
-                    <p><a href="#" class="reply">回覆</a></p>
-                  </div>
-                </li>
+                </c:forEach>
               </ul>
               <!-- END comment-list -->
 
               <div class="comment-form-wrap pt-5">
-                <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;">寫個評論吧..</h3>
-                <form action="#" class="p-5 bg-light">
+                <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;">寫個評論吧...</h3>
+                <!--評論表單-->
+                <form action="../newComment.controller" class="p-5 bg-light" method="POST">
+                  <input type="hidden" id="c_artId" value="${artList[0].artId}">
                   <div class="form-group">
                     <label for="name" style="font-family:'Noto Sans TC', sans-serif ;">使用者名稱 *</label>
-                    <input type="text" class="form-control" id="name" />
+                    <input type="text" class="form-control" name="c_userId" id="c_userId" />
                   </div>
                   
 
                   <div class="form-group">
                     <label for="message" style="font-family:'Noto Sans TC', sans-serif ;">評論內容</label>
                     <textarea
-                      name=""
+                      name="c_content"
                       id="message"
                       cols="30"
                       rows="10"
@@ -233,8 +143,9 @@
                   </div>
                   <div class="form-group">
                     <input
+                      id="post_btn"
                       type="submit"
-                      value="Post Comment"
+                      value="發表評論"
                       class="btn py-3 px-4 btn-primary"
                     />
                   </div>
@@ -249,121 +160,70 @@
               <div class="categories">
                 <h3 style="font-family:'Noto Sans TC', sans-serif ;">文章分類</h3>
                 <li>
-                  <a href="#" style="font-family:'Noto Sans TC', sans-serif ;">旅遊 <span>(12)</span></a>
+                  <a href="../typeSearch/1" style="font-family:'Noto Sans TC', sans-serif ;">旅遊 <span>${typeCount.travel}</span></a>
                 </li>
                 <li>
-                  <a href="#" style="font-family:'Noto Sans TC', sans-serif ;">住宿 <span>(22)</span></a>
+                  <a href="../typeSearch/2" style="font-family:'Noto Sans TC', sans-serif ;">住宿 <span>${typeCount.accommodation}</span></a>
                 </li>
                 <li>
-                  <a href="#" style="font-family:'Noto Sans TC', sans-serif ;">美食 <span>(37)</span></a>
+                  <a href="../typeSearch/3" style="font-family:'Noto Sans TC', sans-serif ;">美食 <span>${typeCount.food}</span></a>
                 </li>
                 <li>
-                  <a href="#" style="font-family:'Noto Sans TC', sans-serif ;">景點 <span>(42)</span></a>
+                  <a href="../typeSearch/4" style="font-family:'Noto Sans TC', sans-serif ;">景點 <span>${typeCount.scenery}</span></a>
                 </li>
                 <li>
-                  <a href="#" style="font-family:'Noto Sans TC', sans-serif ;">交通 <span>(14)</span></a>
+                  <a href="../typeSearch/5" style="font-family:'Noto Sans TC', sans-serif ;">交通 <span>${typeCount.traffic}</span></a>
                 </li>
                 <li>
-                  <a href="#" style="font-family:'Noto Sans TC', sans-serif ;">行程 <span>(140)</span></a>
+                  <a href="../typeSearch/6" style="font-family:'Noto Sans TC', sans-serif ;">行程 <span>${typeCount.itinerary}</span></a>
                 </li>
                 <li>
-                    <a href="#" style="font-family:'Noto Sans TC', sans-serif ;">購物 <span>(140)</span></a>
+                    <a href="../typeSearch/7" style="font-family:'Noto Sans TC', sans-serif ;">購物 <span>${typeCount.shopping}</span></a>
                   </li>
                 <li>
-                    <a href="#" style="font-family:'Noto Sans TC', sans-serif ;">其他 <span>(10)</span></a>
+                    <a href="../typeSearch/0" style="font-family:'Noto Sans TC', sans-serif ;">其他 <span>${typeCount.others}</span></a>
                   </li>
               </div>
             </div>
 
             <div class="sidebar-box ftco-animate">
               <h3 style="font-family:'Noto Sans TC', sans-serif ;">近期文章</h3>
-              <div class="block-21 mb-4 d-flex">
-                <a
-                  class="blog-img mr-4"
-                  style="
-                    background-image: url(direngine-master/images/image_1.jpg);
-                  "
-                ></a>
-                <div class="text">
-                  <h3 class="heading">
-                    <a href="#"
-                      >Even the all-powerful Pointing has no control about the
-                      blind texts</a
-                    >
-                  </h3>
-                  <div class="meta">
-                    <div>
-                      <a href="#"
-                        ><span class="icon-calendar"></span> July 12, 2018</a
+              
+              <c:forEach var='recent' items='${recentArt}' varStatus='status'>
+                <div class="block-21 mb-4 d-flex">
+                  <a
+                    class="blog-img mr-4"
+                    style="
+                      background-image: url(<c:url value='/${recentArtPic[status.index]}'/>);
+                    "
+                    <
+                    
+                  ></a>
+                  <div class="text">
+                    <h3 class="heading">
+                      <a href="#">
+                        ${recent.artTitle}
+                        </a
                       >
-                    </div>
-                    <div>
-                      <a href="#"><span class="icon-person"></span> Admin</a>
-                    </div>
-                    <div>
-                      <a href="#"><span class="icon-chat"></span> 19</a>
+                    </h3>
+                    <div class="meta">
+                      <div>
+                        <a href="#"
+                          ><span class="icon-calendar"></span>${recent.artCreTime}</a
+                        >
+                      </div>
+                      <div>
+                        <a href="#"><span class="icon-person"></span>${recent.artUserId}</a>
+                      </div>
+                      <div>
+                        <a href="#"><span class="icon-chat"></span>${recent.artCommNum}</a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="block-21 mb-4 d-flex">
-                <a
-                  class="blog-img mr-4"
-                  style="
-                    background-image: url(direngine-master/images/image_2.jpg);
-                  "
-                ></a>
-                <div class="text">
-                  <h3 class="heading">
-                    <a href="#"
-                      >Even the all-powerful Pointing has no control about the
-                      blind texts</a
-                    >
-                  </h3>
-                  <div class="meta">
-                    <div>
-                      <a href="#"
-                        ><span class="icon-calendar"></span> July 12, 2018</a
-                      >
-                    </div>
-                    <div>
-                      <a href="#"><span class="icon-person"></span> Admin</a>
-                    </div>
-                    <div>
-                      <a href="#"><span class="icon-chat"></span> 19</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="block-21 mb-4 d-flex">
-                <a
-                  class="blog-img mr-4"
-                  style="
-                    background-image: url(direngine-master/images/image_3.jpg);
-                  "
-                ></a>
-                <div class="text">
-                  <h3 class="heading">
-                    <a href="#"
-                      >Even the all-powerful Pointing has no control about the
-                      blind texts</a
-                    >
-                  </h3>
-                  <div class="meta">
-                    <div>
-                      <a href="#"
-                        ><span class="icon-calendar"></span> July 12, 2018</a
-                      >
-                    </div>
-                    <div>
-                      <a href="#"><span class="icon-person"></span> Admin</a>
-                    </div>
-                    <div>
-                      <a href="#"><span class="icon-chat"></span> 19</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+              </c:forEach>
+              
             </div>
           </div>
         </div>
@@ -398,5 +258,52 @@
       </svg>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+
+    <script>
+      $('#post_btn').on('click',function(){
+        event.preventDefault();
+        var c_content = $('#message').val();
+        var c_userId=$('#c_userId').val();
+        var c_artId=$('#c_artId').val();
+        console.log('content='+c_content);
+        console.log('userid='+c_userId);
+        console.log('artid='+c_artId);
+
+        $.ajax({
+          type:"POST",
+          url:"../newComment.controller",
+          data:{
+            c_content:c_content,
+            c_userId:c_userId,
+            artId: c_artId
+          },
+          success:function(response){
+            console.log(response);
+            $('.comment-list').append(
+              "<li class='comment'>"+
+              "<div class='vcard bio'>"+
+              "<img src='"+
+              "<c:url value='/direngine-master/images/person_1.jpg'/>'"+
+              ' alt="Image placeholder"/>'+
+              "</div>"+                 
+              "<div class='comment-body'>"+
+              "<h3>"+response.comUserId+"</h3>"+
+              "<div class='meta'>"+response.comDate+"</div>"+
+              "<p>"+response.comContent+"</p>"+
+              "<p><a href='' class='reply'>回覆</a></p>"+
+             " </div></li>"
+            )
+            var commNum = eval($('#commNum').text());
+            console.log(commNum);
+            
+            $('#message').val('');
+            $('#commNum').text(eval(commNum+1));
+            
+          }
+        })
+
+      })
+
+    </script>
   </body>
 </html>
