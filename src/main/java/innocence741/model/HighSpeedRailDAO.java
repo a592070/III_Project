@@ -1,5 +1,7 @@
 package innocence741.model;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +13,23 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 
 
 public class HighSpeedRailDAO {
 
 
-	private static List<HighSpeedRail> hsrlist;
+	private List<HighSpeedRail> hsrlist;
 	private List<HighSpeedRail> hsrList2user =new ArrayList<HighSpeedRail>();
 	
 	private SessionFactory sessionFacory;
 
+//	public HighSpeedRailDAO() throws SQLException {
+//		Session session = sessionFacory.getCurrentSession();
+//		if (hsrlist == null || hsrlist.size() == 0) {
+//			hsrInit();
+//		}
+//	}
+	
 	@Autowired
 	public HighSpeedRailDAO(@Qualifier("sessionFactory") SessionFactory sessionFacory) {
 		this.sessionFacory = sessionFacory;
@@ -30,15 +38,10 @@ public class HighSpeedRailDAO {
 //	public HighSpeedRailDAO() {
 //	}
 
-	public HighSpeedRailDAO() throws SQLException {
-		Session session = sessionFacory.getCurrentSession();
-		if (hsrlist == null || hsrlist.size() == 0) {
-			hsrInit();
-		}
-	}
+
 	
 	public void hsrInit() throws SQLException {
-//		hsrlist = new ArrayList<>();
+		hsrlist = new ArrayList<>();
 		Session session = sessionFacory.getCurrentSession();
 		Query<HighSpeedRail> query = session.createQuery("From HighSpeedRail",HighSpeedRail.class);
 		hsrlist = query.list();
@@ -94,7 +97,9 @@ public class HighSpeedRailDAO {
     
     public void searchHSR(String startPoint, String destination, String departureTime) {
     	String direction = getDirection(startPoint, destination);
-
+    	System.out.println(hsrlist==null);
+    	System.out.println("-------------------------------------------------------------");
+    	hsrList2user =new ArrayList<HighSpeedRail>();
     	for (int i = 0;  i <hsrlist.size(); i++) {
     		if( Objects.equals(direction,hsrlist.get(i).getDirection()) && hsrlist.get(i).getArriveTime(startPoint)!=null && hsrlist.get(i).getArriveTime(destination)!=null ) {
     			hsrList2user.add(hsrlist.get(i));
