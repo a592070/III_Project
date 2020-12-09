@@ -4,15 +4,22 @@
 <head>
     <title>找景點</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
 
     <script type="text/javascript">
         const context = "${pageContext.servletContext.contextPath}";
     </script>
 
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.10/lib/index.css" />
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
 
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vuex"></script>
@@ -36,8 +43,8 @@
         }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/vant@2.10/lib/vant.min.js"></script>
-
+<%--    <script src="https://cdn.jsdelivr.net/npm/vant@2.10/lib/vant.min.js"></script>--%>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
     <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
@@ -53,20 +60,22 @@
 <body>
 <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
 
-<div class="container-fluid" style="padding: 0">
+<div class="container-fluid" style="padding: 0; width: 100%;height: 100%;">
     <div class="hero-wrap " style="width: 100%;height: 100%; z-index: -1; background-size: cover; background-repeat: no-repeat; background-image: url('https://i.imgur.com/6DuGxHp.jpg'); ">
         <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
-                <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-                    <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 台灣</span></p>
-                    <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">景 點</h1>
+        <div class="container" style="padding: 0; width: 100%;height: 100%;">
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true" style="padding: 0; width: 100%;height: 100%;">
+                <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }" style="padding: 0; width: 100%;height: 50%;">
+                    <h1 class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>FUN</strong> x <strong>台灣</strong></h1>
+                    <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>景 點</strong></h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <div id="app">
+
     <index></index>
 </div>
 

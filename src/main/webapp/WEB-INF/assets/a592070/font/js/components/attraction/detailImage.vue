@@ -15,7 +15,7 @@ module.exports = {
         context+'/assets/attraction/1/08299ea3-9700-317d-b8c5-dd9de05ff5ca.jpg',
         context+'/assets/attraction/1/ceff9e32-2c81-3176-9415-7ade0c9a0719.jpg',
       ],
-      fit: 'contain'
+      fit: 'cover'
     }
   }
 }
