@@ -29,6 +29,9 @@ body{
 img{
 	width:700px;
 }
+.i{
+	width:30px;
+}
 .room-details-item{
 	padding-left:50px;
 }
@@ -289,10 +292,36 @@ element.style {
                                         <h5 id="comment_rating">您的評分</h5>
                                         <div class="rating">
 <!--                                             <i class="icon_star"></i> -->
-<!--                                             <i class="icon_star"></i> -->
-<!--                                             <i class="icon_star"></i> -->
-<!--                                             <i class="icon_star"></i> -->
-<!--                                             <i class="icon_star-half_alt"></i> -->
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <i id="starRating" class='fa fa-star-o'></i>
+<%--                                              <img id="img1" class="i" src="<%=application.getContextPath()%>/direngine-master/images/star.jpg" /> --%>
+                                             
+                                         <script>
+                                             var start = 0;
+                                         $("i#starRating").on("mouseenter", function () {
+                                             console.log("size = " + $("i#starRating").size())
+                                             $("i#starRating").attr("class", "fa fa-star-o")
+                                             let num = $("i#starRating").index($(this)) + 1;
+                                             console.log(num);
+                                             for (let i = 0; i < num; i++) {
+                                                 $("i#starRating").eq(i).attr("class", "icon_star")
+                                             }
+                                         }).mouseout(function () {
+                                             if (start == 0) {
+                                                 $("i#starRating").attr("class", "fa fa-star-o")
+                                             }
+                                         }).click(function () {
+                                             start = 1;
+                                             let clicknum = $("i#starRating").index($(this)) + 1;
+                                             console.log("num" + clicknum);
+                                             for (let i = 0; i < num; i++) {
+                                                 $("i#starRating").eq(i).attr("class", "icon_star")
+                                             }
+                                         })
+                                         </script>
                                         </div>
                                     </div>
                                     <textarea placeholder="寫下您對於此餐廳的評論" id="r_comment"></textarea>
@@ -314,7 +343,6 @@ element.style {
 								                        	res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#addComment" style="display:none;"></button>';
 								                        	$("#comment_rating").html(res_context);
 								                        	$("#commentbtn").click();
-// 								                        	$(".review-add").empty();
 								                        	
 								                        }
 								                    }
