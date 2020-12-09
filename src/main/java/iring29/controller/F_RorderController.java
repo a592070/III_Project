@@ -155,9 +155,9 @@ public class F_RorderController {
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		F_Serivce.createOrder(OTBean);
 		session.removeAttribute("OTBean");
-		OrderTable otBean = F_Serivce.findOrder();
-		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
-		session.setAttribute("res_lists", res_lists);
+//		OrderTable otBean = F_Serivce.findOrder();
+//		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
+//		session.setAttribute("res_lists", res_lists);
 		session.removeAttribute("cartnum");
 //		return "iring29/OrderDetail";
 		return "redirect:payment";
@@ -175,8 +175,8 @@ public class F_RorderController {
 		checkOut.setTotalAmount("100");
 		checkOut.setTradeDesc("Fun Taiwan 商城購物");
 		checkOut.setItemName("Fun Taiwan");
-//		checkOut.setReturnURL("https://10b30b05ae19.ngrok.io/showOrder");//資料確認用
-//		checkOut.setClientBackURL("/showOrder");// return 網址
+//		checkOut.setReturnURL("https://ba554c1555ce.ngrok.io/III_Project/checkorder");//資料確認用
+//		checkOut.setClientBackURL("https://ba554c1555ce.ngrok.io/III_Project/showOrder");// return 網址
 		String result = pay.aioCheckOut(checkOut, null);
 		System.out.println("payment result = " + result);
 		session.setAttribute("result", result);
@@ -188,7 +188,15 @@ public class F_RorderController {
 	@RequestMapping(path = "/showOrder")
 	public String showOrder(HttpSession session) {
 		session.removeAttribute("result");
+		OrderTable otBean = F_Serivce.findOrder();
+		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
+		session.setAttribute("res_lists", res_lists);
 		return "iring29/OrderDetail";
+	}
+	
+	@RequestMapping(path = "/checkorder", method = RequestMethod.POST)
+	public String checkOrder() {
+		return "iring29/checkorder";
 	}
 	
 	//移除預定餐廳
