@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 
 public class TomcatStarter {
 
-    private static int port = 8080;
+    private static int port = 80;
     private static String contextPath = "/";
 
     public static void start() throws LifecycleException, ServletException {
@@ -20,9 +20,12 @@ public class TomcatStarter {
 
         Context context = tomcat.addWebapp(contextPath, basedDir);
         System.out.println(context.getPath());
+        context.setResponseCharacterEncoding("UTF-8");
+        context.setRequestCharacterEncoding("UTF-8");
 
         tomcat.enableNaming();
         Connector connector = tomcat.getConnector();
+        connector.setURIEncoding("UTF-8");
 
         tomcat.start();
         // 啟動線程進入等待狀態
