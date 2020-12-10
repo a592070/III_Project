@@ -43,35 +43,73 @@ public class F_HotelOrderController {
 		if(cartnum == null) {
 			cartnum = 0;
 		}
-		
-		BigDecimal sn =  hotel.getSN(); //取得session裡的SN
-		HotelOrder hOrderList = new HotelOrder();
-		
-		HotelOrder currentDB = f_hotelOrderService.DBroom(sn); //取得已成立訂單中 該飯店的雙人房被訂了幾間
-		HotelOrder currentQD = f_hotelOrderService.QDroom(sn); //取得已成立訂單中 該飯店的四人房被訂了幾間
-		
-//		hOrderList.getDOUBLE_ROOM(sn);
-		
-//		if()
-		
-		HotelOrder hOBean = new HotelOrder();
-		
-		hOBean.setCHECK_IN(date_in);
-		hOBean.setCHECK_OUT(date_out);
-		hOBean.setPROPLE_NUM(guest);
-		hOBean.setDOUBLE_ROOM(dbroom);
-		hOBean.setQUADRUPLE_ROOM(qdroom);
-		hOBean.setCLIENT_NAME(client_name);
-		hOBean.setCLIENT_PHONE(client_phone);
-		
-		OTBean.addHotelOrder(hOBean);
-		
-		
-		
-		cartnum = cartnum + 1;
-		System.out.println("cart num = " +cartnum);
-		session.setAttribute("OTBean", OTBean);
-		session.setAttribute("cartnum", cartnum);
-		return "redirect:Shoppingcart";
+
+			HotelOrder hOBean = new HotelOrder();
+			
+			hOBean.setCHECK_IN(date_in);
+			hOBean.setCHECK_OUT(date_out);
+			hOBean.setPROPLE_NUM(guest);
+			hOBean.setDOUBLE_ROOM(dbroom);
+			hOBean.setQUADRUPLE_ROOM(qdroom);
+			hOBean.setCLIENT_NAME(client_name);
+			hOBean.setCLIENT_PHONE(client_phone);
+			
+			OTBean.addHotelOrder(hOBean);
+			
+			cartnum = cartnum + 1;
+			System.out.println("cart num = " +cartnum);
+			session.setAttribute("OTBean", OTBean);
+			session.setAttribute("cartnum", cartnum);
+			return "redirect:Shoppingcart";
+
 	}
+	
+	
+	
+	@RequestMapping(path = "/CheckOrderRoom", method = RequestMethod.POST)
+	public String CheckOrderRoom(@RequestParam(value = "H_SN") BigDecimal H_SN, 
+							   @RequestParam(value = "dbroom") BigDecimal dbroom, 
+							   @RequestParam(value = "qdroom") BigDecimal qdroom, 
+							   HttpSession session) {
+		
+		int currentDB = f_hotelOrderService.DBroom(H_SN); //取得已成立訂單中 該飯店的雙人房被訂了幾間
+		int currentQD = f_hotelOrderService.QDroom(H_SN); //取得已成立訂單中 該飯店的四人房被訂了幾間
+		
+		int totalDB = f_hotelOrderService.getHotelDB(H_SN); //某某飯店雙人房總數
+		int totalQD = f_hotelOrderService.getHotelQD(H_SN); //某某飯店四人房總數
+		
+			
+		int LeftDB = totalDB - currentDB ; //剩餘雙人房間數
+		int LeftQD = totalQD - currentQD ; //剩餘四人房間數
+		
+		int DBroom = dbroom.intValue();
+		int QDroom = qdroom.intValue();
+		
+		System.out.println(LeftDB);
+		System.out.println(LeftQD);
+		System.out.println(DBroom);
+		System.out.println(DBroom);
+		
+		if(DBroom <= LeftDB && QDroom <= QDroom ) {
+			
+			return "true";
+		}else {
+			return "false";
+		}	
+
+	}
+	
+	@RequestMapping(path = "/CheckOrderDate", method = RequestMethod.POST)
+	public String CheckOrderDate(@RequestParam(value = "H_SN") BigDecimal H_SN, 
+							   @RequestParam(value = "date_in") Date date_in, 
+							   @RequestParam(value = "date_out") Date date_out, 
+							   HttpSession session) {
+		
+	
+		return "";
+
+	}
+	
+	
+	
 }

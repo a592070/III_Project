@@ -37,6 +37,12 @@ body{
 .bg-dark {
      background-color: transparent !important; 
 }
+#idsp{
+	float:left; 
+	color:red;
+	font-size:13px;
+	font-style:italic;
+}
 </style>
 
 </head>
@@ -155,7 +161,8 @@ body{
                 <div class="col-lg-4">
                     <div class="room-booking">
                         <h3>立即預訂</h3>
-                        <form action="<%=pageContext.getServletContext().getContextPath()%>/HotelOrder" method="POST">
+                        <form class="HBooking" action="<%=pageContext.getServletContext().getContextPath()%>/HotelOrder" method="POST">
+                        	 <input type="hidden" id="H_SN" value="${hoteldetail.SN}">
                             <div class="check-date">
                                 <label for="date-in">入住日期:</label>
                                 <input type="date" class="date-input hasDatepicker" id="date_in" name="date_in" onchange="checkin()">
@@ -198,7 +205,7 @@ body{
         						console.log(typeof(book));
         						document.getElementById("date_out").value = book;
         						
-        						var date = new Date();
+        						var day = new Date();
         						var month = date.getMonth() + 1;
         						var year = date.getFullYear();
 
@@ -209,11 +216,14 @@ body{
 									
         						var inittoday = year + "-" + month + "-" + day;
         						document.getElementById("date_out").min = inittoday;
+        						document.getElementById("date_out").value = inittoday;
+        						
         						
         						function checkin(){
         							var today = document.getElementById("date_in").value; 
         							document.getElementById("date_out").min = today;
-        							console.log(today);
+        							document.getElementById("date_out").value = today;
+        							console.log(date_out);
 									}
 								
 //         						var today = document.getElementById("date_in").value;
@@ -243,7 +253,7 @@ body{
     							</script>
                             </div>
                             <div class="select-option">
-                                <label for="dbroom">雙人房:</label>
+                                <label for="dbroom">雙人房:</label><span id="nameDB">&nbsp;</span>
                                 <select id="dbroom" class="form-control">
                                     <option value="0">0</option>
                                     <option value="1">1</option>
@@ -260,6 +270,7 @@ body{
                                 <label for="qdroom">四人房:</label>
                                 <select id="qdroom" class="form-control">
 									<option value="0">0</option>
+									<option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
@@ -271,14 +282,91 @@ body{
                             </div>
                             
                             <div class="select-option">
-                                <label for="client_name">姓名:</label>
+                                <label for="client_name">姓名:</label><span id="idsp">&nbsp;*必填</span><span id="nameCk">&nbsp;</span>
                                 <input type="text" name="client_name" id="client_name">
                             </div>
                             <div class="select-option">
-                                <label for="client_phone">電話:</label>
+                                <label for="client_phone">電話:</label><span id="idsp">&nbsp;*必填</span><span id="phoneCK">&nbsp;</span>
                                 <input type="text" name="client_name" id="client_phone">
                             </div>                            
-                            <button type="submit">我要訂房</button>
+                            <button type="button" id="order" >我要訂房</button>
+                            <script>
+                            var item = 0;
+								$("#order").click(function(){
+									var H_SN = ${"#H_SN"}.val();
+									var date_in = $("#date_in").val();
+									var date_out = $("#date_out").val();
+									var guest = $("#guest").val();
+									var dbroom = $("#dbroom").val();
+									var qdroom = $("#qdroom").val();
+									var client_name = $("#client_name").val();
+									var client_phone = $("#client_phone").val();
+									if($("#client_name").val() == ""){
+										$("#nameCk").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入訂位者姓名</font>");
+									}else{
+										$("#nameCk").html("");
+										}
+									if($("#client_phone").val() == ""){
+										$("#phoneCK").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入手機號碼</font>");
+									}else if(!$("#client_phone").val().match(/^09[0-9]{8}$/)){
+										$("#phoneCK").html("&nbsp;<font color='red' id='idsp'>&nbsp;手機號碼格式不正確！</font>");
+									}else {
+										$("#phoneCK").html("");
+									}
+									if($("#dbroom").val() == "0" && $("#qdroom").val() == "0"){
+										$("#nameDB").html("&nbsp;<font color='red' id='nameDB'>&nbsp;請至少選擇一種房型</font>");
+									}else{
+										$("#nameDB").html("");
+										}
+								
+									console.log("t or f = " + (!$("#client_phone").val().match(/^09[0-9]{8}$/)))
+									if(name != "" && phone != "" && (!$("#client_phone").val().match(/^09[0-9]{8}$/)) == false && date_out != ""){
+										$.ajax(
+							                    {
+							                        type: 'POST',
+							                        data: { "H_SN":H_SN, "date_in":date_in, "date_in":date_in},
+							                        url: '${pageContext.servletContext.contextPath}/CheckOrderDate',
+							                        dataType: 'html',
+							                        success:function(response){
+							                        	console.log("h = " + response);
+							                           if(response == "false"){
+								                           console.log("in h = " + response);
+							                        	   var hotel_context = "";
+							                        	   hotel_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+								                        	$("#rating").html(res_context);
+								                        	$("#tableckbtn").click();
+							                        	   
+								                        }else{
+								                        	$.ajax(
+												                    {
+												                        type: 'POST',
+												                        data: {"H_SN":H_SN, "dbroom":dbroom, "qdroom":qdroom },
+												                        url: '${pageContext.servletContext.contextPath}/CheckOrderRoom',
+												                        dataType: 'html',
+												                        success:function(response){
+												                        	console.log("r = " + response);
+												                           if(response == "false"){
+													                           console.log("in r = " + response);
+												                        	   var hotel_context = "";
+												                        	   hotel_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+													                        	$("#rating").html(res_context);
+													                        	$("#tableckbtn").click();
+												                        	   
+													                        }else{
+													                        	   $(".HBooking").submit();
+														                    }
+												                        }
+												                    }
+												                )
+									                    }
+							                        }
+							                    }
+							                )
+										
+									}
+									})
+									
+                            </script>
                         </form>
                     </div>
                 </div>

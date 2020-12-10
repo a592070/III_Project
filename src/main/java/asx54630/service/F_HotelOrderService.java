@@ -19,13 +19,23 @@ public class F_HotelOrderService {
 	private F_HotelOrderDAO f_hotelOrderDao;
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public HotelOrder DBroom(BigDecimal sn) {
+	public int DBroom(BigDecimal sn) {
 		return f_hotelOrderDao.DBroom(sn);
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public HotelOrder QDroom(BigDecimal sn) {
+	public int QDroom(BigDecimal sn) {
 		return f_hotelOrderDao.QDroom(sn);
 	}
-
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public int getHotelDB(BigDecimal sn) {
+		return f_hotelOrderDao.getHotelDB(sn);
+	}
+	
+	@Transactional(rollbackFor = {Throwable.class})
+	public int  getHotelQD(BigDecimal sn) {
+		return f_hotelOrderDao.getHotelQD(sn);
+	}
+	
 }
