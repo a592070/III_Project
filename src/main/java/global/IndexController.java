@@ -10,7 +10,7 @@ public class IndexController {
     public String welcomePage(){
         return "index";
     }
-    @RequestMapping(path = "/FunTaiwan")
+    @RequestMapping(path = {"/FunTaiwan", "/", "/index", "/*"})
     public String UserIndex(){
         return "UserIndex";
     }
