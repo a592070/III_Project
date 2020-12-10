@@ -143,51 +143,71 @@ element.style {
 									<a href="javascript:void();" id="addCart">放入購物車</a>
 									<script>
 										$("#addCart").on('click',function(){
-											var thedate = $("#theDate").val();
-											var thetime = $("#sel").val();
-											var num = $("#p_num").val();
-											var name = $("#b-name").val();
-											var phone = $("#b-phone").val();
-											console.log("resule =" + thedate, thetime, num, name, phone);
-											//	檢查桌數
 											$.ajax(
 								                    {
-								                        type: 'GET',
-								                        data: { "book_date":thedate,"time":thetime },
-								                        url: '${pageContext.servletContext.contextPath}/checkTable',
-								                        dataType: 'html',
+								                        type: 'POST',
+								                        data: { },
+								                        url: '${pageContext.servletContext.contextPath}/checkLogin',
+								                        dataType: 'json',
 								                        success:function(response){
-								                        	console.log("r = " + response);
-								                           if(response == "false"){
-									                           console.log("in r = " + response);
-								                        	   var res_context = "";
-									                        	res_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
-									                        	$("#rating").html(res_context);
-									                        	$("#tableckbtn").click();
-								                        	   
-									                        }else{
-															//加入購物車
-									                        	$.ajax(
+									                        console.log("re = " + response);
+									                        if(response == true){
+									                        	var thedate = $("#theDate").val();
+																var thetime = $("#sel").val();
+																var num = $("#p_num").val();
+																var name = $("#b-name").val();
+																var phone = $("#b-phone").val();
+																console.log("resule =" + thedate, thetime, num, name, phone);
+//									                        	檢查桌數
+																$.ajax(
 													                    {
-													                        type: 'POST',
-													                        data: { "time":thetime, "book_date":thedate, "b_name":name,"b_phone":phone ,"person_number": num},
-													                        url: '${pageContext.servletContext.contextPath}/addOrder',
+													                        type: 'GET',
+													                        data: { "book_date":thedate,"time":thetime },
+													                        url: '${pageContext.servletContext.contextPath}/checkTable',
 													                        dataType: 'html',
 													                        success:function(response){
-														                        console.log("re = " + response);
-													                        	var res_context = "";
-													                        	res_context += '<button type="button" class="btn btn-primary" id="modalbtn" data-toggle="modal" data-target="#exampleModalCenter" style="display:none;"></button>';
-													                        	$("#rating").html(res_context);
-													                        	$("#modalbtn").click();
-													                        	$(".nav-shop__circle").html(response);
+													                        	console.log("r = " + response);
+													                           if(response == "false"){
+														                           console.log("in r = " + response);
+													                        	   var res_context = "";
+														                        	res_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+														                        	$("#rating").html(res_context);
+														                        	$("#tableckbtn").click();
+													                        	   
+														                        }else{
+																				//加入購物車
+														                        	$.ajax(
+																		                    {
+																		                        type: 'POST',
+																		                        data: { "time":thetime, "book_date":thedate, "b_name":name,"b_phone":phone ,"person_number": num},
+																		                        url: '${pageContext.servletContext.contextPath}/addOrder',
+																		                        dataType: 'html',
+																		                        success:function(response){
+																			                        console.log("re = " + response);
+																		                        	var res_context = "";
+																		                        	res_context += '<button type="button" class="btn btn-primary" id="modalbtn" data-toggle="modal" data-target="#exampleModalCenter" style="display:none;"></button>';
+																		                        	$("#rating").html(res_context);
+																		                        	$("#modalbtn").click();
+																		                        	$(".nav-shop__circle").html(response);
+																		                        }
+																		                    }
+																		                )
+														                        	   
+															                    }
 													                        }
 													                    }
 													                )
-									                        	   
+								                        		
+									                        }else if(response == false){
+									                        	var res_context = "";
+									                        	res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#loginbtn" style="display:none;"></button>';
+								                        		$("#comment_rating").append(res_context);
+								                        		$("#commentbtn").click();
 										                    }
 								                        }
 								                    }
 								                )
+											
 											
 											
 										});
@@ -348,6 +368,7 @@ element.style {
 											var comment = $("#r_comment").val();
 											var stars = $("#stars").val();
 											console.log("comment = " + comment + ", stars = " + stars );
+											//檢查是否登入
 											$.ajax(
 								                    {
 								                        type: 'POST',
@@ -357,6 +378,7 @@ element.style {
 								                        success:function(response){
 									                        console.log("re = " + response);
 									                        if(response == true){
+									                        	//是否重複登入 & 可登入
 									                        	$.ajax(
 													                    {
 													                        type: 'POST',
@@ -426,7 +448,7 @@ element.style {
         									</button>
       									</div>
       									<div class="modal-body">
-       									請先登入再留言          
+       									請先登入哦 !          
       									</div>
       									<div class="modal-footer">
 											<form id="form-1" action="<%=pageContext.getServletContext().getContextPath()%>/user/singinPage">
@@ -579,48 +601,68 @@ element.style {
                             <script>
                             var item = 0;
 								$("#order").click(function(){
-									var name = $("#b-name").val();
-									var phone = $("#b-phone").val();
-									var date = $("#theDate").val();
-									var time = $("#sel").val();
-									if($("#b-name").val() == ""){
-										$("#nameck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入訂位者姓名</font>");
-									}else{
-										$("#nameck").html("");
-										}
-									if($("#b-phone").val() == ""){
-										$("#phoneck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入手機號碼</font>");
-									}else if(!$("#b-phone").val().match(/^09[0-9]{8}$/)){
-										$("#phoneck").html("&nbsp;<font color='red' id='idsp'>&nbsp;手機號碼格式不正確！</font>");
-									}else {
-										$("#phoneck").html("");
-									}
-									console.log("t or f = " + (!$("#b-phone").val().match(/^09[0-9]{8}$/)))
-									if(name != "" && phone != "" && (!$("#b-phone").val().match(/^09[0-9]{8}$/)) == false){
-										$.ajax(
-							                    {
-							                        type: 'GET',
-							                        data: { "book_date":date,"time":time },
-							                        url: '${pageContext.servletContext.contextPath}/checkTable',
-							                        dataType: 'html',
-							                        success:function(response){
-							                        	console.log("r = " + response);
-							                           if(response == "false"){
-								                           console.log("in r = " + response);
-							                        	   var res_context = "";
-								                        	res_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
-								                        	$("#rating").html(res_context);
-								                        	$("#tableckbtn").click();
-							                        	   
-								                        }else{
-								                        	   $(".booking2").submit();
-									                    }
-							                        }
-							                    }
-							                )
-										
-									}
-									})
+									//檢查是否登入
+									$.ajax(
+								                    {
+								                        type: 'POST',
+								                        data: { },
+								                        url: '${pageContext.servletContext.contextPath}/checkLogin',
+								                        dataType: 'json',
+								                        success:function(response){
+									                        console.log("re = " + response);
+									                        if(response == true){
+									                        	var name = $("#b-name").val();
+																var phone = $("#b-phone").val();
+																var date = $("#theDate").val();
+																var time = $("#sel").val();
+																if($("#b-name").val() == ""){
+																	$("#nameck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入訂位者姓名</font>");
+																}else{
+																	$("#nameck").html("");
+																	}
+																if($("#b-phone").val() == ""){
+																	$("#phoneck").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入手機號碼</font>");
+																}else if(!$("#b-phone").val().match(/^09[0-9]{8}$/)){
+																	$("#phoneck").html("&nbsp;<font color='red' id='idsp'>&nbsp;手機號碼格式不正確！</font>");
+																}else {
+																	$("#phoneck").html("");
+																}
+																console.log("t or f = " + (!$("#b-phone").val().match(/^09[0-9]{8}$/)))
+																if(name != "" && phone != "" && (!$("#b-phone").val().match(/^09[0-9]{8}$/)) == false){
+																	$.ajax(
+														                    {
+														                        type: 'GET',
+														                        data: { "book_date":date,"time":time },
+														                        url: '${pageContext.servletContext.contextPath}/checkTable',
+														                        dataType: 'html',
+														                        success:function(response){
+														                        	console.log("r = " + response);
+														                           if(response == "false"){
+															                           console.log("in r = " + response);
+														                        	   var res_context = "";
+															                        	res_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+															                        	$("#rating").html(res_context);
+															                        	$("#tableckbtn").click();
+														                        	   
+															                        }else{
+															                        	   $(".booking2").submit();
+																                    }
+														                        }
+														                    }
+														                )
+																	
+																}
+								                        		
+									                        }else if(response == false){
+									                        	var res_context = "";
+									                        	res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#loginbtn" style="display:none;"></button>';
+								                        		$("#comment_rating").append(res_context);
+								                        		$("#commentbtn").click();
+										                    }
+								                        }
+								                    }
+								                )
+								})
 									
 							function checkinfoN(){
 									var name = $("#b-name").val();
