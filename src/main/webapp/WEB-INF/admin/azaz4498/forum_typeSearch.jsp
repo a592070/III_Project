@@ -29,7 +29,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
           
       }
     </style>
-    <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -40,7 +40,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
     <div
       class="hero-wrap js-fullheight"
-      style="background-image: url('direngine-master/images/bg_6.jpg')"
+      style="background-image: url('../direngine-master/images/bg_6.jpg')"
     >
       <div class="overlay"></div>
       <div class="container">
@@ -68,11 +68,9 @@ contentType="text/html;charset=UTF-8" language="java"%>
         </div>
       </div>
     </div>
-    
-    
-
-    <section class="ftco-section bg-light " id="section">
-      <c:import url="/WEB-INF/admin/azaz4498/carousel.jsp"/>
+    <input type="hidden" id="articleType" value="${list[0].articleType.typeId}">
+    <div class="row d-flex justify-content-center mt-5 mb-5"><i class="fas fa-search fa-2x">${list[0].articleType.typeName}</i></div>
+    <section class="ftco-section bg-light" id="section">
       <div class="container" id="container">
         <div class="row d-flex" id="articleGrid">
           
@@ -82,16 +80,16 @@ contentType="text/html;charset=UTF-8" language="java"%>
               <div class="blog-entry align-self-stretch">
                 <input type="hidden" class="artId" value="${article.artId}">
                 <a
-                  href="article/${article.artId}"
+                  href="<%=application.getContextPath()%>/article/${article.artId}"
                   class="block-20 artCoverPic"
-                  style="background-image: url('${picList[status.index]}')"
+                  style="background-image: url('../${picList[status.index]}')"
                 >
                 </a>
                 <div class="text p-4 d-block">
                   <span class="tag">${article.articleType.typeName}</span>
 
                   <h3 class="heading mt-3">
-                    <a href="article/${article.artId}">${article.artTitle}</a>
+                    <a href="<%=application.getContextPath()%>/article/${article.artId}">${article.artTitle}</a>
                   </h3>
                   <div class="meta mb-3">
                     <div><a href="#">${article.artCreTime}</a></div>
@@ -116,6 +114,11 @@ contentType="text/html;charset=UTF-8" language="java"%>
             <div class="block-27">
               <ul>
                 <li id ="prev" class="prev"><a href="">&lt;</a></li>
+                <!-- <li class="active"><span>1</span></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li> -->
                 <li id ="next" class="next"><a href="">&gt;</a></li>
               </ul>
             </div>
@@ -123,6 +126,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
         </div>
       </div>
     </section>
+
     <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
 
     <!-- loader -->
@@ -155,15 +159,15 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <script>
-        $(window).scroll(function() {
-      if($(document).scrollTop() > 600){
-          $(".fixed-btn").show();
-      } else {
-          $(".fixed-btn").hide();
-  }
+      $(window).scroll(function() {
+    if($(document).scrollTop() > 600){
+        $(".fixed-btn").show();
+    } else {
+        $(".fixed-btn").hide();
+}
 });
 
-    </script>
+  </script>
     <script>
       var len = eval(${totalPages});
       var currPage= eval(${currPage});
@@ -180,19 +184,41 @@ contentType="text/html;charset=UTF-8" language="java"%>
       if(currPage==1){
         $('#prev').remove();
       }
+
+      // $('.artCoverPic').on('click',function(){
+      //   event.preventDefault();
+      //   var currArtId = $(this).prev().val();
+      //   $.ajax({
+      //     type:"GET",
+      //     url:"articleDetail.controller",
+      //     data:{
+      //       artId:currArtId
+      //     },
+      //     success:function(response){
+      //       window.location.href='articleDetail.controller?artId='+currArtId;
+      //     }
+
+      //   })
+      // })
+
+      
+
+
     </script>
-    
     <script>
       $('#next').on('click',function(){
         event.preventDefault();
         var totalPage=eval(${totalPages});
+        var typeId = $('#articleType').val();
+        console.log(typeId);
         
 
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: currPage+1,
+            typeId:typeId
           },
           success:function(response){
             $('#section').children().remove();
@@ -201,6 +227,8 @@ contentType="text/html;charset=UTF-8" language="java"%>
             
             window.scrollTo({ top: 600, behavior: 'smooth' });
 
+            
+            
           },
           
         })
@@ -211,11 +239,13 @@ contentType="text/html;charset=UTF-8" language="java"%>
         // window.scrollTo({ top: 500, behavior: 'smooth' });
         //event.preventDefault();
         var totalPage=eval(${totalPages});
+        var typeId = $('#articleType').val();
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: currPage-1,
+            typeId :typeId
           },
           success:function(response){
             $('#section').children().remove();
@@ -228,13 +258,15 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
       $('.page').on('click',function(){
         console.log('page has been click');
+        var typeId = $('#articleType').val();
         event.preventDefault();
         var page = $(this).text();
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: page,
+            typeId: typeId
           },
           success:function(response){
             $('#section').children().remove();
@@ -245,6 +277,68 @@ contentType="text/html;charset=UTF-8" language="java"%>
         })
 
       })
+
+      
+
     </script>
+    
+
+    <!-- <script>
+      $(window).on("load",function () {
+        $.ajax({
+          type: "GET",
+          url: "Article.controller.json",
+          async:false,
+          success: function (response) {
+            showList(response);
+            
+          },
+        });
+      });
+      </script> -->
+     <!--<script>
+      function showList(response) {
+        var rowStart ="<div class='row d-flex'>";
+        var rowEnd = "</div>";
+        $(rowStart).appendTo('#container');
+        
+        $.each(response.artlist, function (index, element) {
+          var currArtId = element.artId;
+          var imgPath = response.piclist[index];
+          console.log(imgPath);
+          var content =
+              "<div class='col-md-3 d-flex ftco-animate'>" +
+              "<div class='blog-entry align-self-stretch'>" +
+              "<a href='#' class='block-20' style='background-image: " +
+              'url(' +
+              imgPath +
+              ");'>"+
+              "</a>" +
+              "<div class='text p-4 d-block'>" +
+              "<span class='tag'>" +
+              element.articleType.typeName +
+              "</span>" +
+              "<h3 class='heading mt-3>'" +
+              "<a href='#'>" +
+              element.artTitle +
+              "</a></h3>" +
+              "<div class='meta mb-3'>"+
+              "<div><a href='#'>" +
+              element.artCreTime +
+              "</a></div>" +
+              "<div><a href='#'>" +
+              element.artUserId +
+              "</a></div>" +
+              "</div>" +
+              "<a href='#'' class='meta-chat'>" +
+              "<span class='icon-chat'></span>" +
+              element.artCommNum +
+              "</a>" +
+              "</div></div></div></div></div>"
+              $(content).appendTo("#container");
+        });
+        $(rowEnd).appendTo('#container');
+      }
+    </script -->
   </body>
 </html>

@@ -32,7 +32,7 @@ public class CommentDAO {
 	}
 
 	// 新增評論
-	public void newComment(String content, int articleId, String userid) throws SQLException {
+	public Comment newComment(String content, int articleId, String userid) throws SQLException {
 		Comment comment = new Comment();
 		Article article = new Article();
 		Article article2 =  sessionFactory.getCurrentSession().get(Article.class, articleId);
@@ -45,7 +45,7 @@ public class CommentDAO {
 		comment.setArticle(article);
 		 sessionFactory.getCurrentSession().save(comment);
 		 sessionFactory.getCurrentSession().save(article2);
-		System.out.println("New comment created !");
+		 return comment;
 	}
 
 	// 刪除評論
