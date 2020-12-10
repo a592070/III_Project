@@ -2,6 +2,8 @@ package azaz4498.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.persistence.CascadeType;
@@ -21,6 +23,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -168,10 +171,7 @@ public class Article implements Serializable {
 		this.articleType = articleType;
 	}
 
-	@Override
-	public String toString() {
-		return "Article [artContent=" + artContent + "]";
-	}
+	
 
 	
 

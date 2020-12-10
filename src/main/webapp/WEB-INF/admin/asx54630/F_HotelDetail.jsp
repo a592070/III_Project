@@ -34,6 +34,9 @@ body{
  	background:white; 
 	margin:120px 120px;
 }
+.bg-dark {
+     background-color: transparent !important; 
+}
 </style>
 
 </head>

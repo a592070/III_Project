@@ -99,4 +99,5 @@ public class RestaurantService {
 	public boolean checkusr(String username) {
 		return rDao.checkusr(username);
 	}
+
 }

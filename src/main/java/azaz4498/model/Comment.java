@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "F_COMMENT")
@@ -73,6 +74,7 @@ public class Comment implements Serializable{
 	public void setComUserId(String comUserId) {
 		this.comUserId = comUserId;
 	}
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "COM_DATE")
 	public Timestamp getComDate() {
 		return comDate;
