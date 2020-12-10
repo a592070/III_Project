@@ -334,6 +334,7 @@ element.style {
                                              <Input type='hidden' name='stars' id= 'stars' value=''>
                                         </div>
                                     </div>
+                                             <span id="starcomm"></span>
                                          <script>
                                              var start = 0;
                                          $("i#starRating").on("mouseenter", function () {
@@ -360,6 +361,7 @@ element.style {
                                          })
                                          
                                          </script>
+                                         <span id="com_msg"></span>
                                     <textarea placeholder="寫下您對於此餐廳的評論" id="r_comment"></textarea>
                                     <button type="button" id="commbtn" onclick="sendcomment()">送出</button>
                                     <!-- add comment -->
@@ -368,6 +370,17 @@ element.style {
 											var comment = $("#r_comment").val();
 											var stars = $("#stars").val();
 											console.log("comment = " + comment + ", stars = " + stars );
+											if($("#stars").val() == ""){
+												$("#starcomm").html("&nbsp;<font color='red' id='idsp'>&nbsp;評分不可為零</font>");
+											}else{
+												$("#starcomm").html("");
+												}
+											if($("#r_comment").val() == ""){
+												$("#com_msg").html("&nbsp;<font color='red' id='idsp'>&nbsp;留言不可為空白</font>");
+											}else{
+												$("#com_msg").html("");
+												}
+											if($("#r_comment").val() != "" && $("#stars").val() != ""){
 											//檢查是否登入
 											$.ajax(
 								                    {
@@ -414,6 +427,7 @@ element.style {
 								                    }
 								                )
 											}
+										}
                                     </script>
                                     
                                     <!-- Modal 成功留言-->
@@ -459,7 +473,7 @@ element.style {
   									</div>
 									</div><!-- .Modal 導向登入-->
 									
-									<!-- Modal -->
+									<!-- Modal 重複留言-->
 									<div class="modal fade" id="commalready" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   									<div class="modal-dialog modal-dialog-centered" role="document">
     									<div class="modal-content">
@@ -477,10 +491,11 @@ element.style {
       									</div>
     									</div>
   									</div>
-									</div><!-- .Modal -->
+									</div><!-- .Modal 重複留言-->
 									
 									<script>
 									 $(function () { $('#addComment').modal('hide')});
+									 $(function () { $('#commalready').modal('hide')});
 									</script>
 									<script>
 									 $(function () { $('#addComment').on('hide.bs.modal', function () {
@@ -488,10 +503,26 @@ element.style {
 										console.log("size = " + list.size());
 										$("#reviews").remove();
 										$("#r_comment").val('');
-// 										$("#leavecomm").remove;
-// 										var message = '';
-// 										message += '<h5 id="comment_rating">謝謝您的留言</h5>'
-// 										$("#commbtn").attr("disabled",true);
+										$.ajax(
+							                    {
+							                        type: 'POST',
+							                        data: { },
+							                        url: '${pageContext.servletContext.contextPath}/flashComment',
+							                        dataType: 'html',
+							                        success:function(comm){
+														$(".rd-reviews").append(comm);
+														$("i#starRating").attr("class", "fa fa-star-o")
+														$("#commentbtn").empty();
+							                        }
+							                    }
+										)
+										})
+									 });
+									 $(function () { $('#commalready').on('hide.bs.modal', function () {
+										var list = $(".review-item");
+										console.log("size = " + list.size());
+										$("#reviews").remove();
+										$("#r_comment").val('');
 										$.ajax(
 							                    {
 							                        type: 'POST',
@@ -513,11 +544,11 @@ element.style {
                          </div>
 <!--                         </form> -->
                     </div>
-      									<script>
-											$("#addcommbtn").click(function(){
-// 												$(".review-add").remove();
-												})
-      									</script>
+<!--       									<script> -->
+<!-- 											$("#addcommbtn").click(function(){ -->
+<!--  												$(".review-add").remove(); -->
+<!-- 												}) -->
+<!--       									</script> -->
                 </div>
                 <div class="col-lg-4">
                     <div class="room-booking">
