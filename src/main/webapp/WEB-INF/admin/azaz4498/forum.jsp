@@ -56,13 +56,13 @@ contentType="text/html;charset=UTF-8" language="java"%>
               class="breadcrumbs"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
-              <span class="mr-2">探索台灣</span> <span></span>
+              <span class="mr-2">FUN x 台灣</span> <span></span>
             </p>
             <h1
               class="mb-3 bread"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
-              FUN x 台灣
+              論壇
             </h1>
           </div>
         </div>

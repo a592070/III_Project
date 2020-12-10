@@ -207,10 +207,10 @@
                     class="blog-img mr-4"
                     style="
                       background-image: url(<c:url value='/${recentArtPic[status.index]}'/>);
-                    "
-                    <
+                    ">
                     
-                  ></a>
+                    
+                  </a>
                   <div class="text">
                     <h3 class="heading">
                       <a href="<%=application.getContextPath()%>/article/${recent.artId}">
