@@ -58,7 +58,7 @@
               class="breadcrumbs"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
-              <span class="mr-2">探索台灣</span>
+              <span class="mr-2">FUN x 台灣</span>
              
               
             </p>
@@ -66,7 +66,7 @@
               class="mb-3 bread"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
-              FUN x 台灣
+              論壇
             </h1>
           </div>
         </div>
@@ -271,9 +271,15 @@
     </div>
     <!-- fixed btn-->
     <div class="fixed-btn">
-      <a href="#" class="btn btn-primary" href="#" role="button"><i class="far fa-edit">撰寫文章</i></a>
+      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle>" role="button"><i class="far fa-edit">撰寫文章</i></a>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script>
+      $(document).ready(function(){
+      $('body,html').animate({scrollTop: 750}, 950); 
+});
+
+    </script>
     <script>
       $(window).scroll(function() {
     if($(document).scrollTop() > 600){

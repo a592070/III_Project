@@ -198,9 +198,8 @@ h2 {
 						'bulletedList',
 						'numberedList',
 						'|',
-						'imageUpload',
+						'ImageInsert',
 						'blockQuote',
-						'mediaEmbed',
 						'undo',
 						'redo',
 						'insertTable'

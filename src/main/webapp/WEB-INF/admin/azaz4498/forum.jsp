@@ -151,9 +151,15 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <!-- fixed btn-->
     <div class="fixed-btn">
-      <a href="#" class="btn btn-primary" href="#" role="button"><i class="far fa-edit">撰寫文章</i></a>
+      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button"><i class="far fa-edit">撰寫文章</i></a>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script>
+      $(document).ready(function(){
+      $('body,html').animate({scrollTop: 800}, 800); 
+      });
+
+    </script>
     <script>
         $(window).scroll(function() {
       if($(document).scrollTop() > 600){
