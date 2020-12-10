@@ -140,7 +140,7 @@ element.style {
 <!--                                     	<Input type='hidden' name='b_phone' value=''> -->
 <%--                                     	<Input type='hidden' name='person_number' value='${person_number}'> --%>
 <!--                                     </form> -->
-									<a href="javascript:void();" id="addCart">放入購物車</a>
+									<a href="javascript:void();" id="addCart" class="review-add ra-form button">放入購物車</a>
 									<script>
 										$("#addCart").on('click',function(){
 											$.ajax(
