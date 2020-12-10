@@ -64,3 +64,8 @@ src/main/webapp/assets/ckeditor5-build-classic-master/.github/PULL_REQUEST_TEMPL
 .classpath
 .project
 .springBeans
+.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.wst.common.component
