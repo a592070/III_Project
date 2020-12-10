@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import global.pojo.OrderTable;
+import rambo0021.pojo.AccountBean;
 import utils.PictureSupport;
 
 public class F_RestaurantDAO {
@@ -132,5 +133,10 @@ public class F_RestaurantDAO {
 				System.out.println("fail to create comm.");
 			}
 			return flag;
+		}
+		
+		//get accountBean
+		public AccountBean account(String username) {
+			return sessionFactory.getCurrentSession().get(AccountBean.class, username);
 		}
 }
