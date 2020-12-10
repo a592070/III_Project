@@ -45,7 +45,7 @@
           </c:if>
           <c:if test="${!empty userBean}">
           <li class="nav-item"><a href="<%=application.getContextPath()%>/user/singout" class="nav-link">登出</a></li>
-          <li class="nav-item"><a href="<%=application.getContextPath()%>/user/registrationPage" class="nav-link">個人頁面</a></li>
+          <li class="nav-item"><a href="<%=application.getContextPath()%>/user/userProfilePage" class="nav-link">個人頁面</a></li>
           </c:if>     
           <li class="nav-item">
           <FORM id="shoppingcart" action="<%=application.getContextPath()%>/ShoppingCart" method="POST">
