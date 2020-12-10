@@ -71,9 +71,9 @@ img{
 
 element.style {
 }
-.rd-reviews,.review-add {
-	margin-left: 50px;
-}
+/* .rd-reviews,.review-add { */
+/* 	margin-left: 50px; */
+/* } */
 </style>
 </head>
 <body>
@@ -631,7 +631,7 @@ element.style {
                                 <label for="room">請輸入訂位者電話:</label><span id="idsp">&nbsp;*必填</span><span id="phoneck">&nbsp;</span>
                                 <input type="text" id="b-phone" name="b_phone" placeholder="09xxxxxxxx" onchange="checkinfoP()">
                             </div>
-                            <button id="order" type="button" class="orderbtn">我要訂位</button>
+                            <button id="order" type="button" class="orderbtn review-add ra-form button">我要訂位</button>
                             <Input type='hidden' name='cartnum' value=''>
                             <script>
                             var item = 0;
