@@ -322,7 +322,7 @@ element.style {
 <!--                                     <input type="text" placeholder="Email*"> -->
                                 </div>
                                 <div class="col-lg-12">
-                                    <div>
+                                    <div id="leavecomm">
                                         <h5 id="comment_rating">您的評分</h5>
                                         <div class="rating">
 <!--                                             <i class="icon_star"></i> -->
@@ -332,6 +332,8 @@ element.style {
                                              <i id="starRating" class='fa fa-star-o'></i>
                                              <i id="starRating" class='fa fa-star-o'></i>
                                              <Input type='hidden' name='stars' id= 'stars' value=''>
+                                        </div>
+                                    </div>
                                          <script>
                                              var start = 0;
                                          $("i#starRating").on("mouseenter", function () {
@@ -358,8 +360,6 @@ element.style {
                                          })
                                          
                                          </script>
-                                        </div>
-                                    </div>
                                     <textarea placeholder="寫下您對於此餐廳的評論" id="r_comment"></textarea>
                                     <button type="button" id="commbtn" onclick="sendcomment()">送出</button>
                                     <!-- add comment -->
@@ -387,7 +387,7 @@ element.style {
 													                        dataType: 'json',
 													                        success:function(comm){
 														                        if(comm == true){
-														                        	console.log("duplicate = " + comm)
+														                        	console.log("dup = " + comm)
 													                        		var res_context = "";
 												                        			res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#addComment" style="display:none;"></button>';
 												                        			$("#comment_rating").append(res_context);
@@ -396,9 +396,9 @@ element.style {
 														                        if(comm == false){
 															                        console.log("duplicate = " + comm)
 														                        	var res_context = "";
-												                        			res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#commalready" style="display:none;"></button>';
+												                        			res_context += '<button type="button" class="btn btn-primary" id="msgbtn" data-toggle="modal" data-target="#commalready" style="display:none;"></button>';
 												                        			$("#comment_rating").append(res_context);
-												                        			$("#commentbtn").click();
+												                        			$("#msgbtn").click();
 															                    }
 													                        }
 													                    }
@@ -488,7 +488,10 @@ element.style {
 										console.log("size = " + list.size());
 										$("#reviews").remove();
 										$("#r_comment").val('');
-										$("#commbtn").attr("disabled",true);
+// 										$("#leavecomm").remove;
+// 										var message = '';
+// 										message += '<h5 id="comment_rating">謝謝您的留言</h5>'
+// 										$("#commbtn").attr("disabled",true);
 										$.ajax(
 							                    {
 							                        type: 'POST',
@@ -498,6 +501,7 @@ element.style {
 							                        success:function(comm){
 														$(".rd-reviews").append(comm);
 														$("i#starRating").attr("class", "fa fa-star-o")
+														$("#commentbtn").empty();
 							                        }
 							                    }
 										)
