@@ -25,14 +25,14 @@ lib/
 hs_err_pid*
 
 # idea
-.idea/
+/.idea/
 *.iml
 out/
 target/
 
 
 # eclipse
-#.settings/
+/.settings/
 bin/
 gen/
 #.classpath
