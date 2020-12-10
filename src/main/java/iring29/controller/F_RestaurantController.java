@@ -111,7 +111,7 @@ public class F_RestaurantController {
 
 	}
 	
-	@RequestMapping(path = "/DisplayRestaurant", method = RequestMethod.POST)
+	@RequestMapping(path = "/DisplayRestaurant")
 	public String ShowRestaurant(@RequestParam(name = "restaurant_name") String restaurant_name, 
 		    				     HttpSession session, Model m) {
 		System.out.println("res name = " + restaurant_name);

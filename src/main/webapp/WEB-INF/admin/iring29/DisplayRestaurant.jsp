@@ -521,7 +521,7 @@ element.style {
 									 $(function () { $('#commalready').on('hide.bs.modal', function () {
 										var list = $(".review-item");
 										console.log("size = " + list.size());
-										$("#reviews").remove();
+// 										$("#reviews").remove();
 										$("#r_comment").val('');
 										$.ajax(
 							                    {
@@ -530,7 +530,7 @@ element.style {
 							                        url: '${pageContext.servletContext.contextPath}/flashComment',
 							                        dataType: 'html',
 							                        success:function(comm){
-														$(".rd-reviews").append(comm);
+// 														$(".rd-reviews").append(comm);
 														$("i#starRating").attr("class", "fa fa-star-o")
 														$("#commentbtn").empty();
 							                        }
