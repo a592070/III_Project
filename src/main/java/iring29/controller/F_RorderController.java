@@ -8,10 +8,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
@@ -19,7 +21,9 @@ import global.pojo.OrderTable;
 import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
 import iring29.service.F_RestaurantService;
+import rambo0021.pojo.AccountBean;
 
+@SessionAttributes(names = { "userBean"})
 @Controller
 public class F_RorderController {
 
@@ -38,12 +42,16 @@ public class F_RorderController {
 							   @RequestParam(value = "b_name") String b_name, 
 							   @RequestParam(value = "b_phone") String b_phone, 
 							   @RequestParam(value = "person_number") BigDecimal person_number,
-							   HttpSession session) {
+							   HttpSession session, Model m) {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		if(OTBean == null) {
 			OTBean = new OrderTable();
+			String username = (String) m.getAttribute("userBean");
+			AccountBean account = new AccountBean();
+			account.setUserName(username);
+			OTBean.setAccountBean(account);
 			cartnum = 0;
 		}
 		if(cartnum == null) {
@@ -78,12 +86,16 @@ public class F_RorderController {
 							   @RequestParam(value = "b_name") String b_name, 
 							   @RequestParam(value = "b_phone") String b_phone, 
 							   @RequestParam(value = "person_number") BigDecimal person_number,
-							   HttpSession session) {
+							   HttpSession session, Model m) {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		if(OTBean == null) {
 			OTBean = new OrderTable();
+			AccountBean account = new AccountBean();
+			String username = (String) m.getAttribute("userBean");
+			account.setUserName(username);
+			OTBean.setAccountBean(account);
 			cartnum = 0;
 		}
 		if(cartnum == null) {
@@ -155,12 +167,12 @@ public class F_RorderController {
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		F_Serivce.createOrder(OTBean);
 		session.removeAttribute("OTBean");
-//		OrderTable otBean = F_Serivce.findOrder();
-//		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
-//		session.setAttribute("res_lists", res_lists);
+		OrderTable otBean = F_Serivce.findOrder();  //不使用綠界時打開
+		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();  //不使用綠界時打開
+		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
 		session.removeAttribute("cartnum");
-//		return "iring29/OrderDetail";
-		return "redirect:payment";
+		return "iring29/OrderDetail";//不使用綠界時打開
+//		return "redirect:payment";//使用綠界時打開
 	}
 	
 	@RequestMapping(path = "/payment")
@@ -180,8 +192,7 @@ public class F_RorderController {
 		String result = pay.aioCheckOut(checkOut, null);
 		System.out.println("payment result = " + result);
 		session.setAttribute("result", result);
-//		return "iring29/Payment";
-		return "iring29/OrderDetail";
+		return "iring29/Payment"; //使用綠界時打開
 	}
 	
 	//orderlist detail
