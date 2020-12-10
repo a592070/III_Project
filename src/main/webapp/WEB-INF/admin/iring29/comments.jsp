@@ -14,7 +14,7 @@
 		<div class="ri-text">
 			<span>${comm.com_dateString}</span>
 			<div class="rating" id="commrating${comm.com_id}"></div>
-			<h5>name</h5>
+			<h5>${comm.username}</h5>
 			<p>${comm.com_content}</p>
 			<script>
 				var commstar = Math.floor("${comm.rating}");

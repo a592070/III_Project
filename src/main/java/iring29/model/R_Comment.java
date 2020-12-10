@@ -32,7 +32,8 @@ public class R_Comment {
 	@JoinColumn(name = "R_SN")
 	private Restaurant restaurant;
 	
-//	private AccountBean accountBean;
+	@Column(name = "COM_USER_ID")
+	private String username;
 	
 	@Column(name = "COM_DATE")
 	private Date com_date;
@@ -92,5 +93,15 @@ public class R_Comment {
 		}
 		return Date;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	
 	
 }

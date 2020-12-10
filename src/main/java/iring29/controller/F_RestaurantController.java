@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+@SessionAttributes(names = { "userBean"})
 @Controller
 //@SessionAttributes(names = { "res_data" })
 public class F_RestaurantController {
@@ -142,20 +143,41 @@ public class F_RestaurantController {
 		return new ResponseEntity<byte[]>(F_Serivce.getPic(r_sn), headers, HttpStatus.OK);
 	}
 	
+	//是否登入
+	@RequestMapping(path = "checkLogin", method = RequestMethod.POST)
+	public @ResponseBody boolean checkLogin(Model m) {
+		String username = (String) m.getAttribute("userBean");
+		if(username == null) {
+			System.out.println("未登入");
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
+	//留下留言
 	@RequestMapping(path = "/addComment", method = RequestMethod.POST)
 	public @ResponseBody boolean addComment(@RequestParam(name = "com_content") String comm, 
 											@RequestParam(name = "rating") BigDecimal rating,
-										    HttpSession session) {
+										    HttpSession session, Model m) {
+		Boolean flag = false;
+		String username = (String) m.getAttribute("userBean");
 		Restaurant r = (Restaurant) session.getAttribute("res_data");
-		R_Comment comment = new R_Comment();
-		comment.setCom_content(comm);
-		comment.setRestaurant(r);
-		comment.setRating(rating);
-		boolean addresult = F_Serivce.addComment(comment);
-		List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
-		session.setAttribute("comment", commentlist);
-		
-		return addresult;
+		boolean commResult = F_Serivce.userComment(username, r.getR_sn());
+		System.out.println("comm result = " + commResult);
+		if(commResult == true) {
+			R_Comment comment = new R_Comment();
+			comment.setCom_content(comm);
+			comment.setRestaurant(r);
+			comment.setRating(rating);
+			comment.setUsername(username);
+			boolean addresult = F_Serivce.addComment(comment);
+			List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
+			session.setAttribute("comment", commentlist);
+			flag = addresult;
+			return flag;
+		}
+		return false;
 	}
 	
 	//re-flash comment

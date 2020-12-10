@@ -70,5 +70,10 @@ public class F_RestaurantService {
 	public boolean addComment(R_Comment comm) {
 		return f_RDao.addComment(comm);
 	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public boolean userComment(String username, BigDecimal r_sn) {
+		return f_RDao.userComment(username, r_sn);
+	}
 }
 

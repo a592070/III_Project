@@ -267,7 +267,7 @@ element.style {
 <!--                                     <i class="icon_star"></i> -->
 <!--                                     <i class="icon_star-half_alt"></i> -->
                                 </div>
-                                <h5>name</h5>
+                                <h5>${comm.username}</h5>
                                 <p>${comm.com_content}</p>
                                 <script>
 										var commstar = Math.floor("${comm.rating}");
@@ -292,7 +292,8 @@ element.style {
                         
                     <div class="review-add" id="review-add">
                         <h4>歡迎寫下您的評論</h4>
-                        <form  class="ra-form">
+<!--                         <form  class="ra-form"> -->
+                            <div class="ra-form">
                             <div class="row">
                                 <div class="col-lg-6">
 <!--                                     <input type="text" placeholder="Name*"> -->
@@ -350,23 +351,50 @@ element.style {
 											$.ajax(
 								                    {
 								                        type: 'POST',
-								                        data: { "com_content":comment, "rating":stars},
-								                        url: '${pageContext.servletContext.contextPath}/addComment',
+								                        data: { },
+								                        url: '${pageContext.servletContext.contextPath}/checkLogin',
 								                        dataType: 'json',
 								                        success:function(response){
 									                        console.log("re = " + response);
-								                        	var res_context = "";
-								                        	res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#addComment" style="display:none;"></button>';
-								                        	$("#comment_rating").append(res_context);
-								                        	$("#commentbtn").click();
-								                        	
+									                        if(response == true){
+									                        	$.ajax(
+													                    {
+													                        type: 'POST',
+													                        data: {"com_content":comment, "rating":stars},
+													                        url: '${pageContext.servletContext.contextPath}/addComment',
+													                        dataType: 'json',
+													                        success:function(comm){
+														                        if(comm == true){
+														                        	console.log("duplicate = " + comm)
+													                        		var res_context = "";
+												                        			res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#addComment" style="display:none;"></button>';
+												                        			$("#comment_rating").append(res_context);
+												                        			$("#commentbtn").click();
+														                        }
+														                        if(comm == false){
+															                        console.log("duplicate = " + comm)
+														                        	var res_context = "";
+												                        			res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#commalready" style="display:none;"></button>';
+												                        			$("#comment_rating").append(res_context);
+												                        			$("#commentbtn").click();
+															                    }
+													                        }
+													                    }
+																)
+								                        		
+									                        }else if(response == false){
+									                        	var res_context = "";
+									                        	res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#loginbtn" style="display:none;"></button>';
+								                        		$("#comment_rating").append(res_context);
+								                        		$("#commentbtn").click();
+										                    }
 								                        }
 								                    }
 								                )
 											}
                                     </script>
                                     
-                                    <!-- Modal -->
+                                    <!-- Modal 成功留言-->
 									<div class="modal fade" id="addComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   									<div class="modal-dialog modal-dialog-centered" role="document">
     									<div class="modal-content">
@@ -385,7 +413,50 @@ element.style {
       									</div>
     									</div>
   									</div>
+									</div><!-- .Modal 成功留言-->
+									
+									<!-- Modal 導向登入-->
+									<div class="modal fade" id="loginbtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									請先登入再留言          
+      									</div>
+      									<div class="modal-footer">
+											<form id="form-1" action="<%=pageContext.getServletContext().getContextPath()%>/user/singinPage">
+        										<button type="submit" class="btn btn-primary" id="">登入</button>
+											</form>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal 導向登入-->
+									
+									<!-- Modal -->
+									<div class="modal fade" id="commalready" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									抱歉，您已留言過囉 !          
+      									</div>
+      									<div class="modal-footer">
+        										<button type="button" data-dismiss="modal" class="btn btn-primary" id="">關閉</button>
+      									</div>
+    									</div>
+  									</div>
 									</div><!-- .Modal -->
+									
 									<script>
 									 $(function () { $('#addComment').modal('hide')});
 									</script>
@@ -413,7 +484,8 @@ element.style {
 									</script>
                                 </div>
                             </div>
-                        </form>
+                         </div>
+<!--                         </form> -->
                     </div>
       									<script>
 											$("#addcommbtn").click(function(){
