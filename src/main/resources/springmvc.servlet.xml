@@ -20,7 +20,6 @@
 	<import resource="classpath:asx54630.beans.xml"/>
 
 
-
 	<context:annotation-config />
 	<context:component-scan base-package="global"/>
 
