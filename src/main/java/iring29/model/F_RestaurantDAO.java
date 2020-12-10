@@ -2,6 +2,7 @@ package iring29.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -50,6 +51,9 @@ public class F_RestaurantDAO {
 			return rBean;
 			
 		}
+		public Restaurant findRestaurant(Integer id) {
+			return sessionFactory.getCurrentSession().get(Restaurant.class, BigDecimal.valueOf(id));
+		}
 		
 		//get pic
 		public byte[] getPic(BigDecimal r_sn) {
@@ -64,6 +68,7 @@ public class F_RestaurantDAO {
 			boolean flag = false;
 			try {
 				System.out.println("create order");
+				otBean.setOrder_date(new Date());
 				sessionFactory.getCurrentSession().save(otBean);
 				flag = true;
 			} catch (Exception e) {
@@ -75,7 +80,7 @@ public class F_RestaurantDAO {
 		
 		//find order
 		public OrderTable findOrder(){
-			Query query = sessionFactory.getCurrentSession().createQuery("from OrderTable where order_id = (select max(ot.order_id) from OrderTable ot)", OrderTable.class);
+			Query<OrderTable> query = sessionFactory.getCurrentSession().createQuery("from OrderTable where order_id = (select max(ot.order_id) from OrderTable ot)", OrderTable.class);
 			OrderTable ot = (OrderTable) query.uniqueResult();
 			return ot;
 		}
@@ -83,7 +88,7 @@ public class F_RestaurantDAO {
 		//find table num
 		public boolean TableNum(BigDecimal r_sn, Timestamp ts) {
 			boolean flag = false;
-			Query query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from R_Order_List where r_sn = ?0 and book_time = ?1", Integer.class);
+			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from R_Order_List where r_sn = ?0 and book_time = ?1", Integer.class);
 			query.setParameter(0, r_sn );
 			query.setParameter(1, ts );
 			int num = (int) query.uniqueResult();
@@ -93,5 +98,42 @@ public class F_RestaurantDAO {
 			}
 			return flag;
 		}
-
+		
+		//find restaurant comment
+		public boolean userComment(String username, BigDecimal r_sn) {
+			boolean flag = false;
+			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from R_Comment where COM_USER_ID = ?0 and R_SN = ?1", Integer.class);
+			query.setParameter(0, username );
+			query.setParameter(1, r_sn );
+			int num = (int) query.uniqueResult();
+			System.out.println("num = " + num);
+			if(num < 1) {
+				flag = true;
+			}
+			return flag;
+		}
+		
+		//find restaurant comment
+		public List<R_Comment> ResComment(BigDecimal r_sn) {
+			Query<R_Comment> query = sessionFactory.getCurrentSession().createQuery("from R_Comment where r_sn = ?0 order by COM_DATE desc", R_Comment.class);
+			query.setParameter(0, r_sn);
+			query.setFirstResult(0);
+			query.setMaxResults(3);
+			
+			return query.list();
+		}
+		
+		//add comment
+		public boolean addComment(R_Comment comm) {
+			boolean flag = false;
+			try {
+				comm.setCom_date(new Date());
+				sessionFactory.getCurrentSession().save(comm);
+				flag = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("fail to create comm.");
+			}
+			return flag;
+		}
 }

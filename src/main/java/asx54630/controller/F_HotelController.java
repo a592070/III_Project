@@ -87,7 +87,7 @@ public class F_HotelController {
 
 
 
-	@RequestMapping(path = "/F_hoteldetail", method = RequestMethod.GET) //查詢單筆_給修改用
+	@RequestMapping(path = {"/F_hoteldetail","/F_hoteldetail/{detailsn}"} ) //查詢單筆_給修改用
 	public String processHotelDetail(@RequestParam(name = "detailsn") BigDecimal detailsn,Model m) {
 		
 	Hotel hoteldetail = f_hotelservice.hotelDetail(detailsn);
@@ -95,5 +95,14 @@ public class F_HotelController {
 	
 	return "asx54630/F_HotelDetail";
 	}
+	
+//	@RequestMapping(path = "/F_hoteldetail", method = RequestMethod.GET) //查詢單筆_給修改用
+//	public String processHotelDetail(@RequestParam(name = "detailsn") BigDecimal detailsn,Model m) {
+//		
+//	Hotel hoteldetail = f_hotelservice.hotelDetail(detailsn);
+//	m.addAttribute("hoteldetail", hoteldetail);
+//	
+//	return "asx54630/F_HotelDetail";
+//	}
 	
 }	

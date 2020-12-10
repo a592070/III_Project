@@ -293,7 +293,7 @@ body{
                             <script>
                             var item = 0;
 								$("#order").click(function(){
-									var H_SN = ${"#H_SN"}.val();
+									var H_SN = $("#H_SN").val();
 									var date_in = $("#date_in").val();
 									var date_out = $("#date_out").val();
 									var guest = $("#guest").val();
