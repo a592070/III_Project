@@ -8,7 +8,7 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</property>
 		<!-- <property name="hibernate.connection.datasource">java:comp/env/HibernateService</property> -->
 
-		<property name="hibernate.connection.url">jdbc:oracle:thin:@//localhost:1521/XEPDB1</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@//192.168.1.15:1521/XEPDB1</property>
 		<property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
 		<property name="hibernate.connection.username">iii_team_dba</property>
 		<property name="hibernate.connection.password">iiidba</property>
@@ -49,6 +49,7 @@
 		<mapping class="iring29.model.R_Order_List"/>
 		<mapping class="iring29.model.Restaurant_VO"/>
 		<mapping class="iring29.model.R_OrderList_VO"/>
+		<mapping class="iring29.model.R_Comment"/>
 		<mapping class="azaz4498.model.Article"/>
 		<mapping class="azaz4498.model.ArticleType"/>
 		<mapping class="azaz4498.model.Comment"/>

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import iring29.model.R_Comment;
 import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
 import iring29.model.UserPage;
@@ -35,9 +36,12 @@ import utils.StringUtil;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+@SessionAttributes(names = { "userBean"})
 @Controller
 //@SessionAttributes(names = { "res_data" })
 public class F_RestaurantController {
@@ -56,8 +60,13 @@ public class F_RestaurantController {
 		String region = "";
 		start = 0;
 		Date date = new Date();
+		Calendar calendar = new GregorianCalendar(); 
+		calendar.setTime(date); 
+		calendar.add(calendar.DATE,1); //把日期往后增加一天,整数  往后推,负数往前移动 
+		date=calendar.getTime(); //这个时间就是日期往后推一天的结果 
+		
 	    SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy-MM-dd");       
-	       
+	    
 	    String book_date = bartDateFormat.format(date);  
 	    int person_number = 1;
 		int size = F_Serivce.numRestaurant(name, region);
@@ -102,12 +111,14 @@ public class F_RestaurantController {
 
 	}
 	
-	@RequestMapping(path = "/DisplayRestaurant", method = RequestMethod.POST)
+	@RequestMapping(path = "/DisplayRestaurant")
 	public String ShowRestaurant(@RequestParam(name = "restaurant_name") String restaurant_name, 
 		    				     HttpSession session, Model m) {
 		System.out.println("res name = " + restaurant_name);
 		Restaurant res_data = F_Serivce.findRestaurant(restaurant_name);
+		List<R_Comment> comment = F_Serivce.ResComment(res_data.getR_sn());
 		session.setAttribute("res_data", res_data);
+		session.setAttribute("comment", comment);
 		return "iring29/DisplayRestaurant";
 	}
 	
@@ -132,5 +143,50 @@ public class F_RestaurantController {
 		return new ResponseEntity<byte[]>(F_Serivce.getPic(r_sn), headers, HttpStatus.OK);
 	}
 	
+	//是否登入
+	@RequestMapping(path = "checkLogin", method = RequestMethod.POST)
+	public @ResponseBody boolean checkLogin(Model m) {
+		String username = (String) m.getAttribute("userBean");
+		if(username == null) {
+			System.out.println("未登入");
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
+	//留下留言
+	@RequestMapping(path = "/addComment", method = RequestMethod.POST)
+	public @ResponseBody boolean addComment(@RequestParam(name = "com_content") String comm, 
+											@RequestParam(name = "rating") BigDecimal rating,
+										    HttpSession session, Model m) {
+		Boolean flag = false;
+		String username = (String) m.getAttribute("userBean");
+		Restaurant r = (Restaurant) session.getAttribute("res_data");
+		boolean commResult = F_Serivce.userComment(username, r.getR_sn());
+		System.out.println("comm result = " + commResult);
+		if(commResult == true) {
+			R_Comment comment = new R_Comment();
+			comment.setCom_content(comm);
+			comment.setRestaurant(r);
+			comment.setRating(rating);
+			comment.setUsername(username);
+			boolean addresult = F_Serivce.addComment(comment);
+			List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
+			session.setAttribute("comment", commentlist);
+			flag = addresult;
+			return flag;
+		}
+		return false;
+	}
+	
+	//re-flash comment
+	@RequestMapping(path = "/flashComment", method = RequestMethod.POST)
+	public String flashComment(HttpSession session) {
+		Restaurant r = (Restaurant) session.getAttribute("res_data");
+		List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
+		session.setAttribute("comment", commentlist);
+		return "iring29/comments";
+	}
 	
 }

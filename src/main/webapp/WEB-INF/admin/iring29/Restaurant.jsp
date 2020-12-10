@@ -115,11 +115,14 @@ h3{
 
 								if (month < 10)
 									month = "0" + month;
-								if (day < 10)
+								if (day < 9){
+									console.log("d = " + typeof(day));
+									day = day + 1;
 									day = "0" + day;
-
+								}else{day = day + 1;}
 								var today = year + "-" + month + "-" + day;
 								console.log(typeof(today));
+								console.log("today = " + today);
 								document.getElementById("theDate").value = today;
 								document.getElementById("theDate").min = today;
 						
@@ -194,7 +197,7 @@ h3{
           	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant">
 		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     									<span class="icon-search2"></span>
