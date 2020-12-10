@@ -32,8 +32,5 @@
     <Logger name="org.springframework.web.servlet.view" level="DEBUG">
         <AppenderRef ref="STDOUT"/>
     </Logger>
-<!--     <Logger name="ecpay.payment.integration" level="TRACE"> -->
-<!--         <AppenderRef ref="STDOUT"/> -->
-<!--     </Logger> -->
 
 </configuration>

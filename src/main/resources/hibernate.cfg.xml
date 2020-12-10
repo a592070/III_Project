@@ -49,7 +49,6 @@
 		<mapping class="iring29.model.R_Order_List"/>
 		<mapping class="iring29.model.Restaurant_VO"/>
 		<mapping class="iring29.model.R_OrderList_VO"/>
-		<mapping class="iring29.model.R_Comment"/>
 		<mapping class="azaz4498.model.Article"/>
 		<mapping class="azaz4498.model.ArticleType"/>
 		<mapping class="azaz4498.model.Comment"/>

@@ -70,7 +70,13 @@ public class BackendController {
 
 	
 
-	
+	@RequestMapping(path = "/admin/artTypeSearch.json", method = RequestMethod.GET, produces = {
+			"application/json; charset=UTF-8" })
+	public @ResponseBody List<Article> dispalyByTypeJSON(@RequestParam(name = "articleType") Integer typeId)
+			throws SQLException {
+		List<Article> artList = articleService.showArticlesByType(typeId);
+		return artList;
+	}
 
 	@RequestMapping(path = "/admin/articleSearch.json", method = RequestMethod.GET, produces = {
 			"application/json; charset=UTF-8" })
@@ -109,7 +115,6 @@ public class BackendController {
 		String userid = "Admin";
 		Article article = articleService.newArticle(title, typeId, content, userid);
 		Integer id = article.getArtId();
-		article.setArtStatus("enabled");
 		m.addAttribute("artBean", articleService.showArticleById(id));
 		return "azaz4498/editPage";
 	}
