@@ -71,9 +71,7 @@ img{
 
 element.style {
 }
-/* .rd-reviews,.review-add { */
-/* 	margin-left: 50px; */
-/* } */
+
 </style>
 </head>
 <body>
