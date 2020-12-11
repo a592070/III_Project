@@ -44,7 +44,13 @@ public class ArticleController {
 	private ServletContext context;
 	@Autowired
 	private ForumPage forumPage;
-
+	
+	@RequestMapping(path = "/newArticle",method = RequestMethod.GET)
+	public String newArticle() {
+		return "azaz4498/newArticle_frontend";
+	}
+	
+	
 	@RequestMapping(path = {"/article/{artId}" ,"/typeSearch/article/{artId}"}, method = RequestMethod.GET)
 	public String articlePreview(Model m, @PathVariable(name = "artId") Integer artId) throws SQLException {
 		List<Article> recentArticles = articleService.showRecentArticles();
