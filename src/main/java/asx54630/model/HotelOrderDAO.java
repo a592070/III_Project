@@ -26,7 +26,7 @@ public class HotelOrderDAO {
 	
 	public List<HotelOrder_VO> totalHotel(int first, int count) {
 		Session session = sessionFactory.getCurrentSession();
-		Query<HotelOrder_VO> query = session.createQuery("from HotelOrder_VO order by SN_ORDER", HotelOrder_VO.class);
+		Query<HotelOrder_VO> query = session.createQuery("from HotelOrder_VO order by ORDER_ID", HotelOrder_VO.class);
 		// 找第幾筆
 		query.setFirstResult(first);
 		// 從第幾筆開始count筆

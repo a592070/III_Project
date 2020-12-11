@@ -6,8 +6,10 @@ import java.sql.Timestamp;
 
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,17 +62,32 @@ public class F_HotelOrderController {
 			System.out.println("cart num = " +cartnum);
 			session.setAttribute("OTBean", OTBean);
 			session.setAttribute("cartnum", cartnum);
-			return "redirect:Shoppingcart";
+			return "iring29/Shoppingcart";
 
 	}
 	
+	@RequestMapping(path = "/CheckOrderDate", method = RequestMethod.POST)
+	public boolean CheckOrderDate(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
+								@RequestParam(name = "date_in",required = false) Date date_in, 
+								@RequestParam(name = "date_out",required = false) Date date_out
+								) {
+		
+		System.out.println(H_SN);
+		System.out.println(date_in);
+		System.out.println(date_out);
+		boolean  hOder = f_hotelOrderService.getDB_order_date(H_SN, date_in, date_out);
+
+		return hOder;
+		
+		
+		
+	}
 	
 	
 	@RequestMapping(path = "/CheckOrderRoom", method = RequestMethod.POST)
-	public String CheckOrderRoom(@RequestParam(value = "H_SN") BigDecimal H_SN, 
-							   @RequestParam(value = "dbroom") BigDecimal dbroom, 
-							   @RequestParam(value = "qdroom") BigDecimal qdroom, 
-							   HttpSession session) {
+	public String CheckOrderRoom(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
+							   @RequestParam(name = "dbroom",required = false) BigDecimal dbroom, 
+							   @RequestParam(name = "qdroom",required = false) BigDecimal qdroom) {
 		
 		int currentDB = f_hotelOrderService.DBroom(H_SN); //取得已成立訂單中 該飯店的雙人房被訂了幾間
 		int currentQD = f_hotelOrderService.QDroom(H_SN); //取得已成立訂單中 該飯店的四人房被訂了幾間
@@ -99,16 +116,6 @@ public class F_HotelOrderController {
 
 	}
 	
-	@RequestMapping(path = "/CheckOrderDate", method = RequestMethod.POST)
-	public String CheckOrderDate(@RequestParam(value = "H_SN") BigDecimal H_SN, 
-							   @RequestParam(value = "date_in") Date date_in, 
-							   @RequestParam(value = "date_out") Date date_out, 
-							   HttpSession session) {
-		
-	
-		return "";
-
-	}
 	
 	
 	

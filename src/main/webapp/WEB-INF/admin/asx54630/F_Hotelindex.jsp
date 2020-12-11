@@ -44,7 +44,7 @@ h3{
   <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
     
-    <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/6DuGxHp.jpg');">
+    <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/ne4Q62T.jpg');">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
@@ -68,7 +68,7 @@ h3{
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
 	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="regionkeywd" id="regionkeywd" class="form-control">
+	                    <select name="regionkeywd" id="regionkeywd" class="form-control" onchange="HotelRegionSearch()">
 	                      <option value="">選擇地區...</option>
                           <option value="基隆市">基隆市</option>
                        	  <option value="新北市">新北市</option>
@@ -98,7 +98,7 @@ h3{
 		           	  <div class="form-group">
 		                <div class="select-wrap one-third">
 	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="typekeywd" id="typekeywd" class="form-control" placeholder="類型搜尋">
+	                    <select name="typekeywd" id="typekeywd" class="form-control" placeholder="類型搜尋" onchange="HotelTypeSearch()">
                      	 <option value="">選擇類型...</option>
                      	 <option value="飯店">飯店</option>
                       	 <option value="民宿">民宿</option>
@@ -222,6 +222,53 @@ h3{
   					)
   			}
 
+  		  	function HotelRegionSearch() {
+  				console.log("搜尋")
+//   				var orderfiled = $("#orderfiled").val()
+  				var keyword = $("#keyword").val()
+  				var regionkeywd = $("#regionkeywd").val()
+  				var typekeywd = $("#typekeywd").val()
+//   				var order = $("#order").val()
+				var currentPage=1
+  				$.ajax(
+  						{
+  							type: 'POST',
+  							data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "currentPage" : currentPage },
+  							url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+  							dataType: 'html',
+  							success: function (response) {
+  								$("#h_data").children().remove();
+  								$("#h_data").append(response)
+
+  							}
+
+  						}
+  					)
+  			}
+
+  		  	function HotelTypeSearch() {
+  				console.log("搜尋")
+//   				var orderfiled = $("#orderfiled").val()
+  				var keyword = $("#keyword").val()
+  				var regionkeywd = $("#regionkeywd").val()
+  				var typekeywd = $("#typekeywd").val()
+//   				var order = $("#order").val()
+				var currentPage=1
+  				$.ajax(
+  						{
+  							type: 'POST',
+  							data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "currentPage" : currentPage },
+  							url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+  							dataType: 'html',
+  							success: function (response) {
+  								$("#h_data").children().remove();
+  								$("#h_data").append(response)
+
+  							}
+
+  						}
+  					)
+  			}
 
   		  $("#index").on('click', '#clickbtn', function (e) {
 
@@ -260,7 +307,7 @@ h3{
     		}
 
     		function detailpage(id){
-    			document.location.href="${pageContext.servletContext.contextPath}/F_hoteldetail?detailsn="+id;
+    			document.location.href="${pageContext.servletContext.contextPath}/F_hoteldetail/"+id;
         	}
             	
     		

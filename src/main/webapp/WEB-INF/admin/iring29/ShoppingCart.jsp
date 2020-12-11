@@ -96,41 +96,51 @@ h5{
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<h2>Hotel</h2>
+							<h2>訂飯店</h2>
 						</tr>
 						<tr>
-							<th>Product</th>
-							<th>Quantity</th>
-							<th class="text-center">Price</th>
-							<th class="text-center">Total</th>
+							<th>飯店資訊</th>
+							<th>預定日期</th>
+							<th class="text-center">人數</th>
+							<th class="text-center">價格</th>
 							<th> </th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-sm-8 col-md-6">
-								<div class="media">
-									<a class="thumbnail pull-left" href="#"> <img
-										class="media-object"
-										src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-										style="width: 72px; height: 72px;">
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading">
-											<a href="#">Product name</a>
-										</h4>
-										<h5 class="media-heading">
-											by <a href="#">Brand name</a>
-										</h5>
-										<span>Status: </span><span class="text-success"><strong>In
-												Stock</strong></span>
-									</div>
-								</div>
-							</td>
+							<td class="col-sm-8 col-md-6"></td>
 							<td class="col-sm-1 col-md-1" style="text-align: center"><input
-								type="email" class="form-control" id="exampleInputEmail1"
+								type="date" class="form-control" id="exampleInputEmail1"
 								value="3"></td>
-							<td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+							<td class="col-sm-1 col-md-1 text-center">
+								<input id="guest_dec" type="button" value="-" onclick="dec1()">
+   								<input id="guest" type="text" value="1" size="1" style="text-align:center;" disabled="disabled">
+    							<input id="guest_inc" type="button" value="+" onclick="inc1()">
+    							<script type="text/javascript">
+    					            var count = document.getElementById("guest");
+    					            var inc = document.getElementById("guest_inc");
+    					            var dec = document.getElementById("guest_dec");
+
+    					            if(count.value = 1){
+    					            	dec.removeAttr('onclick');
+        					            }
+    					            if(count.value > 35){
+    					            	inc.removeAttr('onclick');
+        					            }
+    					            
+    					            function inc1() {
+     					        	   count.value = parseInt(count.value) + 1;
+     					            };
+
+     					           function dec1() {
+    					            	count.value = parseInt(count.value) - 1;
+    					            };
+
+    					            
+    					            console.log(count.value);
+    					        
+    							</script>
+							</td>
 							<td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
 							<td class="col-sm-1 col-md-1">
 								<button type="button" class="btn btn-danger">
@@ -138,42 +148,12 @@ h5{
 								</button>
 							</td>
 						</tr>
-						<tr>
-							<td class="col-md-6">
-								<div class="media">
-									<a class="thumbnail pull-left" href="#"> <img
-										class="media-object"
-										src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-										style="width: 72px; height: 72px;">
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading">
-											<a href="#">Product name</a>
-										</h4>
-										<h5 class="media-heading">
-											by <a href="#">Brand name</a>
-										</h5>
-										<span>Status: </span><span class="text-warning"><strong>Leaves
-												warehouse in 2 - 3 weeks</strong></span>
-									</div>
-								</div>
-							</td>
-							<td class="col-md-1" style="text-align: center"><input
-								type="email" class="form-control" id="exampleInputEmail1"
-								value="2"></td>
-							<td class="col-md-1 text-center"><strong>$4.99</strong></td>
-							<td class="col-md-1 text-center"><strong>$9.98</strong></td>
-							<td class="col-md-1">
-								<button type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove"></span> Remove
-								</button>
-							</td>
-						</tr>
+
 						<tr>
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h3>Subtotal</h3></td>
+							<td><h3>小計</h3></td>
 							<td class="text-right"><h3>
 									<strong>$24.59</strong>
 								</h3></td>

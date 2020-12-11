@@ -1,6 +1,7 @@
 package asx54630.model;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -50,6 +51,22 @@ public class F_HotelOrderDAO {
 		Query<Long> query = session.createQuery(hql, Long.class);
 		query.setParameter(0, "%" + sn + "%");
 		return query.uniqueResult().intValue();
+		
+	}
+	
+	public boolean getDB_order_date(BigDecimal sn, Date datein,Date dateout) { //查詢欲下訂之時間是否重疊
+		boolean flag = true;
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "FROM HotelOrder WHERE hotel = ?0 and ((to_date(?1,'yyyy-mm-dd') BETWEEN CHECK_IN AND CHECK_OUT) OR (to_date(?2,'yyyy-mm-dd') BETWEEN CHECK_IN AND CHECK_OUT))";
+		Query<HotelOrder> query = session.createQuery(hql, HotelOrder.class);
+		query.setParameter(0, "%" + sn + "%");
+		query.setParameter(1, "%" + datein + "%");
+		query.setParameter(2, "%" + dateout + "%");
+		
+		if(query != null) {
+			flag = false;
+		}
+		return flag;
 		
 	}
 

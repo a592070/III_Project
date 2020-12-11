@@ -301,6 +301,14 @@ body{
 									var qdroom = $("#qdroom").val();
 									var client_name = $("#client_name").val();
 									var client_phone = $("#client_phone").val();
+									console.log(H_SN);
+									console.log(date_in);
+									console.log(date_out);
+									console.log(guest);
+									console.log(dbroom);
+									console.log(qdroom);
+									console.log(client_name);
+									console.log(client_phone);
 									if($("#client_name").val() == ""){
 										$("#nameCk").html("&nbsp;<font color='red' id='idsp'>&nbsp;請輸入訂位者姓名</font>");
 									}else{
@@ -320,11 +328,11 @@ body{
 										}
 								
 									console.log("t or f = " + (!$("#client_phone").val().match(/^09[0-9]{8}$/)))
-									if(name != "" && phone != "" && (!$("#client_phone").val().match(/^09[0-9]{8}$/)) == false && date_out != ""){
+									if(client_name != "" && client_phone != "" && (!$("#client_phone").val().match(/^09[0-9]{8}$/)) == false && date_out != ""){
 										$.ajax(
 							                    {
 							                        type: 'POST',
-							                        data: { "H_SN":H_SN, "date_in":date_in, "date_in":date_in},
+							                        data: { "H_SN":H_SN, "date_in":date_in, "date_out":date_out},
 							                        url: '${pageContext.servletContext.contextPath}/CheckOrderDate',
 							                        dataType: 'html',
 							                        success:function(response){
@@ -333,7 +341,7 @@ body{
 								                           console.log("in h = " + response);
 							                        	   var hotel_context = "";
 							                        	   hotel_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
-								                        	$("#rating").html(res_context);
+								                        	$("#rating").html(hotel_context);
 								                        	$("#tableckbtn").click();
 							                        	   
 								                        }else{
@@ -349,7 +357,7 @@ body{
 													                           console.log("in r = " + response);
 												                        	   var hotel_context = "";
 												                        	   hotel_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
-													                        	$("#rating").html(res_context);
+													                        	$("#rating").html(hotel_context);
 													                        	$("#tableckbtn").click();
 												                        	   
 													                        }else{
@@ -368,6 +376,29 @@ body{
 									
                             </script>
                         </form>
+                        
+                        									<!-- Modal -->
+									<div class="modal fade" id="tableresponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									抱歉 !   訂位已滿，請重新選擇日期及時段
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" data-dismiss="modal" class="btn btn-primary">確認</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal -->
+                        
+                        
                     </div>
                 </div>
             </div>
