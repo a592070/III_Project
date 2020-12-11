@@ -37,13 +37,13 @@ public class F_RestaurantService {
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public int numRestaurant(String name, String region) {
-		return f_RDao.numRestaurant(name, region);
+	public int numRestaurant(String name, String region, BigDecimal fisrtStar, BigDecimal endStar) {
+		return f_RDao.numRestaurant(name, region, fisrtStar, endStar);
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Restaurant_VO> findMulti_R(int first, int count, String name, String region) {
-		return f_RDao.findMulti_R(first, count, name, region);
+	public List<Restaurant_VO> findMulti_R(int first, int count, String name, String region, BigDecimal fisrtStar, BigDecimal endStar) {
+		return f_RDao.findMulti_R(first, count, name, region, fisrtStar, endStar);
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })

@@ -69,10 +69,12 @@ public class F_RestaurantController {
 	    
 	    String book_date = bartDateFormat.format(date);  
 	    int person_number = 1;
-		int size = F_Serivce.numRestaurant(name, region);
+	    BigDecimal fisrtStar = BigDecimal.ZERO; 
+	    BigDecimal endStar = BigDecimal.valueOf(5);
+		int size = F_Serivce.numRestaurant(name, region, fisrtStar, endStar);
 		userPage.setTotalCount(size);
 		userPage.setCurrentPage(1);
-		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), name, region);
+		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), name, region, fisrtStar, endStar);
 		
 		m.addAttribute("res_data", res_data);
 		m.addAttribute("userPage", userPage);
@@ -86,10 +88,13 @@ public class F_RestaurantController {
 								    			  @RequestParam(name = "restaurant_name") String restaurant_name, 
 								    			  @RequestParam(name = "book_date") String book_date,
 								    			  @RequestParam(name = "person_number") Integer person_number,
+								    			  @RequestParam(name = "stars") BigDecimal stars,
 								    			  @RequestParam(name = "currentPage") Integer currentPage,
 								    			  HttpSession session, Model m) {
 		
-		int size = F_Serivce.numRestaurant(restaurant_name, region_name);
+		BigDecimal fisrtStar = stars; 
+		BigDecimal endStar = BigDecimal.valueOf(5);
+		int size = F_Serivce.numRestaurant(restaurant_name, region_name, fisrtStar, endStar);
 		System.out.println("size = " + size);
 		userPage.setTotalCount(size);
 		if(size == 0) {
@@ -100,7 +105,7 @@ public class F_RestaurantController {
 		userPage.setCurrentPage(currentPage);
 		start = (currentPage - 1)* userPage.getPageSize();
 		
-		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), restaurant_name, region_name);
+		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), restaurant_name, region_name, fisrtStar, endStar);
 		
 		session.setAttribute("book_date", book_date);
 		session.setAttribute("person_number", person_number);

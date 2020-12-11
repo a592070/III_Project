@@ -32,7 +32,13 @@ h3{
 #rowheight{
 	height:1030px;
 }
-
+i{
+    color: #f85959;
+    margin: 0 4px;
+}
+.star_div{
+	height:40px;
+}
 </style>    
 
 </head>
@@ -109,8 +115,8 @@ h3{
 					</script>
 	                  
 		              </div>
-		              <div class="form-group">
-		                <div class="select-wrap one-third">
+		            <div class="form-group">
+		              <div class="select-wrap one-third">
 						<span class="sp_search">餐廳名稱搜尋</span> 
 						<input type="text" name="restaurant_name" id="restaurant_name" placeholder="請輸入關鍵字" class="form-control">
 		              </div>
@@ -162,19 +168,54 @@ h3{
 						<option value="9">9</option>
 						<option value="10">10</option>
 						</select>
-		              </div>
+		              </div>	
+		              		
+		              		<div class="star_div"></div>
+		              		<p>餐廳評價</p>			
+		              		<div class="star_div">
+							<input type="radio" name="radiobutton" id="Check5" value="5" onclick="checkstar()"> 
+								<span class="starspan"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>&emsp;5星
+							</div>
+							<div class="star_div">
+							<input type="radio" name="radiobutton" id="Check4" value="4" onclick="checkstar()"> 
+								<span class="starspan"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span>&emsp;4星以上
+							</div>
+							<div class="star_div">
+							<input type="radio" name="radiobutton" id="Check4" value="3" onclick="checkstar()"> 
+								<span class="starspan"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span>&emsp;3星以上
+							</div>
+							<div class="star_div">
+							<input type="radio" name="radiobutton" id="Check4" value="2" onclick="checkstar()"> 
+								<span class="starspan"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span>&emsp;2星以上
+							</div>
+							<div class="star_div">
+							<input type="radio" name="radiobutton" id="Check4" value="1" onclick="checkstar()"> 
+								<span class="starspan"><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span>&emsp;1星以上
+		              		</div>
+		              		<div class="star_div"></div>
+		              		<Input type='hidden' name='stars' id='stars' value=''>
+		              		
 		              <div class="form-group">
 		                <input type="button" id="clickbtn" value="找餐廳" class="btn btn-primary py-3 px-5">
 		                <br>
 		                <input type="button" id="clearkey" value="清空關鍵字" class="btn btn-primary py-3 px-5">
 		              </div>
-		              
+		           <script>
+					function checkstar(){
+						var result = "";
+						  result = $('input[name=radiobutton]:checked').val()
+						  console.log("sta = " + result);
+						  $("#stars").attr("value", result);
+						  $('#clickbtn').click();
+					}
+					</script>
+					
 		              <script>
 						$('#clearkey').click(function(){
 							console.log("clear");
 						  $("#region").val('');
 						  $('#restaurant_name').val('');
-						  
+						  $('input[type=radio][name="radiobutton"]:checked').removeAttr("checked");
 						  var date = new Date();
 
 							var day = date.getDate();
@@ -200,41 +241,47 @@ h3{
 	            </form>
 		              
         		</div>
+        		
+        		<!-- .radio -->
 <!--         		<div class="sidebar-wrap bg-light ftco-animate"> -->
 <!--         			<h3 class="heading mb-4">Star Rating</h3> -->
 <!--         			<form method="post" class="star-rating"> -->
 <!-- 							  <div class="form-check"> -->
-<!-- 									<input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 									<input type="radio" class="form-check-input" id="Check5" value="5" onclick="checkstar()"> -->
 <!-- 									<label class="form-check-label" for="exampleCheck1"> -->
-<!-- 										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p> -->
+<!-- 										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>&emsp;5星</p> -->
 <!-- 									</label> -->
 <!-- 							  </div> -->
 <!-- 							  <div class="form-check"> -->
-<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <input type="radio" class="form-check-input" id="Check4" value="4" onclick="checkstar()"> -->
 <!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
-<!-- 						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span>&emsp;4星以上</p> -->
 <!-- 						      </label> -->
 <!-- 							  </div> -->
 <!-- 							  <div class="form-check"> -->
-<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <input type="radio" class="form-check-input" id="Check3" value="3" onclick="checkstar()"> -->
 <!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
-<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span>&emsp;3星以上</p> -->
 <!-- 						     </label> -->
 <!-- 							  </div> -->
 <!-- 							  <div class="form-check"> -->
-<!-- 							    <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 							    <input type="radio" class="form-check-input" id="Check2" value="2" onclick="checkstar()"> -->
 <!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
-<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span>&emsp;2星以上</p> -->
 <!-- 						      </label> -->
 <!-- 							  </div> -->
 <!-- 							  <div class="form-check"> -->
-<!-- 						      <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+<!-- 						      <input type="radio" class="form-check-input" id="Check1" value="1" onclick="checkstar()"> -->
 <!-- 						      <label class="form-check-label" for="exampleCheck1"> -->
-<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p> -->
+<!-- 						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span>&emsp;1星以上</p> -->
 <!-- 							    </label> -->
 <!-- 							  </div> -->
+							  
 <!-- 							</form> -->
-<!--         		</div> -->
+					
+		
+							
+<!--         		</div>.radio -->
           </div>
           
           <!-- Display stores -->
@@ -329,6 +376,7 @@ h3{
 				var restaurant_name = $("#restaurant_name").val();
 				var book_date = $("#theDate").val();
 				var person_number = $("#inputState").val();
+				var stars = $("#stars").val();
 				var currentPage = (e.target.text);
 				console.log("typeof(currentPage) = " + typeof(currentPage))
 				if(typeof(currentPage) == "undefined"){
@@ -337,11 +385,11 @@ h3{
 					console.log("cp = "+ currentPage)
 				}
 				
-				console.log(region_name, restaurant_name, book_date, person_number, currentPage)
+				console.log(region_name, restaurant_name, book_date, person_number, stars, currentPage)
 				$.ajax(
 	                    {
 	                        type: 'POST',
-	                        data: { "region_name":region_name, "restaurant_name":restaurant_name, "book_date":book_date,"person_number":person_number ,"currentPage": currentPage},
+	                        data: { "region_name":region_name, "restaurant_name":restaurant_name, "book_date":book_date,"person_number":person_number, "stars":stars ,"currentPage": currentPage},
 	                        url: '${pageContext.servletContext.contextPath}/SearchRestaurant',
 	                        dataType: 'html',
 	                        success:function(response){
