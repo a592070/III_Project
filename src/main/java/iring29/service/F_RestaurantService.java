@@ -31,6 +31,10 @@ public class F_RestaurantService {
 	public Restaurant findRestaurant(String name) {
 		return f_RDao.findRestaurant(name);
 	}
+	@Transactional(rollbackFor = { Throwable.class })
+	public Restaurant findRestaurant(Integer id) {
+		return f_RDao.findRestaurant(id);
+	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
 	public int numRestaurant(String name, String region) {
