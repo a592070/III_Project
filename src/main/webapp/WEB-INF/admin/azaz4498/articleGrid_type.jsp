@@ -81,7 +81,11 @@ contentType="text/html;charset=UTF-8" language="java"%>
     <script>
       var len = eval(${totalPages});
       var currPage= eval(${currPage});
-      for(var i=1; i<=len;i++) {
+      if(len==1){
+        $('#next').remove();
+        $('#prev').remove();
+      }
+      for(var i=1; i<len;i++) {
         var content = "<li class='page' id='page"+i+"'><a href=''>"+i+"</a></li>";
         $('#next').before(content);
         $('#page'+currPage).addClass('active');
@@ -147,7 +151,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
       })
 
       $('.page').on('click',function(){
-        console.log('page has been click');
+        console.log(`${totalPages}`);
         event.preventDefault();
         var typeId = $('#articleType').val();
         var page = $(this).text();
