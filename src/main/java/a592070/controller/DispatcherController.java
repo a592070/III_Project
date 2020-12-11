@@ -52,7 +52,6 @@ public class DispatcherController {
     SendMailService sendMailService;
 
     @RequestMapping("/testmail")
-    @ResponseBody
     public String send() throws ExecutionException, InterruptedException {
         String recipients = "a592070@gmail.com";
         String title = "TEST MAIL";
@@ -62,6 +61,6 @@ public class DispatcherController {
         // 異步發送MAIL
         sendMailService.asyncSend(recipients, title, content);
 
-        return "checked your email";
+        return "UserIndex";
     }
 }

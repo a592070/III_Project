@@ -96,10 +96,24 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 
 
 
-<!--		<dependency>-->
+
+
+		<!--		<dependency>-->
 <!--			<groupId>org.apache.tomcat</groupId>-->
 <!--			<artifactId>tomcat-catalina</artifactId>-->
 <!--			<version>${embed.tomcat.version}</version>-->
@@ -121,6 +135,20 @@
 <!--			<artifactId>tomcat-jasper</artifactId>-->
 <!--			<version>${embed.tomcat.version}</version>-->
 <!--		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-websocket -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-websocket</artifactId>
+			<version>${embed.tomcat.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-websocket-api -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-websocket-api</artifactId>
+			<version>${embed.tomcat.version}</version>
+		</dependency>
+
+
 
 
 

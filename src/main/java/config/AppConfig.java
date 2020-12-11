@@ -23,7 +23,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 //@ImportResource
 @ImportResource({"classpath:springmvc.servlet.xml"})
-@Import({AsyncConfig.class})
+//@Import({AsyncConfig.class})
+@ComponentScan("config")
 @EnableWebMvc
 @EnableAsync
 public class AppConfig {
