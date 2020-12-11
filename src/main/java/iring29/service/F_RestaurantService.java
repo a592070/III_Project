@@ -12,6 +12,7 @@ import iring29.model.F_RestaurantDAO;
 import iring29.model.R_Comment;
 import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
+import rambo0021.pojo.AccountBean;
 
 public class F_RestaurantService {
 
@@ -32,13 +33,13 @@ public class F_RestaurantService {
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public int numRestaurant(String name, String region) {
-		return f_RDao.numRestaurant(name, region);
+	public int numRestaurant(String name, String region, BigDecimal fisrtStar, BigDecimal endStar) {
+		return f_RDao.numRestaurant(name, region, fisrtStar, endStar);
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
-	public List<Restaurant_VO> findMulti_R(int first, int count, String name, String region) {
-		return f_RDao.findMulti_R(first, count, name, region);
+	public List<Restaurant_VO> findMulti_R(int first, int count, String name, String region, BigDecimal fisrtStar, BigDecimal endStar) {
+		return f_RDao.findMulti_R(first, count, name, region, fisrtStar, endStar);
 	}
 	
 	@Transactional(rollbackFor = { Throwable.class })
@@ -74,6 +75,11 @@ public class F_RestaurantService {
 	@Transactional(rollbackFor = { Throwable.class })
 	public boolean userComment(String username, BigDecimal r_sn) {
 		return f_RDao.userComment(username, r_sn);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public AccountBean account(String username) {
+		return f_RDao.account(username);
 	}
 }
 
