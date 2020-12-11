@@ -32,7 +32,7 @@ img{
 .i{
 	width:30px;
 }
-.room-details-item{
+.room-details-item, .rd-reviews, .review-add {
 	padding-left:50px;
 }
 
@@ -68,11 +68,30 @@ img{
 	font-size:13px;
 	font-style:italic;
 }
-
-element.style {
+.btn.btn-primary, button.close{
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: 2px;
+    background: #dfa974;
+    border: none;
+    padding: 14px 34px 13px;
+    display: inline-block;	
 }
-.rd-reviews,.review-add {
-	margin-left: 50px;
+.modal-body{
+	font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+}
+.modal-title{
+    font-size: 20px;
+    color: #19191a;
+    margin-bottom: 24px;
+    float: left;
+    margin-right: 10px;
 }
 </style>
 </head>
@@ -140,9 +159,10 @@ element.style {
 <!--                                     	<Input type='hidden' name='b_phone' value=''> -->
 <%--                                     	<Input type='hidden' name='person_number' value='${person_number}'> --%>
 <!--                                     </form> -->
-									<a href="javascript:void();" id="addCart">放入購物車</a>
+									<a href="javascript:void();" id="addCart" class="review-add ra-form button">放入購物車</a>
 									<script>
 										$("#addCart").on('click',function(){
+											//check if login
 											$.ajax(
 								                    {
 								                        type: 'POST',
@@ -186,7 +206,7 @@ element.style {
 																			                        console.log("re = " + response);
 																		                        	var res_context = "";
 																		                        	res_context += '<button type="button" class="btn btn-primary" id="modalbtn" data-toggle="modal" data-target="#exampleModalCenter" style="display:none;"></button>';
-																		                        	$("#rating").html(res_context);
+																		                        	$("#rating").append(res_context);
 																		                        	$("#modalbtn").click();
 																		                        	$(".nav-shop__circle").html(response);
 																		                        }
@@ -631,7 +651,7 @@ element.style {
                                 <label for="room">請輸入訂位者電話:</label><span id="idsp">&nbsp;*必填</span><span id="phoneck">&nbsp;</span>
                                 <input type="text" id="b-phone" name="b_phone" placeholder="09xxxxxxxx" onchange="checkinfoP()">
                             </div>
-                            <button id="order" type="button" class="orderbtn">我要訂位</button>
+                            <button id="order" type="button" class="orderbtn review-add ra-form button">我要訂位</button>
                             <Input type='hidden' name='cartnum' value=''>
                             <script>
                             var item = 0;

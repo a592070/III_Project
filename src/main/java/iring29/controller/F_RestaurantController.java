@@ -69,10 +69,12 @@ public class F_RestaurantController {
 	    
 	    String book_date = bartDateFormat.format(date);  
 	    int person_number = 1;
-		int size = F_Serivce.numRestaurant(name, region);
+	    BigDecimal fisrtStar = BigDecimal.ZERO; 
+	    BigDecimal endStar = BigDecimal.valueOf(5);
+		int size = F_Serivce.numRestaurant(name, region, fisrtStar, endStar);
 		userPage.setTotalCount(size);
 		userPage.setCurrentPage(1);
-		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), name, region);
+		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), name, region, fisrtStar, endStar);
 		
 		m.addAttribute("res_data", res_data);
 		m.addAttribute("userPage", userPage);
@@ -86,10 +88,13 @@ public class F_RestaurantController {
 								    			  @RequestParam(name = "restaurant_name") String restaurant_name, 
 								    			  @RequestParam(name = "book_date") String book_date,
 								    			  @RequestParam(name = "person_number") Integer person_number,
+								    			  @RequestParam(name = "stars") BigDecimal stars,
 								    			  @RequestParam(name = "currentPage") Integer currentPage,
 								    			  HttpSession session, Model m) {
 		
-		int size = F_Serivce.numRestaurant(restaurant_name, region_name);
+		BigDecimal fisrtStar = stars; 
+		BigDecimal endStar = BigDecimal.valueOf(5);
+		int size = F_Serivce.numRestaurant(restaurant_name, region_name, fisrtStar, endStar);
 		System.out.println("size = " + size);
 		userPage.setTotalCount(size);
 		if(size == 0) {
@@ -100,7 +105,7 @@ public class F_RestaurantController {
 		userPage.setCurrentPage(currentPage);
 		start = (currentPage - 1)* userPage.getPageSize();
 		
-		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), restaurant_name, region_name);
+		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), restaurant_name, region_name, fisrtStar, endStar);
 		
 		session.setAttribute("book_date", book_date);
 		session.setAttribute("person_number", person_number);
@@ -111,15 +116,17 @@ public class F_RestaurantController {
 
 	}
 	
-	@RequestMapping(path = {"/DisplayRestaurant","/DisplayRestaurant/{restaurant_id}"})
+	@RequestMapping(path = {"/DisplayRestaurant/${res.r_sn}","/DisplayRestaurant/{restaurant_id}"}) 
 	public String ShowRestaurant(
-			@RequestParam(name = "restaurant_name", required = false) String restaurant_name,
+			@RequestParam(name = "r_sn", required = false) Integer r_sn,
+//			@PathVariable(name="res.r_sn", required = false) Integer r_sn,  
 			@PathVariable(name="restaurant_id", required = false) Integer restaurant_id,
 			HttpSession session, Model m) {
-		System.out.println("res name = " + restaurant_name);
+		System.out.println("r_sn = " + r_sn);
 		
 		Restaurant res_data = null;
-		if(!StringUtil.isEmpty(restaurant_name)) res_data=F_Serivce.findRestaurant(restaurant_name);
+//		if(!StringUtil.isEmpty(r_sn)) res_data=F_Serivce.findRestaurant(restaurant_name);
+		if(r_sn != null && r_sn != 0) res_data = F_Serivce.findRestaurant(r_sn);
 		if(restaurant_id != null && restaurant_id != 0) res_data = F_Serivce.findRestaurant(restaurant_id);
 		
 		List<R_Comment> comment = F_Serivce.ResComment(res_data.getR_sn());
