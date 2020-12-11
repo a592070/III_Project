@@ -199,6 +199,14 @@ public class F_RorderController {
 	public String showOrder(HttpSession session) {
 		session.removeAttribute("result");
 		OrderTable otBean = F_Serivce.findOrder();
+
+
+
+		otBean.getR_Order_Lists().removeIf(ele -> {
+			return "".equals(ele.getRestaurant().getName());
+		});
+
+
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
 		session.setAttribute("res_lists", res_lists);
 		return "iring29/OrderDetail";
