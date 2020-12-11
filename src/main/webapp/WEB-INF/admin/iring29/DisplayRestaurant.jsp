@@ -32,7 +32,7 @@ img{
 .i{
 	width:30px;
 }
-.room-details-item{
+.room-details-item, .rd-reviews, .review-add {
 	padding-left:50px;
 }
 

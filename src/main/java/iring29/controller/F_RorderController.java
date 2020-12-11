@@ -181,7 +181,7 @@ public class F_RorderController {
 		AllInOne pay = new AllInOne("");
 		AioCheckOutALL checkOut = new AioCheckOutALL();
 		checkOut.setMerchantID("2000132");
-		checkOut.setMerchantTradeNo("Fun" + otBean.getOrder_id().toString());
+		checkOut.setMerchantTradeNo("Fun Taiwan" + otBean.getOrder_id().toString());
 		checkOut.setMerchantTradeDate(otBean.getOrder_dateString());
 		checkOut.setTotalAmount("100");
 		checkOut.setTradeDesc("Fun Taiwan 商城購物");

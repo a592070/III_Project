@@ -188,7 +188,7 @@ h5{
 
 <!-- 餐廳 start -->
 		<c:set var ="size" value= "${fn:length(OTBean.r_Order_Lists)}"></c:set>
-		<c:if test = "${size > 1}" >
+		<c:if test = "${size > 0}" >
 		
 	<div class="container">
 		<div class="row">
@@ -228,7 +228,7 @@ h5{
 							<div class="content"><h5>${R.restaurant.name}</h5></div>
 							<div class="content"><h5>${R.restaurant.address}</h5></div>
 							<div class="content"><h5><input class="form-control data" value="${R.cus_name}" id="cus_name${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
-							<div class="content"><h5><input class="form-control data" value="${R.cus_phone}" id="cus_phone${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
+							<div class="content"><h5><input class="form-control data phone" value="${R.cus_phone}" id="cus_phone${R.restaurant.r_sn}" placeholder="09xxxxxxxx" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
 							</td>
 							<td class="col-sm-1 col-md-1" >
 								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control ${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}(), tableck${R.restaurant.r_sn}()">
@@ -356,7 +356,7 @@ h5{
 						console.log("price = " + price);
 						$("#deposit${R.restaurant.r_sn}").html(price);
 						console.log("sn = " + sn + ",name = " + name + ",phone = " + phone + ", bd = " + bd + ", bt = " + bt + ", pnum = " + pnum);
-						if(name != "" && phone != "" && phone.match(/^09[0-9]{8}$/)){
+						if(name != "" && phone != "" && (!$("#cus_phone${R.restaurant.r_sn}").val().match(/^09[0-9]{8}$/)) == false){
 						$.ajax(
 			                    {
 			                        type: 'POST',
@@ -638,21 +638,33 @@ h5{
 							  <script type="text/javascript">
 							  function checkbtn(){
 									var totaldata = document.getElementsByClassName("form-control data");
+									var totalphone = document.getElementsByClassName("form-control data phone");
 									console.log("otaldata =" + totaldata.length);
+									var flag = true;
 									for(var j = 0; j < totaldata.length; j++){
 										console.log("value=" + totaldata[j].value);
 											if(totaldata[j].value == ""){
 												console.log("empty");
 												document.getElementById("check").setAttribute("data-target", "#checkagain");	
-												document.getElementById("check").setAttribute("type","button");
-												break;							
-											}else{
-												console.log("has data");
-												document.getElementById("check").setAttribute("data-target", "#exampleModalCenter");	
-												document.getElementById("check").setAttribute("type","button");					
-												}
+												document.getElementById("check").setAttribute("type","button");							
+											flag = false;
+											}
 										}
-									
+									for(var z = 0; z < totalphone.length; z++){
+										var p = totalphone[z].value;
+										var pattern = /^09[0-9]{8}$/;
+										console.log("phone = " + totalphone[z].value);
+										var p_result = pattern.test(p);
+										if(p_result == false){
+											document.getElementById("check").setAttribute("data-target", "#checkagain");	
+											document.getElementById("check").setAttribute("type","button");
+											flag = false;	
+											}
+										}
+									if(flag == true){
+										document.getElementById("check").setAttribute("data-target", "#exampleModalCenter");	
+										document.getElementById("check").setAttribute("type","button");					
+									}
 								  }
 							  </script>
 
