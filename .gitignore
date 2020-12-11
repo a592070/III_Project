@@ -64,5 +64,3 @@ src/main/webapp/assets/ckeditor5-build-classic-master/.github/PULL_REQUEST_TEMPL
 .settings/org.eclipse.core.resources.prefs
 .settings/org.eclipse.jdt.core.prefs
 .settings/org.eclipse.wst.common.component
-WebContent/META-INF/MANIFEST.MF
-src/main/resources/META-INF/persistence.xml
