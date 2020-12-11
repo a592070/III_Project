@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import global.pojo.OrderTable;
+import rambo0021.pojo.AccountBean;
 import utils.PictureSupport;
 
 public class F_RestaurantDAO {
@@ -21,20 +22,24 @@ public class F_RestaurantDAO {
 	}
 	
 		// search how many Restaurant
-		public int numRestaurant(String name, String region) {
-			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Restaurant_VO where name like ?0 and region like?1 and status = 'Y'", Integer.class);
+		public int numRestaurant(String name, String region, BigDecimal fisrtStar, BigDecimal endStar) {
+			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from Restaurant_VO where name like ?0 and region like?1 and status = 'Y' and rating between ?2 and ?3", Integer.class);
 			query.setParameter(0, "%" + name + "%");
 			query.setParameter(1, "%" + region + "%");
+			query.setParameter(2, fisrtStar);
+			query.setParameter(3, endStar);
 			return query.uniqueResult().intValue();
 
 		}
 
 		// find multiple restaurant by restaurant name
-		public List<Restaurant_VO> findMulti_R(int first,int count, String name, String region) {
-			Query<Restaurant_VO> query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region like ?1 and status = 'Y' order by r_sn", Restaurant_VO.class);
+		public List<Restaurant_VO> findMulti_R(int first, int count, String name, String region, BigDecimal fisrtStar, BigDecimal endStar) {
+			Query<Restaurant_VO> query = sessionFactory.getCurrentSession().createQuery("from Restaurant_VO where name like ?0 and region like ?1 and status = 'Y' and rating between ?2 and ?3 order by r_sn ", Restaurant_VO.class);
 			System.out.println("start findMulti_R");
 			query.setParameter(0, "%" + name + "%");
 			query.setParameter(1, "%" + region + "%");
+			query.setParameter(2, fisrtStar);
+			query.setParameter(3, endStar);
 			// 找第幾筆
 			query.setFirstResult(first);
 			// 從第幾筆開始count筆
@@ -51,6 +56,7 @@ public class F_RestaurantDAO {
 			return rBean;
 			
 		}
+		
 		public Restaurant findRestaurant(Integer id) {
 			return sessionFactory.getCurrentSession().get(Restaurant.class, BigDecimal.valueOf(id));
 		}
@@ -135,5 +141,10 @@ public class F_RestaurantDAO {
 				System.out.println("fail to create comm.");
 			}
 			return flag;
+		}
+		
+		//get accountBean
+		public AccountBean account(String username) {
+			return sessionFactory.getCurrentSession().get(AccountBean.class, username);
 		}
 }
