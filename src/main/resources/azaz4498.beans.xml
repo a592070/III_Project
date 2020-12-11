@@ -23,9 +23,6 @@
 		<bean id="PictureService"
 		class="azaz4498.service.PictureService" lazy-init="true"
 		scope="session" />
-		<bean id="ForumPage"
-		class="azaz4498.model.ForumPage" lazy-init="true"
-		scope="session" />
 	<context:component-scan
 		base-package="azaz4498.controller" />
 

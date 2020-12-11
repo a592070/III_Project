@@ -2,8 +2,7 @@ package global.pojo;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.HashSet;
 
 import java.util.Set;
@@ -35,8 +34,9 @@ public class OrderTable {
 	@Id@Column(name = "ORDER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private BigDecimal order_id;
-	@Column(name = "ORDER_DATE")
-	private Date order_date;
+//	@Column(name = "ORDER_DATE")
+	@Transient
+	private Timestamp order_date;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERNAME")
 	private AccountBean accountBean;
@@ -52,9 +52,6 @@ public class OrderTable {
 	@Transient
 	T_Order_List t_Order_List; // 小訂單的Bean (Traffic)
 
-	@Column(name = "TOTAL_PRICE")
-	private BigDecimal totalPrice = BigDecimal.ZERO;
-	
 	public Set<T_Order_List> getT_Order_Lists() {
 		return t_Order_Lists;
 	}
@@ -90,25 +87,11 @@ public class OrderTable {
 		this.order_id = order_id;
 	}
 
-	public Date getOrder_date() {
+	public Timestamp getOrder_date() {
 		return order_date;
 	}
-	
-	@Transient
-	public String getOrder_dateString() {
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		sdf.setLenient(false);
-		String Date;
-		if(order_date == null) {
-			Date="未知";
-		}else {
-			Date = sdf.format(order_date);
-		}
-		return Date;
-	}
 
-	public void setOrder_date(Date order_date) {
+	public void setOrder_date(Timestamp order_date) {
 		this.order_date = order_date;
 	}
 
@@ -131,14 +114,6 @@ public class OrderTable {
 	public void addR_Order_Lists(R_Order_List rList) {
 		rList.setoTable(this);
 		this.r_Order_Lists.add(rList);
-	}
-
-	public BigDecimal getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(BigDecimal totalPrice) {
-		this.totalPrice = totalPrice;
 	}
 	
 	

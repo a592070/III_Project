@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import global.pojo.OrderTable;
 import iring29.model.F_RestaurantDAO;
-import iring29.model.R_Comment;
 import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
 
@@ -63,21 +62,6 @@ public class F_RestaurantService {
 	@Transactional(rollbackFor = { Throwable.class })
 	public boolean TableNum(BigDecimal r_sn, Timestamp ts) {
 		return f_RDao.TableNum(r_sn, ts);
-	}
-	
-	@Transactional(rollbackFor = { Throwable.class })
-	public List<R_Comment> ResComment(BigDecimal r_sn) {
-		return f_RDao.ResComment(r_sn);
-	}
-	
-	@Transactional(rollbackFor = { Throwable.class })
-	public boolean addComment(R_Comment comm) {
-		return f_RDao.addComment(comm);
-	}
-	
-	@Transactional(rollbackFor = { Throwable.class })
-	public boolean userComment(String username, BigDecimal r_sn) {
-		return f_RDao.userComment(username, r_sn);
 	}
 }
 

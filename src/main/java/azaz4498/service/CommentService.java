@@ -22,8 +22,8 @@ public class CommentService {
 	}
 
 	// 新增評論
-	public Comment newComment(String content, int articleId, String userid) throws SQLException {
-		return cDao.newComment(content, articleId, userid);
+	public void newComment(String content, int articleId, String userid) throws SQLException {
+		cDao.newComment(content, articleId, userid);
 	}
 
 	// 刪除評論

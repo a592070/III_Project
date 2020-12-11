@@ -30,8 +30,7 @@
       <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
         data-scrollax-parent="true">
         <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a
-                href="index.html">首頁</a></span> <span>登入</span></p>
+          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span>
           <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員登入</h1>
         </div>
       </div>
@@ -66,8 +65,10 @@
             </div>
             <div class="form-group">
               <input type="button" value="登入" id="submit" class="btn btn-primary py-3 px-5" style="margin-left:85px">
+             </div>
+             <div class="form-group" style="text-align: center">
               <p style="font-size: 18px">
-                還沒有帳號 ? <a class="text-info stretched-link"
+                       還沒有帳號 ? <a class="text-info stretched-link"
                   href="${pageContext.servletContext.contextPath}/user/registrationPage">註冊</a>
               </p>
             </div>
