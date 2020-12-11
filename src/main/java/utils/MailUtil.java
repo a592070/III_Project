@@ -3,79 +3,62 @@ package utils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Future;
 
-public class MailUtil {
-    private Configuration cfg;
+@Component("MailUtil")
+public class MailUtil{
 
+    @Autowired@Qualifier("templateEngine")
     private TemplateEngine templateEngine;
+    @Autowired@Qualifier("javaMailSender")
     private JavaMailSender emailSender;
 
-
-    public void injectTemplate(String title, String content) throws IOException, TemplateException {
-        /* ------------------------------------------------------------------------ */
-        /* You should do this ONLY ONCE in the whole application life-cycle:        */
-
-        /* Create and adjust the configuration singleton */
-//        Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
-//        cfg.setDirectoryForTemplateLoading(new File("/where/you/store/templates"));
-//        // Recommended settings for new projects:
-//        cfg.setDefaultEncoding("UTF-8");
-//        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-//        cfg.setLogTemplateExceptions(false);
-//        cfg.setWrapUncheckedExceptions(true);
-//        cfg.setFallbackOnNullLoopVariable(false);
-
-        /* ------------------------------------------------------------------------ */
-        /* You usually do these for MULTIPLE TIMES in the application life-cycle:   */
-
-        /* Create a data-model */
-        Map root = new HashMap();
-        root.put("title", title);
-        root.put("content", content);
-
-        /* Get the template (uses cache internally) */
-        Template temp = cfg.getTemplate("MailTemplate.html");
-
-        /* Merge data-model with template */
-        Writer out = new OutputStreamWriter(System.out);
-        temp.process(root, out);
-        // Note: Depending on what `out` is, you may need to call `out.close()`.
-        // This is usually the case for file output, but not for servlet output.
-    }
 
     public String generateMailHtml(String title, String content) {
         Map<String, Object> variables = new HashMap<>();
         variables.put("mailtitle", title);
         variables.put("mailtext", content);
 
-        final String templateFileName = "MailTemplate"; //Name of the template file without extension
-        String output = this.templateEngine.process(templateFileName, new Context(Locale.getDefault(), variables));
+        final String templateFileName = "mail"; //Name of the template file without extension
 
+        String output = this.templateEngine.process(templateFileName, new Context(Locale.CHINESE, variables));
         return output;
     }
 
-    public void sendEmail(String recipients, String title, String content){
-        MimeMessageHelper helper = new MimeMessageHelper(emailSender.createMimeMessage());
-
+    @Async
+    public Future<Boolean> sendEmail(String recipients, String title, String content){
         try {
+            MimeMessage mimeMessage = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
             helper.setTo(recipients);
             helper.setSubject("Simple mail template");
             helper.setText(generateMailHtml(title, content), true);
+
+            System.out.println(Thread.currentThread().getName());
+            emailSender.send(mimeMessage);
+            return new AsyncResult<Boolean>(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return new AsyncResult<Boolean>(false);
     }
 
 }

@@ -2,16 +2,22 @@ package a592070.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import utils.MailUtil;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Controller@Lazy
 public class DispatcherController {
@@ -35,5 +41,22 @@ public class DispatcherController {
     @RequestMapping("/attraction/index")
     public String fontIndex(){
         return "a592070/font/attractionInfo";
+    }
+
+    @Autowired
+    @Qualifier("MailUtil")
+    MailUtil mailUtil;
+
+    @RequestMapping("/testmail")
+    @ResponseBody
+    public boolean send() throws ExecutionException, InterruptedException {
+        String target = "a592070@gmail.com";
+        String title = "TEST MAIL";
+        String content = "hihi 你好";
+        System.out.println("===========發送前=============");
+        System.out.println(Thread.currentThread().getName());
+        Boolean flag = mailUtil.sendEmail(target, title, content).get();
+        System.out.println("===========發送後=============");
+        return flag;
     }
 }

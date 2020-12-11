@@ -22,6 +22,7 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="global"/>
+	<context:component-scan base-package="utils"/>
 
 	<mvc:default-servlet-handler />
 	<mvc:resources mapping="/assets/**" location="classpath:/WEB-INF/assets/, /WEB-INF/assets/"/>
