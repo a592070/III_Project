@@ -242,8 +242,11 @@ h5{
 
 						if (month < 10)
 							month = "0" + month;
-						if (day < 10)
+						if (day < 9){
+							console.log("d = " + typeof(day));
+							day = day + 1;
 							day = "0" + day;
+						}else{day = day + 1;}
 
 						var today = year + "-" + month + "-" + day;
 						

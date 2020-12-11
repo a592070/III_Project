@@ -11,10 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,7 +31,7 @@ import rambo0021.serive.AccountService;
 
 @Controller
 @Lazy
-@SessionAttributes(names = { "reqURL","userBean","userPic"})
+@SessionAttributes(names = { "reqURL","userBean"})
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
@@ -104,7 +100,6 @@ public class UserController {
 			@RequestParam("g-recaptcha-response") String recaptcha,Model m) throws IOException{
 		System.out.println("reqURL="+reqURL);
 		boolean verify = VerifyRecaptcha.verify(recaptcha);
-		verify=true;
 		AccountBean aBean = service.userDetail(username);
 		HashMap<String, String> map = new HashMap<String,String>();
 		if(!verify) {
@@ -118,9 +113,6 @@ public class UserController {
 			return map;
 		}
 		m.addAttribute("userBean", aBean.getUserName());
-		if(aBean.getPicture()!= null) {
-			m.addAttribute("userPic", true);
-		}
 		map.put("LoginInfo", "登入成功");
 		map.put("reqURL", reqURL);
 		return map;
@@ -131,14 +123,6 @@ public class UserController {
 		session.invalidate();
 		sessionStatus.setComplete();
 		return "redirect:/FunTaiwan";
-	}
-	
-	@RequestMapping("ShowUserPic")
-	public @ResponseBody ResponseEntity<byte[]> ShowUserPic(@ModelAttribute("userBean") String username) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.IMAGE_PNG);
-		return new ResponseEntity<byte[]>(service.userDetail(username).getPicture(), headers, HttpStatus.OK);
-		
 	}
 	
 	

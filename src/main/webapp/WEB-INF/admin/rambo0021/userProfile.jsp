@@ -6,14 +6,16 @@
 <html>
 
 <head>
-  <title>Fun Taiwan - 個人頁面</title>
+  <title>Fun Taiwan - 登入</title>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <c:import url="/WEB-INF/admin/fragment/user_ref.jsp" />
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
-
+    .img {
+      width: 13px;
+    }
   </style>
 </head>
 
@@ -28,8 +30,9 @@
       <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
         data-scrollax-parent="true">
         <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
-          <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">個人頁面</h1>
+          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a
+                href="index.html">首頁</a></span> <span>登入</span></p>
+          <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員登入</h1>
         </div>
       </div>
     </div>
@@ -39,7 +42,7 @@
     <div class="container ftco-animate">
       <div class="row d-flex mb-5 contact-info" style="text-align : center">
         <div class="col-md-12 mb-4">
-          <h1 class="h1">個人頁面</h1>
+          <h1 class="h1">會員登入</h1>
         </div>
       </div>
       <div class="row block-9">
@@ -114,24 +117,5 @@
         stroke="#F96D00" /></svg></div>
   <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script>
-    $("#Apicture").change(function () {
-      readURL(this);
-    })
-    function readURL(input) {
-
-      if (input.files && input.files[0]) {
-        console.log("我會幫你換圖片")
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-          $(input).siblings('img').attr('src', e.target.result);
-        }
-        reader.readAsDataURL(input.files[0]);
-      }
-
-    }
-  </script>
 </body>
-
 </html>

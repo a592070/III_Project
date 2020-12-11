@@ -20,9 +20,9 @@
 	<import resource="classpath:asx54630.beans.xml"/>
 
 
-
 	<context:annotation-config />
 	<context:component-scan base-package="global"/>
+	<context:component-scan base-package="utils"/>
 
 	<mvc:default-servlet-handler />
 	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
