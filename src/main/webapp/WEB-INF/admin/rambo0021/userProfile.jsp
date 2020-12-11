@@ -13,9 +13,7 @@
   <c:import url="/WEB-INF/admin/fragment/user_ref.jsp" />
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
-    .img {
-      width: 13px;
-    }
+
   </style>
 </head>
 
@@ -30,8 +28,7 @@
       <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
         data-scrollax-parent="true">
         <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a
-                href="index.html">首頁</a></span> <span>個人頁面</span></p>
+          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span></p>
           <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">個人頁面</h1>
         </div>
       </div>
@@ -50,29 +47,59 @@
           <div class="form-group">
             <h3 class="mb-3 bread" style="display: inline;"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">個人照片</h3>
-            <img class="img-2 d-flex justify-content-center align-items-center" id="userPic" style="height : 300px" src="<%=application.getContextPath()%>/user/ShowUserPic">
+            <img class="img-2 d-flex justify-content-center align-items-center" id="userPic" style="height : 300px"
+              src="<%=application.getContextPath()%>/user/ShowUserPic">
             <input type="file" id="Apicture" name="Apicture" accept="image/*" style="display: none">
             <button type="button" onclick="Apicture.click()" class="btn btn-light">上傳圖片</button>
             <button type="button" class="btn btn-light" id="delApic">取消圖片</button>
           </div>
         </div>
         <div class="col-md-6 pr-md-5">
-          <h3 class="mb-3 bread" style="display: inline;" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">帳號</h3>
-          <p>${aBean.userName }</p>
-          <h3 class="mb-3 bread" style="display: inline;" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">密碼</h3>
-          <p>${aBean. }</p>
-          <h3 class="mb-3 bread" style="display: inline;" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員身分</h3>
-          <p>${aBean. }</p>
-          <h3 class="mb-3 bread" style="display: inline;" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">暱稱</h3>
-          <p>${aBean. }</p>
-          <h3 class="mb-3 bread" style="display: inline;" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">註冊日期</h3>
-          <p>${aBean. }</p>
-          <h3 class="mb-3 bread" style="display: inline;" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">最後修改日期</h3>
-          <p>${aBean. }</p>
+          <h3 class="mb-3 bread" style="display: inline;"
+            data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">帳號</h3>
+          <p id="userName">${aBean.userName }</p>
+          <h3 class="mb-3 bread" style="display: inline;"
+            data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">密碼</h3>
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#changePwd">修改密碼</button>
+          <p id="password">••••••••••••••••</p>
+          <h3 class="mb-3 bread" style="display: inline;"
+            data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員身分</h3>
+          <p id="identity">${aBean.identityBean.name}</p>
+          <h3 class="mb-3 bread" style="display: inline;"
+            data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">暱稱</h3>
+          <p>${aBean.nickName}</p>
+          <h3 class="mb-3 bread" style="display: inline;"
+            data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">註冊日期</h3>
+          <p>${aBean.modify_DateString}</p>
+          <h3 class="mb-3 bread" style="display: inline;"
+            data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">最後修改日期</h3>
+          <p>${aBean.registerString}</p>
         </div>
       </div>
     </div>
   </section>
+  <!-- 	ModalPwd  -->
+	<div class="modal fade" id="changePwd" tabindex="-1" aria-labelledby="pwdModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="pwdModalLabel">修改密碼</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="pClose"
+						name="pClose">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label for="password">密碼:</label>
+					<input type="password" id="password" name="password" placeholder="請輸入密碼">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="pwdsubmit">儲存</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
   <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
@@ -87,6 +114,24 @@
         stroke="#F96D00" /></svg></div>
   <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+    $("#Apicture").change(function () {
+      readURL(this);
+    })
+    function readURL(input) {
+
+      if (input.files && input.files[0]) {
+        console.log("我會幫你換圖片")
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $(input).siblings('img').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+
+    }
+  </script>
 </body>
 
 </html>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import rambo0021.pojo.AccountBean;
 import rambo0021.serive.AccountService;
+import utils.StringUtil;
 
 @Controller
 @Lazy
@@ -29,9 +30,9 @@ public class UserPageController {
 	private AccountService service;
 	
 	
-	@GetMapping("/registrationPage")
+	@RequestMapping("/registrationPage")
 	public String registrationPage() {
-	
+	  
 		return "rambo0021/userSingup";
 	}
 	
@@ -40,9 +41,14 @@ public class UserPageController {
 		
 		 System.out.println("登入前攔截");
 		 String reqURL = req.getHeader("Referer");
-		 if(reqURL==null) {
-			 System.out.println("我是空的");
+		 System.out.println("reqURL333="+reqURL);
+		 if(reqURL==null ) {
+			
+			 System.out.println("req.getContextPath()"+req.getContextPath());
 			 reqURL=req.getRequestURL().toString().replace("user/singinPage", "FunTaiwan");
+		 }else if(reqURL.contains("/user/registrationPage")) {
+			 System.out.println("前頁註冊");
+			 reqURL=reqURL.toString().replace("user/registrationPage", "FunTaiwan");
 		 }
 		 System.out.println("reqURL="+reqURL);
 		m.addAttribute("reqURL", reqURL);
