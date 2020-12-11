@@ -9,18 +9,18 @@
           	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant/${res.r_sn}">
 		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     									<span class="icon-search2"></span>
     								</div>
 		    					</a>
-		    					<Input type='hidden' name='restaurant_name' value='${res.name}'>
-								<Input type='hidden' name='book_date' value='${book_date}'>
-								<Input type='hidden' name='person_number' value='${person_number}'>
+<%-- 		    					<Input type='hidden' name='r_sn' value='${res.r_sn}'> --%>
+<%-- 								<Input type='hidden' name='book_date' value='${book_date}'> --%>
+<%-- 								<Input type='hidden' name='person_number' value='${person_number}'> --%>
 		    				</form>
 		    					<div class="text p-3">
-		    						<form action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    						<form action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant/${res.r_sn}">
 		    						<div class="R_info">
 		    						<div class="d-flex">
 		    							<div class="one">
@@ -52,9 +52,9 @@
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>&emsp;${res.region}</span> 
 		    							<span class="ml-auto"><button type="submit" class="btn btn-warning">訂位去</button></span>
-		    							<Input type='hidden' name='restaurant_name' value='${res.name}'>
-										<Input type='hidden' name='book_date' value='${book_date}'>
-										<Input type='hidden' name='person_number' value='${person_number}'>
+<%-- 		    							<Input type='hidden' name='r_sn' value='${res.r_sn}'> --%>
+<%-- 										<Input type='hidden' name='book_date' value='${book_date}'> --%>
+<%-- 										<Input type='hidden' name='person_number' value='${person_number}'> --%>
 		    						</p>
 		    						</div>
 		    					</form>

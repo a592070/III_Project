@@ -97,12 +97,31 @@ h3{
 								<option value="連江">連江</option>
 	                    </select>
 	                  </div>
+	                  
+	                  <script>
+					$("#region").change(function(){
+						console.log("change");
+						console.log($("#region").val());
+						var region = $("#region").val();
+						$('#region option:contains(' + region + ')').attr('selected', 'selected');
+						$('#clickbtn').click();
+										})
+					</script>
+	                  
 		              </div>
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
 						<span class="sp_search">餐廳名稱搜尋</span> 
 						<input type="text" name="restaurant_name" id="restaurant_name" placeholder="請輸入關鍵字" class="form-control">
 		              </div>
+		              
+		              <script>
+					$("#restaurant_name").change(function(){
+						var restaurant_name = $("#restaurant_name").val();
+						$('#clickbtn').click();
+										})
+					</script>
+		              
 		              <div class="form-group">
 		                <span class="sp_search">用餐日期</span> 
 		                <input type="date" name="book_date" id="theDate" min="" class="form-control">
@@ -146,7 +165,36 @@ h3{
 		              </div>
 		              <div class="form-group">
 		                <input type="button" id="clickbtn" value="找餐廳" class="btn btn-primary py-3 px-5">
+		                <br>
+		                <input type="button" id="clearkey" value="清空關鍵字" class="btn btn-primary py-3 px-5">
 		              </div>
+		              
+		              <script>
+						$('#clearkey').click(function(){
+							console.log("clear");
+						  $("#region").val('');
+						  $('#restaurant_name').val('');
+						  
+						  var date = new Date();
+
+							var day = date.getDate();
+							var month = date.getMonth() + 1;
+							var year = date.getFullYear();
+
+							if (month < 10)
+								month = "0" + month;
+							if (day < 9){
+								console.log("d = " + typeof(day));
+								day = day + 1;
+								day = "0" + day;
+							}else{day = day + 1;}
+							var today = year + "-" + month + "-" + day;
+						  $('#theDate').attr("value",today);
+						  $('#theDate').attr("min", today);
+						  $('#clickbtn').click();
+						})
+
+					</script>
 		              
 		            </div>
 	            </form>
@@ -197,18 +245,18 @@ h3{
           	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant">
+		    				<form id="form${res.r_sn}" action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant/${res.r_sn}">
 		    					<a href="javascript:document.getElementById('form${res.r_sn}').submit();" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Restaurant/pic/${res.r_sn}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     									<span class="icon-search2"></span>
     								</div>
 		    					</a>
-		    					<Input type='hidden' name='restaurant_name' value='${res.name}'>
-								<Input type='hidden' name='book_date' value='${book_date}'>
-								<Input type='hidden' name='person_number' value='${person_number}'>
+<%-- 		    					<Input type='hidden' name='r_sn' value='${res.r_sn}'> --%>
+<%-- 								<Input type='hidden' name='book_date' value='${book_date}'> --%>
+<%-- 								<Input type='hidden' name='person_number' value='${person_number}'> --%>
 		    				</form>
 		    					<div class="text p-3">
-		    						<form action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant" method="POST">
+		    						<form action="<%=pageContext.getServletContext().getContextPath()%>/DisplayRestaurant/${res.r_sn}">
 		    						<div class="R_info">
 		    						<div class="d-flex">
 		    							<div class="one">
@@ -240,9 +288,9 @@ h3{
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>&emsp;${res.region}</span> 
 		    							<span class="ml-auto"><button type="submit" class="btn btn-warning">訂位去</button></span>
-		    							<Input type='hidden' name='restaurant_name' value='${res.name}'>
-										<Input type='hidden' name='book_date' value='${book_date}'>
-										<Input type='hidden' name='person_number' value='${person_number}'>
+<%-- 		    							<Input type='hidden' name='r_sn' value='${res.r_sn}'> --%>
+<%-- 										<Input type='hidden' name='book_date' value='${book_date}'> --%>
+<%-- 										<Input type='hidden' name='person_number' value='${person_number}'> --%>
 		    						</p>
 		    						</div>
 		    					</form>

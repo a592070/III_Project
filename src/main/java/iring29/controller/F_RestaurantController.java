@@ -111,15 +111,17 @@ public class F_RestaurantController {
 
 	}
 	
-	@RequestMapping(path = {"/DisplayRestaurant","/DisplayRestaurant/{restaurant_id}"})
+	@RequestMapping(path = {"/DisplayRestaurant/${res.r_sn}","/DisplayRestaurant/{restaurant_id}"}) 
 	public String ShowRestaurant(
-			@RequestParam(name = "restaurant_name", required = false) String restaurant_name,
+			@RequestParam(name = "r_sn", required = false) Integer r_sn,
+//			@PathVariable(name="res.r_sn", required = false) Integer r_sn,  
 			@PathVariable(name="restaurant_id", required = false) Integer restaurant_id,
 			HttpSession session, Model m) {
-		System.out.println("res name = " + restaurant_name);
+		System.out.println("r_sn = " + r_sn);
 		
 		Restaurant res_data = null;
-		if(!StringUtil.isEmpty(restaurant_name)) res_data=F_Serivce.findRestaurant(restaurant_name);
+//		if(!StringUtil.isEmpty(r_sn)) res_data=F_Serivce.findRestaurant(restaurant_name);
+		if(r_sn != null && r_sn != 0) res_data = F_Serivce.findRestaurant(r_sn);
 		if(restaurant_id != null && restaurant_id != 0) res_data = F_Serivce.findRestaurant(restaurant_id);
 		
 		List<R_Comment> comment = F_Serivce.ResComment(res_data.getR_sn());
