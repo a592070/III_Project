@@ -2,6 +2,7 @@ package a592070;
 
 import config.AppConfig;
 import config.WebApplicationInitializer;
+import global.SendMailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,16 @@ import utils.MailUtil;
 @SpringJUnitConfig(classes = AppConfig.class)
 public class MailTest {
 
-    @Autowired@Qualifier("MailUtil")
-    MailUtil mailUtil;
+    @Autowired@Qualifier("sendMailService")
+    SendMailService sendMailService;
 
     @Test
     public void testMail(){
         String target = "410011233@gms.ndhu.edu.tw";
         String title = "TEST MAIL";
         String content = "hihi 你好";
-        System.out.println("===========發送前=============");
-        mailUtil.sendEmail(target, title, target);
-        System.out.println("===========發送後=============");
+
+        sendMailService.asyncSend(target, title, content);
+
     }
 }

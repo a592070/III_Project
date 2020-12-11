@@ -3,9 +3,7 @@ package config;
 import freemarker.template.TemplateExceptionHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -25,6 +23,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 //@ImportResource
 @ImportResource({"classpath:springmvc.servlet.xml"})
+@Import({AsyncConfig.class})
 @EnableWebMvc
 @EnableAsync
 public class AppConfig {
