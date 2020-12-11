@@ -20,15 +20,15 @@
 	<import resource="classpath:asx54630.beans.xml"/>
 
 
-
 	<context:annotation-config />
 	<context:component-scan base-package="global"/>
+	<context:component-scan base-package="utils"/>
 
 	<mvc:default-servlet-handler />
-	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
-	<mvc:resources mapping="/direngine-master/**" location="/WEB-INF/direngine-master/"/>
-	<mvc:resources mapping="/sona-master/**" location="/WEB-INF/sona-master/"/>
-	<mvc:resources mapping="/admin/direngine-master/**" location="/WEB-INF/direngine-master/"/>
+	<mvc:resources mapping="/assets/**" location="classpath:/WEB-INF/assets/, /WEB-INF/assets/"/>
+	<mvc:resources mapping="/direngine-master/**" location="classpath:/WEB-INF/direngine-master/, /WEB-INF/direngine-master/"/>
+	<mvc:resources mapping="/sona-master/**" location="classpath:/WEB-INF/sona-master/, /WEB-INF/sona-master/"/>
+	<mvc:resources mapping="/admin/direngine-master/**" location="classpath:/WEB-INF/direngine-master/, /WEB-INF/direngine-master/"/>
 	
 
 	<mvc:annotation-driven>
@@ -63,6 +63,14 @@
 			<bean class="global.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors> -->
+	
+	<!--測試 -->
+<!-- 	<mvc:interceptors> -->
+<!--  		<mvc:interceptor>  -->
+<!-- 			<mvc:mapping path="/user/singinPage"/> -->
+<!-- 			<bean class="rambo0021.Testinterceptors"/> -->
+<!-- 		</mvc:interceptor> -->
+<!-- 	</mvc:interceptors> -->
 
 	<!--視圖解析器: DispatcherServlet 給他的ModelAndView -->
 	<bean

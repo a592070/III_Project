@@ -63,7 +63,8 @@ public class Restaurant {
 	private AccountBean accountBean;
 	@Column(name = "PRICE")
 	private BigDecimal price;
-	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "restaurant")
+	private Set<R_Comment> rcom = new HashSet<R_Comment>();
 	
 	public BigDecimal getR_sn() {
 		return r_sn;
@@ -205,6 +206,14 @@ public class Restaurant {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	public Set<R_Comment> getRcom() {
+		return rcom;
+	}
+
+	public void setRcom(Set<R_Comment> rcom) {
+		this.rcom = rcom;
 	}
 	
 	

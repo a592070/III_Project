@@ -2,6 +2,7 @@ package azaz4498.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,10 +17,33 @@ public class ArticleService {
 	@Autowired
 	private ArticleDAO aDao;
 	
-	//顯示文章列表(非禁用)
-	public List<Article> showAvailableArticles(){
-		return aDao.showAvailableArticles();
+	
+	public Map<String, Integer> getTypeCount(){
+		return aDao.getTypeCount();
 	}
+	
+	public Integer getRecords() {
+		return aDao.getRecords();
+	}
+	public Integer getTypeSearchRecord(Integer articleType) {
+		return aDao.getTypeSearchRecords(articleType);
+	}
+	public Integer getSearchRecords(String keyword, Integer articleType) {
+		return aDao.getSearchRecords(keyword, articleType);
+	}
+	//顯示最近文章
+	public List<Article> showRecentArticles(){
+		return aDao.getRecentPost();
+	}
+	//顯示文章列表(非禁用)(前台)
+	public List<Article> showAvailableArticles(Integer index,Integer records){
+		return aDao.showAvailableArticles(index, records);
+	}
+	//搜尋文章(前台)
+	public List<Article> searchArticlesFrontend(String keyword, Integer articleType,Integer index,Integer records) {
+		return aDao.searchArticleFrontend(keyword, articleType, index, records);
+	}
+	
 	// 顯示文章列表
 	public List<Article> showAllArticles() {
 		return aDao.showAllArticles();
@@ -31,8 +55,8 @@ public class ArticleService {
 	}
 
 	// 依類型顯示文章
-	public List<Article> showArticlesByType(Integer typeId) throws SQLException {
-		return aDao.showArticlesByType(typeId);
+	public List<Article> showArticlesByType(Integer typeId,Integer index,Integer records) throws SQLException {
+		return aDao.showArticlesByType(typeId, index,records);
 	}
 
 	// 新增文章
@@ -45,7 +69,7 @@ public class ArticleService {
 			throws SQLException {
 		return aDao.articleEdit(title, content, articleId, userid, typeId);
 	}
-
+	//搜尋文章
 	public List<Article> searchArticles(String keyword, Integer articleType) {
 		return aDao.searchArticle(keyword, articleType);
 	}
@@ -65,6 +89,9 @@ public class ArticleService {
 		return aDao.switchStatus(articleId);
 	}
 
-	// upload img
+	// getCoverpic
+	public List<String> getCoverPicList(List<Article> artList){
+		return aDao.getCoverPicList(artList);
+	}
 	
 }

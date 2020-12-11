@@ -36,14 +36,15 @@
 											$("#test${hotels.SN}").prepend(tags, zerostar);
 				    						</script>
 			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
+			    							<span class="price per-price"><br>${hotels.DOUBLE_ROOM}<small>/雙</small></span>
+			    							<span class="price per-price"><br>${hotels.QUADRUPLE_ROOM}<small>/四</small></span>
 		    							</div>
 		    						</div>
 		    						<p>${hotels.TYPE}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>&emsp;${hotels.REGION}</span> 
-		    							<span class="ml-auto"><a href="#">Book Now</a></span>
+		    							<span class="ml-auto"><a href="#">訂房去</a></span>
 		    						</p>
 		    					</div>
 		    				</div>

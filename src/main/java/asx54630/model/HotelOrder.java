@@ -28,10 +28,10 @@ public class HotelOrder {
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SN_ORDER")
 	private BigDecimal SN_ORDER;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ORDER_ID")
 	private OrderTable orderTable;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ORDER_HOTEL_ID")
 	private Hotel hotel;
 	@Column(name = "DOUBLE_ROOM")
@@ -48,7 +48,8 @@ public class HotelOrder {
 	private String CLIENT_PHONE;
 	@Column(name = "H_PRICE")
 	private BigDecimal H_PRICE;
-	
+	@Column(name = "PROPLE_NUM")
+	private BigDecimal PROPLE_NUM;
 
 	public HotelOrder() {
 		// TODO Auto-generated constructor stub
@@ -152,6 +153,16 @@ public class HotelOrder {
 
 	public void setH_PRICE(BigDecimal h_PRICE) {
 		H_PRICE = h_PRICE;
+	}
+
+
+	public BigDecimal getPROPLE_NUM() {
+		return PROPLE_NUM;
+	}
+
+
+	public void setPROPLE_NUM(BigDecimal pROPLE_NUM) {
+		PROPLE_NUM = pROPLE_NUM;
 	}
 
 

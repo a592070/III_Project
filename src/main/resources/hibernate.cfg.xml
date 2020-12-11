@@ -21,7 +21,7 @@
 <!-- 		 <property name="current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property> -->
 <!-- 		<property name="current_session_context_class">thread</property>-->
 
-<!--		<property name="hibernate.show_sql">true</property>-->
+		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 <!--		<property name="use_sql_comments">true</property>-->
 
@@ -49,6 +49,7 @@
 		<mapping class="iring29.model.R_Order_List"/>
 		<mapping class="iring29.model.Restaurant_VO"/>
 		<mapping class="iring29.model.R_OrderList_VO"/>
+		<mapping class="iring29.model.R_Comment"/>
 		<mapping class="azaz4498.model.Article"/>
 		<mapping class="azaz4498.model.ArticleType"/>
 		<mapping class="azaz4498.model.Comment"/>

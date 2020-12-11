@@ -1,5 +1,20 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style>
+.ftco-footer .ftco-footer-widget h2 {
+	margin-bottom:10px;
+}
+.pb-2, .py-2 {
+    padding-bottom: 0.3rem !important;
+}
+.pt-2, .py-2 {
+    padding-bottom: 0.3rem !important;
+}
+.ftco-footer {
+    padding: 4em 0 4em 0;
+}
+</style>
+
     <footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">
         <div class="row mb-5">
@@ -16,32 +31,32 @@
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-4 ml-md-5">
-              <h2 class="ftco-heading-2">Information</h2>
+              <h2 class="ftco-heading-2">相關訊息</h2>
               <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">About</a></li>
-                <li><a href="#" class="py-2 d-block">Service</a></li>
-                <li><a href="#" class="py-2 d-block">Terms and Conditions</a></li>
-                <li><a href="#" class="py-2 d-block">Become a partner</a></li>
-                <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
-                <li><a href="#" class="py-2 d-block">Privacy and Policy</a></li>
+                <li><a href="#" class="py-2 d-block">關於我</a></li>
+                <li><a href="#" class="py-2 d-block">服務項目</a></li>
+<!--                 <li><a href="#" class="py-2 d-block">Terms and Conditions</a></li> -->
+                <li><a href="#" class="py-2 d-block">成為夥伴</a></li>
+<!--                 <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li> -->
+                <li><a href="#" class="py-2 d-block">政策</a></li>
               </ul>
             </div>
           </div>
           <div class="col-md">
              <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">Customer Support</h2>
+              <h2 class="ftco-heading-2">客戶服務</h2>
               <ul class="list-unstyled">
                 <li><a href="#" class="py-2 d-block">FAQ</a></li>
-                <li><a href="#" class="py-2 d-block">Payment Option</a></li>
-                <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
-                <li><a href="#" class="py-2 d-block">How it works</a></li>
-                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                <li><a href="#" class="py-2 d-block">付款方式</a></li>
+                <li><a href="#" class="py-2 d-block">訂購咨詢</a></li>
+<!--                 <li><a href="#" class="py-2 d-block">How it works</a></li> -->
+                <li><a href="#" class="py-2 d-block">聯絡我</a></li>
               </ul>
             </div>
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<h2 class="ftco-heading-2">有任何問題嗎?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>

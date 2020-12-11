@@ -96,41 +96,51 @@ h5{
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<h2>Hotel</h2>
+							<h2>訂飯店</h2>
 						</tr>
 						<tr>
-							<th>Product</th>
-							<th>Quantity</th>
-							<th class="text-center">Price</th>
-							<th class="text-center">Total</th>
+							<th>飯店資訊</th>
+							<th>預定日期</th>
+							<th class="text-center">人數</th>
+							<th class="text-center">價格</th>
 							<th> </th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-sm-8 col-md-6">
-								<div class="media">
-									<a class="thumbnail pull-left" href="#"> <img
-										class="media-object"
-										src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-										style="width: 72px; height: 72px;">
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading">
-											<a href="#">Product name</a>
-										</h4>
-										<h5 class="media-heading">
-											by <a href="#">Brand name</a>
-										</h5>
-										<span>Status: </span><span class="text-success"><strong>In
-												Stock</strong></span>
-									</div>
-								</div>
-							</td>
+							<td class="col-sm-8 col-md-6"></td>
 							<td class="col-sm-1 col-md-1" style="text-align: center"><input
-								type="email" class="form-control" id="exampleInputEmail1"
+								type="date" class="form-control" id="exampleInputEmail1"
 								value="3"></td>
-							<td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+							<td class="col-sm-1 col-md-1 text-center">
+								<input id="guest_dec" type="button" value="-" onclick="dec1()">
+   								<input id="guest" type="text" value="1" size="1" style="text-align:center;" disabled="disabled">
+    							<input id="guest_inc" type="button" value="+" onclick="inc1()">
+    							<script type="text/javascript">
+    					            var count = document.getElementById("guest");
+    					            var inc = document.getElementById("guest_inc");
+    					            var dec = document.getElementById("guest_dec");
+
+    					            if(count.value = 1){
+    					            	dec.removeAttr('onclick');
+        					            }
+    					            if(count.value > 35){
+    					            	inc.removeAttr('onclick');
+        					            }
+    					            
+    					            function inc1() {
+     					        	   count.value = parseInt(count.value) + 1;
+     					            };
+
+     					           function dec1() {
+    					            	count.value = parseInt(count.value) - 1;
+    					            };
+
+    					            
+    					            console.log(count.value);
+    					        
+    							</script>
+							</td>
 							<td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
 							<td class="col-sm-1 col-md-1">
 								<button type="button" class="btn btn-danger">
@@ -138,42 +148,12 @@ h5{
 								</button>
 							</td>
 						</tr>
-						<tr>
-							<td class="col-md-6">
-								<div class="media">
-									<a class="thumbnail pull-left" href="#"> <img
-										class="media-object"
-										src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-										style="width: 72px; height: 72px;">
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading">
-											<a href="#">Product name</a>
-										</h4>
-										<h5 class="media-heading">
-											by <a href="#">Brand name</a>
-										</h5>
-										<span>Status: </span><span class="text-warning"><strong>Leaves
-												warehouse in 2 - 3 weeks</strong></span>
-									</div>
-								</div>
-							</td>
-							<td class="col-md-1" style="text-align: center"><input
-								type="email" class="form-control" id="exampleInputEmail1"
-								value="2"></td>
-							<td class="col-md-1 text-center"><strong>$4.99</strong></td>
-							<td class="col-md-1 text-center"><strong>$9.98</strong></td>
-							<td class="col-md-1">
-								<button type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove"></span> Remove
-								</button>
-							</td>
-						</tr>
+
 						<tr>
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h3>Subtotal</h3></td>
+							<td><h3>小計</h3></td>
 							<td class="text-right"><h3>
 									<strong>$24.59</strong>
 								</h3></td>
@@ -187,7 +167,9 @@ h5{
 
 
 <!-- 餐廳 start -->
-
+		<c:set var ="size" value= "${fn:length(OTBean.r_Order_Lists)}"></c:set>
+		<c:if test = "${size > 0}" >
+		
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -226,7 +208,7 @@ h5{
 							<div class="content"><h5>${R.restaurant.name}</h5></div>
 							<div class="content"><h5>${R.restaurant.address}</h5></div>
 							<div class="content"><h5><input class="form-control data" value="${R.cus_name}" id="cus_name${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
-							<div class="content"><h5><input class="form-control data" value="${R.cus_phone}" id="cus_phone${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
+							<div class="content"><h5><input class="form-control data phone" value="${R.cus_phone}" id="cus_phone${R.restaurant.r_sn}" placeholder="09xxxxxxxx" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
 							</td>
 							<td class="col-sm-1 col-md-1" >
 								<input type="date" name="book_date" id="theDate${R.restaurant.name}" class="form-control ${R.restaurant.r_sn}" onchange="changeinfo${R.restaurant.r_sn}(), tableck${R.restaurant.r_sn}()">
@@ -242,8 +224,11 @@ h5{
 
 						if (month < 10)
 							month = "0" + month;
-						if (day < 10)
+						if (day < 9){
+							console.log("d = " + typeof(day));
+							day = day + 1;
 							day = "0" + day;
+						}else{day = day + 1;}
 
 						var today = year + "-" + month + "-" + day;
 						
@@ -351,7 +336,7 @@ h5{
 						console.log("price = " + price);
 						$("#deposit${R.restaurant.r_sn}").html(price);
 						console.log("sn = " + sn + ",name = " + name + ",phone = " + phone + ", bd = " + bd + ", bt = " + bt + ", pnum = " + pnum);
-						if(name != "" && phone != "" && phone.match(/^09[0-9]{8}$/)){
+						if(name != "" && phone != "" && (!$("#cus_phone${R.restaurant.r_sn}").val().match(/^09[0-9]{8}$/)) == false){
 						$.ajax(
 			                    {
 			                        type: 'POST',
@@ -475,7 +460,7 @@ h5{
 			</div>
 		</div>
 	</div>
-
+</c:if>
 <!-- 餐廳 END -->
 
 	<div class="container">
@@ -633,21 +618,33 @@ h5{
 							  <script type="text/javascript">
 							  function checkbtn(){
 									var totaldata = document.getElementsByClassName("form-control data");
+									var totalphone = document.getElementsByClassName("form-control data phone");
 									console.log("otaldata =" + totaldata.length);
+									var flag = true;
 									for(var j = 0; j < totaldata.length; j++){
 										console.log("value=" + totaldata[j].value);
 											if(totaldata[j].value == ""){
 												console.log("empty");
 												document.getElementById("check").setAttribute("data-target", "#checkagain");	
-												document.getElementById("check").setAttribute("type","button");
-												break;							
-											}else{
-												console.log("has data");
-												document.getElementById("check").setAttribute("data-target", "#exampleModalCenter");	
-												document.getElementById("check").setAttribute("type","button");					
-												}
+												document.getElementById("check").setAttribute("type","button");							
+											flag = false;
+											}
 										}
-									
+									for(var z = 0; z < totalphone.length; z++){
+										var p = totalphone[z].value;
+										var pattern = /^09[0-9]{8}$/;
+										console.log("phone = " + totalphone[z].value);
+										var p_result = pattern.test(p);
+										if(p_result == false){
+											document.getElementById("check").setAttribute("data-target", "#checkagain");	
+											document.getElementById("check").setAttribute("type","button");
+											flag = false;	
+											}
+										}
+									if(flag == true){
+										document.getElementById("check").setAttribute("data-target", "#exampleModalCenter");	
+										document.getElementById("check").setAttribute("type","button");					
+									}
 								  }
 							  </script>
 
