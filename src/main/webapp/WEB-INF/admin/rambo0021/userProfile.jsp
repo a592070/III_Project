@@ -60,7 +60,6 @@
           <p id="userName">${aBean.userName }</p>
           <h3 class="mb-3 bread" style="display: inline;"
             data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">密碼</h3>
-          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#changePwd">修改密碼</button>
           <p id="password">••••••••••••••••</p>
           <h3 class="mb-3 bread" style="display: inline;"
             data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員身分</h3>
@@ -74,6 +73,7 @@
           <h3 class="mb-3 bread" style="display: inline;"
             data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">最後修改日期</h3>
           <p>${aBean.registerString}</p>
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#changePwd">修改資料</button>
         </div>
       </div>
     </div>
@@ -83,7 +83,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="pwdModalLabel">修改密碼</h5>
+					<h5 class="modal-title" id="pwdModalLabel">修改會員資料</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="pClose"
 						name="pClose">
 						<span aria-hidden="true">&times;</span>
