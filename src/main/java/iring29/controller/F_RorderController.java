@@ -151,14 +151,6 @@ public class F_RorderController {
 		F_Serivce.createOrder(OTBean);
 		session.removeAttribute("OTBean");
 		OrderTable otBean = F_Serivce.findOrder();
-
-
-
-		otBean.getR_Order_Lists().removeIf(ele -> {
-			return "".equals(ele.getRestaurant().getName());
-		});
-
-
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
 		session.setAttribute("res_lists", res_lists);
 		session.removeAttribute("cartnum");

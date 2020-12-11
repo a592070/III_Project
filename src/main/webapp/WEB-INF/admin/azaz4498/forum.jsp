@@ -17,19 +17,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
       h3 {
         font-family: "Noto Sans TC", sans-serif;
       }
-      html {
-        scroll-behavior: smooth;
-      }
-      .fixed-btn {
-          position: fixed;
-          bottom: 20px;
-          right: 80px;
-          height: 100px;
-          z-index: 999;
-          
-      }
     </style>
-    <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -56,34 +44,56 @@ contentType="text/html;charset=UTF-8" language="java"%>
               class="breadcrumbs"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
-              <span class="mr-2">FUN x 台灣</span> <span></span>
+              <span class="mr-2">探索台灣</span> <span></span>
             </p>
             <h1
               class="mb-3 bread"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
-              論壇
+              FUN x 台灣
             </h1>
           </div>
         </div>
       </div>
     </div>
-    
-    
 
-    <section class="ftco-section bg-light " id="section">
-      <c:import url="/WEB-INF/admin/azaz4498/carousel.jsp"/>
-      <div class="container" id="container">
+    <section class="ftco-section bg-light">
+      <div class="container">
         <div class="row d-flex" id="articleGrid">
-          
+          <div class="col-md-3 d-flex ftco-animate">
+            <div class="blog-entry align-self-stretch">
+              <a
+                href="blog-single.html"
+                class="block-20"
+                style="
+                  background-image: url('direngine-master/images/image_1.jpg');
+                "
+              >
+              </a>
+              <div class="text p-4 d-block">
+                <span class="tag">文章分類</span>
+
+                <h3 class="heading mt-3">
+                  <a href="#">文章標題</a>
+                </h3>
+                <div class="meta mb-3">
+                  <div><a href="#">文章建立時間</a></div>
+                  <div><a href="#">文章作者</a></div>
+                  <div>
+                    <a href="#" class="meta-chat"
+                      ><span class="icon-chat"></span> 評論數3</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <c:forEach var="article" items="${list}" varStatus="status">
-            
             <div class="col-md-3 d-flex ftco-animate">
               <div class="blog-entry align-self-stretch">
-                <input type="hidden" class="artId" value="${article.artId}">
                 <a
-                  href="article/${article.artId}"
-                  class="block-20 artCoverPic"
+                  href="blog-single.html"
+                  class="block-20"
                   style="background-image: url('${picList[status.index]}')"
                 >
                 </a>
@@ -91,7 +101,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                   <span class="tag">${article.articleType.typeName}</span>
 
                   <h3 class="heading mt-3">
-                    <a href="article/${article.artId}">${article.artTitle}</a>
+                    <a href="#">${article.artTitle}</a>
                   </h3>
                   <div class="meta mb-3">
                     <div><a href="#">${article.artCreTime}</a></div>
@@ -106,23 +116,27 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 </div>
               </div>
             </div>
-          
           </c:forEach>
-        </table>
         </div>
         <!--分頁-->
         <div class="row mt-5">
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                <li id ="prev" class="prev"><a href="">&lt;</a></li>
-                <li id ="next" class="next"><a href="">&gt;</a></li>
+                <li><a href="#">&lt;</a></li>
+                <li class="active"><span>1</span></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&gt;</a></li>
               </ul>
             </div>
           </div>
         </div>
       </div>
     </section>
+
     <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
 
     <!-- loader -->
@@ -149,108 +163,64 @@ contentType="text/html;charset=UTF-8" language="java"%>
         />
       </svg>
     </div>
-    <!-- fixed btn-->
-    <div class="fixed-btn">
-      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button"><i class="far fa-edit">撰寫文章</i></a>
-    </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script src="${pageContext.request.contextPath}/assets/tablesorter-2.31.3/js/jquery.tablesorter.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/tablesorter-2.31.3/js/extras/jquery.tablesorter.pager.js"></script>
     <script>
-      $(document).ready(function(){
-      $('body,html').animate({scrollTop: 800}, 800); 
-      });
-
+      $("articleGrid").tablesorterPager({});
     </script>
-    <script>
-        $(window).scroll(function() {
-      if($(document).scrollTop() > 600){
-          $(".fixed-btn").show();
-      } else {
-          $(".fixed-btn").hide();
-  }
-});
 
-    </script>
-    <script>
-      var len = eval(${totalPages});
-      var currPage= eval(${currPage});
-      
-      for(var i=1; i<=len;i++) {
-        var content = "<li class='page'id='page"+i+"'><a href=''>"+i+"</a></li>";        
-        $('#next').before(content);
-        $('#page'+currPage).addClass('active');
-        $('#page'+currPage).remove('a');
-      };
-      if(currPage==len){
-        $('#next').remove();
-      }
-      if(currPage==1){
-        $('#prev').remove();
-      }
-    </script>
-    
-    <script>
-      $('#next').on('click',function(){
-        event.preventDefault();
-        var totalPage=eval(${totalPages});
-        
-
+    <!-- <script>
+      $(window).on("load",function () {
         $.ajax({
-          type:"GET",
-          url:"Article.pagincontroller.json",
-          data:{
-            currPage: currPage+1,
-          },
-          success:function(response){
-            $('#section').children().remove();
-            $('#section').append(response);
-            console.log('現在頁數'+currPage);
+          type: "GET",
+          url: "Article.controller.json",
+          async:false,
+          success: function (response) {
+            showList(response);
             
-            window.scrollTo({ top: 600, behavior: 'smooth' });
-
           },
-          
-        })
-
-      })
-
-      $('#prev').on('click',function(){
-        // window.scrollTo({ top: 500, behavior: 'smooth' });
-        //event.preventDefault();
-        var totalPage=eval(${totalPages});
-        $.ajax({
-          type:"GET",
-          url:"Article.pagincontroller.json",
-          data:{
-            currPage: currPage-1,
-          },
-          success:function(response){
-            $('#section').children().remove();
-            $('#section').append(response);
-            console.log('現在頁數'+currPage);
-            window.scrollTo({ top: 600, behavior: 'smooth' });
-          },
-        })
-      })
-
-      $('.page').on('click',function(){
-        console.log('page has been click');
-        event.preventDefault();
-        var page = $(this).text();
-        $.ajax({
-          type:"GET",
-          url:"Article.pagincontroller.json",
-          data:{
-            currPage: page,
-          },
-          success:function(response){
-            $('#section').children().remove();
-            $('#section').append(response);
-            console.log('現在頁數'+currPage);
-            window.scrollTo({ top: 600, behavior: 'smooth' });
-          },
-        })
-
-      })
-    </script>
+        });
+      });
+      </script> -->
+    <!-- <script>
+      function showList(response) {
+        
+        $.each(response.list, function (index, element) {
+          var currArtId = element.artId;
+          var imgPath = response.coverPic[currArtId];
+          console.log(imgPath);
+          var content = "<div class='col-md-3 d-flex ftco-animate'>" +
+              "<div class='blog-entry align-self-stretch'>" +
+              "<a href='#' class='block-20' style='background-image: " +
+              'url(' +
+              imgPath +
+              ");'>"+
+              "</a>" +
+              "<div class='text p-4 d-block'>" +
+              "<span class='tag'>" +
+              element.articleType.typeName +
+              "</span>" +
+              "<h3 class='heading mt-3>'" +
+              "<a href='#'>" +
+              element.artTitle +
+              "</a></h3>" +
+              "<div class='meta mb-3'>"+
+              "<div><a href='#'>" +
+              element.artCreTime +
+              "</a></div>" +
+              "<div><a href='#'>" +
+              element.artUserId +
+              "</a></div>" +
+              "</div>" +
+              "<a href='#'' class='meta-chat'>" +
+              "<span class='icon-chat'></span>" +
+              element.artCommNum +
+              "</a>" +
+              "</div></div></div></div></div>"
+              $(content).appendTo("#articleGrid");
+        });
+      }
+    </script> -->
   </body>
 </html>

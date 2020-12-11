@@ -50,9 +50,6 @@ public class F_RestaurantDAO {
 			return rBean;
 			
 		}
-		public Restaurant findRestaurant(Integer id) {
-			return sessionFactory.getCurrentSession().get(Restaurant.class, BigDecimal.valueOf(id));
-		}
 		
 		//get pic
 		public byte[] getPic(BigDecimal r_sn) {

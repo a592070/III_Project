@@ -18,7 +18,7 @@
 body{
 	margin:0px;
 	padding:0px;
-	background:url('${pageContext.request.contextPath}/direngine-master/images/AsianFood.jpg') center center fixed no-repeat;
+	background:url('direngine-master/images/AsianFood.jpg') center center fixed no-repeat;
 	background-size: cover;　
 }    
 .box{

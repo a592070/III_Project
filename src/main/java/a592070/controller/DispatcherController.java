@@ -29,11 +29,4 @@ public class DispatcherController {
     public String test() {
         return "a592070/travelSetInfo02";
     }
-
-
-
-    @RequestMapping("/attraction/index")
-    public String fontIndex(){
-        return "a592070/font/attractionInfo";
-    }
 }
