@@ -1,11 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <!-- import js -->
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
     
 		<div class="row" id="rowheight">
-          	
+		
+		<c:set var ="size" value= "${fn:length(res_data)}"></c:set>
+		<c:if test = "${size < 1}" >
+			<h5>很抱歉，沒有符合的餐廳</h5>
+		</c:if>
+         
+        <c:if test = "${size > 0}" >
+		
           	<c:forEach var="res" items="${res_data}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
@@ -61,7 +69,8 @@
 		    					</div>
 		    				</div>
 		    			</div>
-		    			</c:forEach>		    			
+		    			</c:forEach>	
+		    		</c:if>  	    			
           	</div>
           	
  			<!-- Page -->
@@ -83,6 +92,6 @@
 				$("#${userPage.currentPage}").remove("a");
 		        </script>
           </div> <!-- .col-md-8 -->
-          
+        
     <!-- import js -->
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 

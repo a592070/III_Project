@@ -68,10 +68,31 @@ img{
 	font-size:13px;
 	font-style:italic;
 }
-
-element.style {
+.btn.btn-primary, button.close{
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: 2px;
+    background: #dfa974;
+    border: none;
+    padding: 14px 34px 13px;
+    display: inline-block;	
 }
-
+.modal-body{
+	font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+}
+.modal-title{
+    font-size: 20px;
+    color: #19191a;
+    margin-bottom: 24px;
+    float: left;
+    margin-right: 10px;
+}
 </style>
 </head>
 <body>
@@ -141,6 +162,7 @@ element.style {
 									<a href="javascript:void();" id="addCart" class="review-add ra-form button">放入購物車</a>
 									<script>
 										$("#addCart").on('click',function(){
+											//check if login
 											$.ajax(
 								                    {
 								                        type: 'POST',
@@ -184,7 +206,7 @@ element.style {
 																			                        console.log("re = " + response);
 																		                        	var res_context = "";
 																		                        	res_context += '<button type="button" class="btn btn-primary" id="modalbtn" data-toggle="modal" data-target="#exampleModalCenter" style="display:none;"></button>';
-																		                        	$("#rating").html(res_context);
+																		                        	$("#rating").append(res_context);
 																		                        	$("#modalbtn").click();
 																		                        	$(".nav-shop__circle").html(response);
 																		                        }

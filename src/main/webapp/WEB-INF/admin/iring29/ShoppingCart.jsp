@@ -187,7 +187,9 @@ h5{
 
 
 <!-- 餐廳 start -->
-
+		<c:set var ="size" value= "${fn:length(OTBean.r_Order_Lists)}"></c:set>
+		<c:if test = "${size > 1}" >
+		
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -478,7 +480,7 @@ h5{
 			</div>
 		</div>
 	</div>
-
+</c:if>
 <!-- 餐廳 END -->
 
 	<div class="container">
