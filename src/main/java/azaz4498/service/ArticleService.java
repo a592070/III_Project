@@ -50,7 +50,7 @@ public class ArticleService {
 	}
 
 	// 顯示當前文章(by Id)
-	public List<Article> showArticleById(Integer articleId) throws SQLException {
+	public Article showArticleById(Integer articleId) throws SQLException {
 		return aDao.showArticleById(articleId);
 	}
 

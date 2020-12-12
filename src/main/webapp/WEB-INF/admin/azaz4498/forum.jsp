@@ -174,21 +174,26 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
     </script>
     <script>
-      var len = eval(${totalPages});
-      var currPage= eval(${currPage});
       
-      for(var i=1; i<len;i++) {
-        var content = "<li class='page'id='page"+i+"'><a href=''>"+i+"</a></li>";        
+        var len = eval(${totalPages});
+        var currPage= eval(${currPage});
+        console.log(len);
+      for(var i=1; i<=len;i++) {
+        var content = "<li class='page' id='page"+i+"'><a href=''>"+i+"</a></li>";
         $('#next').before(content);
         $('#page'+currPage).addClass('active');
         $('#page'+currPage).remove('a');
+        
       };
-      if(currPage==len){
+      if(len==1){
         $('#next').remove();
-      }
-      if(currPage==1){
+        $('#prev').remove();
+      }else if(currPage==len){
+        $('#next').remove();
+      }else if(currPage==1){
         $('#prev').remove();
       }
+      
     </script>
     
     <script>

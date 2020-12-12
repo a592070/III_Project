@@ -56,7 +56,8 @@ public class ArticleController {
 		List<Article> recentArticles = articleService.showRecentArticles();
 		List<Comment> commentList = commentService.showCommentsByArticle(artId);
 		List<String> coverPicList = articleService.getCoverPicList(recentArticles);
-		m.addAttribute("artList", articleService.showArticleById(artId));
+		Article currArticle =articleService.showArticleById(artId);
+		m.addAttribute("artBean",currArticle);
 		m.addAttribute("commentList", commentList);
 		m.addAttribute("recentArt", recentArticles);
 		m.addAttribute("recentArtPic", coverPicList);
@@ -142,11 +143,7 @@ public class ArticleController {
 		return "azaz4498/editPage";
 	}
 
-	@RequestMapping(path = "/newArticlePage.controller")
-	public String newArticlePage() {
-
-		return "azaz4498/newArticle_backend";
-	}
+	
 
 	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
 	public String Edit(@RequestParam(name = "articleTitle") String title,
@@ -157,18 +154,19 @@ public class ArticleController {
 		articleService.articleEdit(title, content, articleId, userid, typeId);
 		m.addAttribute("artBean", articleService.showArticleById(articleId));
 
-		return "azaz4498/editPage";
+		return "azaz4498/articleDetail";
 	}
 
 	@RequestMapping(path = "/newArticle.controller", method = RequestMethod.POST)
-	public String newArticleBackend(@RequestParam(name = "articleTitle") String title,
-			@RequestParam(name = "articleContent") String content, @RequestParam(name = "typeSelect") Integer typeId,
+	public String newArticleBackend(@RequestParam(name = "title") String title,
+			@RequestParam(name = "content") String content, 
+			@RequestParam(name = "typeSelect") Integer typeId,
+			@RequestParam(name = "userId") String userid,
 			Model m) throws SQLException {
-		String userid = "Admin";
 		Article article = articleService.newArticle(title, typeId, content, userid);
 		Integer id = article.getArtId();
 		m.addAttribute("artBean", articleService.showArticleById(id));
-		return "azaz4498/editPage";
+		return "redirect:/article/"+id;
 	}
 
 	@RequestMapping(path = "/delete.controller", method = RequestMethod.POST) // 要把方法改成前台刪除方式
