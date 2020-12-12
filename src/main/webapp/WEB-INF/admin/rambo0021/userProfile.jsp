@@ -93,8 +93,25 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<label for="password">密碼:</label>
-					<input type="password" id="password" name="password" placeholder="請輸入密碼">
+          <div class="form-group">
+            <h3 class="mb-3 bread" style="display: inline;"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">密碼</h3>
+            <img class="img" id="pimg" src=""><span id="psp"></span><br />
+            <input class="form-control" type="password" id="password" name="password" autocomplete="off"
+              placeholder="請輸入密碼" />
+          </div>
+          <div class="form-group">
+            <h3 class="mb-3 bread" style="display: inline;"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">密碼確認</h3>
+            <img class="img" id="cimg" src=""><span id="csp"></span><br />
+            <input class="form-control" type="password" id="checkpassword" placeholder="請確認密碼" />
+          </div>
+          <div class="form-group">
+            <h3 class="mb-3 bread" style="display: inline;"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Email</h3>
+            <img class="img" id="eimg" src=""><span id="esp"></span><br />
+            <input class="form-control" type="text" id="email" name="email" placeholder="請輸入email" />
+          </div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="pwdsubmit">儲存</button>
