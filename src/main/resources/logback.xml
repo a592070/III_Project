@@ -36,4 +36,6 @@
 <!--         <AppenderRef ref="STDOUT"/> -->
 <!--     </Logger> -->
 
+    <logger name="org.springframework.data.elasticsearch.client.WIRE" level="trace"/>
+
 </configuration>

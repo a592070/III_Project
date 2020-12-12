@@ -21,6 +21,8 @@
     console.log("nu = " + ${cartnum});
 // 	   console.log("num");
     </script>
+    <c:import url="fragment/vue_ref.jsp"/>
+    <c:import url="fragment/notify.jsp"/>
     
     
     <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/taiwan.jpg');">
