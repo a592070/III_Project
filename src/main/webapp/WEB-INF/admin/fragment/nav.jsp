@@ -59,7 +59,7 @@
             <a href="about.html" class="nav-link">關於我</a>
           </li>
           <li class="nav-item">
-            <a href="tour.html" class="nav-link">景點</a>
+            <a href="${pageContext.servletContext.contextPath}/attraction/index" class="nav-link">找景點</a>
           </li>
           <li class="nav-item">
             <a

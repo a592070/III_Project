@@ -1,6 +1,7 @@
 package a592070.dao;
 
 import a592070.pojo.AttractionDO;
+import a592070.pojo.AttractionVO;
 import a592070.service.AttractionService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,6 +26,20 @@ public class AttractionDAOImpl extends AttractionDAO{
             return session.find(AttractionDO.class, id);
         }else{
             return session.get(AttractionDO.class, id);
+        }
+    }
+
+    @Override
+    public AttractionDO getEle(Integer id, boolean findFromPersistence, boolean available) {
+        Session session = sessionFactory.getCurrentSession();
+
+        AttractionDO attraction = null;
+        if(findFromPersistence){
+            attraction = session.find(AttractionDO.class, id);
+            return attraction.getStatus() ? attraction:null;
+        }else{
+            attraction = session.get(AttractionDO.class, id);
+            return (attraction!=null && attraction.getStatus()) ? attraction:null;
         }
     }
 

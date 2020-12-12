@@ -1,6 +1,7 @@
-package a592070.pojo;
+package a592070.serializer;
 
 
+import a592070.pojo.AttractionDO;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

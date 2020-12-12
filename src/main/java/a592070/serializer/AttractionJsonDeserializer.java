@@ -1,5 +1,6 @@
-package a592070.pojo;
+package a592070.serializer;
 
+import a592070.pojo.AttractionDO;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
