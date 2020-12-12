@@ -69,7 +69,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
       </div>
     </div>
     <input type="hidden" id="articleType" value="${list[0].articleType.typeId}">
-    <div class="row d-flex justify-content-center mt-5 mb-5"><i class="fas fa-search fa-2x">${list[0].articleType.typeName}</i></div>
+    <div class="row d-flex justify-content-center  bg-light align-items-end" style="height: 75px;"><i class="fas fa-search fa-2x">${list[0].articleType.typeName}</i></div>
     <section class="ftco-section bg-light" id="section">
       <div class="container" id="container">
         <div class="row d-flex" id="articleGrid">
@@ -155,7 +155,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <!-- fixed btn-->
     <div class="fixed-btn">
-      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle>" role="button"><i class="far fa-edit">撰寫文章</i></a>
+      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button"><i class="far fa-edit">撰寫文章</i></a>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <script>
@@ -176,14 +176,20 @@ contentType="text/html;charset=UTF-8" language="java"%>
   </script>
     <script>
       var len = eval(${totalPages});
+      console.log(len);
       var currPage= eval(${currPage});
+      if(len==1){
+        $('#next').remove();
+        $('#prev').remove();
+      }
       
-      for(var i=1; i<=len;i++) {
+      for(var i=1; i<len;i++) {
         var content = "<li class='page'id='page"+i+"'><a href=''>"+i+"</a></li>";        
         $('#next').before(content);
         $('#page'+currPage).addClass('active');
         $('#page'+currPage).remove('a');
       };
+      
       if(currPage==len){
         $('#next').remove();
       }

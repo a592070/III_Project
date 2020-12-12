@@ -29,6 +29,12 @@
     padding-bottom: 0.9rem !important;
     color: #000000 !important;
   }
+ .navbar-brand {
+    font-size: 27px;
+}
+.ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+    font-size: 18px;
+}
 </style>
 <nav
   class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"

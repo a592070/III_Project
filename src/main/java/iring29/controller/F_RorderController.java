@@ -49,8 +49,7 @@ public class F_RorderController {
 		if(OTBean == null) {
 			OTBean = new OrderTable();
 			String username = (String) m.getAttribute("userBean");
-			AccountBean account = new AccountBean();
-			account.setUserName(username);
+			AccountBean account = F_Serivce.account(username);
 			OTBean.setAccountBean(account);
 			cartnum = 0;
 		}
@@ -92,8 +91,8 @@ public class F_RorderController {
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		if(OTBean == null) {
 			OTBean = new OrderTable();
-			AccountBean account = new AccountBean();
 			String username = (String) m.getAttribute("userBean");
+			AccountBean account = F_Serivce.account(username);
 			account.setUserName(username);
 			OTBean.setAccountBean(account);
 			cartnum = 0;
@@ -182,7 +181,7 @@ public class F_RorderController {
 		AllInOne pay = new AllInOne("");
 		AioCheckOutALL checkOut = new AioCheckOutALL();
 		checkOut.setMerchantID("2000132");
-		checkOut.setMerchantTradeNo("Fun" + otBean.getOrder_id().toString());
+		checkOut.setMerchantTradeNo("Fun Taiwan" + otBean.getOrder_id().toString());
 		checkOut.setMerchantTradeDate(otBean.getOrder_dateString());
 		checkOut.setTotalAmount("100");
 		checkOut.setTradeDesc("Fun Taiwan 商城購物");
