@@ -108,7 +108,7 @@ public class ArticleDAO {
 	}
 	//類別搜尋筆數(前台)
 	public Integer getTypeSearchRecords(Integer articleType) {
-		String hql = "select count(ART_ID) from Article where ART_TYPE_ID=?1";
+		String hql = "select count(ART_ID) from Article where ART_TYPE_ID=?1 AND ART_STATUS='enabled' ";
 		Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql,Long.class);
 		query.setParameter(1, articleType);
 		Integer totalRecords = query.uniqueResult().intValue();

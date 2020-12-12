@@ -5,6 +5,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 h-25">
+        <h2>選擇一個你感興趣的文章類型</h2>
         <div class="destination-slider owl-carousel ftco-animate" style=" height: 100px;">
           <div class="item ">
             <div class="destination">
