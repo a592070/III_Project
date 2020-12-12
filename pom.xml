@@ -8,7 +8,7 @@
 	<groupId>org.example</groupId>
 	<artifactId>III_Project</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>III_Project Maven Webapp</name>
 	<!-- FIXME change it to the project's website -->
@@ -18,6 +18,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
+
+		<spring.version>5.2.9.RELEASE</spring.version>
+		<embed.tomcat.version>9.0.10</embed.tomcat.version>
+		<hibernate.version>5.4.22.Final</hibernate.version>
+		<jackson.version>2.11.2</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -49,10 +54,36 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.3</version>
 		</dependency>
+
+
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>5.2.9.RELEASE</version>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
 		<dependency>
@@ -68,12 +99,31 @@
 
 
 
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tomcat</groupId>-->
+<!--			<artifactId>tomcat-catalina</artifactId>-->
+<!--			<version>${embed.tomcat.version}</version>-->
+<!--		</dependency>-->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>5.2.9.RELEASE</version>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>${embed.tomcat.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>${embed.tomcat.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jasper -->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tomcat</groupId>-->
+<!--			<artifactId>tomcat-jasper</artifactId>-->
+<!--			<version>${embed.tomcat.version}</version>-->
+<!--		</dependency>-->
+
+
+
 		<!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
 		<dependency>
 			<groupId>javax.annotation</groupId>
@@ -95,34 +145,22 @@
 			<artifactId>ojdbc8</artifactId>
 			<version>19.7.0.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>5.2.9.RELEASE</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>5.2.9.RELEASE</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.4.22.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
-			<version>5.4.22.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-ehcache</artifactId>
-			<version>5.4.22.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 
 
@@ -156,19 +194,19 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.11.2</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.11.2</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.11.2</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 
@@ -197,14 +235,14 @@
 			<groupId>javax.websocket</groupId>
 			<artifactId>javax.websocket-api</artifactId>
 			<version>1.1</version>
+		</dependency>
 
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-websocket -->
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-websocket</artifactId>
-			<version>9.0.37</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tomcat</groupId>-->
+<!--			<artifactId>tomcat-websocket</artifactId>-->
+<!--			<version>9.0.37</version>-->
+<!--		</dependency>-->
 
 		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
@@ -252,6 +290,21 @@
 	</dependencies>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+						<nonFilteredFileExtension>woff</nonFilteredFileExtension>
+						<nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+						<nonFilteredFileExtension>eot</nonFilteredFileExtension>
+						<nonFilteredFileExtension>svg</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+			</plugin>
+		</plugins>
 		<resources>
 			<resource>
 				<directory>resources</directory>
@@ -271,13 +324,24 @@
 				<filtering>true</filtering>
 			</resource>
 			<resource>
-				<directory>src</directory>
-				<includes>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
-				</includes>
+				<directory>src/main/webapp</directory>
 				<filtering>true</filtering>
+				<excludes>
+					<exclude>*.*</exclude>
+					<exclude>**/*.*</exclude>
+				</excludes>
 			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>*.*</include>
+					<include>**/*.*</include>
+				</includes>
+			</resource>
+
 		</resources>
+
 	</build>
+
 </project>
