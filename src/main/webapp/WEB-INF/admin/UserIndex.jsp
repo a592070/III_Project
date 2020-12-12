@@ -8,21 +8,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>Fun X Taiwan</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
+
 </head>
 <body>
     <!-- import js -->
-    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 	
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <!-- Start nav -->
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
     <script>
     $(".nav-shop__circle").html('${cartnum}');
 //     console.log($(".nav-shop__circle").val());
-    console.log("nu = " + ${cartnum});
+<%--    console.log("nu = " + ${cartnum});--%>
 // 	   console.log("num");
     </script>
-    <c:import url="fragment/vue_ref.jsp"/>
-    <c:import url="fragment/notify.jsp"/>
     
     
     <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/taiwan.jpg');">
@@ -63,7 +62,7 @@
         </div>
       </div>
     </div>
-    
+
   <!-- footer -->
      <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
 
@@ -71,7 +70,7 @@
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>    
     
     <!-- import js -->
-    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />    
-    
+    <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+
 </body>
 </html>

@@ -27,6 +27,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @ComponentScan("config")
 @EnableWebMvc
 @EnableAsync
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class AppConfig {
 
     @Bean

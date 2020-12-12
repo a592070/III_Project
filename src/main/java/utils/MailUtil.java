@@ -31,7 +31,14 @@ public class MailUtil{
     @Autowired@Qualifier("javaMailSender")
     private JavaMailSender emailSender;
 
-
+    /**
+     * 生成模板，模板路徑resources/templates/
+     * ex. templateFileName = mail (templates/mail.html)
+     *
+     * @param title
+     * @param content
+     * @return
+     */
     public String generateMailHtml(String title, String content) {
         Map<String, Object> variables = new HashMap<>();
         variables.put("mailtitle", title);
@@ -52,7 +59,7 @@ public class MailUtil{
             helper.setSubject("Simple mail template");
             helper.setText(generateMailHtml(title, content), true);
 
-            System.out.println(Thread.currentThread().getName());
+//            System.out.println(Thread.currentThread().getName());
             emailSender.send(mimeMessage);
             return new AsyncResult<Boolean>(true);
         } catch (Exception e) {

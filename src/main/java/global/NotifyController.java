@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Controller@Lazy@Scope("session")
+//@Controller
 public class NotifyController {
 
     @Autowired
@@ -21,35 +21,37 @@ public class NotifyController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
+    private int i;
+
     private List<NotifyVO> notifies = new ArrayList<>();
 
     public NotifyController() {
+        i = 0;
         notifies.add(new NotifyVO(NotifyVO.STATUS_SUCCESS, "test success", "content success"));
         notifies.add(new NotifyVO(NotifyVO.STATUS_WARNING, "test warning", "content warning"));
         notifies.add(new NotifyVO(NotifyVO.STATUS_ERROR, "test error", "content error"));
         notifies.add(new NotifyVO(NotifyVO.STATUS_OTHER, "test other", "content other"));
     }
 
+    public synchronized void addNotify(String title, String content, String status){
+
+    }
+
     @PostConstruct
     private void broadcastTimePeriodically(){
-
         taskScheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                int i = 0;
                 broadcastNotifies();
-                notifies.remove(0);
-                notifies.add(new NotifyVO(NotifyVO.STATUS_SUCCESS, "test other"+i, "content other"+i));
-                i++;
             }
         }, 5000);
     }
 
     private void broadcastNotifies(){
-        notifies.forEach(ele -> {
-            ele.setDate(new Date());
-        });
-        simpMessagingTemplate.convertAndSend("/topic/notify", notifies);
+        NotifyVO remove = notifies.remove(0);
+        simpMessagingTemplate.convertAndSend("/topic/notify", remove);
+        notifies.add(new NotifyVO(NotifyVO.STATUS_SUCCESS, "test other"+i, "content other"+i));
+        i++;
     }
 
 }

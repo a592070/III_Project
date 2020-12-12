@@ -1,5 +1,6 @@
 package config;
 
+import ch.qos.logback.ext.spring.web.LogbackConfigListener;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -29,7 +30,9 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
         filterRegistration.setInitParameter("forceEncoding", "true");
         filterRegistration.addMappingForUrlPatterns(null, false, "/*");
 
+
         servletContext.addListener(new ContextLoaderListener(ac));
+        servletContext.addListener(new LogbackConfigListener());
     }
 
     @Override

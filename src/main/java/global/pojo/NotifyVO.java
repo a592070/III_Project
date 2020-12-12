@@ -25,7 +25,7 @@ public class NotifyVO implements Serializable {
     @JsonIgnore
     private DateFormat dateFormat = new SimpleDateFormat(DATA_FORMAT);
 
-    private String dateFormatted = this.dateFormat.format(this.date);
+    private String dateFormatted;
 
     private String status;
     private String title;
@@ -72,6 +72,14 @@ public class NotifyVO implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDateFormatted() {
+        return this.dateFormat.format(this.date);
+    }
+
+    public void setDateFormatted(String dateFormatted) {
+        this.dateFormatted = dateFormatted;
     }
 
     @Override

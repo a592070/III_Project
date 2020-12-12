@@ -1,5 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@ taglib
-uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>
+<script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/notify/js/notify.js"></script>
+
+
 <link
   href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
   rel="stylesheet"
@@ -122,6 +127,9 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           </li>
         </ul>
       </div>
+    </div>
+    <div id="notify">
+      <index></index>
     </div>
   </div>
 </nav>
