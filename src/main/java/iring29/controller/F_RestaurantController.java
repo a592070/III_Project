@@ -31,6 +31,7 @@ import iring29.model.Restaurant_VO;
 import iring29.model.UserPage;
 import iring29.service.F_RestaurantService;
 import oracle.net.aso.m;
+import rambo0021.pojo.AccountBean;
 import utils.StringUtil;
 
 import java.math.BigDecimal;
@@ -41,7 +42,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-@SessionAttributes(names = { "userBean"})
+@SessionAttributes(names = { "userBean" })
 @Controller
 //@SessionAttributes(names = { "res_data" })
 public class F_RestaurantController {
@@ -93,6 +94,10 @@ public class F_RestaurantController {
 								    			  HttpSession session, Model m) {
 		
 		BigDecimal fisrtStar = stars; 
+		System.out.println("fist star = " + fisrtStar);
+		if(fisrtStar == null) {
+			fisrtStar = BigDecimal.ZERO;
+		}
 		BigDecimal endStar = BigDecimal.valueOf(5);
 		int size = F_Serivce.numRestaurant(restaurant_name, region_name, fisrtStar, endStar);
 		System.out.println("size = " + size);
@@ -159,13 +164,15 @@ public class F_RestaurantController {
 	//是否登入
 	@RequestMapping(path = "checkLogin", method = RequestMethod.POST)
 	public @ResponseBody boolean checkLogin(Model m) {
-		String username = (String) m.getAttribute("userBean");
-		if(username == null) {
+		AccountBean userBean =  (AccountBean) m.getAttribute("userBean");
+		System.out.println("userBean = " + userBean);
+		if(userBean == null) {
 			System.out.println("未登入");
 			return false;
 		}else {
 			return true;
 		}
+//		return true;
 	}
 	
 	//留下留言
@@ -174,16 +181,16 @@ public class F_RestaurantController {
 											@RequestParam(name = "rating") BigDecimal rating,
 										    HttpSession session, Model m) {
 		Boolean flag = false;
-		String username = (String) m.getAttribute("userBean");
+		AccountBean userBean = (AccountBean) m.getAttribute("userBean");
 		Restaurant r = (Restaurant) session.getAttribute("res_data");
-		boolean commResult = F_Serivce.userComment(username, r.getR_sn());
+		boolean commResult = F_Serivce.userComment(userBean.getUserName(), r.getR_sn());
 		System.out.println("comm result = " + commResult);
 		if(commResult == true) {
 			R_Comment comment = new R_Comment();
 			comment.setCom_content(comm);
 			comment.setRestaurant(r);
 			comment.setRating(rating);
-			comment.setUsername(username);
+			comment.setUsername(userBean.getUserName());
 			boolean addresult = F_Serivce.addComment(comment);
 			List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
 			session.setAttribute("comment", commentlist);

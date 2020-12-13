@@ -24,7 +24,7 @@ import iring29.model.Restaurant;
 import iring29.service.F_RestaurantService;
 import rambo0021.pojo.AccountBean;
 
-@SessionAttributes(names = { "userBean"})
+@SessionAttributes(names = { "userBean" })
 @Controller
 public class F_RorderController {
 
@@ -50,11 +50,11 @@ public class F_RorderController {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		//判斷是否登入
 		if(OTBean == null) {
 			OTBean = new OrderTable();
-			String username = (String) m.getAttribute("userBean");
-			AccountBean account = F_Serivce.account(username);
-			OTBean.setAccountBean(account);
+			AccountBean userbean = (AccountBean) m.getAttribute("userBean");
+			OTBean.setAccountBean(userbean);
 			cartnum = 0;
 		}
 		if(cartnum == null) {
@@ -93,12 +93,11 @@ public class F_RorderController {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		//判斷是否登入
 		if(OTBean == null) {
 			OTBean = new OrderTable();
-			String username = (String) m.getAttribute("userBean");
-			AccountBean account = F_Serivce.account(username);
-			account.setUserName(username);
-			OTBean.setAccountBean(account);
+			AccountBean userbean = (AccountBean) m.getAttribute("userBean");
+			OTBean.setAccountBean(userbean);
 			cartnum = 0;
 		}
 		if(cartnum == null) {
