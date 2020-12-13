@@ -1,5 +1,7 @@
 package rambo0021.dao;
 
+import static org.hamcrest.CoreMatchers.allOf;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,8 +59,8 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public String updateAccPwd(String username, String pwd) {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
-		if (aBean != null) {
-			aBean.setPassword(pwd);
+		if (aBean != null && !aBean.getPassword().equals(pwd)) {
+			aBean.setPassword(SHA2DAO.getSHA256(pwd));
 			return "修改密碼成功";
 		}
 		return "修改失敗";
@@ -151,9 +153,9 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public String delAccount(AccountBean aBean) {
 		Session session = sessionFactory.getCurrentSession();
-		if (aBean.getOrderTable() != null) {
-			aBean.setOrderTable(new ArrayList<>());
-		}
+//		if (aBean.getOrderTable() != null) {
+//			aBean.setOrderTable(new ArrayList<>());
+//		}
 		session.update(aBean);
 		session.remove(aBean);
 		return "刪除成功";
@@ -268,6 +270,23 @@ public class AccountDAOImpl implements AccountDAO {
 	public List<IdentityBean> getidList() {
 		String hql="From IdentityBean order by id";
 		return sessionFactory.getCurrentSession().createQuery(hql, IdentityBean.class).list();
+	}
+
+	@Override
+	public String updateUser(String username, String password, String email, String nickName) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
+		if (aBean != null) {
+			System.out.println("修改資料");
+			if (!aBean.getPassword().equals(password)) {
+				System.out.println("密碼不同");
+				aBean.setPassword(SHA2DAO.getSHA256(password));
+			}
+			aBean.setEmail(email);
+			aBean.setNickName(nickName);
+			aBean.setModify_Date(new Date());
+		}
+		System.out.println("dao完成");
+		return "修改成功";
 	}
 
 }
