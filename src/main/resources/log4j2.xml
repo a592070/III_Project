@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+<!--    <Appenders>-->
+<!--        <Console name="STDOUT" target="SYSTEM_OUT">-->
+<!--            <PatternLayout pattern="HibernateLog &ndash;&gt; %d{HH:mm:ss} [%p] [%c] - %m%n"/>-->
+<!--        </Console>-->
+<!--    </Appenders>-->
+    <Loggers>
+<!--        <Root level="error">-->
+<!--            <AppenderRef ref="hb"/>-->
+<!--        </Root>-->
+<!--        <Logger name="org.hibernate" level="INFO">-->
+<!--            <AppenderRef ref="hb"/>-->
+<!--        </Logger>-->
+<!--        <Logger name="org.hibernate.SQL" level="DEBUG">-->
+<!--            <AppenderRef ref="hb"/>-->
+<!--        </Logger>-->
+<!--        <Logger name="org.hibernate.type.descriptor.attraction.sql.BasicBinder" level="DEBUG">-->
+<!--            <AppenderRef ref="hb"/>-->
+<!--        </Logger>-->
+<!--        <Logger name="org.hibernate.engine.transaction.internal.TransactionImpl" level="DEBUG">-->
+<!--            <AppenderRef ref="hb"/>-->
+<!--        </Logger>-->
+
+
+
+        <Logger name="org.hibernate.SQL" level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+        <Logger name="org.hibernate.engine.transaction.internal.TransactionImpl" level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+
+
+        <Logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+        <Logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+        <Logger name="org.springframework.web.servlet.view" level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+        <logger name="org.springframework.data.elasticsearch.client.WIRE" level="trace"/>
+
+
+        <Logger name="ecpay.payment.integration" level="TRACE">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+
+
+    </Loggers>
+</Configuration>

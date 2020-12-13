@@ -323,7 +323,7 @@ module.exports = {
       this.$store.commit('toggleTravelSetInfoLoading', true)
 
       let url = context+'/admin/travelSet/status/'+value.sn;
-      axios.post(url)
+      axios.put(url)
           .then(response => {
             if(response.data){
               value.status = !value.status;

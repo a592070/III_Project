@@ -24,8 +24,15 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     @Override
     public int getSize(){
         String hql = "select count(sn) from RestaurantVO";
-
         return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
+    }
+
+    @Override
+    public int getSize(boolean available) {
+        String hql = "select count(sn) from RestaurantVO where status = :available";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("available", available);
+        return query.uniqueResult().intValue();
     }
 
     @Override
@@ -35,6 +42,19 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
             return session.find(RestaurantVO.class, id);
         }else{
             return session.get(RestaurantVO.class, id);
+        }
+    }
+
+    @Override
+    public RestaurantVO getEle(Integer id, boolean findFromPersistence, boolean available) {
+        Session session = sessionFactory.getCurrentSession();
+        RestaurantVO restaurantVO = null;
+        if(findFromPersistence){
+            restaurantVO = session.find(RestaurantVO.class, id);
+            return restaurantVO.getStatus() ? restaurantVO:null;
+        }else{
+            restaurantVO = session.get(RestaurantVO.class, id);
+            return (restaurantVO!=null && restaurantVO.getStatus()) ? restaurantVO:null;
         }
     }
 
@@ -74,6 +94,22 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
+    public int getSizeByKeywords(String keyWords, String region, boolean available) {
+        keyWords = "%"+keyWords+"%";
+        region = "%"+region+"%";
+
+        String hql = "select count(sn) from RestaurantVO " +
+                "where (status = :available) and region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) ";
+
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keyword", keyWords);
+        query.setParameter("region", region);
+        query.setParameter("available", available);
+
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
     public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending) {
         keyWords = "%"+keyWords+"%";
         region = "%"+region+"%";
@@ -85,6 +121,25 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
         query.setParameter("keyword", keyWords);
         query.setParameter("region", region);
+
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+        return query.list();
+    }
+
+    @Override
+    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending, boolean available) {
+        keyWords = "%"+keyWords+"%";
+        region = "%"+region+"%";
+
+        String hql = "from RestaurantVO " +
+                "where (status = :available) and region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
+        if(descending) hql += " desc";
+
+        Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
+        query.setParameter("keyword", keyWords);
+        query.setParameter("region", region);
+        query.setParameter("available", available);
 
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
@@ -104,6 +159,19 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
+    public int getSizeByFiled(String filedName, String filedValue, boolean available) {
+        filedValue = "%" + filedValue + "%";
+
+        String hql = "select count(sn) from RestaurantVO where (status = :available) and "+filedName+" like ?1";
+
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter(1, filedValue);
+        query.setParameter("available", available);
+
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
     public List<RestaurantVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending) {
         filedValue = "%"+filedValue+"%";
 
@@ -117,14 +185,41 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public List<RestaurantVO> listByRownum(int startIndex, int endIndex, String orderFiled, boolean descending) {
+    public List<RestaurantVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending, boolean available) {
+        filedValue = "%"+filedValue+"%";
+
+        String hql = "from RestaurantVO where (status = :available) and "+filedName+" like ?1 order by "+orderFiled;
+        if(descending) hql += " desc";
+
+        Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
+        query.setParameter(1, filedValue);
+        query.setParameter("available", available);
+
+        return query.list();
+    }
+
+    @Override
+    public List<RestaurantVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
         String hql = "from RestaurantVO order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
 
-        query.setFirstResult(startIndex);
-        query.setMaxResults(endIndex);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+
+        return query.list();
+    }
+
+    @Override
+    public List<RestaurantVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available) {
+        String hql = "from RestaurantVO where (status = :available) order by "+orderFiled;
+        if(descending) hql += " desc";
+
+        Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
+        query.setParameter("available", available);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
 
         return query.list();
     }

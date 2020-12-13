@@ -220,7 +220,7 @@
 					url: '${pageContext.servletContext.contextPath}/admin/delAccountPic',
 					dataType: 'text',
 					success: function (response) {
-						alert(response)
+						alert("修改成功")
 						$("#userPic").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/NoImage.png")
 						$("#mData").text(formatDate());
 					}

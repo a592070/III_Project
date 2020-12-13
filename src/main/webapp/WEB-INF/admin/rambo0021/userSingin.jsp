@@ -30,8 +30,8 @@
       <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
         data-scrollax-parent="true">
         <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a
-                href="index.html">首頁</a></span> <span>登入</span></p>
+          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN
+              x 臺灣</span>
           <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員登入</h1>
         </div>
       </div>
@@ -69,6 +69,8 @@
               <p style="font-size: 18px">
                 還沒有帳號 ? <a class="text-info stretched-link"
                   href="${pageContext.servletContext.contextPath}/user/registrationPage">註冊</a>
+                <button type="button" class="btn btn-warning" data-toggle="modal"
+                  data-target="#forgetPwd">忘記密碼?</button>
               </p>
             </div>
           </form>
@@ -76,6 +78,39 @@
       </div>
     </div>
   </section>
+
+  <!-- 	ModalPwd  -->
+  <div class="modal fade" id="forgetPwd" tabindex="-1" aria-labelledby="pwdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pwdModalLabel">忘記密碼</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" name="pClose">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <h3 class="mb-3 bread" style="display: inline;"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">帳號</h3>
+            <img class="img" id="pimg" src=""><span id="psp"></span><br />
+            <input class="form-control" type="text" id="fogetUsername" name="password" autocomplete="off"
+              placeholder="請輸入帳號" />
+          </div>
+          <div class="form-group">
+            <h3 class="mb-3 bread" style="display: inline;"
+              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Email</h3>
+            <img class="img" id="eimg" src=""><span id="esp"></span><br />
+            <input class="form-control" type="text" id="fogetEmail" name="email" placeholder="請輸入email" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="fsubmit" data-dismiss="modal">發送</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
@@ -96,43 +131,74 @@
     console.log("登入")
     var form1 = $(this).parents('form');
     var formData = new FormData(form1[0]);
-    
+
+    swal({
+      title: "處理中",
+      button: false,
+      icon: '<%=application.getContextPath()%>/assets/img/rambo0021/giphy.gif'
+    })
+
     $.ajax({
 
       type: "POST",
-      url: "${pageContext.servletContext.contextPath}/user/signin",
+      url: "${pageContext.servletContext.contextPath}/user/singin",
       data: formData,
       processData: false,
       contentType: false,
       dataType: "json",
 
       success: (response) => {
-         console.log(response)
-         checkLogin(response)
+        console.log(response)
+        checkLogin(response)
 
       }
 
     })
 
   })
-  function checkLogin(response){
-    if(response.LoginError){
+  function checkLogin(response) {
+    if (response.LoginError) {
       grecaptcha.reset();
       swal({
-            title: "登入失敗!",
-            text: response.LoginError,
-            icon: "warning",
-          });
-    }else{
+        title: "登入失敗!",
+        text: response.LoginError,
+        icon: "warning",
+      });
+    } else {
       swal({
-            title: "登入成功!",
-            icon: "success",
-            button: false
-          });
-          setTimeout(function () { location.href = response.reqURL; }, 2000);
+        title: "登入成功!",
+        icon: "success",
+        button: false
+      });
+      setTimeout(function () { location.href = response.reqURL; }, 2000);
     }
 
   }
+  $("#fsubmit").click(function () {
+    var username = $('#fogetUsername').val()
+    var email = $("#fogetEmail").val()
+    swal({
+      title: "處理中",
+      button: false,
+      icon: '<%=application.getContextPath()%>/assets/img/rambo0021/giphy.gif'
+    })
+    $.ajax({
+
+      type: "POST",
+      url: "${pageContext.servletContext.contextPath}/user/forgetPwd",
+      data: { "username": username,"email": email },
+      dataType: "text",
+
+      success: (response) => {
+        console.log(response)
+        swal({
+          title: "新密碼已發送至您的信箱!",
+          icon: "success",
+        });
+      }
+
+    })
+  })
 </script>
 
 </html>

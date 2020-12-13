@@ -1,7 +1,11 @@
 package global;
 
 public class Constant {
-    public static final String USER_SESSION = "user_session";	// CONSTANT.user
+//    public static final String USER_SESSION = "user_session";	// CONSTANT.user
+    public static final String USER_LOGIN_SESSION = "userBean";
+    public static final String ADMIN_LOGIN_SESSION = "adminBean";
+
+
 
     public static final String TravelSetListCar_session = "travelSetListCar";
     public static final String TravelSetListHotel_session = "travelSetListHotel";
@@ -10,11 +14,7 @@ public class Constant {
     public static final String TravelSetList_session = "travelSetList";
     public static final String TravelSetEdit_session = "travelSetEdit";
 
-    public static final String CHATROOM_CLIENTS = "chatRoomClients";
-    public static final String LOGIN = "Login";
-    public static final String ADMIN_BEAN = "adminBean";
 
-    public static final String HISTORY_MESSAGE = "historyMsg";
 
     public static final String WEB_INF_PATH = "/WEB-INF";
 
@@ -25,9 +25,10 @@ public class Constant {
     public static final String ATTRACTION_PIC_PATH = WEB_INF_PATH + ATTRACTION_PIC_URL;
 
 
-    public String getUser(){
-        return USER_SESSION;
-    }
+
+    public static final String CHATROOM_CLIENTS = "chatRoomClients";
+    public static final String HISTORY_MESSAGE = "historyMsg";
+
 
     public static String getTravelSetListCar_session() {
         return TravelSetListCar_session;

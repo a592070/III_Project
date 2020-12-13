@@ -31,4 +31,6 @@ public interface AccountService {
 	int getSize(String hql);
 	String delAccount(AccountBean aBean);
 	List<IdentityBean> getidList();
+	String updateUser(String username, String password, String email, String nickName);
+	String forgetPwd(String username, String email);
 }
