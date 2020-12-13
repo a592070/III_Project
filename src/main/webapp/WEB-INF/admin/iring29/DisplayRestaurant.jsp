@@ -344,6 +344,243 @@ button#order {
                         <!-- .review -->
                     </div>
                         
+                        <div class="review-add" id="review-add">
+<!--                         <h4>歡迎寫下您的評論</h4> -->
+<!--                         <form  class="ra-form"> -->
+                            <div class="ra-form">
+                            <div class="row">
+                                <div class="col-lg-6">
+<!--                                     <input type="text" placeholder="Name*"> -->
+                                </div>
+                                <div class="col-lg-6">
+<!--                                     <input type="text" placeholder="Email*"> -->
+                                </div>
+                                <div class="col-lg-12">
+                                    <div id="leavecomm">
+                                        <h5 id="comment_rating"></h5>
+<!--                                         <div class="rating"> -->
+<!--                                              <i class="icon_star"></i> --> 
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <Input type='hidden' name='stars' id= 'stars' value=''> -->
+<!--                                         </div> -->
+                                    </div>
+                                             <span id="starcomm"></span>
+                                         <script>
+                                             var start = 0;
+                                         $("i#starRating").on("mouseenter", function () {
+                                             start = 0;
+                                             console.log("size = " + $("i#starRating").size())
+                                             $("i#starRating").attr("class", "fa fa-star-o")
+                                             let num = $("i#starRating").index($(this)) + 1;
+                                             console.log(num);
+                                             for (let i = 0; i < num; i++) {
+                                                 $("i#starRating").eq(i).attr("class", "icon_star")
+                                             }
+                                         }).mouseout(function () {
+                                             if (start == 0) {
+                                                 $("i#starRating").attr("class", "fa fa-star-o")
+                                             }
+                                         }).click(function () {
+                                             start = 1;
+                                             let clicknum = $("i#starRating").index($(this)) + 1;
+                                             let num = $("i#starRating").index($(this)) + 1;
+                                             console.log("num =" + clicknum);
+                                             for (let i = 0; i < num; i++) {
+                                                 $("i#starRating").eq(i).attr("class", "icon_star")
+                                             }
+                                             $("#stars").attr("value", clicknum);
+                                         })
+                                         
+                                         </script>
+                                         <span id="com_msg"></span>
+<!--                                     <textarea placeholder="寫下您對於此餐廳的評論" id="r_comment"></textarea> -->
+<!--                                     <button type="button" id="commbtn" onclick="sendcomment()">送出</button> -->
+                                    <!-- add comment -->
+                                    <script>
+										function sendcomment(){
+											var comment = $("#r_comment").val();
+											var stars = $("#stars").val();
+											var id = $("#r_order_id").val()
+											console.log("comment = " + comment + ", stars = " + stars + ", id = " + id );
+											if($("#stars").val() == ""){
+												$("#starcomm").html("&nbsp;<font color='red' id='idsp'>&nbsp;評分不可為零</font>");
+											}else{
+												$("#starcomm").html("");
+												}
+											if($("#r_comment").val() == ""){
+												$("#com_msg").html("&nbsp;<font color='red' id='idsp'>&nbsp;留言不可為空白</font>");
+											}else{
+												$("#com_msg").html("");
+												}
+											if($("#r_comment").val() != "" && $("#stars").val() != ""){
+											//檢查是否登入
+											$.ajax(
+								                    {
+								                        type: 'POST',
+								                        data: { },
+								                        url: '${pageContext.servletContext.contextPath}/checkLogin',
+								                        dataType: 'json',
+								                        success:function(response){
+									                        console.log("re = " + response);
+									                        if(response == true){
+									                        	//是否重複登入 & 可登入
+									                        	$.ajax(
+													                    {
+													                        type: 'POST',
+													                        data: {"com_content":comment, "rating":stars, "id":id },
+													                        url: '${pageContext.servletContext.contextPath}/addComment',
+													                        dataType: 'json',
+													                        success:function(comm){
+														                        if(comm == true){
+														                        	console.log("dup = " + comm)
+													                        		var res_context = "";
+												                        			res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#addComment" style="display:none;"></button>';
+												                        			$("#comment_rating").append(res_context);
+												                        			$("#commentbtn").click();
+														                        }
+														                        if(comm == false){
+															                        console.log("duplicate = " + comm)
+														                        	var res_context = "";
+												                        			res_context += '<button type="button" class="btn btn-primary" id="msgbtn" data-toggle="modal" data-target="#commalready" style="display:none;"></button>';
+												                        			$("#comment_rating").append(res_context);
+												                        			$("#msgbtn").click();
+															                    }
+													                        }
+													                    }
+																)
+								                        		
+									                        }else if(response == false){
+									                        	var res_context = "";
+									                        	res_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#loginbtn" style="display:none;"></button>';
+								                        		$("#comment_rating").append(res_context);
+								                        		$("#commentbtn").click();
+										                    }
+								                        }
+								                    }
+								                )
+											}
+										}
+                                    </script>
+                                    
+                                    <!-- Modal 成功留言-->
+									<div class="modal fade" id="addComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									 新增成功，謝謝您的寶貴意見 !          
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" data-dismiss="modal" class="btn btn-primary" id="addcommbtn">確認</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal 成功留言-->
+									
+									<!-- Modal 導向登入-->
+									<div class="modal fade" id="loginbtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									請先登入哦 !          
+      									</div>
+      									<div class="modal-footer">
+											<form id="form-1" action="<%=pageContext.getServletContext().getContextPath()%>/user/singinPage">
+        										<button type="submit" class="btn btn-primary" id="">登入</button>
+											</form>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal 導向登入-->
+									
+									<!-- Modal 重複留言-->
+									<div class="modal fade" id="commalready" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									抱歉，您已留言過囉 !          
+      									</div>
+      									<div class="modal-footer">
+        										<button type="button" data-dismiss="modal" class="btn btn-primary" id="">關閉</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal 重複留言-->
+									
+									<script>
+									 $(function () { $('#addComment').modal('hide')});
+									 $(function () { $('#commalready').modal('hide')});
+									</script>
+									<script>
+									 $(function () { $('#addComment').on('hide.bs.modal', function () {
+										var list = $(".review-item");
+										console.log("size = " + list.size());
+										$("#reviews").remove();
+										$("#r_comment").val('');
+										$.ajax(
+							                    {
+							                        type: 'POST',
+							                        data: { },
+							                        url: '${pageContext.servletContext.contextPath}/flashComment',
+							                        dataType: 'html',
+							                        success:function(comm){
+														$(".rd-reviews").append(comm);
+														$("i#starRating").attr("class", "fa fa-star-o")
+														$("#commentbtn").empty();
+							                        }
+							                    }
+										)
+										})
+									 });
+									 $(function () { $('#commalready').on('hide.bs.modal', function () {
+										var list = $(".review-item");
+										console.log("size = " + list.size());
+// 										$("#reviews").remove();
+										$("#r_comment").val('');
+										$.ajax(
+							                    {
+							                        type: 'POST',
+							                        data: { },
+							                        url: '${pageContext.servletContext.contextPath}/flashComment',
+							                        dataType: 'html',
+							                        success:function(comm){
+// 														$(".rd-reviews").append(comm);
+// 														$("i#starRating").attr("class", "fa fa-star-o")
+// 														$("#commentbtn").empty();
+														$("#closecomm").click();
+							                        }
+							                    }
+										)
+										})
+									 });
+									</script>
+                                </div>
+                            </div>
+                         </div>
+<!--                         </form> -->
+                    </div>
                     
                 </div>
                 <div class="col-lg-4">

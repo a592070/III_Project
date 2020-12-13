@@ -376,6 +376,11 @@ button#order {
                         <h4>評論</h4>
                         <!-- review -->
                         <div id="reviews">
+                        <c:set var ="size" value= "${fn:length(comment)}" />
+                        <c:if test="${size < 1}">
+                        	<h5>目前沒有留言</h5>
+                        </c:if>
+                        <c:if test = "${size > 0}" >
                         <c:forEach var="comm" items="${comment}" >
                         <div class="review-item" id="${comm.com_id}">
                             <div class="ri-pic">
@@ -409,6 +414,7 @@ button#order {
                             </div>
                         </div>
                         </c:forEach>
+                        </c:if>
                         </div>
                         <!-- .review -->
                     </div>
@@ -616,8 +622,9 @@ button#order {
 							                        dataType: 'html',
 							                        success:function(comm){
 														$(".rd-reviews").append(comm);
-														$("i#starRating").attr("class", "fa fa-star-o")
-														$("#commentbtn").empty();
+// 														$("i#starRating").attr("class", "fa fa-star-o")
+// 														$("#commentbtn").empty();
+														$("#closecomm").click();
 							                        }
 							                    }
 										)
