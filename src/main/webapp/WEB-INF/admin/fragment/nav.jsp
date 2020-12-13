@@ -106,7 +106,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             </li>
             <li class="nav-item">
               <a
-                href="<%=application.getContextPath()%>/user/registrationPage"
+                href="<%=application.getContextPath()%>/user/userProfilePage"
                 class="nav-link"
                 >個人頁面</a
               >

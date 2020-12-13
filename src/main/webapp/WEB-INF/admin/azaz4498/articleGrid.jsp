@@ -80,7 +80,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
     <script>
       var len = eval(${totalPages});
       var currPage= eval(${currPage});
-      for(var i=1; i<=len;i++) {
+      for(var i=1; i<len;i++) {
         var content = "<li class='page' id='page"+i+"'><a href=''>"+i+"</a></li>";
         $('#next').before(content);
         $('#page'+currPage).addClass('active');

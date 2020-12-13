@@ -271,7 +271,7 @@
     </div>
     <!-- fixed btn-->
     <div class="fixed-btn">
-      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle>" role="button"><i class="far fa-edit">撰寫文章</i></a>
+      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button"><i class="far fa-edit">撰寫文章</i></a>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <script>
