@@ -29,9 +29,6 @@ public class AttractionServiceImpl implements AttractionService{
     @Override
 //    @Transactional(readOnly = true)
     public AttractionDO getEle(Integer id, int findFromPersistence) {
-//        if(id == null || id==0) return null;
-//        if(findFromPersistence == this.findFromPersistence) return dao.getEle(id, true);
-//        return dao.getEle(id, false);
         return getEle(id, findFromPersistence, false);
     }
     @Override
@@ -44,6 +41,30 @@ public class AttractionServiceImpl implements AttractionService{
             attractionDO = dao.getEle(id, true);
         }else{
             attractionDO = dao.getEle(id, false);
+        }
+        if(loadPicture) attractionDO.getAttractionPic().size();
+        return attractionDO;
+    }
+
+    @Override
+    public AttractionDO getEleWithStatus(Integer id, boolean available) {
+        return getEleWithStatus(id, available, getFromDatabase);
+    }
+
+    @Override
+    public AttractionDO getEleWithStatus(Integer id, boolean available, int findFromPersistence) {
+        return getEleWithStatus(id, available, findFromPersistence, false);
+    }
+
+    @Override
+    public AttractionDO getEleWithStatus(Integer id, boolean available, int findFromPersistence, boolean loadPicture) {
+        if(id == null || id==0) return null;
+
+        AttractionDO attractionDO;
+        if(findFromPersistence == this.findFromPersistence){
+            attractionDO = dao.getEle(id, true, available);
+        }else{
+            attractionDO = dao.getEle(id, false, available);
         }
         if(loadPicture) attractionDO.getAttractionPic().size();
         return attractionDO;

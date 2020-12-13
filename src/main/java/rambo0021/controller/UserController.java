@@ -8,6 +8,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import global.service.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -32,6 +33,7 @@ import rambo0021.dao.VerifyRecaptcha;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.IdentityBean;
 import rambo0021.serive.AccountService;
+import utils.MailUtil;
 
 @Controller
 @Lazy
@@ -44,6 +46,9 @@ public class UserController {
 	
 	@Autowired
 	private RestaurantService rs;
+
+	@Autowired@Qualifier("sendMailService")
+	SendMailService sendMailService;
 	
     //前台註冊
 	@RequestMapping("/singup")
@@ -139,8 +144,15 @@ public class UserController {
 	}
 	@RequestMapping("updateUser")
 	public @ResponseBody String updateUser(@RequestParam String username,@RequestParam("password") String password,@RequestParam String email,@RequestParam String nickName) {
-	    String rs = service.updateUser(username, password,email,nickName);
-	    System.out.println("資料修改完成");
+	    service.updateUser(username, password,email,nickName);
 	   return "ok";
 	}
-   }
+	@RequestMapping("forgetPwd")
+	public @ResponseBody String forgetPwd(@RequestParam String username,@RequestParam String email, HttpSession session) {
+		String pwd =service.forgetPwd(username,email);
+		System.out.println(pwd);
+		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼",session);
+		return "ok";
+	}
+   
+}
