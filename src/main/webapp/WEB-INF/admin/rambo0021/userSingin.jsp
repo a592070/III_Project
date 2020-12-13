@@ -30,8 +30,7 @@
       <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
         data-scrollax-parent="true">
         <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a
-                href="index.html">首頁</a></span> <span>登入</span></p>
+          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span>
           <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員登入</h1>
         </div>
       </div>
@@ -96,11 +95,17 @@
     console.log("登入")
     var form1 = $(this).parents('form');
     var formData = new FormData(form1[0]);
+
+    swal({
+        title:"處理中",
+        button: false,
+        icon: '<%=application.getContextPath()%>/assets/img/rambo0021/giphy.gif'
+      })
     
     $.ajax({
 
       type: "POST",
-      url: "${pageContext.servletContext.contextPath}/user/signin",
+      url: "${pageContext.servletContext.contextPath}/user/singin",
       data: formData,
       processData: false,
       contentType: false,
