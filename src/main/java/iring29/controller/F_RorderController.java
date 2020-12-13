@@ -2,6 +2,7 @@ package iring29.controller;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +19,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
-import global.SendMailService;
 import global.pojo.OrderTable;
+import iring29.model.R_Comment;
 import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
 import iring29.service.F_RestaurantService;
@@ -31,7 +33,7 @@ public class F_RorderController {
 	@Autowired
 	private F_RestaurantService F_Serivce;
 	@Autowired
-	private SendMailService sendMail;
+	private global.service.SendMailService sendMail;
 	
 	
 	@RequestMapping(path = "/OrderList", method = RequestMethod.POST)
@@ -176,15 +178,26 @@ public class F_RorderController {
 			//send mail
 			String email = "929iring@gmail.com";  //不使用綠界時打開
 			String title = "Fun x Taiwan";  //不使用綠界時打開
-			String content = "謝謝您訂購" + r.getRestaurant().getName() + "，也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
-			BigDecimal r_sn = r.getRestaurant().getR_sn();//不使用綠界時打開
-			sendMail.asyncSend(email, title, content);  //不使用綠界時打開
+			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
+			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
+			String url = "/DisplayRestaurant/"+r.getRestaurant().getR_sn();
+			sendMail.asyncSend(email, title, content, urlDisplay, url , session);  //不使用綠界時打開
 			
 		}
 				
 		session.removeAttribute("cartnum");
 		return "iring29/OrderDetail";//不使用綠界時打開
 //		return "redirect:payment";//使用綠界時打開
+	}
+	
+	//leave comment
+	@RequestMapping(path = {"/reviewrestaurant/{restaurant_id}"}) 
+	public String reviewRestaurant(@PathVariable(name="restaurant_id", required = false) Integer restaurant_id, HttpSession session) {
+		Restaurant res_data = F_Serivce.findRestaurant(restaurant_id);
+		List<R_Comment> comment = F_Serivce.ResComment(res_data.getR_sn());
+		session.setAttribute("res_data", res_data);
+		session.setAttribute("comment", comment);
+		return "iring29/RestaurantComment";
 	}
 	
 	@RequestMapping(path = "/payment")

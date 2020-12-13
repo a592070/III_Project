@@ -380,11 +380,12 @@ button#order {
                                          }).click(function () {
                                              start = 1;
                                              let clicknum = $("i#starRating").index($(this)) + 1;
-                                             console.log("num" + clicknum);
+                                             let num = $("i#starRating").index($(this)) + 1;
+                                             console.log("num =" + clicknum);
                                              for (let i = 0; i < num; i++) {
                                                  $("i#starRating").eq(i).attr("class", "icon_star")
                                              }
-                                             $("#stars").val(clicknum);
+                                             $("#stars").attr("value", clicknum);
                                          })
                                          
                                          </script>
