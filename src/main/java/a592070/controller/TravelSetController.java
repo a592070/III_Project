@@ -195,7 +195,7 @@ public class TravelSetController {
     }
 
 
-    @PostMapping("/admin/travelSet/status/{id}")
+    @PutMapping("/admin/travelSet/status/{id}")
     public boolean switchStatus(@PathVariable(name = "id") Integer id){
         boolean flag = false;
         try {

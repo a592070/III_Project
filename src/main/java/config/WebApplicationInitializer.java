@@ -1,5 +1,6 @@
 package config;
 
+import ch.qos.logback.ext.spring.web.LogbackConfigListener;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -29,7 +30,9 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
         filterRegistration.setInitParameter("forceEncoding", "true");
         filterRegistration.addMappingForUrlPatterns(null, false, "/*");
 
+
         servletContext.addListener(new ContextLoaderListener(ac));
+        servletContext.addListener(new LogbackConfigListener());
     }
 
     @Override
@@ -49,11 +52,12 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
 
     @Override
     protected Filter[] getServletFilters() {
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        characterEncodingFilter.setForceEncoding(true);
-        characterEncodingFilter.setForceRequestEncoding(true);
-        characterEncodingFilter.setForceResponseEncoding(true);
-        return new Filter[] { characterEncodingFilter};
+//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+//        characterEncodingFilter.setEncoding("UTF-8");
+//        characterEncodingFilter.setForceEncoding(true);
+//        characterEncodingFilter.setForceRequestEncoding(true);
+//        characterEncodingFilter.setForceResponseEncoding(true);
+//        return new Filter[] { characterEncodingFilter};
+        return super.getServletFilters();
     }
 }

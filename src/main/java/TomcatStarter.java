@@ -1,8 +1,18 @@
+import ch.qos.logback.classic.servlet.LogbackServletContextListener;
+import ch.qos.logback.classic.spi.LoggerContextListener;
+import ch.qos.logback.ext.spring.web.LogbackConfigListener;
+import org.apache.catalina.ContainerListener;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
+import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.connector.Connector;
+import org.apache.catalina.startup.ContextConfig;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.tomcat.util.descriptor.web.ApplicationParameter;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.request.RequestContextListener;
 
+import javax.persistence.Embedded;
 import javax.servlet.ServletException;
 
 public class TomcatStarter {
@@ -26,6 +36,21 @@ public class TomcatStarter {
         tomcat.enableNaming();
         Connector connector = tomcat.getConnector();
         connector.setURIEncoding("UTF-8");
+
+
+        ApplicationParameter parameter = new ApplicationParameter();
+        parameter.setName("logbackConfigLocation");
+        parameter.setValue("classpath:logback.xml");
+        context.addApplicationParameter(parameter);
+        context.addApplicationListener(LogbackConfigListener.class.getName());
+
+//        System.out.println(LogbackConfigListener.class.getName());
+//        context.addApplicationListener(ContextLoaderListener.class.getName());
+//        System.out.println(ContextLoaderListener.class.getName());
+//        context.addApplicationListener(RequestContextListener.class.getName());
+//        System.out.println(RequestContextListener.class.getName());
+
+
 
         tomcat.start();
         // 啟動線程進入等待狀態

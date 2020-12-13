@@ -1,7 +1,6 @@
 package global;
 
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 import rambo0021.pojo.AccountBean;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         HttpSession httpSession = request.getSession();
-        AccountBean loginUser = (AccountBean) httpSession.getAttribute(Constant.ADMIN_BEAN);
+        AccountBean loginUser = (AccountBean) httpSession.getAttribute(Constant.ADMIN_LOGIN_SESSION);
         // 檢查session AccountBean是否存在，檢查身分
         if(loginUser != null){
 //            System.out.println(loginUser.getUserName());
