@@ -117,5 +117,15 @@ public class AccountServiceImpl implements AccountService {
 		return dao.getidList();
 	}
 
+	@Override
+	public String updateUser(String username, String password, String email, String nickName) {
+           return dao.updateUser(username,password,email,nickName);	
+	}
+
+	@Override
+	public String forgetPwd(String username, String email) {
+		return dao.forgetPwd(username,email);
+	}
+
 
 }
