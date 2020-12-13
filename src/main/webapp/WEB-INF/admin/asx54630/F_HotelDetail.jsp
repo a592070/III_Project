@@ -338,9 +338,9 @@ body{
 							                        success:function(response){
 							                        	console.log("h = " + response);
 							                           if(response == "false"){
-								                           console.log("in h = " + response);
+								                           console.log("Order Date Error = " + response);
 							                        	   var hotel_context = "";
-							                        	   hotel_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+							                        	   hotel_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#dateerror" style="display:none;"></button>';
 								                        	$("#rating").html(hotel_context);
 								                        	$("#tableckbtn").click();
 							                        	   
@@ -354,9 +354,9 @@ body{
 												                        success:function(response){
 												                        	console.log("r = " + response);
 												                           if(response == "false"){
-													                           console.log("in r = " + response);
+													                           console.log("Order Room Error = " + response);
 												                        	   var hotel_context = "";
-												                        	   hotel_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#tableresponse" style="display:none;"></button>';
+												                        	   hotel_context += '<button type="button" class="btn btn-primary" id="tableckbtn" data-toggle="modal" data-target="#roomerror" style="display:none;"></button>';
 													                        	$("#rating").html(hotel_context);
 													                        	$("#tableckbtn").click();
 												                        	   
@@ -378,7 +378,7 @@ body{
                         </form>
                         
                         									<!-- Modal -->
-									<div class="modal fade" id="tableresponse" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal fade" id="dateerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   									<div class="modal-dialog modal-dialog-centered" role="document">
     									<div class="modal-content">
       									<div class="modal-header">
@@ -389,6 +389,26 @@ body{
       									</div>
       									<div class="modal-body">
        									抱歉 !   訂位已滿，請重新選擇日期及時段
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" data-dismiss="modal" class="btn btn-primary">確認</button>
+      									</div>
+    									</div>
+  									</div>
+									</div>
+									<!-- .Modal -->
+									<div class="modal fade" id="roomerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									抱歉 !   房間已滿! 請選擇其他飯店!
       									</div>
       									<div class="modal-footer">
 									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->

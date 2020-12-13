@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import asx54630.model.Hotel;
 import asx54630.model.HotelOrder;
@@ -67,16 +68,17 @@ public class F_HotelOrderController {
 	}
 	
 	@RequestMapping(path = "/CheckOrderDate", method = RequestMethod.POST)
-	public boolean CheckOrderDate(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
+	public @ResponseBody boolean CheckOrderDate(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
 								@RequestParam(name = "date_in",required = false) Date date_in, 
 								@RequestParam(name = "date_out",required = false) Date date_out
 								) {
 		
-		System.out.println(H_SN);
-		System.out.println(date_in);
-		System.out.println(date_out);
-		boolean  hOder = f_hotelOrderService.getDB_order_date(H_SN, date_in, date_out);
-
+		System.out.println("controller =" + H_SN);
+		System.out.println("controller =" + date_in);
+		System.out.println("controller =" + date_out);
+		boolean hOder = f_hotelOrderService.getDB_order_date(H_SN, date_in, date_out);
+		
+		System.out.println(hOder);
 		return hOder;
 		
 		
@@ -85,16 +87,20 @@ public class F_HotelOrderController {
 	
 	
 	@RequestMapping(path = "/CheckOrderRoom", method = RequestMethod.POST)
-	public String CheckOrderRoom(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
+	public @ResponseBody boolean CheckOrderRoom(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
 							   @RequestParam(name = "dbroom",required = false) BigDecimal dbroom, 
 							   @RequestParam(name = "qdroom",required = false) BigDecimal qdroom) {
+		boolean flag = false;
 		
-		int currentDB = f_hotelOrderService.DBroom(H_SN); //取得已成立訂單中 該飯店的雙人房被訂了幾間
-		int currentQD = f_hotelOrderService.QDroom(H_SN); //取得已成立訂單中 該飯店的四人房被訂了幾間
+		Integer currentDB = f_hotelOrderService.DBroom(H_SN).intValue(); //取得已成立訂單中 該飯店的雙人房被訂了幾間
 		
-		int totalDB = f_hotelOrderService.getHotelDB(H_SN); //某某飯店雙人房總數
-		int totalQD = f_hotelOrderService.getHotelQD(H_SN); //某某飯店四人房總數
+
+		Integer currentQD = f_hotelOrderService.QDroom(H_SN); //取得已成立訂單中 該飯店的四人房被訂了幾間
+			
 		
+		Integer totalDB = f_hotelOrderService.getHotelDB(H_SN); //某某飯店雙人房總數
+
+		Integer totalQD = f_hotelOrderService.getHotelQD(H_SN); //某某飯店四人房總數
 			
 		int LeftDB = totalDB - currentDB ; //剩餘雙人房間數
 		int LeftQD = totalQD - currentQD ; //剩餘四人房間數
@@ -105,14 +111,16 @@ public class F_HotelOrderController {
 		System.out.println(LeftDB);
 		System.out.println(LeftQD);
 		System.out.println(DBroom);
-		System.out.println(DBroom);
+		System.out.println(QDroom);
 		
-		if(DBroom <= LeftDB && QDroom <= QDroom ) {
+		if(currentDB == 0 && currentQD == 0) {
+			flag = true;
+		}else if(DBroom <=LeftDB) {
 			
-			return "true";
-		}else {
-			return "false";
-		}	
+		}
+
+			
+		return flag;
 
 	}
 	
