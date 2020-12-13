@@ -151,6 +151,9 @@ public class AttractionController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.IMAGE_JPEG);
         httpHeaders.setCacheControl(CacheControl.noCache());

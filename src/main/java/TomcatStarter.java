@@ -33,10 +33,6 @@ public class TomcatStarter {
         context.setResponseCharacterEncoding("UTF-8");
         context.setRequestCharacterEncoding("UTF-8");
 
-        tomcat.enableNaming();
-        Connector connector = tomcat.getConnector();
-        connector.setURIEncoding("UTF-8");
-
 
         ApplicationParameter parameter = new ApplicationParameter();
         parameter.setName("logbackConfigLocation");
@@ -51,6 +47,9 @@ public class TomcatStarter {
 //        System.out.println(RequestContextListener.class.getName());
 
 
+        tomcat.enableNaming();
+        Connector connector = tomcat.getConnector();
+        connector.setURIEncoding("UTF-8");
 
         tomcat.start();
         // 啟動線程進入等待狀態

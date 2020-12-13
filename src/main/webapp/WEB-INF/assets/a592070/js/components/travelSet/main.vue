@@ -45,6 +45,7 @@ module.exports = {
     }
   },
   computed: Vuex.mapState(['travelSetDialog', 'travelSetDetailLoading', 'travelSetInfoLoading', 'travelSetSaved', 'selectItemDialog']),
+
   methods: {
     handleCloseTravelSet(done) {
     },
