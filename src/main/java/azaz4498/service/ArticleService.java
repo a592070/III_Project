@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import azaz4498.model.Article;
 import azaz4498.model.ArticleDAO;
+import azaz4498.model.Comment;
+import azaz4498.model.MultiComment;
 
 @Transactional
 public class ArticleService {
@@ -34,6 +36,10 @@ public class ArticleService {
 	//顯示最近文章
 	public List<Article> showRecentArticles(){
 		return aDao.getRecentPost();
+	}
+	//取得多層留言
+	public Map<Integer, List<MultiComment>> getMultiCommentMap(List<Comment> commentList){
+		return aDao.getMultiCommentMap(commentList);
 	}
 	//顯示文章列表(非禁用)(前台)
 	public List<Article> showAvailableArticles(Integer index,Integer records){

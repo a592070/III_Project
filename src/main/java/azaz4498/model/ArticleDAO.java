@@ -69,6 +69,17 @@ public class ArticleDAO {
 		typeCount.put("traffic",traffic);
 		return typeCount;
 	}
+	//取得文章內多層留言
+	public Map<Integer, List<MultiComment>> getMultiCommentMap(List<Comment> commentList){
+		Map<Integer, List<MultiComment>> multiCommentMap = new HashMap<Integer, List<MultiComment>>();
+		for(Comment comment:commentList) {
+			int commentId = comment.getComId();
+			multiCommentMap.put(commentId, comment.getM_Comments());
+		}
+		return multiCommentMap;
+		
+		
+	}
 	
 	//找文章中圖片當封面
 	public List<String> getCoverPicList(List<Article> artList){

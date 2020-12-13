@@ -20,14 +20,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import azaz4498.model.Article;
 import azaz4498.model.Comment;
 import azaz4498.model.ForumPage;
+import azaz4498.model.MultiComment;
 import azaz4498.service.ArticleService;
 import azaz4498.service.ArticleTypeService;
 import azaz4498.service.CommentService;
+import azaz4498.service.MultiCommentService;
 import azaz4498.service.PictureService;
 
 @Controller
 @Lazy
-@SessionAttributes(names = { "artBean", "typeBean", "artList", "commentList", "recentArt", "recentArtPic",
+@SessionAttributes(names = { "artBean", "typeBean", "artList", "commentList","multiCommentList" ,"recentArt", "recentArtPic",
 		"typeCount" })
 public class ArticleController {
 	@Autowired
@@ -41,26 +43,31 @@ public class ArticleController {
 	@Autowired
 	CommentService commentService;
 	@Autowired
+	MultiCommentService multiCommentService;
+	@Autowired
 	private ServletContext context;
 	@Autowired
 	private ForumPage forumPage;
 	
+	//新增文章
 	@RequestMapping(path = "/newArticle",method = RequestMethod.GET)
 	public String newArticle() {
 		return "azaz4498/newArticle_frontend";
 	}
 	
-	
+	//文章頁面
 	@RequestMapping(path = {"/article/{artId}" ,"/typeSearch/article/{artId}"}, method = RequestMethod.GET)
 	public String articlePreview(Model m, @PathVariable(name = "artId") Integer artId) throws SQLException {
 		List<Article> recentArticles = articleService.showRecentArticles();
 		List<Comment> commentList = commentService.showCommentsByArticle(artId);
 		List<String> coverPicList = articleService.getCoverPicList(recentArticles);
+		
 		Article currArticle =articleService.showArticleById(artId);
 		m.addAttribute("artBean",currArticle);
 		m.addAttribute("commentList", commentList);
 		m.addAttribute("recentArt", recentArticles);
 		m.addAttribute("recentArtPic", coverPicList);
+		m.addAttribute("multiCommentList",articleService.getMultiCommentMap(commentList));
 		m.addAttribute("typeCount", articleService.getTypeCount());
 		return "azaz4498/articleDetail";
 
@@ -136,27 +143,28 @@ public class ArticleController {
 		m.addAttribute("currPage", currPage);
 		return "azaz4498/forum_typeSearch";
 	}
-
-	@RequestMapping(path = "/editPage.controller")
-	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
-		m.addAttribute("artBean", articleService.showArticleById(articleId));
-		return "azaz4498/editPage";
-	}
-
+	//編輯頁面
+//	@RequestMapping(path = "/editPage.controller")
+//	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
+//		m.addAttribute("artBean", articleService.showArticleById(articleId));
+//		return "azaz4498/editPage";
+//	}
+//
+//	
+//	
+//	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
+//	public String Edit(@RequestParam(name = "articleTitle") String title,
+//			@RequestParam(name = "articleContent") String content, @RequestParam(name = "artId") Integer articleId,
+//			@RequestParam(name = "userid") String userid, @RequestParam(name = "typeSelect") Integer typeId, Model m)
+//			throws SQLException {
+//
+//		articleService.articleEdit(title, content, articleId, userid, typeId);
+//		m.addAttribute("artBean", articleService.showArticleById(articleId));
+//
+//		return "azaz4498/articleDetail";
+//	}
 	
-
-	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
-	public String Edit(@RequestParam(name = "articleTitle") String title,
-			@RequestParam(name = "articleContent") String content, @RequestParam(name = "artId") Integer articleId,
-			@RequestParam(name = "userid") String userid, @RequestParam(name = "typeSelect") Integer typeId, Model m)
-			throws SQLException {
-
-		articleService.articleEdit(title, content, articleId, userid, typeId);
-		m.addAttribute("artBean", articleService.showArticleById(articleId));
-
-		return "azaz4498/articleDetail";
-	}
-
+	//文章新增後跳轉文章頁面
 	@RequestMapping(path = "/newArticle.controller", method = RequestMethod.POST)
 	public String newArticleBackend(@RequestParam(name = "title") String title,
 			@RequestParam(name = "content") String content, 
