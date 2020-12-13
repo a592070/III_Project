@@ -1,14 +1,18 @@
 package rambo0021.controller;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import global.service.SendMailService;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -20,12 +24,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
+import global.service.SendMailService;
 import iring29.model.Restaurant;
 import iring29.service.RestaurantService;
 import rambo0021.dao.SHA2DAO;
@@ -33,7 +45,6 @@ import rambo0021.dao.VerifyRecaptcha;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.IdentityBean;
 import rambo0021.serive.AccountService;
-import utils.MailUtil;
 
 @Controller
 @Lazy
@@ -49,6 +60,7 @@ public class UserController {
 
 	@Autowired@Qualifier("sendMailService")
 	SendMailService sendMailService;
+	
 	
     //前台註冊
 	@RequestMapping("/singup")
@@ -128,31 +140,75 @@ public class UserController {
 		map.put("reqURL", reqURL);
 		return map;
 	}
-	
+	//前台登出
 	@RequestMapping("singout")
 	public  String singout(HttpSession session, SessionStatus sessionStatus,HttpServletRequest req) {
 		session.invalidate();
 		sessionStatus.setComplete();
 		return "redirect:/FunTaiwan";
 	}
-	
+	//個人頁面顯示圖片
 	@RequestMapping("ShowUserPic")
 	public @ResponseBody ResponseEntity<byte[]> ShowUserPic(@ModelAttribute("userBean") AccountBean aBean) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
 		return new ResponseEntity<byte[]>(aBean.getPicture(), headers, HttpStatus.OK);	
 	}
+	//修改個人資料
 	@RequestMapping("updateUser")
 	public @ResponseBody String updateUser(@RequestParam String username,@RequestParam("password") String password,@RequestParam String email,@RequestParam String nickName) {
 	    service.updateUser(username, password,email,nickName);
 	   return "ok";
 	}
+	//忘記密碼
 	@RequestMapping("forgetPwd")
 	public @ResponseBody String forgetPwd(@RequestParam String username,@RequestParam String email, HttpSession session) {
 		String pwd =service.forgetPwd(username,email);
 		System.out.println(pwd);
-		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼",session);
+//		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼",session);
+		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼", "點我登入", "/user/singinPage", session);
 		return "ok";
 	}
-   
+	//修改圖片
+		@RequestMapping(path = "/udUserImg")
+		public @ResponseBody String udAccountImg(@RequestParam String username, @RequestParam("Apicture") MultipartFile img,
+				Model m,@ModelAttribute("userBean") AccountBean aBean) throws IOException {
+			System.out.println(username);
+			InputStream is = new BufferedInputStream(img.getInputStream());
+//		    v1
+//			byte[] b =new byte[is.available()];
+//	        is.read(b);
+//	        is.close();
+//			userDetail.setPicture(b);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			byte[] b = new byte[81920];
+			int len = 0;
+			while ((len = is.read(b)) != -1) {
+				baos.write(b, 0, len);
+			}
+			String status = service.updateAccImg(baos.toByteArray(), username);
+			aBean.setPicture(baos.toByteArray());
+			aBean.setModify_Date(new Date());
+			baos.close();
+			m.addAttribute("userBean", aBean);
+			return status;
+		}
+		
+		//google login
+		@RequestMapping(path = "/googleLogin")
+		public @ResponseBody HashMap<String, String> googleLogin(@ModelAttribute(name="reqURL") String reqURL,
+				                                @RequestParam String nickname,
+				                                @RequestParam String imgUrl,
+				                                @RequestParam String email,
+				                                Model m){
+		AccountBean aBean =	service.checkGoogleLogin(nickname,imgUrl,email);
+		HashMap<String, String> map = new HashMap<String,String>();
+		m.addAttribute("userBean", aBean);
+		map.put("LoginInfo", "登入成功");
+		map.put("reqURL", reqURL);
+			return map;
+		}
+		
+
+		
 }

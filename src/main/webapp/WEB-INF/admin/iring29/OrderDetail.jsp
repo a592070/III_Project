@@ -416,10 +416,12 @@ td.col-sm-1.col-md-1.text-center{
 							<td></td>
 							<td></td>
 							<td>
-								<button type="button" class="btn btn-primary">
+							<form action="<%=pageContext.getServletContext().getContextPath()%>/FunTaiwan">
+								<button type="submit" class="btn btn-primary">
 									<span class="glyphicon glyphicon-shopping-cart"></span>
 									繼續逛
 								</button>
+							</form>
 							</td>
 							<td>
 <!-- 								<button type="button" class="btn btn-success"> -->

@@ -175,47 +175,26 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
   </script>
     <script>
-      var len = eval(${totalPages});
-      console.log(len);
-      var currPage= eval(${currPage});
-      if(len==1){
-        $('#next').remove();
-        $('#prev').remove();
-      }
       
-      for(var i=1; i<len;i++) {
-        var content = "<li class='page'id='page"+i+"'><a href=''>"+i+"</a></li>";        
+        var len = eval(${totalPages});
+        var currPage= eval(${currPage});
+        
+      for(var i=1; i<=len;i++) {
+        var content = "<li class='page' id='page"+i+"'><a href=''>"+i+"</a></li>";
         $('#next').before(content);
         $('#page'+currPage).addClass('active');
         $('#page'+currPage).remove('a');
+        
       };
-      
-      if(currPage==len){
+      if(len==1){
         $('#next').remove();
-      }
-      if(currPage==1){
+        $('#prev').remove();
+      }else if(currPage==len){
+        $('#next').remove();
+      }else if(currPage==1){
         $('#prev').remove();
       }
-
-      // $('.artCoverPic').on('click',function(){
-      //   event.preventDefault();
-      //   var currArtId = $(this).prev().val();
-      //   $.ajax({
-      //     type:"GET",
-      //     url:"articleDetail.controller",
-      //     data:{
-      //       artId:currArtId
-      //     },
-      //     success:function(response){
-      //       window.location.href='articleDetail.controller?artId='+currArtId;
-      //     }
-
-      //   })
-      // })
-
       
-
-
     </script>
     <script>
       $('#next').on('click',function(){

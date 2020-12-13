@@ -119,6 +119,82 @@ button#order {
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <h2>${res_data.name}</h2>
+                        <button type="button" class="btn btn-primary" id="reviewbtn" data-toggle="modal" data-target="#reviewModalCenter" style="display:none;"></button>
+                        <script>
+                        $(function(){
+                        	$("#reviewbtn").click();
+                        	});
+                        </script>
+                        		<!--review Modal -->
+									<div class="modal fade" id="reviewModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" id="closecomm" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+      									<div class="review-add">
+       									 <h4>歡迎寫下您的評論</h4>
+       									 <Input type='hidden' name='r_order_id' id= 'r_order_id' value='${r_order_id}'>
+       									 <div class="ra-form">
+       									 <div class="col-lg-12">
+                                    	<div id="leavecomm">
+                                        <h5 id="comment_rating">您的評分</h5>
+                                        <div class="rating">
+<!--                                             <i class="icon_star"></i> -->
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <i id="starRating" class='fa fa-star-o'></i>
+                                             <Input type='hidden' name='stars' id= 'stars' value=''>
+                                        </div>
+                                    </div>
+                                             <span id="starcomm"></span>
+                                         <script>
+                                             var start = 0;
+                                         $("i#starRating").on("mouseenter", function () {
+                                             start = 0;
+                                             console.log("size = " + $("i#starRating").size())
+                                             $("i#starRating").attr("class", "fa fa-star-o")
+                                             let num = $("i#starRating").index($(this)) + 1;
+                                             console.log(num);
+                                             for (let i = 0; i < num; i++) {
+                                                 $("i#starRating").eq(i).attr("class", "icon_star")
+                                             }
+                                         }).mouseout(function () {
+                                             if (start == 0) {
+                                                 $("i#starRating").attr("class", "fa fa-star-o")
+                                             }
+                                         }).click(function () {
+                                             start = 1;
+                                             let clicknum = $("i#starRating").index($(this)) + 1;
+                                             let num = $("i#starRating").index($(this)) + 1;
+                                             console.log("num =" + clicknum);
+                                             for (let i = 0; i < num; i++) {
+                                                 $("i#starRating").eq(i).attr("class", "icon_star")
+                                             }
+                                             $("#stars").attr("value", clicknum);
+                                         })
+                                         
+                                         </script>
+                                         <span id="com_msg"></span>
+                                    	<textarea placeholder="寫下您對於此餐廳的評論" id="r_comment"></textarea>
+<!--                                     	<button type="button" id="commbtn" onclick="sendcomment()">送出</button>           -->
+      									</div>
+      									</div>
+      									</div>
+      									<div class="modal-footer">
+									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" class="btn btn-primary" id="commbtn" onclick="sendcomment()">送出</button>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal -->
+                        
                     </div>
                 </div>
             </div>
@@ -299,7 +375,6 @@ button#order {
                     <div class="rd-reviews">
                         <h4>評論</h4>
                         <!-- review -->
-                        
                         <div id="reviews">
                         <c:set var ="size" value= "${fn:length(comment)}" />
                         <c:if test="${size < 1}">
@@ -344,7 +419,7 @@ button#order {
                         <!-- .review -->
                     </div>
                         
-                        <div class="review-add" id="review-add">
+                    <div class="review-add" id="review-add">
 <!--                         <h4>歡迎寫下您的評論</h4> -->
 <!--                         <form  class="ra-form"> -->
                             <div class="ra-form">
@@ -357,7 +432,7 @@ button#order {
                                 </div>
                                 <div class="col-lg-12">
                                     <div id="leavecomm">
-                                        <h5 id="comment_rating"></h5>
+<!--                                         <h5 id="comment_rating">您的評分</h5> -->
 <!--                                         <div class="rating"> -->
 <!--                                              <i class="icon_star"></i> --> 
 <!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
@@ -547,8 +622,9 @@ button#order {
 							                        dataType: 'html',
 							                        success:function(comm){
 														$(".rd-reviews").append(comm);
-														$("i#starRating").attr("class", "fa fa-star-o")
-														$("#commentbtn").empty();
+// 														$("i#starRating").attr("class", "fa fa-star-o")
+// 														$("#commentbtn").empty();
+														$("#closecomm").click();
 							                        }
 							                    }
 										)
@@ -581,7 +657,11 @@ button#order {
                          </div>
 <!--                         </form> -->
                     </div>
-                    
+<!--       									<script> -->
+<!-- 											$("#addcommbtn").click(function(){ -->
+<!--  												$(".review-add").remove(); -->
+<!-- 												}) -->
+<!--       									</script> -->
                 </div>
                 <div class="col-lg-4">
                     <div class="room-booking">
