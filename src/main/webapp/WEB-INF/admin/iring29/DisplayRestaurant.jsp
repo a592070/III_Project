@@ -93,6 +93,9 @@ img{
     float: left;
     margin-right: 10px;
 }
+button#order {
+    padding-right: 50px;
+}
 </style>
 </head>
 <body>
