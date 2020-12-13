@@ -29,8 +29,8 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong> <br></strong> <strong>Fun Taiwan</strong></h1>
-            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find great places to stay, eat, shop, or visit from local experts</p>
+            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong> <br></strong> <strong>Fun x 臺灣</strong></h1>
+            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">馬上展開您的旅程</p>
             <div class="block-17 my-4">
               <form action="" method="post" class="d-block d-flex">
                 <div class="fields d-block d-flex">
@@ -51,7 +51,7 @@
                 <input type="submit" class="search-submit btn btn-primary" value="Search">  
               </form>
             </div>
-            <p>Or browse the highlights</p>
+            <p>幫您找到適合的景點、住宿、餐廳、交通 訊息</p>
             <p class="browse d-md-flex">
             	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-meeting-point"></i>找交通</a></span> 
             	<span class="d-flex justify-content-md-center align-items-md-center"><a href="<%=application.getContextPath()%>/Restaurant_index"><i class="flaticon-fork"></i>找餐廳</a></span>
