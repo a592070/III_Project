@@ -122,5 +122,10 @@ public class AccountServiceImpl implements AccountService {
            return dao.updateUser(username,password,email,nickName);	
 	}
 
+	@Override
+	public String forgetPwd(String username, String email) {
+		return dao.forgetPwd(username,email);
+	}
+
 
 }
