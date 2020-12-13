@@ -98,6 +98,17 @@ public class AttractionServiceImpl implements AttractionService{
         return false;
     }
 
+
+    @Override
+    public List<Map<String, Object>> listPictureDest(Integer id, String destPrefix, ServletContext context) {
+        try{
+            AttractionDO ele = getEle(id, findFromPersistence, true);
+            if(ele != null) return listPictureDest(ele, destPrefix, context);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     public List<Map<String, Object>> listPictureDest(AttractionDO attractionDO, String destPrefix, ServletContext context) {
         List<AttractionPictureDO> attractionPic = attractionDO.getAttractionPic();
@@ -110,7 +121,7 @@ public class AttractionServiceImpl implements AttractionService{
 
             // /WEB-INF/assets/attraction/xxx/xxx.jpg
             String dest = Constant.WEB_INF_PATH + destPrefix + File.separator + ele.getPicFileName();
-            if(writePicToDest(ele, dest, context)) map.put("dest", destPrefix+"/"+ele.getPicFileName());
+            if(writePicToDest(ele, dest, context)) map.put("dest", destPrefix + File.separator + ele.getPicFileName());
 
             list.add(map);
         }

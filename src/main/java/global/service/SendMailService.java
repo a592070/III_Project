@@ -38,7 +38,8 @@ public class SendMailService{
      * @param title         信件內容標題，可以使用html標籤，ex. <strong>title</strong>
      * @param content       信件內容，可以使用html標籤，ex. <p>content</p>
      * @param urlDisplay    url 顯示名稱
-     * @param url           url
+     * @param url           url 相對路徑 ex. /index
+     * @param session       HttpSession，提供給notify發送通知使用
      */
     public void asyncSend(String recipients, String title, String content, String urlDisplay, String url, HttpSession session){
         String mailHtml = mailUtil.generateMailHtml(title, content, urlDisplay, url);

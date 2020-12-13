@@ -25,6 +25,8 @@ public interface AttractionService {
 //    AttractionDO update(AttractionDO attractionDO);
     boolean delete(Integer id);
 
+    List<Map<String, Object>> listPictureDest(Integer id, String destPrefix, ServletContext context);
+
     List<Map<String, Object>> listPictureDest(AttractionDO attractionDO, String destPrefix, ServletContext context);
 
     boolean writePicToDest(AttractionPictureDO ele, String destPath, ServletContext context);
