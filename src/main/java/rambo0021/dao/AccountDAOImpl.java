@@ -276,17 +276,23 @@ public class AccountDAOImpl implements AccountDAO {
 	public String updateUser(String username, String password, String email, String nickName) {
 		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class, username);
 		if (aBean != null) {
-			System.out.println("修改資料");
 			if (!aBean.getPassword().equals(password)) {
-				System.out.println("密碼不同");
 				aBean.setPassword(SHA2DAO.getSHA256(password));
 			}
 			aBean.setEmail(email);
 			aBean.setNickName(nickName);
 			aBean.setModify_Date(new Date());
 		}
-		System.out.println("dao完成");
 		return "修改成功";
+	}
+
+	@Override
+	public String forgetPwd(String username, String email) {
+		Session session = sessionFactory.getCurrentSession();
+		AccountBean aBean = session.get(AccountBean.class, username);
+		String pwd=RandomPwdDAO.generateRandomPassword(8);
+		aBean.setPassword(SHA2DAO.getSHA256(pwd));
+		return pwd;
 	}
 
 }
