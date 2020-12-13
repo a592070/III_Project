@@ -28,6 +28,9 @@ contentType="text/html;charset=UTF-8" language="java"%>
           z-index: 999;
           
       }
+      .destination .icon span {
+      color: #000000;
+	    opacity:0.6;}
     </style>
     <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
@@ -174,7 +177,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
       var len = eval(${totalPages});
       var currPage= eval(${currPage});
       
-      for(var i=1; i<=len;i++) {
+      for(var i=1; i<len;i++) {
         var content = "<li class='page'id='page"+i+"'><a href=''>"+i+"</a></li>";        
         $('#next').before(content);
         $('#page'+currPage).addClass('active');

@@ -127,10 +127,11 @@ contentType="text/html;charset=UTF-8" language="java"%>
               <div class="form-group">
                 <input type="submit" value="發表文章" class="btn btn-primary
                 py-3 px-5" />
-                <input type="button" value="清空"" class="btn btn-warning
-                py-3 px-5" />
+                <input id="preview_btn" onclick="preview()"type="button"data-toggle="modal" data-target="#previewModal" value="文章預覽" class="btn btn-warning
+                py-3 px-5"/>
+              
               </div>
-            </form>
+            
           </div>
           <div class="col-md-6 pr-md-5">
             <div class="form-group">
@@ -143,11 +144,50 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 class="form-control"
               ></textarea>
             </div>
-            
+          </form>
           </div>
         </div>
       </div>
     </section>
+
+    <!--文章預覽modal-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="previewModal">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">文章預覽</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+              <div class="container bg-light">
+                <div class="row">
+                  <div class="col-md-8 ftco-animate">
+                    <div class="tag-widget post-tag-container mb-5 mt-5">
+                      <div class="tagcloud">
+                        <a href="javascript: void(0)" class="tag-cloud-link" id="p_type">文章類型</a>
+                      </div>
+                    </div>
+                    <h2 class="mb-3" id="p_title">文章標題</h2>
+                    <div class="col-md-8 ftco-animate" id="p_content" style="width: 600px;">
+
+                    </div>
+                      
+                    </div>
+                    </div>  
+                    </div>
+                  
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉預覽</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!--文章預覽modal End-->
 
     <c:import url="/WEB-INF/admin/fragment/footer.jsp" />
     <!-- loader -->
@@ -176,11 +216,27 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/Forum_ref.jsp" />
-
+    <!--開始滑-->
     <script>
       $(document).ready(function(){
-     $('body,html').animate({scrollTop: 750}, 800); 
-});
+      $('body,html').animate({scrollTop: 750}, 800); 
+      });
+      <!--開始滑-->
+    </script>
+
+    <script>
+      function preview(){
+        event.preventDefault();
+        $('#p_content').empty();
+        var p_title = $('#title').val();
+        var p_type = $("#typeSelect").find(":selected").text();
+        var p_content = editor.getData();
+
+        $('#p_type').text(p_type);
+        $('#p_title').text(p_title);
+        $('#p_content').append(p_content);
+        $('#p_content').find('img').addClass('img-fluid');
+      }
 
     </script>
     <script>
