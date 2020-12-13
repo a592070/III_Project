@@ -98,7 +98,7 @@
 <script>
 module.exports = {
   components: {
-    "detail-image": httpVueLoader(context + '/assets/a592070/font/js/components/attraction/detailImage.vue'),
+    "detail-image": httpVueLoader(context + '/assets/a592070/front/attraction/components/detailImage.vue'),
   },
   data() {
     return {

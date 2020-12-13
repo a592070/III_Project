@@ -26,7 +26,7 @@ import java.util.Map;
 
 @RestController
 @Lazy
-public class AttractionFontController {
+public class AttractionFrontController {
     @Autowired
     private ServletContext servletContext;
 
@@ -140,27 +140,4 @@ public class AttractionFontController {
     }
 
 
-    @GetMapping("/attraction/pic/{id}/{fileName}")
-    public ResponseEntity<byte[]> getPicture(@PathVariable(name = "id") Integer id,
-                                             @PathVariable(name = "fileName") String fileName){
-        byte[] bytes = null;
-
-        // 從資料庫抓圖片
-//        List<AttractionPictureDO> picture = (List<AttractionPictureDO>)viewService.getPictures(id);
-//        if(picture.get(0) != null) bytes = picture.get(0).getPicture();
-
-        // 靜態資源抓圖片
-        String path = Constant.ATTRACTION_PIC_PATH + File.separator + id + File.separator + fileName + ".jpg";
-        String realPath = servletContext.getRealPath(path);
-        try {
-            bytes = IOUtils.pathToByteArray(realPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.IMAGE_JPEG);
-        httpHeaders.setCacheControl(CacheControl.noCache());
-        ResponseEntity<byte[]> responseEntity = new ResponseEntity(bytes, httpHeaders, HttpStatus.OK);
-        return responseEntity;
-    }
 }

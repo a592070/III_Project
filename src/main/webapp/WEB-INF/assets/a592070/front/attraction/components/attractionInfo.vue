@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-start mb-5 pb-3">
+  <div class="row justify-content-start mb-5 pb-3" style="width: 70%">
     <div class="col-md-7 heading-section">
       <span class="subheading">特別推薦</span>
       <h2 class="mb-4"><strong>熱 門</strong> 景 點</h2>

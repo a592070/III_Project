@@ -50,7 +50,7 @@
 <%--    </script>--%>
     <c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>
 
-    <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/font/js/attractionInfo.js"></script>
+    <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/front/attraction/js/attractionInfo.js"></script>
 
 
 </head>
