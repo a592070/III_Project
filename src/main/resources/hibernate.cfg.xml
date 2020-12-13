@@ -53,6 +53,7 @@
 		<mapping class="azaz4498.model.Article"/>
 		<mapping class="azaz4498.model.ArticleType"/>
 		<mapping class="azaz4498.model.Comment"/>
+		<mapping class="azaz4498.model.MultiComment"/>
 		<mapping class="azaz4498.model.Picture"/>
 		<mapping class="rambo0021.pojo.AccountBean" />
 		<mapping class="rambo0021.pojo.IdentityBean" />
