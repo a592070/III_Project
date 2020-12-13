@@ -28,6 +28,11 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
+    public int getSize(boolean available) {
+        return getSize();
+    }
+
+    @Override
     public CarVO getEle(Integer id, boolean findFromPersistence) {
         Session session = sessionFactory.getCurrentSession();
         if(findFromPersistence){
@@ -35,6 +40,11 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
         }else{
             return session.get(CarVO.class, id);
         }
+    }
+
+    @Override
+    public CarVO getEle(Integer id, boolean findFromPersistence, boolean available) {
+        return getEle(id, findFromPersistence);
     }
 
     /**
@@ -66,6 +76,11 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
+    public int getSizeByKeywords(String keyWords, String region, boolean available) {
+        return getSizeByKeywords(keyWords, region);
+    }
+
+    @Override
     public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending){
         keyWords = "%"+keyWords+"%";
 
@@ -81,6 +96,11 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
+    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending, boolean available) {
+        return listByKeywords(firstIndex, resultSize, keyWords, region, orderFiled, descending);
+    }
+
+    @Override
     public int getSizeByFiled(String filedName, String filedValue) {
         filedValue = "%"+filedValue+"%";
         String hql="from CarVO where "+filedName+" like ?1 ";
@@ -89,6 +109,12 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
         query.setParameter(1, filedValue);
         return query.uniqueResult().intValue();
     }
+
+    @Override
+    public int getSizeByFiled(String filedName, String filedValue, boolean available) {
+        return getSizeByFiled(filedName, filedValue);
+    }
+
     @Override
     public List<CarVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending) {
         filedValue = "%"+filedValue+"%";
@@ -103,6 +129,11 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
+    public List<CarVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending, boolean available) {
+        return listByFiled(firstIndex, resultSize, filedName, filedValue, orderFiled, descending);
+    }
+
+    @Override
     public List<CarVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
         String hql="from CarVO order by "+orderFiled;
         if(descending) hql += " desc";
@@ -111,6 +142,11 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
         return query.list();
+    }
+
+    @Override
+    public List<CarVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available) {
+        return listByRownum(firstIndex, resultSize, orderFiled, descending);
     }
 
 }

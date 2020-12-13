@@ -1,5 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@ taglib
-uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>
+<script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/notify/js/notify.js"></script>
+
+
 <link
   href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
   rel="stylesheet"
@@ -60,7 +65,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             <a href="about.html" class="nav-link">關於我</a>
           </li>
           <li class="nav-item">
-            <a href="tour.html" class="nav-link">景點</a>
+            <a href="${pageContext.servletContext.contextPath}/attraction/index" class="nav-link">找景點</a>
           </li>
           <li class="nav-item">
             <a
@@ -106,7 +111,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             </li>
             <li class="nav-item">
               <a
-                href="<%=application.getContextPath()%>/user/registrationPage"
+                href="<%=application.getContextPath()%>/user/userProfilePage"
                 class="nav-link"
                 >個人頁面</a
               >
@@ -128,6 +133,9 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           </li>
         </ul>
       </div>
+    </div>
+    <div id="notify">
+      <index></index>
     </div>
   </div>
 </nav>

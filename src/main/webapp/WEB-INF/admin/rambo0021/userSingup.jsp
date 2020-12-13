@@ -23,14 +23,13 @@
   <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
   <!-- END nav -->
 
-  <div class="hero-wrap js-fullheight" style="background-image: url('../direngine-master/images/bg_2.jpg');">
+  <div class="hero-wrap js-fullheight" style="background-image: url('../direngine-master/images/bg_3.jpg');">
     <div class="overlay"></div>
     <div class="container" style="text-align : center">
       <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
         data-scrollax-parent="true">
         <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a
-                href="index.html">首頁</a></span> <span>註冊</span></p>
+          <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 臺灣</span> <span>註冊</span></p>
           <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員註冊</h1>
         </div>
       </div>
@@ -66,7 +65,6 @@
                 <option value="2" selected>一般會員</option>
                 <option value="3">餐廳業者</option>
                 <option value="4">住宿業者</option>
-                <option value="5">交通業者</option>
               </select>
             </div>
             <div class="form-group">
@@ -534,7 +532,7 @@
       $.ajax({
 
         type: "POST",
-        url: "${pageContext.servletContext.contextPath}/user/signup",
+        url: "${pageContext.servletContext.contextPath}/user/singup",
         data: formData,
         processData: false,
         contentType: false,

@@ -19,7 +19,7 @@ public class IdentityBean {
 	private int id;
 	@Column(name = "NAME")
 	private String name;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "identityBean")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "identityBean")
 	private Set<AccountBean> accountBean = new HashSet<AccountBean>();
 
 	public IdentityBean() {

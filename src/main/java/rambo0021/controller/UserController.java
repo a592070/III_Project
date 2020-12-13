@@ -8,9 +8,14 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import global.service.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +33,7 @@ import rambo0021.dao.VerifyRecaptcha;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.IdentityBean;
 import rambo0021.serive.AccountService;
+import utils.MailUtil;
 
 @Controller
 @Lazy
@@ -40,9 +46,12 @@ public class UserController {
 	
 	@Autowired
 	private RestaurantService rs;
+
+	@Autowired@Qualifier("sendMailService")
+	SendMailService sendMailService;
 	
     //前台註冊
-	@RequestMapping("/signup")
+	@RequestMapping("/singup")
 	public @ResponseBody HashMap<String, String> signup(@RequestParam Integer identity,
 			                           @RequestParam String username,
 			                           @RequestParam String password,
@@ -95,11 +104,13 @@ public class UserController {
 		return map;
 	}
 	//前台登入 
-	@RequestMapping("/signin")
-	public @ResponseBody HashMap<String, String> signim(@ModelAttribute(name="reqURL") String reqURL,@RequestParam String username, @RequestParam String password,
+	@RequestMapping("/singin")
+	public @ResponseBody HashMap<String, String> singin(@ModelAttribute(name="reqURL") String reqURL,@RequestParam String username, @RequestParam String password,
 			@RequestParam("g-recaptcha-response") String recaptcha,Model m) throws IOException{
 		System.out.println("reqURL="+reqURL);
 		boolean verify = VerifyRecaptcha.verify(recaptcha);
+		verify=true;
+		
 		AccountBean aBean = service.userDetail(username);
 		HashMap<String, String> map = new HashMap<String,String>();
 		if(!verify) {
@@ -112,7 +123,7 @@ public class UserController {
 			map.put("LoginError", "此帳號已被禁用" );
 			return map;
 		}
-		m.addAttribute("userBean", aBean.getUserName());
+		m.addAttribute("userBean", aBean);
 		map.put("LoginInfo", "登入成功");
 		map.put("reqURL", reqURL);
 		return map;
@@ -125,6 +136,23 @@ public class UserController {
 		return "redirect:/FunTaiwan";
 	}
 	
-	
-	
+	@RequestMapping("ShowUserPic")
+	public @ResponseBody ResponseEntity<byte[]> ShowUserPic(@ModelAttribute("userBean") AccountBean aBean) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		return new ResponseEntity<byte[]>(aBean.getPicture(), headers, HttpStatus.OK);	
+	}
+	@RequestMapping("updateUser")
+	public @ResponseBody String updateUser(@RequestParam String username,@RequestParam("password") String password,@RequestParam String email,@RequestParam String nickName) {
+	    service.updateUser(username, password,email,nickName);
+	   return "ok";
+	}
+	@RequestMapping("forgetPwd")
+	public @ResponseBody String forgetPwd(@RequestParam String username,@RequestParam String email, HttpSession session) {
+		String pwd =service.forgetPwd(username,email);
+		System.out.println(pwd);
+		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼",session);
+		return "ok";
+	}
+   
 }

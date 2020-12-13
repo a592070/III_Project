@@ -1,26 +1,20 @@
 package a592070.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import global.SendMailService;
+import global.pojo.NotifyVO;
+import global.service.NotifyService;
+import global.service.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import utils.MailUtil;
+import utils.NotifyUtil;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
+import javax.servlet.http.HttpSession;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 
 @Controller@Lazy
 public class DispatcherController {
@@ -52,16 +46,37 @@ public class DispatcherController {
     SendMailService sendMailService;
 
     @RequestMapping("/testmail")
-    @ResponseBody
-    public String send() throws ExecutionException, InterruptedException {
+    public String send(HttpSession session) throws ExecutionException, InterruptedException {
         String recipients = "a592070@gmail.com";
         String title = "TEST MAIL";
-        String content = "hihi 你好";
+        String content = "<table>" +
+                "<tr><th>123</th><th>456</th></tr>" +
+                "<tr><td>qwe</td><td>abc</td></tr>" +
+                "</table>";
+        String urlDisplay = "景點內容";
+        String url = "/attraction/index";
         System.out.println(Thread.currentThread().getName());
 
         // 異步發送MAIL
-        sendMailService.asyncSend(recipients, title, content);
+        sendMailService.asyncSend(recipients, title, content, urlDisplay, url, session);
 
-        return "checked your email";
+        return "UserIndex";
+    }
+
+
+    @Autowired
+    NotifyService notifyService;
+
+    @RequestMapping("/testnotify")
+    @ResponseBody
+    public String notifyTest(){
+        notifyService.addBroadcastNotify(new NotifyVO(NotifyVO.STATUS_SUCCESS, "test1", "content1"));
+        return "發送廣播消息";
+    }
+    @RequestMapping("/testnotify2")
+    @ResponseBody
+    public String notifyTest2(HttpSession session){
+        notifyService.addSingleNotify(new NotifyVO(NotifyVO.STATUS_SUCCESS, "test2", "content2"), NotifyUtil.notifyUserName(session));
+        return "發送個人消息";
     }
 }

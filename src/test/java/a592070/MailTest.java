@@ -1,21 +1,19 @@
 package a592070;
 
 import config.AppConfig;
-import config.WebApplicationInitializer;
-import global.SendMailService;
+import global.service.SendMailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import utils.MailUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringJUnitConfig(classes = AppConfig.class)
 public class MailTest {
 
-    @Autowired@Qualifier("sendMailService")
+    @Autowired
     SendMailService sendMailService;
 
     @Test
@@ -24,7 +22,7 @@ public class MailTest {
         String title = "TEST MAIL";
         String content = "hihi 你好";
 
-        sendMailService.asyncSend(target, title, content);
+//        sendMailService.asyncSend(target, title, content, null);
 
     }
 }

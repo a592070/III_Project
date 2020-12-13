@@ -1,5 +1,7 @@
 package a592070.pojo;
 
+import a592070.serializer.CarVOJsonDeserializer;
+import a592070.serializer.CarVOJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Immutable;
