@@ -78,29 +78,27 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
 
     
-    <script>
-      var len = eval(${totalPages});
-      var currPage= eval(${currPage});
-      if(len==1){
-        $('#next').remove();
-        $('#prev').remove();
-      }
-      for(var i=1; i<len;i++) {
-        var content = "<li class='page' id='page"+i+"'><a href=''>"+i+"</a></li>";
-        $('#next').before(content);
-        $('#page'+currPage).addClass('active');
-        $('#page'+currPage).remove('a');
+      <script>
         
-      };
-      if(currPage==len){
-        $('#next').remove();
-      }
-      if(currPage==1){
-        $('#prev').remove();
-      }
-
-      
-    </script>
+          var len = eval(${totalPages});
+          var currPage= eval(${currPage});
+        for(var i=1; i<=len;i++) {
+          var content = "<li class='page' id='page"+i+"'><a href=''>"+i+"</a></li>";
+          $('#next').before(content);
+          $('#page'+currPage).addClass('active');
+          $('#page'+currPage).remove('a');
+          
+        };
+        if(len==1){
+          $('#next').remove();
+          $('#prev').remove();
+        }else if(currPage==len){
+          $('#next').remove();
+        }else if(currPage==1){
+          $('#prev').remove();
+        }
+        
+      </script>
     <script>
       $('#next').on('click',function(){
         event.preventDefault();

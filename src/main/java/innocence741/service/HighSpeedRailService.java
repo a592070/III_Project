@@ -1,5 +1,6 @@
 package innocence741.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -41,5 +42,9 @@ public class HighSpeedRailService {
 	
 	public void getSN_Schedule(String idHSR) {
 		highSpeedRailDAO.getSN_Schedule(idHSR);
+	}
+	
+	public HighSpeedRail hsrDetail(BigDecimal sn_schedule) {
+		return highSpeedRailDAO.hsrDetail(sn_schedule);
 	}
 }

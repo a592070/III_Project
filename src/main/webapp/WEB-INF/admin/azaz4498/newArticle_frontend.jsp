@@ -87,12 +87,13 @@ contentType="text/html;charset=UTF-8" language="java"%>
         </div>
         <div class="row block-9">
           <div class="col-md-6 pr-md-5">
-            <form action="#">
+            <form id="f_newArticle"action="${pageContext.servletContext.contextPath}/newArticle.controller" method="POST">
               
               <div class="form-group">
                 <label for="title"><h4>標題</h4></label>
                 <input
                 id="title"
+                name="title"
                 type="text"
                 class="form-control"
                   placeholder="請輸入標題"
@@ -118,6 +119,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 <label for="userId"><h4>使用者名稱</h4></label>
                 <input
                   type="text"
+                  name="userId"
                   class="form-control"
                   placeholder=""
                   id="userId"
@@ -125,7 +127,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
               </div>
               
               <div class="form-group">
-                <input type="submit" value="發表文章" class="btn btn-primary
+                <input id="publish_btn"type="submit" value="發表文章" class="btn btn-primary
                 py-3 px-5" />
                 <input id="preview_btn" onclick="preview()"type="button"data-toggle="modal" data-target="#previewModal" value="文章預覽" class="btn btn-warning
                 py-3 px-5"/>
@@ -237,6 +239,31 @@ contentType="text/html;charset=UTF-8" language="java"%>
         $('#p_content').append(p_content);
         $('#p_content').find('img').addClass('img-fluid');
       }
+
+      $('#publish_btn').on('click',function(){
+        event.preventDefault();
+        var title = $('#title').val();
+        var type = $("#typeSelect").find(":selected").text();
+        var content = editor.getData();
+        
+
+        if(title==null||title==''){
+          alert("請填寫文章標題");
+          $('#title').focus();
+        }else if(type==null||type=='選擇類型'){
+          alert('請選擇文章類型')
+          $("#typeSelect").focus();
+        }else if(content==null||content==''){
+          alert('請輸入文章內容');
+          editor.editing.view.focus();
+        }
+        else{
+          alert('文章發布成功! 3秒後跳轉到您的文章頁面')
+          setTimeout(function(){$('#f_newArticle').submit()},3000);
+          
+        }
+
+      })
 
     </script>
     <script>
