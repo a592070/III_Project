@@ -106,11 +106,10 @@ public class F_RestaurantDAO {
 		}
 		
 		//find restaurant comment
-		public boolean userComment(String username, BigDecimal r_sn) {
+		public boolean userComment(BigDecimal id) {
 			boolean flag = false;
-			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from R_Comment where COM_USER_ID = ?0 and R_SN = ?1", Integer.class);
-			query.setParameter(0, username );
-			query.setParameter(1, r_sn );
+			Query<Integer> query = sessionFactory.getCurrentSession().createQuery("select CAST(count(*) as int) from R_Comment where r_order_id = ?0", Integer.class);
+			query.setParameter(0, id );
 			int num = (int) query.uniqueResult();
 			System.out.println("num = " + num);
 			if(num < 1) {

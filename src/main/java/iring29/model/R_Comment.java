@@ -1,7 +1,6 @@
 package iring29.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import rambo0021.pojo.AccountBean;
 
 @Entity
 @Table(name = "R_COMMENT")
@@ -39,6 +37,9 @@ public class R_Comment {
 	private Date com_date;
 	@Column(name = "RATING")
 	private BigDecimal rating;
+	
+	@Column(name = "R_ORDER_ID")
+	private BigDecimal rOrderId;
 
 	public BigDecimal getCom_id() {
 		return com_id;
@@ -100,6 +101,14 @@ public class R_Comment {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public BigDecimal getrOrderId() {
+		return rOrderId;
+	}
+
+	public void setrOrderId(BigDecimal rOrderId) {
+		this.rOrderId = rOrderId;
 	}
 
 	

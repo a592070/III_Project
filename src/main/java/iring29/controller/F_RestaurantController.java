@@ -179,11 +179,12 @@ public class F_RestaurantController {
 	@RequestMapping(path = "/addComment", method = RequestMethod.POST)
 	public @ResponseBody boolean addComment(@RequestParam(name = "com_content") String comm, 
 											@RequestParam(name = "rating") BigDecimal rating,
+											@RequestParam(name = "id") BigDecimal id,
 										    HttpSession session, Model m) {
 		Boolean flag = false;
 		AccountBean userBean = (AccountBean) m.getAttribute("userBean");
 		Restaurant r = (Restaurant) session.getAttribute("res_data");
-		boolean commResult = F_Serivce.userComment(userBean.getUserName(), r.getR_sn());
+		boolean commResult = F_Serivce.userComment(id);
 		System.out.println("comm result = " + commResult);
 		if(commResult == true) {
 			R_Comment comment = new R_Comment();
@@ -191,6 +192,7 @@ public class F_RestaurantController {
 			comment.setRestaurant(r);
 			comment.setRating(rating);
 			comment.setUsername(userBean.getUserName());
+			comment.setrOrderId(id);
 			boolean addresult = F_Serivce.addComment(comment);
 			List<R_Comment> commentlist = F_Serivce.ResComment(r.getR_sn());
 			session.setAttribute("comment", commentlist);
