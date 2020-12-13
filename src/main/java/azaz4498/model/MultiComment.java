@@ -75,8 +75,8 @@ public class MultiComment implements Serializable{
 		this.m_Date = m_Date;
 	}
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MULTI_COM_COM_ID")
+	@ManyToOne(fetch = FetchType.LAZY)
 	public Comment getComment() {
 		return comment;
 	}
