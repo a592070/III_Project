@@ -33,4 +33,5 @@ public interface AccountDAO {
 	List<IdentityBean> getidList();
 	String updateUser(String username, String password, String email, String nickName);
 	String forgetPwd(String username, String email);
+	AccountBean checkGoogleLogin(String nickname, String imgUrl, String email);
 }
