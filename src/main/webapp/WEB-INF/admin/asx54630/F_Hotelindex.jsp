@@ -160,8 +160,8 @@ h3{
 											$("#test${hotels.SN}").prepend(tags, zerostar);
 				    						</script>
 			    						<div class="two">
-			    							<span class="price per-price"><br>${hotels.DOUBLE_ROOM}<small>/雙</small></span>
-			    							<span class="price per-price"><br>${hotels.QUADRUPLE_ROOM}<small>/四</small></span>
+			    							<span class="price per-price"><small>雙/</small>${hotels.DOUBLE_ROOM}</span>
+			    							<span class="price per-price"><small>四/</small>${hotels.QUADRUPLE_ROOM}</span>
 		    							</div>
 		    						</div>
 		    						<p>${hotels.TYPE}</p>
@@ -223,7 +223,7 @@ h3{
   			}
 
   		  	function HotelRegionSearch() {
-  				console.log("搜尋")
+  				console.log("地區搜尋")
 //   				var orderfiled = $("#orderfiled").val()
   				var keyword = $("#keyword").val()
   				var regionkeywd = $("#regionkeywd").val()
@@ -247,7 +247,7 @@ h3{
   			}
 
   		  	function HotelTypeSearch() {
-  				console.log("搜尋")
+  				console.log("類型搜尋")
 //   				var orderfiled = $("#orderfiled").val()
   				var keyword = $("#keyword").val()
   				var regionkeywd = $("#regionkeywd").val()
