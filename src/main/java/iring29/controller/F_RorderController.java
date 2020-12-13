@@ -174,7 +174,7 @@ public class F_RorderController {
 		OrderTable otBean = F_Serivce.findOrder();  //不使用綠界時打開
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();  //不使用綠界時打開
 		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
-		for(R_Order_List r : res_lists) {
+		for(R_Order_List r : res_lists) {  //不使用綠界時打開
 			//send mail
 			String email = "929iring@gmail.com";  //不使用綠界時打開
 			String title = "Fun x Taiwan";  //不使用綠界時打開
@@ -234,11 +234,19 @@ public class F_RorderController {
 	public String showOrder(HttpSession session) {
 		session.removeAttribute("result");
 		OrderTable otBean = F_Serivce.findOrder();
-		
-		//send mail
-
-
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
+		//send mail
+		for(R_Order_List r : res_lists) {  
+			//send mail
+			String email = "929iring@gmail.com"; 
+			String title = "Fun x Taiwan";  
+			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  
+			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
+			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
+			sendMail.asyncSend(email, title, content, urlDisplay, url , session); 
+			
+		}
+
 		session.setAttribute("res_lists", res_lists);
 		return "iring29/OrderDetail";
 	}
