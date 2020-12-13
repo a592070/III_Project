@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
+import global.SendMailService;
 import global.pojo.OrderTable;
 import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
@@ -29,6 +30,9 @@ public class F_RorderController {
 
 	@Autowired
 	private F_RestaurantService F_Serivce;
+	@Autowired
+	private SendMailService sendMail;
+	
 	
 	@RequestMapping(path = "/OrderList", method = RequestMethod.POST)
 	public String PlaceOrder() {
@@ -169,6 +173,16 @@ public class F_RorderController {
 		OrderTable otBean = F_Serivce.findOrder();  //不使用綠界時打開
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();  //不使用綠界時打開
 		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
+		for(R_Order_List r : res_lists) {
+			//send mail
+			String email = "929iring@gmail.com";  //不使用綠界時打開
+			String title = "Fun x Taiwan";  //不使用綠界時打開
+			String content = "謝謝您訂購" + r.getRestaurant().getName() + "，也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
+			BigDecimal r_sn = r.getRestaurant().getR_sn();//不使用綠界時打開
+			sendMail.asyncSend(email, title, content);  //不使用綠界時打開
+			
+		}
+				
 		session.removeAttribute("cartnum");
 		return "iring29/OrderDetail";//不使用綠界時打開
 //		return "redirect:payment";//使用綠界時打開
@@ -191,7 +205,7 @@ public class F_RorderController {
 		String result = pay.aioCheckOut(checkOut, null);
 		System.out.println("payment result = " + result);
 		session.setAttribute("result", result);
-		return "iring29/Payment"; //使用綠界時打開
+		return "iring29/Payment"; 
 	}
 	
 	//orderlist detail
@@ -199,12 +213,8 @@ public class F_RorderController {
 	public String showOrder(HttpSession session) {
 		session.removeAttribute("result");
 		OrderTable otBean = F_Serivce.findOrder();
-
-
-
-		otBean.getR_Order_Lists().removeIf(ele -> {
-			return "".equals(ele.getRestaurant().getName());
-		});
+		
+		//send mail
 
 
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
