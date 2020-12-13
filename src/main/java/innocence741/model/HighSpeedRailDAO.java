@@ -2,6 +2,7 @@ package innocence741.model;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,15 +130,23 @@ public class HighSpeedRailDAO {
 	}
 	
     public void getSN_Schedule(String idHSR) {
+    	hsrList2user = new ArrayList<HighSpeedRail>();
     	for (int i = 0;  i <hsrlist.size(); i++) {
     		if(hsrlist.get(i).getIdHSR().equals(idHSR)) {
     			hsrList2user.add(hsrlist.get(i));
+    			System.out.println("-----------------------" + "TTTT" + "-----------------------");
     			break;
     		}
     	}
+    	System.out.println("---------------hsrList2user.size()= " + hsrList2user.size() + "----------------");
+    	System.out.println("---------------hsrlist.size()= " + hsrlist.size() + "----------------");
     }
 	
-
+    public HighSpeedRail hsrDetail(BigDecimal sn_schedule) {
+		Session session = sessionFacory.getCurrentSession();
+    	HighSpeedRail highSpeedRail = session.get(HighSpeedRail.class, sn_schedule);
+    	return highSpeedRail;
+    }
 
 
 }

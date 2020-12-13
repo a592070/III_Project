@@ -265,7 +265,7 @@
                 //console.log($("#destination").val().toLowerCase())
                 strCookies = table.rows[index+1].cells[0].innerHTML+","+startPoint+","+destination+","+$("#departureDate").val();
                 Cookies.set('HSR', strCookies)
-                window.location="\orderHSRticket.jsp";
+                window.location="\orderHSRticket.controller";
                 //console.log(startPoint)
             })
 
