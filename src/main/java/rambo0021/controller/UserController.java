@@ -151,7 +151,8 @@ public class UserController {
 	public @ResponseBody String forgetPwd(@RequestParam String username,@RequestParam String email, HttpSession session) {
 		String pwd =service.forgetPwd(username,email);
 		System.out.println(pwd);
-		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼",session);
+//		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼",session);
+		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼", "點我登入", "/user/singinPage", session);
 		return "ok";
 	}
    
