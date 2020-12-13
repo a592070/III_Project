@@ -69,8 +69,6 @@
               <p style="font-size: 18px">
                 還沒有帳號 ? <a class="text-info stretched-link"
                   href="${pageContext.servletContext.contextPath}/user/registrationPage">註冊</a>
-              </p>
-              <p style="font-size: 18px">
                 <button type="button" class="btn btn-warning" data-toggle="modal"
                   data-target="#forgetPwd">忘記密碼?</button>
               </p>
