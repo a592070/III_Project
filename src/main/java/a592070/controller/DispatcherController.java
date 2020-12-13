@@ -49,11 +49,16 @@ public class DispatcherController {
     public String send(HttpSession session) throws ExecutionException, InterruptedException {
         String recipients = "a592070@gmail.com";
         String title = "TEST MAIL";
-        String content = "hihi 你好";
+        String content = "<table>" +
+                "<tr><th>123</th><th>456</th></tr>" +
+                "<tr><td>qwe</td><td>abc</td></tr>" +
+                "</table>";
+        String urlDisplay = "景點內容";
+        String url = "/attraction/index";
         System.out.println(Thread.currentThread().getName());
 
         // 異步發送MAIL
-        sendMailService.asyncSend(recipients, title, content, session);
+        sendMailService.asyncSend(recipients, title, content, urlDisplay, url, session);
 
         return "UserIndex";
     }
