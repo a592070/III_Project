@@ -80,13 +80,13 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 ftco-animate">
-             <h2 class="mb-3">${artList[0].artTitle}</h2>
+             <h2 class="mb-3">${artBean.artTitle}</h2>
              <div class="tag-widget post-tag-container mb-5 mt-5">
                <div class="tagcloud">
-                 <a href="<%=application.getContextPath()%>/typeSearch/${artList[0].articleType.typeId}" class="tag-cloud-link">${artList[0].articleType.typeName}</a>
+                 <a href="<%=application.getContextPath()%>/typeSearch/${artBean.articleType.typeId}" class="tag-cloud-link">${artBean.articleType.typeName}</a>
                </div>
              </div>
-            ${artList[0].artContent}
+            ${artBean.artContent}
 
 
             <div class="about-author d-flex p-5 bg-light">
@@ -99,7 +99,7 @@
                 />
               </div>
               <div class="desc align-self-md-center">
-                <h3 style="font-family:'Noto Sans TC', sans-serif ;">${artList[0].artUserId}</h3>
+                <h3 style="font-family:'Noto Sans TC', sans-serif ;">${artBean.artUserId}</h3>
                 <p>
                     
                 </p>
@@ -107,7 +107,7 @@
             </div>
 
             <div class="pt-5 mt-5">
-              <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;"><span id="commNum">${artList[0].artCommNum}</span>則評論</h3>
+              <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;"><span id="commNum">${artBean.artCommNum}</span>則評論</h3>
               <ul class="comment-list">
 
                 <c:forEach var="comment" items="${commentList}" varStatus="status">
@@ -119,13 +119,33 @@
                     />
                   </div>
                   <div class="comment-body">
-                    <h3>${comment.comUserId}</h3>
+                    <h3>${comment.comUserId} <a data-toggle="collapse" href="#collapse${status.index}"><i class="fas fa-angle-down float-right"></i></a></h3>
                     <div class="meta">${comment.comDate}</div>
                     <p>
                       ${comment.comContent}
                     </p>
-                    <p><a href="#" class="reply">回覆</a></p>
+                    <p>
+                      <a href="javascript: void(0)" class="reply" id="reply${status.index}">回覆</a>
+                    </p>
                   </div>
+                  <div class="collapse" id="collapse${status.index}">
+                  <ul class="children" id="children${status.index}">
+                    <li class="comment">
+                      <div class="comment-body" >
+                        <p><strong>Doe</strong></p>
+                        <div class="meta">June 27, 2018 at 2:21pm</div>
+                        <p>多層內容</p>
+                      </div>
+                      </li>
+                      <li class="comment">
+                        <div class="comment-body" >
+                          <p><strong>Doe</strong></p>
+                          <div class="meta">June 27, 2018 at 2:21pm</div>
+                          <p>多層內容</p>
+                        </div>
+                        </li>
+                      </ul>
+                    </div>
                 </li>
                 </c:forEach>
               </ul>
@@ -135,7 +155,7 @@
                 <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;">寫個評論吧...</h3>
                 <!--評論表單-->
                 <form action="../newComment.controller" class="p-5 bg-light" method="POST">
-                  <input type="hidden" id="c_artId" value="${artList[0].artId}">
+                  <input type="hidden" id="c_artId" value="${artBean.artId}">
                   <div class="form-group">
                     <label for="name" style="font-family:'Noto Sans TC', sans-serif ;">使用者名稱 *</label>
                     <input type="text" class="form-control" name="c_userId" id="c_userId" />
@@ -278,6 +298,35 @@
       $(document).ready(function(){
       $('body,html').animate({scrollTop: 750}, 950); 
 });
+
+    </script>
+    <script>
+      $('.fa-angle-down').on('click',function(){
+        if($(this).hasClass("fa-flip-vertical")){
+          $(this).removeClass('fa-flip-vertical');
+          console.log('remove');
+        }else{
+          $(this).addClass('fa-flip-vertical');
+        }    
+      
+      })
+
+      $('.reply').on('click',function(){
+        var id = $(this).attr('id');
+        var c_id =id.replace('reply','children');
+        $('#'+c_id).append(
+          '<li class="comment">'+
+          '<div class="comment-body">'+
+          '<p><strong>Doe</strong></p>'+
+          '<div class="meta">June 27, 2018 at 2:21pm</div>'+
+          '<p>多層內容</p>'+
+          '</div>'+
+          '</li>'+
+          '</ul>'+
+          '</li>'
+        );
+        
+      })
 
     </script>
     <script>

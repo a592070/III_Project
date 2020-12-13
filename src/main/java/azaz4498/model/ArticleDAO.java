@@ -69,6 +69,17 @@ public class ArticleDAO {
 		typeCount.put("traffic",traffic);
 		return typeCount;
 	}
+	//取得文章內多層留言
+	public Map<Integer, List<MultiComment>> getMultiCommentMap(List<Comment> commentList){
+		Map<Integer, List<MultiComment>> multiCommentMap = new HashMap<Integer, List<MultiComment>>();
+		for(Comment comment:commentList) {
+			int commentId = comment.getComId();
+			multiCommentMap.put(commentId, comment.getM_Comments());
+		}
+		return multiCommentMap;
+		
+		
+	}
 	
 	//找文章中圖片當封面
 	public List<String> getCoverPicList(List<Article> artList){
@@ -195,12 +206,12 @@ public class ArticleDAO {
 	}
 
 	// 顯示當前文章(by Id)
-	public List<Article> showArticleById(Integer articleId) throws SQLException {
-		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article where ART_ID=?1",
-				Article.class);
-		query.setParameter(1, articleId);
-		List<Article> list = query.list();
-		return list;
+	public Article showArticleById(Integer articleId) throws SQLException {
+		Article result = sessionFactory.getCurrentSession().get(Article.class, articleId);
+		Integer views = result.getArtView();
+		result.setArtView(views+1);
+		sessionFactory.getCurrentSession().update(result);
+		return result;
 	}
 
 	// 依類型顯示文章(前台)
@@ -226,10 +237,10 @@ public class ArticleDAO {
 		article.setArtCreTime(new java.sql.Timestamp(new java.util.Date().getTime()));
 		article.setArtCommNum(0);
 		article.setArtView(0);
+		article.setArtStatus("enabled");
 		type.setTypeId(typeId);
 		article.setArticleType(type);
 		sessionFactory.getCurrentSession().save(article);
-		System.out.println("New article created !");
 		return article;
 
 	}
