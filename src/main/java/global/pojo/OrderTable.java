@@ -45,8 +45,8 @@ public class OrderTable {
 //	@Transient
 //	private R_Order_List r_Order_List;
 
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order_table", cascade = CascadeType.ALL, orphanRemoval=true)
-	@Transient
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order_table", cascade = CascadeType.ALL, orphanRemoval=true)
+//	@Transient
 	Set<T_Order_List> t_Order_Lists;
 
 	@Transient
@@ -79,6 +79,7 @@ public class OrderTable {
 	public OrderTable() {
 		super();
 		r_Order_Lists = new HashSet<R_Order_List>();
+		t_Order_Lists = new HashSet<T_Order_List>();
 	}
 	
 

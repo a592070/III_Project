@@ -1,9 +1,11 @@
 package azaz4498.model;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,6 +24,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "F_COMMENT")
 @DynamicUpdate
@@ -35,6 +39,7 @@ public class Comment implements Serializable{
 	private String comUserId;
 	private Timestamp comDate;
 	private Article article;
+	private List<MultiComment> m_Comments = new ArrayList<MultiComment>();
 	public Comment() {
 		
 	}
@@ -92,6 +97,15 @@ public class Comment implements Serializable{
 
 	public void setArticle(Article article) {
 		this.article = article;
+	}
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL , mappedBy = "comment")
+	public List<MultiComment> getM_Comments() {
+		return m_Comments;
+	}
+
+	public void setM_Comments(List<MultiComment> m_Comments) {
+		this.m_Comments = m_Comments;
 	}
 	
 }
