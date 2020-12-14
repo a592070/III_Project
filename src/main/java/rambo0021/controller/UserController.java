@@ -156,8 +156,10 @@ public class UserController {
 	}
 	//修改個人資料
 	@RequestMapping("updateUser")
-	public @ResponseBody String updateUser(@RequestParam String username,@RequestParam("password") String password,@RequestParam String email,@RequestParam String nickName) {
+	public @ResponseBody String updateUser(@RequestParam String username,@RequestParam("password") String password,@RequestParam String email,@RequestParam String nickName,HttpServletRequest request,HttpSession session) {
 	    service.updateUser(username, password,email,nickName);
+//	    String remoteAddr = request.getLocalAddr();
+	    sendMailService.asyncSend(email, "個人資料修改通知", "您的個人資料已更改，如不是本人操作，請盡速更改密碼", "點我登入", "/user/singinPage", session);
 	   return "ok";
 	}
 	//忘記密碼
