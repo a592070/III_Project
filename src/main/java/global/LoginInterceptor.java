@@ -12,8 +12,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //        System.out.println(request.getRequestURI());
 
-        // 符合請求URI 可以通過 預設singin、login頁面可以通過
-        if(request.getRequestURI().contains("/admin/singin") || request.getRequestURI().contains("/admin/login")) {
+        // 符合請求URI 可以通過 預設signin、login頁面可以通過
+        if(request.getRequestURI().contains("/admin/signin") || request.getRequestURI().contains("/admin/login")) {
             return true;
         }
 
@@ -27,7 +27,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         // 其他 導回 login頁面
-        request.getRequestDispatcher("/admin/singin").forward(request,response);
+        request.getRequestDispatcher("/admin/signin").forward(request,response);
         return false;
     }
 }

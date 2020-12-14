@@ -61,8 +61,15 @@ public class F_HotelOrderController {
 			hOBean.setQUADRUPLE_ROOM(qdroom);
 			hOBean.setCLIENT_NAME(client_name);
 			hOBean.setCLIENT_PHONE(client_phone);
-			
+			BigDecimal DBprice = dbroom.multiply(hotel.getDOUBLE_ROOM());
+			BigDecimal QDprice = qdroom.multiply(hotel.getQUADRUPLE_ROOM());
+			BigDecimal total = DBprice.add(QDprice);
+			System.out.println(DBprice);
+			System.out.println(QDprice);
+			System.out.println(total);
+			hOBean.sethPRICE(total);
 			OTBean.addHotelOrder(hOBean);
+			OTBean.setTotalPrice(OTBean.getTotalPrice().add(total));
 			
 			cartnum = cartnum + 1;
 			System.out.println("cart num = " +cartnum);
