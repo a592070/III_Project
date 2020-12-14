@@ -3,14 +3,11 @@ package asx54630.service;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import asx54630.model.F_HotelOrderDAO;
-import asx54630.model.Hotel;
-import asx54630.model.HotelOrder;
 
 @Service("hOrderService")
 public class F_HotelOrderService {
@@ -19,22 +16,22 @@ public class F_HotelOrderService {
 	private F_HotelOrderDAO f_hotelOrderDao;
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public Integer DBroom(BigDecimal sn) {
+	public BigDecimal DBroom(BigDecimal sn) {
 		return f_hotelOrderDao.DBroom(sn);
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public Integer QDroom(BigDecimal sn) {
+	public BigDecimal QDroom(BigDecimal sn) {
 		return f_hotelOrderDao.QDroom(sn);
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public Integer getHotelDB(BigDecimal sn) {
+	public BigDecimal getHotelDB(BigDecimal sn) {
 		return f_hotelOrderDao.getHotelDB(sn);
 	}
 	
 	@Transactional(rollbackFor = {Throwable.class})
-	public Integer  getHotelQD(BigDecimal sn) {
+	public BigDecimal  getHotelQD(BigDecimal sn) {
 		return f_hotelOrderDao.getHotelQD(sn);
 	}
 	

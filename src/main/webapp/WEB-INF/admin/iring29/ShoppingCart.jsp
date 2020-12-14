@@ -90,6 +90,9 @@ h5{
       </div>
     </div><!-- .background -->
 <section class="cart_area">
+
+		<c:set var ="size" value= "${fn:length(OTBean.hotelOrder)}"></c:set>
+		<c:if test = "${size > 0}" >
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -114,7 +117,7 @@ h5{
 								value="3"></td>
 							<td class="col-sm-1 col-md-1 text-center">
 								<input id="guest_dec" type="button" value="-" onclick="dec1()">
-   								<input id="guest" type="text" value="1" size="1" style="text-align:center;" disabled="disabled">
+   								<input id="guest" name="guest" type="text" value="1" size="1" style="text-align:center;" disabled="disabled">
     							<input id="guest_inc" type="button" value="+" onclick="inc1()">
     							<script type="text/javascript">
     					            var count = document.getElementById("guest");
@@ -164,7 +167,7 @@ h5{
 			</div>
 		</div>
 	</div>
-
+</c:if>
 
 <!-- 餐廳 start -->
 		<c:set var ="size" value= "${fn:length(OTBean.r_Order_Lists)}"></c:set>

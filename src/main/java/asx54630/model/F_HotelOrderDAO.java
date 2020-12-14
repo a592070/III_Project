@@ -2,8 +2,6 @@ package asx54630.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -21,37 +19,33 @@ public class F_HotelOrderDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	public Integer DBroom(BigDecimal sn) { //查詢H_OrderList中  某某飯店的雙人房被訂了幾間
+	public BigDecimal DBroom(BigDecimal sn) { //查詢H_OrderList中  某某飯店的雙人房被訂了幾間
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "select sum(DOUBLE_ROOM) from HotelOrder where ORDER_HOTEL_ID = ?0" ;
+		String hql = "select sum(DOUBLE_ROOM) from HotelOrder where ORDER_HOTEL_ID =" + sn ;
 		Query<BigDecimal> query = session.createQuery(hql,BigDecimal.class);
-		query.setParameter(0, sn);
-		return query.uniqueResult().intValue();
+		return query.uniqueResult();
 	}
 	
-	public Integer QDroom(BigDecimal sn) { //查詢某某飯店的四人房被訂了幾間
+	public BigDecimal QDroom(BigDecimal sn) { //查詢某某飯店的四人房被訂了幾間
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "select sum(QUADRUPLE_ROOM) from HotelOrder where ORDER_HOTEL_ID = ?0" ;
+		String hql = "select sum(QUADRUPLE_ROOM) from HotelOrder where ORDER_HOTEL_ID =" + sn ;
 		Query<BigDecimal> query = session.createQuery(hql, BigDecimal.class);
-		query.setParameter(0, sn);
-		return query.uniqueResult().intValue();
+		return query.uniqueResult();
 	}
 	
-	public Integer getHotelDB(BigDecimal sn) { //查詢某某飯店總共有幾間雙人房
+	public BigDecimal getHotelDB(BigDecimal sn) { //查詢某某飯店總共有幾間雙人房
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "select DBROOM_COUNT from Hotel WHERE SN = ?0";
+		String hql = "select DBROOM_COUNT from Hotel WHERE SN =" + sn;
 		Query<BigDecimal> query = session.createQuery(hql, BigDecimal.class);
-		query.setParameter(0, sn);
-		return query.uniqueResult().intValue();
+		return query.uniqueResult();
 		
 	}
 	
-	public Integer getHotelQD(BigDecimal sn) { //查詢某某飯店總共有幾間四人房
+	public BigDecimal getHotelQD(BigDecimal sn) { //查詢某某飯店總共有幾間四人房
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "select QDROOM_COUNT from Hotel WHERE SN = ?0";
+		String hql = "select QDROOM_COUNT from Hotel WHERE SN =" + sn;
 		Query<BigDecimal> query = session.createQuery(hql, BigDecimal.class);
-		query.setParameter(0, sn);
-		return query.uniqueResult().intValue();
+		return query.uniqueResult();
 		
 	}
 	

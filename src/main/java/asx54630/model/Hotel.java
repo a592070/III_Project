@@ -14,11 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
-
-import iring29.model.R_Order_List;
 
 @Entity
 @Table(name = "HOTEL")
@@ -42,9 +39,11 @@ public class Hotel {
 	private String PIC_URL;
 	private byte[] PIC;
 	private Set<HotelOrder> hSets = new HashSet<HotelOrder>();
+	private BigDecimal DBROOM_COUNT;
+	private BigDecimal QDROOM_COUNT;
 
 
-	public Hotel(BigDecimal sn, String name, String region, String address, String tel, BigDecimal dbroom, BigDecimal quadroom, String description, String openTime, String type, BigDecimal rating, String account, String status,String pic_url,byte[] pic) {
+	public Hotel(BigDecimal sn, String name, String region, String address, String tel, BigDecimal dbroom, BigDecimal quadroom, String description, String openTime, String type, BigDecimal rating, String account, String status,String pic_url,byte[] pic,BigDecimal dbroom_count,BigDecimal qdroom_count) {
 		this.SN = sn;
 		this.NAME = name;
 		this.REGION = region;
@@ -60,6 +59,8 @@ public class Hotel {
 		this.STATUS = status;
 		this.PIC_URL = pic_url;
 		this.PIC = pic;
+		this.DBROOM_COUNT = dbroom_count;
+		this.QDROOM_COUNT = qdroom_count;
 	}
 	
 	public Hotel() {
@@ -211,6 +212,23 @@ public class Hotel {
 	public void sethSets(Set<HotelOrder> hSets) {
 		this.hSets = hSets;
 	}
+
+	public BigDecimal getDBROOM_COUNT() {
+		return DBROOM_COUNT;
+	}
+
+	public void setDBROOM_COUNT(BigDecimal dBROOM_COUNT) {
+		DBROOM_COUNT = dBROOM_COUNT;
+	}
+
+	public BigDecimal getQDROOM_COUNT() {
+		return QDROOM_COUNT;
+	}
+
+	public void setQDROOM_COUNT(BigDecimal qDROOM_COUNT) {
+		QDROOM_COUNT = qDROOM_COUNT;
+	}
+	
 	
 	
 }

@@ -35,7 +35,7 @@ public class F_HotelOrderController {
 							   @RequestParam(value = "qdroom") BigDecimal qdroom, 
 							   @RequestParam(value = "client_name") String client_name, 
 							   @RequestParam(value = "client_phone") String client_phone,
-							   HttpSession session) {
+							   HttpSession session,Model m) {
 		Hotel hotel = (Hotel) session.getAttribute("hotel");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
@@ -86,43 +86,60 @@ public class F_HotelOrderController {
 	}
 	
 	
-	@RequestMapping(path = "/CheckOrderRoom", method = RequestMethod.POST)
-	public @ResponseBody boolean CheckOrderRoom(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
-							   @RequestParam(name = "dbroom",required = false) BigDecimal dbroom, 
-							   @RequestParam(name = "qdroom",required = false) BigDecimal qdroom) {
-		boolean flag = false;
-		
-		Integer currentDB = f_hotelOrderService.DBroom(H_SN).intValue(); //取得已成立訂單中 該飯店的雙人房被訂了幾間
-		
-
-		Integer currentQD = f_hotelOrderService.QDroom(H_SN); //取得已成立訂單中 該飯店的四人房被訂了幾間
-			
-		
-		Integer totalDB = f_hotelOrderService.getHotelDB(H_SN); //某某飯店雙人房總數
-
-		Integer totalQD = f_hotelOrderService.getHotelQD(H_SN); //某某飯店四人房總數
-			
-		int LeftDB = totalDB - currentDB ; //剩餘雙人房間數
-		int LeftQD = totalQD - currentQD ; //剩餘四人房間數
-		
-		int DBroom = dbroom.intValue();
-		int QDroom = qdroom.intValue();
-		
-		System.out.println(LeftDB);
-		System.out.println(LeftQD);
-		System.out.println(DBroom);
-		System.out.println(QDroom);
-		
-		if(currentDB == 0 && currentQD == 0) {
-			flag = true;
-		}else if(DBroom <=LeftDB) {
-			
-		}
-
-			
-		return flag;
-
-	}
+//	@RequestMapping(path = "/CheckOrderRoom", method = RequestMethod.POST)
+//	public @ResponseBody boolean CheckOrderRoom(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
+//							   @RequestParam(name = "dbroom",required = false) BigDecimal dbroom, 
+//							   @RequestParam(name = "qdroom",required = false) BigDecimal qdroom) {
+//		boolean flag = false;
+//
+//		BigDecimal currentDB = f_hotelOrderService.DBroom(H_SN); //取得已成立訂單中 該飯店的雙人房被訂了幾間
+//		
+//		BigDecimal currentQD = f_hotelOrderService.QDroom(H_SN); //取得已成立訂單中 該飯店的四人房被訂了幾間
+//		
+//		BigDecimal totalDB = f_hotelOrderService.getHotelDB(H_SN); //某某飯店雙人房總數
+//
+//		BigDecimal totalQD = f_hotelOrderService.getHotelQD(H_SN); //某某飯店四人房總數
+//		
+//		
+//		System.out.println(currentDB);
+//		System.out.println(currentQD);
+//		System.out.println(totalDB);
+//		System.out.println(totalQD);
+//			
+////		BigDecimal LeftDB = totalDB.subtract(currentDB); //剩餘雙人房間數
+////		BigDecimal LeftQD = totalQD.subtract(currentQD); //剩餘四人房間數
+//		
+////		int DBroom = dbroom.intValue(); //要下訂的雙人房間數
+////		int QDroom = qdroom.intValue(); //要下訂的四人房間數
+//
+//		int result1 = currentDB.compareTo(null); 
+//		int result2 = currentQD.compareTo(null); 
+////		int result3 = dbroom.compareTo(LeftDB); 
+////		int result4 = qdroom.compareTo(LeftQD); 
+//		
+//		System.out.println(result1);
+//		System.out.println(result2);
+//		
+//		if(result1 == 0 && result2==0) {
+//			flag = true;
+//			return flag;
+//		} 
+//		
+//		if(result1 != 0  && result2 != 0 ) {
+//		BigDecimal LeftDB = totalDB.subtract(currentDB); 
+//		BigDecimal LeftQD = totalQD.subtract(currentQD);
+//		int result3 = dbroom.compareTo(LeftDB); 
+//		int result4 = qdroom.compareTo(LeftQD);
+//			if(result3 <0 &&  result4 <0) {
+//				flag = true;
+//				return flag;
+//			}
+//		}
+//
+//			
+//		return flag;
+//
+//	}
 	
 	
 	
