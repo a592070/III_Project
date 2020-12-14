@@ -68,13 +68,13 @@
                         </td>
                         <td>
                             <c:forEach var="h" items="${o.hotelOrder }">
-                            ${r.hotel.NAME}
+                            ${h.hotel.NAME}
                            </c:forEach>
                         </td>
                         <td>
-                           <c:forEach var="t" items="${o.t_Order_Lists }">
-                            ${t.highSpeedRail.idHSR}
-                           </c:forEach>
+<%--                            <c:forEach var="t" items="${o.t_Order_Lists }"> --%>
+<%--                             ${t.highSpeedRail.idHSR} --%>
+<%--                            </c:forEach> --%>
                         </td>
                         <td>${o.totalPrice}</td>
                         <td><c:out value="${fn:substring(o.order_date, 0, 19)}" /></td>
