@@ -102,23 +102,44 @@ h5{
 							<h2>訂飯店</h2>
 						</tr>
 						<tr>
-							<th>飯店資訊</th>
-							<th>預定日期</th>
-							<th class="text-center">人數</th>
-							<th class="text-center">價格</th>
+							<th><h5>飯店資訊</h5></th>
+							<th></th>
+							<th><h5>預定日期</h5></th>
+							<th></th>
+							<th class="text-center"><h5>人數</h5></th>
+							<th class="text-center"><h5>價格</h5></th>
 							<th> </th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="h" items="${OTBean.OTBean.hotelOrder}">
-						<tr>
-							<td class="col-sm-8 col-md-6"></td>
-							<td class="col-sm-1 col-md-1" style="text-align: center"><input
-								type="date" class="form-control" id="exampleInputEmail1"
-								value="3"></td>
+					<c:forEach var="h" items="${OTBean.hotelOrder}">
+						<tr id="orderInfo${h.hotel.SN}">
+							<td class="col-sm-8 col-md-6">
+								<div class="div_title"><h5 class="media-heading">飯店名稱&emsp;&emsp;&emsp;</h5></div>
+										<div class="div_title"><h5 class="media-heading">飯店地址&emsp;&emsp;&emsp;</h5></div>
+										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_n">訂房人姓名&emsp;<span id="idsp">&nbsp;*必填</span><span id="idsp" class="n${h.hotel.SN}"></span></h5></div>
+										</div>
+										<div class="div_title"><div class="div_title input"><h5 class="media-heading input_p">訂房人電話&emsp;<span id="idsp">&nbsp;*必填<span id="idsp" class="p${h.hotel.SN}"></span></span></h5></div> 
+										</div>
+							</td>
+							<td>
+							<Input type='hidden' name='SN' id="SN${h.hotel.SN}" value='${h.hotel.SN}'>
+							<div class="content"><h5>${h.hotel.NAME}</h5></div>
+							<div class="content"><h5>${h.hotel.ADDRESS}</h5></div>
+							<div class="content"><h5><input class="form-control data" value="${h.CLIENT_NAME}" id="client_name${h.hotel.SN}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
+							<div class="content"><h5><input class="form-control data phone" value="${h.CLIENT_PHONE}" id="client_phone${h.hotel.SN}" placeholder="09xxxxxxxx" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
+							</td>
+							<td class="col-sm-8 col-md-8">
+							<div class="div_title"><h5>入住日期</h5></div>
+							<div class="div_title"><h5>退房日期</h5></div>
+							</td>
+							<td>
+							<input type="date" class="form-control" id="exampleInputEmail1" value="${h.CHECK_IN}">
+							<input type="date" class="form-control" id="exampleInputEmail1" value="${h.CHECK_OUT}">
+							</td>
 							<td class="col-sm-1 col-md-1 text-center">
 								<input id="guest_dec" type="button" value="-" onclick="dec1()">
-   								<input id="guest" name="guest" type="text" value="1" size="1" style="text-align:center;" disabled="disabled">
+   								<input id="guest" name="guest" type="text" value="${h.PROPLE_NUM}" size="1" style="text-align:center;" disabled="disabled">
     							<input id="guest_inc" type="button" value="+" onclick="inc1()">
     							<script type="text/javascript">
     					            var count = document.getElementById("guest");
