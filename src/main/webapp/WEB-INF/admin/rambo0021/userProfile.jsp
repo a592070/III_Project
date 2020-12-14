@@ -6,7 +6,7 @@
       <html>
 
       <head>
-        <title>Fun Taiwan - 登入</title>
+        <title>Fun Taiwan - 個人頁面</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
