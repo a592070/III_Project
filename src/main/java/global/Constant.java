@@ -5,6 +5,7 @@ public class Constant {
     public static final String USER_LOGIN_SESSION = "userBean";
     public static final String ADMIN_LOGIN_SESSION = "adminBean";
 
+    public static final String STOMP_USERS = "stompUsers";
 
 
     public static final String TravelSetListCar_session = "travelSetListCar";
