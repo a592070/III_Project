@@ -687,7 +687,7 @@ button#order {
                             </div>
                             <div class="select-option">
                                 <label for="room">訂金:</label>
-                                <input id="money" type="text" disabled value="0"><span>元</span>
+                                <input id="money" type="text" disabled value="${res_data.price}"><span>元</span>
                                 <Input type='hidden' id="deposit" value='${res_data.price}'>
                             </div>
                             
