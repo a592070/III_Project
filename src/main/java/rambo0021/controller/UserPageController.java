@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -61,8 +62,9 @@ public class UserPageController {
 		
 		return "rambo0021/userProfile";
 	}
-	@RequestMapping("/userOrderListPage")
-		public String userOrderListPage(@ModelAttribute("userBean") AccountBean aBean,Model m) {	
+	@RequestMapping("/userOrderListPage/{username}")
+		public String userOrderListPage(@PathVariable("username") String username,Model m) {	
+		   AccountBean aBean = service.userDetail(username);
 		   List<OrderTable> oList = aBean.getOrderTable();
 		   m.addAttribute("oList", oList);
 	       return "rambo0021/userOrderList";

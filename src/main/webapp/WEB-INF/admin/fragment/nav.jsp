@@ -118,7 +118,7 @@
             </li>
             <li class="nav-item">
               <a
-                href="<%=application.getContextPath()%>/user/userOrderListPage"
+                href="<%=application.getContextPath()%>/user/userOrderListPage/${userBean.userName}"
                 class="nav-link"
                 >我的訂單</a
               >
