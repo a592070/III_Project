@@ -50,9 +50,7 @@
                 <h1 class="h1">會員登入</h1>
                 <div class="form-group">
                   <!-- google login -->
-
-<!--                   <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="padding-left: 430px"></div> -->
-
+                                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="padding-left: 430px"></div>
                 </div>
               </div>
             </div>
@@ -269,7 +267,7 @@
 
         })
         $("#fastSignin2").click(function () {
-          $("#fogetUsername").val("abcabc");
+          $("#fogetUsername").val("aaaaaa");
           $("#fogetEmail").val("iiiteam124@gmail.com");
         })
       </script>
