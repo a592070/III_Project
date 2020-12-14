@@ -58,5 +58,11 @@ public class UserPageController {
 		
 		return "rambo0021/userProfile";
 	}
+	@RequestMapping("/userOrderListPage")
+		public String userOrderListPage(Model m) {	
+			
+	       return "rambo0021/userOrderList";
+		
+	}
 
 }
