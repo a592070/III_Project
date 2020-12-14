@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,23 +15,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import azaz4498.model.Article;
 import azaz4498.model.Comment;
 import azaz4498.model.ForumPage;
-import azaz4498.model.MultiComment;
 import azaz4498.service.ArticleService;
 import azaz4498.service.ArticleTypeService;
 import azaz4498.service.CommentService;
 import azaz4498.service.MultiCommentService;
 import azaz4498.service.PictureService;
+import rambo0021.pojo.AccountBean;
+import rambo0021.serive.AccountService;
 
 @Controller
 @Lazy
 @SessionAttributes(names = { "artBean", "typeBean", "artList", "commentList","multiCommentList" ,"recentArt", "recentArtPic",
-		"typeCount" })
+		"typeCount","userBean","userName" })
 public class ArticleController {
 	@Autowired
 	@Qualifier("ArticleService")
@@ -45,14 +46,22 @@ public class ArticleController {
 	@Autowired
 	MultiCommentService multiCommentService;
 	@Autowired
+	AccountService accountService;
+	@Autowired
 	private ServletContext context;
 	@Autowired
 	private ForumPage forumPage;
 	
 	//新增文章
 	@RequestMapping(path = "/newArticle",method = RequestMethod.GET)
-	public String newArticle() {
-		return "azaz4498/newArticle_frontend";
+	public String newArticle(HttpSession session,Model m) {
+		AccountBean account = (AccountBean) m.getAttribute("userBean");
+		if (account==null) {
+			return "rambo0021/userSingin";
+		}else {
+			m.addAttribute("userBean",account);
+			return "azaz4498/newArticle_frontend";
+		}
 	}
 	
 	//文章頁面
@@ -61,6 +70,7 @@ public class ArticleController {
 		List<Article> recentArticles = articleService.showRecentArticles();
 		List<Comment> commentList = commentService.showCommentsByArticle(artId);
 		List<String> coverPicList = articleService.getCoverPicList(recentArticles);
+		AccountBean account = (AccountBean) m.getAttribute("userBean");
 		
 		Article currArticle =articleService.showArticleById(artId);
 		m.addAttribute("artBean",currArticle);
@@ -69,6 +79,8 @@ public class ArticleController {
 		m.addAttribute("recentArtPic", coverPicList);
 		m.addAttribute("multiCommentList",articleService.getMultiCommentMap(commentList));
 		m.addAttribute("typeCount", articleService.getTypeCount());
+		m.addAttribute("userBean", account);
+		
 		return "azaz4498/articleDetail";
 
 	}
@@ -87,6 +99,7 @@ public class ArticleController {
 		m.addAttribute("picList", picList);
 		m.addAttribute("totalPages", totalPage);
 		m.addAttribute("currPage", currPage);
+		m.addAttribute("userBean",m.getAttribute("userBean"));
 
 		return "azaz4498/forum";
 	}
@@ -108,6 +121,7 @@ public class ArticleController {
 			m.addAttribute("picList", picList);
 			m.addAttribute("totalPages", totalPage);
 			m.addAttribute("currPage", currPage);
+			m.addAttribute("userBean",m.getAttribute("userBean"));
 			return "azaz4498/articleGrid_type";
 		} else {
 
@@ -121,6 +135,7 @@ public class ArticleController {
 			m.addAttribute("picList", picList);
 			m.addAttribute("totalPages", totalPage);
 			m.addAttribute("currPage", currPage);
+			m.addAttribute("userBean",m.getAttribute("userBean"));
 
 			return "azaz4498/articleGrid";
 		}
@@ -141,6 +156,7 @@ public class ArticleController {
 		m.addAttribute("picList", picList);
 		m.addAttribute("totalPages", totalPage);
 		m.addAttribute("currPage", currPage);
+		m.addAttribute("userBean",m.getAttribute("userBean"));
 		return "azaz4498/forum_typeSearch";
 	}
 	//編輯頁面
@@ -171,7 +187,9 @@ public class ArticleController {
 			@RequestParam(name = "typeSelect") Integer typeId,
 			@RequestParam(name = "userId") String userid,
 			Model m) throws SQLException {
-		Article article = articleService.newArticle(title, typeId, content, userid);
+		AccountBean account = (AccountBean) m.getAttribute("userBean");
+		m.addAttribute("userBean",account);
+		Article article = articleService.newArticle(title, typeId, content, account.getUserName());
 		Integer id = article.getArtId();
 		m.addAttribute("artBean", articleService.showArticleById(id));
 		return "redirect:/article/"+id;

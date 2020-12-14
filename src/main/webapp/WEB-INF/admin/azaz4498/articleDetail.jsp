@@ -92,8 +92,8 @@
             <div class="about-author d-flex p-5 bg-light">
               <div class="bio align-self-md-center mr-5">
                 <img
-                  src="<c:url value='/direngine-master/images/person_1.jpg'/>"
-                  alt="Image placeholder"
+                  src="../f_showUserPic/${artBean.artUserId}"
+                  alt="image not available"
                   class="img-fluid mb-4"
                   width="100" height="100"
                 />
@@ -114,22 +114,22 @@
                 <li class="comment">
                   <div class="vcard bio">
                     <img
-                      src="<c:url value='/direngine-master/images/person_1.jpg'/>"
+                      src="../f_showUserPic/${comment.comUserId}"
                       alt="Image placeholder"
                     />
                   </div>
                   <div class="comment-body">
-                    <h3>${comment.comUserId} <a data-toggle="collapse" href="#collapse${status.index}"><i class="fas fa-angle-down float-right"></i></a></h3>
+                    <h3>${comment.comUserId} <a data-toggle="collapse" href="#collapse${comment.comId}"><i class="fas fa-angle-down float-right"></i></a></h3>
                     <div class="meta">${comment.comDate}</div>
                     <p>
                       ${comment.comContent}
                     </p>
                     <p>
-                      <a href="javascript: void(0)" class="reply" id="reply${status.index}">回覆</a>
+                      <a href="javascript: void(0)" class="reply" id="reply${comment.comId}">回覆</a>
                     </p>
                   </div>
-                  <div class="collapse" id="collapse${status.index}">
-                  <ul class="children" id="children${status.index}">
+                  <div class="collapse" id="collapse${comment.comId}">
+                  <ul class="children" id="children${comment.comId}">
                     <li class="comment">
                       <div class="comment-body" >
                         <p><strong>Doe</strong></p>
@@ -154,11 +154,11 @@
               <div class="comment-form-wrap pt-5">
                 <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;">寫個評論吧...</h3>
                 <!--評論表單-->
-                <form action="../newComment.controller" class="p-5 bg-light" method="POST">
-                  <input type="hidden" id="c_artId" value="${artBean.artId}">
+                <form class="p-5 bg-light" method="POST">
+                  <input name="artId" type="hidden" id="c_artId" value="${artBean.artId}">
                   <div class="form-group">
                     <label for="name" style="font-family:'Noto Sans TC', sans-serif ;">使用者名稱 *</label>
-                    <input type="text" class="form-control" name="c_userId" id="c_userId" />
+                    <input type="text" placeholder="請先登入以評論" class="form-control" name="c_userId" id="c_userId" value="${userBean.userName}" readonly />
                   </div>
                   
 
@@ -170,6 +170,7 @@
                       cols="30"
                       rows="10"
                       class="form-control"
+                      
                     ></textarea>
                   </div>
                   <div class="form-group">
@@ -297,6 +298,7 @@
     <script>
       $(document).ready(function(){
       $('body,html').animate({scrollTop: 750}, 950); 
+        
 });
 
     </script>
@@ -344,33 +346,45 @@
         event.preventDefault();
         var c_content = $('#message').val();
         var c_userId=$('#c_userId').val();
-        var c_artId=$('#c_artId').val();
-        console.log('content='+c_content);
-        console.log('userid='+c_userId);
-        console.log('artid='+c_artId);
+        var c_artId= $('#c_artId').val();
+        var loginCheck = $('#c_userId').val;
+        if(loginCheck==null||loginCheck==""){
+          alert('請先登入');
+          window.location.href="<%=application.getContextPath()%>/user/singinPage";
+        }
+        else if(c_content==null || c_content==""){
+          alert('請輸入內容再進行留言')
+          $('#message').focus();
+        }
+        else{
+        var c_content = $('#message').val();
+        var c_userId=$('#c_userId').val();
+        var c_artId= $('#c_artId').val();
+        
 
         $.ajax({
           type:"POST",
           url:"../newComment.controller",
           data:{
             c_content:c_content,
-            c_userId:c_userId,
-            artId: c_artId
+            artId:c_artId
           },
           success:function(response){
             console.log(response);
             $('.comment-list').append(
               "<li class='comment'>"+
               "<div class='vcard bio'>"+
-              "<img src='"+
-              "<c:url value='/direngine-master/images/person_1.jpg'/>'"+
-              ' alt="Image placeholder"/>'+
+              "<img src='"+"../f_showUserPic/"+response.comUserId+"'"+"/>"+
               "</div>"+                 
               "<div class='comment-body'>"+
-              "<h3>"+response.comUserId+"</h3>"+
+              "<h3>"+response.comUserId+
+              "<a data-toggle='collapse' href='#collapse"+response.comId+"'>"+
+              "<i class='fas fa-angle-down float-right'></i></a></h3>"+
+              
               "<div class='meta'>"+response.comDate+"</div>"+
               "<p>"+response.comContent+"</p>"+
-              "<p><a href='' class='reply'>回覆</a></p>"+
+              "<p><a href='javascript: void(0)' class='reply'"+
+              "id='reply"+response.comId+"'>回覆</a></p>"+
              " </div></li>"
             )
             var commNum = eval($('#commNum').text());
@@ -379,9 +393,10 @@
             $('#message').val('');
             $('#commNum').text(eval(commNum+1));
             
-          }
+          },
+          
         })
-
+        }
       })
 
     </script>

@@ -121,8 +121,9 @@ contentType="text/html;charset=UTF-8" language="java"%>
                   type="text"
                   name="userId"
                   class="form-control"
-                  placeholder=""
+                  value="${userBean.userName}"
                   id="userId"
+                  readonly
                 />
               </div>
               
@@ -226,6 +227,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
       <!--開始滑-->
     </script>
 
+
     <script>
       function preview(){
         event.preventDefault();
@@ -258,8 +260,8 @@ contentType="text/html;charset=UTF-8" language="java"%>
           editor.editing.view.focus();
         }
         else{
-          alert('文章發布成功! 3秒後跳轉到您的文章頁面')
           setTimeout(function(){$('#f_newArticle').submit()},3000);
+          alert('文章發布成功! 3秒後跳轉到您的文章頁面')
           
         }
 
@@ -317,7 +319,24 @@ contentType="text/html;charset=UTF-8" language="java"%>
 				mediaEmbed: {
 					previewsInData: true
 					// 設定影片為可見的格式
-				},
+        },
+        resizeOptions:[
+        {
+                    name: 'imageResize:original',
+                    label: 'Original',
+                    value: null
+                },
+                {
+                    name: 'imageResize:50',
+                    label: '50%',
+                    value: '50'
+                },
+                {
+                    name: 'imageResize:75',
+                    label: '75%',
+                    value: '75'
+                }
+        ],
 				licenseKey: '', 
 
 				ckfinder:{uploadUrl: '${pageContext.servletContext.contextPath}/admin/imgUpload'},
