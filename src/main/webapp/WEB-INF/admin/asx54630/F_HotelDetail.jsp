@@ -236,7 +236,7 @@ body{
                             <div class="select-option">
                                 <label for="guest">人數:</label>
 								<input id="guest_dec" type="button" value="-">
-   								<input id="guest" name="guest" type="text" value="1" size="1" style="text-align:center;" disabled="disabled">
+   								<input id="guest" name="guest1" type="text" value="1" size="1" style="text-align:center;" >
     							<input id="guest_inc" type="button" value="+">
     							<script type="text/javascript">
     					            var count = document.getElementById("guest");
@@ -287,7 +287,7 @@ body{
                             </div>
                             <div class="select-option">
                                 <label for="client_phone">電話:</label><span id="idsp">&nbsp;*必填</span><span id="phoneCK">&nbsp;</span>
-                                <input type="text" name="client_name" id="client_phone">
+                                <input type="text" name="client_phone" id="client_phone">
                             </div>                            
                             <button type="button" id="order" >我要訂房</button>
                             <script>

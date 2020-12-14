@@ -110,6 +110,7 @@ h5{
 						</tr>
 					</thead>
 					<tbody>
+					<c:forEach var="h" items="${OTBean.OTBean.hotelOrder}">
 						<tr>
 							<td class="col-sm-8 col-md-6"></td>
 							<td class="col-sm-1 col-md-1" style="text-align: center"><input
@@ -151,7 +152,7 @@ h5{
 								</button>
 							</td>
 						</tr>
-
+						</c:forEach>
 						<tr>
 							<td> </td>
 							<td> </td>

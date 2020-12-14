@@ -3,6 +3,9 @@ package asx54630.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,10 +92,10 @@ public class F_HotelController {
 
 
 	@RequestMapping(path = {"/F_hoteldetail","/F_hoteldetail/{detailsn}"} ) //查詢單筆_給修改用
-	public String processHotelDetail(@PathVariable(name = "detailsn", required = false) BigDecimal detailsn,Model m) {
+	public String processHotelDetail(@PathVariable(name = "detailsn", required = false) BigDecimal detailsn,HttpSession session) {
 		
 	Hotel hoteldetail = f_hotelservice.hotelDetail(detailsn);
-	m.addAttribute("hoteldetail", hoteldetail);
+	session.setAttribute("hoteldetail", hoteldetail);
 	
 	return "asx54630/F_HotelDetail";
 	}

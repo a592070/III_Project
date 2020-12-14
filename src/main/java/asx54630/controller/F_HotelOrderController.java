@@ -30,13 +30,22 @@ public class F_HotelOrderController {
 	@RequestMapping(path = "/HotelOrder", method = RequestMethod.POST)
 	public String HotelOrder(@RequestParam(value = "date_in") Date date_in,
 							   @RequestParam(value = "date_out") Date date_out,
-							   @RequestParam(value = "guest") BigDecimal guest, 
+							   @RequestParam(value = "guest1") BigDecimal guest, 
 							   @RequestParam(value = "dbroom") BigDecimal dbroom, 
 							   @RequestParam(value = "qdroom") BigDecimal qdroom, 
 							   @RequestParam(value = "client_name") String client_name, 
 							   @RequestParam(value = "client_phone") String client_phone,
 							   HttpSession session,Model m) {
-		Hotel hotel = (Hotel) session.getAttribute("hotel");
+		
+		System.out.println(date_in);
+		System.out.println(date_out);
+		System.out.println(guest);
+		System.out.println(dbroom);
+		System.out.println(qdroom);
+		System.out.println(client_name);
+		System.out.println(client_phone);
+		
+		Hotel hotel = (Hotel) session.getAttribute("hoteldetail");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		if(OTBean == null) {
@@ -49,6 +58,7 @@ public class F_HotelOrderController {
 
 			HotelOrder hOBean = new HotelOrder();
 			
+			hOBean.setHotel(hotel);
 			hOBean.setCHECK_IN(date_in);
 			hOBean.setCHECK_OUT(date_out);
 			hOBean.setPROPLE_NUM(guest);
@@ -63,7 +73,7 @@ public class F_HotelOrderController {
 			System.out.println("cart num = " +cartnum);
 			session.setAttribute("OTBean", OTBean);
 			session.setAttribute("cartnum", cartnum);
-			return "iring29/Shoppingcart";
+			return "redirect:Shoppingcart";
 
 	}
 	
