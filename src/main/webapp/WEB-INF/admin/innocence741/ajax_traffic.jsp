@@ -372,7 +372,7 @@
                 $("#destination2").val(infoHSR[2]);
                 $("#departureDate2").val(infoHSR[3]);
 
-                let snSchedule;
+                // let snSchedule;
                 // $('#trainSubmit').on('click', function() {
                 startPoint = $("#startPoint2").val().toLowerCase();
                 destination = $("#destination2").val().toLowerCase();
