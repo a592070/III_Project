@@ -58,9 +58,9 @@
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a href="index.html" class="nav-link">首頁</a>
-          </li>
+<!--           <li class="nav-item"> -->
+<!--             <a href="index.html" class="nav-link">首頁</a> -->
+<!--           </li> -->
           <li class="nav-item">
             <a href="about.html" class="nav-link">關於我</a>
           </li>
