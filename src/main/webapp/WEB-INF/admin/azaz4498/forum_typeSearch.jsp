@@ -107,7 +107,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 <a
                   href="<%=application.getContextPath()%>/article/${article.artId}"
                   class="block-20 artCoverPic"
-                  style="background-image: url('../${picList[status.index]}')"
+                  style="background-image: url('${picList[status.index]}')"
                 >
                 </a>
                 <div class="text p-4 d-block">
@@ -189,7 +189,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
       var loginCheck = eval(${userBean.userName});
         if(loginCheck==null||loginCheck==""){
           alert('請先登入');
-          window.location.href="<%=application.getContextPath()%>/user/singinPage";
+          window.location.href="<%=application.getContextPath()%>/user/signinPage";
       }
      </script>
     <script>

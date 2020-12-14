@@ -6,7 +6,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>撰寫文章</title>
+    <title>文章</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
@@ -47,7 +47,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
     <div
       class="hero-wrap js-fullheight"
-      style="background-image: url('direngine-master/images/bg_6.jpg')"
+      style="background-image: url(<c:url value='/direngine-master/images/bg_6.jpg'/>)"
     >
       <div class="overlay"></div>
       <div class="container">
@@ -69,7 +69,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
               class="mb-3 bread"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
-              撰寫文章
+              修改文章
             </h1>
           </div>
         </div>
@@ -80,14 +80,14 @@ contentType="text/html;charset=UTF-8" language="java"%>
       <div class="container">
         <div class="row d-flex contact-info">
           <div class="col-md-12 mb-4">
-            <h3>寫點甚麼吧 ...</h3>
+            <h3>修改文章</h3>
             <hr>
           </div>
           <div class="w-100"></div>
         </div>
         <div class="row block-9">
           <div class="col-md-6 pr-md-5">
-            <form id="f_newArticle"action="${pageContext.servletContext.contextPath}/newArticle.controller" method="POST">
+            <form id="f_editArticle"action="${pageContext.servletContext.contextPath}/edit.controller" method="POST">
               
               <div class="form-group">
                 <label for="title"><h4>標題</h4></label>
@@ -96,8 +96,10 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 name="title"
                 type="text"
                 class="form-control"
-                  placeholder="請輸入標題"
+                value="${artBean.artTitle}"
                   />
+                <input type="hidden" id="artId" name="artId" value="${artBean.artId}"/>
+                <input type="hidden" id="userName" name="userName" value="${userBean.userName}"/>
                 </div>
                 
               <div class="form-group">
@@ -121,20 +123,17 @@ contentType="text/html;charset=UTF-8" language="java"%>
                   type="text"
                   name="userId"
                   class="form-control"
-                  value="${userBean.userName}"
+                  value="${artBean.artUserId}"
                   id="userId"
                   readonly
                 />
               </div>
               
               <div class="form-group">
-                <input id="publish_btn"type="submit" value="發表文章" class="btn btn-primary
+                <input id="edit_btn"type="submit" value="送出修改"" class="btn btn-primary
                 py-3 px-5" />
                 <input id="preview_btn" onclick="preview()"type="button"data-toggle="modal" data-target="#previewModal" value="文章預覽" class="btn btn-warning
                 py-3 px-5"/>
-
-                <input id="magic_btn"type="button" value="Magic!" onclick="magic()" class="btn btn-success
-                py-3 px-5" style="opacity: 0.2;"/>
               
               </div>
             
@@ -148,7 +147,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                 cols="30"
                 rows="7"
                 class="form-control"
-              ></textarea>
+              >${artBean.artContent }</textarea>
             </div>
           </form>
           </div>
@@ -177,7 +176,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                       </div>
                     </div>
                     <h2 class="mb-3" id="p_title">文章標題</h2>
-                    <div class="col-md-8 ftco-animate" id="p_content" style="width: 800px;">
+                    <div class="col-md-8 ftco-animate" id="p_content" style="width: 600px;">
 
                     </div>
                       
@@ -225,19 +224,16 @@ contentType="text/html;charset=UTF-8" language="java"%>
     <!--開始滑-->
     <script>
       $(document).ready(function(){
-      $('body,html').animate({scrollTop: 750}, 800); 
+      $('body,html').animate({scrollTop: 750}, 800);
+      var userName = $('#userName').val();
+      var artUserName = $('#userId').val();
+      if(userName!=artUserName){
+        alert('不要亂改別人的文章喔');
+        window.location.href="<%=application.getContextPath()%>/forum_index";
+      }
+      
       });
       <!--開始滑-->
-    </script>
-    <script>
-      function magic(){
-        event.preventDefault();
-        var autoContent=`<p>&nbsp;</p><figure class="image image_resized" style="width:62.12%;"><img src="https://sa.bbkz.net/forum/attachment.php?attachmentid=3206046&amp;thumb=1&amp;d=1605950104"></figure><h3>很多年沒背上背包外出旅行了，最近終於能重新背上背包~~</h3><p>看到草嶺古道芒花季的照片就想起很多年前去美麗的桃源谷，<br>覺得這是條CP值更高的路線，<br>選擇了和以前一樣由內寮進大里出的路線(相對反方向應該更好走，我懶)，<br>搭平日最早一班火車到貢寮07:40剛好接駁火車站前F832公車(07:50)，<br>小公車滿滿都是登山客XD，30分鐘直達登山口，<br>桃源谷內寮線頭尾都有廁所(不想上也去擠點出來吧XD 因為接下來很遠都沒廁所)，<br>然後就出發吧!<br>&nbsp;</p><figure class="image image_resized" style="width:36.82%;"><img src="https://sa.bbkz.net/forum/attachment.php?attachmentid=3205896&amp;thumb=1&amp;d=1605935029"></figure>`
-        $('#title').val('【遊記】 桃源谷芒花季(內寮進大里出)');
-        editor.setData(autoContent);
-        
-      }
-
     </script>
 
 
@@ -255,7 +251,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
         $('#p_content').find('img').addClass('img-fluid');
       }
 
-      $('#publish_btn').on('click',function(){
+      $('#edit_btn').on('click',function(){
         event.preventDefault();
         var title = $('#title').val();
         var type = $("#typeSelect").find(":selected").text();
@@ -273,14 +269,34 @@ contentType="text/html;charset=UTF-8" language="java"%>
           editor.editing.view.focus();
         }
         else{
-          setTimeout(function(){$('#f_newArticle').submit()},3000);
-          
+          setTimeout(function(){$('#f_editArticle').submit()},3000);
+          alert('文章修改成功!')
           
         }
 
       })
-
     </script>
+    <script type="text/javascript">
+		
+      window.onload = getDefaultType();
+      let currId = $("#artId").val();
+      
+  
+      function getDefaultType() {//判斷文章類型 修改下拉選單預設值
+        
+        var typeSelect = document.getElementById("typeSelect");
+        var options = typeSelect.getElementsByTagName("option");
+        var selectedType = '${artBean.articleType.typeId}';
+        console.log(selectedType);
+        if(selectedType==0){
+          options[8].selected = true;
+        }else{
+          options[selectedType].selected = true;
+        };
+        
+      }
+  
+  </script>
     <script>
       <!--editor confing-->
 	function MyCustomUploadAdapterPlugin( editor ) {

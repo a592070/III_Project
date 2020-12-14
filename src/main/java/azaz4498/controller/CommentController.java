@@ -36,8 +36,9 @@ public class CommentController {
 		return comment;
 	}
 	@RequestMapping(path = "/newMultiComment.controller", method = RequestMethod.POST)
-	public @ResponseBody MultiComment newMultiComment(String content, int comId,String userId) {
-		MultiComment multiComment = multiCommentService.newMultiComment(content, comId, userId);
+	public @ResponseBody MultiComment newMultiComment(HttpSession session,@RequestParam(name = "mc_content") String content,@RequestParam(name = "comId") int comId,String userId) {
+		AccountBean account =(AccountBean) session.getAttribute("userBean");
+		MultiComment multiComment = multiCommentService.newMultiComment(content, comId, account.getUserName());
 		return multiComment;
 	}
 }
