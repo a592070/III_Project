@@ -106,7 +106,7 @@
           <div class="col-lg-9">
           	<div class="row">
 
-				<div id="anotherSection" style="width: 800px; height: 100px; margin: 0 auto;">
+				<div id="anotherSection" style="width: 800px; height: 650px; margin: 0 auto;">
  
 					<!-- 用來顯示Ajax回傳值的fieldset -->
 		 
@@ -288,6 +288,7 @@
          }
          let startPoint;
          let destination;
+         let snSchedule;
          $(document).ready(function(){
 
             $("#trainSubmit").click(function(){
@@ -507,6 +508,75 @@
 
                  });
             });
+
+
+
+
+
+
+
+            $("#ajaxTable3").on("click", ".orderTicket", function(){
+                var index = $(".orderTicket").index(this);
+                $(".orderTicket").attr("disabled",true);
+                //console.log(index);
+                var table = document.getElementById('ajaxTable3');
+                var table2 = document.getElementById('ajaxTable2');
+
+                console.log("---------snSchedule= " + snSchedule);
+                var startPoint = table.rows[1].cells[2].innerHTML;
+                var destination = table.rows[1].cells[3].innerHTML;
+                var nums_days = table.rows[1].cells[6].innerHTML;
+                var departureDate = table.rows[1].cells[1].innerHTML;
+                var customerName = table2.rows[1].cells[1].children[0].value;
+                var customerPhone = table2.rows[1].cells[3].children[0].value;
+                // console.log(customerName);
+                //console.log(table.rows[1].cells[8].children[0].value);
+                $.ajax({
+
+                     type:"POST",                    //指定http參數傳輸格式為POST
+
+                     url: "T_OrderServlet",        //請求目標的url，可在url內加上GET參數，如 www.xxxx.com?xx=yy&xxx=yyy
+
+                     data: {
+                        //  "snSchedule" : '"' + snSchedule +'"' 
+                        "snSchedule" :  snSchedule,
+                        "startPoint" : startPoint,
+                        "destination" : destination,
+                        "nums_days" : nums_days,
+                        "departureDate" : departureDate,
+                        "orderType" : 0,
+                        "customerName" : customerName,
+                        "customerPhone" : customerPhone
+                     }, //要傳給目標的data為id=formId的Form其序列化(serialize)為的值，之
+
+                                                     //內含有name的物件value
+
+                     dataType: "json",               //目標url處理完後回傳的值之type，此列為一個JSON Object
+
+                     success : function(response){
+
+                        //  console.log(response["check"]);
+                        //  console.log(response["check"] === "fail")
+                        //  if(response["check"] === "fail"){
+                        //     window.location="\orderFailPage.html";
+                        //  }else if(response["check"] === "success"){
+                        //      window.location="\orderSuccessPage.html";
+                        //  }
+
+                     },
+
+                     //Ajax失敗後要執行的function，此例為印出錯誤訊息
+
+                     error:function(xhr, ajaxOptions, thrownError){
+
+                         console.log(xhr.status+"\n"+thrownError);
+                     }
+
+                 });
+            })
+
+
+
 
 
             
