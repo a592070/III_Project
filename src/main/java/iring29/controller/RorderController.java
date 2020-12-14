@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,8 @@ public class RorderController {
 	private R_OrderService rOrderService;
 	@Autowired
 	private Page page;
+	@Autowired
+	private global.service.SendMailService sendMail;
 
 	private int start = 0;
 
@@ -121,12 +125,23 @@ public class RorderController {
 							  @RequestParam(name = "cus_phone") String cus_phone, 
 							  @RequestParam(name = "book_date") String book_date,
 							  @RequestParam(name = "book_time") String book_time,
-							  @RequestParam(name = "customer_num") BigDecimal customer_num,Model m) {
+							  @RequestParam(name = "customer_num") BigDecimal customer_num,Model m, HttpSession session) {
 		String booktime = book_date +" " + book_time + ":00" ;
 		Timestamp ts = Timestamp.valueOf(booktime);
 		
 		rOrderService.updateOrder(id, cus_name, cus_phone, ts, customer_num);
 		R_OrderList_VO ROList = rOrderService.Detail_OderList(id);
+		
+		String mail = ROList.getEmail();
+		//send mail
+		String email = mail; 
+		String title = "Fun x Taiwan";  
+		String content = "成功修改" + ROList.getName() + "訂餐訊息。<br>訂單編號為"+ id + "<br>訂餐者姓名：" + cus_name +"<br>訂餐者電話：" + cus_phone + 
+				"<br>訂餐時間：" + booktime + "<br>訂餐人數：" + customer_num;  
+//		String urlDisplay = "Fun Taiwan";
+//		String url = "/http://localhost/";
+		sendMail.asyncSend(email, title, content, session); 
+		
 		m.addAttribute("ROList", ROList);
 		m.addAttribute("date", book_date);
 		m.addAttribute("time",book_time);

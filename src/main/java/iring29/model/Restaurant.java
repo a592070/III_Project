@@ -56,14 +56,14 @@ public class Restaurant {
 	private BigDecimal tablenum;
 	@Column(name = "STATUS")
 	private String status;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "restaurant")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "restaurant", orphanRemoval=true)
 	private Set<R_Order_List> rSets = new HashSet<R_Order_List>();
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERNAME", referencedColumnName="USERNAME")
 	private AccountBean accountBean;
 	@Column(name = "PRICE")
 	private BigDecimal price;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "restaurant")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "restaurant", orphanRemoval=true)
 	private Set<R_Comment> rcom = new HashSet<R_Comment>();
 	
 	public BigDecimal getR_sn() {
