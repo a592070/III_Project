@@ -1,8 +1,5 @@
 package rambo0021.dao;
 
-import static org.hamcrest.CoreMatchers.allOf;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +9,11 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import global.pojo.OrderTable;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
-import rambo0021.pojo.Page;
 import rambo0021.pojo.Sort;
+import utils.IOUtils;
 
 public class AccountDAOImpl implements AccountDAO {
 	@Autowired
@@ -293,6 +289,32 @@ public class AccountDAOImpl implements AccountDAO {
 		String pwd=RandomPwdDAO.generateRandomPassword(8);
 		aBean.setPassword(SHA2DAO.getSHA256(pwd));
 		return pwd;
+	}
+
+	@Override
+	public AccountBean checkGoogleLogin(String nickname, String imgUrl, String email) {
+		AccountBean aBean = sessionFactory.getCurrentSession().get(AccountBean.class,email);
+		if(aBean != null) {
+			return aBean;
+		}
+		AccountBean accountBean = new AccountBean();
+		IdentityBean identityBean = new IdentityBean();
+		identityBean.setId(2);
+		accountBean.setIdentityBean(identityBean);
+		
+		accountBean.setUserName(email);
+		accountBean.setPassword(SHA2DAO.getSHA256(email));
+		try {
+			accountBean.setPicture(IOUtils.urlToByteArray(imgUrl));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		accountBean.setNickName(nickname);
+		accountBean.setEmail(email);
+		accountBean.setModify_Date(new Date());
+		accountBean.setRegister(new Date());
+		sessionFactory.getCurrentSession().save(accountBean);
+		return accountBean;
 	}
 
 }

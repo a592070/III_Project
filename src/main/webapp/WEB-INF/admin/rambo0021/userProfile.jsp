@@ -30,7 +30,7 @@
         <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
           <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN
               x 臺灣</span></p>
-          <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">會員登入</h1>
+          <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">個人頁面</h1>
         </div>
       </div>
     </div>
@@ -182,6 +182,7 @@
     $("#Apicture").change(function () {
       var pic = this
       var username = $("#userName").text();
+      console.log(username)
       var form1 = $(this).parents('form');
       var formData = new FormData(form1[0]);
       formData.append('username', username)
@@ -193,7 +194,7 @@
       $.ajax({
 
         type: "POST",
-        url: "${pageContext.servletContext.contextPath}/admin/udAccountImg",
+        url: "${pageContext.servletContext.contextPath}/user/udUserImg",
         data: formData,
         processData: false,
         contentType: false,

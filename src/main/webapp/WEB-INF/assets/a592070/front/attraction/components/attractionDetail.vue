@@ -43,27 +43,44 @@
 
 
     <v-card color="basil" :elevation="100">
-      <detail-image></detail-image>
+
+      <v-overlay :value="selectDetailLoading">
+        <v-progress-circular
+            indeterminate
+            size="64"
+        ></v-progress-circular>
+      </v-overlay>
+
+
+      <el-carousel indicator-position="outside" type="card">
+        <el-carousel-item v-for="item in attractionPic">
+          <el-image :src="item.dest" :fit="'cover'"></el-image>
+        </el-carousel-item>
+      </el-carousel>
       <v-card-title class="text-center justify-center py-6">
         <h1 class="font-weight-bold display-3 basil--text">
-          石 岡 水 壩
+<!--          石 岡 水 壩-->
+          {{attractionData.name}}
         </h1>
 
       </v-card-title>
       <p class="rate mb-5">
         <el-rate
-            v-model="rating"
+            v-model="attractionData.rating"
             disabled
             show-score
             text-color="#ff9900"
             score-template="{value}">
         </el-rate>
-        <span class="loc"><a href="#"><i class="icon-map"></i><strong>臺中市</strong> 臺中市422石岡區豐勢路1238號</a></span>
+        <span class="loc"><a href="javascript:0">
+          <i class="icon-map"></i>
+          <strong>{{attractionData.region}}</strong> {{attractionData.address}}</a></span>
+        <br>
         <iframe
             width="600"
             height="450"
             frameborder="0" style="border:0"
-            src=""
+            :src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyDVV4ION7MX_-1bG3bDyKBZ75NIVTHKCLA&q='+attractionData.address"
             allowfullscreen>
         </iframe>
 
@@ -81,13 +98,48 @@
       </v-tabs>
 
       <v-tabs-items v-model="tab">
-        <v-tab-item
-            v-for="item in detail"
-            :key="item">
+<!--        <v-tab-item-->
+<!--            v-for="item in detail"-->
+<!--            :key="item">-->
+<!--          <v-card-->
+<!--              color="basil"-->
+<!--              flat>-->
+<!--            <v-card-text>{{ item }}</v-card-text>-->
+<!--          </v-card>-->
+<!--        </v-tab-item>-->
+        <v-tab-item>
           <v-card
               color="basil"
               flat>
-            <v-card-text>{{ item }}</v-card-text>
+            <v-card-text>{{ attractionData.toldescribe }}</v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card
+              color="basil"
+              flat>
+            <v-card-text>{{ attractionData.ticketInfo }}</v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card
+              color="basil"
+              flat>
+            <v-card-text>{{ attractionData.travellingInfo }}</v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card
+              color="basil"
+              flat>
+            <v-card-text>{{ attractionData.openTime }}</v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card
+              color="basil"
+              flat>
+            <v-card-text>{{ attractionData.remarks }}</v-card-text>
           </v-card>
         </v-tab-item>
       </v-tabs-items>
@@ -98,7 +150,7 @@
 <script>
 module.exports = {
   components: {
-    "detail-image": httpVueLoader(context + '/assets/a592070/front/attraction/components/detailImage.vue'),
+    // "detail-image": httpVueLoader(context + '/assets/a592070/front/attraction/components/detailImage.vue'),
   },
   data() {
     return {
@@ -117,10 +169,15 @@ module.exports = {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
 
     }
-  }
+  },
+  computed: Vuex.mapState(['selectDetailLoading', 'attractionData', 'attractionPic'])
 }
 </script>
 <style>
+* {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
 /* Helper classes */
 .basil {
   /*background-color: #FFFBE6 !important;*/
