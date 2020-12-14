@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -154,10 +155,21 @@ public class UserController {
 		headers.setContentType(MediaType.IMAGE_PNG);
 		return new ResponseEntity<byte[]>(aBean.getPicture(), headers, HttpStatus.OK);	
 	}
+	//顯示帳號圖片
+	@RequestMapping("ShowUserPic/{username}")
+	public @ResponseBody ResponseEntity<byte[]> ShowUserPic2(@PathVariable("username") String username) {
+		AccountBean userBean = service.userDetail(username);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		return new ResponseEntity<byte[]>(userBean.getPicture(), headers, HttpStatus.OK);	
+	}
+	
 	//修改個人資料
 	@RequestMapping("updateUser")
-	public @ResponseBody String updateUser(@RequestParam String username,@RequestParam("password") String password,@RequestParam String email,@RequestParam String nickName) {
+	public @ResponseBody String updateUser(@RequestParam String username,@RequestParam("password") String password,@RequestParam String email,@RequestParam String nickName,HttpServletRequest request,HttpSession session) {
 	    service.updateUser(username, password,email,nickName);
+//	    String remoteAddr = request.getLocalAddr();
+	    sendMailService.asyncSend(email, "個人資料修改通知", "您的個人資料已更改，如不是本人操作，請盡速更改密碼", "點我登入", "/user/singinPage", session);
 	   return "ok";
 	}
 	//忘記密碼
