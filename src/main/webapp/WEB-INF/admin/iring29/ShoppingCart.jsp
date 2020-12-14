@@ -605,8 +605,8 @@ h5{
 							<td></td>
 							<td></td>
 							<td>
-							<form action="<%=pageContext.getServletContext().getContextPath()%>/UserIndex">
-								<button type="button" class="btn btn-primary">
+							<form action="<%=pageContext.getServletContext().getContextPath()%>/FunTaiwan">
+								<button type="submit" class="btn btn-primary">
 									<span class="glyphicon glyphicon-shopping-cart"></span>
 									繼續逛
 								</button>

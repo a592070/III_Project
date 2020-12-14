@@ -2,6 +2,7 @@ package iring29.controller;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,17 +20,21 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
 import global.pojo.OrderTable;
+import iring29.model.R_Comment;
 import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
 import iring29.service.F_RestaurantService;
 import rambo0021.pojo.AccountBean;
 
-@SessionAttributes(names = { "userBean"})
+@SessionAttributes(names = { "userBean" })
 @Controller
 public class F_RorderController {
 
 	@Autowired
 	private F_RestaurantService F_Serivce;
+	@Autowired
+	private global.service.SendMailService sendMail;
+	
 	
 	@RequestMapping(path = "/OrderList", method = RequestMethod.POST)
 	public String PlaceOrder() {
@@ -46,11 +52,11 @@ public class F_RorderController {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		//判斷是否登入
 		if(OTBean == null) {
 			OTBean = new OrderTable();
-			String username = (String) m.getAttribute("userBean");
-			AccountBean account = F_Serivce.account(username);
-			OTBean.setAccountBean(account);
+			AccountBean userbean = (AccountBean) m.getAttribute("userBean");
+			OTBean.setAccountBean(userbean);
 			cartnum = 0;
 		}
 		if(cartnum == null) {
@@ -89,12 +95,11 @@ public class F_RorderController {
 		Restaurant res_data = (Restaurant) session.getAttribute("res_data");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		//判斷是否登入
 		if(OTBean == null) {
 			OTBean = new OrderTable();
-			String username = (String) m.getAttribute("userBean");
-			AccountBean account = F_Serivce.account(username);
-			account.setUserName(username);
-			OTBean.setAccountBean(account);
+			AccountBean userbean = (AccountBean) m.getAttribute("userBean");
+			OTBean.setAccountBean(userbean);
 			cartnum = 0;
 		}
 		if(cartnum == null) {
@@ -169,9 +174,39 @@ public class F_RorderController {
 		OrderTable otBean = F_Serivce.findOrder();  //不使用綠界時打開
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();  //不使用綠界時打開
 		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
+		for(R_Order_List r : res_lists) {  //不使用綠界時打開
+			//send mail
+			String email = "929iring@gmail.com";  //不使用綠界時打開
+			String title = "Fun x Taiwan";  //不使用綠界時打開
+			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
+			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
+			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
+			sendMail.asyncSend(email, title, content, urlDisplay, url , session);  //不使用綠界時打開
+			
+		}
+				
 		session.removeAttribute("cartnum");
 		return "iring29/OrderDetail";//不使用綠界時打開
 //		return "redirect:payment";//使用綠界時打開
+	}
+	
+	//leave comment
+	@RequestMapping(path = {"/reviewrestaurant/{restaurant_id}/{r_order_id}"}) 
+	public String reviewRestaurant(@PathVariable(name="restaurant_id", required = false) Integer restaurant_id,
+								   @PathVariable(name="r_order_id", required = false) Integer r_order_id, HttpSession session) {
+		Restaurant res_data = F_Serivce.findRestaurant(restaurant_id);
+		List<R_Comment> comment = F_Serivce.ResComment(res_data.getR_sn());
+		session.setAttribute("res_data", res_data);
+		session.setAttribute("comment", comment);
+		session.setAttribute("r_order_id", r_order_id);
+//		return "iring29/RestaurantComment";
+		
+		return "redirect:writeComment";
+	}
+	
+	@RequestMapping(path = "/reviewrestaurant/{restaurant_id}/writeComment")
+	public String writeComment(@PathVariable(name="restaurant_id", required = false) Integer restaurant_id) {
+		return "iring29/RestaurantComment";
 	}
 	
 	@RequestMapping(path = "/payment")
@@ -191,7 +226,7 @@ public class F_RorderController {
 		String result = pay.aioCheckOut(checkOut, null);
 		System.out.println("payment result = " + result);
 		session.setAttribute("result", result);
-		return "iring29/Payment"; //使用綠界時打開
+		return "iring29/Payment"; 
 	}
 	
 	//orderlist detail
@@ -199,15 +234,19 @@ public class F_RorderController {
 	public String showOrder(HttpSession session) {
 		session.removeAttribute("result");
 		OrderTable otBean = F_Serivce.findOrder();
-
-
-
-		otBean.getR_Order_Lists().removeIf(ele -> {
-			return "".equals(ele.getRestaurant().getName());
-		});
-
-
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
+		//send mail
+		for(R_Order_List r : res_lists) {  
+			//send mail
+			String email = "929iring@gmail.com"; 
+			String title = "Fun x Taiwan";  
+			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  
+			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
+			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
+			sendMail.asyncSend(email, title, content, urlDisplay, url , session); 
+			
+		}
+
 		session.setAttribute("res_lists", res_lists);
 		return "iring29/OrderDetail";
 	}

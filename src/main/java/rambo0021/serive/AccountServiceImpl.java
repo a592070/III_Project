@@ -127,5 +127,10 @@ public class AccountServiceImpl implements AccountService {
 		return dao.forgetPwd(username,email);
 	}
 
+	@Override
+	public AccountBean checkGoogleLogin(String nickname, String imgUrl, String email) {
+		return dao.checkGoogleLogin(nickname,imgUrl,email);
+	}
+
 
 }

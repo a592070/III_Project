@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import global.pojo.OrderTable;
@@ -22,18 +25,20 @@ import rambo0021.pojo.AccountBean;
 
 
 public class T_Order_ListDAO {
-	private Session session;
+	private SessionFactory sessionFacory;
 
-	public T_Order_ListDAO(){
-	}
+//	public T_Order_ListDAO(){
+//	}
 	
-	public T_Order_ListDAO(Session session) throws SQLException {
-		this.session = session;
+	@Autowired
+	public T_Order_ListDAO(@Qualifier("sessionFactory") SessionFactory sessionFacory) {
+		this.sessionFacory = sessionFacory;
 	}
 
 	public boolean createOrderTable(OrderTable order_table) {
 		boolean flag = false;
 		try {
+			Session session = sessionFacory.getCurrentSession();
 			session.save(order_table);
 			flag = true;
 		} catch (Exception e) {
@@ -43,6 +48,8 @@ public class T_Order_ListDAO {
 	}
 
 	public void searchHistoricalOrder(ArrayList<ArrayList> combineArrayList, String userid) throws ParseException {
+		Session session = sessionFacory.getCurrentSession();
+
 		ArrayList<OrderTable> tmp_orderTableBeans = new ArrayList<>();
 		ArrayList<OrderTable> orderTableBeans = new ArrayList<>();
 
@@ -128,6 +135,8 @@ public class T_Order_ListDAO {
 				hBean.setTainan(list.get(i)[26].toString());
 			if (list.get(i)[27] != null)
 				hBean.setZuoying(list.get(i)[27].toString());
+			tBean.setT_status(1);
+			tBean.setVersion(1);
 
 //			tBean.setOrder_table(oBean);
 			tBean.setCarType(cBean);
@@ -168,6 +177,8 @@ public class T_Order_ListDAO {
 	}
 
 	public boolean delT_Order_List(BigDecimal t_sn_order) {
+		Session session = sessionFacory.getCurrentSession();
+
 		boolean flag = false;
 		T_Order_List t_Order_List = session.get(T_Order_List.class, t_sn_order);
 
