@@ -74,7 +74,7 @@ public class ImageUploadController {
 		picture.setRefId(articleId);
 
 		Integer picId = pictureService.addPic(picture).getId();
-		String imgPath = "../showPic/" + picId;
+		String imgPath = "/showPic/" + picId;
 
 		map.put("finalFileName", finalFileName);
 		map.put("url", imgPath);
@@ -84,7 +84,7 @@ public class ImageUploadController {
 
 	}
 
-	@RequestMapping(value =  {"admin/showPic/{picId}","showPic/{picId}"}, method = RequestMethod.GET)
+	@RequestMapping(value =  {"admin/showPic/{picId}","/showPic/{picId}","../showPic/{picId}"}, method = RequestMethod.GET)
 	public ResponseEntity<byte[]> showImg(@PathVariable(name = "picId") Integer picId) throws IOException {
 		HttpHeaders headers = new HttpHeaders();
 		Picture picture = pictureService.getPic(picId);

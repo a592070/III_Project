@@ -49,6 +49,28 @@ contentType="text/html;charset=UTF-8" language="java"%>
       color: #000000;
 	    opacity:0.6;
       }
+      .container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 576px) {
+    .container {
+      /* max-width: 540px; */
+      } }
+  @media (min-width: 768px) {
+    .container {
+      /* max-width: 720px; */
+      } }
+  @media (min-width: 992px) {
+    .container {
+      /* max-width: 960px; */
+      } }
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1140px;
+      } }
     </style>
     <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>

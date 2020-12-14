@@ -80,7 +80,12 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 ftco-animate">
-             <h2 class="mb-3">${artBean.artTitle}</h2>
+            <h2 class="mb-3">${artBean.artTitle}</h2>
+            <input type="button" value ="修改文章"class="btn btn-primary"id="edit_btn" onclick="location.href='<%=application.getContextPath()%>/edit/article/${artBean.artId}'"/>
+            
+            
+              
+            
              <div class="tag-widget post-tag-container mb-5 mt-5">
                <div class="tagcloud">
                  <a href="<%=application.getContextPath()%>/typeSearch/${artBean.articleType.typeId}" class="tag-cloud-link">${artBean.articleType.typeName}</a>
@@ -123,27 +128,29 @@
                     <div class="meta">${comment.comDate}</div>
                     <p>
                       ${comment.comContent}
-                    </p>
-                    <p>
-                      <a href="javascript: void(0)" class="reply" id="reply${comment.comId}">回覆</a>
-                    </p>
+                    
                   </div>
                   <div class="collapse" id="collapse${comment.comId}">
                   <ul class="children" id="children${comment.comId}">
+                  <c:forEach var="m_comment" items="${comment.m_Comments}">
                     <li class="comment">
                       <div class="comment-body" >
-                        <p><strong>Doe</strong></p>
-                        <div class="meta">June 27, 2018 at 2:21pm</div>
-                        <p>多層內容</p>
+                        <p><strong>${m_comment.m_UserId}</strong></p>
+                        <div class="meta">${m_comment.m_Date}</div>
+                        <p>${m_comment.m_Content}</p>
                       </div>
                       </li>
-                      <li class="comment">
-                        <div class="comment-body" >
-                          <p><strong>Doe</strong></p>
-                          <div class="meta">June 27, 2018 at 2:21pm</div>
-                          <p>多層內容</p>
-                        </div>
-                        </li>
+                    </c:forEach>
+                      <li class="comment" id="m_com${comment.comId}">
+                      <div class="d-flex flex-row comment-body">
+                        <textarea id="tx${comment.comId}"class="ml-1 form-control" style="border-radius: 10px; height: 105px; width: 1045px; resize: none; box-shadow: 5px;"></textarea>
+                      </div>
+                        <div class="d-inline-flex flex-row-reverse comment-body mt-2">
+                        <p>
+                          <a href="javascript:void(0);" class="reply" id="reply${comment.comId}">回覆</a>
+                        </p>
+                      </div>
+                    </li>
                       </ul>
                     </div>
                 </li>
@@ -151,7 +158,7 @@
               </ul>
               <!-- END comment-list -->
 
-              <div class="comment-form-wrap pt-5">
+              <div class="comment-form-wrap pt-5" style="height: auto; width: auto;">
                 <h3 class="mb-5" style="font-family:'Noto Sans TC', sans-serif ;">寫個評論吧...</h3>
                 <!--評論表單-->
                 <form class="p-5 bg-light" method="POST">
@@ -167,9 +174,10 @@
                     <textarea
                       name="c_content"
                       id="message"
-                      cols="30"
-                      rows="10"
+                      cols="5"
+                      rows="5"
                       class="form-control"
+                      style="resize: none;"
                       
                     ></textarea>
                   </div>
@@ -182,6 +190,7 @@
                     />
                   </div>
                 </form>
+                <a href="javascript: void(0);" onclick="magic()">一鍵輸入</a>
               </div>
             </div>
           </div>
@@ -297,40 +306,72 @@
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <script>
       $(document).ready(function(){
+        var userid = $('#c_userId').val();
+        var op = '${artBean.artUserId}';
+
       $('body,html').animate({scrollTop: 750}, 950); 
-        
-});
+
+      if(userid==op){
+        $('#edit_btn').show();
+      }else{
+        $('#edit_btn').hide();
+      }
+      });
 
     </script>
     <script>
-      $('.fa-angle-down').on('click',function(){
-        if($(this).hasClass("fa-flip-vertical")){
-          $(this).removeClass('fa-flip-vertical');
-          console.log('remove');
-        }else{
-          $(this).addClass('fa-flip-vertical');
-        }    
-      
-      })
+      function magic(){
+        
+        $('#message').val('謝謝你的分享，假日有空也想去!');
+      }
+    </script>
+    <script>
 
       $('.reply').on('click',function(){
+        event.preventDefault();
         var id = $(this).attr('id');
-        var c_id =id.replace('reply','children');
-        $('#'+c_id).append(
+        var str = id.replace('reply','m_com');
+        var textarea = id.replace('reply','tx');
+        var comId = id.replace('reply','');
+        var mc_content=$('#'+textarea).val();
+        var loginCheck = $('#c_userId').val;
+
+        if(loginCheck==null||loginCheck==""){
+          alert('請先登入');
+          window.location.href="<%=application.getContextPath()%>/user/signinPage";
+        }else if(mc_content==null || mc_content==""){
+          alert('請輸入內容再進行留言')
+          $('#'+textarea).focus();
+        }else{
+          $.ajax({
+          type:"POST",
+          url:"../newMultiComment.controller",
+          data:{
+            comId:comId,
+            mc_content:mc_content
+          },
+          success:function(response){
+            $('#'+textarea).val('');
+          $('#'+str).before(
           '<li class="comment">'+
           '<div class="comment-body">'+
-          '<p><strong>Doe</strong></p>'+
-          '<div class="meta">June 27, 2018 at 2:21pm</div>'+
-          '<p>多層內容</p>'+
+          '<p><strong>'+response.m_UserId+'</strong></p>'+
+          '<div class="meta">'+response.m_Date+'</div>'+
+          '<p>'+response.m_Content+'</p>'+
           '</div>'+
           '</li>'+
           '</ul>'+
           '</li>'
         );
         
-      })
-
+          },
+        })
+        }
+      });
+      
+        
     </script>
+    
     <script>
       $(window).scroll(function() {
     if($(document).scrollTop() > 600){
@@ -382,16 +423,27 @@
               "<i class='fas fa-angle-down float-right'></i></a></h3>"+
               
               "<div class='meta'>"+response.comDate+"</div>"+
-              "<p>"+response.comContent+"</p>"+
-              "<p><a href='javascript: void(0)' class='reply'"+
-              "id='reply"+response.comId+"'>回覆</a></p>"+
-             " </div></li>"
+              "<p>"+response.comContent+"</p>"+"</div>"+
+              "<div class='collapse' id='collapse"+response.comId+"'>"+
+              "<ul class='children' id='children"+response.comId+"'>"+
+              "<li class='comment' id='m_com"+response.comId+"'>"+
+              "<div class='d-flex flex-row comment-body'>"+
+              "<textarea class='ml-1 form-control'"+
+              "id='tx"+response.comId+"'"+
+              " style='border-radius: 10px; height: 105px; width: 1045px; resize: none; box-shadow: 5px;'></textarea>"+
+              "</div>"+
+              "<div class='d-inline-flex flex-row-reverse comment-body mt-2'>"+
+              "<p><a href='javascript:void(0);' class='reply' id='reply"+response.comId+"'>回覆</a>"+
+              "</p></div></li></ul></div></li>"
             )
             var commNum = eval($('#commNum').text());
             console.log(commNum);
             
             $('#message').val('');
             $('#commNum').text(eval(commNum+1));
+            
+
+
             
           },
           
@@ -400,5 +452,16 @@
       })
 
     </script>
+    <script>
+      $('i').on('click',function(){
+        if($(this).hasClass("fa-flip-vertical")){
+          $(this).removeClass('fa-flip-vertical');
+          console.log('remove');
+        }else{
+          $(this).addClass('fa-flip-vertical');
+        }    
+      
+      })
+      </script>
 </body>
 </html>

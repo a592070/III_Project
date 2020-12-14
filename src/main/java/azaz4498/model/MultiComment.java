@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -67,6 +68,7 @@ public class MultiComment implements Serializable{
 	public void setM_UserId(String m_UserId) {
 		this.m_UserId = m_UserId;
 	}
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "MULTI_COM_DATE")
 	public Timestamp getM_Date() {
 		return m_Date;
