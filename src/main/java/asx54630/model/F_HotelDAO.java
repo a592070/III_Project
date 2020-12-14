@@ -65,4 +65,6 @@ public class F_HotelDAO {
 		return session.get(Hotel.class, sn);
 	}
 	
+
+	
 }

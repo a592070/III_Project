@@ -130,8 +130,8 @@ td {
 									<tbody id="tbody">
 										<c:forEach var="hotels" items="${hotelOdata}">
 											<tr>
-												<td class="Brid">${hotels.SN_ORDER}</td>
 												<td class="rid">${hotels.ORDER_ID}</td>
+												<td class="Brid">${hotels.SN_ORDER}</td>
 												<td class="rname">${hotels.NAME}</td>
 												<td>${hotels.DOUBLE_ROOM}</td>
 												<td>${hotels.QUADRUPLE_ROOM}</td>
