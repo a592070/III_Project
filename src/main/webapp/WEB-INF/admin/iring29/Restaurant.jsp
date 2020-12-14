@@ -17,6 +17,8 @@
 }
 .type{
 	height:50px;
+	font-size: 15px;
+    color: black;
 }
 h3{
 	height:80px;
@@ -38,6 +40,20 @@ i{
 }
 .star_div{
 	height:40px;
+	font-size: 17px;
+}
+.sidebar-wrap .heading{
+	font-size:25px;
+}
+.sp_search{
+	font-size:20px;
+	color:black;
+}
+span.starspan {
+    font-size: 20px;
+}
+#region_name{
+    font-size: 17px;
 }
 </style>    
 
@@ -171,7 +187,7 @@ i{
 		              </div>	
 		              		
 		              		<div class="star_div"></div>
-		              		<p>餐廳評價</p>			
+		              		<p class="sp_search">餐廳評價</p>			
 		              		<div class="star_div">
 							<input type="radio" name="radiobutton" id="Check5" value="5" onclick="checkstar()"> 
 								<span class="starspan"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>&emsp;5星
@@ -333,7 +349,7 @@ i{
 		    						<p class="type">${res.type}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i>&emsp;${res.region}</span> 
+		    							<span id="region_name"><i class="icon-map-o"></i>&emsp;${res.region}</span> 
 		    							<span class="ml-auto"><button type="submit" class="btn btn-warning">訂位去</button></span>
 <%-- 		    							<Input type='hidden' name='r_sn' value='${res.r_sn}'> --%>
 <%-- 										<Input type='hidden' name='book_date' value='${book_date}'> --%>

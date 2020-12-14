@@ -97,9 +97,9 @@ td.col-sm-1.col-md-1.text-center{
       </div>
     </div><!-- .background -->
     
-<section class="cart_area">
+<section class="cart_area" id="index">
 	<div class="container">
-		<div class="row"  id="index">
+		<div class="row" >
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<table class="table table-hover">
 					<thead>

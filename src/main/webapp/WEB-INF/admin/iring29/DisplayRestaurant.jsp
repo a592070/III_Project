@@ -108,6 +108,15 @@ button#order {
 	text-align:right;
 	font-size:30px;
 }
+.room-booking form .select-option label, .room-booking form .check-date label {
+    font-size: 18px;
+    }
+.rd-reviews .review-item .ri-text .rating {
+    font-size: 20px;
+    }
+.room-booking form button {
+    font-size: 16px;
+    }
 </style>
 </head>
 <body>
