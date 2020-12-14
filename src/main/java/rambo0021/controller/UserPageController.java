@@ -1,5 +1,7 @@
 package rambo0021.controller;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import global.pojo.OrderTable;
 import rambo0021.pojo.AccountBean;
 import rambo0021.serive.AccountService;
 
@@ -47,7 +50,7 @@ public class UserPageController {
 //			 System.out.println("前頁註冊");
 			 reqURL=reqURL.toString().replace("user/registrationPage", "FunTaiwan");
 		 }else if(reqURL.contains("/user/singinPage")) {
-			 reqURL=reqURL.toString().replace("/user/singinPage", "FunTaiwan");
+			 reqURL=reqURL.toString().replace("user/singinPage", "FunTaiwan");
 		 }
 //		 System.out.println("reqURL="+reqURL);
 		m.addAttribute("reqURL", reqURL);
@@ -59,8 +62,9 @@ public class UserPageController {
 		return "rambo0021/userProfile";
 	}
 	@RequestMapping("/userOrderListPage")
-		public String userOrderListPage(Model m) {	
-			
+		public String userOrderListPage(@ModelAttribute("userBean") AccountBean aBean,Model m) {	
+		   List<OrderTable> oList = aBean.getOrderTable();
+		   m.addAttribute("oList", oList);
 	       return "rambo0021/userOrderList";
 		
 	}
