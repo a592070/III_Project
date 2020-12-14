@@ -81,7 +81,7 @@
               >找餐廳</a
             >
           </li>
-          <li class="nav-item"><a href="" class="nav-link">找交通</a></li>
+          <li class="nav-item"><a href="<%=application.getContextPath()%>/highspeedrail.controller" class="nav-link">找交通</a></li>
           <li class="nav-item">
             <a href="<%=application.getContextPath()%>/forum_index" class="nav-link">論壇</a>
           </li>
