@@ -50,7 +50,9 @@
                 <h1 class="h1">會員登入</h1>
                 <div class="form-group">
                   <!-- google login -->
-                  <!--                   <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="padding-left: 430px"></div> -->
+
+<!--                   <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="padding-left: 430px"></div> -->
+
                 </div>
               </div>
             </div>
@@ -151,10 +153,12 @@
           $('body,html').animate({ scrollTop: 700 }, 800);
 
 
+
           var auth2 = gapi.auth2.getAuthInstance();
           auth2.signOut().then(function () {
             console.log('User signed out.');
           });
+
 
         });
 
