@@ -101,7 +101,7 @@ public class F_HotelController {
 	
 	return "asx54630/F_HotelDetail";
 	}
-	
+	 
 //	@RequestMapping(path = "checkLogin", method = RequestMethod.POST)
 //	public @ResponseBody boolean checkLogin(Model m) {
 //		AccountBean userBean =  (AccountBean) m.getAttribute("userBean");
