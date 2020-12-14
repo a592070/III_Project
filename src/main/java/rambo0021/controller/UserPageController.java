@@ -38,16 +38,18 @@ public class UserPageController {
 	@RequestMapping("/singinPage")
 	public String singinPage(HttpServletRequest req,Model m) {
 		
-		 System.out.println("登入前攔截");
+//		 System.out.println("登入前攔截");
 		 String reqURL = req.getHeader("Referer");
 		 if(reqURL==null) {
-			 System.out.println("我是空的");
+//			 System.out.println("我是空的");
 			 reqURL=req.getRequestURL().toString().replace("user/singinPage", "FunTaiwan");
 		 }else if(reqURL.contains("/user/registrationPage")) {
-			 System.out.println("前頁註冊");
+//			 System.out.println("前頁註冊");
 			 reqURL=reqURL.toString().replace("user/registrationPage", "FunTaiwan");
+		 }else if(reqURL.contains("/user/singinPage")) {
+			 reqURL=reqURL.toString().replace("/user/singinPage", "FunTaiwan");
 		 }
-		 System.out.println("reqURL="+reqURL);
+//		 System.out.println("reqURL="+reqURL);
 		m.addAttribute("reqURL", reqURL);
 		return "rambo0021/userSingin";
 	}
@@ -55,6 +57,12 @@ public class UserPageController {
 	public String userProfilePage(@ModelAttribute("userBean") AccountBean aBean,Model m) {	
 		
 		return "rambo0021/userProfile";
+	}
+	@RequestMapping("/userOrderListPage")
+		public String userOrderListPage(Model m) {	
+			
+	       return "rambo0021/userOrderList";
+		
 	}
 
 }
