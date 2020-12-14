@@ -52,5 +52,14 @@
         </Logger>
 
 
+        <Logger name="config.CustomChannelInterceptor" level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+
+        <Logger name="config.CustomHandshakeHandler" level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+
+
     </Loggers>
 </Configuration>

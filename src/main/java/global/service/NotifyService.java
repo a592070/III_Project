@@ -1,5 +1,7 @@
 package global.service;
 
+import config.StompPrincipal;
+import global.Constant;
 import global.pojo.NotifyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletContext;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
@@ -19,6 +22,8 @@ public class NotifyService {
     Executor taskExecutor;
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
+    @Autowired
+    private ServletContext context;
 
     private int i;
 
@@ -27,6 +32,10 @@ public class NotifyService {
 //    private List<NotifyVO> broadcastNotifies = new LinkedList<>();
 //    private List<NotifyVO> singleNotifies = new LinkedList<>();
 
+
+    public Map<String, StompPrincipal> getBroadcastUsers(){
+        return (Map<String, StompPrincipal>)context.getAttribute(Constant.STOMP_USERS);
+    }
 
     /**
      * 增加一筆廣播訊息，添加後會由NotifyAspect實現發送訊息
@@ -46,6 +55,7 @@ public class NotifyService {
     }
 
 
+    
     public void sendBroadcastNotifies(){
         taskExecutor.execute(() -> {
             try {

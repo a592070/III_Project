@@ -2,6 +2,7 @@ package utils;
 
 import config.StompPrincipal;
 import global.Constant;
+import global.pojo.NotifyVO;
 import rambo0021.pojo.AccountBean;
 
 import javax.servlet.http.HttpSession;
@@ -22,5 +23,9 @@ public class NotifyUtil {
         }else{
             return session.getId();
         }
+    }
+
+    public static NotifyVO setNotify(String status, String title, String content){
+        return new NotifyVO(status, title, content);
     }
 }
