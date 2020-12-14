@@ -238,7 +238,7 @@ public class F_RorderController {
 		//send mail
 		for(R_Order_List r : res_lists) {  
 			//send mail
-			String email = "929iring@gmail.com"; 
+			String email = otBean.getAccountBean().getEmail(); 
 			String title = "Fun x Taiwan";  
 			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  
 			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";

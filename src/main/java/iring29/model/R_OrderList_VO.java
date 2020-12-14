@@ -36,6 +36,8 @@ public class R_OrderList_VO {
 	private Timestamp order_date;
 	@Column(name = "USERNAME")
 	private String username;
+	@Column(name = "EMAIL")
+	private String email;
 
 	public BigDecimal getId() {
 		return id;
@@ -117,4 +119,13 @@ public class R_OrderList_VO {
 		this.username = username;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
 }
