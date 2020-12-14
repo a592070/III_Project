@@ -47,7 +47,7 @@ public class HotelOrder {
 	@Column(name = "CLIENT_PHONE")
 	private String CLIENT_PHONE;
 	@Column(name = "H_PRICE")
-	private BigDecimal H_PRICE;
+	private BigDecimal hPRICE;
 	@Column(name = "PROPLE_NUM")
 	private BigDecimal PROPLE_NUM;
 
@@ -146,13 +146,14 @@ public class HotelOrder {
 	}
 
 
-	public BigDecimal getH_PRICE() {
-		return H_PRICE;
+
+	public BigDecimal gethPRICE() {
+		return hPRICE;
 	}
 
 
-	public void setH_PRICE(BigDecimal h_PRICE) {
-		H_PRICE = h_PRICE;
+	public void sethPRICE(BigDecimal hPRICE) {
+		this.hPRICE = hPRICE;
 	}
 
 

@@ -386,13 +386,13 @@ body{
 									                         
                         function insertdata(){
        					 console.log("in data")
-       						 document.getElementById("date_in").value = Date();
-       						 document.getElementById("date_out").value = Date();
+       					 	$("#date_in").val("2020-12-27");
+       					 	$("#date_out").val("2020-12-29");
        						 document.getElementById("guest").value = "3";
        						 document.getElementById("dbroom")[0].selected = "selected";
        						 document.getElementById("qdroom")[1].selected = "selected";
-       						 document.getElementById("client_name").value = "安妮";
-       						 document.getElementById("client_phone").value = "0928957224";
+       						 document.getElementById("client_name").value = "田小傑";
+       						 document.getElementById("client_phone").value = "0928957224"; 
 
        					 }
                        
