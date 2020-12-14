@@ -26,21 +26,21 @@ import rambo0021.serive.AccountService;
 @Lazy
 @SessionAttributes(names = { "adminBean" })
 @RequestMapping("/admin")
-public class AdminSingController {
+public class AdminSignController {
 	@Autowired
 	@Qualifier("accountService")
 	private AccountService service;
 
-	@RequestMapping(path = "/singin")
-	public String singin() {
+	@RequestMapping(path = "/signin")
+	public String signin() {
 
-		return "rambo0021/adminSingin";
+		return "rambo0021/adminSignin";
 	}
 
-	@RequestMapping(path = "/singup")
-	public String singup() {
+	@RequestMapping(path = "/signup")
+	public String signup() {
 
-		return "rambo0021/adminSingup";
+		return "rambo0021/adminSignup";
 	}
 
 	@RequestMapping(path = "/registered")
@@ -53,20 +53,20 @@ public class AdminSingController {
 		aBean.setNickName(nickname);
 		aBean.setPassword(SHA2DAO.getSHA256(password));
 		service.registered(aBean, iBean);
-		return "redirect:/admin/singin";
+		return "redirect:/admin/signin";
 	}
 
 	@RequestMapping(path = "/login")
 	public String login(@RequestParam String username, @RequestParam String password,
-			@RequestParam("g-recaptcha-response") String recaptcha, Model m) throws IOException {
-		boolean verify = VerifyRecaptcha.verify(recaptcha);
+			 Model m) throws IOException {
+//		boolean verify = VerifyRecaptcha.verify(recaptcha);
 		Map<String, String> errorMsgMap = new HashMap<String, String>();
 		//機器人驗證，測試可以註解掉
-		if (!verify) {
-			errorMsgMap.put("LoginError", "驗證不通過");
-			m.addAttribute("ErrorMsgKey", errorMsgMap);
-			return "rambo0021/adminSingin";
-		}
+//		if (!verify) {
+//			errorMsgMap.put("LoginError", "驗證不通過");
+//			m.addAttribute("ErrorMsgKey", errorMsgMap);
+//			return "rambo0021/adminSignin";
+//		}
         //-----------------
 		String status = service.login(username, password);
 		if ("登入成功".equals(status)) {
@@ -76,14 +76,14 @@ public class AdminSingController {
 		}
 		errorMsgMap.put("LoginError", status);
 		m.addAttribute("ErrorMsgKey", errorMsgMap);
-		return "rambo0021/adminSingin";
+		return "rambo0021/adminSignin";
 	}
 
 	@RequestMapping("/logout")
 	public String logout(HttpSession session, SessionStatus sessionStatus) {
 		session.invalidate();
 		sessionStatus.setComplete();
-		return "redirect:/admin/singin";
+		return "redirect:/admin/signin";
 	}
 
 }

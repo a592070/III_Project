@@ -49,7 +49,7 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">大訂單號</th>
+                    <th scope="col">FunTaiwan訂單</th>
                     <th scope="col">餐廳名稱</th>
                     <th scope="col">住宿名稱</th>
                     <th scope="col">高鐵車次</th>
@@ -68,13 +68,13 @@
                         </td>
                         <td>
                             <c:forEach var="h" items="${o.hotelOrder }">
-                            ${r.hotel.NAME}
+                            ${h.hotel.NAME}
                            </c:forEach>
                         </td>
                         <td>
-                           <c:forEach var="t" items="${o.t_Order_Lists }">
-                            ${t.highSpeedRail.idHSR}
-                           </c:forEach>
+<%--                            <c:forEach var="t" items="${o.t_Order_Lists }"> --%>
+<%--                             ${t.highSpeedRail.idHSR} --%>
+<%--                            </c:forEach> --%>
                         </td>
                         <td>${o.totalPrice}</td>
                         <td><c:out value="${fn:substring(o.order_date, 0, 19)}" /></td>

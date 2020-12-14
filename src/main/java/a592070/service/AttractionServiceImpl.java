@@ -66,7 +66,7 @@ public class AttractionServiceImpl implements AttractionService{
         }else{
             attractionDO = dao.getEle(id, false, available);
         }
-        if(loadPicture) attractionDO.getAttractionPic().size();
+        if(attractionDO!=null && loadPicture) attractionDO.getAttractionPic().size();
         return attractionDO;
     }
 

@@ -180,7 +180,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
       var loginCheck = eval(${userBean.userName});
         if(loginCheck==null||loginCheck==""){
           alert('請先登入');
-          window.location.href="<%=application.getContextPath()%>/user/singinPage";
+          window.location.href="<%=application.getContextPath()%>/user/signinPage";
       }
     </script>
 

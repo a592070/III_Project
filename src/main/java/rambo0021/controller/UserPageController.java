@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -35,34 +36,35 @@ public class UserPageController {
 	@GetMapping("/registrationPage")
 	public String registrationPage() {
 	
-		return "rambo0021/userSingup";
+		return "rambo0021/userSignup";
 	}
 	
-	@RequestMapping("/singinPage")
-	public String singinPage(HttpServletRequest req,Model m) {
+	@RequestMapping("/signinPage")
+	public String signinPage(HttpServletRequest req,Model m) {
 		
 //		 System.out.println("登入前攔截");
 		 String reqURL = req.getHeader("Referer");
 		 if(reqURL==null) {
 //			 System.out.println("我是空的");
-			 reqURL=req.getRequestURL().toString().replace("user/singinPage", "FunTaiwan");
+			 reqURL=req.getRequestURL().toString().replace("user/signinPage", "FunTaiwan");
 		 }else if(reqURL.contains("/user/registrationPage")) {
 //			 System.out.println("前頁註冊");
 			 reqURL=reqURL.toString().replace("user/registrationPage", "FunTaiwan");
-		 }else if(reqURL.contains("/user/singinPage")) {
-			 reqURL=reqURL.toString().replace("user/singinPage", "FunTaiwan");
+		 }else if(reqURL.contains("/user/signinPage")) {
+			 reqURL=reqURL.toString().replace("user/signinPage", "FunTaiwan");
 		 }
 //		 System.out.println("reqURL="+reqURL);
 		m.addAttribute("reqURL", reqURL);
-		return "rambo0021/userSingin";
+		return "rambo0021/userSignin";
 	}
 	@RequestMapping("/userProfilePage")
 	public String userProfilePage(@ModelAttribute("userBean") AccountBean aBean,Model m) {	
 		
 		return "rambo0021/userProfile";
 	}
-	@RequestMapping("/userOrderListPage")
-		public String userOrderListPage(@ModelAttribute("userBean") AccountBean aBean,Model m) {	
+	@RequestMapping("/userOrderListPage/{username}")
+		public String userOrderListPage(@PathVariable("username") String username,Model m) {	
+		   AccountBean aBean = service.userDetail(username);
 		   List<OrderTable> oList = aBean.getOrderTable();
 		   m.addAttribute("oList", oList);
 	       return "rambo0021/userOrderList";

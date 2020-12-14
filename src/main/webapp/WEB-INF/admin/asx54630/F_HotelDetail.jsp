@@ -454,7 +454,7 @@ body{
        									請先登入哦 !          
       									</div>
       									<div class="modal-footer">
-											<form id="form-1" action="<%=pageContext.getServletContext().getContextPath()%>/user/singinPage">
+											<form id="form-1" action="<%=pageContext.getServletContext().getContextPath()%>/user/signinPage">
         										<button type="submit" class="btn btn-primary" id="">登入</button>
 											</form>
       									</div>
