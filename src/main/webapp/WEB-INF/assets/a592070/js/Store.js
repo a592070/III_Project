@@ -39,7 +39,8 @@ const store = new Vuex.Store({
         },
         selectItemDialog: false,
         selectItemLoading: true,
-        selectItemData: {index: 0, type: 0}
+        selectItemData: {index: 0, type: 0},
+        saveAvailable: false
     },
     getters: {
         getTravelSetInfoLoading: (state) => state.travelSetInfoLoading,
@@ -48,7 +49,8 @@ const store = new Vuex.Store({
 
         getCurrentTravelSetDetail: (state) => state.currentEditTravelSetDetail,
         getCurrentTravelSetSelectItem: (state) => state.currentEditTravelSetSelectItem,
-        getCurrentTravelSetInfo: (state) => state.currentEditTravelSetInfo
+        getCurrentTravelSetInfo: (state) => state.currentEditTravelSetInfo,
+        getSaveAvailable: (state) => state.saveAvailable,
     },
     mutations: {
         toggleTravelSetInfoLoading(state, flag){
@@ -196,6 +198,13 @@ const store = new Vuex.Store({
                 }
                 return response.data.message;
             })
+        },
+        handleUserAvailable(state, username){
+            let url = context + '/admin/travelSet/checkuser/'+username;
+            return axios.get(url)
+                .then(response => {
+                    return response.data;
+                });
         }
     }
 })

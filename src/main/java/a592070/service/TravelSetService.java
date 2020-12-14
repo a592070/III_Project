@@ -18,6 +18,7 @@ public interface TravelSetService {
 
     int ADMIN_ID = 1;
 
+    boolean checkUser(String username);
 
     TravelSetDO getEle(Integer id, boolean loadFetch);
     TravelSetDO getEle(Integer id, boolean loadFetch, boolean findFromPersistence);

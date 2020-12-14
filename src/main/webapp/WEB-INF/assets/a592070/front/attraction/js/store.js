@@ -21,6 +21,23 @@ const store = new Vuex.Store({
         },
 
         selectDetailLoading: true,
+        initAttractionData: {
+            sn: 0,
+            name: '暫時沒有資訊',
+            toldescribe: '暫時沒有資訊',
+            description: '暫時沒有資訊',
+            tel: '暫時沒有資訊',
+            address: '台灣',
+            px: 0,
+            py: 0,
+            openTime: '暫時沒有資訊',
+            ticketInfo: '暫時沒有資訊',
+            travellingInfo: '暫時沒有資訊',
+            keywords: '暫時沒有資訊',
+            remarks: '暫時沒有資訊',
+            rating: 1,
+            region: '暫時沒有資訊'
+        },
         attractionData: {
             sn: 0,
             name: '暫時沒有資訊',
@@ -86,6 +103,7 @@ const store = new Vuex.Store({
             state.selectDetailLoading = flag;
         },
         setAttractionData(state, data){
+            state.attractionData = state.initAttractionData;
             if(data.sn) state.attractionData.sn = data.sn;
             if(data.name) state.attractionData.name = data.name;
             if(data.toldescribe) state.attractionData.toldescribe = data.toldescribe;

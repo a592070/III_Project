@@ -29,7 +29,7 @@
               >
                 <v-text-field
                     v-model="search"
-                    v-on:focusout="handleSelectedKeyword"
+                    v-on:keyup="handleSelectedKeyword"
                     clearable
                     flat
                     solo-inverted

@@ -16,6 +16,11 @@ public class TravelSetServiceImpl implements TravelSetService{
     private TravelSetDAO dao;
 
     @Override
+    public boolean checkUser(String username) {
+        return dao.checkUser(username);
+    }
+
+    @Override
     public TravelSetDO getEle(Integer id, boolean loadFetch) {
         return getEle(id, loadFetch, false);
     }

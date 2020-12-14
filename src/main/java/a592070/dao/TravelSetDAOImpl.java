@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import rambo0021.pojo.AccountBean;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
@@ -40,6 +41,15 @@ public class TravelSetDAOImpl implements TravelSetDAO{
             travelSetDO.getTravelRestaurants().size();
         }
         return travelSetDO;
+    }
+
+    @Override
+    public boolean checkUser(String username) {
+        String hql = "from AccountBean where userName = :username";
+        Session session = sessionFactory.getCurrentSession();
+        Query<AccountBean> query = session.createQuery(hql, AccountBean.class);
+        query.setParameter("username", username);
+        return query.list().isEmpty();
     }
 
     @Override
