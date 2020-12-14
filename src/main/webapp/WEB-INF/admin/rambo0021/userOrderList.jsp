@@ -49,7 +49,7 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">大訂單號</th>
+                    <th scope="col">FunTaiwan訂單</th>
                     <th scope="col">餐廳名稱</th>
                     <th scope="col">住宿名稱</th>
                     <th scope="col">高鐵車次</th>

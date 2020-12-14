@@ -35,26 +35,26 @@ public class UserPageController {
 	@GetMapping("/registrationPage")
 	public String registrationPage() {
 	
-		return "rambo0021/userSingup";
+		return "rambo0021/userSignup";
 	}
 	
-	@RequestMapping("/singinPage")
-	public String singinPage(HttpServletRequest req,Model m) {
+	@RequestMapping("/signinPage")
+	public String signinPage(HttpServletRequest req,Model m) {
 		
 //		 System.out.println("登入前攔截");
 		 String reqURL = req.getHeader("Referer");
 		 if(reqURL==null) {
 //			 System.out.println("我是空的");
-			 reqURL=req.getRequestURL().toString().replace("user/singinPage", "FunTaiwan");
+			 reqURL=req.getRequestURL().toString().replace("user/signinPage", "FunTaiwan");
 		 }else if(reqURL.contains("/user/registrationPage")) {
 //			 System.out.println("前頁註冊");
 			 reqURL=reqURL.toString().replace("user/registrationPage", "FunTaiwan");
-		 }else if(reqURL.contains("/user/singinPage")) {
-			 reqURL=reqURL.toString().replace("user/singinPage", "FunTaiwan");
+		 }else if(reqURL.contains("/user/signinPage")) {
+			 reqURL=reqURL.toString().replace("user/signinPage", "FunTaiwan");
 		 }
 //		 System.out.println("reqURL="+reqURL);
 		m.addAttribute("reqURL", reqURL);
-		return "rambo0021/userSingin";
+		return "rambo0021/userSignin";
 	}
 	@RequestMapping("/userProfilePage")
 	public String userProfilePage(@ModelAttribute("userBean") AccountBean aBean,Model m) {	

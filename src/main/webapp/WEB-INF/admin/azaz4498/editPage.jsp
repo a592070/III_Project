@@ -93,18 +93,18 @@ h2 {
 
 								<div class="card-body">
 									<form id=edit_form action=${pageContext.servletContext.contextPath}/admin/edit.controller method="POST">
-										<input type="hidden" name="artId" id="artId" value="${artBean[0].artId }">
+										<input type="hidden" name="artId" id="artId" value="${artBean.artId }">
 										
 
 										<div class="form-group">
 											<label for="fname"><h3>標題</h3></label>
 											<input type="text" name="articleTitle" id="title" class="form-control"
-												value="${artBean[0].artTitle }">
+												value="${artBean.artTitle }">
 										</div>
 										<div class="form-group">
 											<label for="userId"><h3>作者</h3></label>
 											<input type="text" name="userid" id="userid" class="form-control"
-												value="${artBean[0].artUserId }" readonly="value">
+												value="${artBean.artUserId }" readonly="value">
 										</div>
 										<div class="form-group">
 											<label for="typeSelect"><h3>分類</h3></label> 
@@ -122,7 +122,7 @@ h2 {
 										</div>
 										<div class="form-group">
 											<label for="content"><h3>內容</h3></label>
-											<textarea class="form-control" id="editor" cols="100" name="articleContent">${artBean[0].artContent }</textarea>
+											<textarea class="form-control" id="editor" cols="100" name="articleContent">${artBean.artContent }</textarea>
 										</div>
 
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
@@ -172,7 +172,7 @@ h2 {
 			
 			var typeSelect = document.getElementById("typeSelect");
 			var options = typeSelect.getElementsByTagName("option");
-			var selectedType = '${artBean[0].articleType.typeId}';
+			var selectedType = '${artBean.articleType.typeId}';
 			console.log(selectedType);
 			if(selectedType==0){
 				options[8].selected = true;
@@ -265,8 +265,8 @@ h2 {
 			<!--editor config end -->
 			<!-- redo btn function -->
 			function redo(){
-				document.getElementById("title").value = "${artBean[0].artTitle }";
-				editor.setData( '${artBean[0].artContent }');
+				document.getElementById("title").value = "${artBean.artTitle }";
+				editor.setData( '${artBean.artContent }');
 				getDefaultType();
 				event.preventDefault();
 			}

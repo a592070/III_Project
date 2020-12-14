@@ -7,6 +7,8 @@ import a592070.pojo.AttractionVO;
 import a592070.service.AttractionService;
 import a592070.service.ViewService;
 import global.Constant;
+
+import org.apache.catalina.filters.ExpiresFilter.XServletOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -129,10 +131,10 @@ public class AttractionFrontController {
 
         Map<String, Object> map = new HashMap<>();
         try{
-            map.put("attractionData", attractionDO);
             // /assets/attraction/xxx
             String destPrefix = Constant.ATTRACTION_PIC_URL + File.separator +attractionDO.getSn();
             map.put("attractionPic", service.listPictureDest(attractionDO, destPrefix, servletContext));
+            map.put("attractionData", attractionDO);
         }catch (Exception e){
             e.printStackTrace();
         }

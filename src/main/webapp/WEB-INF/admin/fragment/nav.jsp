@@ -88,7 +88,7 @@
           <c:if test="${empty userBean}">
             <li class="nav-item">
               <a
-                href="<%=application.getContextPath()%>/user/singinPage"
+                href="<%=application.getContextPath()%>/user/signinPage"
                 class="nav-link"
                 >登入</a
               >
@@ -104,7 +104,7 @@
           <c:if test="${!empty userBean}">
             <li class="nav-item">
               <a
-                href="<%=application.getContextPath()%>/user/singout"
+                href="<%=application.getContextPath()%>/user/signout"
                 class="nav-link"
                 >登出</a
               >

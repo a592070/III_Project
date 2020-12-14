@@ -67,7 +67,7 @@
 	<!--測試 -->
 <!-- 	<mvc:interceptors> -->
 <!--  		<mvc:interceptor>  -->
-<!-- 			<mvc:mapping path="/user/singinPage"/> -->
+<!-- 			<mvc:mapping path="/user/signinPage"/> -->
 <!-- 			<bean class="rambo0021.Testinterceptors"/> -->
 <!-- 		</mvc:interceptor> -->
 <!-- 	</mvc:interceptors> -->
