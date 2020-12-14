@@ -392,7 +392,7 @@ body{
        						 document.getElementById("dbroom")[0].selected = "selected";
        						 document.getElementById("qdroom")[1].selected = "selected";
        						 document.getElementById("client_name").value = "田小傑";
-       						 document.getElementById("client_phone").value = "0928957224";
+       						 document.getElementById("client_phone").value = "0928957224"; 
 
        					 }
                        
