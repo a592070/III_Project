@@ -107,7 +107,7 @@
 									<button type="button" class="btn btn-light" id="fastsignin">帶入資料</button>
 <!-- 									<p> -->
 <!-- 										還沒有帳號 ? <a class="text-blue" -->
-<%-- 											href="${pageContext.servletContext.contextPath}/admin/singup">註冊</a> --%>
+<%-- 											href="${pageContext.servletContext.contextPath}/admin/signup">註冊</a> --%>
 <!-- 									</p> -->
 								</div>
 							</div>

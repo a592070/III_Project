@@ -50,7 +50,7 @@
                 <h1 class="h1">會員登入</h1>
                 <div class="form-group">
                   <!-- google login -->
-                  <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="padding-left: 430px"></div>
+<!--                   <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="padding-left: 430px"></div> -->
                 </div>
               </div>
             </div>
@@ -169,7 +169,7 @@
           $.ajax({
 
             type: "POST",
-            url: "${pageContext.servletContext.contextPath}/user/singin",
+            url: "${pageContext.servletContext.contextPath}/user/signin",
             data: formData,
             processData: false,
             contentType: false,

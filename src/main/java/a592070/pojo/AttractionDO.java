@@ -54,6 +54,7 @@ public class AttractionDO {
     private String travellingInfo;
     private String keywords;
     private String remarks;
+    @Column(name="rating")
     private BigDecimal rating;
     private String region;
     @Type(type = "org.hibernate.type.NumericBooleanType")
@@ -200,6 +201,7 @@ public class AttractionDO {
     }
 
     public BigDecimal getRating() {
+    	if(rating == null || rating.doubleValue()<0) rating = BigDecimal.ZERO;
         return rating;
     }
 

@@ -308,7 +308,7 @@
           <input type="button" value="註冊" class="btn btn-primary py-3 px-5" id="submit" disabled>
           <p style="font-size: 18px">
             已經有帳號 ? <a class="text-info stretched-link"
-              href="${pageContext.servletContext.contextPath}/user/singinPage">登入</a>
+              href="${pageContext.servletContext.contextPath}/user/signinPage">登入</a>
           </p>
         </div>
       </form>
@@ -540,7 +540,7 @@
       $.ajax({
 
         type: "POST",
-        url: "${pageContext.servletContext.contextPath}/user/singup",
+        url: "${pageContext.servletContext.contextPath}/user/signup",
         data: formData,
         processData: false,
         contentType: false,
@@ -554,7 +554,7 @@
             icon: "success",
             button: false
           });
-          setTimeout(function () { location.href = "<%=application.getContextPath()%>/user/singinPage"; }, 2000);
+          setTimeout(function () { location.href = "<%=application.getContextPath()%>/user/signinPage"; }, 2000);
 
         },
 
