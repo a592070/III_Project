@@ -31,6 +31,8 @@ import azaz4498.model.Picture;
 import azaz4498.service.ArticleService;
 import azaz4498.service.ArticleTypeService;
 import azaz4498.service.PictureService;
+import rambo0021.pojo.AccountBean;
+import rambo0021.serive.AccountService;
 
 @Controller
 @Lazy
@@ -44,6 +46,8 @@ public class ImageUploadController {
 	ArticleTypeService articleTypeService;
 	@Autowired
 	PictureService pictureService;
+	@Autowired
+	AccountService accountService;
 	@Autowired
 	private ServletContext context;
 
@@ -70,7 +74,7 @@ public class ImageUploadController {
 		picture.setRefId(articleId);
 
 		Integer picId = pictureService.addPic(picture).getId();
-		String imgPath = "showPic/" + picId;
+		String imgPath = "../showPic/" + picId;
 
 		map.put("finalFileName", finalFileName);
 		map.put("url", imgPath);
@@ -91,6 +95,22 @@ public class ImageUploadController {
 
 		return responseEntity;
 
+	}
+	
+	@RequestMapping(value = "f_showUserPic/{userName}",method = RequestMethod.GET)
+	public ResponseEntity<byte[]> f_showUserPic(@PathVariable(name = "userName") String userName) {
+		HttpHeaders headers = new HttpHeaders();
+		AccountBean account = accountService.userDetail(userName);
+		headers.setContentType(MediaType.IMAGE_PNG);
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(account.getPicture(),headers,HttpStatus.OK);
+
+		
+		return responseEntity;
+		
+	}{
+		
 	}
 
 }
