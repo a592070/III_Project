@@ -49,7 +49,7 @@ h3{
           <script>
     $(".nav-shop__circle").html('${cartnum}');
 //     console.log($(".nav-shop__circle").val());
-    console.log("nu = " + ${cartnum});
+    console.log("nu = " + ${cartnum}); 
 // 	   console.log("num");
     </script>
     
