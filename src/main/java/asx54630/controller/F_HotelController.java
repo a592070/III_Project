@@ -102,18 +102,18 @@ public class F_HotelController {
 	return "asx54630/F_HotelDetail";
 	}
 	
-	@RequestMapping(path = "checkLogin", method = RequestMethod.POST)
-	public @ResponseBody boolean checkLogin(Model m) {
-		AccountBean userBean =  (AccountBean) m.getAttribute("userBean");
-		System.out.println("userBean = " + userBean);
-		if(userBean == null) {
-			System.out.println("未登入");
-			return false;
-		}else {
-			return true;
-		}
-//		return true;
-	}
+//	@RequestMapping(path = "checkLogin", method = RequestMethod.POST)
+//	public @ResponseBody boolean checkLogin(Model m) {
+//		AccountBean userBean =  (AccountBean) m.getAttribute("userBean");
+//		System.out.println("userBean = " + userBean);
+//		if(userBean == null) {
+//			System.out.println("未登入");
+//			return false;
+//		}else {
+//			return true;
+//		}
+////		return true;
+//	}
 	
 //	@RequestMapping(path = "/F_hoteldetail", method = RequestMethod.GET) //查詢單筆_給修改用
 //	public String processHotelDetail(@RequestParam(name = "detailsn") BigDecimal detailsn,Model m) {
