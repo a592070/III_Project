@@ -350,7 +350,7 @@
         var loginCheck = $('#c_userId').val;
         if(loginCheck==null||loginCheck==""){
           alert('請先登入');
-          window.location.href="<%=application.getContextPath()%>/user/singinPage";
+          window.location.href="<%=application.getContextPath()%>/user/signinPage";
         }
         else if(c_content==null || c_content==""){
           alert('請輸入內容再進行留言')
