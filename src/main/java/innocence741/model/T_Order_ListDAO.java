@@ -135,6 +135,8 @@ public class T_Order_ListDAO {
 				hBean.setTainan(list.get(i)[26].toString());
 			if (list.get(i)[27] != null)
 				hBean.setZuoying(list.get(i)[27].toString());
+			tBean.setT_status(1);
+			tBean.setVersion(1);
 
 //			tBean.setOrder_table(oBean);
 			tBean.setCarType(cBean);

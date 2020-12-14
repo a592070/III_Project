@@ -30,7 +30,7 @@ public class AttractionFrontController {
     @Autowired
     private ServletContext servletContext;
 
-    private static final int PAGE_SIZE = 9;
+    private static final int PAGE_SIZE = 30;
 
     @Autowired@Qualifier("attractionService")
     private AttractionService service;
@@ -47,6 +47,7 @@ public class AttractionFrontController {
 
         List<AttractionVO> list = viewService.listWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), true);
         Map<String, Object> map = new HashMap<>();
+
         map.put("tableData", list);
         map.put("pageData", pageSupport);
         return map;
@@ -86,8 +87,8 @@ public class AttractionFrontController {
     }
     @RequestMapping("/attraction/list/{page}/{region}/{keywords}")
     public Map<String, Object> getAttractionListByKeywords(@PathVariable("page") int page,
-                                                           @PathVariable(name="region", required = false) String region,
-                                                           @PathVariable(name="keywords", required = false) String keywords,
+                                                           @PathVariable(name="region") String region,
+                                                           @PathVariable(name="keywords") String keywords,
                                                            @RequestParam(name="sortColumn", required = false) String sortColumn,
                                                            @RequestParam(name = "order", required = false) String order){
         PageSupport pageSupport = new PageSupport();
@@ -123,7 +124,7 @@ public class AttractionFrontController {
         return map;
     }
     @RequestMapping("/attraction/entity/{id}")
-    public Map<String, Object> getAttraction(@PathVariable(name = "id") int id) {
+    public Map<String, Object> getAttraction(@PathVariable(name = "id") Integer id) {
         AttractionDO attractionDO = service.getEleWithStatus(id, true, AttractionService.getFromDatabase, true);
 
         Map<String, Object> map = new HashMap<>();

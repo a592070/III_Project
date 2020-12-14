@@ -15,10 +15,9 @@
         <v-container fluid>
           <v-row>
             <v-spacer></v-spacer>
-            <v-col md="10" :align="'center'">
+            <v-col md="12" :align="'center'">
             <v-data-iterator
-              :items="items"
-              :search="search"
+              :items="attractionList"
               hide-default-footer
           >
             <template v-slot:header>
@@ -29,6 +28,7 @@
               >
                 <v-text-field
                     v-model="search"
+                    v-on:focusout="handleSelectedKeyword"
                     clearable
                     flat
                     solo-inverted
@@ -38,23 +38,35 @@
                 ></v-text-field>
                 <template v-if="$vuetify.breakpoint.mdAndUp">
                   <v-spacer></v-spacer>
-                  <v-select
-                      v-model="selectRegion"
-                      flat
-                      solo-inverted
-                      hide-details
-                      :items="regions"
-                      prepend-inner-icon="mdi-magnify"
-                      label="Sort by"
-                  ></v-select>
+<!--                  <v-select-->
+<!--                      v-model="selectRegion"-->
+<!--                      flat-->
+<!--                      solo-inverted-->
+<!--                      hide-details-->
+<!--                      :items="regions"-->
+<!--                      prepend-inner-icon="mdi-magnify"-->
+<!--                      label="Region"-->
+<!--                      @change="handleSelectedRegion(selectRegion)"-->
+<!--                  >-->
+<!--                    <template v-slot:prepend-item>-->
+<!--                      <v-list-item disabled :value="null">&#45;&#45;請選擇&#45;&#45;</v-list-item>-->
+<!--                      <v-list-item :value="'all'">全部</v-list-item>-->
+<!--                    </template>-->
+<!--                  </v-select>-->
+                  <el-select v-model="selectRegion" placeholder="選擇地區" @change="handleSelectedRegion(selectRegion)">
+                    <el-option label="--請選擇--" disabled :value="null"></el-option>
+                    <el-option v-for="ele in regions" v-bind:key="ele" :value="ele" ></el-option>
+                  </el-select>
                   <v-spacer></v-spacer>
                 </template>
               </v-toolbar>
             </template>
 
             <template v-slot:default="props">
-<!--              <v-row>-->
-<!--                <v-col-->
+<!--              <v-container style="height: 100vh; overflow:auto">-->
+<!--                <el-scrollbar style="height: 100%;">-->
+<!--                  <v-row v-infinite-scroll="load">-->
+<!--                  <v-col-->
 <!--                    v-for="item in props.items"-->
 <!--                    :key="item.name"-->
 <!--                    cols="12"-->
@@ -71,7 +83,7 @@
 
 <!--                    <v-list dense>-->
 <!--                      <v-list-item-->
-<!--                          v-for="(key, index) in filteredKeys"-->
+<!--                          v-for="(key, index) in filteredRegions"-->
 <!--                          :key="index"-->
 <!--                      >-->
 <!--                        <v-list-item-content :class="{ 'blue&#45;&#45;text': sortBy === key }">-->
@@ -87,48 +99,121 @@
 <!--                    </v-list>-->
 <!--                  </v-card>-->
 <!--                </v-col>-->
-<!--          </v-row>-->
+<!--              </v-row>-->
+<!--                </el-scrollbar>-->
+<!--              </v-container>-->
+<!--              <v-card>-->
+<!--                <template v-for="(beer, index) in beers">-->
+<!--                  <v-layout-->
+<!--                      :key="index"-->
+<!--                      @click=""-->
+<!--                  >-->
+<!--                    <v-flex xs5>-->
+<!--                      <v-img-->
+<!--                          :src="beer.img"-->
+<!--                          height="125px"-->
+<!--                          contain-->
+<!--                      ></v-img>-->
+<!--                    </v-flex>-->
+<!--                    <v-flex xs7>-->
+<!--                      <v-card-title primary-title>-->
+<!--                        <div>-->
+<!--                          <div class="headline" v-html="beer.name"></div>-->
+<!--                          <div v-html="beer.tagline"></div>-->
+<!--                        </div>-->
+<!--                      </v-card-title>-->
+<!--                    </v-flex>-->
+<!--                  </v-layout>-->
+<!--                </template>-->
+<!--                <div v-if="beers.length === 0">-->
+<!--                  <v-progress-circular-->
+<!--                      indeterminate-->
+<!--                      color="primary"-->
+<!--                      class="bottom"-->
+<!--                  />-->
+<!--                </div>-->
+<!--              </v-card>-->
 
                 <v-container style="height: 100vh; overflow:auto">
+                  <el-scrollbar style="height: 100%;" ref="scrollbar">
+                    <ul class="align-center"
+                        v-infinite-scroll="load"
+                        infinite-scroll-disabled="disabled"
+                        infinite-scroll-distance="300"
+                        style="padding-right: 10% ;"
+                    >
+                      <template v-for="item in attractionList">
+                      <li type="none">
+                        <v-hover v-slot="{ hover }">
+                          <v-card
+                              :elevation="hover ? 12 : 2"
+                              :class="{ 'on-hover': hover }"
+                          >
+                        <v-layout>
+                          <v-flex xs5>
+                            <el-image
+                                :src="item.images[0]"
+                                :preview-src-list="item.images"
+                                :fit="'contain'"
+                                >
+                              <el-image
+                                  slot="error"
+                                  :src="noPic"
+                                  :fit="'contain'"
+                              >
+                              </el-image>
+                            </el-image>
 
-                  <el-scrollbar style="height: 100%;">
-                    <ul class="align-center" v-infinite-scroll="load" style="padding-right: 10% ;">
-                      <li v-for="i in count" type="none">
-                        <div class="row">
-                          <div class="col-md-6 col-lg-3" v-for="index in 4">
-                            <div class="destination">
-
-                              <div class="img img-2 d-flex justify-content-center align-items-center">
-                                <el-image
-                                    :src="images[0]"
-                                    :preview-src-list="images">
-                                </el-image>
-                              </div>
+                          </v-flex>
 
 
-                              <div class="text p-3">
-                                <h3><a href="#">Luxury Restaurant</a></h3>
-                                <p class="rate">
-                                  <i class="icon-star"></i>
-                                  <i class="icon-star"></i>
-                                  <i class="icon-star"></i>
-                                  <i class="icon-star"></i>
-                                  <i class="icon-star-o"></i>
-                                  <span>8 Rating</span>
-                                </p>
-                                <p>Far far away, behind the word mountains, far from the countries</p>
-                                <hr>
-                                <p class="bottom-area d-flex">
-                                  <span><i class="icon-map-o"></i> San Franciso, CA</span>
-                                  <span class="ml-auto">
-                          <a type="button" @click="$vuetify.goTo(toDetailInfo, options)">Discover</a></span>
-                                </p>
-                              </div>
+                          <v-flex xs7 >
+
+
+                            <div class="text p-3">
+                              <h3><a href="javascript:0" @click="toDetail(item.sn)">{{item.name}}</a></h3>
+                              <el-rate
+                                  v-model="item.rating"
+                                  disabled
+                                  show-score
+                                  text-color="#ff9900"
+                                  score-template="{value}">
+                              </el-rate>
+<!--                              <p class="rate">-->
+<!--                                <i class="icon-star"></i>-->
+<!--                                <i class="icon-star"></i>-->
+<!--                                <i class="icon-star"></i>-->
+<!--                                <i class="icon-star"></i>-->
+<!--                                <i class="icon-star-o"></i>-->
+<!--                                <span>8 Rating</span>-->
+<!--                              </p>-->
+                              <p>{{item.description}}</p>
+                              <hr>
+                              <p class="bottom-area d-flex">
+                                <span><i class="icon-map-o"></i>{{item.address}}</span>
+                                <span class="ml-auto">
+                                  <el-button type="success" round @click="toDetail(item.sn)">Discover</el-button>
+                                </span>
+                              </p>
                             </div>
-                          </div>
-                        </div>
+
+                          </v-flex>
+
+                        </v-layout>
+                        <hr/>
+                          </v-card>
+                        </v-hover>
                       </li>
+
+                      </template>
                     </ul>
+                    <div class="gotop-a">
+                      <a href="javascript:;" class="el-icon-caret-top" @click="scrollbarToTop"></a>
+                    </div>
+                    <v-container>
+                      <p v-if="selectListLoading"><strong>加 載 中 ...</strong></p>
+                      <p v-if="noMore"><strong>沒有更多了</strong></p>
+                    </v-container>
                   </el-scrollbar>
                 </v-container>
 
@@ -231,7 +316,7 @@
 module.exports = {
   components: {
     "attraction-detail": httpVueLoader(context + '/assets/a592070/front/attraction/components/attractionDetail.vue'),
-    'attraction-info': httpVueLoader(context + '/assets/a592070/front/attraction/components/attractionInfo.vue')
+    // 'attraction-info': httpVueLoader(context + '/assets/a592070/front/attraction/components/attractionInfo.vue')
   },
   data() {
     return {
@@ -250,117 +335,10 @@ module.exports = {
       hidden: false,
       btnFlag: false,
 
-
-
-
+      noPic: context+'/assets/nopic.jpg',
       selectRegion: '全部',
       search: '',
-      filter: {},
-      regions: [
-        '全部', '台北', '新北', '桃園', '台中', '高雄'
-      ],
-      items: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: '14%',
-          iron: '1%',
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          sodium: 129,
-          calcium: '8%',
-          iron: '1%',
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          sodium: 337,
-          calcium: '6%',
-          iron: '7%',
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          sodium: 413,
-          calcium: '3%',
-          iron: '8%',
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          sodium: 327,
-          calcium: '7%',
-          iron: '16%',
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          sodium: 50,
-          calcium: '0%',
-          iron: '0%',
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          sodium: 38,
-          calcium: '0%',
-          iron: '2%',
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          sodium: 562,
-          calcium: '0%',
-          iron: '45%',
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          sodium: 326,
-          calcium: '2%',
-          iron: '22%',
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          sodium: 54,
-          calcium: '12%',
-          iron: '6%',
-        },
-      ],
+
     }
   },
   computed: {
@@ -377,48 +355,48 @@ module.exports = {
         easing: 'easeInOutCubic'
       }
     },
-
-
-
-    filteredKeys () {
-      return this.keys.filter(key => key !== 'Name')
+    noMore () {
+      return this.pageData.currentPage >= this.pageData.totalPageCount;
     },
+    disabled () {
+      return this.selectListLoading || this.noMore
+    },
+    ...Vuex.mapState(['attractionList', 'selectListLoading', 'pageData', 'regions'])
+  },
+  created: function (){
   },
   mounted(){
     window.addEventListener("scroll", this.scrollToTop, true);
+    this.init();
   },
   destroyed(){
     window.removeEventListener("scroll", this.scrollToTop, true);
   },
   methods: {
-    getFirstImage(){
+    init(){
+      this.$store.dispatch("initRegionsData");
+      this.$store.dispatch("initAttractionListData");
+      this.$store.dispatch('initAttractionData', 1);
     },
     load () {
-      this.count += 1
+      this.$store.commit("addPage");
+      this.$store.dispatch("appendAttractionListData", {region: this.selectRegion, keyword:this.search});
     },
-    scrollTo() {
-      let scrollTop =
-          window.pageYOffset ||
-          document.documentElement.scrollTop ||
-          document.body.scrollTop;
-      this.scrollTop = scrollTop;
-      let target =  this.$refs['infoList'].offsetTop;
-      console.log(target);
-      console.log(scrollTop);
-      if (this.scrollTop > target) {
-        this.scrollFlag = true;
-      }
+    handleSelectedKeyword(){
+      this.selectData();
     },
-    backTop() {
-      const that = this;
-      let timer = setInterval(() => {
-        let ispeed = Math.floor(-that.scrollTop / 5);
-        document.documentElement.scrollTop = document.body.scrollTop =
-            that.scrollTop + ispeed;
-        if (that.scrollTop === 0) {
-          clearInterval(timer);
-        }
-      }, 16);
+    handleSelectedRegion(region){
+      this.selectRegion = region;
+      this.selectData();
+    },
+    selectData(){
+      console.log(this.selectRegion, this.search);
+      this.$store.commit('toggleSelectListLoading', true);
+      this.$store.dispatch("selectedAttractionListData", {region: this.selectRegion, keyword:this.search})
+          .then(() => {
+            this.scrollbarToTop();
+            this.$store.commit('toggleSelectListLoading', false);
+          })
     },
     scrollToTop() {
       const that = this;
@@ -433,6 +411,16 @@ module.exports = {
         that.btnFlag = false;
       }
     },
+    scrollbarToTop(){
+      this.$refs['scrollbar'].wrap.scrollTop = 0;
+    },
+
+
+
+    toDetail(id){
+      this.$vuetify.goTo(this.toDetailInfo, this.options);
+      this.$store.dispatch('initAttractionData', id);
+    }
 
 
   }
@@ -441,6 +429,10 @@ module.exports = {
 
 </script>
 <style>
+* {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
 .box {
   width: 200px;
   height: 100px;
@@ -454,5 +446,28 @@ module.exports = {
   overflow: scroll;
   width: 110%;
   height: 120%;
+}
+.gotop-a {
+  /*display: block;*/
+  /*width: 1.5rem;*/
+  /*height: 5rem;*/
+  /*!*background: url(~@/assets/images/icon-top.gif) no-repeat 0 0;*!*/
+  /*background-size: 0.5rem;*/
+  /*margin: auto;*/
+  right: 4px;
+  bottom: 25px;
+  position: absolute;
+  background-color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #409eff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+  cursor: pointer;
+  z-index: 5;
 }
 </style>

@@ -21,7 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-
+import asx54630.model.HotelOrder;
 import innocence741.model.T_Order_List;
 
 import iring29.model.R_Order_List;
@@ -42,6 +42,8 @@ public class OrderTable {
 	private AccountBean accountBean;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "oTable", orphanRemoval=true)
 	private Set<R_Order_List> r_Order_Lists;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "orderTable", orphanRemoval=true)
+	private Set<HotelOrder> hotelOrder;
 //	@Transient
 //	private R_Order_List r_Order_List;
 
@@ -79,6 +81,8 @@ public class OrderTable {
 	public OrderTable() {
 		super();
 		r_Order_Lists = new HashSet<R_Order_List>();
+		t_Order_Lists = new HashSet<T_Order_List>();
+		hotelOrder = new HashSet<HotelOrder>();
 	}
 	
 
@@ -141,6 +145,18 @@ public class OrderTable {
 		this.totalPrice = totalPrice;
 	}
 	
+	public Set<HotelOrder> getHotelOrder() {
+		return hotelOrder;
+	}
+
+	public void setHotelOrder(Set<HotelOrder> hotelOrder) {
+		this.hotelOrder = hotelOrder;
+	}
+	
+	public void addHotelOrder(HotelOrder hList) {
+		hList.setoTable(this);
+		this.hotelOrder.add(hList);
+	}
 	
 
 }

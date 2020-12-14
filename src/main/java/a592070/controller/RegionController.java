@@ -20,7 +20,7 @@ public class RegionController {
     @Autowired@Qualifier("regionService")
     private RegionService service;
 
-    @RequestMapping("/admin/list.Region")
+    @RequestMapping({"/admin/list.Region", "/list.Region"})
     public List<String> listRegion(){
         List<RegionDO> list = service.list();
         List<String> regions = new ArrayList<>();

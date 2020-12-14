@@ -44,7 +44,7 @@ h3{
   <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
     
-    <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/6DuGxHp.jpg');">
+    <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/ne4Q62T.jpg');">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
@@ -68,7 +68,7 @@ h3{
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
 	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="regionkeywd" id="regionkeywd" class="form-control">
+	                    <select name="regionkeywd" id="regionkeywd" class="form-control" onchange="HotelRegionSearch()">
 	                      <option value="">選擇地區...</option>
                           <option value="基隆市">基隆市</option>
                        	  <option value="新北市">新北市</option>
@@ -98,7 +98,7 @@ h3{
 		           	  <div class="form-group">
 		                <div class="select-wrap one-third">
 	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="typekeywd" id="typekeywd" class="form-control" placeholder="類型搜尋">
+	                    <select name="typekeywd" id="typekeywd" class="form-control" placeholder="類型搜尋" onchange="HotelTypeSearch()">
                      	 <option value="">選擇類型...</option>
                      	 <option value="飯店">飯店</option>
                       	 <option value="民宿">民宿</option>
@@ -140,7 +140,7 @@ h3{
 		    					<div class="text p-3">
 		    						<div class="d-flex">
 		    							<div class="one">
-				    						<h3><a href="hotel-single.html">${hotels.NAME}</a></h3>
+				    						<h3>${hotels.NAME}</h3>
 				    						<p class="rate" id="test${hotels.SN}">
 				    							<span>${hotels.RATING}</span>
 				    						</p>
@@ -160,14 +160,15 @@ h3{
 											$("#test${hotels.SN}").prepend(tags, zerostar);
 				    						</script>
 			    						<div class="two">
-			    							<span class="price per-price">$40<br><small>/night</small></span>
+			    							<span class="price per-price"><small>雙/</small>${hotels.DOUBLE_ROOM}</span>
+			    							<span class="price per-price"><small>四/</small>${hotels.QUADRUPLE_ROOM}</span>
 		    							</div>
 		    						</div>
 		    						<p>${hotels.TYPE}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>&emsp;${hotels.REGION}</span> 
-		    							<span class="ml-auto"><a href="#">Book Now</a></span>
+		    							<span class="ml-auto"><a href="#">訂房去</a></span>
 		    						</p>
 		    					</div>
 		    				</div>
@@ -221,6 +222,53 @@ h3{
   					)
   			}
 
+  		  	function HotelRegionSearch() {
+  				console.log("地區搜尋")
+//   				var orderfiled = $("#orderfiled").val()
+  				var keyword = $("#keyword").val()
+  				var regionkeywd = $("#regionkeywd").val()
+  				var typekeywd = $("#typekeywd").val()
+//   				var order = $("#order").val()
+				var currentPage=1
+  				$.ajax(
+  						{
+  							type: 'POST',
+  							data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "currentPage" : currentPage },
+  							url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+  							dataType: 'html',
+  							success: function (response) {
+  								$("#h_data").children().remove();
+  								$("#h_data").append(response)
+
+  							}
+
+  						}
+  					)
+  			}
+
+  		  	function HotelTypeSearch() {
+  				console.log("類型搜尋")
+//   				var orderfiled = $("#orderfiled").val()
+  				var keyword = $("#keyword").val()
+  				var regionkeywd = $("#regionkeywd").val()
+  				var typekeywd = $("#typekeywd").val()
+//   				var order = $("#order").val()
+				var currentPage=1
+  				$.ajax(
+  						{
+  							type: 'POST',
+  							data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "currentPage" : currentPage },
+  							url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+  							dataType: 'html',
+  							success: function (response) {
+  								$("#h_data").children().remove();
+  								$("#h_data").append(response)
+
+  							}
+
+  						}
+  					)
+  			}
 
   		  $("#index").on('click', '#clickbtn', function (e) {
 
@@ -259,7 +307,7 @@ h3{
     		}
 
     		function detailpage(id){
-    			document.location.href="${pageContext.servletContext.contextPath}/F_hoteldetail?detailsn="+id;
+    			document.location.href="${pageContext.servletContext.contextPath}/F_hoteldetail/"+id;
         	}
             	
     		

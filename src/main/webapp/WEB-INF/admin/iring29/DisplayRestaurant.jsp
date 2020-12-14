@@ -36,6 +36,7 @@ img{
 	padding-left:50px;
 }
 
+
 </style>
 <!-- CSS STYLE -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/sona-master/css/bootstrap.min.css" type="text/css">
@@ -93,6 +94,12 @@ img{
     float: left;
     margin-right: 10px;
 }
+button#order {
+    padding-right: 50px;
+}
+.breadcrumb_section{
+	padding-top:50px;
+}
 </style>
 </head>
 <body>
@@ -106,7 +113,7 @@ img{
     </script>
 <div class="box">
 <!-- Breadcrumb Section Begin -->
-    <div class="breadcrumb-section">
+    <div class="breadcrumb_section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -292,7 +299,13 @@ img{
                     <div class="rd-reviews">
                         <h4>評論</h4>
                         <!-- review -->
+                        
                         <div id="reviews">
+                        <c:set var ="size" value= "${fn:length(comment)}" />
+                        <c:if test="${size < 1}">
+                        	<h5>目前沒有留言</h5>
+                        </c:if>
+                        <c:if test = "${size > 0}" >
                         <c:forEach var="comm" items="${comment}" >
                         <div class="review-item" id="${comm.com_id}">
                             <div class="ri-pic">
@@ -326,12 +339,13 @@ img{
                             </div>
                         </div>
                         </c:forEach>
+                        </c:if>
                         </div>
                         <!-- .review -->
                     </div>
                         
-                    <div class="review-add" id="review-add">
-                        <h4>歡迎寫下您的評論</h4>
+                        <div class="review-add" id="review-add">
+<!--                         <h4>歡迎寫下您的評論</h4> -->
 <!--                         <form  class="ra-form"> -->
                             <div class="ra-form">
                             <div class="row">
@@ -343,16 +357,16 @@ img{
                                 </div>
                                 <div class="col-lg-12">
                                     <div id="leavecomm">
-                                        <h5 id="comment_rating">您的評分</h5>
-                                        <div class="rating">
-<!--                                             <i class="icon_star"></i> -->
-                                             <i id="starRating" class='fa fa-star-o'></i>
-                                             <i id="starRating" class='fa fa-star-o'></i>
-                                             <i id="starRating" class='fa fa-star-o'></i>
-                                             <i id="starRating" class='fa fa-star-o'></i>
-                                             <i id="starRating" class='fa fa-star-o'></i>
-                                             <Input type='hidden' name='stars' id= 'stars' value=''>
-                                        </div>
+                                        <h5 id="comment_rating"></h5>
+<!--                                         <div class="rating"> -->
+<!--                                              <i class="icon_star"></i> --> 
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <i id="starRating" class='fa fa-star-o'></i> -->
+<!--                                              <Input type='hidden' name='stars' id= 'stars' value=''> -->
+<!--                                         </div> -->
                                     </div>
                                              <span id="starcomm"></span>
                                          <script>
@@ -373,23 +387,25 @@ img{
                                          }).click(function () {
                                              start = 1;
                                              let clicknum = $("i#starRating").index($(this)) + 1;
-                                             console.log("num" + clicknum);
+                                             let num = $("i#starRating").index($(this)) + 1;
+                                             console.log("num =" + clicknum);
                                              for (let i = 0; i < num; i++) {
                                                  $("i#starRating").eq(i).attr("class", "icon_star")
                                              }
-                                             $("#stars").val(clicknum);
+                                             $("#stars").attr("value", clicknum);
                                          })
                                          
                                          </script>
                                          <span id="com_msg"></span>
-                                    <textarea placeholder="寫下您對於此餐廳的評論" id="r_comment"></textarea>
-                                    <button type="button" id="commbtn" onclick="sendcomment()">送出</button>
+<!--                                     <textarea placeholder="寫下您對於此餐廳的評論" id="r_comment"></textarea> -->
+<!--                                     <button type="button" id="commbtn" onclick="sendcomment()">送出</button> -->
                                     <!-- add comment -->
                                     <script>
 										function sendcomment(){
 											var comment = $("#r_comment").val();
 											var stars = $("#stars").val();
-											console.log("comment = " + comment + ", stars = " + stars );
+											var id = $("#r_order_id").val()
+											console.log("comment = " + comment + ", stars = " + stars + ", id = " + id );
 											if($("#stars").val() == ""){
 												$("#starcomm").html("&nbsp;<font color='red' id='idsp'>&nbsp;評分不可為零</font>");
 											}else{
@@ -415,7 +431,7 @@ img{
 									                        	$.ajax(
 													                    {
 													                        type: 'POST',
-													                        data: {"com_content":comment, "rating":stars},
+													                        data: {"com_content":comment, "rating":stars, "id":id },
 													                        url: '${pageContext.servletContext.contextPath}/addComment',
 													                        dataType: 'json',
 													                        success:function(comm){
@@ -551,8 +567,9 @@ img{
 							                        dataType: 'html',
 							                        success:function(comm){
 // 														$(".rd-reviews").append(comm);
-														$("i#starRating").attr("class", "fa fa-star-o")
-														$("#commentbtn").empty();
+// 														$("i#starRating").attr("class", "fa fa-star-o")
+// 														$("#commentbtn").empty();
+														$("#closecomm").click();
 							                        }
 							                    }
 										)
@@ -564,11 +581,7 @@ img{
                          </div>
 <!--                         </form> -->
                     </div>
-<!--       									<script> -->
-<!-- 											$("#addcommbtn").click(function(){ -->
-<!--  												$(".review-add").remove(); -->
-<!-- 												}) -->
-<!--       									</script> -->
+                    
                 </div>
                 <div class="col-lg-4">
                     <div class="room-booking">
@@ -645,11 +658,11 @@ img{
                             </div>
                             <div class="select-option">
                                 <label for="guest">請輸入訂位者姓名:</label><span id="idsp">&nbsp;*必填</span><span id="nameck">&nbsp;</span>
-                                <input type="text" id="b-name" name="b_name" placeholder="" onchange="checkinfoN()">
+                                <input class="form-control" type="text" id="b-name" name="b_name" placeholder="" onchange="checkinfoN()">
                             </div>
                             <div class="select-option">
                                 <label for="room">請輸入訂位者電話:</label><span id="idsp">&nbsp;*必填</span><span id="phoneck">&nbsp;</span>
-                                <input type="text" id="b-phone" name="b_phone" placeholder="09xxxxxxxx" onchange="checkinfoP()">
+                                <input class="form-control" type="text" id="b-phone" name="b_phone" placeholder="09xxxxxxxx" onchange="checkinfoP()">
                             </div>
                             <button id="order" type="button" class="orderbtn review-add ra-form button">我要訂位</button>
                             <Input type='hidden' name='cartnum' value=''>

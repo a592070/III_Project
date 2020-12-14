@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,6 +57,11 @@ public class HighSpeedRailController {
 	@RequestMapping(path = "/orderHSRticket.controller", method = RequestMethod.GET)
 	public String orderHSRticket() {
 		return "innocence741/orderHSRticket";
+	}
+	
+	@RequestMapping(path = "/showT_Order.controller", method = RequestMethod.GET)
+	public String showT_Order() {
+		return "innocence741/showT_Order";
 	}
 	
 	@RequestMapping(path = "/HsrServlet", method = RequestMethod.POST)
@@ -248,4 +254,41 @@ public class HighSpeedRailController {
     }
 	
 
+    
+    
+    
+	@RequestMapping(path = "/ShowHistricalT_OrderServlet", method = RequestMethod.POST)
+	public void processAction4(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ParseException {
+		
+		HttpSession session2 = request.getSession(false);
+//        if (session2.getAttribute("Login") == null) {
+//            // 請使用者登入
+////        	System.out.println("hahahahaha");
+//        	String ujson1 = "{\"check\" : \"rederict\"}";
+//            PrintWriter out = response.getWriter();
+//            out.println(ujson1.toString());
+//        }else {
+        
+        	AccountBean account = (AccountBean) session2.getAttribute("Login");
+        	
+//        	String userName = account.getUserName();
+        	String userName = "abab";
+        	
+	        ArrayList<ArrayList> combineArrayList = new ArrayList<>();
+			t_Order_ListService.searchHistoricalOrder(combineArrayList, userName);	//假設使用者為abab 之後從session取得
+	//		System.out.println("combineArrayList.size= " + combineArrayList.size());
+			
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        String ujson = objectMapper.writeValueAsString(combineArrayList);
+	//		JsonNode jsonNode = objectMapper.readTree(ujson);
+	//		System.out.println(jsonNode.path(0).size());	
+	//		JsonNode node = jsonNode.path(1).path(1).path("order_id");	//取得orderID的位置
+	//		System.out.println(node);
+	        System.out.println(ujson+"\n");
+	        PrintWriter out = response.getWriter();
+	        out.println(ujson.toString());
+	    }
+		
+//	}
+    
 }

@@ -136,7 +136,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
         region = "%"+region+"%";
 
         String hql = "select vo from AttractionDO do , AttractionVO vo " +
-                "where (status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
+                "where (do.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
                 "( str(do.sn) like :keyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
                 "order by vo."+orderFiled;
         if(descending) hql += " desc";

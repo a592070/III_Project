@@ -3,9 +3,13 @@ package asx54630.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +35,7 @@ public class F_HotelController {
 	public String processHotelPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
 		hpage.sethPageSize(PAGESIZE);
 		int size = f_hotelservice.howMuchData("", "", "");
-		System.out.println(size);
+		System.out.println("=========================="+size);
 		hpage.sethTotalCount(size);
 		hpage.sethCurrentPage(currentPage);
 		
@@ -87,13 +91,22 @@ public class F_HotelController {
 
 
 
-	@RequestMapping(path = "/F_hoteldetail", method = RequestMethod.GET) //查詢單筆_給修改用
-	public String processHotelDetail(@RequestParam(name = "detailsn") BigDecimal detailsn,Model m) {
+	@RequestMapping(path = {"/F_hoteldetail","/F_hoteldetail/{detailsn}"} ) //查詢單筆_給修改用
+	public String processHotelDetail(@PathVariable(name = "detailsn", required = false) BigDecimal detailsn,HttpSession session) {
 		
 	Hotel hoteldetail = f_hotelservice.hotelDetail(detailsn);
-	m.addAttribute("hoteldetail", hoteldetail);
+	session.setAttribute("hoteldetail", hoteldetail);
 	
 	return "asx54630/F_HotelDetail";
 	}
+	
+//	@RequestMapping(path = "/F_hoteldetail", method = RequestMethod.GET) //查詢單筆_給修改用
+//	public String processHotelDetail(@RequestParam(name = "detailsn") BigDecimal detailsn,Model m) {
+//		
+//	Hotel hoteldetail = f_hotelservice.hotelDetail(detailsn);
+//	m.addAttribute("hoteldetail", hoteldetail);
+//	
+//	return "asx54630/F_HotelDetail";
+//	}
 	
 }	
