@@ -18,12 +18,34 @@ contentType="text/html;charset=UTF-8" language="java"%>
       html {
         scroll-behavior: smooth;
       }
+      .destination .icon {
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    opacity: 0.6;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease; }
+    .destination .icon span {
+      color: #000000;
+	    opacity:0.6;}
+      .destination .icon span {
+      color: #000000;
+	    opacity:0.6;
+      }
     </style>
     <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
       <div class="container" id="container">
+        <c:import url="/WEB-INF/admin/azaz4498/carousel.jsp"/>
         <div class="row d-flex" id="articleGrid">
           <c:forEach var="article" items="${list}" varStatus="status">
             <div class="col-md-3 d-flex ftco-animate">

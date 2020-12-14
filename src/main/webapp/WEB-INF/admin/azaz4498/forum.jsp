@@ -172,9 +172,18 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <!-- fixed btn-->
     <div class="fixed-btn">
-      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button"><i class="far fa-edit">撰寫文章</i></a>
+      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button" onclick="checkLogin()"><i class="far fa-edit">撰寫文章</i></a>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script>
+     function checkLogin(){
+      var loginCheck = eval(${userBean.userName});
+        if(loginCheck==null||loginCheck==""){
+          alert('請先登入');
+          window.location.href="<%=application.getContextPath()%>/user/singinPage";
+      }
+    </script>
+
     <script>
       $(document).ready(function(){
       $('body,html').animate({scrollTop: 800}, 800); 
