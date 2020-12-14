@@ -176,7 +176,7 @@ public class F_RorderController {
 		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
 		for(R_Order_List r : res_lists) {  //不使用綠界時打開
 			//send mail
-			String email = "929iring@gmail.com";  //不使用綠界時打開
+			String email = OTBean.getAccountBean().getEmail();  //不使用綠界時打開
 			String title = "Fun x Taiwan";  //不使用綠界時打開
 			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
 			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";

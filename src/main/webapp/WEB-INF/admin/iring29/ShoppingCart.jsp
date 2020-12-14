@@ -91,7 +91,7 @@ h5{
     </div><!-- .background -->
 <section class="cart_area">
 	<div class="container">
-		<div class="row">
+		<div class="row"  id="index">
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<table class="table table-hover">
 					<thead>
@@ -721,6 +721,13 @@ h5{
 		</div>
 	</div>
 </section>
+
+    <script>
+      $(document).ready(function(){
+      $('body,html').delay(1000).animate({scrollTop: $("#index").offset().top - 160}, 600); 
+      });
+
+    </script>
   <!-- footer -->
      <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
 

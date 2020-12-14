@@ -87,8 +87,8 @@ public class F_RestaurantController {
 	@RequestMapping(path = "/SearchRestaurant", method = RequestMethod.POST)
 	public String DisplayRestaurant(@RequestParam(name = "region_name") String region_name,
 								    			  @RequestParam(name = "restaurant_name") String restaurant_name, 
-								    			  @RequestParam(name = "book_date") String book_date,
-								    			  @RequestParam(name = "person_number") Integer person_number,
+//								    			  @RequestParam(name = "book_date") String book_date,
+//								    			  @RequestParam(name = "person_number") Integer person_number,
 								    			  @RequestParam(name = "stars") BigDecimal stars,
 								    			  @RequestParam(name = "currentPage") Integer currentPage,
 								    			  HttpSession session, Model m) {
@@ -112,8 +112,8 @@ public class F_RestaurantController {
 		
 		List<Restaurant_VO> res_data = F_Serivce.findMulti_R(start, userPage.getPageSize(), restaurant_name, region_name, fisrtStar, endStar);
 		
-		session.setAttribute("book_date", book_date);
-		session.setAttribute("person_number", person_number);
+//		session.setAttribute("book_date", book_date);
+//		session.setAttribute("person_number", person_number);
 		m.addAttribute("res_data", res_data);
 		m.addAttribute("userPage", userPage);
 		

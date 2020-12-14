@@ -100,6 +100,14 @@ button#order {
 .breadcrumb_section{
 	padding-top:50px;
 }
+.databtn{
+	background:gray;
+}
+#money{
+	width:200px;
+	text-align:right;
+	font-size:30px;
+}
 </style>
 </head>
 <body>
@@ -284,6 +292,10 @@ button#order {
                                     <tr>
                                         <td class="r-o">營業時間</td>
                                         <td><pre>${res_data.opentime}</pre></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">訂金</td>
+                                        <td>${res_data.price} /人</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -664,9 +676,28 @@ button#order {
                                 <label for="room">請輸入訂位者電話:</label><span id="idsp">&nbsp;*必填</span><span id="phoneck">&nbsp;</span>
                                 <input class="form-control" type="text" id="b-phone" name="b_phone" placeholder="09xxxxxxxx" onchange="checkinfoP()">
                             </div>
+                            <div class="select-option">
+                                <label for="room">訂金:</label>
+                                <input id="money" type="text" disabled value="0"><span>元</span>
+                                <Input type='hidden' id="deposit" value='${res_data.price}'>
+                            </div>
+                            
                             <button id="order" type="button" class="orderbtn review-add ra-form button">我要訂位</button>
+                            <button id="order" type="button" class="databtn" onclick="insertdata()">帶入資料</button>
                             <Input type='hidden' name='cartnum' value=''>
                             <script>
+							function insertdata(){
+								$("#theDate").attr("value","2020-12-30");
+								$("#sel").children().eq(1).attr("selected",true);
+								$("#p_num").children().eq(3).attr("selected",true);
+								$("#b-name").attr("value","王大明");
+								$("#b-phone").attr("value","0912123123");
+								var price = ($("#deposit").val() * $("#p_num").children().eq(3).val()) ;
+								console.log("price = " + price);
+								$("#money").attr("value",price)
+								console.log("date = " + $("#theDate").val())
+							}
+                            
                             var item = 0;
 								$("#order").click(function(){
 									//檢查是否登入
