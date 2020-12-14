@@ -277,7 +277,7 @@ td.col-sm-1.col-md-1.text-center{
 
 <!-- 餐廳 END -->
 
-	<div class="container">
+	<!-- <div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<table class="table table-hover">
@@ -371,7 +371,7 @@ td.col-sm-1.col-md-1.text-center{
 				
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 
 	<div class="container">
