@@ -58,8 +58,8 @@ public class AccountBean {
 	@JoinColumn(name = "IDENTITY")
 	private IdentityBean identityBean;
     
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accountBean", orphanRemoval=true)
-//	private List<OrderTable> orderTable = new ArrayList<OrderTable>();// 大訂單 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "accountBean", orphanRemoval=true)
+	private List<OrderTable> orderTable = new ArrayList<OrderTable>();// 大訂單 
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "accountBean")
     private Restaurant restaurant;	
@@ -180,13 +180,13 @@ public class AccountBean {
 		this.identityBean = identityBean;
 	}
 
-//	public List<OrderTable> getOrderTable() {
-//		return orderTable;
-//	}
-//
-//	public void setOrderTable(List<OrderTable> orderTable) {
-//		this.orderTable = orderTable;
-//	}
+	public List<OrderTable> getOrderTable() {
+		return orderTable;
+	}
+
+	public void setOrderTable(List<OrderTable> orderTable) {
+		this.orderTable = orderTable;
+	}
 
 	public Restaurant getRestaurant() {
 		return restaurant;

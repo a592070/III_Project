@@ -4,7 +4,7 @@
 
   <v-container fluid style="padding: 0; margin: 0;">
 
-    <v-container ref="infoList">
+    <v-container ref="infoListHead">
       <div class="row justify-content-start mb-5 pb-3" >
         <div class="col-md-7 heading-section">
           <span class="subheading">特別推薦</span>
@@ -12,7 +12,7 @@
         </div>
 
 
-        <v-container fluid>
+        <v-container fluid >
           <v-row>
             <v-spacer></v-spacer>
             <v-col md="12" :align="'center'">
@@ -20,11 +20,12 @@
               :items="attractionList"
               hide-default-footer
           >
-            <template v-slot:header>
+            <template v-slot:header >
               <v-toolbar
                   dark
                   color="blue darken-3"
                   class="mb-1"
+                  ref="infoList"
               >
                 <v-text-field
                     v-model="search"
@@ -345,8 +346,14 @@ module.exports = {
     toInfoList() {
       return this.$refs['infoList'];
     },
+    toInfoListHead() {
+      return this.$refs['infoListHead'];
+    },
     toDetailInfo() {
       return this.$refs['detailInfoDirect'];
+    },
+    toScrollbar(){
+      return this.$refs['scrollbar'];
     },
     options () {
       return {
@@ -412,7 +419,20 @@ module.exports = {
       }
     },
     scrollbarToTop(){
-      this.$refs['scrollbar'].wrap.scrollTop = 0;
+      // this.$refs['scrollbar'].wrap.scrollTop = 0;
+
+      let timer = setInterval(() => {
+        let scrollTop = this.$refs['scrollbar'].wrap.scrollTop;
+        let ispeed = Math.floor(-scrollTop / 5);
+        this.$refs['scrollbar'].wrap.scrollTop = scrollTop + ispeed;
+        // document.documentElement.scrollTop = document.body.scrollTop =
+        //     this.scrollTop + ispeed;
+        if (scrollTop === 0) {
+          clearInterval(timer);
+        }
+      }, 16);
+
+      this.$vuetify.goTo(this.toInfoList, this.options)
     },
 
 
@@ -454,8 +474,8 @@ module.exports = {
   /*!*background: url(~@/assets/images/icon-top.gif) no-repeat 0 0;*!*/
   /*background-size: 0.5rem;*/
   /*margin: auto;*/
-  right: 4px;
-  bottom: 25px;
+  left: 4px;
+  bottom: 200px;
   position: absolute;
   background-color: #fff;
   width: 40px;

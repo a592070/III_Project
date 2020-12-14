@@ -24,7 +24,7 @@
     </script>
     
     
-    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/taiwan.jpg');">
+    <div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/taiwan1.jpg');">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
@@ -55,7 +55,7 @@
             <p class="browse d-md-flex">
             	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-meeting-point"></i>找交通</a></span> 
             	<span class="d-flex justify-content-md-center align-items-md-center"><a href="<%=application.getContextPath()%>/Restaurant_index"><i class="flaticon-fork"></i>找餐廳</a></span>
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>找住宿</a></span> 
+            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="<%=application.getContextPath()%>/Hotel_index"><i class="flaticon-hotel"></i>找住宿</a></span> 
             	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-cars"></i>找景點</a></span>
             </p>
           </div>

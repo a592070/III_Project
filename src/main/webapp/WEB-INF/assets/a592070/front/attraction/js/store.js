@@ -77,6 +77,7 @@ const store = new Vuex.Store({
         },
         setRegions(state, data){
             state.regions = data;
+            state.regions.unshift('全部');
         },
 
 
@@ -85,16 +86,20 @@ const store = new Vuex.Store({
             state.selectDetailLoading = flag;
         },
         setAttractionData(state, data){
+            if(data.sn) state.attractionData.sn = data.sn;
             if(data.name) state.attractionData.name = data.name;
             if(data.toldescribe) state.attractionData.toldescribe = data.toldescribe;
             if(data.description) state.attractionData.description = data.description;
             if(data.tel) state.attractionData.tel = data.tel;
             if(data.address) state.attractionData.address = data.address;
+            if(data.px) state.attractionData.px = data.px;
+            if(data.py) state.attractionData.py = data.py;
             if(data.openTime) state.attractionData.openTime = data.openTime;
             if(data.ticketInfo) state.attractionData.ticketInfo = data.ticketInfo;
             if(data.travellingInfo) state.attractionData.travellingInfo = data.travellingInfo;
             if(data.keywords) state.attractionData.keywords = data.keywords;
             if(data.remarks) state.attractionData.remarks = data.remarks;
+            if(data.rating) state.attractionData.rating = data.rating;
             if(data.region) state.attractionData.region = data.region;
         },
         setAttractionPic(state, data){

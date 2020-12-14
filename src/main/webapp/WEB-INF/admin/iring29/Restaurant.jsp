@@ -17,6 +17,8 @@
 }
 .type{
 	height:50px;
+	font-size: 15px;
+    color: black;
 }
 h3{
 	height:80px;
@@ -38,6 +40,20 @@ i{
 }
 .star_div{
 	height:40px;
+	font-size: 17px;
+}
+.sidebar-wrap .heading{
+	font-size:25px;
+}
+.sp_search{
+	font-size:20px;
+	color:black;
+}
+span.starspan {
+    font-size: 20px;
+}
+#region_name{
+    font-size: 17px;
 }
 </style>    
 
@@ -65,7 +81,7 @@ i{
         </div>
       </div>
     </div>
-
+    
 
     <section class="ftco-section ftco-degree-bg" id="top">
       <div class="container">
@@ -129,8 +145,8 @@ i{
 					</script>
 		              
 		              <div class="form-group">
-		                <span class="sp_search">用餐日期</span> 
-		                <input type="date" name="book_date" id="theDate" min="" class="form-control">
+<!-- 		                <span class="sp_search">用餐日期</span>  -->
+<!-- 		                <input type="date" name="book_date" id="theDate" min="" class="form-control"> -->
 							<script>
 								var date = new Date();
 
@@ -155,23 +171,23 @@ i{
 		              </div>
 		              </div>
 		              <div class="form-group">
-		              	<span class="sp_search">用餐人數</span> 
-		                <select name="person_number" id="inputState" class="form-control">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						</select>
+<!-- 		              	<span class="sp_search">用餐人數</span>  -->
+<!-- 		                <select name="person_number" id="inputState" class="form-control"> -->
+<!-- 						<option value="1">1</option> -->
+<!-- 						<option value="2">2</option> -->
+<!-- 						<option value="3">3</option> -->
+<!-- 						<option value="4">4</option> -->
+<!-- 						<option value="5">5</option> -->
+<!-- 						<option value="6">6</option> -->
+<!-- 						<option value="7">7</option> -->
+<!-- 						<option value="8">8</option> -->
+<!-- 						<option value="9">9</option> -->
+<!-- 						<option value="10">10</option> -->
+<!-- 						</select> -->
 		              </div>	
 		              		
 		              		<div class="star_div"></div>
-		              		<p>餐廳評價</p>			
+		              		<p class="sp_search">餐廳評價</p>			
 		              		<div class="star_div">
 							<input type="radio" name="radiobutton" id="Check5" value="5" onclick="checkstar()"> 
 								<span class="starspan"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span>&emsp;5星
@@ -333,7 +349,7 @@ i{
 		    						<p class="type">${res.type}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
-		    							<span><i class="icon-map-o"></i>&emsp;${res.region}</span> 
+		    							<span id="region_name"><i class="icon-map-o"></i>&emsp;${res.region}</span> 
 		    							<span class="ml-auto"><button type="submit" class="btn btn-warning">訂位去</button></span>
 <%-- 		    							<Input type='hidden' name='r_sn' value='${res.r_sn}'> --%>
 <%-- 										<Input type='hidden' name='book_date' value='${book_date}'> --%>
@@ -389,7 +405,7 @@ i{
 				$.ajax(
 	                    {
 	                        type: 'POST',
-	                        data: { "region_name":region_name, "restaurant_name":restaurant_name, "book_date":book_date,"person_number":person_number, "stars":stars ,"currentPage": currentPage},
+	                        data: { "region_name":region_name, "restaurant_name":restaurant_name, "stars":stars ,"currentPage": currentPage},
 	                        url: '${pageContext.servletContext.contextPath}/SearchRestaurant',
 	                        dataType: 'html',
 	                        success:function(response){
@@ -408,6 +424,13 @@ i{
     </section> 
     <!-- .section -->
 
+    <script>
+      $(document).ready(function(){
+      $('body,html').delay(1000).animate({scrollTop: $("#index").offset().top - 160}, 600); 
+      });
+
+    </script>
+   
 
   <!-- footer -->
      <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 

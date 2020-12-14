@@ -105,10 +105,10 @@ public class HighSpeedRailController {
 //            out.println(ujson1.toString());
 //        }else {
 			String idHSR = request.getParameter("idHSR");
-			String startPoint = request.getParameter("startPoint");
-			String destination = request.getParameter("destination");
+			String startPoint = request.getParameter("startPoint2");
+			String destination = request.getParameter("destination2");
 			String ticketNum = request.getParameter("ticketNum");
-			String departureDate = request.getParameter("departureDate");
+			String departureDate = request.getParameter("departureDate2");
 	//		System.out.println("idHSR= " + idHSR);
 	//		System.out.println("departureDate=" + departureDate);
 			

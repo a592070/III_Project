@@ -39,10 +39,19 @@ h3{
 </style>
   </head>
   <body>
+
+  
   <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
     <!-- strat nav -->
   <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
     <!-- END nav -->
+    
+          <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
     
     <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/ne4Q62T.jpg');">
       <div class="overlay"></div>
@@ -50,7 +59,7 @@ h3{
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
             <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2">FUN x 台灣</span></p>
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Hotels</h1>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">尋找理想的飯店</h1>
           </div>
         </div>
       </div>

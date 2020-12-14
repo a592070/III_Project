@@ -58,9 +58,9 @@
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a href="index.html" class="nav-link">首頁</a>
-          </li>
+<!--           <li class="nav-item"> -->
+<!--             <a href="index.html" class="nav-link">首頁</a> -->
+<!--           </li> -->
           <li class="nav-item">
             <a href="about.html" class="nav-link">關於我</a>
           </li>
@@ -81,7 +81,7 @@
               >找餐廳</a
             >
           </li>
-          <li class="nav-item"><a href="" class="nav-link">找交通</a></li>
+          <li class="nav-item"><a href="<%=application.getContextPath()%>/highspeedrail.controller" class="nav-link">找交通</a></li>
           <li class="nav-item">
             <a href="<%=application.getContextPath()%>/forum_index" class="nav-link">論壇</a>
           </li>
@@ -114,6 +114,13 @@
                 href="<%=application.getContextPath()%>/user/userProfilePage"
                 class="nav-link"
                 >個人頁面</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href="<%=application.getContextPath()%>/user/userOrderListPage"
+                class="nav-link"
+                >我的訂單</a
               >
             </li>
           </c:if>

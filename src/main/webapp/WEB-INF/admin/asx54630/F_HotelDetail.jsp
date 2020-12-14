@@ -27,7 +27,7 @@
 body{
 	margin:0px;
 	padding:0px;
-	background:url('https://i.imgur.com/6DuGxHp.jpg') center center fixed no-repeat;
+	background:url('https://i.imgur.com/ne4Q62T.jpg') center center fixed no-repeat;
 	background-size: cover;　
 } 
 .box{
@@ -51,7 +51,12 @@ body{
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> 
     <!-- Start nav -->    
     <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
-
+      <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
 <div class="box">
 
     <!-- Offcanvas Menu Section Begin -->
@@ -161,6 +166,8 @@ body{
                 <div class="col-lg-4">
                     <div class="room-booking">
                         <h3>立即預訂</h3>
+                        <button type="button" class="btn btn-light" id="putdata" onclick="insertdata()">帶入資料</button>
+
                         <form class="HBooking" action="<%=pageContext.getServletContext().getContextPath()%>/HotelOrder" method="POST">
                         	 <input type="hidden" id="H_SN" value="${hoteldetail.SN}">
                             <div class="check-date">
@@ -293,6 +300,16 @@ body{
                             <script>
                             var item = 0;
 								$("#order").click(function(){
+
+									$.ajax(
+						                    {
+						                        type: 'POST',
+						                        data: { },
+						                        url: '${pageContext.servletContext.contextPath}/checkLogin',
+						                        dataType: 'json',
+						                        success:function(response){
+							                        console.log("re = " + response);
+							                        if(response == true){
 									var H_SN = $("#H_SN").val();
 									var date_in = $("#date_in").val();
 									var date_out = $("#date_out").val();
@@ -346,15 +363,39 @@ body{
 							                        	   
 								                        }else{
 								                        	$(".HBooking").submit();
-								                        	
-									                    }
+								                        }
 							                        }
 							                    }
-							                )
-										
+							                )			
 									}
-									})
+	                        		
+		                        }else if(response == false){
+		                        	var hotel_context = "";
+		                        	hotel_context += '<button type="button" class="btn btn-primary" id="commentbtn" data-toggle="modal" data-target="#loginbtn" style="display:none;"></button>';
+	                        		$("#rating").append(hotel_context);
+	                        		$("#commentbtn").click();
+			                    }
+	                        }
+	                    }
+	                )
+				})
 									
+									
+									
+									
+									                         
+                        function insertdata(){
+       					 console.log("in data")
+       						 document.getElementById("date_in").value = Date();
+       						 document.getElementById("date_out").value = Date();
+       						 document.getElementById("guest").value = "3";
+       						 document.getElementById("dbroom")[0].selected = "selected";
+       						 document.getElementById("qdroom")[1].selected = "selected";
+       						 document.getElementById("client_name").value = "安妮";
+       						 document.getElementById("client_phone").value = "0928957224";
+
+       					 }
+                       
                             </script>
                         </form>
                         
@@ -369,7 +410,7 @@ body{
         									</button>
       									</div>
       									<div class="modal-body">
-       									抱歉 !   訂位已滿，請重新選擇日期及時段
+       									抱歉 !   該時段已無空房，請重新選擇日期
       									</div>
       									<div class="modal-footer">
 									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
@@ -398,6 +439,28 @@ body{
 <!--     									</div> -->
 <!--   									</div> -->
 <!-- 									</div>.Modal -->
+
+						<!-- Modal 導向登入-->
+									<div class="modal fade" id="loginbtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  									<div class="modal-dialog modal-dialog-centered" role="document">
+    									<div class="modal-content">
+      									<div class="modal-header">
+        									<h5 class="modal-title" id="exampleModalLongTitle">Fun X Taiwan</h5>
+        									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          									<span aria-hidden="true">&times;</span>
+        									</button>
+      									</div>
+      									<div class="modal-body">
+       									請先登入哦 !          
+      									</div>
+      									<div class="modal-footer">
+											<form id="form-1" action="<%=pageContext.getServletContext().getContextPath()%>/user/singinPage">
+        										<button type="submit" class="btn btn-primary" id="">登入</button>
+											</form>
+      									</div>
+    									</div>
+  									</div>
+									</div><!-- .Modal 導向登入-->
                         
                         
                     </div>

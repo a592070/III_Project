@@ -82,12 +82,12 @@
 						<form action="${pageContext.servletContext.contextPath}/admin/login" method="POST">
 							<div class="row">
 								<div class="form-group col-md-12 mb-4">
-									<input type="text" class="form-control input-lg" name="username" 
+									<input type="text" class="form-control input-lg" name="username" id="username"
 										aria-describedby="nameHelp" placeholder="使用者名稱">
 								</div>
 								<div class="form-group col-md-12 ">
 									<input type="password" class="form-control input-lg"
-										name="password" placeholder="密碼">
+										name="password" id="password" placeholder="密碼">
 								</div>
 								<div class="col-md-12">
 									<div class="d-flex my-2 justify-content-between">
@@ -103,8 +103,8 @@
 										</p>-->
 									</div>
 									<div class="g-recaptcha" data-sitekey="6LdOeNYZAAAAAPAEKRkJYgqKjU79n5B90Jnw2Q06"></div>
-									<button type="submit"
-										class="btn btn-lg btn-primary btn-block mb-4">登入</button>
+									<button type="submit" class="btn btn-lg btn-primary btn-block mb-4">登入</button>
+									<button type="button" class="btn btn-light" id="fastsignin">帶入資料</button>
 <!-- 									<p> -->
 <!-- 										還沒有帳號 ? <a class="text-blue" -->
 <%-- 											href="${pageContext.servletContext.contextPath}/admin/singup">註冊</a> --%>
@@ -141,7 +141,13 @@
 	<script>
 	<c:if test="${!empty ErrorMsgKey.LoginError}">
       $("#loginModalCenter").modal('show');
-    </c:if>
+	</c:if>
+	
+	
+	$("#fastsignin").click(function(){
+	  $("#username").val("system");
+	  $("#password").val("system");
+	})
 	</script>
 </body>
 
