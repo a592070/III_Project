@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import rambo0021.pojo.AccountBean;
+
 public class R_OrderDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -58,6 +60,7 @@ public class R_OrderDAO {
 		}
 		return result;
 	}
+	
 	
 	//delete order
 	public String deleteOrder(BigDecimal id) {

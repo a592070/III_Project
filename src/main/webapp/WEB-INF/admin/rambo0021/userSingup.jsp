@@ -23,7 +23,7 @@
   <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
   <!-- END nav -->
 
-  <div class="hero-wrap js-fullheight" style="background-image: url('../direngine-master/images/bg_3.jpg');">
+  <div class="hero-wrap js-fullheight" style="background-image: url('../direngine-master/images/user-1.jpg');">
     <div class="overlay"></div>
     <div class="container" style="text-align : center">
       <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
@@ -92,8 +92,11 @@
               <img class="img" id="eimg" src=""><span id="esp"></span><br />
               <input class="form-control" type="text" id="email" name="email" placeholder="請輸入email" />
             </div>
-
-
+            <div class="form-group">
+             
+              <input type="button" value="帶入資料" class="btn btn-light py-1 px-1" id="fastSignup">
+          
+            </div>
           </div>
           <!-- 會員or店家 -->
           <div class="col-md-6 pr-md-5">
@@ -328,6 +331,11 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <script>
+    $(document).ready(function(){
+      $('body,html').animate({scrollTop: 700}, 800); 
+      });
+
+
     //圖片預覽
     $("#Apicture,#Rpicture").change(function () {
       readURL(this);
@@ -503,7 +511,7 @@
       var checkpassword = $("#checkpassword").val();
       if (checkpassword == "") {
         $("#cimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/error.png");
-        $("#csp").text("確認密碼不可為空");
+        $("#csp").text("確認密碼不能為空");
         $("#csp").css({ "color": "red", "fontSize": "18px", "fontStyle": "italic" });
       } else if (password != checkpassword) {
         $("#cimg").attr("src", "<%=application.getContextPath()%>/assets/img/rambo0021/error.png");
@@ -559,6 +567,26 @@
 
     })
 
+    //一鍵輸入
+    $("#fastSignup").click(function(){
+      //個人資料
+      $("#username").val("yourhomesteak");
+      $("#password").val("yourhomesteak");
+      $("#checkpassword").val("yourhomesteak");
+      $("#email").val("iiiteam124@gmail.com");
+
+      //餐廳資料
+      $("#Rname").val("你家牛排");
+      $("#Rregion").val("桃園");
+      $("#Raddress").val("桃園市中壢區中大路888號");
+      $("#Rtrans").val("停車資訊：路邊可停車");
+      $("#Rservice").val("家庭聚餐, 朋友聚餐");
+      $("#Rtype").val("西式料理, 創意料理, 牛排, 套餐");
+      $("#Ropentime").val("[全天開放]週一 - 週五 09:30-17:30 週六 - 週日 09:30-18:00");
+      $("#Rdescription").val("適合青少年, 受大學生歡迎, 適合肉食愛好者, 提供優質甜點, 提供優質啤酒選項,, 信用卡");
+      $("#email,#password,#username,#checkpassword").blur();
+     
+    })
 
   </script>
 </body>

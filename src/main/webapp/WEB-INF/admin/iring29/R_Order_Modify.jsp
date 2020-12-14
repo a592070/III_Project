@@ -99,7 +99,7 @@ h5{
 					<div class="col-md-6 mb-3">
 						<label for="phone"><h5>訂位人數</h5></label> 
 <%-- 						<textarea class="form-control" name="cus_phone"	id="cus_phone" cols="80" rows="1">${ROList.customer_num}</textarea> --%>
-						<select name="customer_num" id="p_num" class="form-control">
+						<select name="customer_num" id="p_num" class="form-control" onchange="changenum()">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -188,8 +188,14 @@ h5{
 					</div>
 					</FORM>
 					<hr>
-					<h4 class="mb-3">總金額 500 元</h4>
+					<h4 class="mb-3">總金額 <span id="deposit">${ROList.deposit}</span> 元</h4>
 					<hr>
+					<script>
+// 					function changenum(){
+// 						console.log("in change" + $("#deposit").html("300"))
+					
+// 						}
+					</script>
 <!-- 					<div class="modify_div"> -->
 <!-- 						<button class="btn btn-warning" name="confirm" value="confrim" -->
 <!-- 							onclick="confrimModify()">確認修改</button> -->

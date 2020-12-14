@@ -52,7 +52,6 @@
                   <!-- google login -->
                   <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="padding-left: 430px"></div>
                 </div>
-
               </div>
             </div>
             <div class="row block-9">
@@ -89,6 +88,9 @@
                     </p>
                   </div>
 
+                  <input type="button" value="帶入資料" class="btn btn-light py-1 px-1" id="fastSignin1">
+
+
                 </form>
               </div>
             </div>
@@ -123,6 +125,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="fsubmit" data-dismiss="modal">發送</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+                <input type="button" value="帶入資料" class="btn btn-light py-1 px-1" id="fastSignin2">
               </div>
             </div>
           </div>
@@ -144,6 +147,10 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
       </body>
       <script>
+        $(document).ready(function () {
+          $('body,html').animate({ scrollTop: 700 }, 800);
+        });
+
         $("#forgetLink").click(function () {
           $("#foget").click()
         })
@@ -223,9 +230,9 @@
         //google API login
         function onSignIn(googleUser) {
           var profile = googleUser.getBasicProfile();
-          var nickname =profile.getName();
-          var imgUrl =profile.getImageUrl();
-          var email  =profile.getEmail();
+          var nickname = profile.getName();
+          var imgUrl = profile.getImageUrl();
+          var email = profile.getEmail();
           console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
           console.log('Name: ' + profile.getName());
           console.log('Image URL: ' + profile.getImageUrl());
@@ -233,18 +240,27 @@
           $.ajax({
             type: "POST",
             url: "${pageContext.servletContext.contextPath}/user/googleLogin",
-            data: { "nickname": nickname,"imgUrl":imgUrl, "email": email },
+            data: { "nickname": nickname, "imgUrl": imgUrl, "email": email },
             success: (response) => {
               swal({
-              title: "登入成功!",
-              icon: "success",
-              button: false
-            });
-            setTimeout(function () { location.href = response.reqURL; }, 2000);
+                title: "登入成功!",
+                icon: "success",
+                button: false
+              });
+              setTimeout(function () { location.href = response.reqURL; }, 2000);
             }
           })
-       
+
         }
+        $("#fastSignin1").click(function () {
+          $("#username").val("yourhomesteak");
+          $("#password").val("yourhomesteak");
+
+        })
+        $("#fastSignin2").click(function () {
+          $("#fogetUsername").val("abcabc");
+          $("#fogetEmail").val("iiiteam124@gmail.com");
+        })
       </script>
 
       </html>

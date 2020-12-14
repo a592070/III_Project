@@ -89,7 +89,7 @@ h5{
         </div>
       </div>
     </div><!-- .background -->
-<section class="cart_area">
+<section class="cart_area"  id="index">
 
 		<c:set var ="size" value= "${fn:length(OTBean.hotelOrder)}"></c:set>
 		<c:if test = "${size > 0}" >
@@ -726,6 +726,13 @@ h5{
 		</div>
 	</div>
 </section>
+
+    <script>
+      $(document).ready(function(){
+      $('body,html').delay(1000).animate({scrollTop: $("#index").offset().top - 160}, 600); 
+      });
+
+    </script>
   <!-- footer -->
      <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
 

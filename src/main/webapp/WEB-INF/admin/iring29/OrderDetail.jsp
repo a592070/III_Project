@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FUN TAIWAN - 購物車</title>
+<title>FUN TAIWAN - 訂單成立</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <c:import url="/WEB-INF/admin/fragment/user_ref.jsp" /> 
 
@@ -97,9 +97,9 @@ td.col-sm-1.col-md-1.text-center{
       </div>
     </div><!-- .background -->
     
-<section class="cart_area">
+<section class="cart_area" id="index">
 	<div class="container">
-		<div class="row">
+		<div class="row" >
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<table class="table table-hover">
 					<thead>
@@ -437,6 +437,13 @@ td.col-sm-1.col-md-1.text-center{
 		</div>
 	</div>
 </section>
+
+    <script>
+      $(document).ready(function(){
+      $('body,html').delay(1000).animate({scrollTop: $("#index").offset().top - 160}, 600); 
+      });
+
+    </script>
 	<!-- footer -->
      <c:import url="/WEB-INF/admin/fragment/footer.jsp"/> 
 

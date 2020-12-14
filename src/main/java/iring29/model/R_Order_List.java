@@ -39,6 +39,8 @@ public class R_Order_List {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "R_SN")
 	private Restaurant restaurant;
+	@Column(name = "TABLE_NUM")
+	private BigDecimal table_num;
 	
 	public BigDecimal getId() {
 		return id;
@@ -104,4 +106,13 @@ public class R_Order_List {
 		this.restaurant = restaurant;
 	}
 
+	public BigDecimal getTable_num() {
+		return table_num;
+	}
+
+	public void setTable_num(BigDecimal table_num) {
+		this.table_num = table_num;
+	}
+
+	
 }
