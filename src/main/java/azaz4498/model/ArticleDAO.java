@@ -84,14 +84,14 @@ public class ArticleDAO {
 	//找文章中圖片當封面
 	public List<String> getCoverPicList(List<Article> artList){
 		List<String> picList = new ArrayList<String>();
-		String defaultImgPath = "direngine-master/images/article_default.jpg";
+		String defaultImgPath = "../direngine-master/images/article_default.jpg";
 		for (Article article : artList) {
 			String content = article.getArtContent();
 			if (content != null && !content.equals("")) {// 判斷文章內容是否為空
 				Document doc = Jsoup.parse(content);
 				Element imgEle = doc.getElementsByTag("img").first();
 				if (imgEle != null) {// 判斷img標籤是否存在
-					if (imgEle.attr("stc").equals("")) {
+					if (imgEle.attr("src").equals("")) {
 						picList.add(defaultImgPath);
 						
 					} else {
