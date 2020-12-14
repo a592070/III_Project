@@ -74,7 +74,7 @@ public class ImageUploadController {
 		picture.setRefId(articleId);
 
 		Integer picId = pictureService.addPic(picture).getId();
-		String imgPath = "showPic/" + picId;
+		String imgPath = "../showPic/" + picId;
 
 		map.put("finalFileName", finalFileName);
 		map.put("url", imgPath);

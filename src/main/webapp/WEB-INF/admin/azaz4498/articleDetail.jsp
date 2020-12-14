@@ -227,7 +227,7 @@
                     href="<%=application.getContextPath()%>/article/${recent.artId}"
                     class="blog-img mr-4"
                     style="
-                      background-image: url(<c:url value='/${recentArtPic[status.index]}'/>);
+                      background-image: url('${recentArtPic[status.index]}');
                     ">
                     
                     
