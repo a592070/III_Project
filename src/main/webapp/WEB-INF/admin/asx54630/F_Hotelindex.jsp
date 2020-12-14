@@ -51,8 +51,13 @@ h3{
 //     console.log($(".nav-shop__circle").val());
     console.log("nu = " + ${cartnum}); 
 // 	   console.log("num");
-    </script>
-    
+<!--     </script> -->
+<!--         <script> -->
+<!--        $(document).ready(function(){ -->
+<!--      $('body,html').animate({scrollTop: 800}, 800);  -->
+<!--        }); -->
+
+<!--     </script> -->
     <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/ne4Q62T.jpg');">
       <div class="overlay"></div>
       <div class="container">
@@ -169,8 +174,8 @@ h3{
 											$("#test${hotels.SN}").prepend(tags, zerostar);
 				    						</script>
 			    						<div class="two">
-			    							<span class="price per-price"><small>雙/</small>${hotels.DOUBLE_ROOM}</span>
-			    							<span class="price per-price"><small>四/</small>${hotels.QUADRUPLE_ROOM}</span>
+			    							<p><span class="price per-price"><small>雙人房</small>${hotels.DOUBLE_ROOM}<small>/晚</small></span></p>
+			    							<p><span class="price per-price"><small>四人房</small>${hotels.QUADRUPLE_ROOM}<small>/晚</small></span></p>
 		    							</div>
 		    						</div>
 		    						<p>${hotels.TYPE}</p>
