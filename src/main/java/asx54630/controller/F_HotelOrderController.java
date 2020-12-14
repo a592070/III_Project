@@ -19,6 +19,7 @@ import asx54630.model.Hotel;
 import asx54630.model.HotelOrder;
 import asx54630.service.F_HotelOrderService;
 import global.pojo.OrderTable;
+import rambo0021.pojo.AccountBean;
 
 
 @Controller
@@ -37,19 +38,13 @@ public class F_HotelOrderController {
 							   @RequestParam(value = "client_phone") String client_phone,
 							   HttpSession session,Model m) {
 		
-		System.out.println(date_in);
-		System.out.println(date_out);
-		System.out.println(guest);
-		System.out.println(dbroom);
-		System.out.println(qdroom);
-		System.out.println(client_name);
-		System.out.println(client_phone);
-		
 		Hotel hotel = (Hotel) session.getAttribute("hoteldetail");
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		if(OTBean == null) {
 			OTBean = new OrderTable();
+			AccountBean userbean = (AccountBean) m.getAttribute("userBean");
+			OTBean.setAccountBean(userbean);
 			cartnum = 0;
 		}
 		if(cartnum == null) {
@@ -95,6 +90,20 @@ public class F_HotelOrderController {
 		
 	}
 	
+	@RequestMapping(path = "/remove", method = RequestMethod.POST)
+	public @ResponseBody String removeInfo(@RequestParam(value = "H_SN") BigDecimal H_SN, HttpSession session){
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		cartnum = cartnum - 1;
+		System.out.println("sn = " + H_SN);
+		OTBean.getR_Order_Lists().removeIf(ele->{
+			return H_SN.equals(ele.getRestaurant().getR_sn());
+		});
+
+		session.setAttribute("OTBean", OTBean);
+		session.setAttribute("cartnum", cartnum);
+		return "remove";
+	}
 	
 //	@RequestMapping(path = "/CheckOrderRoom", method = RequestMethod.POST)
 //	public @ResponseBody boolean CheckOrderRoom(@RequestParam(name = "H_SN",required = false) BigDecimal H_SN, 
