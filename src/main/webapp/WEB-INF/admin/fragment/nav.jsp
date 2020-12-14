@@ -116,6 +116,13 @@
                 >個人頁面</a
               >
             </li>
+            <li class="nav-item">
+              <a
+                href="<%=application.getContextPath()%>/user/userOrderListPage"
+                class="nav-link"
+                >我的訂單</a
+              >
+            </li>
           </c:if>
           <li class="nav-item">
             <FORM
