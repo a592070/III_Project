@@ -51,7 +51,7 @@ h3{
 //     console.log($(".nav-shop__circle").val());
     console.log("nu = " + ${cartnum}); 
 // 	   console.log("num");
-<!--     </script> -->
+		  </script>
 <!--         <script> -->
 <!--        $(document).ready(function(){ -->
 <!--      $('body,html').animate({scrollTop: 800}, 800);  -->

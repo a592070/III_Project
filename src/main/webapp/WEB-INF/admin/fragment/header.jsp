@@ -1,11 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Student
-  Date: 2020/10/29
-  Time: 上午 10:22
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>
+<script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/notify/js/notify.js"></script>
 <header class="main-header " id="header">
     <nav class="navbar navbar-static-top navbar-expand-lg">
         <!-- Sidebar toggle button -->
@@ -22,7 +18,9 @@
 
                     <%-- 廣播通知 --%>
                     <button class="dropdown-toggle">
-                        <i class="mdi mdi-cast" href="${pageContext.servletContext.contextPath}/admin/broadcastMessage"></i>
+                        <a href="${pageContext.servletContext.contextPath}/admin/broadcastMessage">
+                        <i class="mdi mdi-cast" ></i>
+                        </a>
                     </button>
 
                 </li>
@@ -64,5 +62,8 @@
             </ul>
         </div>
     </nav>
+    <div id="notify">
+        <index></index>
+    </div>
 </header>
 
