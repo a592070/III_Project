@@ -304,6 +304,7 @@
       <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button"><i class="far fa-edit">撰寫文章</i></a>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
       $(document).ready(function(){
         var userid = $('#c_userId').val();
@@ -337,10 +338,22 @@
         var loginCheck = $('#c_userId').val;
 
         if(loginCheck==null||loginCheck==""){
-          alert('請先登入');
+          Swal.fire({
+            title:'請先登入',
+            text:'登入以回復他人評論',
+            icon:'warning'
+          })
+          
           window.location.href="<%=application.getContextPath()%>/user/signinPage";
         }else if(mc_content==null || mc_content==""){
-          alert('請輸入內容再進行留言')
+          alert('')
+          Swal.fire({
+            title: '請輸入內容再進行留言',
+            icon: 'warning'
+          })
+            
+
+          
           $('#'+textarea).focus();
         }else{
           $.ajax({
@@ -390,11 +403,19 @@
         var c_artId= $('#c_artId').val();
         var loginCheck = $('#c_userId').val;
         if(loginCheck==null||loginCheck==""){
-          alert('請先登入');
+          Swal.fire({
+            title:'請先登入',
+            text:'登入以發布評論',
+            icon:'warning'
+          })
           window.location.href="<%=application.getContextPath()%>/user/signinPage";
         }
         else if(c_content==null || c_content==""){
-          alert('請輸入內容再進行留言')
+          Swal.fire({
+            title:'請輸入內容再進行留言',
+            icon:'warning'
+          })
+          
           $('#message').focus();
         }
         else{
