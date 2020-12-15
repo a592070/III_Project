@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import asx54630.model.HotelOrder;
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
 import global.pojo.OrderTable;
@@ -167,16 +169,18 @@ public class F_RorderController {
 	
 	//訂單成立後
 	@RequestMapping(path = "/ShowOrderList", method = RequestMethod.POST)
-	public String placeOrder(HttpSession session) {
+	public String placeOrder(HttpSession session, @ModelAttribute("userBean")AccountBean aBean) {
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		F_Serivce.createOrder(OTBean);
 		session.removeAttribute("OTBean");
 		OrderTable otBean = F_Serivce.findOrder();  //不使用綠界時打開
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();  //不使用綠界時打開
 		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
+//		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();  //不使用綠界時打開
+//		session.setAttribute("hotel_lists", hotel_lists);  //不使用綠界時打開
 		for(R_Order_List r : res_lists) {  //不使用綠界時打開
 			//send mail
-			String email = OTBean.getAccountBean().getEmail();  //不使用綠界時打開
+			String email = aBean.getEmail();  //不使用綠界時打開
 			String title = "Fun x Taiwan";  //不使用綠界時打開
 			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
 			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";

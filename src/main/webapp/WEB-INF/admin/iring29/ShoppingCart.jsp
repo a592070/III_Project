@@ -126,8 +126,8 @@ h5{
 							<Input type='hidden' name='SN' id="SN${h.hotel.SN}" value='${h.hotel.SN}'>
 							<div class="content"><h5>${h.hotel.NAME}</h5></div>
 							<div class="content"><h5>${h.hotel.ADDRESS}</h5></div>
-							<div class="content"><h5><input class="form-control data" value="${h.CLIENT_NAME}" id="client_name${h.hotel.SN}" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
-							<div class="content"><h5><input class="form-control data phone" value="${h.CLIENT_PHONE}" id="client_phone${h.hotel.SN}" placeholder="09xxxxxxxx" onchange="changeinfo${R.restaurant.r_sn}()"></h5></div>
+							<div class="content"><h5><input class="form-control data" value="${h.CLIENT_NAME}" id="client_name${h.hotel.SN}" onchange="changeinfo${h.hotel.SN}()"></h5></div>
+							<div class="content"><h5><input class="form-control data phone" value="${h.CLIENT_PHONE}" id="client_phone${h.hotel.SN}" placeholder="09xxxxxxxx" onchange="changeinfo${h.hotel.SN}()"></h5></div>
 							</td>
 							<td class="col-sm-8 col-md-8">
 							<div class="div_title"><h5>入住日期</h5></div>
@@ -166,7 +166,10 @@ h5{
     					        
     							</script>
 							</td>
-							<td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+							<td class="col-sm-1 col-md-1 ">
+							<h5 class="hPRICE" id="hPRICE${h.hotel.SN}">${h.hPRICE}</h5>
+							</td>
+							
 							<td class="col-sm-1 col-md-1">
 								<button type="button" class="btn btn-danger">
 									<span class="glyphicon glyphicon-remove"></span> Remove
@@ -179,13 +182,25 @@ h5{
 							<td> </td>
 							<td> </td>
 							<td><h3>小計</h3></td>
-							<td class="text-right"><h3>
-									<strong>$24.59</strong>
-								</h3></td>
+							<td class="text-right">
+								<h3 id="Hsum"><strong id="HPrice"></strong></h3>
+								</td>
 						</tr>
 
 					</tbody>
 				</table>
+				<script type="text/javascript">
+						var hPRICE = document.getElementsByClassName("hPRICE");
+						console.log("deposit size = " + hPRICE.length);
+						var size = 0;
+						for(var i = 0; i < hPRICE.length; i++ ){
+							size += parseInt(hPRICE[i].innerHTML);
+							console.log("money = " + size);
+							console.log("money = " + hPRICE[i].innerHTML);
+							}
+        				document.getElementById("HPrice").innerHTML = size;
+        				
+   					</script>
 			</div>
 		</div>
 	</div>
@@ -603,13 +618,17 @@ h5{
 				<!-- 總金額 -->
 					<script type="text/javascript">
 					var Rsum = document.getElementById("tPrice").innerHTML;
-					console.log("sum = " + Rsum);
-					document.getElementById("sumPrice").innerHTML = Rsum;
+					var Hsum = document.getElementById("HPrice").innerHTML;
+					var TotalSum = parseInt(Rsum) + parseInt(Hsum);
+					console.log("sum = " + TotalSum);
+					document.getElementById("sumPrice").innerHTML = TotalSum;
 					
 					function sumprice(){
 						var Rsum = document.getElementById("tPrice").innerHTML;
-						console.log("sum = " + Rsum);
-						document.getElementById("sumPrice").innerHTML = Rsum;
+						var Hsum = document.getElementById("HPrice").innerHTML;
+						var TotalSum = parseInt(Rsum) + parseInt(Hsum);
+						console.log("sum = " + TotalSum);
+						document.getElementById("sumPrice").innerHTML = TotalSum;
 					}
 					</script>
 			</div>

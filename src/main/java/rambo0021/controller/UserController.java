@@ -64,7 +64,7 @@ public class UserController {
 	
 	
     //前台註冊
-	@RequestMapping("/singup")
+	@RequestMapping("/signup")
 	public @ResponseBody HashMap<String, String> signup(@RequestParam Integer identity,
 			                           @RequestParam String username,
 			                           @RequestParam String password,
@@ -117,8 +117,8 @@ public class UserController {
 		return map;
 	}
 	//前台登入 
-	@RequestMapping("/singin")
-	public @ResponseBody HashMap<String, String> singin(@ModelAttribute(name="reqURL") String reqURL,@RequestParam String username, @RequestParam String password,
+	@RequestMapping("/signin")
+	public @ResponseBody HashMap<String, String> signin(@ModelAttribute(name="reqURL") String reqURL,@RequestParam String username, @RequestParam String password,
 			@RequestParam("g-recaptcha-response") String recaptcha,Model m) throws IOException{
 		System.out.println("reqURL="+reqURL);
 		boolean verify = VerifyRecaptcha.verify(recaptcha);
@@ -142,8 +142,8 @@ public class UserController {
 		return map;
 	}
 	//前台登出
-	@RequestMapping("singout")
-	public  String singout(HttpSession session, SessionStatus sessionStatus,HttpServletRequest req) {
+	@RequestMapping("signout")
+	public  String signout(HttpSession session, SessionStatus sessionStatus,HttpServletRequest req) {
 		session.invalidate();
 		sessionStatus.setComplete();
 		return "redirect:/FunTaiwan";
@@ -169,7 +169,7 @@ public class UserController {
 	public @ResponseBody String updateUser(@RequestParam String username,@RequestParam("password") String password,@RequestParam String email,@RequestParam String nickName,HttpServletRequest request,HttpSession session) {
 	    service.updateUser(username, password,email,nickName);
 //	    String remoteAddr = request.getLocalAddr();
-	    sendMailService.asyncSend(email, "個人資料修改通知", "您的個人資料已更改，如不是本人操作，請盡速更改密碼", "點我登入", "/user/singinPage", session);
+	    sendMailService.asyncSend(email, "個人資料修改通知", "您的個人資料已更改，如不是本人操作，請盡速更改密碼", "點我登入", "/user/signinPage", session);
 	   return "ok";
 	}
 	//忘記密碼
@@ -178,7 +178,7 @@ public class UserController {
 		String pwd =service.forgetPwd(username,email);
 		System.out.println(pwd);
 //		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼",session);
-		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼", "點我登入", "/user/singinPage", session);
+		sendMailService.asyncSend(email, "密碼重置", "您的新密碼為"+pwd+"，請登入後更改密碼", "點我登入", "/user/signinPage", session);
 		return "ok";
 	}
 	//修改圖片

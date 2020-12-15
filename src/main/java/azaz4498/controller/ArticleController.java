@@ -2,6 +2,7 @@ package azaz4498.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import azaz4498.model.Article;
 import azaz4498.model.Comment;
 import azaz4498.model.ForumPage;
+import azaz4498.model.MultiComment;
 import azaz4498.service.ArticleService;
 import azaz4498.service.ArticleTypeService;
 import azaz4498.service.CommentService;
@@ -30,7 +32,7 @@ import rambo0021.serive.AccountService;
 
 @Controller
 @Lazy
-@SessionAttributes(names = { "artBean", "typeBean", "artList", "commentList","multiCommentList" ,"recentArt", "recentArtPic",
+@SessionAttributes(names = { "artBean", "typeBean", "artList", "commentList","multiCommentMap" ,"recentArt", "recentArtPic",
 		"typeCount","userBean","userName" })
 public class ArticleController {
 	@Autowired
@@ -57,7 +59,7 @@ public class ArticleController {
 	public String newArticle(HttpSession session,Model m) {
 		AccountBean account = (AccountBean) m.getAttribute("userBean");
 		if (account==null) {
-			return "rambo0021/userSingin";
+			return "rambo0021/userSignin";
 		}else {
 			m.addAttribute("userBean",account);
 			return "azaz4498/newArticle_frontend";
@@ -70,6 +72,7 @@ public class ArticleController {
 		List<Article> recentArticles = articleService.showRecentArticles();
 		List<Comment> commentList = commentService.showCommentsByArticle(artId);
 		List<String> coverPicList = articleService.getCoverPicList(recentArticles);
+//		Map<Integer, List<MultiComment>> multiCommentMap = articleService.getMultiCommentMap(commentList);
 		AccountBean account = (AccountBean) m.getAttribute("userBean");
 		
 		Article currArticle =articleService.showArticleById(artId);
@@ -77,9 +80,11 @@ public class ArticleController {
 		m.addAttribute("commentList", commentList);
 		m.addAttribute("recentArt", recentArticles);
 		m.addAttribute("recentArtPic", coverPicList);
-		m.addAttribute("multiCommentList",articleService.getMultiCommentMap(commentList));
+//		m.addAttribute("multiCommentMap",multiCommentMap);
 		m.addAttribute("typeCount", articleService.getTypeCount());
 		m.addAttribute("userBean", account);
+		
+//		System.err.println(multiCommentMap);
 		
 		return "azaz4498/articleDetail";
 
@@ -160,25 +165,27 @@ public class ArticleController {
 		return "azaz4498/forum_typeSearch";
 	}
 	//編輯頁面
-//	@RequestMapping(path = "/editPage.controller")
-//	public String EditPage(@RequestParam(name = "artId") Integer articleId, Model m) throws SQLException {
-//		m.addAttribute("artBean", articleService.showArticleById(articleId));
-//		return "azaz4498/editPage";
-//	}
-//
-//	
-//	
-//	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
-//	public String Edit(@RequestParam(name = "articleTitle") String title,
-//			@RequestParam(name = "articleContent") String content, @RequestParam(name = "artId") Integer articleId,
-//			@RequestParam(name = "userid") String userid, @RequestParam(name = "typeSelect") Integer typeId, Model m)
-//			throws SQLException {
-//
-//		articleService.articleEdit(title, content, articleId, userid, typeId);
-//		m.addAttribute("artBean", articleService.showArticleById(articleId));
-//
-//		return "azaz4498/articleDetail";
-//	}
+	@RequestMapping(path = "/edit/article/{artId}")
+	public String EditPage(@PathVariable(name = "artId") Integer articleId, Model m) throws SQLException {
+		AccountBean account = (AccountBean) m.getAttribute("userBean");
+		m.addAttribute("userBean",account);
+		m.addAttribute("artBean", articleService.showArticleById(articleId));
+		return "azaz4498/editPage_frontend";
+	}
+
+	
+	//編輯controller
+	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
+	public String Edit(@RequestParam(name = "title") String title,
+			@RequestParam(name = "content") String content, @RequestParam(name = "artId") Integer articleId,
+			@RequestParam(name = "userId") String userid, @RequestParam(name = "typeSelect") Integer typeId, Model m)
+			throws SQLException {
+		AccountBean account = (AccountBean) m.getAttribute("userBean");
+		articleService.articleEdit(title, content, articleId, account.getUserName(), typeId);
+		m.addAttribute("artBean", articleService.showArticleById(articleId));
+
+		return "redirect:/article/"+articleId;
+	}
 	
 	//文章新增後跳轉文章頁面
 	@RequestMapping(path = "/newArticle.controller", method = RequestMethod.POST)

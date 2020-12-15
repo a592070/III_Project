@@ -102,12 +102,12 @@
 											<a class="text-blue" href="#">忘記密碼?</a>
 										</p>-->
 									</div>
-									<div class="g-recaptcha" data-sitekey="6LdOeNYZAAAAAPAEKRkJYgqKjU79n5B90Jnw2Q06"></div>
+									<!-- <div class="g-recaptcha" data-sitekey="6LdOeNYZAAAAAPAEKRkJYgqKjU79n5B90Jnw2Q06"></div> -->
 									<button type="submit" class="btn btn-lg btn-primary btn-block mb-4">登入</button>
 									<button type="button" class="btn btn-light" id="fastsignin">帶入資料</button>
 <!-- 									<p> -->
 <!-- 										還沒有帳號 ? <a class="text-blue" -->
-<%-- 											href="${pageContext.servletContext.contextPath}/admin/singup">註冊</a> --%>
+<%-- 											href="${pageContext.servletContext.contextPath}/admin/signup">註冊</a> --%>
 <!-- 									</p> -->
 								</div>
 							</div>
