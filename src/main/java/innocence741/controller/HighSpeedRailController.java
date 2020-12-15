@@ -19,11 +19,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -41,7 +39,6 @@ import global.pojo.OrderTable;
 import rambo0021.pojo.AccountBean;
 import rambo0021.serive.AccountService;
 
-@SessionAttributes(names = { "userBean" })
 @Controller @Lazy
 public class HighSpeedRailController {
 	
@@ -158,7 +155,7 @@ public class HighSpeedRailController {
 	
 	
 	@RequestMapping(path = "/T_OrderServlet", method = RequestMethod.POST)
-	public void processAction3(@ModelAttribute("userBean") AccountBean aBean, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+	public void processAction3(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String snSchedule = request.getParameter("snSchedule");
         
         String startPoint = request.getParameter("startPoint");
@@ -185,7 +182,7 @@ public class HighSpeedRailController {
 //        System.out.println("departureDate_tmp= "+departureDate);
 //        System.out.println("departureDate= "+departureDate[0]+" "+departureDate[1]+" "+departureDate[2]);
 //        System.out.println("orderType= "+orderType);
-//        HttpSession session2 = request.getSession(false);	//使用者的資訊SESSION
+        HttpSession session2 = request.getSession(false);	//使用者的資訊SESSION
         
 		Set<T_Order_List> t_Order_Lists = new HashSet<T_Order_List>();
 		OrderTable order_table = new OrderTable();
@@ -196,8 +193,7 @@ public class HighSpeedRailController {
 
 //        AccountBean user = (AccountBean) session2.getAttribute("Login");	//之後要換的User
 //		AccountBean user = session.get(AccountBean.class, "abab");
-		String userName = aBean.getUserName();
-        AccountBean user = accountService.userDetail(userName);
+        AccountBean user = accountService.userDetail("abab");
 		System.out.println("abab: OK");
 //		HighSpeedRail highSpeedRail = session.get(HighSpeedRail.class, BigDecimal.valueOf(Integer.parseInt(snSchedule))); //之後要換Integer.parseInt(snSchedule)
 		HighSpeedRail highSpeedRail = highSpeedRailService.hsrDetail(BigDecimal.valueOf(Integer.parseInt(snSchedule)));
@@ -262,9 +258,9 @@ public class HighSpeedRailController {
     
     
 	@RequestMapping(path = "/ShowHistricalT_OrderServlet", method = RequestMethod.POST)
-	public void processAction4(@ModelAttribute("userBean") AccountBean aBean, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ParseException {
+	public void processAction4(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ParseException {
 		
-//		HttpSession session2 = request.getSession(false);
+		HttpSession session2 = request.getSession(false);
 //        if (session2.getAttribute("Login") == null) {
 //            // 請使用者登入
 ////        	System.out.println("hahahahaha");
@@ -273,10 +269,10 @@ public class HighSpeedRailController {
 //            out.println(ujson1.toString());
 //        }else {
         
-//        	AccountBean account = (AccountBean) session2.getAttribute("Login");
+        	AccountBean account = (AccountBean) session2.getAttribute("Login");
         	
 //        	String userName = account.getUserName();
-        	String userName = aBean.getUserName();
+        	String userName = "abab";
         	
 	        ArrayList<ArrayList> combineArrayList = new ArrayList<>();
 			t_Order_ListService.searchHistoricalOrder(combineArrayList, userName);	//假設使用者為abab 之後從session取得

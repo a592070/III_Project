@@ -83,5 +83,14 @@
 
 <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+
+<script>
+    $(document).ready(function(){
+        let timer = setInterval(() => {
+            $('body,html').animate({scrollTop: 900}, 4500);
+            clearInterval(timer);
+        }, 2500);
+    });
+</script>
 </body>
 </html>

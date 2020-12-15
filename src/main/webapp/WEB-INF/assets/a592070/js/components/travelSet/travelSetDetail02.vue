@@ -2,14 +2,17 @@
   <div style="height: 600px">
     <el-tabs type="border-card" style="height:100%; overflow-y:auto;overflow-x:hidden;">
       <el-tab-pane label="基本設定" style="max-height:90%">
-        <el-form :model="currentEditTravelSetDetail.travelSetInfo" ref="travelSetDetailInfo">
+
+        <el-form :model="currentEditTravelSetDetail.travelSetInfo" ref="travelSetDetailInfo" :rules="rules">
           <el-form-item label="編號" :label-width="formLabelWidth"
                         prop="sn">
             <el-input v-model="currentEditTravelSetDetail.travelSetInfo.sn" disabled></el-input>
           </el-form-item>
-          <el-form-item label="創建者" :label-width="formLabelWidth"
-                        prop="createdUser">
-            <el-input v-model="currentEditTravelSetDetail.travelSetInfo.createdUser"></el-input>
+          <el-form-item label="創建者"
+                        :label-width="formLabelWidth"
+                        prop="createdUser"
+                        >
+            <el-input v-model="currentEditTravelSetDetail.travelSetInfo.createdUser" v-on:change="handleCheckUser"></el-input>
           </el-form-item>
           <el-form-item label="名稱" :label-width="formLabelWidth"
                         prop="name">
@@ -39,6 +42,9 @@
             <el-button type="warning" icon="el-icon-refresh-left"
                        v-on:click="resetTravelSetForm('travelSetDetailInfo')">重 置
             </el-button>
+
+            <el-button type="info" round v-on:click="handleInjectData">匯入資料</el-button>
+
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -46,7 +52,7 @@
 
       <el-tab-pane label="景點規劃">
         <el-form :model="currentEditTravelSetDetail.travelSetAttractions" ref="travelSetDetailAttractions">
-          <template v-for="(item, index) in currentEditTravelSetDetail.travelSetAttractions.data">
+          <template v-for="(item, index) in currentEditTravelSetDetail.travelSetAttractions.data" >
             <el-row>
               <el-col :span="4">
                 <el-form-item label="編號:" :prop="'.data['+index+'].sn'" :label-width="formLabelWidth">
@@ -254,10 +260,27 @@
 <script>
 module.exports = {
   data() {
+    var checkUser = (rule, value, callback) => {
+        if(!value){
+          return callback(new Error('創建者不能為空'));
+        }else{
+          this.handleCheckUser();
+          console.log(this.userNotAllow)
+          if(this.userNotAllow) return callback(new Error('使用者不存在'));
+        }
+    };
+
     return {
       loading: true,
       formLabelWidth: '80px',
-      travelSetDetail: null
+      travelSetDetail: null,
+      userNotAllow: true,
+
+      rules: {
+        createdUser: [
+          { validator: checkUser, trigger: 'blur' }
+        ]
+      }
     }
   },
   created: function () {
@@ -367,6 +390,51 @@ module.exports = {
     },
     handleSwitchStatus(value) {
       value.status = !value.status;
+    },
+    handleCheckUser(){
+      let user = this.currentEditTravelSetDetail.travelSetInfo.createdUser;
+      this.$store.dispatch('handleUserAvailable', user)
+          .then((response => {
+
+            if(response){
+              this.userNotAllow = false
+            }else{
+              this.userNotAllow = true
+            }
+          }))
+    },
+    handleInjectData(){
+      this.currentEditTravelSetDetail.travelSetInfo.createdUser = 'system';
+      this.currentEditTravelSetDetail.travelSetInfo.name = '高雄文化古蹟二日遊';
+      this.currentEditTravelSetDetail.travelSetInfo.description = '#打狗英國領事館#高雄市立歷史博物館#蓮池潭#高雄市立美術館#國立科學工藝博物館';
+      this.currentEditTravelSetDetail.travelSetInfo.priority = 66;
+      this.currentEditTravelSetDetail.travelSetInfo.status = true;
+
+      this.currentEditTravelSetDetail.travelSetAttractions.data.push({
+        attraction: {sn: 1061, name: '打狗英國領事館文化園區'},
+      });
+      this.currentEditTravelSetDetail.travelSetAttractions.data.push({
+        attraction: {sn: 1118, name: '高雄市立歷史博物館'},
+      });
+      this.currentEditTravelSetDetail.travelSetAttractions.data.push({
+        attraction: {sn: 1136, name: '蓮池潭風景區'},
+      });
+      this.currentEditTravelSetDetail.travelSetAttractions.data.push({
+        attraction: {sn: 1073, name: '高雄市立美術館'},
+      });
+      this.currentEditTravelSetDetail.travelSetAttractions.data.push({
+        attraction: {sn: 1751, name: '國立科學工藝博物館'},
+      });
+
+
+      this.currentEditTravelSetDetail.travelSetRestaurants.data.push({
+        restaurant: {sn: 108, name: '四川小灶'},
+      });
+      this.currentEditTravelSetDetail.travelSetRestaurants.data.push({
+        restaurant: {sn: 107, name: '漢來海港餐廳-巨蛋店 (漢神巨蛋 5F)'},
+      });
+
+      this.$store.commit('setCurrentTravelSetDetail', this.currentEditTravelSetDetail);
     }
   }
 }

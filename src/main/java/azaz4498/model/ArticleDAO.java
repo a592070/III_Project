@@ -153,7 +153,7 @@ public class ArticleDAO {
 	
 	//顯示文章列表(非禁用)(前台)
 	public List<Article> showAvailableArticles(Integer index,Integer records){
-		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article  WHERE ART_STATUS = 'enabled' Order by ART_ID",
+		Query<Article> query = sessionFactory.getCurrentSession().createQuery("From Article  WHERE ART_STATUS = 'enabled' Order by ART_CRE_TIME DESC",
 				Article.class);
 		//資料從index開始
 		query.setFirstResult(index);
@@ -218,7 +218,7 @@ public class ArticleDAO {
 	public List<Article> showArticlesByType(Integer typeId,Integer index,Integer records) throws SQLException {
 
 		Query<Article> query = sessionFactory.getCurrentSession()
-				.createQuery("From Article where ART_TYPE_ID=?1 AND ART_STATUS = 'enabled'Order by ART_CRE_TIME", Article.class);
+				.createQuery("From Article where ART_TYPE_ID=?1 AND ART_STATUS = 'enabled'Order by ART_CRE_TIME DESC", Article.class);
 		query.setParameter(1, typeId);
 		query.setMaxResults(records);
 		query.setFirstResult(index);

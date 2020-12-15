@@ -72,17 +72,28 @@
             text-color="#ff9900"
             score-template="{value}">
         </el-rate>
-        <span class="loc"><a href="javascript:0">
-          <i class="icon-map"></i>
-          <strong>{{attractionData.region}}</strong> {{attractionData.address}}</a></span>
-        <br>
-        <iframe
+
+        <el-popover
+            placement="bottom"
             width="600"
             height="450"
-            frameborder="0" style="border:0"
-            :src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyDVV4ION7MX_-1bG3bDyKBZ75NIVTHKCLA&q='+attractionData.address"
-            allowfullscreen>
-        </iframe>
+            trigger="hover">
+
+          <iframe
+              width="600"
+              height="450"
+              frameborder="0" style="border:0"
+              :src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyDVV4ION7MX_-1bG3bDyKBZ75NIVTHKCLA&q='+attractionData.address"
+              allowfullscreen>
+          </iframe>
+
+          <span class="loc" slot="reference"><a href="javascript:0">
+          <i class="icon-map"></i>
+          <strong>{{attractionData.region}}</strong> {{attractionData.address}}</a></span>
+
+        </el-popover>
+        <br>
+
 
       </p>
       <v-tabs

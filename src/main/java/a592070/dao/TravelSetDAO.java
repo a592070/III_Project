@@ -7,6 +7,8 @@ import java.util.List;
 public interface TravelSetDAO{
     TravelSetDO getTravelSetByID(Integer id, boolean loadFetch, boolean findFromPersistence);
 
+    boolean checkUser(String username);
+
     int getSize();
     int getSize(boolean available);
     List<TravelSetVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending);

@@ -29,7 +29,7 @@
               >
                 <v-text-field
                     v-model="search"
-                    v-on:focusout="handleSelectedKeyword"
+                    v-on:keyup="handleSelectedKeyword"
                     clearable
                     flat
                     solo-inverted
@@ -279,6 +279,14 @@
 
     <div ref="detailInfoDirect"></div>
 
+    <v-lazy
+        v-model="isActive"
+        :options="{
+          threshold: .5
+        }"
+        min-height="200"
+        transition="fade-transition"
+    >
 <!--    <section class=" testimony-section bg-light">-->
     <v-container fluid ref="detailInfo" style="padding: 0; margin: 0; background-color: #ECEFF1">
 
@@ -289,6 +297,7 @@
       </div>
     </v-container>
 <!--    </section>-->
+    </v-lazy>
 
     <v-fab-transition>
       <v-btn
@@ -321,6 +330,7 @@ module.exports = {
   },
   data() {
     return {
+      isActive: true,
       barHeight: '100%',
       images: [
           context+'/assets/attraction/1/179ac12b-892f-355d-8f6a-17b605ec7894.jpg',

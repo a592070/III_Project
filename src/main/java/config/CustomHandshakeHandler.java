@@ -17,9 +17,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class CustomHandshakeHandler extends DefaultHandshakeHandler {
@@ -35,7 +33,9 @@ public class CustomHandshakeHandler extends DefaultHandshakeHandler {
         HttpSession session = servletRequest.getServletRequest().getSession();
 
         Object stompUsers = context.getAttribute(Constant.STOMP_USERS);
-        Map<String, StompPrincipal> users = (Map<String, StompPrincipal>) (stompUsers==null ? new HashMap<String, StompPrincipal>() : stompUsers);
+//        Map<String, StompPrincipal> users = (Map<String, StompPrincipal>) (stompUsers==null ? new HashMap<String, StompPrincipal>() : stompUsers);
+
+        Set<StompPrincipal> users = (Set<StompPrincipal>) (stompUsers==null ? new HashSet<>() : stompUsers);
 
         if (session != null) {
             // 如果有登入 使用username
@@ -47,21 +47,31 @@ public class CustomHandshakeHandler extends DefaultHandshakeHandler {
             if(adminSession != null || normalSession != null){
                 loginUser = adminSession!=null ? adminSession : normalSession;
 
-                StompPrincipal storeUser = users.get("user/" + loginUser.getUserName());
-                StompPrincipal stompPrincipal = storeUser != null ? storeUser: new StompPrincipal(loginUser.getUserName());
+//                StompPrincipal storeUser = users.get("user/" + loginUser.getUserName());
+//                StompPrincipal stompPrincipal = storeUser != null ? storeUser: new StompPrincipal(loginUser.getUserName());
+//                users.put("user/"+stompPrincipal.getName(), stompPrincipal);
 
-                users.put("user/"+stompPrincipal.getName(), stompPrincipal);
+                AccountBean finalLoginUser = loginUser;
+                StompPrincipal stompPrincipal = users.stream().filter(ele -> ele.getName().equals(finalLoginUser.getUserName())).findFirst().orElse(new StompPrincipal(loginUser.getUserName()));
+
+                stompPrincipal.setGroup(StompPrincipal.GROUP_USER);
+                users.add(stompPrincipal);
+
                 context.setAttribute(Constant.STOMP_USERS, users);
-
                 logger.info("用戶已建立連接" + stompPrincipal.getName());
                 logger.info("用戶數量" + users.size());
                 return stompPrincipal;
             }else{
 
-                StompPrincipal storeUser = users.get("guest/" + session.getId());
-                StompPrincipal stompPrincipal = storeUser != null ? storeUser: new StompPrincipal(session.getId());
+//                StompPrincipal storeUser = users.get("guest/" + session.getId());
+//                StompPrincipal stompPrincipal = storeUser != null ? storeUser: new StompPrincipal(session.getId());
+//                users.put("guest/"+stompPrincipal.getName(), stompPrincipal);
 
-                users.put("guest/"+stompPrincipal.getName(), stompPrincipal);
+                StompPrincipal stompPrincipal = users.stream().filter(ele -> ele.getName().equals(session.getId())).findFirst().orElse(new StompPrincipal(session.getId()));
+
+                stompPrincipal.setGroup(StompPrincipal.GROUP_GUEST);
+                users.add(stompPrincipal);
+
                 context.setAttribute(Constant.STOMP_USERS, users);
 
                 logger.info("用戶已建立連接" + stompPrincipal.getName());
