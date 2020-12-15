@@ -294,5 +294,40 @@ public class HighSpeedRailController {
 	    }
 		
 //	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(path = "/cancelT_Order_ListServlet", method = RequestMethod.POST)
+	public void	processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+		
+        String t_sn_order_tmp = request.getParameter("t_sn_order");
+        
+		boolean flag = true;
+        BigDecimal t_sn_order = BigDecimal.valueOf(Integer.parseInt(t_sn_order_tmp));
+        System.out.println("t_sn_order= " + t_sn_order);
+        
+        flag = t_Order_ListService.delT_Order_List(t_sn_order);
+		printJSON2(request,response,flag);
+	}
+    public void printJSON2(HttpServletRequest request, HttpServletResponse response, boolean flag) throws IOException {
+    	String str = "";
+    	if(flag == true) {
+    		str = "{\"check\" : \"success\"}";
+    	}else {
+    		str = "{\"check\" : \"fail\"}";
+		}
+    	System.out.println("str= " + str);
+    	PrintWriter out = response.getWriter();
+    	out.println(str);
+    	
+    }
+	
+	
     
 }
