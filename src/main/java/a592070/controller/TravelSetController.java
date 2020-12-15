@@ -259,7 +259,7 @@ public class TravelSetController {
         return map;
     }
 
-    @PostMapping("/admin/travelSet/checkuser/{username}")
+    @RequestMapping("/admin/travelSet/checkuser/{username}")
     public boolean checkUser(@PathVariable("username") String username){
         if(StringUtil.isEmpty(username)) return false;
         return service.checkUser(username);

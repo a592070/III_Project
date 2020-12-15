@@ -201,7 +201,7 @@ const store = new Vuex.Store({
         },
         handleUserAvailable(state, username){
             let url = context + '/admin/travelSet/checkuser/'+username;
-            return axios.get(url)
+            return axios.post(url)
                 .then(response => {
                     return response.data;
                 });

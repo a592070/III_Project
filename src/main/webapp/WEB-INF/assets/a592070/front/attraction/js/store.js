@@ -130,11 +130,18 @@ const store = new Vuex.Store({
         initAttractionListData(state){
             state.commit('toggleSelectListLoading', true);
             let url = context+'/attraction/list/1';
-            axios.get(url)
+            return axios.get(url)
                 .then(response => {
-                    state.commit('setAttractionList', response.data.tableData);
-                    state.commit('setPageData', response.data.pageData);
+                    if(response.data) {
+                        state.commit('setAttractionList', response.data.tableData);
+                        state.commit('setPageData', response.data.pageData);
+                    }
                     state.commit('toggleSelectListLoading', false);
+                    return true;
+                })
+                .catch(() => {
+                    state.commit('toggleSelectListLoading', false);
+                    return false;
                 });
         },
         initRegionsData(state){
@@ -160,7 +167,11 @@ const store = new Vuex.Store({
                 .then(response => {
                     state.commit('setAttractionList', response.data.tableData);
                     state.commit('setPageData', response.data.pageData);
+                    return true;
+                })
+                .catch(() => {
                     state.commit('toggleSelectListLoading', false);
+                    return false;
                 });
         },
         appendAttractionListData(state, {region, keyword}){
@@ -185,11 +196,16 @@ const store = new Vuex.Store({
         initAttractionData(state, id){
             state.commit('toggleSelectDetailLoading', true);
             let url = context+'/attraction/entity/'+id;
-            axios.get(url)
+            return axios.get(url)
                 .then(response => {
                     state.commit('setAttractionData', response.data.attractionData);
                     state.commit('setAttractionPic', response.data.attractionPic);
                     state.commit('toggleSelectDetailLoading', false);
+                    return true;
+                })
+                .catch(() => {
+                    state.commit('toggleSelectDetailLoading', false);
+                    return false;
                 });
         }
     }

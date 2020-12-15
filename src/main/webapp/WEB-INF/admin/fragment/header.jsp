@@ -19,12 +19,12 @@
         <div class="navbar-right ">
             <ul class="nav navbar-nav">
                 <li class="dropdown notifications-menu">
-<!--                     <button class="dropdown-toggle" data-toggle="dropdown"> -->
-<!--                         <i class="mdi mdi-bell-outline"></i> -->
-<!--                     </button> -->
-<!--                     <ul class="dropdown-menu dropdown-menu-right"> -->
-<!--                         <li class="dropdown-header"></li> -->
-<!--                     </ul> -->
+
+                    <%-- 廣播通知 --%>
+                    <button class="dropdown-toggle">
+                        <i class="mdi mdi-cast" href="${pageContext.servletContext.contextPath}/admin/broadcastMessage"></i>
+                    </button>
+
                 </li>
                 <!-- User Account -->
                 <li class="dropdown user-menu">

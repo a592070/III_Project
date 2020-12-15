@@ -49,7 +49,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
         Session session = sessionFactory.getCurrentSession();
         Query<AccountBean> query = session.createQuery(hql, AccountBean.class);
         query.setParameter("username", username);
-        return query.list().isEmpty();
+        return !query.list().isEmpty();
     }
 
     @Override
