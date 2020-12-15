@@ -176,8 +176,8 @@ public class F_RorderController {
 		OrderTable otBean = F_Serivce.findOrder();  //不使用綠界時打開
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();  //不使用綠界時打開
 		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
-//		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();  //不使用綠界時打開
-//		session.setAttribute("hotel_lists", hotel_lists);  //不使用綠界時打開
+		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();  //不使用綠界時打開
+		session.setAttribute("hotel_lists", hotel_lists);  //不使用綠界時打開
 		for(R_Order_List r : res_lists) {  //不使用綠界時打開
 			//send mail
 			String email = aBean.getEmail();  //不使用綠界時打開
