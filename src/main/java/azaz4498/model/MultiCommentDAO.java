@@ -25,7 +25,9 @@ public class MultiCommentDAO {
 	//新增multi評論
 	public MultiComment newMultiComment (String content, int comId,String userId) {
 		MultiComment multiComment = new MultiComment();
+		Comment comment = sessionFactory.getCurrentSession().get(Comment.class, comId);
 		multiComment.setM_Date(new java.sql.Timestamp(new java.util.Date().getTime()));
+		multiComment.setComment(comment);
 		multiComment.setM_Content(content);
 		multiComment.setM_UserId(userId);
 		multiComment.setM_ComId(comId);

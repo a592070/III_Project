@@ -127,7 +127,7 @@ h2 {
 
 										<div class="form-footer pt-4 pt-5 mt-4 border-top">
 											<button type="button" class="btn btn-primary edit_btn" data-toggle="modal" data-target="#editModal">送出修改</button>
-											<button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button>
+											<!-- <button id="preview_btn" class="btn-primary btn" onclick="preview()">文章預覽</button> -->
 											<button class="btn btn-danger" onclick="redo()">重置</button>
 											
 										</div>
@@ -215,9 +215,9 @@ h2 {
 						'numberedList',
 						'imageInsert',
 						'|',
-						'imageUpload',
+						
 						'blockQuote',
-						'mediaEmbed',
+						
 						'undo',
 						'redo',
 						'insertTable'
