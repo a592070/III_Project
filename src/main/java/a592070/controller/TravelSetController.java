@@ -258,4 +258,10 @@ public class TravelSetController {
         map.put("pageData", pageSupport);
         return map;
     }
+
+    @RequestMapping("/admin/travelSet/checkuser/{username}")
+    public boolean checkUser(@PathVariable("username") String username){
+        if(StringUtil.isEmpty(username)) return false;
+        return service.checkUser(username);
+    }
 }

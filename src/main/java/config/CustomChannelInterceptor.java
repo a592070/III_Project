@@ -18,6 +18,7 @@ import java.security.Principal;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Component
 public class CustomChannelInterceptor implements ChannelInterceptor {
@@ -42,8 +43,11 @@ public class CustomChannelInterceptor implements ChannelInterceptor {
 
                 Object stompUsers = context.getAttribute(Constant.STOMP_USERS);
                 if(stompUsers != null){
-                    Map<String, StompPrincipal> users = (Map<String, StompPrincipal>) stompUsers;
-                    users.keySet().removeIf(key -> key.contains(userName));
+//                    Map<String, StompPrincipal> users = (Map<String, StompPrincipal>) stompUsers;
+//                    users.keySet().removeIf(key -> key.contains(userName));
+
+                    Set<StompPrincipal> users = ( Set<StompPrincipal>) stompUsers;
+                    users.removeIf(ele -> userName.equals(ele.getName()));
 
                     context.setAttribute(Constant.STOMP_USERS, users);
                 }

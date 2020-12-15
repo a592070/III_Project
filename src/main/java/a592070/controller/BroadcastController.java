@@ -5,14 +5,12 @@ import global.pojo.NotifyVO;
 import global.service.NotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import utils.NotifyUtil;
 import utils.StringUtil;
 
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class BroadcastController {
@@ -21,13 +19,20 @@ public class BroadcastController {
     private NotifyService notifyService;
 
     @RequestMapping("/broadcast/users")
-    public Map<String, StompPrincipal>  getBroadcastUsers(){
-        Map<String, StompPrincipal> broadcastUsers = notifyService.getBroadcastUsers();
+    public Set<StompPrincipal>  getBroadcastUsers(){
+        Set<StompPrincipal> broadcastUsers = notifyService.getBroadcastUsers();
         return broadcastUsers;
     }
 
-    @PostMapping({"/broadcast/receive/{user}", "/broadcast/receive/"})
-    public boolean receiveMessage(@PathVariable(value = "user", required = false) String user, Integer status, String title, String content){
+    @PostMapping({"/broadcast/publish/{user}", "/broadcast/publish"})
+    public boolean publishMessage(
+            @PathVariable(value = "user", required = false) String user,
+            @RequestBody Map<String,Object> params){
+
+        Integer status = (Integer) params.get("status");
+        String title = (String) params.get("title");
+        String message = (String) params.get("message");
+
         String sStatus;
         switch (status){
             case 1:
@@ -45,9 +50,9 @@ public class BroadcastController {
         }
 
         if(!StringUtil.isEmpty(user)){
-            notifyService.addSingleNotify(NotifyUtil.setNotify(sStatus, title, content), user);
+            notifyService.addSingleNotify(NotifyUtil.setNotify(sStatus, title, message), user);
         }else{
-            notifyService.addBroadcastNotify(NotifyUtil.setNotify(sStatus, title, content));
+            notifyService.addBroadcastNotify(NotifyUtil.setNotify(sStatus, title, message));
         }
         return true;
     }
