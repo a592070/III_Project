@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- Created by IntelliJ IDEA. User: Student Date: 2020/10/29 Time: 上午 10:25
 To change this template use File | Settings | File Templates. --%> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
@@ -74,3 +75,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 <script src="${pageContext.request.contextPath}/assets/plugins/toaster/toastr.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/sleek.js"></script>
+
+<c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>
+
+

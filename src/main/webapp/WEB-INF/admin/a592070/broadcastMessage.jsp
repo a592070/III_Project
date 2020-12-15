@@ -12,7 +12,7 @@
     <title>Broadcast Message</title>
 
     <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
-    <c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>
+
 
     <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/back/message/js/message.js"></script>
 </head>

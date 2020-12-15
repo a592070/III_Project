@@ -21,6 +21,23 @@ const store = new Vuex.Store({
         },
 
         selectDetailLoading: true,
+        initAttractionData: {
+            sn: 0,
+            name: '暫時沒有資訊',
+            toldescribe: '暫時沒有資訊',
+            description: '暫時沒有資訊',
+            tel: '暫時沒有資訊',
+            address: '台灣',
+            px: 0,
+            py: 0,
+            openTime: '暫時沒有資訊',
+            ticketInfo: '暫時沒有資訊',
+            travellingInfo: '暫時沒有資訊',
+            keywords: '暫時沒有資訊',
+            remarks: '暫時沒有資訊',
+            rating: 1,
+            region: '暫時沒有資訊'
+        },
         attractionData: {
             sn: 0,
             name: '暫時沒有資訊',
@@ -86,6 +103,7 @@ const store = new Vuex.Store({
             state.selectDetailLoading = flag;
         },
         setAttractionData(state, data){
+            state.attractionData = state.initAttractionData;
             if(data.sn) state.attractionData.sn = data.sn;
             if(data.name) state.attractionData.name = data.name;
             if(data.toldescribe) state.attractionData.toldescribe = data.toldescribe;
@@ -112,11 +130,18 @@ const store = new Vuex.Store({
         initAttractionListData(state){
             state.commit('toggleSelectListLoading', true);
             let url = context+'/attraction/list/1';
-            axios.get(url)
+            return axios.get(url)
                 .then(response => {
-                    state.commit('setAttractionList', response.data.tableData);
-                    state.commit('setPageData', response.data.pageData);
+                    if(response.data) {
+                        state.commit('setAttractionList', response.data.tableData);
+                        state.commit('setPageData', response.data.pageData);
+                    }
                     state.commit('toggleSelectListLoading', false);
+                    return true;
+                })
+                .catch(() => {
+                    state.commit('toggleSelectListLoading', false);
+                    return false;
                 });
         },
         initRegionsData(state){
@@ -142,7 +167,11 @@ const store = new Vuex.Store({
                 .then(response => {
                     state.commit('setAttractionList', response.data.tableData);
                     state.commit('setPageData', response.data.pageData);
+                    return true;
+                })
+                .catch(() => {
                     state.commit('toggleSelectListLoading', false);
+                    return false;
                 });
         },
         appendAttractionListData(state, {region, keyword}){
@@ -167,11 +196,16 @@ const store = new Vuex.Store({
         initAttractionData(state, id){
             state.commit('toggleSelectDetailLoading', true);
             let url = context+'/attraction/entity/'+id;
-            axios.get(url)
+            return axios.get(url)
                 .then(response => {
                     state.commit('setAttractionData', response.data.attractionData);
                     state.commit('setAttractionPic', response.data.attractionPic);
                     state.commit('toggleSelectDetailLoading', false);
+                    return true;
+                })
+                .catch(() => {
+                    state.commit('toggleSelectDetailLoading', false);
+                    return false;
                 });
         }
     }

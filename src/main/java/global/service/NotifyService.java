@@ -33,8 +33,8 @@ public class NotifyService {
 //    private List<NotifyVO> singleNotifies = new LinkedList<>();
 
 
-    public Map<String, StompPrincipal> getBroadcastUsers(){
-        return (Map<String, StompPrincipal>)context.getAttribute(Constant.STOMP_USERS);
+    public Set<StompPrincipal> getBroadcastUsers(){
+        return (Set<StompPrincipal>)context.getAttribute(Constant.STOMP_USERS);
     }
 
     /**
