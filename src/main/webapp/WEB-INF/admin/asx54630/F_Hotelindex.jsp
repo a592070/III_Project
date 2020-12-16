@@ -52,12 +52,12 @@ h3{
     console.log("nu = " + ${cartnum}); 
 // 	   console.log("num");
 		  </script>
-<!--         <script> -->
-<!--        $(document).ready(function(){ -->
-<!--      $('body,html').animate({scrollTop: 800}, 800);  -->
-<!--        }); -->
+        <script>
+        $(document).ready(function(){ 
+      $('body,html').delay(1300).animate({scrollTop: 900}, 900); 
+        }); 
 
-<!--     </script> -->
+     </script> 
     <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/ne4Q62T.jpg');">
       <div class="overlay"></div>
       <div class="container">
@@ -318,6 +318,25 @@ h3{
     		  $("#keyword").val('');
     		  $('#regionkeywd').val('');
     		  $('#typekeywd').val('');
+				console.log("清空選項")
+				var keyword = $("#keyword").val()
+				var regionkeywd = $("#regionkeywd").val()
+				var typekeywd = $("#typekeywd").val()
+			var currentPage=1
+				$.ajax(
+						{
+							type: 'POST',
+							data: { "keyword": keyword, "regionkeywd": regionkeywd, "typekeywd" : typekeywd, "currentPage" : currentPage },
+							url: '${pageContext.servletContext.contextPath}/F_hotelPage',
+							dataType: 'html',
+							success: function (response) {
+								$("#h_data").children().remove();
+								$("#h_data").append(response)
+
+							}
+
+						}
+					)
     		}
 
     		function detailpage(id){

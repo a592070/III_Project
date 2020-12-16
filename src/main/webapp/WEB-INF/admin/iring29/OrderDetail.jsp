@@ -145,7 +145,7 @@ td.col-sm-1.col-md-1.text-center{
 					
 							<td class="col-sm-1 col-md-1 text-center"><h5>${H.PROPLE_NUM}&emsp;&emsp;</h5></td>
 							<td class="col-sm-1 col-md-1">
-								<h5><strong class="deposit">${H.hPRICE}</strong></h5>
+								<h5><strong class="hPrice">${H.hPRICE}</strong></h5>
 							</td>
 							<td class="col-sm-1 col-md-1"></td>
 						</tr>
@@ -163,16 +163,17 @@ td.col-sm-1.col-md-1.text-center{
 					</tbody>
 				</table>
 				<script type="text/javascript">
-// <!--  						var hPRICE = document.getElementsByClassName("hPRICE"); -->
-// <!--  						console.log("deposit size = " + hPRICE.length); -->
-// <!--  						var size = 0; -->
-// <!--   							size += parseInt(hPRICE[i].innerHTML); -->
-// <!--   							console.log("money = " + size); -->
-// <!-- 							console.log("money = " + hPRICE[i].innerHTML); -->
-// <!-- 							} -->
-// <!--          				document.getElementById("HPrice").innerHTML = size; -->
+				var hPRICE = document.getElementsByClassName("hPrice");
+				console.log("hPRICE size = " + hPRICE.length);
+				var size = 0;
+				for(var i = 0; i < hPRICE.length; i++ ){
+					size += parseInt(hPRICE[i].innerHTML);
+					console.log("money = " + size);
+					console.log("money = " + hPRICE[i].innerHTML);
+					}
+				document.getElementById("HPrice").innerHTML = size;
         				
-=    					</script> =
+    					</script> 
 			</div>
 		</div>
 	</div>
@@ -376,13 +377,17 @@ td.col-sm-1.col-md-1.text-center{
 				<!-- 總金額 -->
 					<script type="text/javascript">
 					var Rsum = document.getElementById("tPrice").innerHTML;
+					var Hsum = document.getElementById("HPrice").innerHTML;
+					var TotalSum = parseInt(Rsum) + parseInt(Hsum);
 					console.log("sum = " + Rsum);
-					document.getElementById("sumPrice").innerHTML = Rsum;
+					document.getElementById("sumPrice").innerHTML = TotalSum;
 					
 					function sumprice(){
 						var Rsum = document.getElementById("tPrice").innerHTML;
+						var Hsum = document.getElementById("HPrice").innerHTML;
+						var TotalSum = parseInt(Rsum) + parseInt(Hsum);
 						console.log("sum = " + Rsum);
-						document.getElementById("sumPrice").innerHTML = Rsum;
+						document.getElementById("sumPrice").innerHTML = TotalSum;
 					}
 					</script>
 			</div>

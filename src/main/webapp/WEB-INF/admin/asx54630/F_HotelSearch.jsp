@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 
+
+
 <div class="row">
+	<c:set var ="size" value= "${fn:length(hoteldata)}"></c:set>
+		<c:if test = "${size < 1}" >
+			<h5>很抱歉，沒有符合的飯店</h5>
+		</c:if>
+		<c:if test = "${size > 0}" >
           	<c:forEach var="hotels" items="${hoteldata}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
@@ -50,6 +58,7 @@
 		    				</div>
 		    			</div>
 		    		</c:forEach>
+		    		
           	</div>
           	<div class="row mt-5">
 		          <div class="col text-center">
@@ -66,6 +75,7 @@
 		            </div>
 		          </div>
 		        </div>
+		        </c:if>
 		        <script type="text/javascript">
 				$("#${currentPage}").attr("class","active");
 				$("#${currentPage}").remove("a");
