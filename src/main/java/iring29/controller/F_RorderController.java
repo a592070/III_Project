@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import asx54630.model.HotelOrder;
 import ecpay.payment.integration.AllInOne;
@@ -208,7 +209,7 @@ public class F_RorderController {
 	
 	//send mail leave comment
 	@RequestMapping(path = {"/commentrestaurant/{r.id}"})
-	public String mailforComment(@PathVariable(name="r.id", required = false) Integer r_id, HttpSession session) {
+	public ModelAndView mailforComment(@PathVariable(name="r.id", required = false) Integer r_id, HttpSession session) {
 		R_Order_List rList = F_Serivce.findR_sn(r_id);
 		
 		  //不使用綠界時打開
@@ -220,7 +221,8 @@ public class F_RorderController {
 			String url = "/reviewrestaurant/" + rList.getId();
 			sendMail.asyncSend(email, title, content, urlDisplay, url , session);  //不使用綠界時打開
 			
-		return "iring29/RestaurantList"; //要修改
+			ModelAndView  model = new ModelAndView("redirect:/admin/RestaurantList");    
+		    return model;  
 		
 	}
 	
