@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import asx54630.model.Hotel;
 import asx54630.model.HotelOrder;
@@ -21,7 +22,7 @@ import asx54630.service.F_HotelOrderService;
 import global.pojo.OrderTable;
 import rambo0021.pojo.AccountBean;
 
-
+@SessionAttributes(names = { "userBean" })
 @Controller
 public class F_HotelOrderController {
 
