@@ -124,7 +124,7 @@ td {
 					</script>
 									</div></th>
 											<th>修改</th>
-											<th>刪除</th>
+											<th>評論</th>
 										</tr>
 									</thead>
 									<tbody id="tbody">
@@ -167,28 +167,35 @@ td {
 <%-- 												<Input type='hidden' name='rid' value='${r.id}'> --%>
 <!-- 												</form> -->
 											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#訂單${r.id}">
-											  刪除
+											<c:if test="${r.book_time > ts}">
+											<button type="button" class="btn btn-info" data-toggle="modal" data-target="#訂單${r.id}" disabled>
+											  評論
 											</button>
+											</c:if>
+											<c:if test="${r.book_time < ts}">
+											<button type="button" class="btn btn-info" data-toggle="modal" data-target="#訂單${r.id}">
+											  評論
+											</button>
+											</c:if>
 
 											<!-- Modal -->
 											<div class="modal fade" id="訂單${r.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
  											 <div class="modal-dialog modal-dialog-centered" role="document">
   											  <div class="modal-content">
  											     <div class="modal-header">
- 											       <h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>
+ 											       <h5 class="modal-title" id="exampleModalLabel">發送提醒</h5>
  											       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
   											        <span aria-hidden="true">&times;</span>											
   											      </button>											
   											    </div>
   											    <div class="modal-body">
-  											      確認刪除餐廳訂單 ${r.id} 資料？
+  											      確認寄送訂單 ${r.id} 評論郵件？
      											</div>											
  											     <div class="modal-footer">
    											     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-   											     <form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" >
+   											     <form id="statuss" name="statuss" action="<%=application.getContextPath()%>/commentrestaurant/${r.id}"  >
    											     	<button type="submit" class="btn btn-primary">確認</button>
-   											     	<Input type='hidden' name='rid' value='${r.id}'>
+<%--    											     	<Input type='hidden' name='rid' value='${r.id}'> --%>
    											     </form>
    											   </div>
   											  </div>
@@ -334,22 +341,28 @@ td {
 										}	
 									res_context += '</form></td>';
 									res_context += '<td>';
-									res_context += '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#訂單'+ response.Rlist[i].id +'">';
-									res_context += '刪除</button>';
+										if(response.Rlist[i].book_time > response.ts){
+									res_context += '<button type="button" class="btn btn-info" disabled data-toggle="modal" data-target="#訂單'+ response.Rlist[i].id +'">';
+									res_context += '評論</button>';
+											}
+										if(response.Rlist[i].book_time < response.ts){
+									res_context += '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#訂單'+ response.Rlist[i].id +'">';
+									res_context += '評論</button>';
+											}
 									res_context += '<div class="modal fade" id="訂單'+ response.Rlist[i].id +'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">';
 									res_context += '<div class="modal-dialog modal-dialog-centered" role="document">';
 									res_context += '<div class="modal-content">';
 									res_context += '<div class="modal-header">';
-									res_context += '<h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>';
+									res_context += '<h5 class="modal-title" id="exampleModalLabel">發送提醒</h5>';
 									res_context += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
 									res_context += '<span aria-hidden="true">&times;</span></button></div>';
 									res_context += '<div class="modal-body">';
-									res_context += '確認刪除餐廳訂單'+ response.Rlist[i].id +'資料？';
+									res_context += '確認寄送訂單'+ response.Rlist[i].id +'評論郵件？';
 									res_context += '</div><div class="modal-footer">';
 									res_context += '<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>';
-									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" >';
+									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/commentrestaurant/'+ response.Rlist[i].id + '">';
 									res_context += '<button type="submit" class="btn btn-primary">確認</button>';
-									res_context += '<Input type="hidden" name="rid" value="'+ response.Rlist[i].id +'">';
+// 									res_context += '<Input type="hidden" name="rid" value="'+ response.Rlist[i].id +'">';
 									res_context += '</form></div></div></div></div>';
 // 									var del = "確認是否刪除此訂單資料？";
 <%-- 									res_context += '<form id="statuss" name="statuss" action="<%=application.getContextPath()%>/admin/DeleteOrder" method="POST" onsubmit="return confirm(`del`);">'; --%>

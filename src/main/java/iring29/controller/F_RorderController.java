@@ -181,6 +181,8 @@ public class F_RorderController {
 		String content = "謝謝您的訂購！  Fun Taiwan訂單編號為"+ otBean.getOrder_id() + "<br>";
 		String Hotel = "<br>";
 		String Restaurant = "<br>";
+		String urlDisplay = "Fun Taiwan";
+		String url = "/FunTaiwan";
 		if(otBean.getHotelOrder().size() > 0 ) {
 			for(HotelOrder hOrder : otBean.getHotelOrder()) {
 				Hotel += "旅館訂單號為：" + hOrder.getSN_ORDER() + "<br>入住時間為：" + hOrder.getCHECK_IN() + "<br>退房時間為：" + hOrder.getCHECK_OUT() +
@@ -195,22 +197,8 @@ public class F_RorderController {
 		}
 		content = content + Hotel + Restaurant;
 		
-		sendMail.asyncSend(email, title, content, session);
+		sendMail.asyncSend(email, title, content,urlDisplay, url, session);
 		
-//		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();  //不使用綠界時打開
-//		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
-//		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();  //不使用綠界時打開
-//		session.setAttribute("hotel_lists", hotel_lists);  //不使用綠界時打開
-//		for(R_Order_List r : res_lists) {  //不使用綠界時打開
-//			//send mail
-//			String email = aBean.getEmail();  //不使用綠界時打開
-//			String title = "Fun x Taiwan";  //不使用綠界時打開
-//			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
-//			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
-//			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
-//			sendMail.asyncSend(email, title, content, urlDisplay, url , session);  //不使用綠界時打開
-//			
-//		}
 				
 		session.removeAttribute("cartnum");
 		session.setAttribute("otBean", otBean);
@@ -218,22 +206,42 @@ public class F_RorderController {
 		return "redirect:payment";//使用綠界時打開
 	}
 	
-	//leave comment
-	@RequestMapping(path = {"/reviewrestaurant/{restaurant_id}/{r_order_id}"}) 
-	public String reviewRestaurant(@PathVariable(name="restaurant_id", required = false) Integer restaurant_id,
-								   @PathVariable(name="r_order_id", required = false) Integer r_order_id, HttpSession session) {
-		Restaurant res_data = F_Serivce.findRestaurant(restaurant_id);
+	//send mail leave comment
+	@RequestMapping(path = {"/commentrestaurant/{r.id}"})
+	public String mailforComment(@PathVariable(name="r.id", required = false) Integer r_id, HttpSession session) {
+		R_Order_List rList = F_Serivce.findR_sn(r_id);
+		
+		  //不使用綠界時打開
+			//send mail
+			String email = "iiiteam124@gmail.com";  //不使用綠界時打開
+			String title = "Fun x Taiwan";  //不使用綠界時打開
+			String content = "謝謝您訂購" + rList.getRestaurant().getName() + "<br>訂單編號為"+ rList.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
+			String urlDisplay = "對"+rList.getRestaurant().getName()+"留下您的評價";
+			String url = "/reviewrestaurant/" + rList.getId();
+			sendMail.asyncSend(email, title, content, urlDisplay, url , session);  //不使用綠界時打開
+			
+		return "iring29/RestaurantList"; //要修改
+		
+	}
+	
+	//link of leaeve comment
+	@RequestMapping(path = {"/reviewrestaurant/{r.id}"}) 
+	public String reviewRestaurant(@PathVariable(name="r.id", required = false) Integer r_id, HttpSession session) {
+		R_Order_List rOrder_List = F_Serivce.findR_sn(r_id);
+		BigDecimal restaurant_id = rOrder_List.getRestaurant().getR_sn();
+		System.out.println("id = " + restaurant_id);
+		Restaurant res_data = rOrder_List.getRestaurant();
 		List<R_Comment> comment = F_Serivce.ResComment(res_data.getR_sn());
 		session.setAttribute("res_data", res_data);
 		session.setAttribute("comment", comment);
-		session.setAttribute("r_order_id", r_order_id);
+		session.setAttribute("r_order_id", r_id);
 //		return "iring29/RestaurantComment";
 		
 		return "redirect:writeComment";
 	}
 	
-	@RequestMapping(path = "/reviewrestaurant/{restaurant_id}/writeComment")
-	public String writeComment(@PathVariable(name="restaurant_id", required = false) Integer restaurant_id) {
+	@RequestMapping(path = "/reviewrestaurant/writeComment")
+	public String writeComment(@PathVariable(name="r_id", required = false) Integer r_id) {
 		return "iring29/RestaurantComment";
 	}
 	
