@@ -99,83 +99,83 @@ td.col-sm-1.col-md-1.text-center{
     
 <section class="cart_area" id="index">
 
-<!-- <div class="container"> -->
-<!-- 		<div class="row"> -->
-<!-- 			<div class="col-sm-12 col-md-10 col-md-offset-1"> -->
-<!-- 				<table class="table table-hover"> -->
-<%-- 					<c:forEach var="H" items="${hotel_lists}"> --%>
-<!-- 					<thead> -->
-<!-- 						<tr> -->
-<!-- 							<h2>飯店訂單訊息</h2> -->
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<%-- 							<th><h5 class="media-heading line">飯店訂單&emsp;<strong>${H.SN_ORDER}</strong></h5></th> --%>
-<!-- 							<th><h5 class="media-heading line"></h5></th> -->
-<!-- 							<th><h5 class="media-heading line">訂位時間</h5></th> -->
-<!-- 							<th class="text-center"><h5 class="media-heading line">訂位人數</h5></th> -->
-<!-- 							<th class="text-center"><h5 class="media-heading line">價格</h5></th> -->
-<!-- 							<th> </th> -->
-<!-- 						</tr> -->
-<!-- 					</thead> -->
-<!-- 					<tbody> -->
-<!-- 						<tr> -->
-<!-- 							<td class="col-sm-8 col-md-6"> -->
-<!-- 								<div class="media"> -->
-<!-- 									<div class="media-body"> -->
-<!-- 										<div class="div_title"><h5 class="media-heading">飯店名稱&emsp;&emsp;&emsp;</h5></div> -->
-<!-- 										<div class="div_title"><h5 class="media-heading">飯店地址&emsp;&emsp;&emsp;</h5></div> -->
-<!-- 										<div class="div_title"><h5 class="media-heading line">訂房人姓名&emsp;</h5></div> -->
-<!-- 										<div class="div_title"><h5 class="media-heading line">訂房人電話&emsp;</h5></div> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</td> -->
-<!-- 							<td> -->
-<%-- 							<div class="content"><h5>${H.hotel.NAME}</h5></div> --%>
-<%-- 							<div class="content"><h5>${H.hotel.ADDRESS}</h5></div> --%>
-<%-- 							<div class="content"><h5 class="media-heading line">${H.CLIENT_NAME}</h5></div> --%>
-<%-- 							<div class="content"><h5 class="media-heading line">${H.CLIENT_PHONE}</h5></div> --%>
-<!-- 							</td> -->
-<!-- 							<div class="div_title"><h5>入住日期</h5></div> -->
-<!-- 							<div class="div_title"><h5>退房日期</h5></div> -->
-<!-- 							</td> -->
-<!-- 							<td> -->
-<%-- 							<div class="content"><h5 class="media-heading line">${H.CHECK_IN}</h5></div> --%>
-<%-- 							<div class="content"><h5 class="media-heading line">${H.CHECK_OUT}</h5></div> --%>
-<!-- 							</td> -->
+<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<table class="table table-hover">
+					<c:forEach var="H" items="${hotel_lists}">
+					<thead>
+						<tr>
+							<h2>飯店訂單訊息</h2>
+						</tr>
+						<tr>
+							<th><h5 class="media-heading line">飯店訂單&emsp;<strong>${H.SN_ORDER}</strong></h5></th>
+							<th><h5 class="media-heading line"></h5></th>
+							<th><h5 class="media-heading line">訂位時間</h5></th>
+							<th class="text-center"><h5 class="media-heading line">訂位人數</h5></th>
+							<th class="text-center"><h5 class="media-heading line">價格</h5></th>
+							<th> </th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="col-sm-8 col-md-6">
+								<div class="media">
+									<div class="media-body">
+										<div class="div_title"><h5 class="media-heading">飯店名稱&emsp;&emsp;&emsp;</h5></div>
+										<div class="div_title"><h5 class="media-heading">飯店地址&emsp;&emsp;&emsp;</h5></div>
+										<div class="div_title"><h5 class="media-heading line">訂房人姓名&emsp;</h5></div>
+										<div class="div_title"><h5 class="media-heading line">訂房人電話&emsp;</h5></div>
+									</div>
+								</div>
+							</td>
+							<td>
+							<div class="content"><h5>${H.hotel.NAME}</h5></div>
+							<div class="content"><h5>${H.hotel.ADDRESS}</h5></div>
+							<div class="content"><h5 class="media-heading line">${H.CLIENT_NAME}</h5></div>
+							<div class="content"><h5 class="media-heading line">${H.CLIENT_PHONE}</h5></div>
+							</td>
+							<div class="div_title"><h5>入住日期</h5></div>
+							<div class="div_title"><h5>退房日期</h5></div>
+							</td>
+							<td>
+							<div class="content"><h5 class="media-heading line">${H.CHECK_IN}</h5></div>
+							<div class="content"><h5 class="media-heading line">${H.CHECK_OUT}</h5></div>
+							</td>
 					
-<%-- 							<td class="col-sm-1 col-md-1 text-center"><h5>${H.PROPLE_NUM}&emsp;&emsp;</h5></td> --%>
-<!-- 							<td class="col-sm-1 col-md-1"> -->
-<%-- 								<h5><strong class="deposit">${H.hPRICE}</strong></h5> --%>
-<!-- 							</td> -->
-<!-- 							<td class="col-sm-1 col-md-1"></td> -->
-<!-- 						</tr> -->
-<%-- 					</c:forEach> --%>
+							<td class="col-sm-1 col-md-1 text-center"><h5>${H.PROPLE_NUM}&emsp;&emsp;</h5></td>
+							<td class="col-sm-1 col-md-1">
+								<h5><strong class="deposit">${H.hPRICE}</strong></h5>
+							</td>
+							<td class="col-sm-1 col-md-1"></td>
+						</tr>
+					</c:forEach>
 						
 
-<!-- 						<tr> -->
-<!-- 							<td> </td> -->
-<!-- 							<td> </td> -->
-<!-- 							<td> </td> -->
-<!-- 							<td><h4>小計</h4></td> -->
-<!-- 							<td class="text-right"> -->
-<!-- 							<h3><strong id="HPrice"></strong></h3></td> -->
-<!-- 						</tr> -->
-<!-- 					</tbody> -->
-<!-- 				</table> -->
-<!-- 				<script type="text/javascript"> -->
-<!--  						var hPRICE = document.getElementsByClassName("hPRICE"); -->
-<!--  						console.log("deposit size = " + hPRICE.length); -->
-<!--  						var size = 0; -->
-<!--   							size += parseInt(hPRICE[i].innerHTML); -->
-<!--   							console.log("money = " + size); -->
-<!-- 							console.log("money = " + hPRICE[i].innerHTML); -->
-<!-- 							} -->
-<!--          				document.getElementById("HPrice").innerHTML = size; -->
+						<tr>
+							<td> </td>
+							<td> </td>
+							<td> </td>
+							<td><h4>小計</h4></td>
+							<td class="text-right">
+							<h3><strong id="HPrice"></strong></h3></td>
+						</tr>
+					</tbody>
+				</table>
+				<script type="text/javascript">
+// <!--  						var hPRICE = document.getElementsByClassName("hPRICE"); -->
+// <!--  						console.log("deposit size = " + hPRICE.length); -->
+// <!--  						var size = 0; -->
+// <!--   							size += parseInt(hPRICE[i].innerHTML); -->
+// <!--   							console.log("money = " + size); -->
+// <!-- 							console.log("money = " + hPRICE[i].innerHTML); -->
+// <!-- 							} -->
+// <!--          				document.getElementById("HPrice").innerHTML = size; -->
         				
-<!--    					</script> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
+=    					</script> =
+			</div>
+		</div>
+	</div>
 
 
 <!-- 餐廳 start -->
@@ -261,101 +261,101 @@ td.col-sm-1.col-md-1.text-center{
 
 <!-- 餐廳 END -->
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12 col-md-10 col-md-offset-1">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<h2>Transportation</h2>
-						</tr>
-						<tr>
-							<th>Product</th>
-							<th>Quantity</th>
-							<th class="text-center">Price</th>
-							<th class="text-center">Total</th>
-							<th> </th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="col-sm-8 col-md-6">
-								<div class="media">
-									<a class="thumbnail pull-left" href="#"> <img
-										class="media-object"
-										src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-										style="width: 72px; height: 72px;">
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading">
-											<a href="#">Product name</a>
-										</h4>
-										<h5 class="media-heading">
-											by <a href="#">Brand name</a>
-										</h5>
-										<span>Status: </span><span class="text-success"><strong>In
-												Stock</strong></span>
-									</div>
-								</div>
-							</td>
-							<td class="col-sm-1 col-md-1" style="text-align: center"><input
-								type="email" class="form-control" id="exampleInputEmail1"
-								value="3"></td>
-							<td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-							<td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-							<td class="col-sm-1 col-md-1">
-								<button type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove"></span> Remove
-								</button>
-							</td>
-						</tr>
-						<tr>
-							<td class="col-md-6">
-								<div class="media">
-									<a class="thumbnail pull-left" href="#"> <img
-										class="media-object"
-										src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-										style="width: 72px; height: 72px;">
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading">
-											<a href="#">Product name</a>
-										</h4>
-										<h5 class="media-heading">
-											by <a href="#">Brand name</a>
-										</h5>
-										<span>Status: </span><span class="text-warning"><strong>Leaves
-												warehouse in 2 - 3 weeks</strong></span>
-									</div>
-								</div>
-							</td>
-							<td class="col-md-1" style="text-align: center"><input
-								type="email" class="form-control" id="exampleInputEmail1"
-								value="2"></td>
-							<td class="col-md-1 text-center"><strong>$4.99</strong></td>
-							<td class="col-md-1 text-center"><strong>$9.98</strong></td>
-							<td class="col-md-1">
-								<button type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove"></span> Remove
-								</button>
-							</td>
-						</tr>
-						<tr>
-							<td> </td>
-							<td> </td>
-							<td> </td>
-							<td><h3>SubTotal</h3></td>
-							<td class="text-right"><h3>
-									<strong>$31.52</strong>
-								</h3></td>
-						</tr>
+<!-- 	<div class="container"> -->
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-sm-12 col-md-10 col-md-offset-1"> -->
+<!-- 				<table class="table table-hover"> -->
+<!-- 					<thead> -->
+<!-- 						<tr> -->
+<!-- 							<h2>Transportation</h2> -->
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<th>Product</th> -->
+<!-- 							<th>Quantity</th> -->
+<!-- 							<th class="text-center">Price</th> -->
+<!-- 							<th class="text-center">Total</th> -->
+<!-- 							<th> </th> -->
+<!-- 						</tr> -->
+<!-- 					</thead> -->
+<!-- 					<tbody> -->
+<!-- 						<tr> -->
+<!-- 							<td class="col-sm-8 col-md-6"> -->
+<!-- 								<div class="media"> -->
+<!-- 									<a class="thumbnail pull-left" href="#"> <img -->
+<!-- 										class="media-object" -->
+<!-- 										src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" -->
+<!-- 										style="width: 72px; height: 72px;"> -->
+<!-- 									</a> -->
+<!-- 									<div class="media-body"> -->
+<!-- 										<h4 class="media-heading"> -->
+<!-- 											<a href="#">Product name</a> -->
+<!-- 										</h4> -->
+<!-- 										<h5 class="media-heading"> -->
+<!-- 											by <a href="#">Brand name</a> -->
+<!-- 										</h5> -->
+<!-- 										<span>Status: </span><span class="text-success"><strong>In -->
+<!-- 												Stock</strong></span> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
+<!-- 							<td class="col-sm-1 col-md-1" style="text-align: center"><input -->
+<!-- 								type="email" class="form-control" id="exampleInputEmail1" -->
+<!-- 								value="3"></td> -->
+<!-- 							<td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td> -->
+<!-- 							<td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td> -->
+<!-- 							<td class="col-sm-1 col-md-1"> -->
+<!-- 								<button type="button" class="btn btn-danger"> -->
+<!-- 									<span class="glyphicon glyphicon-remove"></span> Remove -->
+<!-- 								</button> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<td class="col-md-6"> -->
+<!-- 								<div class="media"> -->
+<!-- 									<a class="thumbnail pull-left" href="#"> <img -->
+<!-- 										class="media-object" -->
+<!-- 										src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" -->
+<!-- 										style="width: 72px; height: 72px;"> -->
+<!-- 									</a> -->
+<!-- 									<div class="media-body"> -->
+<!-- 										<h4 class="media-heading"> -->
+<!-- 											<a href="#">Product name</a> -->
+<!-- 										</h4> -->
+<!-- 										<h5 class="media-heading"> -->
+<!-- 											by <a href="#">Brand name</a> -->
+<!-- 										</h5> -->
+<!-- 										<span>Status: </span><span class="text-warning"><strong>Leaves -->
+<!-- 												warehouse in 2 - 3 weeks</strong></span> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
+<!-- 							<td class="col-md-1" style="text-align: center"><input -->
+<!-- 								type="email" class="form-control" id="exampleInputEmail1" -->
+<!-- 								value="2"></td> -->
+<!-- 							<td class="col-md-1 text-center"><strong>$4.99</strong></td> -->
+<!-- 							<td class="col-md-1 text-center"><strong>$9.98</strong></td> -->
+<!-- 							<td class="col-md-1"> -->
+<!-- 								<button type="button" class="btn btn-danger"> -->
+<!-- 									<span class="glyphicon glyphicon-remove"></span> Remove -->
+<!-- 								</button> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<td> </td> -->
+<!-- 							<td> </td> -->
+<!-- 							<td> </td> -->
+<!-- 							<td><h3>SubTotal</h3></td> -->
+<!-- 							<td class="text-right"><h3> -->
+<!-- 									<strong>$31.52</strong> -->
+<!-- 								</h3></td> -->
+<!-- 						</tr> -->
 
-					</tbody>
-				</table>
+<!-- 					</tbody> -->
+<!-- 				</table> -->
 				
-			</div>
-		</div>
-	</div>
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 
 
 	<div class="container">

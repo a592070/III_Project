@@ -49,6 +49,7 @@
 <%--        ELEMENT.locale(ELEMENT.lang.en);--%>
 <%--    </script>--%>
 <%--    <c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>--%>
+    <c:import url="/WEB-INF/admin/fragment/vuetity_css.jsp" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
     <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/front/attraction/js/attractionInfo.js"></script>
@@ -89,7 +90,7 @@
         let timer = setInterval(() => {
             $('body,html').animate({scrollTop: 900}, 4500);
             clearInterval(timer);
-        }, 2500);
+        }, 2000);
     });
 </script>
 </body>

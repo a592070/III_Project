@@ -12,8 +12,8 @@ public class PictureSupport {
     /**
      * 傳入entity 物件、url屬性名、byte[]屬性名，將圖片解析為byte[]存入 entity.sDestField
      * @param entity        entity 物件
-     * @param sOriginField  pictureURL column(String)
-     * @param sDestField    picture column(byte[])
+     * @param sOriginField  pictureURL， column type(String)
+     * @param sDestField    picture， column type(byte[])
      * @param <T>
      * @throws Exception
      */
