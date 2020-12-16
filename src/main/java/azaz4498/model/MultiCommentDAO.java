@@ -34,6 +34,31 @@ public class MultiCommentDAO {
 		sessionFactory.getCurrentSession().save(multiComment);
 		return multiComment;
 	}
+	//刪除multi評論
+	public boolean deleteMultiComment(int id, String userId) {
+		MultiComment result =sessionFactory.getCurrentSession().get(MultiComment.class, id);
+		String op = result.getM_UserId();
+		if (result!=null && op.equals(userId)) {
+			sessionFactory.getCurrentSession().delete(result);
+			return true;
+		}else {
+			return false;
+		}
+		
+		
+	}
+	//編輯
+	public MultiComment editMultiComment(String content, int id,String userId) {
+		MultiComment result = sessionFactory.getCurrentSession().get(MultiComment.class, id);
+		String op =result.getM_UserId();
+		if (result!=null && userId.equals(op)) {
+			result.setM_Content(content);
+			sessionFactory.getCurrentSession().save(result);
+		}
+		
+		return result;
+		
+	}
 	
 	
 }
