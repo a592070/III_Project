@@ -1,4 +1,4 @@
-import travelSetStore from './travelSetStore.js';
+import store from './travelSetStore.js';
 
 Vue.use(httpVueLoader);
 // Vue.use(vant);
@@ -12,6 +12,6 @@ const TravelSetInfo = new Vue({
         'index': httpVueLoader(context+'/assets/a592070/front/travelSet/components/main.vue'),
     },
     vuetify: new Vuetify(),
-    travelSetStore
+    store
 })
 export default TravelSetInfo;

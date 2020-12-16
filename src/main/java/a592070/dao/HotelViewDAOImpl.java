@@ -20,18 +20,7 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public int getSize() {
-        Query<Long> query = sessionFactory.getCurrentSession().createQuery("select count(sn) from HotelVO", Long.class);
-        return query.uniqueResult().intValue();
-    }
 
-    @Override
-    public int getSize(boolean available) {
-        Query<Long> query = sessionFactory.getCurrentSession().createQuery("select count(sn) from HotelVO where status = :available", Long.class);
-        query.setParameter("available", available);
-        return query.uniqueResult().intValue();
-    }
 
     @Override
     public HotelVO getEle(Integer id, boolean findFromPersistence) {
@@ -56,6 +45,7 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
         }
     }
 
+
     /**
      * NOT USING
      * @param id
@@ -73,44 +63,75 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
         return null;
     }
 
-    @Override
-    public int getSizeByKeywords(String keyWords, String region) {
-        keyWords = "%"+keyWords+"%";
-        region = "%"+region+"%";
 
-        String hql = "select count(sn) from HotelVO where region like :region and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword)";
+
+    @Override
+    public int getSize() {
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery("select count(sn) from HotelVO", Long.class);
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public int getSize(boolean available) {
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery("select count(sn) from HotelVO where status = :available", Long.class);
+        query.setParameter("available", available);
+        return query.uniqueResult().intValue();
+    }
+    @Override
+    public List<HotelVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
+        String hql = "from HotelVO order by "+orderFiled;
+        if(descending) hql += " desc";
+
+        Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+        return query.list();
+    }
+
+    @Override
+    public List<HotelVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available) {
+        String hql = "from HotelVO where (status=:available) order by "+orderFiled;
+        if(descending) hql += " desc";
+
+        Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
+        query.setParameter("available", available);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+        return query.list();
+    }
+
+    @Override
+    public int getSizeByKeywords(String keyword) {
+        keyword = "%"+keyword+"%";
+
+        String hql = "select count(sn) from HotelVO where (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword)";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keyWords);
-        query.setParameter("region", region);
+        query.setParameter("keyword", keyword);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public int getSizeByKeywords(String keyWords, String region, boolean available) {
-        keyWords = "%"+keyWords+"%";
-        region = "%"+region+"%";
+    public int getSizeByKeywords(String keyword, boolean available) {
+        keyword = "%"+keyword+"%";
 
-        String hql = "select count(sn) from HotelVO where (status=:available) and (region like :region) and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword)";
+        String hql = "select count(sn) from HotelVO where (status=:available) and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword)";
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keyWords);
-        query.setParameter("region", region);
+        query.setParameter("keyword", keyword);
         query.setParameter("available", available);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public List<HotelVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending) {
-        keyWords = "%"+keyWords+"%";
-        region = "%"+region+"%";
+    public List<HotelVO> listByKeywords(int firstIndex, int resultSize, String keyword, String orderFiled, boolean descending) {
+        keyword = "%"+keyword+"%";
 
-        String hql = "from HotelVO where region like :region and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
+        String hql = "from HotelVO where (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
-        query.setParameter("keyword", keyWords);
-        query.setParameter("region", region);
+        query.setParameter("keyword", keyword);
 
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
@@ -119,16 +140,14 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
     }
 
     @Override
-    public List<HotelVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending, boolean available) {
-        keyWords = "%"+keyWords+"%";
-        region = "%"+region+"%";
+    public List<HotelVO> listByKeywords(int firstIndex, int resultSize, String keyword, String orderFiled, boolean descending, boolean available) {
+        keyword = "%"+keyword+"%";
 
-        String hql = "from HotelVO where (status=:available) and (region like :region) and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
+        String hql = "from HotelVO where (status=:available) and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
-        query.setParameter("keyword", keyWords);
-        query.setParameter("region", region);
+        query.setParameter("keyword", keyword);
         query.setParameter("available", available);
 
         query.setFirstResult(firstIndex);
@@ -195,25 +214,68 @@ public class HotelViewDAOImpl implements ViewDAO<HotelVO>{
     }
 
     @Override
-    public List<HotelVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
-        String hql = "from HotelVO order by "+orderFiled;
+    public int getSizeBySelect(String region, String keywords) {
+        keywords = "%"+keywords+"%";
+        region = "%"+region+"%";
+
+        String hql = "select count(sn) from HotelVO where region like :region and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword)";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keyword", keywords);
+        query.setParameter("region", region);
+
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public int getSizeBySelect(String region, String keywords, boolean available) {
+        keywords = "%"+keywords+"%";
+        region = "%"+region+"%";
+
+        String hql = "select count(sn) from HotelVO where (status=:available) and (region like :region) and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword)";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keyword", keywords);
+        query.setParameter("region", region);
+        query.setParameter("available", available);
+
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public List<HotelVO> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending) {
+        keywords = "%"+keywords+"%";
+        region = "%"+region+"%";
+
+        String hql = "from HotelVO where region like :region and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
+        query.setParameter("keyword", keywords);
+        query.setParameter("region", region);
+
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
+
         return query.list();
     }
 
     @Override
-    public List<HotelVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available) {
-        String hql = "from HotelVO where (status=:available) order by "+orderFiled;
+    public List<HotelVO> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending, boolean available) {
+        keywords = "%"+keywords+"%";
+        region = "%"+region+"%";
+
+        String hql = "from HotelVO where (status=:available) and (region like :region) and (str(sn) like :keyword or name like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<HotelVO> query = sessionFactory.getCurrentSession().createQuery(hql, HotelVO.class);
+        query.setParameter("keyword", keywords);
+        query.setParameter("region", region);
         query.setParameter("available", available);
+
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
+
         return query.list();
     }
+
+
 }

@@ -2,12 +2,12 @@ Vue.use(Vuex);
 const travelSetStore = new Vuex.Store({
     state: {
         regions: ['全部'],
-        selectItemType: null,
+        selectItemType: 'attraction',
         itemType: {
-            attraction: 'attraction',
-            car: 'car',
-            hotel: 'hotel',
-            restaurant: 'restaurant'
+            attraction: 0,
+            restaurant: 1,
+            hotel: 2,
+            car: 3
         },
         itemList: [
             {
@@ -33,6 +33,8 @@ const travelSetStore = new Vuex.Store({
         getSelectListLoading: (state) => state.selectListLoading,
         getPageData: (state) => state.pageData,
         getRegions: (state) => state.regions,
+        getSelectItemType: (state) => state.selectItemType,
+
 
     },
     mutations: {
@@ -58,13 +60,19 @@ const travelSetStore = new Vuex.Store({
             state.regions = data;
             state.regions.unshift('全部');
         },
+        setSelectItemType(state, data){
+            state.selectItemType = data;
+        }
+
 
 
     },
     actions: {
         initItemListData(state){
             state.commit('toggleSelectListLoading', true);
-            let url = context+'/'+state.selectItemType+'/list/1';
+            let type = state.getters.getSelectItemType;
+            let url = context+'/travelSet/'+type+'/list/1';
+            console.log(url);
             return axios.get(url)
                 .then(response => {
                     if(response.data) {
@@ -90,14 +98,16 @@ const travelSetStore = new Vuex.Store({
             state.commit('toggleSelectListLoading', true);
             let url;
             console.log(region, keyword);
+            let type = state.getters.getSelectItemType;
 
             if(!region || region == "全部") region = "all";
 
             if(keyword && keyword != ''){
-                url = context+'/'+state.selectItemType+'/list/1/'+region+'/'+keyword;
+                url = context+'/travelSet/'+type+'/list/1/'+region+'/'+keyword;
             }else{
-                url = context+'/'+state.selectItemType+'/list/1/'+region;
+                url = context+'/travelSet/'+type+'/list/1/'+region;
             }
+            console.log(url);
             return axios.get(url)
                 .then(response => {
                     state.commit('setItemList', response.data.tableData);
@@ -111,6 +121,7 @@ const travelSetStore = new Vuex.Store({
         },
         appendItemListData(state, {region, keyword}){
             state.commit('toggleSelectListLoading', true);
+            let type = state.getters.getSelectItemType;
 
             let url;
             if(!region || region == "全部"){
@@ -118,10 +129,11 @@ const travelSetStore = new Vuex.Store({
             }
             let pageData = state.getters.getPageData;
             if(!keyword || keyword == ''){
-                url = context+'/'+state.selectItemType+'/list/'+pageData.currentPage+'/'+region;
+                url = context+'/travelSet/'+type+'/list/'+pageData.currentPage+'/'+region;
             }else{
-                url = context+'/'+state.selectItemType+'/list/'+pageData.currentPage+'/'+region+'/'+keyword;
+                url = context+'/travelSet/'+type+'/list/'+pageData.currentPage+'/'+region+'/'+keyword;
             }
+            console.log(url);
             return axios.get(url)
                 .then(response => {
                     state.commit('addItemList', response.data.tableData);

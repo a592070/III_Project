@@ -228,10 +228,11 @@ public class TravelSetController {
      3: car
      }
      */
-    @GetMapping({"/admin/travelSet/{type}/{page}/{keywords}", "/admin/travelSet/{type}/{page}"})
+    @GetMapping({"/admin/travelSet/{type}/{page}/{region}/{keywords}", "/admin/travelSet/{type}/{page}/{region}", "/admin/travelSet/{type}/{page}"})
     public Map<String, Object> listTravelSetAttraction(
             @PathVariable("type") int type,
             @PathVariable("page") int page,
+            @PathVariable(name = "region", required = false) String region,
             @PathVariable(name="keywords", required = false) String keywords){
         PageSupport pageSupport = new PageSupport();
         pageSupport.setPageSize(PAGE_SIZE);
@@ -241,16 +242,16 @@ public class TravelSetController {
 
         if(type == 0){
             pageSupport.setTotalSize(attractionViewService.getSizeByKeyWords(keywords));
-            list = attractionViewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+            list = attractionViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
         }else if(type == 1){
             pageSupport.setTotalSize(restaurantViewService.getSizeByKeyWords(keywords));
-            list = restaurantViewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+            list = restaurantViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
         }else if(type == 2){
             pageSupport.setTotalSize(hotelViewService.getSizeByKeyWords(keywords));
-            list = hotelViewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+            list = hotelViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
         }else if(type == 3){
             pageSupport.setTotalSize(carViewService.getSizeByKeyWords(keywords));
-            list = carViewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords);
+            list = carViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
         }
 
         Map<String, Object> map = new HashMap<>();

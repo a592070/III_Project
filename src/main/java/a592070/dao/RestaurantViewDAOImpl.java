@@ -22,20 +22,6 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public int getSize(){
-        String hql = "select count(sn) from RestaurantVO";
-        return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
-    }
-
-    @Override
-    public int getSize(boolean available) {
-        String hql = "select count(sn) from RestaurantVO where status = :available";
-        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("available", available);
-        return query.uniqueResult().intValue();
-    }
-
-    @Override
     public RestaurantVO getEle(Integer id, boolean findFromPersistence) {
         Session session = sessionFactory.getCurrentSession();
         if(findFromPersistence){
@@ -79,48 +65,82 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public int getSizeByKeywords(String keyWords, String region) {
-        keyWords = "%"+keyWords+"%";
-        region = "%"+region+"%";
+    public List<RestaurantVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
+        String hql = "from RestaurantVO order by "+orderFiled;
+        if(descending) hql += " desc";
+
+        Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
+
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+
+        return query.list();
+    }
+
+
+    @Override
+    public int getSize(){
+        String hql = "select count(sn) from RestaurantVO";
+        return sessionFactory.getCurrentSession().createQuery(hql, Long.class).uniqueResult().intValue();
+    }
+
+    @Override
+    public int getSize(boolean available) {
+        String hql = "select count(sn) from RestaurantVO where status = :available";
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("available", available);
+        return query.uniqueResult().intValue();
+    }
+    @Override
+    public List<RestaurantVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available) {
+        String hql = "from RestaurantVO where (status = :available) order by "+orderFiled;
+        if(descending) hql += " desc";
+
+        Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
+        query.setParameter("available", available);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(resultSize);
+
+        return query.list();
+    }
+
+    @Override
+    public int getSizeByKeywords(String keywords) {
+        keywords = "%"+keywords+"%";
 
         String hql = "select count(sn) from RestaurantVO " +
-                "where region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) ";
+                "where (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) ";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keyWords);
-        query.setParameter("region", region);
+        query.setParameter("keyword", keywords);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public int getSizeByKeywords(String keyWords, String region, boolean available) {
-        keyWords = "%"+keyWords+"%";
-        region = "%"+region+"%";
+    public int getSizeByKeywords(String keywords, boolean available) {
+        keywords = "%"+keywords+"%";
 
         String hql = "select count(sn) from RestaurantVO " +
-                "where (status = :available) and region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) ";
+                "where (status = :available) and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) ";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keyWords);
-        query.setParameter("region", region);
+        query.setParameter("keyword", keywords);
         query.setParameter("available", available);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending) {
-        keyWords = "%"+keyWords+"%";
-        region = "%"+region+"%";
+    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending) {
+        keywords = "%"+keywords+"%";
 
         String hql = "from RestaurantVO " +
-                "where region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
+                "where (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
-        query.setParameter("keyword", keyWords);
-        query.setParameter("region", region);
+        query.setParameter("keyword", keywords);
 
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
@@ -128,17 +148,15 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending, boolean available) {
-        keyWords = "%"+keyWords+"%";
-        region = "%"+region+"%";
+    public List<RestaurantVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean available) {
+        keywords = "%"+keywords+"%";
 
         String hql = "from RestaurantVO " +
-                "where (status = :available) and region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
+                "where (status = :available) and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
-        query.setParameter("keyword", keyWords);
-        query.setParameter("region", region);
+        query.setParameter("keyword", keywords);
         query.setParameter("available", available);
 
         query.setFirstResult(firstIndex);
@@ -199,28 +217,72 @@ public class RestaurantViewDAOImpl implements ViewDAO<RestaurantVO> {
     }
 
     @Override
-    public List<RestaurantVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending) {
-        String hql = "from RestaurantVO order by "+orderFiled;
+    public int getSizeBySelect(String region, String keywords) {
+        keywords = "%"+keywords+"%";
+        region = "%"+region+"%";
+
+        String hql = "select count(sn) from RestaurantVO " +
+                "where region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) ";
+
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keyword", keywords);
+        query.setParameter("region", region);
+
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public int getSizeBySelect(String region, String keywords, boolean available) {
+        keywords = "%"+keywords+"%";
+        region = "%"+region+"%";
+
+        String hql = "select count(sn) from RestaurantVO " +
+                "where (status = :available) and region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) ";
+
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+        query.setParameter("keyword", keywords);
+        query.setParameter("region", region);
+        query.setParameter("available", available);
+
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public List<RestaurantVO> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending) {
+        keywords = "%"+keywords+"%";
+        region = "%"+region+"%";
+
+        String hql = "from RestaurantVO " +
+                "where region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
+        query.setParameter("keyword", keywords);
+        query.setParameter("region", region);
 
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
-
         return query.list();
     }
 
     @Override
-    public List<RestaurantVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available) {
-        String hql = "from RestaurantVO where (status = :available) order by "+orderFiled;
+    public List<RestaurantVO> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending, boolean available) {
+        keywords = "%"+keywords+"%";
+        region = "%"+region+"%";
+
+        String hql = "from RestaurantVO " +
+                "where (status = :available) and region like :region and (str(sn) like :keyword or name like :keyword or type like :keyword or address like :keyword or description like :keyword) order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<RestaurantVO> query = sessionFactory.getCurrentSession().createQuery(hql, RestaurantVO.class);
+        query.setParameter("keyword", keywords);
+        query.setParameter("region", region);
         query.setParameter("available", available);
+
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
-
         return query.list();
     }
+
+
 }

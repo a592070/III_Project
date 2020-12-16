@@ -116,8 +116,8 @@ public class AttractionFrontController {
 
         if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
 
-        pageSupport.setTotalSize(viewService.getSizeByKeyWordsWithStatus(keywords, region, true));
-        list = viewService.listByKeyWordsWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, true, region, sortColumn, desc);
+        pageSupport.setTotalSize(viewService.getSizeBySelectWithStatus(region, keywords, true));
+        list = viewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true, sortColumn, desc);
 
 
         Map<String, Object> map = new HashMap<>();

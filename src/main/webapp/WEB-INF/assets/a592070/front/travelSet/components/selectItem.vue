@@ -170,7 +170,7 @@ module.exports = {
   created: function (){
   },
   mounted(){
-    this.init();
+    // this.init();
   },
   destroyed(){
   },

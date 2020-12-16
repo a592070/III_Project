@@ -150,7 +150,60 @@
 
       </v-stepper>
 
+<!--        <v-overlay-->
+<!--            :z-index="zIndex"-->
+<!--            :value="overlay"-->
+<!--            :absolute="true"-->
+<!--        >-->
+<!--          <v-btn-->
+<!--              class="white&#45;&#45;text"-->
+<!--              color="teal"-->
+<!--              @click="overlay = false"-->
+<!--          >-->
+<!--            Hide Overlay-->
+<!--          </v-btn>-->
+<!--        </v-overlay>-->
 
+        <v-dialog
+            v-model="dialog"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+            scrollable
+        >
+          <v-card tile>
+            <v-toolbar
+                flat
+                dark
+                color="primary"
+            >
+              <v-btn
+                  icon
+                  dark
+                  @click="dialog = false"
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>選擇旅程項目</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-select
+                  v-model="selectType"
+                  :items="itemTypes"
+                  chips
+                  label="Type"
+                  color="blue-grey lighten-2"
+                  solo
+                  @change="handleSelectItemType"
+              ></v-select>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <v-card-text>
+              <select-item></select-item>
+            </v-card-text>
+
+            <div style="flex: 1 1 auto;"></div>
+          </v-card>
+        </v-dialog>
 
       </v-container>
     </v-container>
@@ -160,7 +213,7 @@
 <script>
 module.exports = {
   components: {
-    // 'select-item': httpVueLoader(context + '/assets/a592070/front/travelSet/components/selectItem.vue')
+    'select-item': httpVueLoader(context + '/assets/a592070/front/travelSet/components/selectItem.vue')
   },
   data() {
     return {
@@ -181,12 +234,12 @@ module.exports = {
       zIndex: 100,
       dialog: false,
 
-      // selectItemType: 0,
+      selectType: this.selectItemType,
       itemTypes: [
-        { text: '景點', value: this.itemType.attraction},
-        { text: '餐廳', value: this.itemType.restaurant},
-        { text: '旅館', value: this.itemType.hotel},
-        { text: '租車', value: this.itemType.car}
+        { text: '景點', value: 0},
+        { text: '餐廳', value: 1},
+        { text: '旅館', value: 2},
+        { text: '租車', value: 3}
         ],
     }
   },
@@ -201,7 +254,7 @@ module.exports = {
     timeline () {
       return this.events.slice().reverse()
     },
-    // ...Vuex.mapState(['itemType', 'selectItemType'])
+    ...Vuex.mapState(['itemType', 'selectItemType'])
   },
 
   methods: {
@@ -238,6 +291,13 @@ module.exports = {
         this.e1 = n + 1
       }
     },
+    handleSelectItemType(){
+      console.log(this.selectType);
+      this.$store.commit('setSelectItemType', this.selectType);
+
+      this.$store.dispatch("initRegionsData");
+      this.$store.dispatch("initItemListData");
+    }
   },
 
 };

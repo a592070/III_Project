@@ -24,11 +24,11 @@ public interface ViewDAO<T> {
 //    int getSizeByKeywords(String keyWords);
 //    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String orderFiled);
 
-    int getSizeByKeywords(String keyWords, String region);
-    int getSizeByKeywords(String keyWords, String region, boolean available);
+    int getSizeByKeywords(String keywords);
+    int getSizeByKeywords(String keywords, boolean available);
 
-    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending);
-    List<T> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending, boolean available);
+    List<T> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending);
+    List<T> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean available);
 
 
 
@@ -38,5 +38,10 @@ public interface ViewDAO<T> {
     List<T> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending);
     List<T> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending, boolean available);
 
+
+    int getSizeBySelect(String region, String keywords);
+    int getSizeBySelect(String region, String keywords, boolean available);
+    List<T> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending);
+    List<T> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending, boolean available);
 
 }
