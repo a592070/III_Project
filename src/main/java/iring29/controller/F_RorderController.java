@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import asx54630.model.HotelOrder;
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
 import global.pojo.OrderTable;
+import innocence741.model.T_Order_List;
 import iring29.model.R_Comment;
 import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
@@ -154,12 +156,12 @@ public class F_RorderController {
 				r.setCus_phone(b_phone);
 				r.setCustomer_num(person_number);
 				BigDecimal deposit = person_number.multiply(r.getRestaurant().getPrice());
+				OTBean.setTotalPrice(OTBean.getTotalPrice().subtract(r.getDeposit()).add(deposit));
 				r.setDeposit(deposit);
-				OTBean.setTotalPrice(OTBean.getTotalPrice().add(r.getDeposit()));
 			}
 		}
 		session.setAttribute("OTBean", OTBean);
-		return "modify";
+		return OTBean.getTotalPrice().toString();
 	}
 	
 	@RequestMapping(path = "/ShoppingCart", method = RequestMethod.POST)
@@ -173,60 +175,93 @@ public class F_RorderController {
 		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
 		F_Serivce.createOrder(OTBean);
 		session.removeAttribute("OTBean");
-		OrderTable otBean = F_Serivce.findOrder();  //不使用綠界時打開
-		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();  //不使用綠界時打開
-		session.setAttribute("res_lists", res_lists);  //不使用綠界時打開
-		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();  //不使用綠界時打開
-		session.setAttribute("hotel_lists", hotel_lists);  //不使用綠界時打開
-		for(R_Order_List r : res_lists) {  //不使用綠界時打開
-			//send mail
-			String email = aBean.getEmail();  //不使用綠界時打開
-			String title = "Fun x Taiwan";  //不使用綠界時打開
-			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
-			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
-			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
-			sendMail.asyncSend(email, title, content, urlDisplay, url , session);  //不使用綠界時打開
-			
+		OrderTable otBean = F_Serivce.findOrder(); 
+		//訂單成立的mail
+		String email = aBean.getEmail();
+		String title = "Fun x Taiwan";
+		String content = "謝謝您的訂購！  Fun Taiwan訂單編號為"+ otBean.getOrder_id() + "<br>";
+		String Hotel = "<br>";
+		String Restaurant = "<br>";
+		String urlDisplay = "Fun Taiwan";
+		String url = "/FunTaiwan";
+		if(otBean.getHotelOrder().size() > 0 ) {
+			for(HotelOrder hOrder : otBean.getHotelOrder()) {
+				Hotel += "旅館訂單號為：" + hOrder.getSN_ORDER() + "<br>入住時間為：" + hOrder.getCHECK_IN() + "<br>退房時間為：" + hOrder.getCHECK_OUT() +
+						"<br>金額為：" + hOrder.gethPRICE();
+			}
 		}
+		if(otBean.getR_Order_Lists().size() > 0) {
+			for(R_Order_List r : otBean.getR_Order_Lists()) {  
+				Restaurant += "<br>餐廳訂單號為：" + r.getId() + "<br>預約用餐時間為：" + r.getBookt_time() + "<br>用餐人數：" + r.getCustomer_num()+
+						"<br>訂位者姓名：" + r.getCus_name() + "<br>訂位者電話：" + r.getCus_phone() + "<br>金額為：" + r.getDeposit();
+			}
+		}
+		content = content + Hotel + Restaurant;
+		
+		sendMail.asyncSend(email, title, content,urlDisplay, url, session);
+		
 				
 		session.removeAttribute("cartnum");
-		return "iring29/OrderDetail";//不使用綠界時打開
-//		return "redirect:payment";//使用綠界時打開
+		session.setAttribute("otBean", otBean);
+//		return "iring29/OrderDetail";//不使用綠界時打開
+		return "redirect:payment";//使用綠界時打開
 	}
 	
-	//leave comment
-	@RequestMapping(path = {"/reviewrestaurant/{restaurant_id}/{r_order_id}"}) 
-	public String reviewRestaurant(@PathVariable(name="restaurant_id", required = false) Integer restaurant_id,
-								   @PathVariable(name="r_order_id", required = false) Integer r_order_id, HttpSession session) {
-		Restaurant res_data = F_Serivce.findRestaurant(restaurant_id);
+	//send mail leave comment
+	@RequestMapping(path = {"/commentrestaurant/{r.id}"})
+	public ModelAndView mailforComment(@PathVariable(name="r.id", required = false) Integer r_id, HttpSession session) {
+		R_Order_List rList = F_Serivce.findR_sn(r_id);
+		
+		  //不使用綠界時打開
+			//send mail
+			String email = "iiiteam124@gmail.com";  //不使用綠界時打開
+			String title = "Fun x Taiwan";  //不使用綠界時打開
+			String content = "謝謝您訂購" + rList.getRestaurant().getName() + "<br>訂單編號為"+ rList.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  //不使用綠界時打開
+			String urlDisplay = "對"+rList.getRestaurant().getName()+"留下您的評價";
+			String url = "/reviewrestaurant/" + rList.getId();
+			sendMail.asyncSend(email, title, content, urlDisplay, url , session);  //不使用綠界時打開
+			
+			ModelAndView  model = new ModelAndView("redirect:/admin/RestaurantList");    
+		    return model;  
+		
+	}
+	
+	//link of leaeve comment
+	@RequestMapping(path = {"/reviewrestaurant/{r.id}"}) 
+	public String reviewRestaurant(@PathVariable(name="r.id", required = false) Integer r_id, HttpSession session) {
+		R_Order_List rOrder_List = F_Serivce.findR_sn(r_id);
+		BigDecimal restaurant_id = rOrder_List.getRestaurant().getR_sn();
+		System.out.println("id = " + restaurant_id);
+		Restaurant res_data = rOrder_List.getRestaurant();
 		List<R_Comment> comment = F_Serivce.ResComment(res_data.getR_sn());
 		session.setAttribute("res_data", res_data);
 		session.setAttribute("comment", comment);
-		session.setAttribute("r_order_id", r_order_id);
+		session.setAttribute("r_order_id", r_id);
 //		return "iring29/RestaurantComment";
 		
 		return "redirect:writeComment";
 	}
 	
-	@RequestMapping(path = "/reviewrestaurant/{restaurant_id}/writeComment")
-	public String writeComment(@PathVariable(name="restaurant_id", required = false) Integer restaurant_id) {
+	@RequestMapping(path = "/reviewrestaurant/writeComment")
+	public String writeComment(@PathVariable(name="r_id", required = false) Integer r_id) {
 		return "iring29/RestaurantComment";
 	}
 	
 	@RequestMapping(path = "/payment")
 	//payment
 	public String payment(HttpSession session){
-		OrderTable otBean = F_Serivce.findOrder();
+//		OrderTable otBean = F_Serivce.findOrder();
+		OrderTable otBean = (OrderTable) session.getAttribute("otBean");
 		AllInOne pay = new AllInOne("");
 		AioCheckOutALL checkOut = new AioCheckOutALL();
 		checkOut.setMerchantID("2000132");
-		checkOut.setMerchantTradeNo("Fun Taiwan" + otBean.getOrder_id().toString());
+		checkOut.setMerchantTradeNo("FunTaiwan" + otBean.getOrder_id().toString() + "A");
 		checkOut.setMerchantTradeDate(otBean.getOrder_dateString());
-		checkOut.setTotalAmount("100");
+		checkOut.setTotalAmount(otBean.getTotalPrice().toString());
 		checkOut.setTradeDesc("Fun Taiwan 商城購物");
 		checkOut.setItemName("Fun Taiwan");
-//		checkOut.setReturnURL("https://ba554c1555ce.ngrok.io/III_Project/checkorder");//資料確認用
-//		checkOut.setClientBackURL("https://ba554c1555ce.ngrok.io/III_Project/showOrder");// return 網址
+		checkOut.setReturnURL("https://3f7180e589ed.ngrok.io/checkorder");//資料確認用
+		checkOut.setClientBackURL("http://localhost/showOrder");// return 網址
 		String result = pay.aioCheckOut(checkOut, null);
 		System.out.println("payment result = " + result);
 		session.setAttribute("result", result);
@@ -237,21 +272,24 @@ public class F_RorderController {
 	@RequestMapping(path = "/showOrder")
 	public String showOrder(HttpSession session) {
 		session.removeAttribute("result");
-		OrderTable otBean = F_Serivce.findOrder();
+//		OrderTable otBean = F_Serivce.findOrder();
+		OrderTable otBean = (OrderTable) session.getAttribute("otBean");
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
+		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();
 		//send mail
-		for(R_Order_List r : res_lists) {  
-			//send mail
-			String email = otBean.getAccountBean().getEmail(); 
-			String title = "Fun x Taiwan";  
-			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  
-			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
-			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
-			sendMail.asyncSend(email, title, content, urlDisplay, url , session); 
-			
-		}
+//		for(R_Order_List r : res_lists) {  
+//			//send mail
+//			String email = otBean.getAccountBean().getEmail(); 
+//			String title = "Fun x Taiwan";  
+//			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  
+//			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
+//			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
+//			sendMail.asyncSend(email, title, content, urlDisplay, url , session); 
+//			
+//		}
 
 		session.setAttribute("res_lists", res_lists);
+		session.setAttribute("hotel_lists", hotel_lists);
 		return "iring29/OrderDetail";
 	}
 	

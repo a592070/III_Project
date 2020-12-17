@@ -20,5 +20,12 @@ public List<MultiComment> getMultiCommentsByComId(int commentId){
 public MultiComment newMultiComment(String content, int comId,String userId) {
 	return mDao.newMultiComment(content, comId, userId);
 }
+public boolean deleteMultiComment(int id, String userId) {
+	return mDao.deleteMultiComment(id, userId);
+	
+}
+public MultiComment editMultiComment(String content,int id, String userId) {
+	return mDao.editMultiComment(content, id, userId);
+}
 
 }

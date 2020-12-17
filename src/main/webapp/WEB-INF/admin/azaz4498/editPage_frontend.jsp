@@ -35,6 +35,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
               min-width: 600px;
           }
     </style>
+    <link rel="stylesheet" href="../assets/azaz4498/content-style.css" type="text/css">
     <script
       src="https://kit.fontawesome.com/4c5dc04160.js"
       crossorigin="anonymous"
@@ -176,7 +177,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                       </div>
                     </div>
                     <h2 class="mb-3" id="p_title">文章標題</h2>
-                    <div class="col-md-8 ftco-animate" id="p_content" style="width: 600px;">
+                    <div class="ftco-animate ck-content" id="p_content" style="width: 600px;">
 
                     </div>
                       
@@ -248,7 +249,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
         $('#p_type').text(p_type);
         $('#p_title').text(p_title);
         $('#p_content').append(p_content);
-        $('#p_content').find('img').addClass('img-fluid');
       }
 
       $('#edit_btn').on('click',function(){

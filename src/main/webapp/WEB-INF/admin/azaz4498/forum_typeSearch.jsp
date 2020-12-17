@@ -180,18 +180,29 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <!-- fixed btn-->
     <div class="fixed-btn">
-      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button" onclick="checkLogin()"><i class="far fa-edit">撰寫文章</i></a>
+      <a class="btn btn-primary" href="javascript: void(0)" role="button" onclick="checkLogin()"><i class="far fa-edit">撰寫文章</i></a>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 
     <script>
       function checkLogin(){
-      var loginCheck = eval(${userBean.userName});
-        if(loginCheck==null||loginCheck==""){
-          alert('請先登入');
-          window.location.href="<%=application.getContextPath()%>/user/signinPage";
-      }
-     </script>
+        console.log('login check');
+       var loginCheck = '${userBean.userName}';
+         if(loginCheck==null||loginCheck==""){
+           Swal.fire({
+             title:'請先登入',
+             text:'登入以撰寫文章',
+             html:"<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以發表評論",
+             icon:'warning',
+             confirmButtonText:'好'
+           })
+       }else{
+         window.location.href="<%=application.getContextPath()%>/newArticle";
+       }
+     }
+    </script>
     <script>
       $(document).ready(function(){
       $('body,html').animate({scrollTop: 750}, 800); 
@@ -261,8 +272,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
       })
 
       $('#prev').on('click',function(){
-        // window.scrollTo({ top: 500, behavior: 'smooth' });
-        //event.preventDefault();
         var totalPage=eval(${totalPages});
         var typeId = $('#articleType').val();
         $.ajax({
@@ -303,67 +312,6 @@ contentType="text/html;charset=UTF-8" language="java"%>
 
       })
 
-      
-
     </script>
-    
-
-    <!-- <script>
-      $(window).on("load",function () {
-        $.ajax({
-          type: "GET",
-          url: "Article.controller.json",
-          async:false,
-          success: function (response) {
-            showList(response);
-            
-          },
-        });
-      });
-      </script> -->
-     <!--<script>
-      function showList(response) {
-        var rowStart ="<div class='row d-flex'>";
-        var rowEnd = "</div>";
-        $(rowStart).appendTo('#container');
-        
-        $.each(response.artlist, function (index, element) {
-          var currArtId = element.artId;
-          var imgPath = response.piclist[index];
-          console.log(imgPath);
-          var content =
-              "<div class='col-md-3 d-flex ftco-animate'>" +
-              "<div class='blog-entry align-self-stretch'>" +
-              "<a href='#' class='block-20' style='background-image: " +
-              'url(' +
-              imgPath +
-              ");'>"+
-              "</a>" +
-              "<div class='text p-4 d-block'>" +
-              "<span class='tag'>" +
-              element.articleType.typeName +
-              "</span>" +
-              "<h3 class='heading mt-3>'" +
-              "<a href='#'>" +
-              element.artTitle +
-              "</a></h3>" +
-              "<div class='meta mb-3'>"+
-              "<div><a href='#'>" +
-              element.artCreTime +
-              "</a></div>" +
-              "<div><a href='#'>" +
-              element.artUserId +
-              "</a></div>" +
-              "</div>" +
-              "<a href='#'' class='meta-chat'>" +
-              "<span class='icon-chat'></span>" +
-              element.artCommNum +
-              "</a>" +
-              "</div></div></div></div></div>"
-              $(content).appendTo("#container");
-        });
-        $(rowEnd).appendTo('#container');
-      }
-    </script -->
   </body>
 </html>
