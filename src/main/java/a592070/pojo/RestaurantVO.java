@@ -1,12 +1,16 @@
 package a592070.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import global.Constant;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Type;
 import utils.StringUtil;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 //@JsonDeserialize(using = RestaurantVOJsonDeserializer.class)
 @Entity
@@ -22,6 +26,14 @@ public class RestaurantVO {
     private String description;
     private BigDecimal rating;
     private String region;
+
+    @JsonIgnore
+    @Column(name = "pic")
+    private byte[] image;
+
+    @Transient
+    private List<String> images;
+
     @Type(type = "org.hibernate.type.NumericBooleanType")
     @Column(name = "status", nullable = false)
     private boolean status;
@@ -93,6 +105,22 @@ public class RestaurantVO {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public List<String> getImages() {
+        return Arrays.asList(Constant.TRAVEL_SET_RESTAURANT_PIC +this.sn);
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     @Override

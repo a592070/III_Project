@@ -61,6 +61,9 @@
 		<mapping class="rambo0021.pojo.AccountBean" />
 		<mapping class="rambo0021.pojo.IdentityBean" />
 		<mapping class="rambo0021.pojo.AccountListViewBean" />
+		<mapping class="rambo0021.pojo.AccountChartView" />
+		<mapping class="rambo0021.pojo.RegisterMonthView" />
+		
 		
 		<mapping class="innocence741.model.CarRentalCompany" />
 		<mapping class="innocence741.model.CarRentalCompanyVO" />

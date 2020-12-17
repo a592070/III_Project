@@ -3,15 +3,64 @@
     <v-container style="max-width: 1200px;">
       <v-card class="mb-4">
         <v-card-text>
+
+          <v-dialog
+              ref="dateModal"
+              v-model="dateModal"
+              :return-value.sync="dates"
+              persistent
+              width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                  v-model="dateRangeText"
+                  label="Picker in dialog"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+                v-model="dates"
+                scrollable
+                range
+                :min="new Date().toISOString()"
+            >
+              <v-spacer></v-spacer>
+              <v-btn
+                  text
+                  color="primary"
+                  @click="dateModal = false"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                  text
+                  color="primary"
+                  @click="$refs.dateModal.save(dates)"
+              >
+                OK
+              </v-btn>
+            </v-date-picker>
+          </v-dialog>
+          <v-text-field
+              v-model="dateNum"
+              hide-details
+              flat
+              readonly
+              label="# 選 擇 天 數"
+          ></v-text-field>
           <v-select
               v-model="steps"
               :items="[2, 3, 4, 5, 6]"
               label="# 選 擇 天 數"
           ></v-select>
           <v-select
-              v-model="selectRegion"
-              :items="['全部', '台北', '高雄', '桃園', '台中']"
+              v-model="region"
+              :items="regions"
               label="# 選 擇 地 區"
+              @change="handleSelectedRegion"
           ></v-select>
           <v-text-field
               v-model="inputName"
@@ -88,25 +137,25 @@
                       <select-item></select-item>
                     </v-dialog>
                   </template>
-
-                  <v-text-field
-                      v-model="input"
-                      hide-details
-                      flat
-                      label="留下點什麼..."
-                      solo
-                      @keydown.enter="comment"
+                  <v-card
+                      color="red lighten-2"
+                      dark
                   >
-                    <template v-slot:append>
+                    <v-card-title class="title">
+                      {{selectItem.name}}
+                    </v-card-title>
+                    <v-card-text class="white text--primary">
+                      <p>{{selectItem.description}}</p>
                       <v-btn
+                          color="red lighten-2"
                           class="mx-0"
-                          depressed
-                          @click="comment"
+                          outlined
                       >
-                        Post
+                        Button
                       </v-btn>
-                    </template>
-                  </v-text-field>
+                    </v-card-text>
+                  </v-card>
+
                 </v-timeline-item>
 
                 <v-slide-x-transition
@@ -179,9 +228,14 @@ module.exports = {
   },
   data() {
     return {
+      dates: [],
+      dateMenu: false,
+      dateModal: false,
       events: [],
       input: null,
       nonce: 0,
+
+      region: this.selectRegion,
 
       travelSet: [],
       e1: 1,
@@ -189,6 +243,7 @@ module.exports = {
       inputName: null,
       inputDescription: null,
 
+      item: this.selectItem
 
     }
   },
@@ -203,9 +258,21 @@ module.exports = {
     timeline () {
       return this.events.slice().reverse()
     },
-    ...Vuex.mapState(["selectItemDialog"])
-  },
+    dateRangeText () {
+      return this.dates.join(' ~ ')
+    },
+    dateNum(){
+      console.log(this.dates);
+      console.log(new Date(this.dates[1]));
+      console.log(new Date(this.dates[0]));
 
+      return new Date(this.dates[1])-new Date(this.dates[0])
+    },
+    ...Vuex.mapState(["selectItemDialog", 'regions', 'selectRegion', 'selectItem']),
+  },
+  created: function (){
+    this.$store.dispatch("initRegionsData");
+  },
   methods: {
     openDialog () {
       // this.count += 2
@@ -245,12 +312,12 @@ module.exports = {
         this.e1 = n + 1
       }
     },
-
-
-
-    handleItemClick(id){
-      console.log(id);
+    handleSelectedRegion(){
+      this.setSelectRegion(this.region);
     },
+
+
+    ...Vuex.mapMutations(['setSelectRegion']),
   },
 };
 </script>

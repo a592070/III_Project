@@ -60,7 +60,6 @@ public class CommentDAO {
 			article2.setArtCommNum(commNum - 1);
 			 sessionFactory.getCurrentSession().save(article2);
 			 sessionFactory.getCurrentSession().delete(result);
-			System.out.println("評論已刪除");
 			return true;
 		}
 		return false;

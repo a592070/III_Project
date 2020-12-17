@@ -17,8 +17,8 @@
       <v-toolbar-title>選擇旅程項目</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-select
-          v-model="selectType"
-          :items="itemTypes"
+          v-model="type"
+          :items="itemType"
           chips
           label="Type"
           color="blue-grey lighten-2"
@@ -27,7 +27,7 @@
       ></v-select>
       <v-spacer></v-spacer>
       <v-text-field
-          v-if="selectType+1"
+          v-if="selectItemType+1"
           v-model="search"
           v-on:keyup="handleSelectedKeyword"
           clearable
@@ -37,10 +37,10 @@
           prepend-inner-icon="mdi-magnify"
           label="Search"
       ></v-text-field>
-      <template v-if="selectType+1 && $vuetify.breakpoint.mdAndUp">
+      <template v-if="selectItemType+1 && $vuetify.breakpoint.mdAndUp">
         <v-spacer></v-spacer>
 
-        <el-select v-model="selectRegion" placeholder="選擇地區" @change="handleSelectedRegion(selectRegion)">
+        <el-select v-model="region" placeholder="選擇地區" @change="handleSelectedRegion(region)">
           <el-option label="--請選擇--" disabled :value="null"></el-option>
           <el-option v-for="ele in regions" v-bind:key="ele" :value="ele"></el-option>
         </el-select>
@@ -48,13 +48,12 @@
       </template>
     </v-toolbar>
     <v-card-text>
-  <div v-if="selectType+1">
+  <div v-if="selectItemType+1">
     <v-spacer ref="scrollTopDiv"></v-spacer>
     <el-scrollbar style="height: 100%;" ref="scrollbar">
     <ul class="align-center"
         v-infinite-scroll="load"
         :infinite-scroll-disabled="disabled"
-        :infinite-scroll-distance="300"
         style="padding-right: 10% ;"
 
     >
@@ -100,7 +99,7 @@
                     <p class="bottom-area d-flex">
                       <span><i class="icon-map-o"></i>{{ item.address }}</span>
                       <span class="ml-auto">
-                                  <el-button type="success" round @click="handleItemClick(item.sn)">選 擇</el-button>
+                                  <el-button type="success" round @click="handleItemClick(item)">選 擇</el-button>
                                 </span>
                     </p>
                   </div>
@@ -137,15 +136,17 @@ module.exports = {
   data() {
     return {
       noPic: context+'/assets/nopic.jpg',
-      selectRegion: '全部',
       search: '',
 
-      selectType: this.selectItemType,
-      itemTypes: [
-        { text: '景點', value: 0},
-        { text: '餐廳', value: 1},
-        { text: '旅館', value: 2},
-      ],
+      region: this.selectRegion,
+      type: 0
+
+      // selectType: this.selectItemType,
+      // itemTypes: [
+      //   { text: '景點', value: 0},
+      //   { text: '餐廳', value: 1},
+      //   { text: '旅館', value: 2},
+      // ],
     }
   },
   computed: {
@@ -163,48 +164,60 @@ module.exports = {
       return this.pageData.currentPage >= this.pageData.totalPageCount;
     },
     disabled () {
-      return this.selectListLoading || this.noMore
+      return this.noMore
     },
-    ...Vuex.mapState(['itemList', 'selectListLoading', 'pageData', 'regions', 'selectItemType', 'selectItemDialog'])
+    ...Vuex.mapState(['itemList', 'selectListLoading', 'pageData', 'selectRegion', 'regions', 'selectItemType', 'itemType', 'selectItemDialog', 'selectItem'])
   },
   created: function (){
   },
   mounted(){
-    // this.init();
+    this.init();
   },
   destroyed(){
   },
   methods: {
     init(){
-      this.$store.dispatch("initRegionsData");
-      this.$store.dispatch("initItemListData");
+      this.$store.commit('toggleSelectListLoading', true);
+
+      // this.$store.dispatch("initRegionsData");
+      this.$store.dispatch("initItemListData")
+          .then(() => {
+            this.$store.commit('toggleSelectListLoading', false);
+          });
     },
     load () {
       console.log("load...")
-      this.$store.commit("addPage");
-      this.$store.dispatch("appendItemListData", {region: this.selectRegion, keyword: this.search})
-
+      if(!this.selectListLoading){
+        this.$store.commit('toggleSelectListLoading', true);
+        this.$store.commit("addPage");
+        this.$store.dispatch("appendItemListData", {region: this.selectRegion, keyword: this.search})
+            .then(() => {
+              this.$store.commit('toggleSelectListLoading', false);
+            })
+      }
     },
     handleSelectItemType(){
-      console.log(this.selectType);
-      this.$store.commit('setSelectItemType', this.selectType);
+      console.log(this.type);
+      this.scrollbarToTop();
+      this.$store.commit('setSelectItemType', this.type)
 
-      this.$store.dispatch("initRegionsData");
-      this.$store.dispatch("initItemListData");
+      this.init();
     },
     handleSelectedKeyword(){
       this.selectData();
     },
     handleSelectedRegion(region){
-      this.selectRegion = region;
+      // this.selectRegion = region;
+      this.$store.commit('setSelectRegion', this.region);
+
       this.selectData();
     },
     selectData(){
       console.log(this.selectRegion, this.search);
+      this.scrollbarToTop();
       this.$store.commit('toggleSelectListLoading', true);
       this.$store.dispatch("selectedItemListData", {region: this.selectRegion, keyword:this.search})
           .then(() => {
-            this.scrollbarToTop();
             this.$store.commit('toggleSelectListLoading', false);
           })
     },
@@ -220,8 +233,10 @@ module.exports = {
       }, 16);
     },
 
-    handleItemClick(id){
-      console.log(id);
+    handleItemClick(obj){
+      console.log(obj);
+      this.$store.commit('setSelectItem', {sn: obj.sn, name: obj.name, description: obj.description});
+      this.$store.commit('toggleSelectItemDialog', false);
     },
 
 
