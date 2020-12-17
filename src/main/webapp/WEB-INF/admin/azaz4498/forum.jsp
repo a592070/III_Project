@@ -194,45 +194,40 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <!-- fixed btn-->
     <div class="fixed-btn">
-      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button" onclick="checkLogin()"><i class="far fa-edit">撰寫文章</i></a>
+      <a class="btn btn-primary" href="javascript: void(0)" role="button" onclick="checkLogin()"><i class="far fa-edit">撰寫文章</i></a>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
-     function checkLogin(){
-      var loginCheck = eval(${userBean.userName});
-        if(loginCheck==null||loginCheck==""){
-          alert('請先登入');
-          window.location.href="<%=application.getContextPath()%>/user/signinPage";
-      }
-    </script>
-
-    <script>
-      $(document).ready(function(){
-      $('body,html').animate({scrollTop: 800}, 800); 
-      });
-
-    </script>
-    <script>
-        $(window).scroll(function() {
-      if($(document).scrollTop() > 600){
-          $(".fixed-btn").show();
-      } else {
-          $(".fixed-btn").hide();
-  }
-});
-
+      function checkLogin(){
+        console.log('login check');
+       var loginCheck = '${userBean.userName}';
+         if(loginCheck==null||loginCheck==""){
+           Swal.fire({
+             title:'請先登入',
+             text:'登入以撰寫文章',
+             html:"<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以發表評論",
+             icon:'warning',
+             confirmButtonText:'好'
+           })
+       }else{
+         window.location.href="<%=application.getContextPath()%>/newArticle";
+       }
+     }
     </script>
     <script>
-      
+          $(document).ready(function(){
+    $('body,html').animate({scrollTop: 800}, 800); 
+    });
+        
+        
         var len = eval(${totalPages});
         var currPage= eval(${currPage});
-        console.log(len);
       for(var i=1; i<=len;i++) {
         var content = "<li class='page' id='page"+i+"'><a href=''>"+i+"</a></li>";
         $('#next').before(content);
         $('#page'+currPage).addClass('active');
         $('#page'+currPage).remove('a');
-        
       };
       if(len==1){
         $('#next').remove();
@@ -242,15 +237,11 @@ contentType="text/html;charset=UTF-8" language="java"%>
       }else if(currPage==1){
         $('#prev').remove();
       }
-      
-    </script>
-    
-    <script>
+      </script>
+      <script>
       $('#next').on('click',function(){
         event.preventDefault();
         var totalPage=eval(${totalPages});
-        
-
         $.ajax({
           type:"GET",
           url:"Article.pagincontroller.json",
@@ -261,22 +252,16 @@ contentType="text/html;charset=UTF-8" language="java"%>
             $('#section').children().remove();
             $('#section').append(response);
             console.log('現在頁數'+currPage);
-            
             window.scrollTo({ top: 600, behavior: 'smooth' });
-
           },
-          
         })
-
       })
 
       $('#prev').on('click',function(){
-        // window.scrollTo({ top: 500, behavior: 'smooth' });
-        //event.preventDefault();
         var totalPage=eval(${totalPages});
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: currPage-1,
           },
@@ -293,9 +278,10 @@ contentType="text/html;charset=UTF-8" language="java"%>
         console.log('page has been click');
         event.preventDefault();
         var page = $(this).text();
+        var typeId = $('#articleType').val();
         $.ajax({
           type:"GET",
-          url:"Article.pagincontroller.json",
+          url:"../Article.pagincontroller.json",
           data:{
             currPage: page,
           },
@@ -306,8 +292,18 @@ contentType="text/html;charset=UTF-8" language="java"%>
             window.scrollTo({ top: 600, behavior: 'smooth' });
           },
         })
+      });
 
-      })
+      $(window).scroll(function() {
+        if($(document).scrollTop() > 600){
+            $(".fixed-btn").show();
+        } else {
+            $(".fixed-btn").hide();
+    }
+  });
     </script>
+
+
+    
   </body>
 </html>
