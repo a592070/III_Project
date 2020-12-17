@@ -32,6 +32,7 @@
           
       }
     </style>
+    <link rel="stylesheet" href="../assets/azaz4498/content-style.css" type="text/css">
     <script src="https://kit.fontawesome.com/4c5dc04160.js" crossorigin="anonymous"></script>
   </head>
 
@@ -91,8 +92,9 @@
                  <a href="<%=application.getContextPath()%>/typeSearch/${artBean.articleType.typeId}" class="tag-cloud-link">${artBean.articleType.typeName}</a>
                </div>
              </div>
+             <div class="ck-content">
             ${artBean.artContent}
-
+          </div>
 
             <div class="about-author d-flex p-5 bg-light">
               <div class="bio align-self-md-center mr-5">
@@ -124,32 +126,61 @@
                     />
                   </div>
                   <div class="comment-body">
-                    <h3>${comment.comUserId} <a data-toggle="collapse" href="#collapse${comment.comId}"><i class="fas fa-angle-down float-right"></i></a></h3>
+                    <h3 class="main_username">${comment.comUserId} 
+                    <a data-toggle="collapse" href="#collapse${comment.comId}">
+                      <i class="fas fa-angle-down float-right"></i>
+                    </a>
+                  </h3>
+                  
                     <div class="meta">${comment.comDate}</div>
                     <p>
                       ${comment.comContent}
-                    
+                    </p>
+                   
+                    <a href="javascript: void(0)" style="color:rgb(16, 141, 163);" class="com_edit">
+                      <i class="fas fa-pencil-alt float-left mr-2">
+                        <span>編輯</span>
+                      </i>
+                    </a>
+                    <a href="javascript: void(0)" class="com_del">
+                      
+                      <i class="fas fa-trash-alt float-left ">
+                        <span>刪除</span>
+                      </i>
+                    </a>
+                  
                   </div>
                   <div class="collapse" id="collapse${comment.comId}">
                   <ul class="children" id="children${comment.comId}">
                   <c:forEach var="m_comment" items="${comment.m_Comments}">
                     <li class="comment">
                       <div class="comment-body" >
-                        <p><strong>${m_comment.m_UserId}</strong></p>
+                        <p class="sub_username"><strong>${m_comment.m_UserId}</strong></p>
                         <div class="meta">${m_comment.m_Date}</div>
-                        <p>${m_comment.m_Content}</p>
+                        <p>${m_comment.m_Content} </p>
+                        <a href="javascript: void(0)" style="color:rgb(16, 141, 163);" class="mtc_edit">
+                      
+                          <i class="fas fa-pencil-alt float-left mr-2">
+                            <span>編輯</span>
+                          </i>
+                        </a>
+                        <a href="javascript: void(0)" class="mtc_delete">
+                          
+                          <i class="fas fa-trash-alt float-left ">
+                            <span>刪除</span>
+                          </i>
+                        </a>
                       </div>
                       </li>
                     </c:forEach>
                       <li class="comment" id="m_com${comment.comId}">
                       <div class="d-flex flex-row comment-body">
-                        <textarea id="tx${comment.comId}"class="ml-1 form-control" style="border-radius: 10px; height: 105px; width: 1045px; resize: none; box-shadow: 5px;"></textarea>
-                      </div>
-                        <div class="d-inline-flex flex-row-reverse comment-body mt-2">
+                        <textarea id="tx${comment.comId}"class="ml-1 mr-1" style="border: solid 0.5px; border-radius: 8px; height: 30px; width: 590px; resize: none; box-shadow: 5px;"></textarea>
                         <p>
                           <a href="javascript:void(0);" class="reply" id="reply${comment.comId}">回覆</a>
                         </p>
                       </div>
+                        
                     </li>
                       </ul>
                     </div>
@@ -301,167 +332,219 @@
     </div>
     <!-- fixed btn-->
     <div class="fixed-btn">
-      <a class="btn btn-primary" href="<%=application.getContextPath()%>/newArticle" role="button"><i class="far fa-edit">撰寫文章</i></a>
+      <a onclick="checkLogin()" class="btn btn-primary" href="javascript: void(0)" role="button"><i class="far fa-edit">撰寫文章</i></a>
     </div>
+
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
-      $(document).ready(function(){
-        var userid = $('#c_userId').val();
-        var op = '${artBean.artUserId}';
+      // 滑動+編輯文章按鈕隱藏
+$(document).ready(function () {
+  var userid = $("#c_userId").val();
+  var op = "${artBean.artUserId}";
+  $("body,html").animate({ scrollTop: 750 }, 950);
+  if (userid == op) {
+    $("#edit_btn").show();
+  } else {
+    $("#edit_btn").hide();
+  }
+});
 
-      $('body,html').animate({scrollTop: 750}, 950); 
+// 箭頭動畫
 
-      if(userid==op){
-        $('#edit_btn').show();
-      }else{
-        $('#edit_btn').hide();
-      }
-      });
+$('.comment-list').on('click','.fa-angle-down',function(){
+  if ($(this).hasClass("fa-flip-vertical")) {
+    $(this).removeClass("fa-flip-vertical");
+    console.log("remove");
+  } else {
+    $(this).addClass("fa-flip-vertical");
+  }
+})
 
-    </script>
-    <script>
-      function magic(){
-        
-        $('#message').val('謝謝你的分享，假日有空也想去!');
-      }
-    </script>
-    <script>
 
-      $('.reply').on('click',function(){
-        event.preventDefault();
-        var id = $(this).attr('id');
-        var str = id.replace('reply','m_com');
-        var textarea = id.replace('reply','tx');
-        var comId = id.replace('reply','');
-        var mc_content=$('#'+textarea).val();
-        var loginCheck = $('#c_userId').val;
+$(window).scroll(function () {
+  if ($(document).scrollTop() > 600) {
+    $(".fixed-btn").show();
+  } else {
+    $(".fixed-btn").hide();
+  }
+});
 
-        if(loginCheck==null||loginCheck==""){
-          alert('請先登入');
-          window.location.href="<%=application.getContextPath()%>/user/signinPage";
-        }else if(mc_content==null || mc_content==""){
-          alert('請輸入內容再進行留言')
-          $('#'+textarea).focus();
-        }else{
-          $.ajax({
-          type:"POST",
-          url:"../newMultiComment.controller",
-          data:{
-            comId:comId,
-            mc_content:mc_content
-          },
-          success:function(response){
-            $('#'+textarea).val('');
-          $('#'+str).before(
-          '<li class="comment">'+
-          '<div class="comment-body">'+
-          '<p><strong>'+response.m_UserId+'</strong></p>'+
-          '<div class="meta">'+response.m_Date+'</div>'+
-          '<p>'+response.m_Content+'</p>'+
-          '</div>'+
-          '</li>'+
-          '</ul>'+
-          '</li>'
+$(".comment-list").on("click", ".reply", function () {
+  console.log("reply has benn clicked");
+  event.preventDefault();
+  var id = $(this).attr("id");
+  var str = id.replace("reply", "m_com");
+  var textarea = id.replace("reply", "tx");
+  var comId = id.replace("reply", "");
+  var mc_content = $("#" + textarea).val();
+  var loginCheck = "${userBean.userName}";
+
+  if (loginCheck == null || loginCheck == "") {
+    Swal.fire({
+      title: "請先登入",
+      text: "登入以回復他人評論",
+      html:
+        "<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以回復他人評論",
+      icon: "warning",
+      confirmButtonText: "好",
+    });
+  } else if (mc_content == null || mc_content == "") {
+    Swal.fire({
+      title: "請輸入內容再進行留言",
+      icon: "warning",
+    });
+    $("#" + textarea).focus();
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "../newMultiComment.controller",
+      data: {
+        comId: comId,
+        mc_content: mc_content,
+      },
+      success: function (response) {
+        $("#" + textarea).val("");
+        $("#" + str).before(
+          '<li class="comment">' +
+            '<div class="comment-body">' +
+            '<p class="sub_username"><strong>' +
+            response.m_UserId +
+            "</strong></p>" +
+            '<div class="meta">' +
+            response.m_Date +
+            "</div>" +
+            "<p>" +
+            response.m_Content +
+            "</p>" +
+            '<a href="javascript: void(0)" style="color:rgb(16, 141, 163); class="mtc_edit">' +
+            '<i class="fas fa-pencil-alt float-left mr-2">' +
+            "<span>編輯</span></i></a>" +
+            '<a href="javascript: void(0)" class="mtc_delete">' +
+            '<i class="fas fa-trash-alt float-left">' +
+            "<span>刪除</span></i></a>" +
+            "</div>" +
+            "</li>" +
+            "</ul>" +
+            "</li>"
         );
-        
-          },
-        })
-        }
-      });
-      
-        
+      },
+    });
+  }
+});
+
+$("#post_btn").on("click", function (event) {
+  event.preventDefault();
+  var c_content = $("#message").val();
+  var c_artId = $("#c_artId").val();
+  var loginCheck = "${userBean.userName}";
+  console.log(loginCheck);
+  if (loginCheck == null || loginCheck == "") {
+    Swal.fire({
+      title: "請先登入",
+      html:
+        "<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以發表評論",
+      icon: "warning",
+    });
+  } else if (c_content == null || c_content == "") {
+    Swal.fire({
+      title: "請輸入內容再進行留言",
+      icon: "warning",
+    });
+
+    $("#message").focus();
+  } else {
+    var c_content = $("#message").val();
+    var c_artId = $("#c_artId").val();
+
+    $.ajax({
+      type: "POST",
+      url: "../newComment.controller",
+      data: {
+        c_content: c_content,
+        artId: c_artId,
+      },
+      success: function (response) {
+        console.log(response);
+        $(".comment-list").append(
+          "<li class='comment'>" +
+            "<div class='vcard bio'>" +
+            "<img src='" +
+            "../f_showUserPic/" +
+            response.comUserId +
+            "'" +
+            "/>" +
+            "</div>" +
+            "<div class='comment-body'>" +
+            "<h3 class='main_username'>" +
+            response.comUserId +
+            "<a data-toggle='collapse' href='#collapse" +
+            response.comId +
+            "'>" +
+            "<i class='fas fa-angle-down float-right'></i></a></h3>" +
+            "<div class='meta'>" +
+            response.comDate +
+            "</div>" +
+            "<p>" +
+            response.comContent +
+            "</p>" +
+            '<a href="javascript: void(0)" class="com_edit" style="color:rgb(16, 141, 163);">' +
+            '<i class="fas fa-pencil-alt float-left mr-2"><span>編輯</span></i></a>' +
+            '<a href="javascript: void(0) class="com_edit">' +
+            '<i class="fas fa-trash-alt float-left "> <span>刪除</span></i></a>' +
+            "</div>" +
+            "<div class='collapse' id='collapse" +
+            response.comId +
+            "'>" +
+            "<ul class='children' id='children" +
+            response.comId +
+            "'>" +
+            "<li class='comment' id='m_com" +
+            response.comId +
+            "'>" +
+            "<div class='d-flex flex-row comment-body'>" +
+            "<textarea class='ml-1 form-control'" +
+            "id='tx" +
+            response.comId +
+            "'" +
+            " style='border-radius: 10px; height: 105px; width: 1045px; resize: none; box-shadow: 5px;'></textarea>" +
+            "</div>" +
+            "<div class='d-inline-flex flex-row-reverse comment-body mt-2'>" +
+            "<p><a href='javascript:void(0);' class='reply' id='reply" +
+            response.comId +
+            "'>回覆</a>" +
+            "</p></div></li></ul></div></li>"
+        );
+        var commNum = eval($("#commNum").text());
+        console.log(commNum);
+
+        $("#message").val("");
+        $("#commNum").text(eval(commNum + 1));
+      },
+    });
+  }
+});
+
     </script>
     
     <script>
-      $(window).scroll(function() {
-    if($(document).scrollTop() > 600){
-        $(".fixed-btn").show();
-    } else {
-        $(".fixed-btn").hide();
-}
-});
-
+    function checkLogin(){
+     var loginCheck ='${userBean.userName}'
+       if(loginCheck==null||loginCheck==""){
+         Swal.fire({
+           title:'請先登入',
+           text:'登入以撰寫文章',
+           html:"<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以發表評論",
+           icon:'warning',
+           confirmButtonText:'好'
+         })
+     }else{
+       window.location.href="<%=application.getContextPath()%>/newArticle";
+     }
+   }
+   function magic(){
+        $('#message').val('謝謝你的分享，假日有空也想去!');
+      }
   </script>
-    <script>
-      $('#post_btn').on('click',function(){
-        event.preventDefault();
-        var c_content = $('#message').val();
-        var c_userId=$('#c_userId').val();
-        var c_artId= $('#c_artId').val();
-        var loginCheck = $('#c_userId').val;
-        if(loginCheck==null||loginCheck==""){
-          alert('請先登入');
-          window.location.href="<%=application.getContextPath()%>/user/signinPage";
-        }
-        else if(c_content==null || c_content==""){
-          alert('請輸入內容再進行留言')
-          $('#message').focus();
-        }
-        else{
-        var c_content = $('#message').val();
-        var c_userId=$('#c_userId').val();
-        var c_artId= $('#c_artId').val();
-        
-
-        $.ajax({
-          type:"POST",
-          url:"../newComment.controller",
-          data:{
-            c_content:c_content,
-            artId:c_artId
-          },
-          success:function(response){
-            console.log(response);
-            $('.comment-list').append(
-              "<li class='comment'>"+
-              "<div class='vcard bio'>"+
-              "<img src='"+"../f_showUserPic/"+response.comUserId+"'"+"/>"+
-              "</div>"+                 
-              "<div class='comment-body'>"+
-              "<h3>"+response.comUserId+
-              "<a data-toggle='collapse' href='#collapse"+response.comId+"'>"+
-              "<i class='fas fa-angle-down float-right'></i></a></h3>"+
-              
-              "<div class='meta'>"+response.comDate+"</div>"+
-              "<p>"+response.comContent+"</p>"+"</div>"+
-              "<div class='collapse' id='collapse"+response.comId+"'>"+
-              "<ul class='children' id='children"+response.comId+"'>"+
-              "<li class='comment' id='m_com"+response.comId+"'>"+
-              "<div class='d-flex flex-row comment-body'>"+
-              "<textarea class='ml-1 form-control'"+
-              "id='tx"+response.comId+"'"+
-              " style='border-radius: 10px; height: 105px; width: 1045px; resize: none; box-shadow: 5px;'></textarea>"+
-              "</div>"+
-              "<div class='d-inline-flex flex-row-reverse comment-body mt-2'>"+
-              "<p><a href='javascript:void(0);' class='reply' id='reply"+response.comId+"'>回覆</a>"+
-              "</p></div></li></ul></div></li>"
-            )
-            var commNum = eval($('#commNum').text());
-            console.log(commNum);
-            
-            $('#message').val('');
-            $('#commNum').text(eval(commNum+1));
-            
-
-
-            
-          },
-          
-        })
-        }
-      })
-
-    </script>
-    <script>
-      $('i').on('click',function(){
-        if($(this).hasClass("fa-flip-vertical")){
-          $(this).removeClass('fa-flip-vertical');
-          console.log('remove');
-        }else{
-          $(this).addClass('fa-flip-vertical');
-        }    
-      
-      })
-      </script>
 </body>
 </html>

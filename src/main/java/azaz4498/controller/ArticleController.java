@@ -58,12 +58,10 @@ public class ArticleController {
 	@RequestMapping(path = "/newArticle",method = RequestMethod.GET)
 	public String newArticle(HttpSession session,Model m) {
 		AccountBean account = (AccountBean) m.getAttribute("userBean");
-		if (account==null) {
-			return "rambo0021/userSignin";
-		}else {
+		
 			m.addAttribute("userBean",account);
 			return "azaz4498/newArticle_frontend";
-		}
+		
 	}
 	
 	//文章頁面

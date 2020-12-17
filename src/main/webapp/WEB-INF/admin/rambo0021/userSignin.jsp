@@ -28,7 +28,7 @@
         <c:import url="/WEB-INF/admin/fragment/nav.jsp" />
         <!-- END nav -->
 
-        <div class="hero-wrap js-fullheight" style="background-image: url('../direngine-master/images/bg_2.jpg');">
+        <div class="hero-wrap js-fullheight" style="background-image: url('${pageContext.request.contextPath}/direngine-master/images/bg_2.jpg');">
           <div class="overlay"></div>
           <div class="container">
             <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
