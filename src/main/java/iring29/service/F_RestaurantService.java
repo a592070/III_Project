@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import global.pojo.OrderTable;
 import iring29.model.F_RestaurantDAO;
 import iring29.model.R_Comment;
+import iring29.model.R_Order_List;
 import iring29.model.Restaurant;
 import iring29.model.Restaurant_VO;
 import rambo0021.pojo.AccountBean;
@@ -84,6 +85,11 @@ public class F_RestaurantService {
 	@Transactional(rollbackFor = { Throwable.class })
 	public AccountBean account(String username) {
 		return f_RDao.account(username);
+	}
+	
+	@Transactional(rollbackFor = { Throwable.class })
+	public R_Order_List findR_sn(Integer r_id) {
+		return f_RDao.findR_sn(r_id); 
 	}
 }
 

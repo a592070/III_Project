@@ -145,7 +145,7 @@ td.col-sm-1.col-md-1.text-center{
 					
 							<td class="col-sm-1 col-md-1 text-center"><h5>${H.PROPLE_NUM}&emsp;&emsp;</h5></td>
 							<td class="col-sm-1 col-md-1">
-								<h5><strong class="hPrice">${H.hPRICE}</strong></h5>
+								<h5><strong class="hPRICE">${H.hPRICE}</strong></h5>
 							</td>
 							<td class="col-sm-1 col-md-1"></td>
 						</tr>
@@ -163,15 +163,16 @@ td.col-sm-1.col-md-1.text-center{
 					</tbody>
 				</table>
 				<script type="text/javascript">
-				var hPRICE = document.getElementsByClassName("hPrice");
-				console.log("hPRICE size = " + hPRICE.length);
-				var size = 0;
-				for(var i = 0; i < hPRICE.length; i++ ){
-					size += parseInt(hPRICE[i].innerHTML);
-					console.log("money = " + size);
-					console.log("money = " + hPRICE[i].innerHTML);
-					}
-				document.getElementById("HPrice").innerHTML = size;
+  						var hPRICE = document.getElementsByClassName("hPRICE"); 
+  						console.log("deposit size = " + hPRICE.length); 
+  						var size = 0; 
+  						for(var j = 0; j < hPRICE.length; j++ ){
+   							size += parseInt(hPRICE[j].innerHTML); 
+   							console.log("money = " + size); 
+ 							console.log("money = " + [j].innerHTML); 
+  						}
+          				document.getElementById("HPrice").innerHTML = size; 
+
         				
     					</script> 
 			</div>
