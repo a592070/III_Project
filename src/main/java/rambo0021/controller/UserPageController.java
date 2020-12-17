@@ -44,7 +44,7 @@ public class UserPageController {
 		
 //		 System.out.println("登入前攔截");
 		 String reqURL = req.getHeader("Referer");
-		 if(reqURL==null) {
+		 if(reqURL==null||reqURL.isEmpty()) {
 //			 System.out.println("我是空的");
 			 reqURL=req.getRequestURL().toString().replace("user/signinPage", "FunTaiwan");
 		 }else if(reqURL.contains("/user/registrationPage")) {
