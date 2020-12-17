@@ -1,26 +1,35 @@
 package asx54630.controller;
 
 import java.math.BigDecimal;
+
 import java.util.List;
 
 import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import asx54630.model.Hotel;
 import asx54630.model.HotelPage;
 import asx54630.model.HotelView;
 import asx54630.service.F_HotelService;
 import asx54630.service.WritePicToDB;
+import iring29.model.Restaurant;
 import rambo0021.pojo.AccountBean;
+
 
 @Controller
 public class F_HotelController {
@@ -37,7 +46,7 @@ public class F_HotelController {
 	private static final int PAGESIZE = 6;
 	
 	@RequestMapping(path = "/Hotel_index")
-	public String processHotelPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m) {
+	public String processHotelPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m,HttpSession session) {
 		hpage.sethPageSize(PAGESIZE);
 		int size = f_hotelservice.howMuchData("", "", "");
 		System.out.println("=========================="+size);
@@ -134,4 +143,61 @@ public class F_HotelController {
 //	 return writePicDB.pic();
 //
 //	}
+	
+	@RequestMapping(path = "/HotelPic")
+	public ResponseEntity<byte[]> ShowPic(HttpSession session) {
+		Hotel h = (Hotel) session.getAttribute("hoteldata");
+		System.out.println("in pic " + h.getNAME());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		
+		return new ResponseEntity<byte[]>(h.getPIC(), headers, HttpStatus.OK);
+	}
+	
+	@GetMapping("/Hotel/pic/{hotels.SN}")
+	@ResponseBody
+	public ResponseEntity<byte[]> hotelPic(@PathVariable(name = "hotels.SN") BigDecimal H_SN) {
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++in pic ");
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		
+		return new ResponseEntity<byte[]>(f_hotelservice.getPic(H_SN), headers, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+//	
+//	@RequestMapping(path = "/F_hotelPage", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8") //分頁.搜尋.排序
+//	public String processFHotelPage(@RequestParam(name = "keyword",required = false) String keyword,
+//										@RequestParam(name = "regionkeywd",required = false) String regionkeywd,
+//										@RequestParam(name = "typekeywd",required = false) String typekeywd,
+//										@RequestParam(name = "currentPage") int currentPage,Model m) {
+//
+//		hpage.sethPageSize(PAGESIZE);
+//		int size = f_hotelservice.howMuchData(keyword, regionkeywd, typekeywd);
+//		System.out.println(size);
+//		hpage.sethTotalCount(size);
+//		hpage.sethCurrentPage(currentPage);
+//		
+//		
+//		int firstIndex = (hpage.getCurrentPage()-1)*hpage.gethPageSize();
+//		
+//		int pageSize = hpage.gethPageSize();
+//		int totalPage = hpage.getTotalPageCount();
+//		List<Hotel> hoteldata = f_hotelservice.selectAll(firstIndex,hpage.gethPageSize(),keyword, regionkeywd,typekeywd);
+//		// 1->0 2->10  (currentPage-1)*pagesize=
+//		// 1->10 2->20 (currentPage)*pagesize
+//		
+//		m.addAttribute("hoteldata", hoteldata);
+//		m.addAttribute("hpage", hpage);
+//		m.addAttribute("currentPage", currentPage);
+//		m.addAttribute("totalPage", totalPage);	
+//
+//		
+//		return "asx54630/F_HotelSearch";
+//		}
+	
 }	

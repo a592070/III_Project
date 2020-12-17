@@ -112,6 +112,7 @@ td.col-sm-1.col-md-1.text-center{
 							<th><h5 class="media-heading line">飯店訂單&emsp;<strong>${H.SN_ORDER}</strong></h5></th>
 							<th><h5 class="media-heading line"></h5></th>
 							<th><h5 class="media-heading line">訂位時間</h5></th>
+							<th></th>
 							<th class="text-center"><h5 class="media-heading line">訂位人數</h5></th>
 							<th class="text-center"><h5 class="media-heading line">價格</h5></th>
 							<th> </th>
@@ -135,6 +136,7 @@ td.col-sm-1.col-md-1.text-center{
 							<div class="content"><h5 class="media-heading line">${H.CLIENT_NAME}</h5></div>
 							<div class="content"><h5 class="media-heading line">${H.CLIENT_PHONE}</h5></div>
 							</td>
+							<td>
 							<div class="div_title"><h5>入住日期</h5></div>
 							<div class="div_title"><h5>退房日期</h5></div>
 							</td>
