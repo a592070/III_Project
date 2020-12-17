@@ -146,7 +146,7 @@ public class F_HotelController {
 	
 	@RequestMapping(path = "/HotelPic")
 	public ResponseEntity<byte[]> ShowPic(HttpSession session) {
-		Hotel h = (Hotel) session.getAttribute("hoteldata");
+		Hotel h = (Hotel) session.getAttribute("hoteldetail");
 		System.out.println("in pic " + h.getNAME());
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
