@@ -19,6 +19,7 @@ import asx54630.model.Hotel;
 import asx54630.model.HotelPage;
 import asx54630.model.HotelView;
 import asx54630.service.F_HotelService;
+import asx54630.service.WritePicToDB;
 import rambo0021.pojo.AccountBean;
 
 @Controller
@@ -29,6 +30,8 @@ public class F_HotelController {
 
 	@Autowired
 	private F_HotelService f_hotelservice;
+	
+	
 	
 	private int start = 0;
 	private static final int PAGESIZE = 6;
@@ -124,4 +127,11 @@ public class F_HotelController {
 //	return "asx54630/F_HotelDetail";
 //	}
 	
+//	@Autowired
+//	private WritePicToDB writePicDB;
+//	@RequestMapping(path = "/writePic") //查詢單筆_給修改用
+//	public WritePicToDB writePicToDB() {		
+//	 return writePicDB.pic();
+//
+//	}
 }	

@@ -23,5 +23,6 @@
 	<bean id="f_hotelOrderController" name="/HotelOrder" class="asx54630.controller.F_HotelOrderController" lazy-init="true" scope="session"/>
 	<bean id="f_hotelOrderDao" class="asx54630.model.F_HotelOrderDAO" lazy-init="true" scope="session"/>
 	<bean id="f_hotelOrderservice" class="asx54630.service.F_HotelOrderService" lazy-init="true" scope="session"/>
+	<bean id="writePicToDB" class="asx54630.service.WritePicToDB" lazy-init="true" scope="session"/>
 	
 </beans>
