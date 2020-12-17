@@ -49,7 +49,7 @@ public class F_HotelController {
 	public String processHotelPage(@RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,Model m,HttpSession session) {
 		hpage.sethPageSize(PAGESIZE);
 		int size = f_hotelservice.howMuchData("", "", "");
-		System.out.println("=========================="+size);
+		System.out.println("=========================="+size); 
 		hpage.sethTotalCount(size);
 		hpage.sethCurrentPage(currentPage);
 		
