@@ -156,12 +156,12 @@ public class F_RorderController {
 				r.setCus_phone(b_phone);
 				r.setCustomer_num(person_number);
 				BigDecimal deposit = person_number.multiply(r.getRestaurant().getPrice());
+				OTBean.setTotalPrice(OTBean.getTotalPrice().subtract(r.getDeposit()).add(deposit));
 				r.setDeposit(deposit);
-				OTBean.setTotalPrice(OTBean.getTotalPrice().add(r.getDeposit()));
 			}
 		}
 		session.setAttribute("OTBean", OTBean);
-		return "modify";
+		return OTBean.getTotalPrice().toString();
 	}
 	
 	@RequestMapping(path = "/ShoppingCart", method = RequestMethod.POST)
@@ -275,19 +275,21 @@ public class F_RorderController {
 //		OrderTable otBean = F_Serivce.findOrder();
 		OrderTable otBean = (OrderTable) session.getAttribute("otBean");
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
+		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();
 		//send mail
-		for(R_Order_List r : res_lists) {  
-			//send mail
-			String email = otBean.getAccountBean().getEmail(); 
-			String title = "Fun x Taiwan";  
-			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  
-			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
-			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
-			sendMail.asyncSend(email, title, content, urlDisplay, url , session); 
-			
-		}
+//		for(R_Order_List r : res_lists) {  
+//			//send mail
+//			String email = otBean.getAccountBean().getEmail(); 
+//			String title = "Fun x Taiwan";  
+//			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  
+//			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
+//			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
+//			sendMail.asyncSend(email, title, content, urlDisplay, url , session); 
+//			
+//		}
 
 		session.setAttribute("res_lists", res_lists);
+		session.setAttribute("hotel_lists", hotel_lists);
 		return "iring29/OrderDetail";
 	}
 	
