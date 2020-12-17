@@ -39,4 +39,9 @@ public class F_HotelService {
 		return f_hotelDao.hotelDetail(sn);
 	}
 
+	@Transactional(rollbackFor = {Throwable.class})
+	public byte[] getPic(BigDecimal H_SN) {
+		return f_hotelDao.getPic(H_SN);
+	}
+
 }
