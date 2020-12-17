@@ -2,12 +2,11 @@ Vue.use(Vuex);
 const travelSetStore = new Vuex.Store({
     state: {
         regions: ['全部'],
-        selectItemType: 'attraction',
+        selectItemType: 0,
         itemType: {
             attraction: 0,
             restaurant: 1,
             hotel: 2,
-            car: 3
         },
         itemList: [
             {
@@ -27,6 +26,8 @@ const travelSetStore = new Vuex.Store({
             totalPageCount: 1
         },
 
+        selectItemDialog: false,
+
     },
     getters: {
         getItemList: (state) => state.itemList,
@@ -34,7 +35,7 @@ const travelSetStore = new Vuex.Store({
         getPageData: (state) => state.pageData,
         getRegions: (state) => state.regions,
         getSelectItemType: (state) => state.selectItemType,
-
+        getSelectItemDialog: (state) => state.selectItemDialog,
 
     },
     mutations: {
@@ -62,6 +63,9 @@ const travelSetStore = new Vuex.Store({
         },
         setSelectItemType(state, data){
             state.selectItemType = data;
+        },
+        toggleSelectItemDialog(state, flag){
+            state.selectItemDialog = flag;
         }
 
 
@@ -71,7 +75,7 @@ const travelSetStore = new Vuex.Store({
         initItemListData(state){
             state.commit('toggleSelectListLoading', true);
             let type = state.getters.getSelectItemType;
-            let url = context+'/travelSet/'+type+'/list/1';
+            let url = context+'/travelSet/'+type+'/1';
             console.log(url);
             return axios.get(url)
                 .then(response => {
@@ -103,9 +107,9 @@ const travelSetStore = new Vuex.Store({
             if(!region || region == "全部") region = "all";
 
             if(keyword && keyword != ''){
-                url = context+'/travelSet/'+type+'/list/1/'+region+'/'+keyword;
+                url = context+'/travelSet/'+type+'/1/'+region+'/'+keyword;
             }else{
-                url = context+'/travelSet/'+type+'/list/1/'+region;
+                url = context+'/travelSet/'+type+'/1/'+region;
             }
             console.log(url);
             return axios.get(url)
@@ -129,9 +133,9 @@ const travelSetStore = new Vuex.Store({
             }
             let pageData = state.getters.getPageData;
             if(!keyword || keyword == ''){
-                url = context+'/travelSet/'+type+'/list/'+pageData.currentPage+'/'+region;
+                url = context+'/travelSet/'+type+'/'+pageData.currentPage+'/'+region;
             }else{
-                url = context+'/travelSet/'+type+'/list/'+pageData.currentPage+'/'+region+'/'+keyword;
+                url = context+'/travelSet/'+type+'/'+pageData.currentPage+'/'+region+'/'+keyword;
             }
             console.log(url);
             return axios.get(url)

@@ -88,7 +88,7 @@
 <script>
     $(document).ready(function(){
         let timer = setInterval(() => {
-            $('body,html').animate({scrollTop: 900}, 4500);
+            $('body,html').animate({scrollTop: 900}, 1800);
             clearInterval(timer);
         }, 2000);
     });

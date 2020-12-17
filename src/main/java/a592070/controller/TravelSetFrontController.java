@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import utils.PageSupport;
+import utils.StringUtil;
 
 import javax.servlet.ServletContext;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class TravelSetFrontController {
      0: attraction
      1: restaurant
      2: hotel
-     3: car
+     3: car(no use)
      }
      */
     @GetMapping({"/travelSet/{type}/{page}/{region}/{keywords}", "/travelSet/{type}/{page}/{region}", "/travelSet/{type}/{page}"})
@@ -63,6 +64,8 @@ public class TravelSetFrontController {
 
         List list = new ArrayList();
 
+        if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
+
         if(type == 0){
             pageSupport.setTotalSize(attractionViewService.getSizeByKeyWords(keywords));
             list = attractionViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true);
@@ -72,10 +75,11 @@ public class TravelSetFrontController {
         }else if(type == 2){
             pageSupport.setTotalSize(hotelViewService.getSizeByKeyWords(keywords));
             list = hotelViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true);
-        }else if(type == 3){
-            pageSupport.setTotalSize(carViewService.getSizeByKeyWords(keywords));
-            list = carViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true);
         }
+//        else if(type == 3){
+//            pageSupport.setTotalSize(carViewService.getSizeByKeyWords(keywords));
+//            list = carViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true);
+//        }
 
         Map<String, Object> map = new HashMap<>();
         map.put("tableData", list);

@@ -68,13 +68,25 @@
                     large
                 >
                   <template v-slot:icon>
-                    <v-btn
-                        color="pink"
-                        fab
-                        @click="addTravelSet"
+                    <v-dialog
+                        v-model="selectItemDialog"
+                        fullscreen
+                        hide-overlay
+                        transition="dialog-bottom-transition"
+                        ref="scrollBarTop"
                     >
-                      <v-icon>mdi-plus</v-icon>
-                    </v-btn>
+                      <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="pink"
+                            fab
+                            @click="addTravelSet"
+                            v-on="on"
+                        >
+                          <v-icon>mdi-plus</v-icon>
+                        </v-btn>
+                      </template>
+                      <select-item></select-item>
+                    </v-dialog>
                   </template>
 
                   <v-text-field
@@ -150,60 +162,9 @@
 
       </v-stepper>
 
-<!--        <v-overlay-->
-<!--            :z-index="zIndex"-->
-<!--            :value="overlay"-->
-<!--            :absolute="true"-->
-<!--        >-->
-<!--          <v-btn-->
-<!--              class="white&#45;&#45;text"-->
-<!--              color="teal"-->
-<!--              @click="overlay = false"-->
-<!--          >-->
-<!--            Hide Overlay-->
-<!--          </v-btn>-->
-<!--        </v-overlay>-->
 
-        <v-dialog
-            v-model="dialog"
-            fullscreen
-            hide-overlay
-            transition="dialog-bottom-transition"
-            scrollable
-        >
-          <v-card tile>
-            <v-toolbar
-                flat
-                dark
-                color="primary"
-            >
-              <v-btn
-                  icon
-                  dark
-                  @click="dialog = false"
-              >
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-              <v-toolbar-title>選擇旅程項目</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-select
-                  v-model="selectType"
-                  :items="itemTypes"
-                  chips
-                  label="Type"
-                  color="blue-grey lighten-2"
-                  solo
-                  @change="handleSelectItemType"
-              ></v-select>
-              <v-spacer></v-spacer>
-            </v-toolbar>
-            <v-card-text>
-              <select-item></select-item>
-            </v-card-text>
 
-            <div style="flex: 1 1 auto;"></div>
-          </v-card>
-        </v-dialog>
+
 
       </v-container>
     </v-container>
@@ -213,7 +174,8 @@
 <script>
 module.exports = {
   components: {
-    'select-item': httpVueLoader(context + '/assets/a592070/front/travelSet/components/selectItem.vue')
+    'select-item': httpVueLoader(context + '/assets/a592070/front/travelSet/components/selectItem02.vue'),
+    'infinite-scroll': httpVueLoader(context + '/assets/a592070/front/travelSet/components/testScroll.vue'),
   },
   data() {
     return {
@@ -224,23 +186,10 @@ module.exports = {
       travelSet: [],
       e1: 1,
       steps: 2,
-      selectRegion: 'all',
       inputName: null,
       inputDescription: null,
 
-      selectItemLoading: false,
 
-      overlay: false,
-      zIndex: 100,
-      dialog: false,
-
-      selectType: this.selectItemType,
-      itemTypes: [
-        { text: '景點', value: 0},
-        { text: '餐廳', value: 1},
-        { text: '旅館', value: 2},
-        { text: '租車', value: 3}
-        ],
     }
   },
   watch: {
@@ -254,10 +203,14 @@ module.exports = {
     timeline () {
       return this.events.slice().reverse()
     },
-    ...Vuex.mapState(['itemType', 'selectItemType'])
+    ...Vuex.mapState(["selectItemDialog"])
   },
 
   methods: {
+    openDialog () {
+      // this.count += 2
+      this.dialog = true
+    },
     comment () {
       const time = (new Date()).toTimeString()
       this.events.push({
@@ -282,7 +235,8 @@ module.exports = {
       //
       // this.input = null
       // this.overlay = ! this.overlay;
-      this.dialog = ! this.dialog;
+      // this.dialog = ! this.dialog;
+      this.$store.commit('toggleSelectItemDialog', true);
     },
     nextStep (n) {
       if (n === this.steps) {
@@ -291,19 +245,18 @@ module.exports = {
         this.e1 = n + 1
       }
     },
-    handleSelectItemType(){
-      console.log(this.selectType);
-      this.$store.commit('setSelectItemType', this.selectType);
 
-      this.$store.dispatch("initRegionsData");
-      this.$store.dispatch("initItemListData");
-    }
+
+
+    handleItemClick(id){
+      console.log(id);
+    },
   },
-
 };
 </script>
 <style>
 * {
   font-family: 'Noto Sans TC', sans-serif;
 }
+
 </style>

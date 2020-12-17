@@ -115,8 +115,8 @@ public class AttractionController {
 
         if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
 
-        pageSupport.setTotalSize(viewService.getSizeBySelect(keywords, region));
-        list = viewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, region, sortColumn, desc);
+        pageSupport.setTotalSize(viewService.getSizeBySelect(region, keywords));
+        list = viewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, sortColumn, desc);
 
 
         Map<String, Object> map = new HashMap<>();

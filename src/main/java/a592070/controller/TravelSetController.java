@@ -249,10 +249,11 @@ public class TravelSetController {
         }else if(type == 2){
             pageSupport.setTotalSize(hotelViewService.getSizeByKeyWords(keywords));
             list = hotelViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
-        }else if(type == 3){
-            pageSupport.setTotalSize(carViewService.getSizeByKeyWords(keywords));
-            list = carViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
         }
+//        else if(type == 3){
+//            pageSupport.setTotalSize(carViewService.getSizeByKeyWords(keywords));
+//            list = carViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
+//        }
 
         Map<String, Object> map = new HashMap<>();
         map.put("tableData", list);

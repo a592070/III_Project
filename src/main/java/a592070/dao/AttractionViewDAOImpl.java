@@ -103,71 +103,151 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
 
     @Override
     public int getSizeByKeywords(String keywords) {
-        keywords = "%"+keywords+"%";
+        Query<Long> query;
 
+        try {
+            int snKeyword = Integer.parseInt(keywords);
 
-        String hql = "select count(sn) from AttractionDO " +
-                "where " +
-                " ( str(sn) like :keyword or name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword ) ";
+            keywords = "%" + keywords + "%";
 
-        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keywords);
+            String hql = "select count(sn) from AttractionDO " +
+                    "where " +
+                    " ( sn like :snKeyword or name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword ) ";
 
+            query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("snKeyword", snKeyword);
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+            keywords = "%" + keywords + "%";
+
+            String hql = "select count(sn) from AttractionDO " +
+                    "where " +
+                    " ( name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword ) ";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+            query.setParameter("keyword", keywords);
+
+        }
         return query.uniqueResult().intValue();
     }
 
     @Override
     public int getSizeByKeywords(String keywords, boolean available) {
-        keywords = "%"+keywords+"%";
+        Query<Long> query;
 
-        String hql = "select count(sn) from AttractionDO " +
-                "where (status=:available) and " +
-                "( str(sn) like :keyword or name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword) ";
+        try {
+            int snKeyword = Integer.parseInt(keywords);
+            keywords = "%" + keywords + "%";
 
-        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keywords);
-        query.setParameter("available", available);
+            String hql = "select count(sn) from AttractionDO " +
+                    "where (status=:available) and " +
+                    "( sn like :snKeyword or name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword) ";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("snKeyword", snKeyword);
+            query.setParameter("available", available);
+        }catch (Exception e){
+            e.printStackTrace();
+            keywords = "%"+keywords+"%";
+
+            String hql = "select count(sn) from AttractionDO " +
+                    "where (status=:available) and " +
+                    "( name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword) ";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("available", available);
+        }
 
         return query.uniqueResult().intValue();
     }
 
     @Override
     public List<AttractionVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending) {
-        keywords = "%"+keywords+"%";
+        Query<AttractionVO> query;
 
-        String hql = "select vo from AttractionDO do , AttractionVO vo " +
-                "where (do.sn=vo.sn) and " +
-                "( str(do.sn) like :keyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                "order by vo."+orderFiled;
-        if(descending) hql += " desc";
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+        try {
+            int snKeyword = Integer.parseInt(keywords);
+            keywords = "%" + keywords + "%";
 
-        Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
-        query.setParameter("keyword", keywords);
+            String hql = "select vo from AttractionDO do , AttractionVO vo " +
+                    "where (do.sn=vo.sn) and " +
+                    "( do.sn like :snKeyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                    "order by vo."+orderFiled;
+            if(descending) hql += " desc";
+            if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
-        query.setFirstResult(firstIndex);
-        query.setMaxResults(resultSize);
+            query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("snKeyword", snKeyword);
+
+            query.setFirstResult(firstIndex);
+            query.setMaxResults(resultSize);
+        }catch (Exception e){
+            e.printStackTrace();
+            keywords = "%"+keywords+"%";
+
+            String hql = "select vo from AttractionDO do , AttractionVO vo " +
+                    "where (do.sn=vo.sn) and " +
+                    "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                    "order by vo."+orderFiled;
+            if(descending) hql += " desc";
+            if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
+            query.setParameter("keyword", keywords);
+
+            query.setFirstResult(firstIndex);
+            query.setMaxResults(resultSize);
+        }
 
         return query.list();
     }
 
     @Override
-    public List<AttractionVO> listByKeywords(int firstIndex, int resultSize, String keyword, String orderFiled, boolean descending, boolean available) {
-        keyword = "%"+keyword+"%";
+    public List<AttractionVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean available) {
+        Query<AttractionVO> query;
 
-        String hql = "select vo from AttractionDO do , AttractionVO vo " +
-                "where (do.status=:available) and (do.sn=vo.sn) and " +
-                "( str(do.sn) like :keyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                "order by vo."+orderFiled;
-        if(descending) hql += " desc";
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+        try {
+            int snKeyword = Integer.parseInt(keywords);
+            keywords = "%" + keywords + "%";
 
-        Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
-        query.setParameter("keyword", keyword);
-        query.setParameter("available", available);
+            String hql = "select vo from AttractionDO do , AttractionVO vo " +
+                    "where (do.status=:available) and (do.sn=vo.sn) and " +
+                    "( do.sn like :keyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                    "order by vo."+orderFiled;
+            if(descending) hql += " desc";
+            if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
-        query.setFirstResult(firstIndex);
-        query.setMaxResults(resultSize);
+            query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("snKeyword", snKeyword);
+            query.setParameter("available", available);
+
+            query.setFirstResult(firstIndex);
+            query.setMaxResults(resultSize);
+        }catch (Exception e){
+            e.printStackTrace();
+            keywords = "%"+keywords+"%";
+
+            String hql = "select vo from AttractionDO do , AttractionVO vo " +
+                    "where (do.status=:available) and (do.sn=vo.sn) and " +
+                    "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                    "order by vo."+orderFiled;
+            if(descending) hql += " desc";
+            if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("available", available);
+
+            query.setFirstResult(firstIndex);
+            query.setMaxResults(resultSize);
+        }
 
         return query.list();
     }
@@ -236,80 +316,178 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
 
     @Override
     public int getSizeBySelect(String region, String keywords) {
-        keywords = "%"+keywords+"%";
-        region = "%"+region+"%";
+        Query<Long> query;
 
+        try{
+            int snKeyword = Integer.parseInt(keywords);
 
-        String hql = "select count(sn) from AttractionDO " +
-                "where region like :region " +
-                "and ( str(sn) like :keyword or name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword ) ";
+            keywords = "%"+keywords+"%";
+            region = "%"+region+"%";
 
-        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keywords);
-        query.setParameter("region", region);
+            String hql = "select count(sn) from AttractionDO " +
+                    "where region like :region " +
+                    "and ( sn like :snKeyword or name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword ) ";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("snKeyword", snKeyword);
+            query.setParameter("region", region);
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+            keywords = "%"+keywords+"%";
+            region = "%"+region+"%";
+
+            String hql = "select count(sn) from AttractionDO " +
+                    "where region like :region " +
+                    "and ( name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword ) ";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("region", region);
+        }
 
         return query.uniqueResult().intValue();
     }
 
     @Override
     public int getSizeBySelect(String region, String keywords, boolean available) {
-        keywords = "%"+keywords+"%";
-        region = "%"+region+"%";
+        String hql;
+        Query<Long> query;
+        try{
+            int snKeyword = Integer.parseInt(keywords);
+
+            keywords = "%"+keywords+"%";
+            region = "%"+region+"%";
+
+            hql = "select count(sn) from AttractionDO " +
+                    "where (status=:available) and (region like :region) and " +
+                    "( sn like :snKeyword or name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword) ";
 
 
-        String hql = "select count(sn) from AttractionDO " +
-                "where (status=:available) and (region like :region) and " +
-                "( str(sn) like :keyword or name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword) ";
+            query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("snKeyword", snKeyword);
+            query.setParameter("region", region);
+            query.setParameter("available", available);
 
-        Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keywords);
-        query.setParameter("region", region);
-        query.setParameter("available", available);
+        }catch (Exception e){
+            e.printStackTrace();
 
+            keywords = "%"+keywords+"%";
+            region = "%"+region+"%";
+
+            hql = "select count(sn) from AttractionDO " +
+                    "where (status=:available) and (region like :region) and " +
+                    "( name like :keyword or toldescribe like :keyword or description like :keyword or address like :keyword or keywords like :keyword) ";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("region", region);
+            query.setParameter("available", available);
+        }
         return query.uniqueResult().intValue();
     }
 
     @Override
     public List<AttractionVO> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending) {
-        keywords = "%"+keywords+"%";
-        region = "%"+region+"%";
+        String hql;
+        Query<AttractionVO> query;
+        try {
+            int snKeyword = Integer.parseInt(keywords);
 
-        String hql = "select vo from AttractionDO do , AttractionVO vo " +
-                "where (do.sn=vo.sn) and (do.region like :region) and " +
-                "( str(do.sn) like :keyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                "order by vo."+orderFiled;
-        if(descending) hql += " desc";
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+            keywords = "%"+keywords+"%";
+            region = "%"+region+"%";
 
-        Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
-        query.setParameter("keyword", keywords);
-        query.setParameter("region", region);
+            hql = "select vo from AttractionDO do , AttractionVO vo " +
+                    "where (do.sn=vo.sn) and (do.region like :region) and " +
+                    "( do.sn like :snKeyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                    "order by vo."+orderFiled;
+            if(descending) hql += " desc";
+            if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
-        query.setFirstResult(firstIndex);
-        query.setMaxResults(resultSize);
+            query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("snKeyword", snKeyword);
+            query.setParameter("region", region);
+
+            query.setFirstResult(firstIndex);
+            query.setMaxResults(resultSize);
+        }catch (Exception e){
+            e.printStackTrace();
+
+            keywords = "%"+keywords+"%";
+            region = "%"+region+"%";
+            hql = "select vo from AttractionDO do , AttractionVO vo " +
+                    "where (do.sn=vo.sn) and (do.region like :region) and " +
+                    "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                    "order by vo."+orderFiled;
+            if(descending) hql += " desc";
+            if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("region", region);
+
+            query.setFirstResult(firstIndex);
+            query.setMaxResults(resultSize);
+        }
+
+
 
         return query.list();
     }
 
     @Override
     public List<AttractionVO> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending, boolean available) {
-        keywords = "%"+keywords+"%";
-        region = "%"+region+"%";
+        String hql;
 
-        String hql = "select vo from AttractionDO do , AttractionVO vo " +
-                "where (do.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
-                "( str(do.sn) like :keyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                "order by vo."+orderFiled;
-        if(descending) hql += " desc";
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+        Query<AttractionVO> query;
+        try {
+            int snKeyword = Integer.parseInt(keywords);
 
-        Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
-        query.setParameter("keyword", keywords);
-        query.setParameter("region", region);
-        query.setParameter("available", available);
+            keywords = "%"+keywords+"%";
+            region = "%"+region+"%";
 
-        query.setFirstResult(firstIndex);
-        query.setMaxResults(resultSize);
+            hql = "select vo from AttractionDO do , AttractionVO vo " +
+                    "where (do.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
+                    "( do.sn like :snKeyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                    "order by vo."+orderFiled;
+            if(descending) hql += " desc";
+            if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("snKeyword", snKeyword);
+            query.setParameter("region", region);
+            query.setParameter("available", available);
+
+            query.setFirstResult(firstIndex);
+            query.setMaxResults(resultSize);
+        }catch (Exception e){
+            e.printStackTrace();
+
+            keywords = "%"+keywords+"%";
+            region = "%"+region+"%";
+
+            hql = "select vo from AttractionDO do , AttractionVO vo " +
+                    "where (do.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
+                    "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
+                    "order by vo."+orderFiled;
+            if(descending) hql += " desc";
+            if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
+
+            query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
+            query.setParameter("keyword", keywords);
+            query.setParameter("region", region);
+            query.setParameter("available", available);
+
+            query.setFirstResult(firstIndex);
+            query.setMaxResults(resultSize);
+        }
+
+
 
         return query.list();
     }
