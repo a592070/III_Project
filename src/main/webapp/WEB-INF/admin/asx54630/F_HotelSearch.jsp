@@ -52,7 +52,7 @@
 		    						<hr>
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>&emsp;${hotels.REGION}</span> 
-		    							<span class="ml-auto"><a href="#">訂房去</a></span>
+		    							<span class="ml-auto"><a href="#" onclick="detailpage('${hotels.SN}')">訂房去</a></span>
 		    						</p>
 		    					</div>
 		    				</div>
