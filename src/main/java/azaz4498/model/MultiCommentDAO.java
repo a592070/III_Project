@@ -39,6 +39,8 @@ public class MultiCommentDAO {
 		MultiComment result =sessionFactory.getCurrentSession().get(MultiComment.class, id);
 		String op = result.getM_UserId();
 		if (result!=null && op.equals(userId)) {
+			result.getComment().getM_Comments().remove(result);
+			result.setComment(null);
 			sessionFactory.getCurrentSession().delete(result);
 			return true;
 		}else {
@@ -53,7 +55,7 @@ public class MultiCommentDAO {
 		String op =result.getM_UserId();
 		if (result!=null && userId.equals(op)) {
 			result.setM_Content(content);
-			sessionFactory.getCurrentSession().save(result);
+			sessionFactory.getCurrentSession().update(result);
 		}
 		
 		return result;

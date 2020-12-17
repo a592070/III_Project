@@ -99,7 +99,7 @@ public class Comment implements Serializable{
 		this.article = article;
 	}
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL , mappedBy = "comment")
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true , mappedBy = "comment")
 	public List<MultiComment> getM_Comments() {
 		return m_Comments;
 	}
