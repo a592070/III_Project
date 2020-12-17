@@ -100,7 +100,7 @@ body{
             <div class="row">
                 <div class="col-lg-8">
                     <div class="room-details-item">
-                        <img src="<%=pageContext.getServletContext().getContextPath()%>/HotelPic');" alt="">
+                        <img src="<%=application.getContextPath()%>/HotelPic" alt="">
                         <div class="rd-text">
                             <div class="rd-title">
                                 <h3>${hoteldetail.NAME}</h3>
