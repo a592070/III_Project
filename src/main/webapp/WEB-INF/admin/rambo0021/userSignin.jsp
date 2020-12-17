@@ -89,7 +89,7 @@
                   </div>
 
                   <input type="button" value="帶入資料" class="btn btn-light py-1 px-1" id="fastSignin1">
-
+                  <input type="button" value="帶入資料2" class="btn btn-light py-1 px-1" id="fastSignin3">
 
                 </form>
               </div>
@@ -151,11 +151,6 @@
           $('body,html').animate({ scrollTop: 700 }, 800);
 
 
-
-          var auth2 = gapi.auth2.getAuthInstance();
-          auth2.signOut().then(function () {
-            console.log('User signed out.');
-          });
 
 
         });
@@ -238,6 +233,7 @@
         })
         //google API login
         function onSignIn(googleUser) {
+            console.log("google")
           var profile = googleUser.getBasicProfile();
           var nickname = profile.getName();
           var imgUrl = profile.getImageUrl();
@@ -269,6 +265,11 @@
         $("#fastSignin2").click(function () {
           $("#fogetUsername").val("aaaaaa");
           $("#fogetEmail").val("iiiteam124@gmail.com");
+        })
+        $("#fastSignin3").click(function () {
+          $("#username").val("aaaaaa");
+          $("#password").val("aaaaaa");
+
         })
       </script>
 

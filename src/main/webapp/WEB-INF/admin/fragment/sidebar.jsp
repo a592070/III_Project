@@ -37,12 +37,35 @@
 
                 <!-- sidebar menu -->
                 <ul class="nav sidebar-inner" id="sidebar-menu">
+                    
                     <li class="has-sub">
-                        <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/accountPage">
+                        <a class="sidenav-item-link" role="button" href="javascript:void(0)" >
                             <i class="mdi mdi-view-dashboard-outline"></i>
-                            <span class="nav-text">用戶列表</span>
+                            <span class="nav-text">用戶管理</span>
                         </a>
+                        <ul id="order">
+                            <div class="sub-menu">
+
+
+                                <li>
+                                    <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/accountPage">
+                                        <span class="nav-text">用戶清單</span>
+                                    </a>
+                                </li>
+
+
+                                <li>
+                                    <a class="sidenav-item-link" href="${pageContext.servletContext.contextPath}/admin/chartPage">
+                                        <span class="nav-text">用戶報表</span>
+                                    </a>
+                                </li>
+
+                            </div>
+                        </ul>
+
                     </li>
+                    
+                    
 
 
                     <li class="has-sub">

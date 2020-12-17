@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rambo0021.dao.AccountDAO;
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.AccountChartView;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
 import rambo0021.pojo.Page;
+import rambo0021.pojo.RegisterMonthView;
 import rambo0021.pojo.Sort;
 
 @Transactional
@@ -130,6 +132,16 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public AccountBean checkGoogleLogin(String nickname, String imgUrl, String email) {
 		return dao.checkGoogleLogin(nickname,imgUrl,email);
+	}
+
+	@Override
+	public List<AccountChartView> getAccChart() {
+		return dao.getAccChart();
+	}
+
+	@Override
+	public List<RegisterMonthView> getMonChart() {
+		return dao.getMonChart();
 	}
 
 
