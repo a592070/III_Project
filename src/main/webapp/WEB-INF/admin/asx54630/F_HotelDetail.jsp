@@ -127,7 +127,7 @@ body{
 										$("#rating").prepend(tags, zerostar);
 										</script>
                                     </div>
-                                    <a href="#">Booking Now</a>
+                                    <a href="#">加入購物車</a>
                                 </div>
                             </div>
                             <table>
