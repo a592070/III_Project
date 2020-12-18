@@ -327,6 +327,99 @@ public class HighSpeedRailController {
     	out.println(str);
     	
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @RequestMapping(path = "/T_OrderShoppingCart", method = RequestMethod.POST)
+	public void processAction5(@ModelAttribute("userBean") AccountBean aBean, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException, IOException {
+		String snSchedule = request.getParameter("snSchedule");
+        
+        String startPoint = request.getParameter("startPoint");
+        
+        String destination = request.getParameter("destination");
+        int trafficPrice = highSpeedRailService.ticketPrice(startPoint, destination);
+        
+        String nums_days = request.getParameter("nums_days");
+        
+        String departureDate_tmp = request.getParameter("departureDate");
+        int[] departureDate = spiltDate(departureDate_tmp);
+        
+        String orderType = request.getParameter("orderType");
+        
+        String customerName = request.getParameter("customerName");
+        
+        String customerPhone = request.getParameter("customerPhone");
+
+//        System.out.println("snSchedule= "+snSchedule);
+//        System.out.println("startPoint= "+startPoint);
+//        System.out.println("destination= "+destination);
+//        System.out.println("trafficPrice= " +trafficPrice);
+//        System.out.println("nums_days= "+nums_days);
+//        System.out.println("departureDate_tmp= "+departureDate);
+//        System.out.println("departureDate= "+departureDate[0]+" "+departureDate[1]+" "+departureDate[2]);
+//        System.out.println("orderType= "+orderType);
+//        HttpSession session2 = request.getSession(false);	//使用者的資訊SESSION
+        
+		Set<T_Order_List> t_Order_Lists = new HashSet<T_Order_List>();
+//		OrderTable order_table = new OrderTable();
+		T_Order_List t_Order_List =new T_Order_List();
+		Timestamp ts = new Timestamp(System.currentTimeMillis()); //下訂單時間
+
+//		session.beginTransaction();
+
+//        AccountBean user = (AccountBean) session2.getAttribute("Login");	//之後要換的User
+//		AccountBean user = session.get(AccountBean.class, "abab");
+//		String userName = aBean.getUserName();
+//        AccountBean user = accountService.userDetail(userName);
+		HighSpeedRail highSpeedRail = highSpeedRailService.hsrDetail(BigDecimal.valueOf(Integer.parseInt(snSchedule)));
+//		order_table.setAccountBean(user);	//假裝user是ipip
+//		order_table.setOrder_date(ts);
+		t_Order_List.setHighSpeedRail(highSpeedRail);
+		t_Order_List.setTicketPrice(BigDecimal.valueOf(trafficPrice));	//之後要換BigDecimal.valueOf(trafficPrice)
+		t_Order_List.setNums_days(BigDecimal.valueOf(Integer.parseInt(nums_days)));	//之後要換BigDecimal.valueOf(Integer.parseInt(nums_days))
+		t_Order_List.setStartPoint(startPoint);	//之後要換startPoint
+		t_Order_List.setDestination(destination);	//之後要換destination
+		t_Order_List.setDeparatureDate(Timestamp.valueOf(LocalDate.of(departureDate[0], departureDate[1], departureDate[2]).atStartOfDay()));	//之後要換Timestamp.valueOf(LocalDate.of(departureDate[0], departureDate[1], departureDate[2]).atStartOfDay())
+		t_Order_List.setOrderType(orderType);	//之後要換orderType
+//		t_Order_List.setOrder_table(order_table);
+		t_Order_List.setCustomerName(customerName);	//之後要換customerName
+		t_Order_List.setCustomerPhone(customerPhone);	//之後要換customerPhone
+		t_Order_List.setT_status(1);
+		t_Order_List.setVersion(1);
+		
+		t_Order_Lists.add(t_Order_List);	//把t_Order_list裝進Set中
+		
+		
+		OrderTable OTBean = (OrderTable) session.getAttribute("OTBean");
+		Integer cartnum = (Integer) session.getAttribute("cartnum");
+		if(OTBean == null) {
+			OTBean = new OrderTable();
+			AccountBean userbean = aBean;
+			OTBean.setAccountBean(userbean);
+			cartnum = 0;
+		}
+		if(cartnum == null) {
+			cartnum = 0;
+		}
+		cartnum = cartnum + 1;
+		OTBean.setTotalPrice(OTBean.getTotalPrice().add(t_Order_List.getTicketPrice().multiply(t_Order_List.getNums_days())));
+		OTBean.addT_Order_Lists(t_Order_List);
+		session.setAttribute("OTBean", OTBean);
+		session.setAttribute("cartnum", cartnum);
+
+		System.out.println("--------------session.getAttribute(customerName)= "+session.getAttribute("OTBean"));
+
+		
+	}
+    
+    
 	
 	
     
