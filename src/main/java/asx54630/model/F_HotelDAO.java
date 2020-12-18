@@ -65,6 +65,11 @@ public class F_HotelDAO {
 		return session.get(Hotel.class, sn);
 	}
 	
-
+	public byte[] getPic(BigDecimal H_SN) {
+		Query query = sessionFactory.getCurrentSession().createQuery("select PIC from Hotel where SN = ?0");
+		query.setParameter(0, H_SN);
+		byte[] pic = (byte[]) query.uniqueResult();
+		return pic;
+	}
 	
 }

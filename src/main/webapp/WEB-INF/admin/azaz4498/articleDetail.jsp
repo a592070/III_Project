@@ -20,9 +20,7 @@
         h2 {
             font-family: 'Noto Sans TC', sans-serif;
         }
-        h3 {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
+        
         .fixed-btn {
           position: fixed;
           bottom: 20px;
@@ -118,7 +116,7 @@
               <ul class="comment-list">
 
                 <c:forEach var="comment" items="${commentList}" varStatus="status">
-                <li class="comment">
+                <li class="comment" >
                   <div class="vcard bio">
                     <img
                       src="../f_showUserPic/${comment.comUserId}"
@@ -137,12 +135,12 @@
                       ${comment.comContent}
                     </p>
                    
-                    <a href="javascript: void(0)" style="color:rgb(16, 141, 163);" class="com_edit">
+                    <a href="javascript: void(0)" style="color:rgb(16, 141, 163);" class="com_edit" id="com_edit${comment.comId}">
                       <i class="fas fa-pencil-alt float-left mr-2">
                         <span>編輯</span>
                       </i>
                     </a>
-                    <a href="javascript: void(0)" class="com_del">
+                    <a href="javascript: void(0)" class="com_del" id="com_del${comment.comId}">
                       
                       <i class="fas fa-trash-alt float-left ">
                         <span>刪除</span>
@@ -155,18 +153,18 @@
                   <c:forEach var="m_comment" items="${comment.m_Comments}">
                     <li class="comment">
                       <div class="comment-body" >
-                        <p class="sub_username"><strong>${m_comment.m_UserId}</strong></p>
+                        <h6 class="sub_username">${m_comment.m_UserId}</h6>
                         <div class="meta">${m_comment.m_Date}</div>
-                        <p>${m_comment.m_Content} </p>
-                        <a href="javascript: void(0)" style="color:rgb(16, 141, 163);" class="mtc_edit">
+                        <p>${m_comment.m_Content}</p>
+                        <a href="javascript: void(0)" style="color:rgb(16, 141, 163);" class="mtc_edit" id="sub_edit${m_comment.m_Id}">
                       
                           <i class="fas fa-pencil-alt float-left mr-2">
                             <span>編輯</span>
                           </i>
                         </a>
-                        <a href="javascript: void(0)" class="mtc_delete">
+                        <a href="javascript: void(0)" class="mtc_delete" id="sub_del${m_comment.m_Id}">
                           
-                          <i class="fas fa-trash-alt float-left ">
+                          <i class="fas fa-trash-alt float-left">
                             <span>刪除</span>
                           </i>
                         </a>
@@ -342,20 +340,48 @@
 $(document).ready(function () {
   var userid = $("#c_userId").val();
   var op = "${artBean.artUserId}";
+  var currUser ="${userBean.userName}"
+
+  $('.main_username').each(function(index){
+    var username=$(this).text().trim();
+    if(currUser!=username || currUser==null){
+      $(this).siblings('.com_del').hide();
+      $(this).siblings('.com_edit').hide();
+    }
+  })
+
+  $('.sub_username').each(function(index){
+    var sub_username = $(this).text().trim();
+    if(currUser!=sub_username||currUser==null){
+      $(this).siblings('.mtc_delete').hide();
+      $(this).siblings('.mtc_edit').hide();
+    }
+  })
+  
+  
   $("body,html").animate({ scrollTop: 750 }, 950);
   if (userid == op) {
     $("#edit_btn").show();
   } else {
     $("#edit_btn").hide();
   }
+  
+  var loginCheck= "${userBean.userName}";
+  if (loginCheck == null || loginCheck == ""){
+    $('.com_del').hide();
+    $('.com_edit').hide();
+    $('.mtc_del').hide();
+    $('.mte_edit').hide();
+  }
+
+
 });
 
 // 箭頭動畫
 
 $('.comment-list').on('click','.fa-angle-down',function(){
   if ($(this).hasClass("fa-flip-vertical")) {
-    $(this).removeClass("fa-flip-vertical");
-    console.log("remove");
+     $(this).removeClass("fa-flip-vertical");
   } else {
     $(this).addClass("fa-flip-vertical");
   }
@@ -368,6 +394,7 @@ $(window).scroll(function () {
   } else {
     $(".fixed-btn").hide();
   }
+
 });
 
 $(".comment-list").on("click", ".reply", function () {
@@ -408,19 +435,19 @@ $(".comment-list").on("click", ".reply", function () {
         $("#" + str).before(
           '<li class="comment">' +
             '<div class="comment-body">' +
-            '<p class="sub_username"><strong>' +
+            '<h6 class="sub_username">' +
             response.m_UserId +
-            "</strong></p>" +
+            "</h6>" +
             '<div class="meta">' +
             response.m_Date +
             "</div>" +
             "<p>" +
             response.m_Content +
             "</p>" +
-            '<a href="javascript: void(0)" style="color:rgb(16, 141, 163); class="mtc_edit">' +
+            '<a href="javascript: void(0)" class="mtc_edit" id="sub_edit'+response.m_Id+'"style="color:rgb(16, 141, 163);">' +
             '<i class="fas fa-pencil-alt float-left mr-2">' +
             "<span>編輯</span></i></a>" +
-            '<a href="javascript: void(0)" class="mtc_delete">' +
+            '<a href="javascript: void(0)" id="sub_del'+response.m_Id+'"class="mtc_delete">' +
             '<i class="fas fa-trash-alt float-left">' +
             "<span>刪除</span></i></a>" +
             "</div>" +
@@ -432,6 +459,155 @@ $(".comment-list").on("click", ".reply", function () {
     });
   }
 });
+
+$('.comment-list').on('click','.com_edit',function(){
+  var orgContent = $(this).prev('p').text().trim();
+  var $t = $(this).prev('p');
+  Swal.fire({
+    input:"textarea",
+    inputLabel:"編輯留言",
+    inputPlaceholder:"在此輸入內容...",
+    inputValue:orgContent,
+    showCancelButton:"true",
+    cancelButtonText:"取消",
+    confirmButtonText:"確認修改",
+    inputValidator:(value)=>{
+      if(!value){
+        return '請輸入內容!'
+      }
+    }
+    
+}).then((result)=>{
+  if(result.isConfirmed){
+    var str = $(this).attr('id');
+        var id = str.replace('com_edit','').trim();
+        var user = "${userBean.userName}".trim();
+        var newContent = result.value;
+        $.ajax({
+          type:'POST',
+          url:'../editComment',
+          data:{
+            content:newContent,
+            user:user,
+            id:id,
+          },
+          success:function(response){
+            $t.text(response.comContent);
+          }
+          })
+          Swal.fire('留言修改完成','','success')
+  }
+})
+})
+//多層留言編輯
+$('.comment-list').on('click','.mtc_edit',function(){
+  var orgContent = $(this).prev('p').text().trim();
+  var $t = $(this).prev('p');
+  Swal.fire({
+    input:"textarea",
+    inputLabel:"編輯留言",
+    inputPlaceholder:"在此輸入內容...",
+    inputValue:orgContent,
+    showCancelButton:"true",
+    cancelButtonText:"取消",
+    confirmButtonText:"確認修改",
+    inputValidator:(value)=>{
+      if(!value){
+        return '請輸入內容!'
+      }
+    }
+    
+}).then((result)=>{
+  if(result.isConfirmed){
+    var str = $(this).attr('id');
+        var id = str.replace('sub_edit','').trim();
+        var user = "${userBean.userName}".trim();
+        var newContent = result.value;
+        $.ajax({
+          type:'POST',
+          url:'../editMultiComment',
+          data:{
+            content:newContent,
+            user:user,
+            id:id,
+          },
+          success:function(response){
+            $t.text(response.m_Content);
+          }
+          })
+          Swal.fire('留言修改完成','','success')
+  }
+})
+
+})
+
+
+//大留言刪除
+$('.comment-list').on('click','.com_del',function(){
+
+  Swal.fire({
+      title: "確認刪除留言?",
+      text: "留言刪除後無法回復",
+      icon: "warning",
+      confirmButtonText: "確認",
+      showCancelButton: true,
+      cancelButtonText:"取消",
+    }).then((result)=>{
+      if(result.isConfirmed){
+        var user = "${userBean.userName}".trim();
+        var str = $(this).attr('id');
+        var com_Id = str.replace('com_del','').trim();
+        var $t = $(this).closest('li');
+        $.ajax({
+          type:'POST',
+          url:'../deleteComment/'+com_Id,
+          data:{user: user},
+          success:function(response){
+            if(response){
+              $t.remove();
+            }else{
+              alert('刪除失敗');
+            }
+          }
+        })
+        Swal.fire('留言已刪除','','success')
+      }
+    })
+})
+//多層留言刪除
+$('.comment-list').on('click','.mtc_delete',function(){
+
+
+  Swal.fire({
+      title: "確認刪除留言?",
+      text: "留言刪除後無法回復",
+      icon: "warning",
+      confirmButtonText: "確認",
+      showCancelButton: true,
+      cancelButtonText:"取消",
+    }).then((result)=>{
+      if(result.isConfirmed){
+        var user = "${userBean.userName}".trim();
+        var str = $(this).attr('id');
+        var mtc_Id = str.replace('sub_del','').trim();
+        console.log(mtc_Id);
+        var $t = $(this).closest('li');
+        $.ajax({
+          type:'POST',
+          url:'../deleteMultiComment/'+mtc_Id,
+          data:{user: user},
+          success:function(response){
+            if(response){
+              $t.remove();
+            }else{
+              alert('刪除失敗');
+            }
+          }
+        })
+        Swal.fire('留言已刪除','','success')
+      }
+    })
+})
 
 $("#post_btn").on("click", function (event) {
   event.preventDefault();
@@ -488,9 +664,9 @@ $("#post_btn").on("click", function (event) {
             "<p>" +
             response.comContent +
             "</p>" +
-            '<a href="javascript: void(0)" class="com_edit" style="color:rgb(16, 141, 163);">' +
+            '<a href="javascript: void(0)" id="com_edit'+response.comId+'"class="com_edit" style="color:rgb(16, 141, 163);">' +
             '<i class="fas fa-pencil-alt float-left mr-2"><span>編輯</span></i></a>' +
-            '<a href="javascript: void(0) class="com_edit">' +
+            '<a href="javascript: void(0) class="com_del" id="com_del'+response.comId+'">' +
             '<i class="fas fa-trash-alt float-left "> <span>刪除</span></i></a>' +
             "</div>" +
             "<div class='collapse' id='collapse" +
@@ -525,7 +701,7 @@ $("#post_btn").on("click", function (event) {
   }
 });
 
-    </script>
+  </script>
     
     <script>
     function checkLogin(){

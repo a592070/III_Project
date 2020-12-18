@@ -67,25 +67,26 @@ public class ArticleController {
 	//文章頁面
 	@RequestMapping(path = {"/article/{artId}" ,"/typeSearch/article/{artId}"}, method = RequestMethod.GET)
 	public String articlePreview(Model m, @PathVariable(name = "artId") Integer artId) throws SQLException {
-		List<Article> recentArticles = articleService.showRecentArticles();
-		List<Comment> commentList = commentService.showCommentsByArticle(artId);
-		List<String> coverPicList = articleService.getCoverPicList(recentArticles);
-//		Map<Integer, List<MultiComment>> multiCommentMap = articleService.getMultiCommentMap(commentList);
 		AccountBean account = (AccountBean) m.getAttribute("userBean");
-		
 		Article currArticle =articleService.showArticleById(artId);
-		m.addAttribute("artBean",currArticle);
-		m.addAttribute("commentList", commentList);
-		m.addAttribute("recentArt", recentArticles);
-		m.addAttribute("recentArtPic", coverPicList);
-//		m.addAttribute("multiCommentMap",multiCommentMap);
-		m.addAttribute("typeCount", articleService.getTypeCount());
-		m.addAttribute("userBean", account);
-		
-//		System.err.println(multiCommentMap);
-		
-		return "azaz4498/articleDetail";
-
+		if (currArticle==null) {
+			m.addAttribute("userBean", account);
+			return "azaz4498/errorPage";
+		}else if ((currArticle.getArtStatus()).equals("disabled")) {
+			m.addAttribute("userBean", account);
+			return "azaz4498/errorPage";
+		}else {
+			List<Article> recentArticles = articleService.showRecentArticles();
+			List<Comment> commentList = commentService.showCommentsByArticle(artId);
+			List<String> coverPicList = articleService.getCoverPicList(recentArticles);
+			m.addAttribute("artBean",currArticle);
+			m.addAttribute("commentList", commentList);
+			m.addAttribute("recentArt", recentArticles);
+			m.addAttribute("recentArtPic", coverPicList);
+			m.addAttribute("typeCount", articleService.getTypeCount());
+			m.addAttribute("userBean", account);
+			return "azaz4498/articleDetail";
+		}
 	}
 
 	// 文章列表

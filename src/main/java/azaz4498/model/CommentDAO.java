@@ -58,6 +58,8 @@ public class CommentDAO {
 			Article article2 =  sessionFactory.getCurrentSession().get(Article.class, articleId);
 			int commNum = article2.getArtCommNum();
 			article2.setArtCommNum(commNum - 1);
+			result.getArticle().getComments().remove(result);
+			result.setArticle(null);
 			 sessionFactory.getCurrentSession().save(article2);
 			 sessionFactory.getCurrentSession().delete(result);
 			return true;
@@ -70,11 +72,9 @@ public class CommentDAO {
 		Comment result =  sessionFactory.getCurrentSession().get(Comment.class, commentId);
 		String op = result.getComUserId();
 		if (result != null && userid.equals(op)) {
-			Query<Comment> query =  sessionFactory.getCurrentSession().createQuery("update Comment set COM_CONTENT=?1 where COM_ID=?2",
-					Comment.class);
-			query.setParameter(1, content);
-			query.setParameter(2, commentId);
-			query.executeUpdate();
+			result.setComContent(content);
+			sessionFactory.getCurrentSession().update(result);
+			
 		}
 		return result;
 

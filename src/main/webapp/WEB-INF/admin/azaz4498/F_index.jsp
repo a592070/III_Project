@@ -125,7 +125,7 @@ h2 {
 								<c:forEach var="article" items="${artBean}">
 									<tr>
 										<td>${article.artId}</td>
-										<td><a class="text-dark" href=""> ${article.artTitle}</a></td>
+										<td><a class="text-dark" href="${pageContext.servletContext.contextPath}/article/${article.artId}"> ${article.artTitle}</a></td>
 										<td>${article.artCreTime}</td>
 										<td><a class="text-dark" href="">${article.artUserId}</a></td>
 										<td>${article.articleType.typeName}</td>
