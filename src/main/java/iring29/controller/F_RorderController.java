@@ -276,6 +276,8 @@ public class F_RorderController {
 		OrderTable otBean = (OrderTable) session.getAttribute("otBean");
 		Set<R_Order_List> res_lists = otBean.getR_Order_Lists();
 		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();
+		Set<T_Order_List> t_Order_Lists = otBean.getT_Order_Lists();
+		BigDecimal totalPrice = otBean.getTotalPrice();
 		//send mail
 //		for(R_Order_List r : res_lists) {  
 //			//send mail
@@ -290,6 +292,9 @@ public class F_RorderController {
 
 		session.setAttribute("res_lists", res_lists);
 		session.setAttribute("hotel_lists", hotel_lists);
+		session.setAttribute("t_Order_Lists", t_Order_Lists);
+		session.setAttribute("totalPrice", totalPrice);
+
 		return "iring29/OrderDetail";
 	}
 	

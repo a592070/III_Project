@@ -26,7 +26,7 @@ public class T_Order_List {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private BigDecimal t_sn_order;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SN_SCHEDULE")
 	private HighSpeedRail highSpeedRail;
 
