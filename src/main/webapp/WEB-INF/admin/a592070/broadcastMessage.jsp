@@ -11,6 +11,7 @@
 <head>
     <title>Broadcast Message</title>
 
+    <c:import url="/WEB-INF/admin/fragment/vuetity_css.jsp" />
     <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
 
 

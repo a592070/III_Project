@@ -45,16 +45,24 @@ public interface ViewService<T> {
 
 
     int getSizeByKeyWords(String keywords);
-    int getSizeByKeyWords(String keywords, String region);
     int getSizeByKeyWordsWithStatus(String keywords, boolean available);
-    int getSizeByKeyWordsWithStatus(String keywords, String region, boolean available);
+
 
     List<T> listByKeyWords(int currentPage, int pageSize, String keywords);
-    List<T> listByKeyWords(int currentPage, int pageSize, String keywords, String region);
-    List<T> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled);
-    List<T> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending);
+    List<T> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled);
+    List<T> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled, boolean descending);
     List<T> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available);
-    List<T> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region);
-    List<T> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region, String orderFiled);
-    List<T> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region, String orderFiled, boolean descending);
+    List<T> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String orderFiled);
+    List<T> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String orderFiled, boolean descending);
+
+
+    int getSizeBySelect(String region, String keywords);
+    int getSizeBySelectWithStatus(String region, String keywords, boolean available);
+
+    List<T> listBySelect(int currentPage, int pageSize, String region, String keywords);
+    List<T> listBySelect(int currentPage, int pageSize, String region, String keywords, String orderFiled);
+    List<T> listBySelect(int currentPage, int pageSize, String region, String keywords, String orderFiled, boolean descending);
+    List<T> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available);
+    List<T> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available, String orderFiled);
+    List<T> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available, String orderFiled, boolean descending);
 }

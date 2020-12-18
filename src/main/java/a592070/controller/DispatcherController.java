@@ -44,8 +44,13 @@ public class DispatcherController {
 
 
     @RequestMapping("/attraction/index")
-    public String fontIndex(){
+    public String fontAttractionIndex(){
         return "a592070/font/attractionInfo";
+    }
+
+    @RequestMapping("/travelSet/index")
+    public String fontTravelSeyIndex(){
+        return "a592070/font/travelSetInfo";
     }
 
 

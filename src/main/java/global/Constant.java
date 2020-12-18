@@ -25,6 +25,8 @@ public class Constant {
     public static final String ATTRACTION_PIC_URL = ASSETS_URL+"/attraction";
     public static final String ATTRACTION_PIC_PATH = WEB_INF_PATH + ATTRACTION_PIC_URL;
 
+    public static final String TRAVEL_SET_RESTAURANT_PIC = "/travelSet/pic/1/";
+    public static final String TRAVEL_SET_HOTEL_PIC = "/travelSet/pic/2/";
 
 
     public static final String CHATROOM_CLIENTS = "chatRoomClients";

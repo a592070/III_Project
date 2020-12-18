@@ -3,6 +3,7 @@ package a592070.service;
 import a592070.dao.CarViewDAOImpl;
 import a592070.dao.ViewDAO;
 import a592070.fieldenum.CarFieldName;
+import static a592070.fieldenum.CarFieldName.*;
 import a592070.pojo.AttractionVO;
 import a592070.pojo.CarVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
 
     @Override
     public List<CarVO> list(int currentPage, int pageSize) {
-        return list(currentPage, pageSize, CarFieldName.CAR_ID);
+        return list(currentPage, pageSize, CAR_ID);
     }
 
     @Override
@@ -80,15 +81,11 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
         return list(currentPage, pageSize, orderFiled, descending);
     }
 
-    @Override
-    public int getSizeByKeyWords(String keywords) {
-        return getSizeByKeyWords(keywords, "");
-    }
 
     @Override
-    public int getSizeByKeyWords(String keywords, String region) {
-        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return getSize();
-        return viewDAO.getSizeByKeywords(keywords, "");
+    public int getSizeByKeyWords(String keywords) {
+        if(StringUtil.isEmpty(keywords)) return getSize();
+        return viewDAO.getSizeByKeywords(keywords);
     }
 
     @Override
@@ -96,51 +93,86 @@ public class CarViewServiceImpl implements ViewService<CarVO>{
         return getSizeByKeyWords(keywords);
     }
 
-    @Override
-    public int getSizeByKeyWordsWithStatus(String keywords, String region, boolean available) {
-        return getSizeByKeyWords(keywords, region);
-    }
+
+
 
     @Override
     public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords) {
-        return listByKeyWords(currentPage, pageSize, keywords, "", CarFieldName.CAR_ID);
+        return listByKeyWords(currentPage, pageSize, keywords, CAR_ID);
     }
 
     @Override
-    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region) {
-        return listByKeyWords(currentPage, pageSize, keywords, region, CarFieldName.CAR_ID);
-    }
-
-    @Override
-    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
-        return listByKeyWords(currentPage, pageSize, keywords, region, orderFiled, false);
+    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled) {
+        return listByKeyWords(currentPage, pageSize, keywords, orderFiled, false);
     }
     @Override
-    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
-        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return list(currentPage, pageSize, orderFiled, descending);
+    public List<CarVO> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled, boolean descending) {
+        if(StringUtil.isEmpty(keywords)) return list(currentPage, pageSize, orderFiled, descending);
         int index = (currentPage-1)*pageSize;
-        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled, descending);
+        return viewDAO.listByKeywords(index, pageSize, keywords, orderFiled, descending);
     }
 
     @Override
     public List<CarVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available) {
-        return listByKeyWords(currentPage, pageSize, keywords);
+        return listByKeyWordsWithStatus(currentPage, pageSize, keywords, available, CAR_ID);
     }
 
     @Override
-    public List<CarVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region) {
-        return listByKeyWords(currentPage, pageSize, keywords, region);
+    public List<CarVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String orderFiled) {
+        return listByKeyWordsWithStatus(currentPage, pageSize, keywords, available, orderFiled, false);
     }
 
     @Override
-    public List<CarVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region, String orderFiled) {
-        return listByKeyWords(currentPage, pageSize, keywords, region, orderFiled);
+    public List<CarVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String orderFiled, boolean descending) {
+        return listByKeyWords(currentPage, pageSize, keywords, orderFiled, descending);
+    }
+
+
+    @Override
+    public int getSizeBySelect(String region, String keywords) {
+        if(StringUtil.isEmpty(keywords)) return getSize();
+        if(StringUtil.isEmpty(region)) return getSize();
+        return getSizeByKeyWords(keywords);
     }
 
     @Override
-    public List<CarVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region, String orderFiled, boolean descending) {
-        return listByKeyWords(currentPage, pageSize, keywords, region, orderFiled, descending);
+    public int getSizeBySelectWithStatus(String region, String keywords, boolean available) {
+        if(StringUtil.isEmpty(keywords)) return getSize();
+        if(StringUtil.isEmpty(region)) return getSize();
+        return getSizeByKeyWords(keywords);
     }
+
+    @Override
+    public List<CarVO> listBySelect(int currentPage, int pageSize, String region, String keywords) {
+        return listBySelect(currentPage, pageSize, region, keywords, CAR_ID);
+    }
+
+    @Override
+    public List<CarVO> listBySelect(int currentPage, int pageSize, String region, String keywords, String orderFiled) {
+        return listBySelect(currentPage, pageSize, region, keywords, orderFiled, false);
+    }
+
+    @Override
+    public List<CarVO> listBySelect(int currentPage, int pageSize, String region, String keywords, String orderFiled, boolean descending) {
+        return listByKeyWords(currentPage, pageSize, keywords, orderFiled, descending);
+    }
+
+    @Override
+    public List<CarVO> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available) {
+        return listBySelectWithStatus(currentPage, pageSize, region, keywords, available, CAR_ID);
+    }
+
+    @Override
+    public List<CarVO> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available, String orderFiled) {
+        return listBySelectWithStatus(currentPage, pageSize, region, keywords, available, orderFiled, false);
+    }
+
+    @Override
+    public List<CarVO> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available, String orderFiled, boolean descending) {
+        return listByKeyWords(currentPage, pageSize, keywords, orderFiled, descending);
+    }
+
+
 
 
     /**

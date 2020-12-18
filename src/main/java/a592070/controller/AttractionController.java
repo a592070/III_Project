@@ -22,6 +22,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * 後台controller
+ */
+
 @RestController
 @Lazy
 public class AttractionController {
@@ -111,8 +115,8 @@ public class AttractionController {
 
         if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
 
-        pageSupport.setTotalSize(viewService.getSizeByKeyWords(keywords, region));
-        list = viewService.listByKeyWords(pageSupport.getCurrentPage(), pageSupport.getPageSize(), keywords, region, sortColumn, desc);
+        pageSupport.setTotalSize(viewService.getSizeBySelect(region, keywords));
+        list = viewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, sortColumn, desc);
 
 
         Map<String, Object> map = new HashMap<>();
