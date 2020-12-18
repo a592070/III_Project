@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.AccountChartView;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
+import rambo0021.pojo.RegisterMonthView;
 import rambo0021.pojo.Sort;
 import utils.IOUtils;
 
@@ -315,6 +317,21 @@ public class AccountDAOImpl implements AccountDAO {
 		accountBean.setRegister(new Date());
 		sessionFactory.getCurrentSession().save(accountBean);
 		return accountBean;
+	}
+
+	@Override
+	public List<AccountChartView> getAccChart() {
+		Session session = sessionFactory.getCurrentSession();
+		String hql="From AccountChartView";
+		
+		return session.createQuery(hql, AccountChartView.class).list();
+	}
+
+	@Override
+	public List<RegisterMonthView> getMonChart() {
+		Session session = sessionFactory.getCurrentSession();
+		String hql="From RegisterMonthView order by month";		
+		return session.createQuery(hql,RegisterMonthView.class).list();
 	}
 
 }

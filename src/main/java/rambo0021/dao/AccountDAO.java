@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.AccountChartView;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
 import rambo0021.pojo.Page;
+import rambo0021.pojo.RegisterMonthView;
 import rambo0021.pojo.Sort;
 
 public interface AccountDAO {
@@ -34,4 +36,6 @@ public interface AccountDAO {
 	String updateUser(String username, String password, String email, String nickName);
 	String forgetPwd(String username, String email);
 	AccountBean checkGoogleLogin(String nickname, String imgUrl, String email);
+	List<AccountChartView> getAccChart();
+	List<RegisterMonthView> getMonChart();
 }
