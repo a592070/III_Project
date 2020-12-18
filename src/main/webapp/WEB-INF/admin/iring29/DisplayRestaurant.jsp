@@ -117,6 +117,12 @@ button#order {
 .room-booking form button {
     font-size: 16px;
     }
+button#order.databtn {
+    background: lightgray;
+    border: lightgrey;
+    padding-left: 50px;
+}
+
 </style>
 </head>
 <body>
