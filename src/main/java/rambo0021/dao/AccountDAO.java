@@ -38,4 +38,5 @@ public interface AccountDAO {
 	AccountBean checkGoogleLogin(String nickname, String imgUrl, String email);
 	List<AccountChartView> getAccChart();
 	List<RegisterMonthView> getMonChart();
+	String initHotelImg();
 }
