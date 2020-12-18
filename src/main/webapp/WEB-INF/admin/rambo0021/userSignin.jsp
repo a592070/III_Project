@@ -88,8 +88,9 @@
                     </p>
                   </div>
 
-                  <input type="button" value="帶入資料" class="btn btn-light py-1 px-1" id="fastSignin1">
-                  <input type="button" value="帶入資料2" class="btn btn-light py-1 px-1" id="fastSignin3">
+                  <input type="button" value="註冊資料" class="btn btn-light py-1 px-1" id="fastSignin1">
+                  <input type="button" value="登入資料" class="btn btn-light py-1 px-1" id="fastSignin3">
+                  <input type="button" value="禁用測試" class="btn btn-light py-1 px-1" id="fastSignin4">
 
                 </form>
               </div>
@@ -263,14 +264,20 @@
 
         })
         $("#fastSignin2").click(function () {
-          $("#fogetUsername").val("aaaaaa");
+          $("#fogetUsername").val("rambo3388");
           $("#fogetEmail").val("iiiteam124@gmail.com");
         })
         $("#fastSignin3").click(function () {
-          $("#username").val("aaaaaa");
-          $("#password").val("aaaaaa");
+          $("#username").val("rambo3388");
+          $("#password").val("rambo3388");
 
         })
+        $("#fastSignin4").click(function () {
+          $("#username").val("iiiEEIT124");
+          $("#password").val("iiiEEIT124");
+
+        })
+
       </script>
 
       </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DirEngine - Free Bootstrap 4 Template by Colorlib</title>
+    <title>找交通</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
@@ -21,7 +21,12 @@
   </head>
   <body>
 	<c:import url="/WEB-INF/admin/fragment/nav.jsp" />
-
+  <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
 
     
     <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/qBul5jw.jpg');">
@@ -42,7 +47,7 @@
         <div class="row">
         	<div class="col-lg-3 sidebar">
         		<div class="sidebar-wrap bg-light ftco-animate">
-        			<h3 class="heading mb-4">Find City</h3>
+        			<h3 class="heading mb-4">訂車票</h3>
         			<form id="formId">
         				<div class="fields">
 
@@ -138,7 +143,8 @@
   <div class="modal-dialog" style="width:1000px">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">確認購票</h5>
+        <button type="button" class="btn btn-secondary" id="abc">帶入資料</button>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -215,8 +221,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="ccc">取消</button>
+        <button type="button" class="btn btn-primary" id="shoppingCart">加入購物車</button>
       </div>
     </div>
   </div>
@@ -334,7 +340,33 @@
                         console.log(table.rows[0].cells[0].innerHTML);
 
 
-                        $('#ajaxTable').DataTable();
+                        $('#ajaxTable').DataTable({
+                          language: {
+                            "lengthMenu": "顯示 _MENU_ 筆資料",
+                            "sProcessing": "處理中...",
+                            "sZeroRecords": "没有匹配结果",
+                            "sInfo": "目前有 _MAX_ 筆資料",
+                            "sInfoEmpty": "目前共有 0 筆紀錄",
+                            "sInfoFiltered": " ",
+                            "sInfoPostFix": "",
+                            "sSearch": "尋找:",
+                            "sUrl": "",
+                            "sEmptyTable": "尚未有資料紀錄存在",
+                            "sLoadingRecords": "載入資料中...",
+                            "sInfoThousands": ",",
+                            "oPaginate": {
+                                "sFirst": "首頁",
+                                "sPrevious": "上一頁",
+                                "sNext": "下一頁",
+                                "sLast": "末頁"
+                            },
+                            "order": [[0, "desc"]],
+                            "oAria": {
+                                "sSortAscending": ": 以升序排列此列",
+                                "sSortDescending": ": 以降序排列此列"
+                            }
+                          }
+                        });
                      },
 
                      //Ajax失敗後要執行的function，此例為印出錯誤訊息
@@ -469,9 +501,9 @@
                             tableData += "</tr>";
                             tableData2 += "<tr>";
                             tableData2 += "<td>" + "" + "</td>" +
-                                          "<td>" + "姓名:"+'<input type="text" class="customerName" value="">' + "</td>"+
+                                          "<td>" + "姓名:"+'<input type="text" class="customerName" value="" id="haha1">' + "</td>"+
                                           "<td>" + "" + "</td>" +
-                                          "<td>" + "電話:"+'<input type="text" class="customerName" value="">' + "</td>";
+                                          "<td>" + "電話:"+'<input type="text" class="customerName" value="" id="haha2">' + "</td>";
                             tableData2 += "</tr>";
 
 
@@ -742,7 +774,144 @@
 
 
 
+
+            $('#abc').on('click', function() {
+              $('#haha1').val("王曉明");
+              $('#haha2').val("0915574215");
+            })
             
+
+            $('#shoppingCart').on('click', function() {
+              
+
+
+                //console.log(index);
+                var table = document.getElementById('ajaxTable3');
+                var table2 = document.getElementById('ajaxTable2');
+
+                console.log("---------snSchedule= " + snSchedule);
+                var startPoint = table.rows[1].cells[2].innerHTML;
+                var destination = table.rows[1].cells[3].innerHTML;
+                var nums_days = table.rows[1].cells[6].innerHTML;
+                var departureDate = table.rows[1].cells[1].innerHTML;
+                var customerName = table2.rows[1].cells[1].children[0].value;
+                var customerPhone = table2.rows[1].cells[3].children[0].value;
+                // console.log(customerName);
+                //console.log(table.rows[1].cells[8].children[0].value);
+
+
+              if(destination==="南港站")
+                destination="nangang";
+              else if(destination==="台北站")
+                destination="taipei";
+              else if(destination==="板橋站")
+                destination="banqiao";
+              else if(destination==="桃園站")
+                destination="taoyuan";
+              else if(destination==="新竹站")
+                destination="hsinchu";
+              else if(destination==="苗栗站")
+                destination="miaoli";
+              else if(destination==="台中站")
+                destination="taichung";
+              else if(destination==="彰化站")
+                destination="changhua";
+              else if(destination==="雲林站")
+                destination="yunlin";
+              else if(destination==="嘉義站")
+                destination="chiayi";
+              else if(destination==="台南站")
+                destination="tainan";
+              else if(destination==="左營站")
+                destination="zuoying";
+
+
+              if(startPoint==="南港站")
+                startPoint="nangang";
+              else if(startPoint==="台北站")
+                startPoint="taipei";
+              else if(startPoint==="板橋站")
+                startPoint="banqiao";
+              else if(startPoint==="桃園站")
+                startPoint="taoyuan";
+              else if(startPoint==="新竹站")
+                startPoint="hsinchu";
+              else if(startPoint==="苗栗站")
+                startPoint="miaoli";
+              else if(startPoint==="台中站")
+                startPoint="taichung";
+              else if(startPoint==="彰化站")
+                startPoint="changhua";
+              else if(startPoint==="雲林站")
+                startPoint="yunlin";
+              else if(startPoint==="嘉義站")
+                startPoint="chiayi";
+              else if(startPoint==="台南站")
+                startPoint="tainan";
+              else if(startPoint==="左營站")
+                startPoint="zuoying";
+
+
+                $.ajax({
+
+                     type:"POST",                    //指定http參數傳輸格式為POST
+
+                     url: "T_OrderShoppingCart",        //請求目標的url，可在url內加上GET參數，如 www.xxxx.com?xx=yy&xxx=yyy
+
+                     data: {
+                        //  "snSchedule" : '"' + snSchedule +'"' 
+                        "snSchedule" :  snSchedule,
+                        "startPoint" : startPoint,
+                        "destination" : destination,
+                        "nums_days" : nums_days,
+                        "departureDate" : departureDate,
+                        "orderType" : 0,
+                        "customerName" : customerName,
+                        "customerPhone" : customerPhone
+                     }, //要傳給目標的data為id=formId的Form其序列化(serialize)為的值，之
+
+                                                     //內含有name的物件value
+
+                     dataType: "json",               //目標url處理完後回傳的值之type，此列為一個JSON Object
+
+                     success : function(response){
+
+                        //  console.log(response["check"]);
+                        //  console.log(response["check"] === "fail")
+                        //  if(response["check"] === "fail"){
+                            // window.location="showT_Order.controller";
+                        //  }else if(response["check"] === "success"){
+                        //      window.location="\orderSuccessPage.html";
+                        //  }
+
+                     },
+
+                     //Ajax失敗後要執行的function，此例為印出錯誤訊息
+
+                     error:function(xhr, ajaxOptions, thrownError){
+
+                         console.log(xhr.status+"\n"+thrownError);
+                     }
+
+                 });
+
+
+
+
+
+
+
+
+
+                $(".nav-shop__circle").html('${cartnum}'+1);
+            //     console.log($(".nav-shop__circle").val());
+            // 	   console.log("num");
+
+              $('#ccc').click();
+              
+            })
+
+
      </script>
     
 
