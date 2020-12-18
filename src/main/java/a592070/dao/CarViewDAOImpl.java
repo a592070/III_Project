@@ -64,31 +64,31 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
-    public int getSizeByKeywords(String keyWords, String region) {
-        keyWords = "%"+keyWords+"%";
+    public int getSizeByKeywords(String keywords) {
+        keywords = "%"+keywords+"%";
 
         String hql = "select count(sn) from CarVO where str(sn) like :keyword or carType like :keyword or company like :keyword";
 
         Query<Long> query = sessionFactory.getCurrentSession().createQuery(hql, Long.class);
-        query.setParameter("keyword", keyWords);
+        query.setParameter("keyword", keywords);
 
         return query.uniqueResult().intValue();
     }
 
     @Override
-    public int getSizeByKeywords(String keyWords, String region, boolean available) {
-        return getSizeByKeywords(keyWords, region);
+    public int getSizeByKeywords(String keywords, boolean available) {
+        return getSizeByKeywords(keywords);
     }
 
     @Override
-    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending){
-        keyWords = "%"+keyWords+"%";
+    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending){
+        keywords = "%"+keywords+"%";
 
         String hql = "from CarVO where str(sn) like :keyword or carType like :keyword or company like :keyword order by "+orderFiled;
         if(descending) hql += " desc";
 
         Query<CarVO> query = sessionFactory.getCurrentSession().createQuery(hql, CarVO.class);
-        query.setParameter("keyword", keyWords);
+        query.setParameter("keyword", keywords);
         query.setFirstResult(firstIndex);
         query.setMaxResults(resultSize);
 
@@ -96,8 +96,8 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     }
 
     @Override
-    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keyWords, String region, String orderFiled, boolean descending, boolean available) {
-        return listByKeywords(firstIndex, resultSize, keyWords, region, orderFiled, descending);
+    public List<CarVO> listByKeywords(int firstIndex, int resultSize, String keywords, String orderFiled, boolean descending, boolean available) {
+        return listByKeywords(firstIndex, resultSize, keywords, orderFiled, descending);
     }
 
     @Override
@@ -131,6 +131,28 @@ public class CarViewDAOImpl implements ViewDAO<CarVO>{
     @Override
     public List<CarVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending, boolean available) {
         return listByFiled(firstIndex, resultSize, filedName, filedValue, orderFiled, descending);
+    }
+
+
+    // db no region column
+    @Override
+    public int getSizeBySelect(String region, String keywords) {
+        return getSizeByKeywords(keywords);
+    }
+
+    @Override
+    public int getSizeBySelect(String region, String keywords, boolean available) {
+        return getSizeByKeywords(keywords);
+    }
+
+    @Override
+    public List<CarVO> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending) {
+        return listByKeywords(firstIndex, resultSize, keywords, orderFiled, descending);
+    }
+
+    @Override
+    public List<CarVO> listBySelect(int firstIndex, int resultSize, String region, String keywords, String orderFiled, boolean descending, boolean available) {
+        return listByKeywords(firstIndex, resultSize, keywords, orderFiled, descending);
     }
 
     @Override

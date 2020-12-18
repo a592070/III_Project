@@ -4,6 +4,7 @@ import a592070.dao.ViewDAO;
 import a592070.fieldenum.HotelFieldName;
 import static a592070.fieldenum.HotelFieldName.*;
 import a592070.pojo.HotelVO;
+import asx54630.model.Hotel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,63 +130,101 @@ public class HotelViewServiceImpl implements ViewService<HotelVO>{
 
     @Override
     public int getSizeByKeyWords(String keywords) {
-        return getSizeByKeyWords(keywords, "");
+        if(StringUtil.isEmpty(keywords)) return getSize();
+        return viewDAO.getSizeByKeywords(keywords);
     }
-    @Override
-    public int getSizeByKeyWords(String keywords, String region) {
-        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return getSize();
-        return viewDAO.getSizeByKeywords(keywords, region);
-    }
+
 
     @Override
     public int getSizeByKeyWordsWithStatus(String keywords, boolean available) {
-        return getSizeByKeyWordsWithStatus(keywords, "", available);
-    }
-
-    @Override
-    public int getSizeByKeyWordsWithStatus(String keywords, String region, boolean available) {
-        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return getSizeWithStatus(available);
-        return viewDAO.getSizeByKeywords(keywords, region, available);
+        if(StringUtil.isEmpty(keywords)) return getSizeWithStatus(available);
+        return viewDAO.getSizeByKeywords(keywords, available);
     }
 
     @Override
     public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords) {
-        return listByKeyWords(currentPage, pageSize, keywords, "", HOTEL_ID);
+        return listByKeyWords(currentPage, pageSize, keywords, HOTEL_ID);
     }
     @Override
-    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region) {
-        return listByKeyWords(currentPage, pageSize, keywords, region, HOTEL_ID);
+    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled) {
+        return listByKeyWords(currentPage, pageSize, keywords, orderFiled, false);
     }
     @Override
-    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled) {
-        return listByKeyWords(currentPage, pageSize, keywords, region, orderFiled, false);
-    }
-    @Override
-    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String region, String orderFiled, boolean descending) {
-        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return list(currentPage, pageSize, orderFiled, descending);
+    public List<HotelVO> listByKeyWords(int currentPage, int pageSize, String keywords, String orderFiled, boolean descending) {
+        if(StringUtil.isEmpty(keywords)) return list(currentPage, pageSize, orderFiled, descending);
         int index = (currentPage-1)*pageSize;
-        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled, descending);
+        return viewDAO.listByKeywords(index, pageSize, keywords, orderFiled, descending);
     }
+
 
     @Override
     public List<HotelVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available) {
-        return listByKeyWordsWithStatus(currentPage, pageSize, keywords, available, "");
+        return listByKeyWordsWithStatus(currentPage, pageSize, keywords, available, HOTEL_ID);
     }
 
     @Override
-    public List<HotelVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region) {
-        return listByKeyWordsWithStatus(currentPage, pageSize, keywords, available, "", HOTEL_ID);
+    public List<HotelVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String orderFiled) {
+        return listByKeyWordsWithStatus(currentPage, pageSize, keywords, available, HOTEL_ID, false);
     }
 
     @Override
-    public List<HotelVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region, String orderFiled) {
-        return listByKeyWordsWithStatus(currentPage, pageSize, keywords, available, "", HOTEL_ID, false);
-    }
-
-    @Override
-    public List<HotelVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String region, String orderFiled, boolean descending) {
-        if(StringUtil.isEmpty(keywords) || "".equals(keywords)) return listWithStatus(currentPage, pageSize, available, orderFiled, descending);
+    public List<HotelVO> listByKeyWordsWithStatus(int currentPage, int pageSize, String keywords, boolean available, String orderFiled, boolean descending) {
+        if(StringUtil.isEmpty(keywords)) return listWithStatus(currentPage, pageSize, available, orderFiled, descending);
         int index = (currentPage-1)*pageSize;
-        return viewDAO.listByKeywords(index, pageSize, keywords, region, orderFiled, descending, available);
+        return viewDAO.listByKeywords(index, pageSize, keywords, orderFiled, descending, available);
     }
+
+    @Override
+    public int getSizeBySelect(String region, String keywords) {
+        if(StringUtil.isEmpty(region)) return getSizeByKeyWords(keywords);
+        if(StringUtil.isEmpty(keywords)) return getSizeByRegion(region);
+        return viewDAO.getSizeBySelect(region, keywords);
+    }
+
+    @Override
+    public int getSizeBySelectWithStatus(String region, String keywords, boolean available) {
+        if(StringUtil.isEmpty(region)) return getSizeByKeyWordsWithStatus(keywords, available);
+        if(StringUtil.isEmpty(keywords)) return getSizeByRegionWithStatus(region, available);
+        return viewDAO.getSizeBySelect(region, keywords, available);
+    }
+
+    @Override
+    public List<HotelVO> listBySelect(int currentPage, int pageSize, String region, String keywords) {
+        return listBySelect(currentPage, pageSize, region, keywords, HOTEL_ID);
+    }
+
+    @Override
+    public List<HotelVO> listBySelect(int currentPage, int pageSize, String region, String keywords, String orderFiled) {
+        return listBySelect(currentPage, pageSize, region, keywords, orderFiled, false);
+    }
+
+    @Override
+    public List<HotelVO> listBySelect(int currentPage, int pageSize, String region, String keywords, String orderFiled, boolean descending) {
+        if(StringUtil.isEmpty(region)) return listByKeyWords(currentPage, pageSize, keywords, orderFiled, descending);
+        if(StringUtil.isEmpty(keywords)) return listByRegion(currentPage, pageSize, region, orderFiled, descending);
+
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listBySelect(index, pageSize, region, keywords, orderFiled, descending);
+    }
+
+    @Override
+    public List<HotelVO> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available) {
+        return listBySelectWithStatus(currentPage, pageSize, region, keywords, available, HOTEL_ID);
+    }
+
+    @Override
+    public List<HotelVO> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available, String orderFiled) {
+        return listBySelectWithStatus(currentPage, pageSize, region, keywords, available, orderFiled, false);
+    }
+
+    @Override
+    public List<HotelVO> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available, String orderFiled, boolean descending) {
+        if(StringUtil.isEmpty(region)) return listByKeyWordsWithStatus(currentPage, pageSize, keywords, available, orderFiled, descending);
+        if(StringUtil.isEmpty(keywords)) return listByRegionWithStatus(currentPage, pageSize, region, available, orderFiled, descending);
+
+        int index = (currentPage-1)*pageSize;
+        return viewDAO.listBySelect(index, pageSize, region, keywords, orderFiled, descending, available);
+    }
+
+
 }

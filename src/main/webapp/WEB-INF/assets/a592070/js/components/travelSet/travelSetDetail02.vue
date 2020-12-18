@@ -200,54 +200,54 @@
       </el-tab-pane>
 
 
-      <el-tab-pane label="租車規劃" >
-        <el-form :model="currentEditTravelSetDetail.travelSetCars" ref="travelSetDetailCars">
-          <template v-for="(item, index) in currentEditTravelSetDetail.travelSetCars.data">
-            <el-row>
-              <el-col :span="4">
-                <el-form-item label="編號:" :prop="'.data.'+index+'.sn'" :label-width="formLabelWidth">
-                  <el-input v-model="item.sn" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="4">
-                <el-form-item label="ID:" :prop="'.data.'+index+'.car.sn'" :label-width="formLabelWidth">
-                  <el-input v-model="item.car.sn" @focus="selectTravelSetItemID(item, index, 3)"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="4">
-                <el-form-item label="名稱:" :prop="'.data.'+index+'.car.name'" :label-width="formLabelWidth">
-                  <el-input v-model="item.car.name" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="2" ></el-col>
-              <el-col :span="8">
-                <el-form-item label="預定時間:" :prop="'.data.'+index+'.time'" :label-width="formLabelWidth">
-                  <el-date-picker
-                      v-model="item.time"
-                      type="datetime"
-                      align="center">
-                  </el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col :span="2">
-                <el-button type="danger" icon="el-icon-minus"
-                    @click.prevent="removeTravelSetFormItem(currentEditTravelSetDetail.travelSetCars.data, item)">
-                  删 除
-                </el-button>
-              </el-col>
-            </el-row>
-          </template>
-          <el-form-item :label-width="formLabelWidth">
-            <el-button type="primary" icon="el-icon-plus"
-                @click="addTravelSetFormItem(currentEditTravelSetDetail.travelSetCars.data, 3)">
-              新 增
-            </el-button>
-            <el-button type="warning" icon="el-icon-refresh-left"
-                       v-on:click="resetTravelSetForm('travelSetDetailCars')">重 置
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
+<!--      <el-tab-pane label="租車規劃" >-->
+<!--        <el-form :model="currentEditTravelSetDetail.travelSetCars" ref="travelSetDetailCars">-->
+<!--          <template v-for="(item, index) in currentEditTravelSetDetail.travelSetCars.data">-->
+<!--            <el-row>-->
+<!--              <el-col :span="4">-->
+<!--                <el-form-item label="編號:" :prop="'.data.'+index+'.sn'" :label-width="formLabelWidth">-->
+<!--                  <el-input v-model="item.sn" disabled></el-input>-->
+<!--                </el-form-item>-->
+<!--              </el-col>-->
+<!--              <el-col :span="4">-->
+<!--                <el-form-item label="ID:" :prop="'.data.'+index+'.car.sn'" :label-width="formLabelWidth">-->
+<!--                  <el-input v-model="item.car.sn" @focus="selectTravelSetItemID(item, index, 3)"></el-input>-->
+<!--                </el-form-item>-->
+<!--              </el-col>-->
+<!--              <el-col :span="4">-->
+<!--                <el-form-item label="名稱:" :prop="'.data.'+index+'.car.name'" :label-width="formLabelWidth">-->
+<!--                  <el-input v-model="item.car.name" disabled></el-input>-->
+<!--                </el-form-item>-->
+<!--              </el-col>-->
+<!--              <el-col :span="2" ></el-col>-->
+<!--              <el-col :span="8">-->
+<!--                <el-form-item label="預定時間:" :prop="'.data.'+index+'.time'" :label-width="formLabelWidth">-->
+<!--                  <el-date-picker-->
+<!--                      v-model="item.time"-->
+<!--                      type="datetime"-->
+<!--                      align="center">-->
+<!--                  </el-date-picker>-->
+<!--                </el-form-item>-->
+<!--              </el-col>-->
+<!--              <el-col :span="2">-->
+<!--                <el-button type="danger" icon="el-icon-minus"-->
+<!--                    @click.prevent="removeTravelSetFormItem(currentEditTravelSetDetail.travelSetCars.data, item)">-->
+<!--                  删 除-->
+<!--                </el-button>-->
+<!--              </el-col>-->
+<!--            </el-row>-->
+<!--          </template>-->
+<!--          <el-form-item :label-width="formLabelWidth">-->
+<!--            <el-button type="primary" icon="el-icon-plus"-->
+<!--                @click="addTravelSetFormItem(currentEditTravelSetDetail.travelSetCars.data, 3)">-->
+<!--              新 增-->
+<!--            </el-button>-->
+<!--            <el-button type="warning" icon="el-icon-refresh-left"-->
+<!--                       v-on:click="resetTravelSetForm('travelSetDetailCars')">重 置-->
+<!--            </el-button>-->
+<!--          </el-form-item>-->
+<!--        </el-form>-->
+<!--      </el-tab-pane>-->
     </el-tabs>
 
     <div>
@@ -323,16 +323,17 @@ module.exports = {
             name: ''
           }
         });
-      }else if(type == 3){
-        this.currentEditTravelSetDetail.travelSetCars.data.push({
-          sn: 0,
-          time: Date.now(),
-          car: {
-            sn: 0,
-            name: ''
-          }
-        });
       }
+      // else if(type == 3){
+      //   this.currentEditTravelSetDetail.travelSetCars.data.push({
+      //     sn: 0,
+      //     time: Date.now(),
+      //     car: {
+      //       sn: 0,
+      //       name: ''
+      //     }
+      //   });
+      // }
       let last = items.length-1;
       this.$store.commit('setCurrentTravelSetDetail', this.currentEditTravelSetDetail);
       this.selectTravelSetItemID(items[last], last, type);

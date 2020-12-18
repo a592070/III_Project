@@ -31,7 +31,7 @@ const store = new Vuex.Store({
             travelSetAttractions: {data: []},
             travelSetRestaurants: {data: []},
             travelSetHotels: {data: []},
-            travelSetCars: {data: []}
+            // travelSetCars: {data: []}
         },
         currentEditTravelSetSelectItem: {
             sn: 0,
@@ -108,12 +108,13 @@ const store = new Vuex.Store({
                 state.currentEditTravelSetDetail.travelSetHotels.data[i].hotel.name = data.name;
 
                 console.log(state.currentEditTravelSetDetail.travelSetHotels.data[i].hotel);
-            }else if(state.selectItemData.type == 3){
-                state.currentEditTravelSetDetail.travelSetCars.data[i].car.sn = data.sn;
-                state.currentEditTravelSetDetail.travelSetCars.data[i].car.name = data.name;
-
-                console.log(state.currentEditTravelSetDetail.travelSetCars.data[i].car);
             }
+            // else if(state.selectItemData.type == 3){
+            //     state.currentEditTravelSetDetail.travelSetCars.data[i].car.sn = data.sn;
+            //     state.currentEditTravelSetDetail.travelSetCars.data[i].car.name = data.name;
+            //
+            //     console.log(state.currentEditTravelSetDetail.travelSetCars.data[i].car);
+            // }
         },
         initTravelSteDetail(state){
             state.currentEditTravelSetDetail = {
@@ -129,7 +130,7 @@ const store = new Vuex.Store({
                 travelSetAttractions: {data: []},
                 travelSetRestaurants: {data: []},
                 travelSetHotels: {data: []},
-                travelSetCars: {data: []}
+                // travelSetCars: {data: []}
             }
         },
         initSelectItemData(state){
@@ -147,15 +148,15 @@ const store = new Vuex.Store({
                         travelSetAttractions: {
                             data: response.data.travelSetAttractions
                         },
-                        travelSetCars: {
-                            data: response.data.travelSetCars
-                        },
                         travelSetHotels: {
                             data: response.data.travelSetHotels
                         },
                         travelSetRestaurants: {
                             data: response.data.travelSetRestaurants
                         }
+                        // ,travelSetCars: {
+                        //     data: response.data.travelSetCars
+                        // },
                     }
 
                     state.commit("setCurrentTravelSetDetail", tmp);
@@ -166,9 +167,10 @@ const store = new Vuex.Store({
             let params = {
                 travelSetInfo: JSON.stringify(data.travelSetInfo),
                 travelSetAttractions: JSON.stringify(data.travelSetAttractions.data),
-                travelSetCars: JSON.stringify(data.travelSetCars.data),
                 travelSetHotels: JSON.stringify(data.travelSetHotels.data),
-                travelSetRestaurants: JSON.stringify(data.travelSetRestaurants.data)};
+                travelSetRestaurants: JSON.stringify(data.travelSetRestaurants.data),
+                // travelSetCars: JSON.stringify(data.travelSetCars.data)
+            };
             return axios({
                 method: 'put',
                 url: url,
@@ -181,15 +183,15 @@ const store = new Vuex.Store({
                         travelSetAttractions: {
                             data: response.data.travelSetAttractions
                         },
-                        travelSetCars: {
-                            data: response.data.travelSetCars
-                        },
                         travelSetHotels: {
                             data: response.data.travelSetHotels
                         },
                         travelSetRestaurants: {
                             data: response.data.travelSetRestaurants
-                        }
+                        },
+                        // travelSetCars: {
+                        //     data: response.data.travelSetCars
+                        // },
                     }
 
                     state.commit("setCurrentTravelSetDetail", tmp);

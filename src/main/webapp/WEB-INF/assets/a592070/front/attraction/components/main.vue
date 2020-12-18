@@ -39,21 +39,7 @@
                 ></v-text-field>
                 <template v-if="$vuetify.breakpoint.mdAndUp">
                   <v-spacer></v-spacer>
-<!--                  <v-select-->
-<!--                      v-model="selectRegion"-->
-<!--                      flat-->
-<!--                      solo-inverted-->
-<!--                      hide-details-->
-<!--                      :items="regions"-->
-<!--                      prepend-inner-icon="mdi-magnify"-->
-<!--                      label="Region"-->
-<!--                      @change="handleSelectedRegion(selectRegion)"-->
-<!--                  >-->
-<!--                    <template v-slot:prepend-item>-->
-<!--                      <v-list-item disabled :value="null">&#45;&#45;請選擇&#45;&#45;</v-list-item>-->
-<!--                      <v-list-item :value="'all'">全部</v-list-item>-->
-<!--                    </template>-->
-<!--                  </v-select>-->
+
                   <el-select v-model="selectRegion" placeholder="選擇地區" @change="handleSelectedRegion(selectRegion)">
                     <el-option label="--請選擇--" disabled :value="null"></el-option>
                     <el-option v-for="ele in regions" v-bind:key="ele" :value="ele" ></el-option>
@@ -64,76 +50,6 @@
             </template>
 
             <template v-slot:default="props">
-<!--              <v-container style="height: 100vh; overflow:auto">-->
-<!--                <el-scrollbar style="height: 100%;">-->
-<!--                  <v-row v-infinite-scroll="load">-->
-<!--                  <v-col-->
-<!--                    v-for="item in props.items"-->
-<!--                    :key="item.name"-->
-<!--                    cols="12"-->
-<!--                    sm="6"-->
-<!--                    md="4"-->
-<!--                    lg="3"-->
-<!--                >-->
-<!--                  <v-card>-->
-<!--                    <v-card-title class="subheading font-weight-bold">-->
-<!--                      {{ item.name }}-->
-<!--                    </v-card-title>-->
-
-<!--                    <v-divider></v-divider>-->
-
-<!--                    <v-list dense>-->
-<!--                      <v-list-item-->
-<!--                          v-for="(key, index) in filteredRegions"-->
-<!--                          :key="index"-->
-<!--                      >-->
-<!--                        <v-list-item-content :class="{ 'blue&#45;&#45;text': sortBy === key }">-->
-<!--                          {{ key }}:-->
-<!--                        </v-list-item-content>-->
-<!--                        <v-list-item-content-->
-<!--                            class="align-end"-->
-<!--                            :class="{ 'blue&#45;&#45;text': sortBy === key }"-->
-<!--                        >-->
-<!--                          {{ item[key.toLowerCase()] }}-->
-<!--                        </v-list-item-content>-->
-<!--                      </v-list-item>-->
-<!--                    </v-list>-->
-<!--                  </v-card>-->
-<!--                </v-col>-->
-<!--              </v-row>-->
-<!--                </el-scrollbar>-->
-<!--              </v-container>-->
-<!--              <v-card>-->
-<!--                <template v-for="(beer, index) in beers">-->
-<!--                  <v-layout-->
-<!--                      :key="index"-->
-<!--                      @click=""-->
-<!--                  >-->
-<!--                    <v-flex xs5>-->
-<!--                      <v-img-->
-<!--                          :src="beer.img"-->
-<!--                          height="125px"-->
-<!--                          contain-->
-<!--                      ></v-img>-->
-<!--                    </v-flex>-->
-<!--                    <v-flex xs7>-->
-<!--                      <v-card-title primary-title>-->
-<!--                        <div>-->
-<!--                          <div class="headline" v-html="beer.name"></div>-->
-<!--                          <div v-html="beer.tagline"></div>-->
-<!--                        </div>-->
-<!--                      </v-card-title>-->
-<!--                    </v-flex>-->
-<!--                  </v-layout>-->
-<!--                </template>-->
-<!--                <div v-if="beers.length === 0">-->
-<!--                  <v-progress-circular-->
-<!--                      indeterminate-->
-<!--                      color="primary"-->
-<!--                      class="bottom"-->
-<!--                  />-->
-<!--                </div>-->
-<!--              </v-card>-->
 
                 <v-container style="height: 100vh; overflow:auto">
                   <el-scrollbar style="height: 100%;" ref="scrollbar">
@@ -180,14 +96,6 @@
                                   text-color="#ff9900"
                                   score-template="{value}">
                               </el-rate>
-<!--                              <p class="rate">-->
-<!--                                <i class="icon-star"></i>-->
-<!--                                <i class="icon-star"></i>-->
-<!--                                <i class="icon-star"></i>-->
-<!--                                <i class="icon-star"></i>-->
-<!--                                <i class="icon-star-o"></i>-->
-<!--                                <span>8 Rating</span>-->
-<!--                              </p>-->
                               <p>{{item.description}}</p>
                               <hr>
                               <p class="bottom-area d-flex">
@@ -225,54 +133,6 @@
           </v-row>
         </v-container>
 
-<!--        <v-container class="ma-7 pa-5" >-->
-<!--          <v-row>-->
-<!--          <v-spacer></v-spacer>-->
-<!--          <v-col md="10" :align="'center'" style="height: 100vh; overflow:auto">-->
-
-<!--          <el-scrollbar style="height: 100%;">-->
-<!--            <ul class="align-center" v-infinite-scroll="load" style="padding-right: 10% ;">-->
-<!--              <li v-for="i in count" type="none">-->
-<!--                <div class="row">-->
-<!--                  <div class="col-md-6 col-lg-3" v-for="index in 4">-->
-<!--                    <div class="destination">-->
-
-<!--                      <div class="img img-2 d-flex justify-content-center align-items-center">-->
-<!--                        <el-image-->
-<!--                            :src="images[0]"-->
-<!--                            :preview-src-list="images">-->
-<!--                        </el-image>-->
-<!--                      </div>-->
-
-
-<!--                      <div class="text p-3">-->
-<!--                        <h3><a href="#">Luxury Restaurant</a></h3>-->
-<!--                        <p class="rate">-->
-<!--                          <i class="icon-star"></i>-->
-<!--                          <i class="icon-star"></i>-->
-<!--                          <i class="icon-star"></i>-->
-<!--                          <i class="icon-star"></i>-->
-<!--                          <i class="icon-star-o"></i>-->
-<!--                          <span>8 Rating</span>-->
-<!--                        </p>-->
-<!--                        <p>Far far away, behind the word mountains, far from the countries</p>-->
-<!--                        <hr>-->
-<!--                        <p class="bottom-area d-flex">-->
-<!--                          <span><i class="icon-map-o"></i> San Franciso, CA</span>-->
-<!--                          <span class="ml-auto">-->
-<!--                          <a type="button" @click="$vuetify.goTo(toDetailInfo, options)">Discover</a></span>-->
-<!--                        </p>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </el-scrollbar>-->
-<!--          </v-col>-->
-<!--          <v-spacer></v-spacer>-->
-<!--          </v-row>-->
-<!--        </v-container>-->
       </div>
     </v-container>
 
@@ -332,12 +192,7 @@ module.exports = {
     return {
       isActive: true,
       barHeight: '100%',
-      images: [
-          context+'/assets/attraction/1/179ac12b-892f-355d-8f6a-17b605ec7894.jpg',
-          context+'/assets/attraction/1/08299ea3-9700-317d-b8c5-dd9de05ff5ca.jpg',
-          context+'/assets/attraction/1/ceff9e32-2c81-3176-9415-7ade0c9a0719.jpg',
-      ],
-      count: 0,
+
       detailImage: false,
       show: true,
       scrollFlag: false,
