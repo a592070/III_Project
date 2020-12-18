@@ -67,6 +67,12 @@ public class F_RestaurantDAO {
 			return (R_Order_List) query.uniqueResult();
 		}
 		
+		public R_Order_List findRlist(BigDecimal r_id) {
+			Query query = sessionFactory.getCurrentSession().createQuery("from R_Order_List where r_sn =?0", R_Order_List.class);
+			query.setParameter(0, r_id);
+			return (R_Order_List) query.uniqueResult();
+		}
+		
 		//get pic
 		public byte[] getPic(BigDecimal r_sn) {
 			Query query = sessionFactory.getCurrentSession().createQuery("select pic from Restaurant_VO where r_sn = ?0");

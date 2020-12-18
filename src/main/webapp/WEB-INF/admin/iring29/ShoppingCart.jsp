@@ -343,7 +343,7 @@ h5{
 								<h5 class="deposit" id="deposit${R.restaurant.r_sn}">${R.deposit}</h5>
 							</td>
 							<td class="col-sm-1 col-md-1">
-								<button type="button" class="btn btn-danger" onclick="remove${R.restaurant.r_sn}(), totalprice(), sumprice()">
+								<button type="button" class="btn btn-danger" onclick="remove${R.restaurant.r_sn}(), totalprice()">
 									<span class="glyphicon glyphicon-remove"></span>移除
 								</button>
 							</td>
@@ -449,6 +449,7 @@ h5{
 					                        dataType: 'json',
 					                        success:function(response){
 						                        console.log(response);
+						                        $("#sumPrice").html(response);
 					                        }
 					                    }
 					                )

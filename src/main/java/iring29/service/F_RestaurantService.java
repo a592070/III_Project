@@ -91,5 +91,10 @@ public class F_RestaurantService {
 	public R_Order_List findR_sn(Integer r_id) {
 		return f_RDao.findR_sn(r_id); 
 	}
+	
+	@Transactional
+	public R_Order_List findRlist(BigDecimal r_id) {
+		return f_RDao.findRlist(r_id);
+	}
 }
 

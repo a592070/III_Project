@@ -182,6 +182,7 @@ public class F_RorderController {
 		String content = "謝謝您的訂購！  Fun Taiwan訂單編號為"+ otBean.getOrder_id() + "<br>";
 		String Hotel = "<br>";
 		String Restaurant = "<br>";
+		String Trans = "<br>";
 		String urlDisplay = "Fun Taiwan";
 		String url = "/FunTaiwan";
 		if(otBean.getHotelOrder().size() > 0 ) {
@@ -196,7 +197,14 @@ public class F_RorderController {
 						"<br>訂位者姓名：" + r.getCus_name() + "<br>訂位者電話：" + r.getCus_phone() + "<br>金額為：" + r.getDeposit();
 			}
 		}
-		content = content + Hotel + Restaurant;
+		
+		if(otBean.getT_Order_Lists().size() > 0) {
+			for(T_Order_List t : otBean.getT_Order_Lists()) {  
+				Restaurant += "<br>交通訂單號為：" + t.getT_sn_order() + "<br>車次為：" + t.getHighSpeedRail().getIdHSR() + "<br>訂位姓名：" + t.getCustomerName()+
+						"<br>訂位者電話：" + t.getCustomerPhone()+ "<br>金額為：" + t.getTicketPrice().multiply(t.getNums_days());
+			}
+		}
+		content = content + Hotel + Restaurant + Trans;
 		
 		sendMail.asyncSend(email, title, content,urlDisplay, url, session);
 		
@@ -278,17 +286,6 @@ public class F_RorderController {
 		Set<HotelOrder> hotel_lists = otBean.getHotelOrder();
 		Set<T_Order_List> t_Order_Lists = otBean.getT_Order_Lists();
 		BigDecimal totalPrice = otBean.getTotalPrice();
-		//send mail
-//		for(R_Order_List r : res_lists) {  
-//			//send mail
-//			String email = otBean.getAccountBean().getEmail(); 
-//			String title = "Fun x Taiwan";  
-//			String content = "謝謝您訂購" + r.getRestaurant().getName() + "<br>訂單編號為"+ r.getId() + "<br>也歡迎點選下方連結留下您的寶貴建議";  
-//			String urlDisplay = "對"+r.getRestaurant().getName()+"留下您的評價";
-//			String url = "/reviewrestaurant/"+r.getRestaurant().getR_sn()+"/"+r.getId();
-//			sendMail.asyncSend(email, title, content, urlDisplay, url , session); 
-//			
-//		}
 
 		session.setAttribute("res_lists", res_lists);
 		session.setAttribute("hotel_lists", hotel_lists);
@@ -310,13 +307,20 @@ public class F_RorderController {
 		Integer cartnum = (Integer) session.getAttribute("cartnum");
 		cartnum = cartnum - 1;
 		System.out.println("sn = " + r_sn);
+		Set<R_Order_List> Rlists = OTBean.getR_Order_Lists();
+		for(R_Order_List r : Rlists) {
+			if(r.getRestaurant().getR_sn().equals(r_sn)) {
+				OTBean.setTotalPrice(OTBean.getTotalPrice().subtract(r.getDeposit()));
+			}
+		}
 		OTBean.getR_Order_Lists().removeIf(ele->{
 			return r_sn.equals(ele.getRestaurant().getR_sn());
 		});
-
+		
 		session.setAttribute("OTBean", OTBean);
+		System.out.println("total price = " + OTBean.getTotalPrice());
 		session.setAttribute("cartnum", cartnum);
-		return "remove";
+		return OTBean.getTotalPrice().toString();
 	}
 	
 	@RequestMapping(path = "/checkTable")
