@@ -903,6 +903,10 @@
 
 
 
+                $(".nav-shop__circle").html('${cartnum}'+1);
+            //     console.log($(".nav-shop__circle").val());
+            // 	   console.log("num");
+
               $('#ccc').click();
               
             })
