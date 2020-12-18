@@ -178,7 +178,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                       </div>
                     </div>
                     <h2 class="mb-3" id="p_title">文章標題</h2>
-                    <div class="col-md-8 ftco-animate ck-content" id="p_content" style="width: 800px;">
+                    <div class="ftco-animate ck-content" id="p_content" style="width: 800px;">
 
                     </div>
                       
@@ -223,6 +223,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/Forum_ref.jsp" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <!--開始滑-->
     <script>
       $(document).ready(function(){
@@ -264,17 +265,58 @@ contentType="text/html;charset=UTF-8" language="java"%>
         
 
         if(title==null||title==''){
-          alert("請填寫文章標題");
+          Swal.fire({
+            title:'請填寫文章標題',
+            icon:'warning',
+            confirmButtonText:"好"
+          })
+
           $('#title').focus();
         }else if(type==null||type=='選擇類型'){
-          alert('請選擇文章類型')
+          Swal.fire({
+            title:'請選擇文章類型',
+            icon:'warning',
+            confirmButtonText:"好"
+          })
           $("#typeSelect").focus();
         }else if(content==null||content==''){
-          alert('請輸入文章內容');
+          Swal.fire({
+            title:'請輸入文章內容',
+            icon:'warning',
+            confirmButtonText:"好"
+          })
           editor.editing.view.focus();
         }
         else{
-          setTimeout(function(){$('#f_newArticle').submit()},3000);
+          let timerInterval
+          Swal.fire({
+            title:'文章發布成功!',
+            html:'將在<b> </b>秒後跳轉',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen:()=>{
+              Swal.showLoading()
+              timerInterval=setInterval(()=>{
+                const swcontent = Swal.getContent()
+                if(swcontent){
+                  const b = swcontent.querySelector('b')
+                  if(b){
+                    b.textContent = Math.round((Swal.getTimerLeft())/1000)
+                  }
+                }
+              },100)
+            },
+            willClose:()=>{
+              clearInterval(timerInterval)
+            }
+          }).then((result)=>{
+            if(result.dismiss===Swal.DismissReason.timer){
+              $('#f_newArticle').submit()
+            }
+
+          })
+
+          
           
           
         }

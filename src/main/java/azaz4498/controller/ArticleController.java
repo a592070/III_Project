@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import azaz4498.model.Article;
 import azaz4498.model.Comment;
@@ -85,6 +86,9 @@ public class ArticleController {
 			m.addAttribute("recentArtPic", coverPicList);
 			m.addAttribute("typeCount", articleService.getTypeCount());
 			m.addAttribute("userBean", account);
+			System.out.println("=========");
+			System.out.println(coverPicList);
+			System.out.println("=========");
 			return "azaz4498/articleDetail";
 		}
 	}
@@ -177,11 +181,21 @@ public class ArticleController {
 	@RequestMapping(path = "/edit.controller", method = RequestMethod.POST)
 	public String Edit(@RequestParam(name = "title") String title,
 			@RequestParam(name = "content") String content, @RequestParam(name = "artId") Integer articleId,
-			@RequestParam(name = "userId") String userid, @RequestParam(name = "typeSelect") Integer typeId, Model m)
+			@RequestParam(name = "userId") String userid, @RequestParam(name = "typeSelect") Integer typeId,Model m,RedirectAttributes attr)
 			throws SQLException {
 		AccountBean account = (AccountBean) m.getAttribute("userBean");
-		articleService.articleEdit(title, content, articleId, account.getUserName(), typeId);
-		m.addAttribute("artBean", articleService.showArticleById(articleId));
+		m.addAttribute("userBean",account);
+		Article article = articleService.articleEdit(title, content, articleId, account.getUserName(), typeId);
+		Integer artId = article.getArtId();
+		List<Article> recentArticles = articleService.showRecentArticles();
+		List<Comment> commentList = commentService.showCommentsByArticle(artId);
+		List<String> coverPicList = articleService.getCoverPicList(recentArticles);
+		attr.addFlashAttribute("artBean",article);
+		attr.addFlashAttribute("commentList", commentList);
+		attr.addFlashAttribute("recentArt", recentArticles);
+		attr.addFlashAttribute("recentArtPic", coverPicList);
+		attr.addFlashAttribute("typeCount", articleService.getTypeCount());
+		m.addAttribute("userBean", account);
 
 		return "redirect:/article/"+articleId;
 	}
@@ -192,12 +206,19 @@ public class ArticleController {
 			@RequestParam(name = "content") String content, 
 			@RequestParam(name = "typeSelect") Integer typeId,
 			@RequestParam(name = "userId") String userid,
-			Model m) throws SQLException {
+			Model m, RedirectAttributes attr) throws SQLException {
 		AccountBean account = (AccountBean) m.getAttribute("userBean");
 		m.addAttribute("userBean",account);
 		Article article = articleService.newArticle(title, typeId, content, account.getUserName());
 		Integer id = article.getArtId();
-		m.addAttribute("artBean", articleService.showArticleById(id));
+		List<Comment> commentList = commentService.showCommentsByArticle(id);
+		List<Article> recentArticles = articleService.showRecentArticles();
+		List<String> coverPicList = articleService.getCoverPicList(recentArticles);
+		attr.addFlashAttribute("artBean", articleService.showArticleById(id));
+		attr.addFlashAttribute("commentList", commentList);
+		attr.addFlashAttribute("recentArt", recentArticles);
+		attr.addFlashAttribute("recentArtPic", coverPicList);
+		attr.addFlashAttribute("typeCount", articleService.getTypeCount());
 		return "redirect:/article/"+id;
 	}
 
