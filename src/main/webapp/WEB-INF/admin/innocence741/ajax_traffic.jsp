@@ -402,11 +402,65 @@
                          let tableData = "<thead><tr><th>列車號</th><th>出發日期</th><th>起程站</th><th>到達站</th><th>出發時間</th><th>到達時間</th><th>購票張數</th><th>總金額</th></tr></thead>";
                          let tableData2 = "<thead><tr><th>請填寫訂購人資訊</th></tr></thead>";
                         for(let i = 0; i < response[0].length; i++){
+                          let a = response[4]["startPoint"];
+                          let b = response[5]["destination"];
+                          if(a==="nangang")
+                            a="南港站";
+                          else if(a==="taipei")
+                            a="台北站";
+                          else if(a==="banqiao")
+                            a="板橋站";
+                          else if(a==="taoyuan")
+                            a="桃園站";
+                          else if(a==="hsinchu")
+                            a="新竹站";
+                          else if(a==="miaoli")
+                            a="苗栗站";
+                          else if(a==="taichung")
+                            a="台中站";
+                          else if(a==="changhua")
+                            a="彰化站";
+                          else if(a==="yunlin")
+                            a="雲林站";
+                          else if(a==="chiayi")
+                            a="嘉義站";
+                          else if(a==="tainan")
+                            a="台南站";
+                          else if(a==="zuoying")
+                            a="左營站";
+
+
+                          if(b==="nangang")
+                            b="南港站";
+                          else if(b==="taipei")
+                            b="台北站";
+                          else if(b==="banqiao")
+                            b="板橋站";
+                          else if(b==="taoyuan")
+                            b="桃園站";
+                          else if(b==="hsinchu")
+                            b="新竹站";
+                          else if(b==="miaoli")
+                            b="苗栗站";
+                          else if(b==="taichung")
+                            b="台中站";
+                          else if(b==="changhua")
+                            b="彰化站";
+                          else if(b==="yunlin")
+                            b="雲林站";
+                          else if(b==="chiayi")
+                            b="嘉義站";
+                          else if(b==="tainan")
+                            b="台南站";
+                          else if(b==="zuoying")
+                            b="左營站";
+
+
                             tableData += "<tr>";
                             tableData += "<td>" + response[0][i]["idHSR"] + "</td>" +
                                          "<td>" + response[3]["departureDate"] + "</td>" +
-                                         "<td>" + response[4]["startPoint"] + "</td>" + 
-                                         "<td>" + response[5]["destination"] + "</td>"+ 
+                                         "<td>" + a + "</td>" + 
+                                         "<td>" + b + "</td>"+ 
                                          "<td>" + response[0][i][startPoint] + "</td>" + 
                                          "<td>" + response[0][i][destination] + "</td>" + 
                                          "<td>" + response[2]["ticketNum"] + "</td>" + 
@@ -472,11 +526,66 @@
                         console.log(response[0].length);
                          let tableData = "<thead><tr><th>列車號</th><th>出發日期</th><th>起程站</th><th>到達站</th><th>出發時間</th><th>到達時間</th><th>購票張數</th><th>總金額</th></tr></thead>";
                         for(let i = 0; i < response[0].length; i++){
+
+
+                          let a = response[4]["startPoint"];
+                          let b = response[5]["destination"];
+                          if(a==="nangang")
+                            a="南港站";
+                          else if(a==="taipei")
+                            a="台北站";
+                          else if(a==="banqiao")
+                            a="板橋站";
+                          else if(a==="taoyuan")
+                            a="桃園站";
+                          else if(a==="hsinchu")
+                            a="新竹站";
+                          else if(a==="miaoli")
+                            a="苗栗站";
+                          else if(a==="taichung")
+                            a="台中站";
+                          else if(a==="changhua")
+                            a="彰化站";
+                          else if(a==="yunlin")
+                            a="雲林站";
+                          else if(a==="chiayi")
+                            a="嘉義站";
+                          else if(a==="tainan")
+                            a="台南站";
+                          else if(a==="zuoying")
+                            a="左營站";
+
+
+                          if(b==="nangang")
+                            b="南港站";
+                          else if(b==="taipei")
+                            b="台北站";
+                          else if(b==="banqiao")
+                            b="板橋站";
+                          else if(b==="taoyuan")
+                            b="桃園站";
+                          else if(b==="hsinchu")
+                            b="新竹站";
+                          else if(b==="miaoli")
+                            b="苗栗站";
+                          else if(b==="taichung")
+                            b="台中站";
+                          else if(b==="changhua")
+                            b="彰化站";
+                          else if(b==="yunlin")
+                            b="雲林站";
+                          else if(b==="chiayi")
+                            b="嘉義站";
+                          else if(b==="tainan")
+                            b="台南站";
+                          else if(b==="zuoying")
+                            b="左營站";
+
                             tableData += "<tr>";
                             tableData += "<td>" + response[0][i]["idHSR"] + "</td>" +
                                          "<td>" + response[3]["departureDate"] + "</td>" +
-                                         "<td>" + response[4]["startPoint"] + "</td>" + 
-                                         "<td>" + response[5]["destination"] + "</td>"+ 
+                                         "<td>" + a + "</td>" + 
+                                         "<td>" + b + "</td>"+ 
                                          "<td>" + response[0][i][startPoint] + "</td>" + 
                                          "<td>" + response[0][i][destination] + "</td>" + 
                                          "<td>" + response[2]["ticketNum"] + "</td>" + 
@@ -531,6 +640,60 @@
                 var customerPhone = table2.rows[1].cells[3].children[0].value;
                 // console.log(customerName);
                 //console.log(table.rows[1].cells[8].children[0].value);
+
+
+              if(destination==="南港站")
+                destination="nangang";
+              else if(destination==="台北站")
+                destination="taipei";
+              else if(destination==="板橋站")
+                destination="banqiao";
+              else if(destination==="桃園站")
+                destination="taoyuan";
+              else if(destination==="新竹站")
+                destination="hsinchu";
+              else if(destination==="苗栗站")
+                destination="miaoli";
+              else if(destination==="台中站")
+                destination="taichung";
+              else if(destination==="彰化站")
+                destination="changhua";
+              else if(destination==="雲林站")
+                destination="yunlin";
+              else if(destination==="嘉義站")
+                destination="chiayi";
+              else if(destination==="台南站")
+                destination="tainan";
+              else if(destination==="左營站")
+                destination="zuoying";
+
+
+              if(startPoint==="南港站")
+                startPoint="nangang";
+              else if(startPoint==="台北站")
+                startPoint="taipei";
+              else if(startPoint==="板橋站")
+                startPoint="banqiao";
+              else if(startPoint==="桃園站")
+                startPoint="taoyuan";
+              else if(startPoint==="新竹站")
+                startPoint="hsinchu";
+              else if(startPoint==="苗栗站")
+                startPoint="miaoli";
+              else if(startPoint==="台中站")
+                startPoint="taichung";
+              else if(startPoint==="彰化站")
+                startPoint="changhua";
+              else if(startPoint==="雲林站")
+                startPoint="yunlin";
+              else if(startPoint==="嘉義站")
+                startPoint="chiayi";
+              else if(startPoint==="台南站")
+                startPoint="tainan";
+              else if(startPoint==="左營站")
+                startPoint="zuoying";
+
+
                 $.ajax({
 
                      type:"POST",                    //指定http參數傳輸格式為POST
@@ -558,7 +721,7 @@
                         //  console.log(response["check"]);
                         //  console.log(response["check"] === "fail")
                         //  if(response["check"] === "fail"){
-                        //     window.location="\orderFailPage.html";
+                            window.location="showT_Order.controller";
                         //  }else if(response["check"] === "success"){
                         //      window.location="\orderSuccessPage.html";
                         //  }
