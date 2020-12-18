@@ -6,6 +6,11 @@ import org.junit.Ignore;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
+
+import static global.Constant.TRAVEL_SET_TYPE_ATTRACTION;
+import static global.Constant.TRAVEL_SET_TYPE_RESTAURANT;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "TRAVEL_ELE_R")
@@ -14,7 +19,9 @@ public class TravelEleRestaurantDO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
 
-    private Timestamp time;
+//    private Timestamp time;
+    @Column(name = "time")@Temporal(TemporalType.TIMESTAMP)
+    private Date time;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "R_ID", referencedColumnName = "SN")
@@ -24,6 +31,9 @@ public class TravelEleRestaurantDO {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRAVEL_ID", referencedColumnName = "SN")
     private TravelSetDO travelSetDO;
+
+    @Transient
+    private Integer type = TRAVEL_SET_TYPE_RESTAURANT;
 
     public TravelEleRestaurantDO() {
     }
@@ -36,11 +46,11 @@ public class TravelEleRestaurantDO {
         this.sn = sn;
     }
 
-    public Timestamp getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

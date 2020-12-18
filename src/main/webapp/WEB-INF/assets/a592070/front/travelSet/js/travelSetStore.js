@@ -29,11 +29,49 @@ const travelSetStore = new Vuex.Store({
         selectListLoading: true,
 
         selectItem: {
+            type: 0,
             sn: 0,
             name: '',
             description: '',
             time: null
-        }
+        },
+
+        travelSetDetail: {
+            travelSetInfo: {
+                sn: 0,
+                name: '',
+                description: '',
+            },
+            travelSetAttractions: [
+                {
+                    sn: 0,
+                    attraction: {
+                        sn: 0,
+                    },
+                    time: '',
+                }],
+            travelSetRestaurants: [
+                {
+                    sn: 0,
+                    restaurant: {
+                        sn: 0,
+                    },
+                    time: '',
+                }
+            ],
+            travelSetHotels: [
+                {
+                    sn: 0,
+                    hotel: {
+                        sn: 0,
+                    },
+                    time: '',
+                }
+            ],
+        },
+        travelSetInfoLoading: false,
+        travelSetInfoDialog: false,
+        travelSetInfo: false,
     },
     getters: {
         getSelectRegion: (state) => state.selectRegion,
@@ -86,9 +124,23 @@ const travelSetStore = new Vuex.Store({
 
 
         setSelectItem(state, data){
+            state.selectItem.type = data.type;
             state.selectItem.sn = data.sn;
             state.selectItem.name = data.name;
             state.selectItem.description = data.description;
+        },
+
+
+        setTravelSetDetail(state, data){
+            state.travelSetDetail.travelSetInfo = data.travelSetInfo;
+            state.travelSetDetail.travelSetAttractions = data.travelSetAttractions;
+            state.travelSetDetail.travelSetHotels = data.travelSetHotels;
+            state.travelSetDetail.travelSetRestaurants = data.travelSetRestaurants;
+        },
+
+
+        setTravelSetInfoDialog(state, flag){
+            state.travelSetInfoDialog = flag;
         }
 
 
@@ -167,6 +219,34 @@ const travelSetStore = new Vuex.Store({
                     state.commit('setPageData', response.data.pageData);
                 });
         },
+        saveTravelSet(state, data){
+            let url = context + '/travelSet/save/'+data.travelSetInfo.sn
+            let params = {
+                travelSetInfo: JSON.stringify(data.travelSetInfo),
+                travelSetAttractions: JSON.stringify(data.travelSetAttractions),
+                travelSetHotels: JSON.stringify(data.travelSetHotels),
+                travelSetRestaurants: JSON.stringify(data.travelSetRestaurants),
+            };
+            return axios({
+                method: 'put',
+                url: url,
+                data: params
+            }).then( response => {
+                console.log(response.data);
+                if(response.data.message){
+                    let tmp = {
+                        travelSetInfo: response.data.travelSetInfo,
+                        travelSetAttractions: response.data.travelSetAttractions,
+                        travelSetHotels: response.data.travelSetHotels,
+                        travelSetRestaurants: response.data.travelSetRestaurants,
+                    }
+
+                    state.commit("setTravelSetDetail", tmp);
+                    state.commit("setTravelSetSaved", true);
+                }
+                return response.data.message;
+            })
+        }
     }
 })
 export default travelSetStore;

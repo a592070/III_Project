@@ -1,9 +1,6 @@
 package a592070.controller;
 
-import a592070.pojo.AttractionVO;
-import a592070.pojo.CarVO;
-import a592070.pojo.HotelVO;
-import a592070.pojo.RestaurantVO;
+import a592070.pojo.*;
 import a592070.service.TravelSetService;
 import a592070.service.ViewService;
 import global.Constant;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import utils.BeanConvertUtils;
 import utils.IOUtils;
 import utils.PageSupport;
 import utils.StringUtil;
@@ -48,6 +46,15 @@ public class TravelSetFrontController {
 
 
 
+    @GetMapping("/travelSet/entity/{id}")
+    public TravelSetFrontVO getTravelSet(@PathVariable("id") Integer id){
+
+        TravelSetDO ele = service.getEle(id, true);
+
+        return BeanConvertUtils.convertToTravelSetFrontVO(ele);
+    }
+
+
     /*
     type {
      0: attraction
@@ -76,14 +83,14 @@ public class TravelSetFrontController {
         }
 
         if(type == 0){
-            pageSupport.setTotalSize(attractionViewService.getSizeByKeyWords(keywords));
+            pageSupport.setTotalSize(attractionViewService.getSizeBySelectWithStatus(region, keywords, true));
             list = attractionViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true);
         }else if(type == 1){
             region = region.replace('臺', '台');
-            pageSupport.setTotalSize(restaurantViewService.getSizeByKeyWords(keywords));
+            pageSupport.setTotalSize(restaurantViewService.getSizeBySelectWithStatus(region, keywords, true));
             list = restaurantViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true);
         }else if(type == 2){
-            pageSupport.setTotalSize(hotelViewService.getSizeByKeyWords(keywords));
+            pageSupport.setTotalSize(hotelViewService.getSizeBySelectWithStatus(region, keywords, true));
             list = hotelViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true);
         }
 //        else if(type == 3){

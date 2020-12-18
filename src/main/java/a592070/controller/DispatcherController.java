@@ -49,8 +49,13 @@ public class DispatcherController {
     }
 
     @RequestMapping("/travelSet/index")
-    public String fontTravelSeyIndex(){
+    public String fontTravelSetIndex(){
         return "a592070/font/travelSetInfo";
+    }
+    @RequestMapping({"/travelSet/detail/{id}", "/travelSet/detail"})
+    public String fontTravelSetIndex(@PathVariable(value = "id", required = false) Integer id, Model model){
+        if(id != null && id.intValue() != 0) model.addAttribute("id", id);
+        return "a592070/font/travelSetDetail";
     }
 
 
@@ -58,6 +63,9 @@ public class DispatcherController {
     public String backBroadcastMessage(){
         return "a592070/broadcastMessage";
     }
+
+
+
 
 
     @Autowired@Qualifier("sendMailService")

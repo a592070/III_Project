@@ -59,10 +59,10 @@ public class TravelSetDO {
 //    private Set<TravelEleAttractionDO> travelAttractions2 = new LinkedHashSet<>();
 
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    private List<TravelEleCarDO> travelCars = new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @Fetch(FetchMode.SUBSELECT)
+//    private List<TravelEleCarDO> travelCars = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "travelSetDO", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -192,24 +192,24 @@ public class TravelSetDO {
 //    }
 
 
-    public void addTravelCars(TravelEleCarDO travelEleCarDO){
-        travelEleCarDO.setTravelSetDO(this);
-        this.travelCars.add(travelEleCarDO);
-    }
-    public void addTravelCars(Integer carID){
-        CarVO carVO = new CarVO();
-        carVO.setSn(carID);
-        TravelEleCarDO travelEleDO = new TravelEleCarDO();
-        travelEleDO.setCar(carVO);
-        travelEleDO.setTravelSetDO(this);
-        this.travelCars.add(travelEleDO);
-    }
-    public List<TravelEleCarDO> getTravelCars() {
-        return travelCars;
-    }
-    public void setTravelCars(List<TravelEleCarDO> travelCars) {
-        this.travelCars = travelCars;
-    }
+//    public void addTravelCars(TravelEleCarDO travelEleCarDO){
+//        travelEleCarDO.setTravelSetDO(this);
+//        this.travelCars.add(travelEleCarDO);
+//    }
+//    public void addTravelCars(Integer carID){
+//        CarVO carVO = new CarVO();
+//        carVO.setSn(carID);
+//        TravelEleCarDO travelEleDO = new TravelEleCarDO();
+//        travelEleDO.setCar(carVO);
+//        travelEleDO.setTravelSetDO(this);
+//        this.travelCars.add(travelEleDO);
+//    }
+//    public List<TravelEleCarDO> getTravelCars() {
+//        return travelCars;
+//    }
+//    public void setTravelCars(List<TravelEleCarDO> travelCars) {
+//        this.travelCars = travelCars;
+//    }
 
 
     public void addTravelHotels(TravelEleHotelDO travelEleHotelDO){

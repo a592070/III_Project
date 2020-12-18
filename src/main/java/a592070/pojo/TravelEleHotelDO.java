@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
+
+import static global.Constant.TRAVEL_SET_TYPE_ATTRACTION;
+import static global.Constant.TRAVEL_SET_TYPE_HOTEL;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "TRAVEL_ELE_H")
@@ -13,7 +18,9 @@ public class TravelEleHotelDO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
 
-    private Timestamp time;
+//    private Timestamp time;
+    @Column(name = "time")@Temporal(TemporalType.TIMESTAMP)
+    private Date time;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "H_ID", referencedColumnName = "SN")
@@ -23,6 +30,9 @@ public class TravelEleHotelDO {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "TRAVEL_ID", referencedColumnName = "SN")
     private TravelSetDO travelSetDO;
+
+    @Transient
+    private Integer type = TRAVEL_SET_TYPE_HOTEL;
 
     public TravelEleHotelDO() {
     }
@@ -35,11 +45,11 @@ public class TravelEleHotelDO {
         this.sn = sn;
     }
 
-    public Timestamp getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

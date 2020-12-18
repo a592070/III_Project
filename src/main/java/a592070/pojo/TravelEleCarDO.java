@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "TRAVEL_ELE_C")
@@ -13,7 +15,9 @@ public class TravelEleCarDO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
 
-    private Timestamp time;
+//    private Timestamp time;
+    @Column(name = "time")@Temporal(TemporalType.TIMESTAMP)
+    private Date time;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "C_ID", referencedColumnName = "SN")
@@ -35,11 +39,11 @@ public class TravelEleCarDO {
         this.sn = sn;
     }
 
-    public Timestamp getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

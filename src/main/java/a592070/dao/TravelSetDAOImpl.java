@@ -36,7 +36,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
         if(travelSetDO!=null && loadFetch){
 //            travelSetDO.getCreatedUser().getUserName();
             travelSetDO.getTravelAttractions().size();
-            travelSetDO.getTravelCars().size();
+//            travelSetDO.getTravelCars().size();
             travelSetDO.getTravelHotels().size();
             travelSetDO.getTravelRestaurants().size();
         }

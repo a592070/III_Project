@@ -49,6 +49,15 @@
     </v-toolbar>
     <v-card-text>
   <div v-if="selectItemType+1">
+
+    <v-overlay :value="selectListLoading">
+      <v-progress-circular
+          indeterminate
+          size="64"
+      ></v-progress-circular>
+    </v-overlay>
+
+
     <v-spacer ref="scrollTopDiv"></v-spacer>
     <el-scrollbar style="height: 100%;" ref="scrollbar">
     <ul class="align-center"
@@ -187,7 +196,9 @@ module.exports = {
     },
     load () {
       console.log("load...")
-      if(!this.selectListLoading){
+      // console.log(this.selectListLoading)
+      // console.log(this.noMore)
+      if(!this.selectListLoading && !this.noMore){
         this.$store.commit('toggleSelectListLoading', true);
         this.$store.commit("addPage");
         this.$store.dispatch("appendItemListData", {region: this.selectRegion, keyword: this.search})
@@ -235,7 +246,7 @@ module.exports = {
 
     handleItemClick(obj){
       console.log(obj);
-      this.$store.commit('setSelectItem', {sn: obj.sn, name: obj.name, description: obj.description});
+      this.$store.commit('setSelectItem', {type: this.selectItemType, sn: obj.sn, name: obj.name, description: obj.description});
       this.$store.commit('toggleSelectItemDialog', false);
     },
 

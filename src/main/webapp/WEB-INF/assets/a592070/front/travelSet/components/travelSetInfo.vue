@@ -1,175 +1,144 @@
 <template>
-  <div class="card card-table-border-none" id="recent-orders">
+<!--  <v-app>-->
+    <v-container>
+      <el-drawer
+          title="title!"
+          :visible.sync="travelSetInfoDialog"
+          :before-close="beforeTravelSetInfoClose"
+          direction="rtl"
+          :with-header="false"
+          wrapperClosable
+          size="70%">
+        <div class="card card-table-border-none" id="recent-orders">
 
-    <div class="card-header justify-content-between">
-      <h2>Travel Set Table</h2>
-      <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>
-    </div>
+          <div class="card-header justify-content-between">
+            <h2>Travel Set Table</h2>
+            <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>
+          </div>
 
-    <div class="card-body pt-0 pb-5">
-      <div class="row justify-content-between">
-        <!--系統推薦選擇-->
-        <el-header style="text-align: left; font-size: 12px">
-          <el-select v-model="currentUser" value-key="id" placeholder="選擇使用者" @change="handleSelectedUser(currentUser)">
-            <el-option label="--請選擇--" disabled :value="null"></el-option>
-            <el-option v-for="(item, index) in user"  :label="item" :value="index" :key="item"></el-option>
-          </el-select>
-        </el-header>
+          <div class="card-body pt-0 pb-5">
+            <div class="row justify-content-between">
+              <!--搜尋框-->
+              <div class=" d-lg-inline-block col-4">
+                <span>當前搜尋: {{currentSearch}}</span>
+                <div class="input-group">
+                  <el-button icon="el-icon-search" v-on:click="handleSearch">資料庫搜尋</el-button>
+                  <input type="text" name="query" id="search-input" class="form-control"
+                         autofocus ="off"
+                         v-model="search"
+                         placeholder="keywords..."/>
+                </div>
+              </div>
+            </div>
 
 
-        <!--搜尋框-->
-        <div class="search-form d-none d-lg-inline-block col-4">
-          <span>當前搜尋: {{currentSearch}}</span>
-          <div class="input-group">
-            <el-button icon="el-icon-search" v-on:click="handleSearch">資料庫搜尋</el-button>
-            <input type="text" name="query" id="search-input" class="form-control"
-                   autofocus ="off"
-                   v-model="search"
-                   placeholder="keywords..."/>
+            <!--表格內容-->
+            <el-table
+                stripe
+                :data="tableData"
+                style="width: 100%"
+                @sort-change='sortChange'
+                height
+                v-loading='travelSetInfoLoading'
+                element-loading-text="唉呦威..."
+                element-loading-spinner="el-icon-loading"
+                element-loading-background="rgba(0, 0, 0, 0.8)"
+            >
+              <el-table-column
+                  label="ID"
+                  prop="sn"
+                  width="75"
+                  sortable='custom'
+                  fixed
+                  :sort-orders="['descending', 'ascending']">
+              </el-table-column>
+              <el-table-column
+                  label="名稱"
+                  prop="name"
+                  width="100"
+                  show-overflow-tooltip
+                  sortable='custom'
+                  :sort-orders="['descending', 'ascending']">
+              </el-table-column>
+              <el-table-column
+                  label="描述"
+                  prop="description"
+                  show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column
+                  label="創建時間"
+                  prop="createdTime"
+                  sortable='custom'
+                  :sort-orders="['descending', 'ascending']">
+                <template slot-scope="scope">
+                  <el-date-picker
+                      v-model="scope.row.createdTime"
+                      type="datetime"
+                      readonly
+                      align="center">
+                  </el-date-picker>
+                </template>
+              </el-table-column>
+              <el-table-column
+                  label="修改時間"
+                  prop="updateTime"
+                  sortable='custom'
+                  :sort-orders="['descending', 'ascending']">
+                <template slot-scope="scope">
+                  <el-date-picker
+                      v-model="scope.row.updateTime"
+                      type="datetime"
+                      readonly
+                      align="center">
+                  </el-date-picker>
+                </template>
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  align="right"
+                  fixed="right">
+                <template slot-scope="scope">
+                  <el-button
+                      size="small"
+                      type="primary" icon="el-icon-edit"
+                      @click="handleEdit(scope.$index, scope.row)">Edit
+                  </el-button>
+                  <el-button
+                      size="small"
+                      type="danger" icon="el-icon-delete"
+                      @click="handleDelete(scope.$index, scope.row)"></el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+
+            <!--分頁-->
+            <div style="margin: 10px;overflow: hidden">
+              <div style="float: right;">
+                <el-pagination
+                    background
+                    :current-page.sync="pageData.currentPage"
+                    :page-size="pageData.pageSize"
+                    :total="pageData.totalSize"
+                    layout="total, prev, pager, next, jumper"
+                    @current-change="handleSelectPage">
+                </el-pagination>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-
-      <!--表格內容-->
-      <el-table
-          stripe
-          :data="tableData"
-          style="width: 100%"
-          @sort-change='sortChange'
-          height
-          v-loading='travelSetInfoLoading'
-          element-loading-text="唉呦威..."
-          element-loading-spinner="el-icon-loading"
-          element-loading-background="rgba(0, 0, 0, 0.8)"
-      >
-        <el-table-column
-            label="ID"
-            prop="sn"
-            width="75"
-            sortable='custom'
-            fixed
-            :sort-orders="['descending', 'ascending']">
-        </el-table-column>
-        <el-table-column
-            label="創建者"
-            prop="createdUser"
-            width="100"
-            show-overflow-tooltip
-            sortable='custom'
-            :sort-orders="['descending', 'ascending']">
-        </el-table-column>
-        <el-table-column
-            label="名稱"
-            prop="name"
-            width="100"
-            show-overflow-tooltip
-            sortable='custom'
-            :sort-orders="['descending', 'ascending']">
-        </el-table-column>
-        <el-table-column
-            label="描述"
-            prop="description"
-            width="150"
-            show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-            label="創建時間"
-            prop="createdTime"
-            width="250"
-            sortable='custom'
-            :sort-orders="['descending', 'ascending']">
-          <template slot-scope="scope">
-            <el-date-picker
-                v-model="scope.row.createdTime"
-                type="datetime"
-                readonly
-                align="center">
-            </el-date-picker>
-          </template>
-        </el-table-column>
-        <el-table-column
-            label="修改時間"
-            prop="updateTime"
-            width="250"
-            sortable='custom'
-            :sort-orders="['descending', 'ascending']">
-          <template slot-scope="scope">
-            <el-date-picker
-                v-model="scope.row.updateTime"
-                type="datetime"
-                readonly
-                align="center">
-            </el-date-picker>
-          </template>
-        </el-table-column>
-        <el-table-column
-            label="推薦優先級"
-            width="125"
-            prop="priority"
-            sortable='custom'
-            :sort-orders="['descending', 'ascending']">
-        </el-table-column>
-        <el-table-column
-            label="啟用狀態"
-            width="150"
-            prop="status"
-            sortable='custom'
-            :sort-orders="['descending', 'ascending']">
-          <template slot-scope="scope">
-            <label class="switch switch-text switch-success switch-pill form-control-label">
-              <input type="checkbox" class="switch-input form-check-input" v-bind:checked="scope.row.status" v-on:click="handleSwitchStatus(scope.row)">
-              <span class="switch-label" data-on="On" data-off="Off"></span>
-              <span class="switch-handle"></span>
-            </label>
-          </template>
-        </el-table-column>
-        <el-table-column
-            width="150"
-            align="right"
-            fixed="right">
-          <template slot-scope="scope">
-            <el-button
-                size="small"
-                type="primary" icon="el-icon-edit"
-                @click="handleEdit(scope.$index, scope.row)">Edit
-            </el-button>
-            <el-button
-                size="small"
-                type="danger" icon="el-icon-delete"
-                @click="handleDelete(scope.$index, scope.row)"></el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <!--分頁-->
-      <div style="margin: 10px;overflow: hidden">
-        <div style="float: right;">
-          <el-pagination
-              background
-              :current-page.sync="pageData.currentPage"
-              :page-size="pageData.pageSize"
-              :total="pageData.totalSize"
-              layout="total, prev, pager, next, jumper"
-              @current-change="handleSelectPage">
-          </el-pagination>
-        </div>
-      </div>
-    </div>
-  </div>
+      </el-drawer>
+    </v-container>
+<!--  </v-app>-->
 </template>
 
 <script>
-
 module.exports = {
-  data() {
-    return {
-      // loading: this.travelSetInfoLoading,
+  data(){
+    return{
+      // travelSetInfoDialog: false,
       search: '',
       sortParams: {},
       currentSearch: '',
-      currentUser: null,
-      user: ["全部", "系統", "一般使用者"],
       pageData: {
         currentPage: null,
         pageSize: null,
@@ -178,22 +147,15 @@ module.exports = {
       tableData: [
         {
           sn: '',
-          createdUser: '',
           name: '',
           description: '',
           createdTime: '',
           updateTime: '',
-          priority: '',
-          status: ''
         }],
       tableColumns: [
         {
           title: 'ID',
           key: 'sn'
-        },
-        {
-          title: 'CreatedUser',
-          key: 'createdUser',
         },
         {
           title: 'Name',
@@ -210,14 +172,6 @@ module.exports = {
         {
           title: 'UpdateTime',
           key: 'updateTime'
-        },
-        {
-          title: 'Priority',
-          key: 'priority'
-        },
-        {
-          title: 'Status',
-          key: 'status'
         },
         {
           title: 'Action',
@@ -257,10 +211,17 @@ module.exports = {
     }
   },
   created: function () {
-    this.initData();
+    // this.initData();
   },
-  computed: Vuex.mapState(['travelSetInfoLoading', 'travelSetInfo']),
+  computed: Vuex.mapState(['travelSetInfoLoading', 'travelSetInfo', 'travelSetInfoDialog']),
   methods: {
+    beforeTravelSetInfoClose(){
+      this.$store.commit("setTravelSetInfoDialog", false);
+    },
+    handleOpenTravelSetInfo(){
+      this.travelSetInfoDialog = true;
+      this.$store.commit("setTravelSetInfoDialog", true);
+    },
     initData() {
       axios.get(context+'/admin/travelSet/list/1')
           .then(response => {
@@ -403,3 +364,9 @@ module.exports = {
   }
 }
 </script>
+<style>
+* {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+</style>
