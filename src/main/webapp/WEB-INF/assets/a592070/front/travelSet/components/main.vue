@@ -14,7 +14,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                   v-model="dateRangeText"
-                  label="Picker in dialog"
+                  label="# 選 擇 日 期"
                   prepend-icon="mdi-calendar"
                   readonly
                   v-bind="attrs"
@@ -49,13 +49,13 @@
               hide-details
               flat
               readonly
-              label="# 選 擇 天 數"
+              label="# 總 天 數"
           ></v-text-field>
-          <v-select
-              v-model="steps"
-              :items="[2, 3, 4, 5, 6]"
-              label="# 選 擇 天 數"
-          ></v-select>
+<!--          <v-select-->
+<!--              v-model="steps"-->
+<!--              :items="[2, 3, 4, 5, 6]"-->
+<!--              label="# 選 擇 天 數"-->
+<!--          ></v-select>-->
           <v-select
               v-model="region"
               :items="regions"
@@ -80,7 +80,7 @@
       <v-container>
       <v-stepper v-model="e1">
         <v-stepper-header>
-          <template v-for="n in steps">
+          <template v-for="n in dateNum">
             <v-stepper-step
                 :key="`${n}-step`"
                 :complete="e1 > n"
@@ -91,7 +91,7 @@
             </v-stepper-step>
 
             <v-divider
-                v-if="n !== steps"
+                v-if="n !== dateNum"
                 :key="n"
             ></v-divider>
           </template>
@@ -99,7 +99,7 @@
 
         <v-stepper-items>
           <v-stepper-content
-              v-for="n in steps"
+              v-for="n in dateNum"
               :key="`${n}-content`"
               :step="n"
           >
@@ -146,12 +146,36 @@
                     </v-card-title>
                     <v-card-text class="white text--primary">
                       <p>{{selectItem.description}}</p>
+                    </v-card-text>
+                    <v-card-text>
+                      <v-menu
+                          v-model="timeMenu"
+                          max-width="290px"
+                          min-width="290px"
+                      >
+                        <template v-slot:activator="{ on }">
+                          <v-text-field
+                              :value="time"
+                              label="選擇時間"
+                              readonly
+                              v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-time-picker
+                            v-if="timeMenu"
+                            :value="time"
+                            @click:hour="closePicker"
+                        ></v-time-picker>
+                      </v-menu>
+                    </v-card-text>
+                    <v-card-text class="white text--primary">
                       <v-btn
                           color="red lighten-2"
                           class="mx-0"
                           outlined
+                          @click="comment(dateNum[n])"
                       >
-                        Button
+                        加 入
                       </v-btn>
                     </v-card-text>
                   </v-card>
@@ -163,19 +187,23 @@
                 >
                   <v-timeline-item
                       v-for="event in timeline"
-                      :key="event.id"
+                      :key="event.sn"
                       class="mb-4"
                       color="pink"
                       small
                   >
                     <v-row justify="space-between">
                       <v-col
-                          cols="7"
-                          v-text="event.text"
+                          cols="4"
+                          v-text="event.name"
+                      ></v-col>
+                      <v-col
+                          cols="4"
+                          v-text="event.description"
                       ></v-col>
                       <v-col
                           class="text-right"
-                          cols="5"
+                          cols="4"
                           v-text="event.time"
                       ></v-col>
                     </v-row>
@@ -239,16 +267,18 @@ module.exports = {
 
       travelSet: [],
       e1: 1,
-      steps: 2,
+      steps: this.dateNum,
       inputName: null,
       inputDescription: null,
 
-      item: this.selectItem
+      item: this.selectItem,
 
+      time: '08:00',
+      timeMenu: false
     }
   },
   watch: {
-    steps (val) {
+    dateNum (val) {
       if (this.e1 > val) {
         this.e1 = val
       }
@@ -262,31 +292,76 @@ module.exports = {
       return this.dates.join(' ~ ')
     },
     dateNum(){
-      console.log(this.dates);
-      console.log(new Date(this.dates[1]));
-      console.log(new Date(this.dates[0]));
+      if(this.dates.length > 1) {
+        console.log(this.dates);
+        console.log(new Date(this.dates[1]));
+        console.log(new Date(this.dates[0]));
 
-      return new Date(this.dates[1])-new Date(this.dates[0])
+        let num = (new Date(this.dates[1]) - new Date(this.dates[0])) / 1000 / 60 / 60 / 24 + 1;
+        let dateArray = [];
+
+        let beginDate = new Date(this.dates[0]);
+        let endDate = new Date(this.dates[1]);
+
+        dateArray.push(beginDate);
+        let tmpDate = beginDate;
+        for (let i = 1; i <num; i++) {
+          let plusDate = tmpDate;
+          plusDate.setDate(plusDate.getDate()+1);
+          dateArray.push(plusDate);
+          tmpDate = plusDate;
+        }
+
+        console.log(dateArray)
+
+        return
+      }else {
+        return 1;
+      }
     },
+
     ...Vuex.mapState(["selectItemDialog", 'regions', 'selectRegion', 'selectItem']),
   },
   created: function (){
     this.$store.dispatch("initRegionsData");
   },
   methods: {
+    allowedHours: v => v % 2,
+    allowedMinutes: v => v >= 10 && v <= 50,
+    allowedStep: m => m % 10 === 0,
     openDialog () {
       // this.count += 2
       this.dialog = true
     },
-    comment () {
-      const time = (new Date()).toTimeString()
-      this.events.push({
-        id: this.nonce++,
-        text: this.input,
-        time: time.replace(/:\d{2}\sGMT-\d{4}\s\((.*)\)/, (match, contents, offset) => {
-          return ` ${contents.split(' ').map(v => v.charAt(0)).join('')}`
-        }),
-      })
+    closePicker: function(v){
+      v = v < 10 ? '0'+v : v;
+      this.time = v+":00";
+      this.timeMenu = false
+    },
+    comment (day) {
+      console.log(day);
+      let time = this.time;
+
+      if(this.events.length > 0){
+        for (let i = 0; i < this.events.length; i++) {
+          if(this.events[i].time > time){
+            this.events.push(this.selectItem)
+          }
+        }
+      }else{
+        this.events.push(this.selectItem)
+      }
+
+      console.log(this.events);
+
+
+      // this.events.push({
+      //   id: this.nonce++,
+      //   text: this.input,
+      //   time: time.replace(/:\d{2}\sGMT-\d{4}\s\((.*)\)/, (match, contents, offset) => {
+      //     return ` ${contents.split(' ').map(v => v.charAt(0)).join('')}`
+      //   }),
+      // })
 
       this.input = null
     },
@@ -306,7 +381,7 @@ module.exports = {
       this.$store.commit('toggleSelectItemDialog', true);
     },
     nextStep (n) {
-      if (n === this.steps) {
+      if (n === this.dateNum) {
         this.e1 = 1
       } else {
         this.e1 = n + 1
