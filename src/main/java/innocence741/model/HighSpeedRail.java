@@ -68,7 +68,7 @@ public class HighSpeedRail {
 	@Column(name = "ZUOYING")
 	private String zuoying;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "highSpeedRail", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "highSpeedRail", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<T_Order_List> t_Order_Lists = new HashSet<T_Order_List>();
 

@@ -411,6 +411,8 @@ public class HighSpeedRailController {
 		cartnum = cartnum + 1;
 		OTBean.setTotalPrice(OTBean.getTotalPrice().add(t_Order_List.getTicketPrice().multiply(t_Order_List.getNums_days())));
 		OTBean.addT_Order_Lists(t_Order_List);
+		t_Order_List.setOrder_table(OTBean);
+
 		session.setAttribute("OTBean", OTBean);
 		session.setAttribute("cartnum", cartnum);
 

@@ -21,7 +21,12 @@
   </head>
   <body>
 	<c:import url="/WEB-INF/admin/fragment/nav.jsp" />
-
+  <script>
+    $(".nav-shop__circle").html('${cartnum}');
+//     console.log($(".nav-shop__circle").val());
+    console.log("nu = " + ${cartnum});
+// 	   console.log("num");
+    </script>
 
     
     <div class="hero-wrap js-fullheight" style="background-image: url('https://i.imgur.com/qBul5jw.jpg');">

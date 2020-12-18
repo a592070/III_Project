@@ -519,9 +519,9 @@ h5{
 						</tr>
 						<tr>
 							<th>交通資訊</th>
-							<th>高鐵車次</th>
-							<th class="text-center">張數</th>
-							<th class="text-center">價格</th>
+							<th></th>
+							<th class="">張數</th>
+							<th class="">價格</th>
 							<th> </th>
 						</tr>
 					</thead>
@@ -534,18 +534,17 @@ h5{
 									<div class="media-body">
 										<h4 class="media-heading">車次${T.highSpeedRail.idHSR}</h4>
 										<h5 class="media-heading">
-											by <a href="#">Brand name</a>
+											姓名: ${T.customerName}
 										</h5>
-										<span>Status: </span><span class="text-success"><strong>In
-												Stock</strong></span>
+										<h5 class="media-heading">
+											電話: ${T.customerPhone}
+										</h5>
 									</div>
 								</div>
 							</td>
-							<td class="col-sm-1 col-md-1" style="text-align: center"><input
-								type="email" class="form-control" id="exampleInputEmail1"
-								value="3"></td>
-							<td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-							<td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+							<td class="col-sm-1 col-md-1" style="text-align: center"></td>
+							<td class="col-sm-1 col-md-1 text-center" ><strong id="tNum">${T.nums_days}</strong></td>
+							<td class="col-sm-1 col-md-1 text-center" ><strong id="tPrice2">${T.ticketPrice}</strong></td>
 							<td class="col-sm-1 col-md-1">
 								<button type="button" class="btn btn-danger">
 									<span class="glyphicon glyphicon-remove"></span> 移除
@@ -553,16 +552,17 @@ h5{
 							</td>
 						</tr>
 
-						</c:forEach>
 						<tr>
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h3>小計</h3></td>
+							<td><h4>小計</h4></td>
 							<td class="text-right"><h3>
-									<strong></strong>
+									<strong id="TT"></strong>
 								</h3></td>
 						</tr>
+					</c:forEach>
+
 					</tbody>
 				</table>
 					
@@ -721,7 +721,12 @@ h5{
 
     <script>
       $(document).ready(function(){
-      $('body,html').delay(1000).animate({scrollTop: $("#index").offset().top - 160}, 600); 
+	  	$('body,html').delay(1000).animate({scrollTop: $("#index").offset().top - 160}, 600);
+		var a = $('#tNum').html();
+		var b = $('#tPrice2').html();
+		var c = parseInt(a)*parseInt(b);
+		$('#TT').html(c);
+		console.log("--------------a"+a);
       });
 
     </script>
