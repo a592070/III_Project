@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import asx54630.model.Hotel;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.serive.AccountService;
+import utils.PictureSupport;
 
 @Controller
 @Lazy
@@ -24,6 +27,7 @@ public class AccountImgInitController {
 	private AccountService service;
 	@Autowired
 	private ServletContext servletContext;
+	
 
 	@GetMapping("/initImg")
 	public @ResponseBody String initImg() {
@@ -50,4 +54,13 @@ public class AccountImgInitController {
 		}
 		return "初始成功";
 	}
+	@GetMapping("/initHotelImg")
+	public @ResponseBody String initHotelImg()  {
+		
+		service.initHotelImg();
+		
+		
+		return "123";
+	}
+	
 }

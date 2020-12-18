@@ -144,5 +144,10 @@ public class AccountServiceImpl implements AccountService {
 		return dao.getMonChart();
 	}
 
+	@Override
+	public String initHotelImg() {
+         return dao.initHotelImg() ;		
+	}
+
 
 }

@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import asx54630.model.Hotel;
 import rambo0021.pojo.AccountBean;
 import rambo0021.pojo.AccountChartView;
 import rambo0021.pojo.AccountListViewBean;
@@ -16,6 +17,7 @@ import rambo0021.pojo.IdentityBean;
 import rambo0021.pojo.RegisterMonthView;
 import rambo0021.pojo.Sort;
 import utils.IOUtils;
+import utils.PictureSupport;
 
 public class AccountDAOImpl implements AccountDAO {
 	@Autowired
@@ -332,6 +334,24 @@ public class AccountDAOImpl implements AccountDAO {
 		Session session = sessionFactory.getCurrentSession();
 		String hql="From RegisterMonthView order by month";		
 		return session.createQuery(hql,RegisterMonthView.class).list();
+	}
+
+	@Override
+	public String initHotelImg() {
+		String hql="From Hotel";
+		List<Hotel> list = sessionFactory.getCurrentSession().createQuery(hql,Hotel.class).list();
+		for (Hotel hotel : list) {
+			try {
+				PictureSupport.writeToDB(hotel, "PIC_URL", "PIC");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			sessionFactory.getCurrentSession().merge(hotel);
+		}
+		
+		
+		return null;
 	}
 
 }
