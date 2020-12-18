@@ -22,7 +22,7 @@
     padding: 0px 6px;
     border-radius: 50%;
     position: absolute;
-    top: -0.5px;
+    top: 20px;
   }
   .ftco-navbar-light.scrolled .nav-link .icon-shopping-cart {
     padding-top: 0.9rem !important;

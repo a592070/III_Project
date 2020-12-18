@@ -297,7 +297,7 @@ h2 {
 														+ element.artId
 														+ "</td>"
 														+ "<td>"
-														+ "<a class='text-dark' href=''>"
+														+ "<a class='text-dark' href='${pageContext.servletContext.contextPath}/article/"+element.artId+"'>"
 														+ element.artTitle
 														+ "</a></td>"
 														+ "<td>"

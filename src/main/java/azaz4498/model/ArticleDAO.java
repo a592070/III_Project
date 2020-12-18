@@ -206,12 +206,18 @@ public class ArticleDAO {
 	}
 
 	// 顯示當前文章(by Id)
-	public Article showArticleById(Integer articleId) throws SQLException {
-		Article result = sessionFactory.getCurrentSession().get(Article.class, articleId);
-		Integer views = result.getArtView();
-		result.setArtView(views+1);
-		sessionFactory.getCurrentSession().update(result);
-		return result;
+	public Article showArticleById(Integer articleId){
+		try {
+			Article result = sessionFactory.getCurrentSession().get(Article.class, articleId);
+			Integer views = result.getArtView();
+			result.setArtView(views+1);
+			sessionFactory.getCurrentSession().update(result);
+			return result;
+		} catch (NullPointerException e) {
+			
+			return null;
+		}
+		
 	}
 
 	// 依類型顯示文章(前台)
