@@ -76,7 +76,7 @@ public class MailUtil{
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
             helper.setTo(recipients);
-            helper.setSubject("Simple mail template");
+            helper.setSubject("Fun x Taiwan");
             helper.setText(mailTemplate, true);
 
 //            System.out.println(Thread.currentThread().getName());

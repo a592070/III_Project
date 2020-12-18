@@ -100,7 +100,7 @@ body{
             <div class="row">
                 <div class="col-lg-8">
                     <div class="room-details-item">
-                        <img src="https://i.imgur.com/D690ggE.jpg" alt="">
+                        <img src="<%=application.getContextPath()%>/HotelPic" alt="">
                         <div class="rd-text">
                             <div class="rd-title">
                                 <h3>${hoteldetail.NAME}</h3>

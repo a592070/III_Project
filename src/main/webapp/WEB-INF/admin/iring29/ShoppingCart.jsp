@@ -317,7 +317,7 @@ h5{
 							
 						</script>
 							<td class="col-sm-1 col-md-1 text-center">
-							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}(), totalprice(), sumprice()">
+							<select name="person_number" id="p_num${R.restaurant.name}" class="form-control p_num ${R.restaurant.r_sn}"  onchange="changeinfo${R.restaurant.r_sn}(), totalprice()">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -385,6 +385,7 @@ h5{
 			                        dataType: 'json',
 			                        success:function(response){
 				                        console.log(response);
+				                        $("#sumPrice").html(response);
 			                        }
 			                    }
 			                )
@@ -609,28 +610,25 @@ h5{
 							<td class="total"> </td>
 							<td><h3>總金額</h3></td>
 							<td class="text-right"><h2>
-									<strong id="sumPrice"></strong>
+									<strong id="sumPrice">${OTBean.totalPrice}</strong>
 								</h2></td>
 						</tr>
 						
 					</tbody>
 				</table>
 				<!-- 總金額 -->
-					<script type="text/javascript">
-					var Rsum = document.getElementById("tPrice").innerHTML;
-					var Hsum = document.getElementById("HPrice").innerHTML;
-					var TotalSum = parseInt(Rsum) + parseInt(Hsum);
-					console.log("sum = " + TotalSum);
-					document.getElementById("sumPrice").innerHTML = TotalSum;
+<!-- 					<script > -->
 					
-					function sumprice(){
-						var Rsum = document.getElementById("tPrice").innerHTML;
-						var Hsum = document.getElementById("HPrice").innerHTML;
-						var TotalSum = parseInt(Rsum) + parseInt(Hsum);
-						console.log("sum = " + TotalSum);
-						document.getElementById("sumPrice").innerHTML = TotalSum;
-					}
-					</script>
+<!-- 					function sumprice(){ -->
+<!-- 						var Rsum = $("#tPrice").val(); -->
+<!-- 						var Hsum = $("#HPrice").val(); -->
+<!-- 						console.log("R = " + Rsum) -->
+<!-- 						console.log("H = " + Hsum) -->
+						
+<!-- // 						console.log("sum = " + TotalSum); -->
+<!-- // 						document.getElementById("sumPrice").innerHTML = TotalSum; -->
+<!-- 					} -->
+<!-- 					</script>  -->
 			</div>
 		</div>
 	</div>

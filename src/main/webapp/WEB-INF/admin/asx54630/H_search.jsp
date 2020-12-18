@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+  
+  	<c:set var ="size" value= "${fn:length(hoteldata)}"></c:set>
+		<c:if test = "${size < 1}" >
+			<h5>查無資料</h5>
+			
+		<script>
+		$("#page").children().remove();
+		</script>
+		</c:if>
+		<c:if test = "${size > 0}" >
 <c:forEach var="hotels" items="${hoteldata}">
             <tr>
 				<td id="SN">${hotels.SN}</td>
@@ -51,6 +62,7 @@
       		 </div></td>
             </tr>
             </c:forEach>
+            </c:if>
             <script type="text/javascript">
 				currentPage = ${hpage.currentPage};
 				totalPage = ${hpage.totalPageCount};

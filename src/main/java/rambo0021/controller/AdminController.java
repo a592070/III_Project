@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,9 +27,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import rambo0021.dao.SHA2DAO;
 import rambo0021.pojo.AccountBean;
+import rambo0021.pojo.AccountChartView;
 import rambo0021.pojo.AccountListViewBean;
 import rambo0021.pojo.IdentityBean;
 import rambo0021.pojo.Page;
+import rambo0021.pojo.RegisterMonthView;
 import rambo0021.pojo.Sort;
 import rambo0021.serive.AccountService;
 import rambo0021.serive.DateService;
@@ -231,4 +231,21 @@ public class AdminController {
 		m.addAttribute("sort", aSort);
 		return "rambo0021/appendPage";
 	}
+	
+	@RequestMapping("/chartPage")
+	public String chartPage() {
+		return "rambo0021/adminChart";
+	}
+	@RequestMapping("/chart")
+	public @ResponseBody List<AccountChartView> chart() {
+		List<AccountChartView> aList = service.getAccChart();
+        return aList;
+	}
+	
+	@RequestMapping("/chart2")
+	public @ResponseBody List<RegisterMonthView> chart2() {
+		List<RegisterMonthView> mList = service.getMonChart();
+        return mList;
+	}
+	
 }

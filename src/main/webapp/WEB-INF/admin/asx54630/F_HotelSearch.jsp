@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 
+
+
 <div class="row">
+	<c:set var ="size" value= "${fn:length(hoteldata)}"></c:set>
+		<c:if test = "${size < 1}" >
+			<h5>很抱歉，沒有符合的飯店</h5>
+		</c:if>
+		<c:if test = "${size > 0}" >
           	<c:forEach var="hotels" items="${hoteldata}">
           		<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    					<a href="javascript:;" onclick="detailpage('${hotels.SN}')" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('https://i.imgur.com/D690ggE.jpg');">
+		    					<a href="javascript:;" onclick="detailpage('${hotels.SN}')" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('<%=pageContext.getServletContext().getContextPath()%>/Hotel/pic/${hotels.SN}');">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     							<span class="icon-search2"></span>
     						</div>
@@ -44,12 +52,13 @@
 		    						<hr>
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i>&emsp;${hotels.REGION}</span> 
-		    							<span class="ml-auto"><a href="#">訂房去</a></span>
+		    							<span class="ml-auto"><a href="#" onclick="detailpage('${hotels.SN}')">訂房去</a></span>
 		    						</p>
 		    					</div>
 		    				</div>
 		    			</div>
 		    		</c:forEach>
+		    		
           	</div>
           	<div class="row mt-5">
 		          <div class="col text-center">
@@ -66,6 +75,7 @@
 		            </div>
 		          </div>
 		        </div>
+		        </c:if>
 		        <script type="text/javascript">
 				$("#${currentPage}").attr("class","active");
 				$("#${currentPage}").remove("a");

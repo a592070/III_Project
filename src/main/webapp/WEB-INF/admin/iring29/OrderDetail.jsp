@@ -112,6 +112,7 @@ td.col-sm-1.col-md-1.text-center{
 							<th><h5 class="media-heading line">飯店訂單&emsp;<strong>${H.SN_ORDER}</strong></h5></th>
 							<th><h5 class="media-heading line"></h5></th>
 							<th><h5 class="media-heading line">訂位時間</h5></th>
+							<th></th>
 							<th class="text-center"><h5 class="media-heading line">訂位人數</h5></th>
 							<th class="text-center"><h5 class="media-heading line">價格</h5></th>
 							<th> </th>
@@ -135,6 +136,7 @@ td.col-sm-1.col-md-1.text-center{
 							<div class="content"><h5 class="media-heading line">${H.CLIENT_NAME}</h5></div>
 							<div class="content"><h5 class="media-heading line">${H.CLIENT_PHONE}</h5></div>
 							</td>
+							<td>
 							<div class="div_title"><h5>入住日期</h5></div>
 							<div class="div_title"><h5>退房日期</h5></div>
 							</td>
@@ -145,7 +147,7 @@ td.col-sm-1.col-md-1.text-center{
 					
 							<td class="col-sm-1 col-md-1 text-center"><h5>${H.PROPLE_NUM}&emsp;&emsp;</h5></td>
 							<td class="col-sm-1 col-md-1">
-								<h5><strong class="deposit">${H.hPRICE}</strong></h5>
+								<h5><strong class="hPRICE">${H.hPRICE}</strong></h5>
 							</td>
 							<td class="col-sm-1 col-md-1"></td>
 						</tr>
@@ -163,16 +165,18 @@ td.col-sm-1.col-md-1.text-center{
 					</tbody>
 				</table>
 				<script type="text/javascript">
-// <!--  						var hPRICE = document.getElementsByClassName("hPRICE"); -->
-// <!--  						console.log("deposit size = " + hPRICE.length); -->
-// <!--  						var size = 0; -->
-// <!--   							size += parseInt(hPRICE[i].innerHTML); -->
-// <!--   							console.log("money = " + size); -->
-// <!-- 							console.log("money = " + hPRICE[i].innerHTML); -->
-// <!-- 							} -->
-// <!--          				document.getElementById("HPrice").innerHTML = size; -->
+  						var hPRICE = document.getElementsByClassName("hPRICE"); 
+  						console.log("deposit size = " + hPRICE.length); 
+  						var size = 0; 
+  						for(var j = 0; j < hPRICE.length; j++ ){
+   							size += parseInt(hPRICE[j].innerHTML); 
+   							console.log("money = " + size); 
+ 							console.log("money = " + [j].innerHTML); 
+  						}
+          				document.getElementById("HPrice").innerHTML = size; 
+
         				
-=    					</script> =
+    					</script> 
 			</div>
 		</div>
 	</div>
@@ -376,13 +380,17 @@ td.col-sm-1.col-md-1.text-center{
 				<!-- 總金額 -->
 					<script type="text/javascript">
 					var Rsum = document.getElementById("tPrice").innerHTML;
+					var Hsum = document.getElementById("HPrice").innerHTML;
+					var TotalSum = parseInt(Rsum) + parseInt(Hsum);
 					console.log("sum = " + Rsum);
-					document.getElementById("sumPrice").innerHTML = Rsum;
+					document.getElementById("sumPrice").innerHTML = TotalSum;
 					
 					function sumprice(){
 						var Rsum = document.getElementById("tPrice").innerHTML;
+						var Hsum = document.getElementById("HPrice").innerHTML;
+						var TotalSum = parseInt(Rsum) + parseInt(Hsum);
 						console.log("sum = " + Rsum);
-						document.getElementById("sumPrice").innerHTML = Rsum;
+						document.getElementById("sumPrice").innerHTML = TotalSum;
 					}
 					</script>
 			</div>
