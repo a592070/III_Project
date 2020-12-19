@@ -11,10 +11,10 @@
           size="70%">
         <div class="card card-table-border-none" id="recent-orders">
 
-          <div class="card-header justify-content-between">
-            <h2>Travel Set Table</h2>
-            <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>
-          </div>
+<!--          <div class="card-header justify-content-between">-->
+<!--            <h2>Travel Set Table</h2>-->
+<!--            <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>-->
+<!--          </div>-->
 
           <div class="card-body pt-0 pb-5">
             <div class="row justify-content-between">
@@ -211,9 +211,9 @@ module.exports = {
     }
   },
   created: function () {
-    // this.initData();
+    this.initData();
   },
-  computed: Vuex.mapState(['travelSetInfoLoading', 'travelSetInfo', 'travelSetInfoDialog']),
+  computed: Vuex.mapState(['travelSetInfoLoading', 'travelSetInfo', 'travelSetInfoDialog', 'travelSetEditItemDialog']),
   methods: {
     beforeTravelSetInfoClose(){
       this.$store.commit("setTravelSetInfoDialog", false);
@@ -223,24 +223,22 @@ module.exports = {
       this.$store.commit("setTravelSetInfoDialog", true);
     },
     initData() {
-      axios.get(context+'/admin/travelSet/list/1')
+      axios.get(context+'/travelSet/list/1')
           .then(response => {
-            this.$store.commit('setTravelSetInfo', response.data.tableData);
+            if(response.data.noLogin){
+              console.log("no login");
+            }else if(response.data.message){
+              this.$store.commit('setTravelSetInfo', response.data.tableData);
 
-            this.tableData = this.travelSetInfo;
-            this.pageData = response.data.pageData;
+              this.tableData = this.travelSetInfo;
+              this.pageData = response.data.pageData;
+            }
+
           })
           .then(()=>this.$store.commit('toggleTravelSetInfoLoading', false));
 
     },
     handleSearch() {
-      this.pageData.currentPage = 1;
-
-      this.handleSelectedData();
-    },
-    handleSelectedUser(user) {
-      console.log(user);
-      this.currentUser = user;
       this.pageData.currentPage = 1;
 
       this.handleSelectedData();
@@ -259,15 +257,11 @@ module.exports = {
       this.$store.commit('toggleTravelSetInfoLoading', true);
       let url;
 
-      let user = this.currentUser
-      if (!user) {
-        user = 0;
-      }
       let keyword = this.search;
       if (!this.search || this.search == '') {
-        url = context + '/admin/travelSet/list/'+this.pageData.currentPage+'/'+user;
+        url = context + '/travelSet/list/'+this.pageData.currentPage;
       } else {
-        url = context + '/admin/travelSet/list/'+this.pageData.currentPage+'/'+user+'/'+keyword;
+        url = context + '/travelSet/list/'+this.pageData.currentPage+'/'+keyword;
       }
 
       let params = this.sortParams;
@@ -284,47 +278,23 @@ module.exports = {
           .then(()=>this.$store.commit('toggleTravelSetInfoLoading', false));
 
     },
-    handleSwitchStatus(value) {
-      this.$store.commit('toggleTravelSetInfoLoading', true)
-
-      let url = context+'/admin/travelSet/status/'+value.sn;
-      axios.put(url)
-          .then(response => {
-            if(response.data){
-              value.status = !value.status;
-              const h = this.$createElement;
-              this.$message({
-                message: h('p', null, [
-                  h('i', { style: 'color: teal' }, value.name),
-                  h('span', null, '狀態更改成功 ')
-                ])
-              });
-            }else{
-              this.$message.error(value.name+': 狀態更改失敗');
-            }
-          })
-          .then(()=>this.$store.commit('toggleTravelSetInfoLoading', false));
-
-    },
 
 
-
-
-    handleInsert() {
-      this.$store.commit('initTravelSteDetail');
-      this.$store.commit("toggleTravelSetDialog", true);
-      this.$store.commit('toggleTravelSetDetailLoading', false);
-    },
     handleEdit(index, row) {
-      this.$store.commit("setCurrentTravelSetInfo", row);
+      this.$store.commit('toggleTravelSetInfoLoading', true);
       this.$store.dispatch('selectedTravelSetDetailData', row.sn)
           .then(()=>{
-            this.$store.commit("toggleTravelSetDialog", true);
-            this.$store.commit('toggleTravelSetDetailLoading', false);
+            this.$store.commit('toggleTravelSetInfoLoading', false);
+          })
+          .then(() => {
+            this.$store.commit('setTravelSetInfoDialog', false);
+          })
+          .then(() => {
+            this.$store.commit('setTravelSetEditItemDialog', true);
           });
     },
     handleDelete(index, row) {
-      this.$confirm('此操作將永久刪除資料, 是否繼續?', '提示', {
+      this.$confirm('確定要刪除?', '提示', {
         confirmButtonText: '去死吧',
         cancelButtonText: '手滑了...',
         type: 'warning',
@@ -332,8 +302,8 @@ module.exports = {
       }).then(() => {
         this.$store.commit('toggleTravelSetInfoLoading', true);
 
-        let url = context+'/admin/travelSet/delete/'+row.sn;
-        axios.delete(url)
+        let url = context+'/travelSet/status/'+row.sn;
+        axios.put(url)
             .then(response => {
               this.$store.commit('toggleTravelSetInfoLoading', false);
 

@@ -36,6 +36,17 @@ const travelSetStore = new Vuex.Store({
             time: null
         },
 
+
+
+        isSortDetailData: false,
+        travelSetDetailSortDate: {
+            sn: 0,
+            name: '',
+            description: '',
+            events: {
+
+            }
+        },
         travelSetDetail: {
             travelSetInfo: {
                 sn: 0,
@@ -47,6 +58,7 @@ const travelSetStore = new Vuex.Store({
                     sn: 0,
                     attraction: {
                         sn: 0,
+                        name: ''
                     },
                     time: '',
                 }],
@@ -55,6 +67,7 @@ const travelSetStore = new Vuex.Store({
                     sn: 0,
                     restaurant: {
                         sn: 0,
+                        name: ''
                     },
                     time: '',
                 }
@@ -64,14 +77,32 @@ const travelSetStore = new Vuex.Store({
                     sn: 0,
                     hotel: {
                         sn: 0,
+                        name: ''
                     },
                     time: '',
                 }
             ],
         },
+
+
         travelSetInfoLoading: false,
         travelSetInfoDialog: false,
-        travelSetInfo: false,
+        travelSetInfo: [
+            {
+                sn: 0,
+                createdUser: '',
+                name: '',
+                description: '',
+                createdTime: '',
+                updateTime: '',
+            },
+        ],
+
+
+
+        travelSetEditItemDialog: false,
+        travelSetDetailLoading: true,
+
     },
     getters: {
         getSelectRegion: (state) => state.selectRegion,
@@ -84,6 +115,11 @@ const travelSetStore = new Vuex.Store({
         getPageData: (state) => state.pageData,
 
         getSelectItem: (state) => state.selectItem,
+
+
+        getTravelSetEditItemDialog: (state) => state.travelSetEditItemDialog,
+        getTravelSetDetailLoading: (state) => state.travelSetDetailLoading,
+
 
     },
     mutations: {
@@ -131,6 +167,13 @@ const travelSetStore = new Vuex.Store({
         },
 
 
+
+        setIsSortDetailData(state, flag){
+            state.isSortDetailData = flag;
+        },
+        setTravelSetDetailSortDate(state, data){
+            state.travelSetDetailSortDate = data;
+        },
         setTravelSetDetail(state, data){
             state.travelSetDetail.travelSetInfo = data.travelSetInfo;
             state.travelSetDetail.travelSetAttractions = data.travelSetAttractions;
@@ -139,9 +182,25 @@ const travelSetStore = new Vuex.Store({
         },
 
 
+        toggleTravelSetInfoLoading(state, flag){
+            state.travelSetInfoLoading = flag;
+        },
+        setTravelSetInfo(state, data){
+            state.travelSetInfo = data;
+        },
         setTravelSetInfoDialog(state, flag){
             state.travelSetInfoDialog = flag;
-        }
+        },
+
+
+
+        setTravelSetEditItemDialog(state, flag){
+            state.travelSetEditItemDialog = flag;
+        },
+        setTravelSetDetailLoading(state, flag){
+            state.travelSetDetailLoading = flag;
+        },
+
 
 
 
@@ -198,6 +257,24 @@ const travelSetStore = new Vuex.Store({
                 .catch(() => {
                     return false;
                 });
+        },
+        selectedTravelSetDetailData(state, sn){
+            return axios.get(context+'/travelSet/entity/'+sn)
+                .then(response => {
+                    if(response.data.sortDate) {
+                        state.commit("setTravelSetDetailSortDate", response.data.dataSorted);
+                        state.commit("setIsSortDetailData", true);
+                    }else{
+                        state.commit("setIsSortDetailData", false);
+                    }
+                    let tmp = {
+                        travelSetInfo: response.data.data.travelSetInfo,
+                        travelSetAttractions: response.data.data.travelSetAttractions,
+                        travelSetHotels: response.data.data.travelSetHotels,
+                        travelSetRestaurants: response.data.data.travelSetRestaurants
+                    }
+                    state.commit("setTravelSetDetail", tmp);
+                })
         },
         appendItemListData(state, {region, keyword}){
             let type = state.getters.getSelectItemType;

@@ -13,7 +13,6 @@ import static global.Constant.*;
 public class BeanConvertUtils {
 
 
-    @Deprecated
     public static TravelSetDO convertToTravelSetDO(TravelSetFrontVO travelSetFrontVO){
         TravelSetDO travelSetDO = new TravelSetDO();
         travelSetDO.setSn(travelSetFrontVO.getSn());
@@ -23,13 +22,27 @@ public class BeanConvertUtils {
         travelSetDO.setCreatedTime(travelSetFrontVO.getCreatedTime());
         travelSetDO.setUpdateTime(travelSetFrontVO.getUpdateTime());
 
-
         Map<String, List<TravelSetEleVO>> events = travelSetFrontVO.getEvents();
-//        events.entrySet().forEach(map -> {
-//            map.getValue().forEach(vo -> {
-//
-//            });
-//        });
+        events.entrySet().forEach(map -> {
+            map.getValue().forEach(vo -> {
+                switch (vo.getType()){
+                    case TRAVEL_SET_TYPE_ATTRACTION:
+                        TravelEleAttractionDO aEleDO = convertToTravelEleDO((TravelSetEleAttractionVO) vo);
+                        travelSetDO.addTravelAttractions(aEleDO);
+                        break;
+                    case TRAVEL_SET_TYPE_RESTAURANT:
+                        TravelEleRestaurantDO rEleDO = convertToTravelEleDO((TravelSetEleRestaurantVO) vo);
+                        travelSetDO.addTravelRestaurants(rEleDO);
+                        break;
+                    case TRAVEL_SET_TYPE_HOTEL:
+                        TravelEleHotelDO hEleDO = convertToTravelEleDO((TravelSetEleHotelVO) vo);
+                        travelSetDO.addTravelHotels(hEleDO);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        });
 
         return travelSetDO;
     }
@@ -87,7 +100,8 @@ public class BeanConvertUtils {
         return travelSetFrontVO;
     }
 
-    public static TravelSetEleVO convertToTravelSetEleVO(int type, Object obj){
+
+    private static TravelSetEleVO convertToTravelSetEleVO(int type, Object obj){
         switch (type){
             case TRAVEL_SET_TYPE_ATTRACTION:
                 return convertToTravelSetEleVO((TravelEleAttractionDO)obj);
@@ -124,6 +138,45 @@ public class BeanConvertUtils {
         vo.setTime(ele.getTime());
         vo.setHotelVO(ele.getHotel());
         return vo;
+    }
+
+    @Deprecated
+    private static <T> T convertToTravelEleDO(TravelSetEleVO travelSetEleVO, Class<T> tClass){
+        switch (travelSetEleVO.getType()){
+            case TRAVEL_SET_TYPE_ATTRACTION:
+                return (T) convertToTravelEleDO((TravelSetEleAttractionVO)travelSetEleVO);
+            case TRAVEL_SET_TYPE_RESTAURANT:
+                return (T) convertToTravelEleDO((TravelSetEleRestaurantVO)travelSetEleVO);
+            case TRAVEL_SET_TYPE_HOTEL:
+                return (T) convertToTravelEleDO((TravelSetEleHotelVO)travelSetEleVO);
+            default:
+                break;
+        }
+        return null;
+    }
+
+    private static TravelEleAttractionDO convertToTravelEleDO(TravelSetEleAttractionVO travelSetEleVO){
+        TravelEleAttractionDO travelEleDO = new TravelEleAttractionDO();
+        travelEleDO.setSn(travelSetEleVO.getSn());
+        travelEleDO.setTime(travelSetEleVO.getTime());
+        travelEleDO.setAttraction(travelSetEleVO.getAttraction());
+        return travelEleDO;
+    }
+
+    private static TravelEleRestaurantDO convertToTravelEleDO(TravelSetEleRestaurantVO travelSetEleVO){
+        TravelEleRestaurantDO travelEleDO = new TravelEleRestaurantDO();
+        travelEleDO.setSn(travelSetEleVO.getSn());
+        travelEleDO.setTime(travelSetEleVO.getTime());
+        travelEleDO.setRestaurant(travelSetEleVO.getRestaurantVO());
+        return travelEleDO;
+    }
+
+    private static TravelEleHotelDO convertToTravelEleDO(TravelSetEleHotelVO travelSetEleVO){
+        TravelEleHotelDO travelEleDO = new TravelEleHotelDO();
+        travelEleDO.setSn(travelSetEleVO.getSn());
+        travelEleDO.setTime(travelSetEleVO.getTime());
+        travelEleDO.setHotel(travelSetEleVO.getHotelVO());
+        return travelEleDO;
     }
 
 

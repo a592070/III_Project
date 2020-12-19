@@ -30,6 +30,12 @@ public class TravelSetServiceImpl implements TravelSetService{
         return dao.getTravelSetByID(id, loadFetch, findFromPersistence);
     }
 
+    @Override
+    public TravelSetDO getEleByUser(Integer id, String userName, boolean loadFetch) {
+        if(id == null || id==0) return null;
+        if(StringUtil.isEmpty(userName)) return null;
+        return dao.getTravelSetByUser(id, userName, loadFetch);
+    }
 
     @Override
     public int getSize() {
@@ -223,6 +229,52 @@ public class TravelSetServiceImpl implements TravelSetService{
         return dao.listBySelect(index, pageSize, identity, keywords, orderFiled, descending, status);
     }
 
+
+    @Override
+    public int getSizeByUser(String userName, boolean status) {
+        return dao.getSizeByUser(userName, status);
+    }
+
+    @Override
+    public List<TravelSetVO> listByUserWithStatus(int currentPage, int pageSize, String userName, boolean status) {
+        return listByUserWithStatus(currentPage, pageSize, userName, status, SN);
+    }
+
+    @Override
+    public List<TravelSetVO> listByUserWithStatus(int currentPage, int pageSize, String userName, boolean status, String orderFiled) {
+        return listByUserWithStatus(currentPage, pageSize, userName, status, orderFiled, false);
+    }
+
+    @Override
+    public List<TravelSetVO> listByUserWithStatus(int currentPage, int pageSize, String userName, boolean status, String orderFiled, boolean descending) {
+        int index = (currentPage-1)* pageSize;
+        return dao.listByUser(index, pageSize, userName, orderFiled, descending, status);
+    }
+
+    @Override
+    public int getSizeByUserSelect(String userName, String keywords, boolean status) {
+        if(StringUtil.isEmpty(keywords)) return getSizeByUser(userName, status);
+        return dao.getSizeByUserSelect(userName, keywords, status);
+    }
+
+    @Override
+    public List<TravelSetVO> listByUserSelectWithStatus(int currentPage, int pageSize, String userName, String keywords, boolean status) {
+        return listByUserSelectWithStatus(currentPage, pageSize, userName, keywords, status, SN);
+    }
+
+    @Override
+    public List<TravelSetVO> listByUserSelectWithStatus(int currentPage, int pageSize, String userName, String keywords, boolean status, String orderFiled) {
+        return listByUserSelectWithStatus(currentPage, pageSize, userName, keywords, status, orderFiled, false);
+    }
+
+    @Override
+    public List<TravelSetVO> listByUserSelectWithStatus(int currentPage, int pageSize, String userName, String keywords, boolean status, String orderFiled, boolean descending) {
+        if(StringUtil.isEmpty(keywords)) return listByUserWithStatus(currentPage, pageSize, userName, status, orderFiled, descending);
+        keywords = new StringBuffer().append("%").append(keywords).append("%").toString();
+        int index = (currentPage-1)* pageSize;
+        return dao.listByUserSelect(index, pageSize, userName, keywords, orderFiled, descending, status);
+    }
+
     @Override
     public TravelSetDO addTravelSet(TravelSetDO travelSetDO) {
         Integer id = dao.addTravelSet(travelSetDO);
@@ -245,6 +297,12 @@ public class TravelSetServiceImpl implements TravelSetService{
     @Override
     public boolean switchTravelSetAvailable(Integer sn) {
         dao.switchTravelSetStatus(sn);
+        return true;
+    }
+
+    @Override
+    public boolean switchTravelSetAvailable(Integer sn, boolean flag) {
+        dao.switchTravelSetStatus(sn ,flag);
         return true;
     }
 }

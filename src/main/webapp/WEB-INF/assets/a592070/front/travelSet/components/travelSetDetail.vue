@@ -273,6 +273,7 @@ module.exports = {
       region: this.selectRegion,
 
       travelSetByDate: [],
+      travelSetDateMap: {},
       e1: 1,
       steps: this.dateNum,
       inputName: null,
@@ -297,6 +298,22 @@ module.exports = {
         this.e1 = val
       }
     },
+    travelSetDetailSortDate: {
+      handler: function () {
+        let events = this.travelSetDetailSortDate.events;
+        let eventDates = Object.keys(events);
+
+        console.log(eventDates);
+
+        eventDates.sort((a,b)=>new Date(a).getTime()-new Date(b).getTime());
+        this.dates = eventDates;
+        this.$refs.dateModal.save(this.dates);
+
+        console.log(this.dates);
+      },
+      deep: true,
+
+    }
   },
   computed: {
     timeline () {
@@ -323,8 +340,8 @@ module.exports = {
           this.dates[1] = tmp;
         }
 
-        console.log("beginDate" + new Date(this.dates[0]));
-        console.log("endDate" + new Date(this.dates[1]));
+        // console.log("beginDate" + new Date(this.dates[0]));
+        // console.log("endDate" + new Date(this.dates[1]));
 
         let num = Math.abs((new Date(this.dates[1]) - new Date(this.dates[0])) / 1000 / 60 / 60 / 24 )+ 1;
 
@@ -341,7 +358,7 @@ module.exports = {
       return this.travelSetByDate.length;
     },
 
-    ...Vuex.mapState(["selectItemDialog", 'regions', 'selectRegion', 'selectItem']),
+    ...Vuex.mapState(["selectItemDialog", 'regions', 'selectRegion', 'selectItem', 'isSortDetailData', 'travelSetDetailSortDate']),
   },
   created: function (){
     this.$store.dispatch("initRegionsData");
@@ -356,15 +373,20 @@ module.exports = {
 
       this.dateArray = [];
       this.travelSetByDate = [];
-      for (let i = 1; i <this.dateNum; i++) {
+      for (let i = 0; i <this.dateNum; i++) {
         let plusDate = new Date(this.dates[0]);
         plusDate.setDate(plusDate.getDate()+i);
         // this.dateArray.splice(i, 0, plusDate);
         this.dateArray.push(plusDate);
+
+        // let key = plusDate.toISOString().substring(0,10);
+        // console.log(key);
+        // this.travelSetDateMap[key] = [];
         this.travelSetByDate.push([]);
       }
-      this.dateArray.unshift(new Date(this.dates[0]));
-      this.travelSetByDate.push([]);
+      // this.dateArray.unshift(new Date(this.dates[0]));
+      // this.travelSetByDate.push([]);
+      // console.log(this.travelSetDateMap);
     },
     closePicker: function(v){
       v = v < 10 ? '0'+v : v;
