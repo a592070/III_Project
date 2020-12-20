@@ -62,7 +62,7 @@
 <!--             <a href="index.html" class="nav-link">首頁</a> -->
 <!--           </li> -->
           <li class="nav-item">
-            <a href="about.html" class="nav-link">關於我</a>
+            <a href="<%=application.getContextPath()%>/FunTaiwan" class="nav-link">關於我</a>
           </li>
           <li class="nav-item">
             <a href="${pageContext.servletContext.contextPath}/attraction/index" class="nav-link">找景點</a>
@@ -85,6 +85,9 @@
           <li class="nav-item">
             <a href="<%=application.getContextPath()%>/forum_index" class="nav-link">論壇</a>
           </li>
+            <li class="nav-item">
+                <a href="${pageContext.servletContext.contextPath}/travelSet/index" class="nav-link">規劃行程</a>
+            </li>
           <c:if test="${empty userBean}">
             <li class="nav-item">
               <a

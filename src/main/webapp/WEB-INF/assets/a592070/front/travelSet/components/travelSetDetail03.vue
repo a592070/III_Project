@@ -33,14 +33,14 @@
                 color="primary"
                 @click="dateModal = false"
             >
-              Cancel
+              取消
             </v-btn>
             <v-btn
                 text
                 color="primary"
                 @click="selectDate"
             >
-              OK
+              選擇
             </v-btn>
           </v-date-picker>
         </v-dialog>
@@ -73,6 +73,25 @@
       </v-card-text>
     </v-card>
 
+    <div class="text-center ma-2">
+      <v-snackbar
+          v-model="selectItemTimeRepeat"
+      >
+        {{ text }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+              color="pink"
+              text
+              v-bind="attrs"
+              @click="selectItemTimeRepeat = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
+
     <v-container>
       <v-stepper v-model="e1" @change="changeStep">
         <v-stepper-header>
@@ -82,7 +101,7 @@
                 :step="index"
                 editable
             >
-              {{index.toString()}}
+              {{index}}
             </v-stepper-step>
 
             <v-divider
@@ -112,7 +131,7 @@
                   >
                     <template v-slot:icon>
                       <v-dialog
-                          v-model="selectItemDialog"
+                          v-model="selectItemDialog1"
                           fullscreen
                           hide-overlay
                           transition="dialog-bottom-transition"
@@ -125,44 +144,51 @@
                               @click="addTravelSetItem"
                               v-on="on"
                           >
-                            <v-icon>mdi-plus</v-icon>
+                            <v-icon>mdi-magnify</v-icon>
                           </v-btn>
                         </template>
-                        <select-item></select-item>
+                        <select-item v-if="selectItemDialog1"></select-item>
                       </v-dialog>
                     </template>
-
-
-
                     <v-card
                         color="red lighten-2"
                         dark
                     >
-                      <v-card-title class="title" v-if="selectItem.type === 0">
+<!--                      <v-card-title class="title">-->
+<!--                        {{selectItem.name}}-->
+<!--                      </v-card-title>-->
+
+                      <v-card-title class="title" v-if="selectItem.attraction">
                         {{selectItem.attraction.name}}
                       </v-card-title>
-                      <v-card-title class="title" v-else-if="selectItem.type === 1">
+                      <v-card-title class="title" v-else-if="selectItem.restaurant">
                         {{selectItem.restaurant.name}}
                       </v-card-title>
-                      <v-card-title class="title" v-else-if="selectItem.type === 2">
+                      <v-card-title class="title" v-else-if="selectItem.hotel">
                         {{selectItem.hotel.name}}
                       </v-card-title>
                       <v-card-title class="title" v-else>
                         請選擇
                       </v-card-title>
 
-                      <v-card-text class="white text--primary" v-if="selectItem.type === 0">
+
+<!--                      <v-card-text class="white text&#45;&#45;primary">-->
+<!--                        <p>{{selectItem.description}}</p>-->
+<!--                      </v-card-text>-->
+
+                      <v-card-text class="white text--primary" v-if="selectItem.attraction">
                         <p>{{selectItem.attraction.description}}</p>
                       </v-card-text>
-                      <v-card-text class="white text--primary" v-else-if="selectItem.type === 1">
-                        <p>{{selectItem.attraction.description}}</p>
+                      <v-card-text class="white text--primary" v-else-if="selectItem.restaurant">
+                        <p>{{selectItem.restaurant.description}}</p>
                       </v-card-text>
-                      <v-card-text class="white text--primary" v-else-if="selectItem.type === 2">
-                        <p>{{selectItem.attraction.description}}</p>
+                      <v-card-text class="white text--primary" v-else-if="selectItem.hotel">
+                        <p>{{selectItem.hotel.description}}</p>
                       </v-card-text>
                       <v-card-text class="white text--primary" v-else>
                         <p></p>
                       </v-card-text>
+
 
                       <v-card-text>
                         <el-time-select
@@ -176,9 +202,18 @@
                         </el-time-select>
                       </v-card-text>
                       <v-card-text class="white text--primary">
+<!--                        <v-btn-->
+<!--                            :disabled="selectItem.sn === 0"-->
+<!--                            color="red lighten-2"-->
+<!--                            class="mx-0"-->
+<!--                            outlined-->
+<!--                            @click="comment()"-->
+<!--                        >-->
+<!--                          加 入-->
+<!--                        </v-btn>-->
+
                         <v-btn
-                            v-if="selectItem.type === 0"
-                            :disabled="selectItem.attraction.sn === 0"
+                            v-if="selectItem.attraction"
                             color="red lighten-2"
                             class="mx-0"
                             outlined
@@ -187,8 +222,7 @@
                           加 入
                         </v-btn>
                         <v-btn
-                            v-else-if="selectItem.type === 1"
-                            :disabled="selectItem.restaurant.sn === 0"
+                            v-else-if="selectItem.restaurant"
                             color="red lighten-2"
                             class="mx-0"
                             outlined
@@ -197,8 +231,7 @@
                           加 入
                         </v-btn>
                         <v-btn
-                            v-else-if="selectItem.type === 2"
-                            :disabled="selectItem.hotel.sn === 0"
+                            v-else-if="selectItem.hotel"
                             color="red lighten-2"
                             class="mx-0"
                             outlined
@@ -217,18 +250,20 @@
                           加 入
                         </v-btn>
 
+
                       </v-card-text>
                     </v-card>
-
 
                   </v-timeline-item>
 
                   <v-slide-x-transition
                       group
                   >
-                    <template v-for="item in timeline">
-                    <v-timeline-item
-                        :key="item.sn"
+                    <template v-for="(item,index) in timeline">
+
+                      <v-timeline-item
+                        v-if="item.attraction"
+                        :key="item.attraction.sn"
                         :color="itemColor[item.type]"
                         fill-dot
                         right
@@ -243,34 +278,23 @@
                           >
                             mdi-calendar-text
                           </v-icon>
-                          <h2 class="display-1 white--text font-weight-light" v-if="item.type === 0">
+
+                          <h2 class="display-1 white--text font-weight-light" >
                             {{item.attraction.name}}
-                          </h2>
-                          <h2 class="display-1 white--text font-weight-light" v-else-if="item.type === 1">
-                            {{item.restaurant.name}}
-                          </h2>
-                          <h2 class="display-1 white--text font-weight-light" v-else-if="item.type === 2">
-                            {{item.hotel.name}}
                           </h2>
                         </v-card-title>
                         <v-card-text class="headline font-weight-bold">
                           {{item.time.toLocaleString()}}
                         </v-card-text>
                         <v-card-actions>
-                          <v-btn
-                              color="orange lighten-2"
-                              text
-                              @click="showItemDetail = !showItemDetail"
-                          >
-                            詳細
-                          </v-btn>
+
                           <v-spacer></v-spacer>
                           <v-btn
                               class="mx-2"
                               fab
                               dark
                               small
-                              color="primary"
+                              color="danger"
                               @click="removeItem(item)"
                           >
                             <v-icon dark>
@@ -279,23 +303,121 @@
                           </v-btn>
                         </v-card-actions>
 
-                        <v-expand-transition>
-                          <div v-show="showItemDetail">
+<!--                        <v-expand-transition>-->
+<!--                          <div v-show="showItemDetail">-->
                             <v-divider></v-divider>
 
-                            <v-card-text v-if="item.type === 0">
+<!--                            <v-card-text>-->
+<!--                              {{item.description}}-->
+<!--                            </v-card-text>-->
+                            <v-card-text>
                               {{item.attraction.description}}
                             </v-card-text>
-                            <v-card-text v-else-if="item.type === 1">
-                              {{item.restaurant.description}}
-                            </v-card-text>
-                            <v-card-text v-else-if="item.type === 2">
-                              {{item.hotel.description}}
-                            </v-card-text>
-                          </div>
-                        </v-expand-transition>
+<!--                          </div>-->
+<!--                        </v-expand-transition>-->
+<!--                        </template>-->
                       </v-card>
                     </v-timeline-item>
+
+                      <v-timeline-item
+                          v-else-if="item.restaurant"
+                          :key="item.restaurant.sn"
+                          :color="itemColor[item.type]"
+                          fill-dot
+                          right
+                      >
+                        <v-card>
+                          <v-card-title
+                              :class="itemColor[item.type]">
+                            <v-icon
+                                class="mr-4"
+                                dark
+                                size="42"
+                            >
+                              mdi-calendar-text
+                            </v-icon>
+
+                            <h2 class="display-1 white--text font-weight-light">
+                              {{item.restaurant.name}}
+                            </h2>
+
+                          </v-card-title>
+                          <v-card-text class="headline font-weight-bold">
+                            {{item.time.toLocaleString()}}
+                          </v-card-text>
+                          <v-card-actions>
+
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                class="mx-2"
+                                fab
+                                dark
+                                small
+                                color="danger"
+                                @click="removeItem(item)"
+                            >
+                              <v-icon dark>
+                                mdi-minus
+                              </v-icon>
+                            </v-btn>
+                          </v-card-actions>
+
+                          <v-divider></v-divider>
+
+                          <v-card-text>
+                            {{item.restaurant.description}}
+                          </v-card-text>
+                        </v-card>
+                      </v-timeline-item>
+
+                      <v-timeline-item
+                          v-else-if="item.hotel"
+                          :key="item.hotel.sn"
+                          :color="itemColor[item.type]"
+                          fill-dot
+                          right
+                      >
+                        <v-card>
+                          <v-card-title
+                              :class="itemColor[item.type]">
+                            <v-icon
+                                class="mr-4"
+                                dark
+                                size="42"
+                            >
+                              mdi-calendar-text
+                            </v-icon>
+                            <h2 class="display-1 white--text font-weight-light" >
+                              {{item.hotel.name}}
+                            </h2>
+
+                          </v-card-title>
+                          <v-card-text class="headline font-weight-bold">
+                            {{item.time.toLocaleString()}}
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                class="mx-2"
+                                fab
+                                dark
+                                small
+                                color="danger"
+                                @click="removeItem(item)"
+                            >
+                              <v-icon dark>
+                                mdi-minus
+                              </v-icon>
+                            </v-btn>
+                          </v-card-actions>
+                          <v-divider></v-divider>
+                          <v-card-text >
+                            {{item.hotel.description}}
+                          </v-card-text>
+                        </v-card>
+                      </v-timeline-item>
+
+
                     </template>
                   </v-slide-x-transition>
                 </v-timeline>
@@ -303,8 +425,10 @@
 
 
               <v-btn
+                  :disabled="noLogin"
                   color="primary"
                   @click="saveTravelSet"
+
               >
                 保 存
               </v-btn>
@@ -317,6 +441,8 @@
         </v-stepper-items>
       </v-stepper>
     </v-container>
+
+
   </v-container>
 
 </template>
@@ -328,6 +454,8 @@ module.exports = {
   },
   data() {
     return {
+      selectItemTimeRepeat:false,
+      text: '選擇的時間點重複了',
       dates: [],
       dateArray: [],
       dateMenu: false,
@@ -356,7 +484,10 @@ module.exports = {
         'cyan lighten-1'
       ],
       showItemDetail: false,
-      timeline: []
+      timeline: [],
+
+
+      // selectItemDialog1: false
     }
   },
   watch: {
@@ -367,9 +498,17 @@ module.exports = {
       console.log(this.e1);
       this.e1 = val;
     },
-    // travelSetDetailSortDate: function (val) {
-    //
-    //   this.travelSetDateMap = val.events;
+    travelSetDetailSortDate: function () {
+      this.travelSetDateMap = this.travelSetDetailSortDate.events
+      this.inputName = this.travelSetDetailSortDate.name;
+      this.inputDescription = this.travelSetDetailSortDate.description;
+    },
+    travelSetDetail: function () {
+      this.inputName = this.travelSetDetail.travelSetInfo.name;
+      this.inputDescription = this.travelSetDetail.travelSetInfo.description;
+    },
+    // selectItemDialog: function (){
+    //   this.selectItemDialog1 = this.selectItemDialog;
     // }
   },
   computed: {
@@ -383,16 +522,20 @@ module.exports = {
     //   let event = this.travelSetDateMap[this.e1];
     //   return event.slice().reverse()
     // },
+    selectItemDialog1 (){
+      return this.selectItemDialog
+    },
     dateRangeText () {
-      // return this.dates.join('  #')
-      return this.dates;
+      return this.dates.join('  #')
     },
     dateNum(){
       if(this.dates.length > 1) {
-        this.steps = this.dates[0];
+        this.dates.sort((a,b)=>new Date(a).getTime()-new Date(b).getTime());
+        this.steps = this.dates.length;
+
         return this.dates.length;
       }
-      this.steps = this.dates[0];
+      this.steps = this.dates.length;
       return 1;
     },
     // steps(){
@@ -401,11 +544,8 @@ module.exports = {
     travelSetLength() {
       return this.travelSetDateMap.length;
     },
-    // travelSetDateMap() {
-    //   return this.travelSetDetailSortDate.events;
-    // },
 
-    ...Vuex.mapState(["selectItemDialog", 'regions', 'selectRegion', 'selectItem', 'isSortDetailData']),
+    ...Vuex.mapState(["selectItemDialog", 'regions', 'selectRegion', 'selectItem', 'isSortDetailData', 'travelSetDetailSortDate', 'travelSetDetail', 'noLogin']),
   },
   created: function (){
     this.$store.dispatch("initRegionsData");
@@ -420,15 +560,24 @@ module.exports = {
       this.dialog = true
     },
     selectDate(){
-      console.log(this.dates);
-      console.log(new Date(this.dates[0]).getTime());
-      this.dates.sort((a,b)=>new Date(a)-new Date(b));
-      // console.log(this.dates);
+      // this.dates.sort((a,b)=>new Date(a).getTime()-new Date(b).getTime());
       this.$refs.dateModal.save(this.dates);
-      // console.log(this.dates);
 
+      // let eventDates = Object.keys(this.travelSetDateMap);
+      // for (let i = 0; i < eventDates.length; i++) {
+      //   if(this.dates.indexOf(eventDates[i]) == -1){
+      //     delete this.travelSetDateMap[eventDates[i]]
+      //   }
+      // }
+      //
+      // // this.travelSetDateMap = {};
+      // for (let date of this.dates) {
+      //   console.log(date);
+      //   this.travelSetDateMap[date] = [];
+      // }
+      // console.log(this.travelSetDateMap);
 
-
+      this.travelSetDateMap = {};
       for (let date of this.dates) {
         if(!this.travelSetDateMap[date]){
           this.travelSetDateMap[date] = [];
@@ -448,13 +597,6 @@ module.exports = {
         return Obj;
       }, {});
 
-
-      this.travelSetDateMap = modify;
-      // console.log(this.travelSetDateMap);
-
-
-      // this.$store.commit('setTravelSetDetailSortDateEvents', this.travelSetDateMap);
-
     },
     closePicker: function(v){
       v = v < 10 ? '0'+v : v;
@@ -464,41 +606,41 @@ module.exports = {
     comment() {
       let time = this.time;
 
-      let item = {};
-      if(this.selectItem.type === 0){
-        item = {
-          sn: 0,
-          type: this.selectItem.type,
-          time: null,
-          attraction: {
-            sn: this.selectItem.sn,
-            name: this.selectItem.name,
-            description: this.selectItem.description,
-          }
-        }
-      }else if(this.selectItem.type === 1){
-        item = {
-          sn: 0,
-          type: this.selectItem.type,
-          time: null,
-          restaurant: {
-            sn: this.selectItem.sn,
-            name: this.selectItem.name,
-            description: this.selectItem.description,
-          }
-        }
-      }else if(this.selectItem.type === 2){
-        item = {
-          sn: 0,
-          type: this.selectItem.type,
-          time: null,
-          hotel: {
-            sn: this.selectItem.sn,
-            name: this.selectItem.name,
-            description: this.selectItem.description,
-          }
-        }
-      }
+      let item = this.selectItem;
+      // if(this.selectItem.type === 0){
+      //   item = {
+      //     sn: 0,
+      //     type: this.selectItem.type,
+      //     time: null,
+      //     attraction: {
+      //       sn: this.selectItem.sn,
+      //       name: this.selectItem.name,
+      //       description: this.selectItem.description,
+      //     }
+      //   }
+      // }else if(this.selectItem.type === 1){
+      //   item = {
+      //     sn: 0,
+      //     type: this.selectItem.type,
+      //     time: null,
+      //     restaurant: {
+      //       sn: this.selectItem.sn,
+      //       name: this.selectItem.name,
+      //       description: this.selectItem.description,
+      //     }
+      //   }
+      // }else if(this.selectItem.type === 2){
+      //   item = {
+      //     sn: 0,
+      //     type: this.selectItem.type,
+      //     time: null,
+      //     hotel: {
+      //       sn: this.selectItem.sn,
+      //       name: this.selectItem.name,
+      //       description: this.selectItem.description,
+      //     }
+      //   }
+      // }
 
       item.time = new Date(this.e1);
 
@@ -510,27 +652,69 @@ module.exports = {
       // });
       let events = this.travelSetDateMap[this.e1];
 
-      // console.log(events);
+      // console.log("==============");
+      // console.log(events)
+      // console.log("==============");
+      // console.log(item);
+      // console.log("==============");
 
       if(events.length > 0){
+        // let isExist = false;
         for (let i = 0; i < events.length; i++) {
-          if(events[i].time > item.time){
-            events.splice(i , 0, item);
+          if(events[i].type == item.type && item.type == 0 && events[i].attraction.sn == item.attraction.sn) {
+            // console.log('type 0:'+i);
+            // events[i].time = item.time;
+            // isExist = true;
+            events.splice(i, 1);
             break;
-          }else if(events[i].time < item.time){
-            events.push(item);
+          }else if(events[i].type == item.type && item.type == 1 && events[i].restaurant.sn == item.restaurant.sn){
+            // console.log('type 1:'+i);
+            // events[i].time = item.time;
+            // isExist = true;
+            events.splice(i, 1);
+            break;
+          }else if(events[i].type == item.type && item.type == 2 && events[i].hotel.sn == item.hotel.sn){
+            // console.log('type 2:'+i);
+            // events[i].time = item.time;
+            // isExist = true;
+            events.splice(i, 1);
             break;
           }
         }
+
+        // console.log(item.time);
+        for (let i = 0; i < events.length; i++) {
+          if(events[i].time.getTime() === item.time.getTime()){
+
+            this.$message({
+              showClose: true,
+              message: this.text,
+              type: 'error'
+            });
+            break;
+          }
+          // console.log('index:'+i+'=======>'+events[i].time)
+          if(events[i].time > item.time ){
+            // console.log(i+'more')
+            events.splice(i , 0, item);
+            break;
+          }
+          if(i===events.length) events.push(item);
+          // else if(events[i].time < item.time){
+          //   // console.log(i+'less')
+          //   events.splice(i+1 , 0, item);
+          //   break;
+          // }
+        }
+        if(events.length == 0) events.push(item);
+
       }else{
         events.push(item)
       }
 
+      console.log(events);
       // console.log(this.travelSetDateMap);
       // this.timeline = this.travelSetDateMap[this.e1].slice().reverse()
-      // console.log(events);
-
-      // this.$store.commit('setTravelSetDetailSortDateEvents', this.travelSetDateMap);
       this.setTimeline();
     },
     setTimeline(){
@@ -542,6 +726,7 @@ module.exports = {
       console.log(index);
 
       event.splice(index, 1);
+      this.setTimeline();
     },
     addTravelSetItem () {
 
@@ -549,11 +734,17 @@ module.exports = {
     },
     saveTravelSet () {
 
-      console.log(this.travelSetDateMap);
+      this.travelSetDetailSortDate.name = this.inputName;
+      this.travelSetDetailSortDate.description = this.inputDescription;
+      // console.log(this.travelSetDateMap);
+      this.$store.commit('setTravelSetDetailSortDateEvents', this.travelSetDateMap);
+      // console.log(this.travelSetDetailSortDate);
       // let convertedTravelSet = this.convertToTravelSet(this.travelSetByDate);
+      // this.$store.dispatch("saveTravelSetSortDate", this.travelSetDetailSortDate);
       // console.log(convertedTravelSet);
-      // this.$store.dispatch("saveTravelSet", convertedTravelSet);
-
+      let travelSet = this.convertToTravelSet(this.travelSetDetailSortDate);
+      // console.log(travelSet);
+      this.$store.dispatch("saveTravelSet", travelSet);
 
     },
     handleSelectedRegion(){
@@ -563,45 +754,46 @@ module.exports = {
     convertToTravelSet(data){
       let tmp = {
         travelSetInfo: {
-          sn: 0,
-          name: this.inputName,
-          description: this.inputDescription,
+          sn: data.sn,
+          name: data.name,
+          description: data.description,
         },
         travelSetAttractions: [],
         travelSetRestaurants: [],
         travelSetHotels: [],
       };
-      for (let i = 0; i < data.length; i++) {
-        let event = data[i];
+      for (let eventDate in data.events) {
+        let event = data.events[eventDate];
 
-        for (let j = 0; j < event.length; j++) {
-          if(event[j].type === 0){
+        for (let i = 0; i < event.length; i++) {
+          if(event[i].type === 0){
             tmp.travelSetAttractions.push({
-              sn: 0,
-              time: event[j].time,
+              sn: event[i].sn === 0? null: event[i].sn,
+              time: event[i].time,
               attraction: {
-                sn: event[j].sn,
+                sn: event[i].attraction.sn,
               }
             })
-          }else if(event[j].type === 1){
+          }else if(event[i].type === 1){
             tmp.travelSetRestaurants.push({
-              sn: 0,
-              time: event[j].time,
+              sn: event[i].sn === 0? null: event[i].sn,
+              time: event[i].time,
               restaurant: {
-                sn: event[j].sn,
+                sn: event[i].restaurant.sn,
               }
             })
-          }else if(event[j].type === 2){
+          }else if(event[i].type === 2){
             tmp.travelSetHotels.push({
-              sn: 0,
-              time: event[j].time,
+              sn: event[i].sn === 0? null: event[i].sn,
+              time: event[i].time,
               hotel: {
-                sn: event[j].sn,
+                sn: event[i].hotel.sn,
               }
             })
           }
         }
       }
+
       return tmp;
     },
     convertFromTravelSet(data){

@@ -128,7 +128,7 @@ public class BeanConvertUtils {
         vo.setType(TRAVEL_SET_TYPE_RESTAURANT);
         vo.setSn(ele.getSn());
         vo.setTime(ele.getTime());
-        vo.setRestaurantVO(ele.getRestaurant());
+        vo.setRestaurant(ele.getRestaurant());
         return vo;
     }
     private static TravelSetEleVO convertToTravelSetEleVO(TravelEleHotelDO ele){
@@ -136,7 +136,7 @@ public class BeanConvertUtils {
         vo.setType(TRAVEL_SET_TYPE_HOTEL);
         vo.setSn(ele.getSn());
         vo.setTime(ele.getTime());
-        vo.setHotelVO(ele.getHotel());
+        vo.setHotel(ele.getHotel());
         return vo;
     }
 
@@ -167,7 +167,7 @@ public class BeanConvertUtils {
         TravelEleRestaurantDO travelEleDO = new TravelEleRestaurantDO();
         travelEleDO.setSn(travelSetEleVO.getSn());
         travelEleDO.setTime(travelSetEleVO.getTime());
-        travelEleDO.setRestaurant(travelSetEleVO.getRestaurantVO());
+        travelEleDO.setRestaurant(travelSetEleVO.getRestaurant());
         return travelEleDO;
     }
 
@@ -175,7 +175,7 @@ public class BeanConvertUtils {
         TravelEleHotelDO travelEleDO = new TravelEleHotelDO();
         travelEleDO.setSn(travelSetEleVO.getSn());
         travelEleDO.setTime(travelSetEleVO.getTime());
-        travelEleDO.setHotel(travelSetEleVO.getHotelVO());
+        travelEleDO.setHotel(travelSetEleVO.getHotel());
         return travelEleDO;
     }
 

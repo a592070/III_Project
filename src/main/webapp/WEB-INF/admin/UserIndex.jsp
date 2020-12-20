@@ -32,31 +32,31 @@
             <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong> <br></strong> <strong>Fun x 臺灣</strong></h1>
             <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">馬上展開您的旅程</p>
             <div class="block-17 my-4">
-              <form action="" method="post" class="d-block d-flex">
-                <div class="fields d-block d-flex">
-                  <div class="textfield-search one-third">
-                  	<input type="text" class="form-control" placeholder="Ex: food, service, hotel">
-                  </div>
-                  <div class="select-wrap one-third">
-                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-<!--                     <select name="" id="" class="form-control" placeholder="Keyword search"> -->
-<!--                       <option value="">Where</option> -->
-<!--                       <option value="">San Francisco USA</option> -->
-<!--                       <option value="">Berlin Germany</option> -->
-<!--                       <option value="">Lodon United Kingdom</option> -->
-<!--                       <option value="">Paris Italy</option> -->
-<!--                     </select> -->
-                  </div>
-                </div>
-                <input type="submit" class="search-submit btn btn-primary" value="Search">  
-              </form>
+<%--              <form action="" method="post" class="d-block d-flex">--%>
+<%--                <div class="fields d-block d-flex">--%>
+<%--                  <div class="textfield-search one-third">--%>
+<%--                  	<input type="text" class="form-control" placeholder="Ex: food, service, hotel">--%>
+<%--                  </div>--%>
+<%--                  <div class="select-wrap one-third">--%>
+<%--                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>--%>
+<%--<!--                     <select name="" id="" class="form-control" placeholder="Keyword search"> -->--%>
+<%--<!--                       <option value="">Where</option> -->--%>
+<%--<!--                       <option value="">San Francisco USA</option> -->--%>
+<%--<!--                       <option value="">Berlin Germany</option> -->--%>
+<%--<!--                       <option value="">Lodon United Kingdom</option> -->--%>
+<%--<!--                       <option value="">Paris Italy</option> -->--%>
+<%--<!--                     </select> -->--%>
+<%--                  </div>--%>
+<%--                </div>--%>
+<%--                <input type="submit" class="search-submit btn btn-primary" value="Search">  --%>
+<%--              </form>--%>
             </div>
             <p>幫您找到適合的景點、住宿、餐廳、交通 訊息</p>
             <p class="browse d-md-flex">
             	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-meeting-point"></i>找交通</a></span> 
             	<span class="d-flex justify-content-md-center align-items-md-center"><a href="<%=application.getContextPath()%>/Restaurant_index"><i class="flaticon-fork"></i>找餐廳</a></span>
             	<span class="d-flex justify-content-md-center align-items-md-center"><a href="<%=application.getContextPath()%>/Hotel_index"><i class="flaticon-hotel"></i>找住宿</a></span> 
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-cars"></i>找景點</a></span>
+            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="<%=application.getContextPath()%>/attraction/index"><i class="flaticon-coffee-cup"></i>找景點</a></span>
             </p>
           </div>
         </div>

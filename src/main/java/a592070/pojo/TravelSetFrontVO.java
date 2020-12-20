@@ -1,5 +1,6 @@
 package a592070.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import utils.CollectionUtils;
 
@@ -8,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TravelSetFrontVO {
     private Integer sn;
     private String name;
@@ -92,5 +94,17 @@ public class TravelSetFrontVO {
 
     public void setEvents(Map<String, List<TravelSetEleVO>> events) {
         this.events = events;
+    }
+
+    @Override
+    public String toString() {
+        return "TravelSetFrontVO{" +
+                "sn=" + sn +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createdUser='" + createdUser + '\'' +
+                ", createdTime=" + createdTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

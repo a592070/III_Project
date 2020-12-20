@@ -3,6 +3,8 @@ package a592070.controller;
 import a592070.pojo.*;
 import a592070.service.TravelSetService;
 import a592070.service.ViewService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import global.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +20,7 @@ import utils.StringUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import java.io.DataInput;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,11 +57,11 @@ public class TravelSetFrontController {
 
     @RequestMapping("/travelSet/list/{page}")
     public Map<String, Object> getTravelSetList(@PathVariable("page") Integer page, HttpSession session){
-//        AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
+        AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
 
         // delete when deploy
-        AccountBean user = new AccountBean();
-        user.setUserName("system");
+//        AccountBean user = new AccountBean();
+//        user.setUserName("system");
 
         Map<String, Object> map = new HashMap<>();
 
@@ -79,6 +82,7 @@ public class TravelSetFrontController {
                 e.printStackTrace();
                 map.put("message", false);
             }
+            map.put("noLogin", false);
         }else{
             map.put("noLogin", true);
         }
@@ -92,11 +96,11 @@ public class TravelSetFrontController {
                                                           @RequestParam(name = "order", required = false) String order,
                                                           HttpSession session){
 
-//        AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
+        AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
 
         // delete when deploy
-        AccountBean user = new AccountBean();
-        user.setUserName("system");
+//        AccountBean user = new AccountBean();
+//        user.setUserName("system");
 
         Map<String, Object> map = new HashMap<>();
 
@@ -138,6 +142,7 @@ public class TravelSetFrontController {
                 e.printStackTrace();
                 map.put("message", false);
             }
+            map.put("noLogin", false);
         }else{
             map.put("noLogin", true);
         }
@@ -147,11 +152,11 @@ public class TravelSetFrontController {
 
     @GetMapping("/travelSet/entity/{id}")
     public Map<String, Object> getTravelSet(@PathVariable("id") Integer id, HttpSession session) {
-//        AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
+        AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
 
         // delete when deploy
-        AccountBean user = new AccountBean();
-        user.setUserName("system");
+//        AccountBean user = new AccountBean();
+//        user.setUserName("system");
 
         Map<String, Object> map = new HashMap<>();
         if(user != null) {
@@ -178,6 +183,7 @@ public class TravelSetFrontController {
                 e.printStackTrace();
                 map.put("sortByDate", false);
             }
+            map.put("noLogin", false);
         }else {
             map.put("noLogin", true);
         }
@@ -205,6 +211,112 @@ public class TravelSetFrontController {
             e.printStackTrace();
         }
         return flag;
+    }
+
+
+    @PutMapping({"/travelSet/save/{id}", "/travelSet/save/", "/travelSet/save"})
+    public Map<String, Object> save(@PathVariable(name = "id", required = false) Integer id,
+                                    @RequestBody Map<String,String> params,
+                                    HttpSession session){
+        AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
+
+        // delete when deploy
+//        AccountBean user = new AccountBean();
+//        user.setUserName("system");
+
+
+        Map<String, Object> map = new HashMap<>();
+        if(user != null) {
+            String userName = user.getUserName();
+            TravelSetDO travelSetDO = null;
+            try {
+
+                ObjectMapper mapper = new ObjectMapper();
+
+                travelSetDO = mapper.readValue(params.get("travelSetInfo"), TravelSetDO.class);
+                List<TravelEleAttractionDO> eleAttractionDOList = mapper.readValue(params.get("travelSetAttractions"), new TypeReference<List<TravelEleAttractionDO>>(){});
+                List<TravelEleHotelDO> eleHotelDOList = mapper.readValue(params.get("travelSetHotels"), new TypeReference<List<TravelEleHotelDO>>(){});
+                List<TravelEleRestaurantDO> eleRestaurantDOList = mapper.readValue(params.get("travelSetRestaurants"), new TypeReference<List<TravelEleRestaurantDO>>(){});
+
+                travelSetDO.setCreatedUser(userName);
+                travelSetDO.setStatus(true);
+                travelSetDO.setPriority(0);
+
+                if(id == null || id.intValue() == 0) {
+                    travelSetDO.setSn(null);
+
+                    for (TravelEleAttractionDO ele : eleAttractionDOList) {
+                        ele.setSn(null);
+                        travelSetDO.addTravelAttractions(ele);
+                    }
+                    for (TravelEleHotelDO ele : eleHotelDOList) {
+                        ele.setSn(null);
+                        travelSetDO.addTravelHotels(ele);
+                    }
+                    for (TravelEleRestaurantDO ele : eleRestaurantDOList) {
+                        ele.setSn(null);
+                        travelSetDO.addTravelRestaurants(ele);
+                    }
+
+                    travelSetDO = service.addTravelSet(travelSetDO);
+                }else{
+
+                    for (TravelEleAttractionDO ele : eleAttractionDOList) {
+                        travelSetDO.addTravelAttractions(ele);
+                    }
+                    for (TravelEleHotelDO ele : eleHotelDOList) {
+                        travelSetDO.addTravelHotels(ele);
+                    }
+                    for (TravelEleRestaurantDO ele : eleRestaurantDOList) {
+                        travelSetDO.addTravelRestaurants(ele);
+                    }
+
+//                    TravelSetDO loadDO = service.getEle(id, true);
+//                    loadDO.getTravelAttractions().forEach(ele -> ele.setTravelSetDO(null));
+//                    loadDO.getTravelRestaurants().forEach(ele -> ele.setTravelSetDO(null));
+//                    loadDO.getTravelHotels().forEach(ele -> ele.setTravelSetDO(null));
+//                    loadDO.setName(travelSetDO.getName());
+//                    loadDO.setDescription(travelSetDO.getDescription());
+//                    loadDO.setPriority(travelSetDO.getPriority());
+//                    loadDO.setStatus(travelSetDO.getStatus());
+//                    loadDO.setTravelAttractions(travelSetDO.getTravelAttractions());
+//                    loadDO.setTravelRestaurants(travelSetDO.getTravelRestaurants());
+//                    loadDO.setTravelHotels(travelSetDO.getTravelHotels());
+
+                    travelSetDO = service.updateTravelSet(travelSetDO, true);
+//                    travelSetDO = service.getEle(id, true, false);
+                }
+
+                Map<String, Object> origin = new HashMap<>();
+                origin.put("travelSetInfo", travelSetDO);
+
+                origin.put("travelSetAttractions", travelSetDO.getTravelAttractions());
+                origin.put("travelSetHotels", travelSetDO.getTravelHotels());
+                origin.put("travelSetRestaurants", travelSetDO.getTravelRestaurants());
+
+                map.put("data", origin);
+
+                map.put("isSave", true);
+
+
+                try{
+                    TravelSetFrontVO travelSetFrontVO = BeanConvertUtils.convertToTravelSetFrontVO(travelSetDO);
+
+                    map.put("dataSorted", travelSetFrontVO);
+                    map.put("sortDate", true);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    map.put("sortDate", false);
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+                map.put("isSave", false);
+            }
+            map.put("noLogin", false);
+        }else {
+            map.put("noLogin", true);
+        }
+        return map;
     }
 
 

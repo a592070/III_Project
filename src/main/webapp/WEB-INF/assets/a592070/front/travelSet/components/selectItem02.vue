@@ -179,8 +179,10 @@ module.exports = {
   },
   created: function (){
   },
-  mounted(){
-    this.init();
+  mounted: function (){
+    this.$nextTick(function () {
+      this.init();
+    })
   },
   destroyed(){
   },
@@ -246,7 +248,18 @@ module.exports = {
 
     handleItemClick(obj){
       console.log(obj);
+      console.log('setSelectItem')
       this.$store.commit('setSelectItem', {type: this.selectItemType, sn: obj.sn, name: obj.name, description: obj.description});
+      console.log('addTravelSetDetailItem')
+      if(this.selectItemType == 0){
+        this.$store.commit('addTravelSetDetailAttraction', {sn: obj.sn, name: obj.name, description: obj.description});
+      }else if(this.selectItemType == 1){
+        this.$store.commit('addTravelSetDetailRestaurant', {sn: obj.sn, name: obj.name, description: obj.description});
+      }else if(this.selectItemType == 2){
+        this.$store.commit('addTravelSetDetailHotel', {sn: obj.sn, name: obj.name, description: obj.description});
+      }
+      this.$store.commit('setNoEditItem', false);
+
       this.$store.commit('toggleSelectItemDialog', false);
     },
 

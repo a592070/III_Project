@@ -86,7 +86,7 @@ public interface TravelSetService {
     List<TravelSetVO> listByUserSelectWithStatus(int currentPage, int pageSize, String userName, String keywords, boolean status, String orderFiled, boolean descending);
 
     TravelSetDO addTravelSet(TravelSetDO travelSetDO);
-    TravelSetDO updateTravelSet(TravelSetDO travelSetDO);
+    TravelSetDO updateTravelSet(TravelSetDO travelSetDO, boolean merge);
     boolean deleteTravelSet(Integer sn);
     boolean switchTravelSetAvailable(Integer sn);
     boolean switchTravelSetAvailable(Integer sn, boolean flag);

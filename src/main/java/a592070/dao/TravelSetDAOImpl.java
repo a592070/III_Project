@@ -448,7 +448,7 @@ public class TravelSetDAOImpl implements TravelSetDAO{
     }
 
     @Override
-    public TravelSetDO updateTravelSet(TravelSetDO travelSetDO) {
+    public TravelSetDO updateTravelSet(TravelSetDO travelSetDO, boolean merge) {
         return (TravelSetDO) sessionFactory.getCurrentSession().merge(travelSetDO);
     }
 

@@ -31,6 +31,7 @@ public class TravelSetDO {
     private String name;
     private String description;
 
+    @Column(columnDefinition = "int default 0")
     private Integer priority;
     @Column(name = "CREATED_TIME", insertable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -275,11 +276,12 @@ public class TravelSetDO {
     public String toString() {
         return "TravelSetDO{" +
                 "sn=" + sn +
+                ", createdUser='" + createdUser + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", priority=" + priority +
                 ", createdTime=" + createdTime +
                 ", updateTime=" + updateTime +
-                ", name='" + name + '\'' +
                 ", status=" + status +
                 '}';
     }

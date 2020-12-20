@@ -282,8 +282,8 @@ public class TravelSetServiceImpl implements TravelSetService{
     }
 
     @Override
-    public TravelSetDO updateTravelSet(TravelSetDO travelSetDO) {
-        return dao.updateTravelSet(travelSetDO);
+    public TravelSetDO updateTravelSet(TravelSetDO travelSetDO, boolean merge) {
+        return dao.updateTravelSet(travelSetDO, merge);
     }
 
     @Override

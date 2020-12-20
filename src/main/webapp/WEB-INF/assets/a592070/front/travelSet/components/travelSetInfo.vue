@@ -9,12 +9,26 @@
           :with-header="false"
           wrapperClosable
           size="70%">
+
+        <v-overlay
+            :absolute="true"
+            :opacity="0.8"
+            :value="noLogin"
+        >
+          <v-btn
+              class="white--text"
+              color="teal"
+              @click="beforeTravelSetInfoClose"
+          >
+            請 先 登 錄
+          </v-btn>
+        </v-overlay>
         <div class="card card-table-border-none" id="recent-orders">
 
-<!--          <div class="card-header justify-content-between">-->
-<!--            <h2>Travel Set Table</h2>-->
-<!--            <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>-->
-<!--          </div>-->
+          <div class="card-header justify-content-between">
+            <h2>您的旅遊規劃</h2>
+            <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>
+          </div>
 
           <div class="card-body pt-0 pb-5">
             <div class="row justify-content-between">
@@ -36,9 +50,7 @@
             <el-table
                 stripe
                 :data="tableData"
-                style="width: 100%"
                 @sort-change='sortChange'
-                height
                 v-loading='travelSetInfoLoading'
                 element-loading-text="唉呦威..."
                 element-loading-spinner="el-icon-loading"
@@ -184,9 +196,6 @@ module.exports = {
                   type: 'primary',
                   size: 'small'
                 },
-                style: {
-                  marginRight: '10px'
-                },
                 on: {
                   click: () => {
                     this.show(params.index)
@@ -211,9 +220,14 @@ module.exports = {
     }
   },
   created: function () {
-    this.initData();
+    // this.initData();
   },
-  computed: Vuex.mapState(['travelSetInfoLoading', 'travelSetInfo', 'travelSetInfoDialog', 'travelSetEditItemDialog']),
+  mounted: function (){
+    this.$nextTick(function () {
+      this.initData();
+    })
+  },
+  computed: Vuex.mapState(['travelSetInfoLoading', 'travelSetInfo', 'travelSetInfoDialog', 'travelSetEditItemDialog', 'noLogin']),
   methods: {
     beforeTravelSetInfoClose(){
       this.$store.commit("setTravelSetInfoDialog", false);
@@ -227,7 +241,9 @@ module.exports = {
           .then(response => {
             if(response.data.noLogin){
               console.log("no login");
+              this.$store.commit('setNoLogin', true);
             }else if(response.data.message){
+              this.$store.commit('setNoLogin', false);
               this.$store.commit('setTravelSetInfo', response.data.tableData);
 
               this.tableData = this.travelSetInfo;
@@ -268,12 +284,18 @@ module.exports = {
       console.log(params);
       axios.get(url, {params})
           .then(response => {
-            this.$store.commit('setTravelSetInfo', response.data.tableData);
+            if(response.data.noLogin){
+              this.$store.commit('setNoLogin', true);
+            }else if(response.data.message){
 
-            this.tableData = this.travelSetInfo;
-            // this.tableData = response.data.tableData;
-            this.pageData = response.data.pageData;
-            this.currentSearch = this.search;
+              this.$store.commit('setNoLogin', false);
+              this.$store.commit('setTravelSetInfo', response.data.tableData);
+
+              this.tableData = this.travelSetInfo;
+              // this.tableData = response.data.tableData;
+              this.pageData = response.data.pageData;
+              this.currentSearch = this.search;
+            }
           })
           .then(()=>this.$store.commit('toggleTravelSetInfoLoading', false));
 
@@ -330,7 +352,10 @@ module.exports = {
         });
       });
     },
-
+    handleInsert(){
+      this.$store.commit('setInitTravelSetDetailDate');
+      this.beforeTravelSetInfoClose();
+    }
   }
 }
 </script>

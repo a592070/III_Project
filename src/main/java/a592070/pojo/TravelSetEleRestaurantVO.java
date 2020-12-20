@@ -3,7 +3,7 @@ package a592070.pojo;
 import java.util.Date;
 
 public class TravelSetEleRestaurantVO extends TravelSetEleVO{
-    private RestaurantVO restaurantVO;
+    private RestaurantVO restaurant;
 
     @Override
     public Integer getSn() {
@@ -35,11 +35,11 @@ public class TravelSetEleRestaurantVO extends TravelSetEleVO{
         this.type = type;
     }
 
-    public RestaurantVO getRestaurantVO() {
-        return restaurantVO;
+    public RestaurantVO getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestaurantVO(RestaurantVO restaurantVO) {
-        this.restaurantVO = restaurantVO;
+    public void setRestaurant(RestaurantVO restaurant) {
+        this.restaurant = restaurant;
     }
 }

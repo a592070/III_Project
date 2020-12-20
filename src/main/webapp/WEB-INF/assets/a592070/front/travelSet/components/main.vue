@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <travel-detail></travel-detail>
-    <travel-info></travel-info>
+    <travel-info v-if="travelSetInfoDialog"></travel-info>
     <v-fab-transition>
       <v-btn
           v-show="!travelSetInfoDialog"
@@ -34,7 +34,7 @@
           @click="handleOpenTravelSetEditItem"
           class="v-btn--example"
       >
-        <v-icon>mdi-plus</v-icon>
+        <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
     </v-fab-transition>
   </v-app>
@@ -44,7 +44,7 @@
 module.exports = {
   components: {
     'travel-info': httpVueLoader(context + '/assets/a592070/front/travelSet/components/travelSetInfo.vue'),
-    'travel-detail': httpVueLoader(context + '/assets/a592070/front/travelSet/components/travelSetDetail02.vue'),
+    'travel-detail': httpVueLoader(context + '/assets/a592070/front/travelSet/components/travelSetDetail03.vue'),
     'travel-detail-edit-item': httpVueLoader(context + '/assets/a592070/front/travelSet/components/travelSetEditItem.vue'),
   },
   data() {

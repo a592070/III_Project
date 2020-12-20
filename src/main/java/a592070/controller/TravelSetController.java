@@ -174,7 +174,7 @@ public class TravelSetController {
                     travelSetDO.addTravelRestaurants(ele);
                 }
 
-                travelSetDO = service.updateTravelSet(travelSetDO);
+                travelSetDO = service.updateTravelSet(travelSetDO, true);
             }
 
 

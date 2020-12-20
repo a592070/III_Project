@@ -53,7 +53,7 @@ public interface TravelSetDAO{
 
 
     Integer addTravelSet(TravelSetDO travelSetDO);
-    TravelSetDO updateTravelSet(TravelSetDO travelSetDO);
+    TravelSetDO updateTravelSet(TravelSetDO travelSetDO, boolean merge);
     void removeTravelSet(TravelSetDO travelSetDO);
     void switchTravelSetStatus(Integer sn);
     void switchTravelSetStatus(Integer sn, boolean flag);
