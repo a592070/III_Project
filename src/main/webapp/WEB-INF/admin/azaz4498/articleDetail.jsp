@@ -173,7 +173,7 @@
                     </c:forEach>
                       <li class="comment" id="m_com${comment.comId}">
                       <div class="d-flex flex-row comment-body">
-                        <textarea id="tx${comment.comId}"class="ml-1 mr-1" style="border: solid 0.5px; border-radius: 8px; height: 30px; width: 590px; resize: none; box-shadow: 5px;"></textarea>
+                        <textarea id="tx${comment.comId}"class="ml-1 mr-1" style="border: solid 0.5px; border-radius: 8px; height: 30px; width: 540px; resize: none; box-shadow: 5px;"></textarea>
                         <p>
                           <a href="javascript:void(0);" class="reply" id="reply${comment.comId}">回覆</a>
                         </p>
@@ -558,6 +558,8 @@ $('.comment-list').on('click','.com_del',function(){
         var str = $(this).attr('id');
         var com_Id = str.replace('com_del','').trim();
         var $t = $(this).closest('li');
+        var commNum = eval($("#commNum").text());
+        $("#commNum").text(eval(commNum - 1));
         $.ajax({
           type:'POST',
           url:'../deleteComment/'+com_Id,
@@ -630,10 +632,17 @@ $("#post_btn").on("click", function (event) {
 
     $("#message").focus();
   } else {
-    var c_content = $("#message").val();
-    var c_artId = $("#c_artId").val();
-
-    $.ajax({
+    Swal.fire({
+          title:'確認發佈留言?',
+          icon:'warning',
+          confirmButtonText:'確認',
+          showCancelButton:true,
+          cancelButtonText:'取消',
+        }).then((result)=>{
+          if(result.isConfirmed){
+            var c_content = $("#message").val();
+            var c_artId = $("#c_artId").val();
+            $.ajax({
       type: "POST",
       url: "../newComment.controller",
       data: {
@@ -641,7 +650,6 @@ $("#post_btn").on("click", function (event) {
         artId: c_artId,
       },
       success: function (response) {
-        console.log(response);
         $(".comment-list").append(
           "<li class='comment'>" +
             "<div class='vcard bio'>" +
@@ -666,7 +674,7 @@ $("#post_btn").on("click", function (event) {
             "</p>" +
             '<a href="javascript: void(0)" id="com_edit'+response.comId+'"class="com_edit" style="color:rgb(16, 141, 163);">' +
             '<i class="fas fa-pencil-alt float-left mr-2"><span>編輯</span></i></a>' +
-            '<a href="javascript: void(0) class="com_del" id="com_del'+response.comId+'">' +
+            '<a href="javascript: void(0)" class="com_del" id="com_del'+response.comId+'">' +
             '<i class="fas fa-trash-alt float-left "> <span>刪除</span></i></a>' +
             "</div>" +
             "<div class='collapse' id='collapse" +
@@ -698,6 +706,8 @@ $("#post_btn").on("click", function (event) {
         $("#commNum").text(eval(commNum + 1));
       },
     });
+          }
+        })
   }
 });
 

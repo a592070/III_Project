@@ -101,7 +101,7 @@
                               <p class="bottom-area d-flex">
                                 <span><i class="icon-map-o"></i>{{item.address}}</span>
                                 <span class="ml-auto">
-                                  <el-button type="success" round @click="toDetail(item.sn)">Discover</el-button>
+                                  <el-button type="success" round @click="toDetail(item.sn)">看詳細</el-button>
                                 </span>
                               </p>
                             </div>

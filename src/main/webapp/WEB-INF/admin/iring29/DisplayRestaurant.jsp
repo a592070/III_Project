@@ -107,6 +107,8 @@ button#order {
 	width:200px;
 	text-align:right;
 	font-size:30px;
+	border: none;
+    background: transparent;
 }
 .room-booking form .select-option label, .room-booking form .check-date label {
     font-size: 18px;

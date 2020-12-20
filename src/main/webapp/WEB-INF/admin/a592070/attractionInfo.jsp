@@ -126,7 +126,7 @@
                                     </el-table-column>
                                     <el-table-column
                                             label="啟用狀態"
-                                            width="100"
+                                            width="150"
                                             prop="status"
                                             sortable='custom'
                                             :sort-orders="['descending', 'ascending']">
@@ -139,18 +139,18 @@
                                         </template>
                                     </el-table-column>
                                     <el-table-column
-                                            width="200"
+                                            width="250"
                                             align="right">
                                         <template slot-scope="scope">
                                             <el-button
                                                     size="medium"
-                                                    type="primary" icon="el-icon-edit" class="btn btn-warning"
-                                                    @click="handleEdit(scope.$index, scope.row)">Edit
+                                                    type="warning" icon="el-icon-edit" class="btn btn-warning"
+                                                    @click="handleEdit(scope.$index, scope.row)">修改
                                             </el-button>
                                             <el-button
                                                     size="medium"
                                                     type="danger" icon="el-icon-delete" class="btn btn-danger"
-                                                    @click="handleDelete(scope.$index, scope.row)"></el-button>
+                                                    @click="handleDelete(scope.$index, scope.row)">刪除</el-button>
                                         </template>
                                     </el-table-column>
                                 </el-table>

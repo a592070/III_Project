@@ -26,6 +26,7 @@
               scrollable
               multiple
               :min="new Date().toISOString()"
+              locale="zh-tw"
           >
             <v-spacer></v-spacer>
             <v-btn

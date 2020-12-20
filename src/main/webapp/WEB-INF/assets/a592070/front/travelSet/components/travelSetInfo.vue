@@ -106,19 +106,18 @@
                 </template>
               </el-table-column>
               <el-table-column
-                  width="150"
-                  align="right"
+                  width="200"
                   fixed="right">
                 <template slot-scope="scope">
                   <el-button
                       size="small"
-                      type="primary" icon="el-icon-edit"
-                      @click="handleEdit(scope.$index, scope.row)">Edit
+                      type="warning" icon="el-icon-edit"
+                      @click="handleEdit(scope.$index, scope.row)">修改
                   </el-button>
                   <el-button
                       size="small"
                       type="danger" icon="el-icon-delete"
-                      @click="handleDelete(scope.$index, scope.row)"></el-button>
+                      @click="handleDelete(scope.$index, scope.row)">刪除</el-button>
                 </template>
               </el-table-column>
             </el-table>

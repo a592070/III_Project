@@ -18,46 +18,60 @@
           indeterminate
       ></v-progress-linear>
     </template>
-    <v-img
+    <v-card
+        class="mx-auto"
+        color="#26c6da"
+        dark
         height="200"
-        src="https://cdn.vuetifyjs.com/images/cards/dark-beach.jpg"
     >
-      <v-row>
-        <v-col
-            class="text-right"
-            cols="12"
-        >
-          <v-menu
-              bottom
-              left
-              transition="slide-y-transition"
-          >
-            <v-list>
-              <v-list-item @click="isUpdating = true">
-                <v-list-item-action>
-                  <v-icon>mdi-cog</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>Update</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-col>
-        <v-row
-            class="pa-4"
-            align="center"
-            justify="center"
-        >
-          <v-col class="text-center">
-            <h3 class="headline">
-              {{ title }}
-            </h3>
-            <span class="grey--text text--lighten-1">{{ message }}</span>
-          </v-col>
-        </v-row>
-      </v-row>
-    </v-img>
+      <v-card-title>
+        <p class="title font-weight-light">{{ title }}</p>
+      </v-card-title>
+
+      <v-card-text class="headline font-weight-bold">
+        {{ message }}
+      </v-card-text>
+    </v-card>
+<!--    <v-img-->
+<!--        height="200"-->
+<!--        src="https://cdn.vuetifyjs.com/images/cards/dark-beach.jpg"-->
+<!--    >-->
+<!--      <v-row>-->
+<!--        <v-col-->
+<!--            class="text-right"-->
+<!--            cols="12"-->
+<!--        >-->
+<!--          <v-menu-->
+<!--              bottom-->
+<!--              left-->
+<!--              transition="slide-y-transition"-->
+<!--          >-->
+<!--            <v-list>-->
+<!--              <v-list-item @click="isUpdating = true">-->
+<!--                <v-list-item-action>-->
+<!--                  <v-icon>mdi-cog</v-icon>-->
+<!--                </v-list-item-action>-->
+<!--                <v-list-item-content>-->
+<!--                  <v-list-item-title>更新</v-list-item-title>-->
+<!--                </v-list-item-content>-->
+<!--              </v-list-item>-->
+<!--            </v-list>-->
+<!--          </v-menu>-->
+<!--        </v-col>-->
+<!--        <v-row-->
+<!--            class="pa-4"-->
+<!--            align="center"-->
+<!--            justify="center"-->
+<!--        >-->
+<!--          <v-col class="text-center">-->
+<!--            <h3 class="headline">-->
+<!--              {{ title }}-->
+<!--            </h3>-->
+<!--            <span class="grey&#45;&#45;text text&#45;&#45;lighten-1">{{ message }}</span>-->
+<!--          </v-col>-->
+<!--        </v-row>-->
+<!--      </v-row>-->
+<!--    </v-img>-->
     <v-form>
       <v-container>
         <v-row>
@@ -71,7 +85,7 @@
                 placeholder="請輸入標題..."
                 filled
                 color="blue-grey lighten-2"
-                label="Title"
+                label="標題"
             ></v-text-field>
           </v-col>
           <v-col
@@ -82,7 +96,7 @@
                 v-model="selectStatus"
                 :items="status"
                 chips
-                label="Status"
+                label="訊息狀態"
                 color="blue-grey lighten-2"
                 solo
             ></v-select>
@@ -93,9 +107,9 @@
             <v-select
                 v-model="selectUsers"
                 :items="users"
-                label="Select"
+                label="選擇"
                 chips
-                hint="What are the target regions"
+                hint="選擇使用者"
                 persistent-hint
             ></v-select>
           </v-col>
@@ -110,7 +124,7 @@
                 clearable
                 clear-icon="mdi-close-circle"
                 color="blue-grey lighten-2"
-                label="Message"
+                label="內容"
             ></v-textarea>
 
           </v-col>
@@ -129,7 +143,7 @@
         <v-icon left>
           mdi-publish
         </v-icon>
-        Publish
+        發布訊息
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -142,7 +156,7 @@
         <v-icon left>
           mdi-update
         </v-icon>
-        Update User
+        更新在線使用者
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -172,10 +186,10 @@ module.exports = {
       snackbar: false,
       selectStatus: '',
       status: [
-        { text: 'Success', value: 1},
-        { text: 'Warning', value: 2},
-        { text: 'Error', value: 3},
-        { text: 'Other', value: 0}],
+        { text: '成功訊息', value: 1},
+        { text: '警告訊息', value: 2},
+        { text: '錯誤訊息', value: 3},
+        { text: '一般訊息', value: 0}],
       connectUsers: ['Sandra Adams', 'Britta Holt'],
       isUpdating: false,
       title: '',
@@ -187,17 +201,17 @@ module.exports = {
       ,
       selectItem1: [
         { header: 'ALL' },
-        { text: 'ALL USERS', value: 'all'},
+        { text: '選擇全部', value: 'all'},
       ],
       selectItemUser: [
-        { header: 'ALL' },
-        { text: 'ALL USERS', value: 'all'},
+        { header: '全部' },
+        { text: '選擇全部', value: 'all'},
         { divider: true },
-        { header: 'User' },
+        { header: '登錄用戶' },
       ],
       selectItemGuest: [
         { divider: true },
-        { header: 'Guest' },
+        { header: '訪客' },
       ]
 
     }
@@ -230,7 +244,7 @@ module.exports = {
           for (let i = 0; i < data.length; i++) {
             if(data[i].group == 'user') {
               itemBody1.push({
-                text: 'user'+i,
+                text: data[i].name,
                 value: data[i].name
               })
             } else if(data[i].group == 'guest'){

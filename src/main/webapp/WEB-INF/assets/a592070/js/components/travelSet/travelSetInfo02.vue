@@ -2,7 +2,7 @@
   <div class="card card-table-border-none" id="recent-orders">
 
     <div class="card-header justify-content-between">
-      <h2>Travel Set Table</h2>
+      <h2>旅遊規劃列表</h2>
       <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleInsert">新增資料</el-button>
     </div>
 
@@ -119,25 +119,24 @@
           <template slot-scope="scope">
             <label class="switch switch-text switch-success switch-pill form-control-label">
               <input type="checkbox" class="switch-input form-check-input" v-bind:checked="scope.row.status" v-on:click="handleSwitchStatus(scope.row)">
-              <span class="switch-label" data-on="On" data-off="Off"></span>
+              <span class="switch-label" data-on="啟用" data-off="禁用"></span>
               <span class="switch-handle"></span>
             </label>
           </template>
         </el-table-column>
         <el-table-column
-            width="150"
-            align="right"
+            width="200"
             fixed="right">
           <template slot-scope="scope">
             <el-button
                 size="small"
-                type="primary" icon="el-icon-edit"
-                @click="handleEdit(scope.$index, scope.row)">Edit
+                type="warning" icon="el-icon-edit"
+                @click="handleEdit(scope.$index, scope.row)">修改
             </el-button>
             <el-button
                 size="small"
                 type="danger" icon="el-icon-delete"
-                @click="handleDelete(scope.$index, scope.row)"></el-button>
+                @click="handleDelete(scope.$index, scope.row)">刪除</el-button>
           </template>
         </el-table-column>
       </el-table>

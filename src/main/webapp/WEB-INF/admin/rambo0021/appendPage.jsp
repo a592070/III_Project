@@ -14,6 +14,7 @@
 		</tr>
 	</thead>
 	<tbody id="tbody">
+        <c:if test="${size>0}">
 		<c:forEach var="a" items="${userList}">
 			<tr>
 				<td id="username">${a.userName}</td>
@@ -48,8 +49,13 @@
 				</td>
 			</tr>
 		</c:forEach>
+		</c:if>
 	</tbody>
 </table>
+<c:if test="${size==0}">
+         <h2>查無資料</h2>
+        </c:if>
+<c:if test="${size>0}">
 <div class="pages">
 	<nav aria-label="..." id='nav'>
 		<ul class="pagination">
@@ -107,3 +113,4 @@
 		</ul>
 	</nav>
 </div>
+</c:if>

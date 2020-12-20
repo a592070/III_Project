@@ -229,6 +229,7 @@ public class AdminController {
 		m.addAttribute("userList", aBeanList);
 		m.addAttribute("page", aPage);
 		m.addAttribute("sort", aSort);
+		m.addAttribute("size", size);
 		return "rambo0021/appendPage";
 	}
 	
