@@ -22,6 +22,9 @@ public interface TravelSetService {
 
     TravelSetDO getEle(Integer id, boolean loadFetch);
     TravelSetDO getEle(Integer id, boolean loadFetch, boolean findFromPersistence);
+    TravelSetDO getEleByUser(Integer id, String userName, boolean loadFetch);
+
+
 
     int getSize();
     int getSizeWithStatus(boolean available);
@@ -62,8 +65,29 @@ public interface TravelSetService {
     List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean status);
     List<TravelSetVO> listBySelectWithStatus(int currentPage, int pageSize, Integer identity, String keywords, String orderFiled, boolean descending, boolean status);
 
+
+//    int getSizeByUser(String userName);
+    int getSizeByUser(String userName, boolean status);
+//    List<TravelSetVO> listByUser(int currentPage, int pageSize, String userName);
+//    List<TravelSetVO> listByUser(int currentPage, int pageSize, String userName, String orderFiled);
+//    List<TravelSetVO> listByUser(int currentPage, int pageSize, String userName, String orderFiled, boolean descending);
+    List<TravelSetVO> listByUserWithStatus(int currentPage, int pageSize, String userName, boolean status);
+    List<TravelSetVO> listByUserWithStatus(int currentPage, int pageSize, String userName, boolean status, String orderFiled);
+    List<TravelSetVO> listByUserWithStatus(int currentPage, int pageSize, String userName, boolean status, String orderFiled, boolean descending);
+
+
+//    int getSizeByUserSelect(String userName, String keywords);
+    int getSizeByUserSelect(String userName, String keywords, boolean status);
+//    List<TravelSetVO> listByUserSelect(int currentPage, int pageSize, String userName, String keywords);
+//    List<TravelSetVO> listByUserSelect(int currentPage, int pageSize, String userName, String keywords, String orderFiled);
+//    List<TravelSetVO> listByUserSelect(int currentPage, int pageSize, String userName, String keywords, String orderFiled, boolean descending);
+    List<TravelSetVO> listByUserSelectWithStatus(int currentPage, int pageSize, String userName, String keywords, boolean status);
+    List<TravelSetVO> listByUserSelectWithStatus(int currentPage, int pageSize, String userName, String keywords, boolean status, String orderFiled);
+    List<TravelSetVO> listByUserSelectWithStatus(int currentPage, int pageSize, String userName, String keywords, boolean status, String orderFiled, boolean descending);
+
     TravelSetDO addTravelSet(TravelSetDO travelSetDO);
-    TravelSetDO updateTravelSet(TravelSetDO travelSetDO);
+    TravelSetDO updateTravelSet(TravelSetDO travelSetDO, boolean merge);
     boolean deleteTravelSet(Integer sn);
     boolean switchTravelSetAvailable(Integer sn);
+    boolean switchTravelSetAvailable(Integer sn, boolean flag);
 }

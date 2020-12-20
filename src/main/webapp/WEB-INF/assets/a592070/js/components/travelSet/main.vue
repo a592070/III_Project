@@ -5,7 +5,7 @@
 
 
       <el-drawer
-          title="Travel Set Detail"
+          title="詳細資料"
           :before-close="handleCloseTravelSet"
           v-if='travelSetDialog'
           :visible.sync='travelSetDialog'

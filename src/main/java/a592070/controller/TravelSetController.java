@@ -117,7 +117,7 @@ public class TravelSetController {
 
             map.put("travelSetInfo", travelSetDO);
             map.put("travelSetAttractions", travelSetDO.getTravelAttractions());
-            map.put("travelSetCars", travelSetDO.getTravelCars());
+//            map.put("travelSetCars", travelSetDO.getTravelCars());
             map.put("travelSetHotels", travelSetDO.getTravelHotels());
             map.put("travelSetRestaurants", travelSetDO.getTravelRestaurants());
         }catch (Exception e){
@@ -137,7 +137,7 @@ public class TravelSetController {
 
             TravelSetDO travelSetDO = mapper.readValue(params.get("travelSetInfo"), TravelSetDO.class);
             List<TravelEleAttractionDO> eleAttractionDOList = mapper.readValue(params.get("travelSetAttractions"), new TypeReference<List<TravelEleAttractionDO>>(){});
-            List<TravelEleCarDO> eleCarDOList = mapper.readValue(params.get("travelSetCars"), new TypeReference<List<TravelEleCarDO>>(){});
+//            List<TravelEleCarDO> eleCarDOList = mapper.readValue(params.get("travelSetCars"), new TypeReference<List<TravelEleCarDO>>(){});
             List<TravelEleHotelDO> eleHotelDOList = mapper.readValue(params.get("travelSetHotels"), new TypeReference<List<TravelEleHotelDO>>(){});
             List<TravelEleRestaurantDO> eleRestaurantDOList = mapper.readValue(params.get("travelSetRestaurants"), new TypeReference<List<TravelEleRestaurantDO>>(){});
 
@@ -146,10 +146,10 @@ public class TravelSetController {
                     ele.setSn(null);
                     travelSetDO.addTravelAttractions(ele);
                 }
-                for (TravelEleCarDO ele : eleCarDOList) {
-                    ele.setSn(null);
-                    travelSetDO.addTravelCars(ele);
-                }
+//                for (TravelEleCarDO ele : eleCarDOList) {
+//                    ele.setSn(null);
+//                    travelSetDO.addTravelCars(ele);
+//                }
                 for (TravelEleHotelDO ele : eleHotelDOList) {
                     ele.setSn(null);
                     travelSetDO.addTravelHotels(ele);
@@ -164,9 +164,9 @@ public class TravelSetController {
                 for (TravelEleAttractionDO ele : eleAttractionDOList) {
                     travelSetDO.addTravelAttractions(ele);
                 }
-                for (TravelEleCarDO ele : eleCarDOList) {
-                    travelSetDO.addTravelCars(ele);
-                }
+//                for (TravelEleCarDO ele : eleCarDOList) {
+//                    travelSetDO.addTravelCars(ele);
+//                }
                 for (TravelEleHotelDO ele : eleHotelDOList) {
                     travelSetDO.addTravelHotels(ele);
                 }
@@ -174,14 +174,14 @@ public class TravelSetController {
                     travelSetDO.addTravelRestaurants(ele);
                 }
 
-                travelSetDO = service.updateTravelSet(travelSetDO);
+                travelSetDO = service.updateTravelSet(travelSetDO, true);
             }
 
 
 
             map.put("travelSetInfo", travelSetDO);
             map.put("travelSetAttractions", travelSetDO.getTravelAttractions());
-            map.put("travelSetCars", travelSetDO.getTravelCars());
+//            map.put("travelSetCars", travelSetDO.getTravelCars());
             map.put("travelSetHotels", travelSetDO.getTravelHotels());
             map.put("travelSetRestaurants", travelSetDO.getTravelRestaurants());
             map.put("message", true);
@@ -241,13 +241,13 @@ public class TravelSetController {
         List list = new ArrayList();
 
         if(type == 0){
-            pageSupport.setTotalSize(attractionViewService.getSizeByKeyWords(keywords));
+            pageSupport.setTotalSize(attractionViewService.getSizeBySelect(region, keywords));
             list = attractionViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
         }else if(type == 1){
-            pageSupport.setTotalSize(restaurantViewService.getSizeByKeyWords(keywords));
+            pageSupport.setTotalSize(restaurantViewService.getSizeBySelect(region, keywords));
             list = restaurantViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
         }else if(type == 2){
-            pageSupport.setTotalSize(hotelViewService.getSizeByKeyWords(keywords));
+            pageSupport.setTotalSize(hotelViewService.getSizeBySelect(region, keywords));
             list = hotelViewService.listBySelect(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords);
         }
 //        else if(type == 3){
