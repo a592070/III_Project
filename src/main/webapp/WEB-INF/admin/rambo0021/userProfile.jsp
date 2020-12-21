@@ -15,6 +15,7 @@
         <style>
 
         </style>
+        
       </head>
 
       <body>
@@ -127,6 +128,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="submit" data-dismiss="modal">儲存</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+                <input type="button" value="修改密碼" class="btn btn-light py-1 px-1" id="fastUpdate">
               </div>
             </div>
           </div>
@@ -260,6 +262,10 @@
             }
 
           }
+
+          $("#fastUpdate").click(function(){
+             $("#updatepassword").val("rambo3388")
+          })
 
         </script>
       </body>

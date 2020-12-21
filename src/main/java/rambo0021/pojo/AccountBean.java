@@ -58,10 +58,10 @@ public class AccountBean {
 	@JoinColumn(name = "IDENTITY")
 	private IdentityBean identityBean;
     
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "accountBean", orphanRemoval=true)
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "accountBean", orphanRemoval=true)
 	private List<OrderTable> orderTable = new ArrayList<OrderTable>();// 大訂單 
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "accountBean")
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "accountBean")
     private Restaurant restaurant;	
 
 	public AccountBean() {
