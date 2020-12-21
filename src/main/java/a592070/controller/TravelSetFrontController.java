@@ -53,6 +53,11 @@ public class TravelSetFrontController {
     private ViewService<RestaurantVO> restaurantViewService;
 
 
+    @RequestMapping("/travelSet/checkLogin")
+    public boolean checkLogin(HttpSession session){
+        AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
+        return user==null;
+    }
 
 
     @RequestMapping("/travelSet/list/{page}")

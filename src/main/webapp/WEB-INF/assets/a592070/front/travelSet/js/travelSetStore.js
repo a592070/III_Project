@@ -242,7 +242,7 @@ const travelSetStore = new Vuex.Store({
                     time: '',
                     restaurant: {
                         sn: data.sn,
-                        name: data.sn,
+                        name: data.name,
                         description: data.description
                     }
                 }
@@ -258,7 +258,7 @@ const travelSetStore = new Vuex.Store({
                 time: '',
                 hotel: {
                     sn: data.sn,
-                    name: data.sn,
+                    name: data.name,
                     description: data.description
                 }
             })
@@ -422,7 +422,7 @@ const travelSetStore = new Vuex.Store({
                     state.commit("setTravelSetDetail", tmp);
                     state.commit("", tmp);
 
-                    return {message: 3};
+                    return {message: 2};
                 }else {
                     return {message: 1};
                 }
