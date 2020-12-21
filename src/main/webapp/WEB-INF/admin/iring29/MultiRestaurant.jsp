@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>找餐廳</title>
+<title>FUN x TAIWAN</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <c:import url="/WEB-INF/admin/fragment/user_ref.jsp" />   
 

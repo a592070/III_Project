@@ -6,7 +6,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Fun台灣 論壇</title>
+    <title>FUN x TAIWAN</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");

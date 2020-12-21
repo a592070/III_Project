@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>後臺系統登入</title>
+<title>FUN x TAIWAN</title>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 

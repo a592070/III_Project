@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Modify Hotel Order</title>
+<title>FUN x TAIWAN</title>
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style type="text/css">
 .col-md-8.order-md-1 {

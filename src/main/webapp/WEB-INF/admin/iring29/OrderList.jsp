@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Order List</title>
+<title>FUN x TAIWAN</title>
 
 <script
 	src="${pageContext.servletContext.contextPath}/static/jquery-3.5.1.js"></script>

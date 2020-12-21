@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>用戶明細</title>
+	<title>FUN x TAIWAN</title>
 	<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 
 	<style>

@@ -7,7 +7,7 @@ User: Student Date: 2020/10/29 Time: 上午 09:28 To change this template use Fi
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>論壇管理</title>
+<title>FUN x TAIWAN</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/Forum_ref.jsp" />
