@@ -200,7 +200,7 @@ public class F_RorderController {
 		
 		if(otBean.getT_Order_Lists().size() > 0) {
 			for(T_Order_List t : otBean.getT_Order_Lists()) {  
-				Restaurant += "<br>交通訂單號為：" + t.getT_sn_order() + "<br>車次為：" + t.getHighSpeedRail().getIdHSR() + "<br>訂位姓名：" + t.getCustomerName()+
+				Trans += "<br>交通訂單號為：" + t.getT_sn_order() + "<br>車次為：" + t.getHighSpeedRail().getIdHSR() + "<br>訂位姓名：" + t.getCustomerName()+
 						"<br>訂位者電話：" + t.getCustomerPhone()+ "<br>金額為：" + t.getTicketPrice().multiply(t.getNums_days());
 			}
 		}

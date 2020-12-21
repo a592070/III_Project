@@ -438,7 +438,7 @@
         {
           type: 'POST',
           data: { "userName": username },
-          url: '${pageContext.servletContext.contextPath}/admin/checkUser',
+          url: '${pageContext.servletContext.contextPath}/user/checkUser',
           dataType: 'json',
           success: function (response) {
             checkusr(response);
