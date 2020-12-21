@@ -87,12 +87,12 @@ h5{
 					<div class="col-md-6 mb-3">
 						<label for="ordername"><h5>入住日期</h5></label> 
 						<input class="form-control" type="date" name="CHECK_IN"	id="CHECK_IN" cols="80" rows="1" value="${hotelOdetail.CHECK_IN}">
-
+						
 					</div>
 					<div class="col-md-6 mb-3">
 						<label for="ordername"><h5>退房日期</h5></label> 
 						<input class="form-control" type="date" name="CHECK_OUT" id="CHECK_OUT" cols="80" rows="1" value="${hotelOdetail.CHECK_OUT}">
-
+				
 					</div>
 					<div class="row"></div>
 					<div class="col-md-6 mb-3">
