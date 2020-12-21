@@ -55,6 +55,7 @@
                 element-loading-text="唉呦威..."
                 element-loading-spinner="el-icon-loading"
                 element-loading-background="rgba(0, 0, 0, 0.8)"
+                height="600"
             >
               <el-table-column
                   label="ID"

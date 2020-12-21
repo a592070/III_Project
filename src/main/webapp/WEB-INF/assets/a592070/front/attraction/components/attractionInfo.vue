@@ -22,7 +22,7 @@
                     >
                       <v-text-field
                           v-model="search"
-                          v-on:keyup="handleSelectedKeyword"
+                          v-on:change="handleSelectedKeyword"
                           clearable
                           flat
                           solo-inverted
