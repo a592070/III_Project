@@ -7,6 +7,9 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+
+import static global.Constant.TRAVEL_SET_TYPE_ATTRACTION;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "TRAVEL_ELE_A")
@@ -15,18 +18,22 @@ public class TravelEleAttractionDO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sn;
 
-    private Timestamp time;
-//    @Column(name = "time")@Temporal(TemporalType.TIMESTAMP)
-//    private Date utilTime;
+//    private Timestamp time;
+    @Column(name = "time")@Temporal(TemporalType.TIMESTAMP)
+    private Date time;
+
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "A_ID", referencedColumnName = "SN")
     private AttractionVO attraction;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "TRAVEL_ID", referencedColumnName = "SN")
     private TravelSetDO travelSetDO;
+
+    @Transient
+    private Integer type = TRAVEL_SET_TYPE_ATTRACTION;
 
     public TravelEleAttractionDO() {
     }
@@ -39,11 +46,11 @@ public class TravelEleAttractionDO {
         this.sn = sn;
     }
 
-    public Timestamp getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

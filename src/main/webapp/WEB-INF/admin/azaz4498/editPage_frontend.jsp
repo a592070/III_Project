@@ -88,7 +88,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
         </div>
         <div class="row block-9">
           <div class="col-md-6 pr-md-5">
-            <form id="f_editArticle"action="${pageContext.servletContext.contextPath}/edit.controller" method="POST">
+            <form id="f_editArticle" action="${pageContext.servletContext.contextPath}/edit.controller" method="POST">
               
               <div class="form-group">
                 <label for="title"><h4>標題</h4></label>
@@ -222,6 +222,8 @@ contentType="text/html;charset=UTF-8" language="java"%>
     </div>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/Forum_ref.jsp" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <!--開始滑-->
     <script>
       $(document).ready(function(){
@@ -259,13 +261,25 @@ contentType="text/html;charset=UTF-8" language="java"%>
         
 
         if(title==null||title==''){
-          alert("請填寫文章標題");
+          Swal.fire({
+            title:'請填寫文章標題',
+            icon:'warning',
+            confirmButtonText:"好"
+          })
           $('#title').focus();
         }else if(type==null||type=='選擇類型'){
-          alert('請選擇文章類型')
+          Swal.fire({
+            title:'請選擇文章類型',
+            icon:'warning',
+            confirmButtonText:"好"
+          })
           $("#typeSelect").focus();
         }else if(content==null||content==''){
-          alert('請輸入文章內容');
+          Swal.fire({
+            title:'請輸入文章內容',
+            icon:'warning',
+            confirmButtonText:"好"
+          })
           editor.editing.view.focus();
         }
         else{

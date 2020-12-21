@@ -66,18 +66,5 @@ public class TravelSetJsonSerializer extends JsonSerializer<TravelSetDO> {
         });
         gen.writeEndArray();
 
-
-        gen.writeArrayFieldStart("travelEleCars");
-        value.getTravelCars().forEach(ele -> {
-            try {
-                gen.writeNumberField("sn", ele.getSn());
-                gen.writeNumberField("id", ele.getCar().getSn());
-                gen.writeStringField("name", ele.getCar().getCarType());
-                gen.writeObjectField("time", ele.getTime());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        gen.writeEndArray();
     }
 }

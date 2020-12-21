@@ -16,6 +16,10 @@ public class Constant {
     public static final String TravelSetEdit_session = "travelSetEdit";
 
 
+    public static final int TRAVEL_SET_TYPE_ATTRACTION = 0;
+    public static final int TRAVEL_SET_TYPE_RESTAURANT = 1;
+    public static final int TRAVEL_SET_TYPE_HOTEL = 2;
+
 
     public static final String WEB_INF_PATH = "/WEB-INF";
 
