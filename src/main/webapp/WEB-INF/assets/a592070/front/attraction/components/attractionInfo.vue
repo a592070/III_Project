@@ -28,7 +28,7 @@
                           solo-inverted
                           hide-details
                           prepend-inner-icon="mdi-magnify"
-                          label="Search"
+                          label="搜尋"
                       ></v-text-field>
                       <template v-if="$vuetify.breakpoint.mdAndUp">
                         <v-spacer></v-spacer>

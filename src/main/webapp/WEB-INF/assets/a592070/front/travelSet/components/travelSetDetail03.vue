@@ -1,6 +1,14 @@
 <template>
 
   <v-container style="max-width: 1200px;">
+    <v-btn
+        text
+        color="primary"
+        @click="importDemoData"
+    >
+      帶入資料
+    </v-btn>
+
     <v-card class="mb-4">
       <v-card-text>
 
@@ -63,7 +71,7 @@
             v-model="inputName"
             hide-details
             flat
-            label="# 取 個 名 子 吧 ..."
+            label="# 取 個 名 字 吧 ..."
         ></v-text-field>
         <v-text-field
             v-model="inputDescription"
@@ -550,8 +558,15 @@ module.exports = {
   },
   created: function (){
     this.$store.dispatch("initRegionsData");
+    this.checkLogin();
   },
   methods: {
+    checkLogin(){
+      axios.get(context+'/travelSet/checkLogin')
+          .then(response => {
+            this.$store.commit('setNoLogin', response.data);
+          });
+    },
     changeStep(){
       console.log(this.e1);
       this.setTimeline();
@@ -578,7 +593,7 @@ module.exports = {
       // }
       // console.log(this.travelSetDateMap);
 
-      this.travelSetDateMap = {};
+      // this.travelSetDateMap = {};
       for (let date of this.dates) {
         if(!this.travelSetDateMap[date]){
           this.travelSetDateMap[date] = [];
@@ -606,6 +621,7 @@ module.exports = {
     },
     comment() {
       let time = this.time;
+      console.log(time);
 
       let item = this.selectItem;
       // if(this.selectItem.type === 0){
@@ -745,7 +761,28 @@ module.exports = {
       // console.log(convertedTravelSet);
       let travelSet = this.convertToTravelSet(this.travelSetDetailSortDate);
       // console.log(travelSet);
-      this.$store.dispatch("saveTravelSet", travelSet);
+      this.$store.dispatch("saveTravelSet", travelSet)
+          .then((response) => {
+            if(response.message === 0){
+              this.$message({
+                showClose: true,
+                message: '請先登錄',
+                type: 'error'
+              });
+            }else if(response.message === 1){
+              this.$message({
+                showClose: true,
+                message: '保存失敗',
+                type: 'error'
+              });
+            }else if(response.message === 2){
+              this.$message({
+                showClose: true,
+                message: '保存成功',
+                type: 'success'
+              });
+            }
+          });
 
     },
     handleSelectedRegion(){
@@ -798,6 +835,58 @@ module.exports = {
       return tmp;
     },
     convertFromTravelSet(data){
+
+    },
+    importDemoData(){
+      this.dates=['2020-12-25'];
+      this.selectDate();
+      this.region = '桃園市'
+      this.handleSelectedRegion();
+      this.inputName = '桃園在地大推薦';
+      this.inputDescription = '私房景點看這裡，桃園在地大推薦!';
+
+      let addItem01 = {
+        sn: 0,
+        time: new Date(2020,11,25,14),
+        type: 0,
+        attraction: {
+          sn: 3432,
+          name: '雅聞魅力博覽館',
+          description: '歐風玫瑰花園、峇里島發呆亭、香氛步道走廊，讓人一踏進園區就有滿滿度假感，館內另規劃沐浴球、香氛娃娃DIY，小巧可愛適合當紀念品。'
+        }
+      }
+      let addItem02 = {
+        sn: 0,
+        time: new Date(2020,11,25,18),
+        type: 1,
+        restaurant: {
+          sn: 88,
+          name: "和東燒肉屋",
+          description: "提供專業炭火燒肉與新鮮多樣的蔬菜，讓您放心吃肉同時沒有負擔，重視店內愉快放鬆的氛圍，對待顧客如同家人一般，我們用心在每個細節上，希望能帶給每位顧客一份簡單卻深刻的感動"
+        }
+      }
+      let addItem03 = {
+        sn: 0,
+        time: new Date(2020,11,25,20),
+        type: 2,
+        hotel: {
+          sn: 18,
+          name: "景鴻汽車旅館",
+          description: "本公司自成立以來，「創新、求變、多元」的企業文化，努力深耕台灣市場，追求企業永續經營及成長，成為最卓越的旅館領導品牌，將朝多元化的經營模式邁進。以提供最便利的服務為宗旨，並善盡良好社會責任。TY MOTEL 的市場擁有與其他旅館不同化之處。時時引進各種新式設備，不斷連結消費者體驗的產品策略，亦是 TY MOTEL 和其他產品的區隔，更是能持續引領業界，以及保持領導品牌地位與未來的核心競爭能力主要原因。"
+        }
+      }
+
+      this.travelSetDateMap[this.dates[0]].push(addItem01);
+      this.travelSetDateMap[this.dates[0]].push(addItem02);
+      this.travelSetDateMap[this.dates[0]].push(addItem03);
+
+      this.$store.commit('addTravelSetDetailAttraction', {sn: addItem01.attraction.sn, name: addItem01.attraction.name, description: addItem01.attraction.description});
+      this.$store.commit('addTravelSetDetailRestaurant', {sn: addItem02.restaurant.sn, name: addItem02.restaurant.name, description: addItem02.restaurant.description});
+      this.$store.commit('addTravelSetDetailHotel', {sn: addItem03.hotel.sn, name: addItem03.hotel.name, description: addItem03.hotel.description});
+
+      this.$store.commit('setNoEditItem', false);
+
+      this.$store.commit('setTravelSetDetailSortDateEvents', this.travelSetDateMap);
 
     },
 

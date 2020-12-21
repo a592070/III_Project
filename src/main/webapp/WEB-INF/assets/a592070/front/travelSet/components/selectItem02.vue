@@ -20,7 +20,7 @@
           v-model="type"
           :items="itemType"
           chips
-          label="Type"
+          label="類型"
           color="blue-grey lighten-2"
           solo
           @change="handleSelectItemType"
@@ -35,7 +35,7 @@
           solo-inverted
           hide-details
           prepend-inner-icon="mdi-magnify"
-          label="Search"
+          label="搜尋"
       ></v-text-field>
       <template v-if="selectItemType+1 && $vuetify.breakpoint.mdAndUp">
         <v-spacer></v-spacer>
@@ -148,7 +148,7 @@ module.exports = {
       search: '',
 
       region: this.selectRegion,
-      type: 0
+      type: this.selectItemType,
 
       // selectType: this.selectItemType,
       // itemTypes: [
@@ -156,6 +156,11 @@ module.exports = {
       //   { text: '餐廳', value: 1},
       //   { text: '旅館', value: 2},
       // ],
+    }
+  },
+  watch: {
+    selectItemType(){
+      this.type = this.selectItemType;
     }
   },
   computed: {
@@ -175,6 +180,12 @@ module.exports = {
     disabled () {
       return this.noMore
     },
+    // type (){
+    //   console.log(this.type)
+    //   return this.selectItemType
+    // },
+
+
     ...Vuex.mapState(['itemList', 'selectListLoading', 'pageData', 'selectRegion', 'regions', 'selectItemType', 'itemType', 'selectItemDialog', 'selectItem'])
   },
   created: function (){
