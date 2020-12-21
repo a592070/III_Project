@@ -91,7 +91,7 @@
         <br>
         <div class="table-responsive">
         <table class="table table-striped table-sm" id="table">
-            <thead>
+            <thead> 
             <tr>
                 <th><div>
 							<Input type='hidden' name='order' id="order" value=''>ID
