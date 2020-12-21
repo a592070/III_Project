@@ -685,6 +685,7 @@ module.exports = {
 
         // console.log(item.time);
         for (let i = 0; i < events.length; i++) {
+          console.log(events[i].time.getTime() + "======" + item.time.getTime())
           if(events[i].time.getTime() === item.time.getTime()){
 
             this.$message({
@@ -700,12 +701,11 @@ module.exports = {
             events.splice(i , 0, item);
             break;
           }
-          if(i===events.length) events.push(item);
-          // else if(events[i].time < item.time){
-          //   // console.log(i+'less')
-          //   events.splice(i+1 , 0, item);
-          //   break;
-          // }
+
+          if(i===events.length-1) {
+            events.push(item);
+            break;
+          }
         }
         if(events.length == 0) events.push(item);
 
