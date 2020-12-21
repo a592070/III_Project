@@ -2,8 +2,6 @@
   <v-app>
 
     <v-container fluid style="padding: 0; margin: 0;">
-
-
           <v-container fluid >
             <v-row>
               <v-spacer></v-spacer>
@@ -22,7 +20,7 @@
                     >
                       <v-text-field
                           v-model="search"
-                          v-on:keyup="handleSelectedKeyword"
+                          v-on:change="handleSelectedKeyword"
                           clearable
                           flat
                           solo-inverted
@@ -42,14 +40,17 @@
                     </v-toolbar>
                   </template>
 
+
+
                   <template v-slot:default="props">
 
                     <v-container style="height: 100vh; overflow:auto">
+
                       <el-scrollbar style="height: 100%;" ref="scrollbar">
+
                         <ul class="align-center"
                             :v-infinite-scroll="load"
                             :infinite-scroll-disabled="disabled"
-                            :infinite-scroll-distance="300"
                             style="padding-right: 10% ;"
                         >
                           <template v-for="item in attractionList">
@@ -181,13 +182,21 @@ module.exports = {
   },
   methods: {
     init(){
+      this.$store.commit('toggleSelectListLoading', true);
       this.$store.dispatch("initRegionsData");
-      this.$store.dispatch("initAttractionListData");
+      this.$store.dispatch("initAttractionListData").response(() => {
+        this.$store.commit('toggleSelectListLoading', false);
+      });
     },
     load () {
-      this.$store.commit("addPage");
-      this.$store.dispatch("appendAttractionListData", {region: this.selectRegion, keyword: this.search});
-
+      if(!this.selectListLoading && !this.noMore) {
+        this.$store.commit('toggleSelectListLoading', true);
+        this.$store.commit("addPage");
+        this.$store.dispatch("appendAttractionListData", {region: this.selectRegion, keyword: this.search})
+            .then((message) => {
+              this.$store.commit('toggleSelectListLoading', false);
+            });
+      }
     },
     handleSelectedKeyword(){
       this.selectData();
@@ -198,6 +207,7 @@ module.exports = {
     },
     selectData(){
       console.log(this.selectRegion, this.search);
+
       this.$store.commit('toggleSelectListLoading', true);
       this.$store.dispatch("selectedAttractionListData", {region: this.selectRegion, keyword:this.search})
           .then(() => {

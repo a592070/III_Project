@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static a592070.fieldenum.AttractionFiledName.ATTRACTION_PICTURE_URL;
 import static a592070.service.TravelSetService.*;
 import static global.Constant.*;
 
@@ -38,7 +39,7 @@ public class TravelSetFrontController {
     private ServletContext context;
 
     private static final int ELE_PAGE_SIZE = 30;
-    private static final int TRAVEL_SET_PAGE_SIZE = 10;
+    private static final int TRAVEL_SET_PAGE_SIZE = 7;
 
     @Autowired@Qualifier("travelSetService")
     private TravelSetService service;
@@ -61,7 +62,9 @@ public class TravelSetFrontController {
 
 
     @RequestMapping("/travelSet/list/{page}")
-    public Map<String, Object> getTravelSetList(@PathVariable("page") Integer page, HttpSession session){
+    public Map<String, Object> getTravelSetList(@PathVariable("page") Integer page,
+                                                @RequestParam(name="sortColumn", required = false) String sortColumn,
+                                                @RequestParam(name = "order", required = false) String order, HttpSession session){
         AccountBean user = (AccountBean) session.getAttribute(USER_LOGIN_SESSION);
 
         // delete when deploy
@@ -76,10 +79,31 @@ public class TravelSetFrontController {
             try{
                 PageSupport pageSupport = new PageSupport();
                 pageSupport.setPageSize(TRAVEL_SET_PAGE_SIZE);
-                pageSupport.setTotalSize(service.getSizeByUser(userName, true));
                 pageSupport.setCurrentPage(page);
 
-                List<TravelSetVO> list = service.listByUserWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), userName, true);
+
+                if(StringUtil.isEmpty(sortColumn) || "sn".equals(sortColumn)) {
+                    sortColumn = SN;
+                }else if("name".equals(sortColumn)){
+                    sortColumn = NAME;
+                }else if("createdUser".equals(sortColumn)){
+                    sortColumn = CREATED_USER;
+                }else if("createdTime".equals(sortColumn)){
+                    sortColumn = CREATED_TIME;
+                }else if("updateTime".equals(sortColumn)){
+                    sortColumn = UPDATE_TIME;
+                }
+
+                boolean desc;
+                if(StringUtil.isEmpty(order) || "ascending".equals(order)){
+                    desc = false;
+                }else{
+                    desc = true;
+                }
+
+                pageSupport.setTotalSize(service.getSizeByUser(userName, true));
+
+                List<TravelSetVO> list = service.listByUserWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), userName, true, sortColumn, desc);
                 map.put("tableData", list);
                 map.put("pageData", pageSupport);
                 map.put("message", true);
@@ -355,7 +379,7 @@ public class TravelSetFrontController {
         switch (type){
             case TRAVEL_SET_TYPE_ATTRACTION:
                 pageSupport.setTotalSize(attractionViewService.getSizeBySelectWithStatus(region, keywords, true));
-                list = attractionViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true);
+                list = attractionViewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true, ATTRACTION_PICTURE_URL);
                 break;
             case TRAVEL_SET_TYPE_RESTAURANT:
                 region = region.replace('臺', '台');

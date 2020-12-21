@@ -8,15 +8,23 @@
 <%--<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">--%>
 
 <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<%--<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/element-ui-index.css">--%>
 
 <script src="https://unpkg.com/vue"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/vue.js"></script>--%>
 <script src="https://unpkg.com/vuex"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/vuex.js"></script>--%>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/axios.min.js"></script>--%>
 <script src="https://unpkg.com/vue-axios@3.2.0/dist/vue-axios.es5.js"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/vue-axios.es5.js"></script>--%>
 <script src="https://unpkg.com/http-vue-loader"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/http-vue-loader"></script>--%>
 
 <script src="http://cdn.bootcss.com/sockjs-client/1.1.1/sockjs.js"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/sockjs.js"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/stomp.min.js"></script>--%>
 
 <script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/sass.js"></script>
 <script type="text/javascript">
@@ -35,8 +43,11 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/vuetify.js"></script>--%>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/element-ui-index.js"></script>--%>
 <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+<%--<script src="${pageContext.servletContext.contextPath}/assets/a592070/web_modules/element-ui-en.js"></script>--%>
 <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
 
 <script>

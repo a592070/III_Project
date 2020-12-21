@@ -2,7 +2,10 @@ package global.service;
 
 import config.StompPrincipal;
 import global.Constant;
+import global.aspect.NotifyAspect;
 import global.pojo.NotifyVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -24,6 +27,8 @@ public class NotifyService {
     private SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
     private ServletContext context;
+
+    Logger logger = LoggerFactory.getLogger(NotifyAspect.class);
 
     private int i;
 
@@ -66,6 +71,7 @@ public class NotifyService {
                     NotifyVO next = iterator.next();
                     next.setDate(new Date());
                     simpMessagingTemplate.convertAndSend("/topic/notify", next);
+                    logger.info("=======廣播訊息已發送=======:\n"+next);
                     iterator.remove();
                 }
 
@@ -74,17 +80,38 @@ public class NotifyService {
             }
         });
     }
-    public void sendSingleNotifies(String userName){
+    public void sendSingleNotifies(NotifyVO value, String userName){
         taskExecutor.execute(() -> {
             try {
-                Thread.sleep(3000);
-                Iterator<NotifyVO> iterator = singleNotifies.iterator();
-                while (iterator.hasNext()){
-                    NotifyVO next = iterator.next();
-                    next.setDate(new Date());
-                    simpMessagingTemplate.convertAndSendToUser(userName, "/topic/notify", next);
-                    iterator.remove();
+                long time = System.currentTimeMillis();
+                while(true){
+                    Object stompUsers = context.getAttribute(Constant.STOMP_USERS);
+                    if(stompUsers != null){
+                        Set<StompPrincipal> users = ( Set<StompPrincipal>) stompUsers;
+                        StompPrincipal stompPrincipal = users.stream().filter(ele -> ele.getName().equals(userName)).findFirst().orElse(null);
+                        if(stompPrincipal != null) {
+                            value.setDate(new Date());
+                            simpMessagingTemplate.convertAndSendToUser(userName, "/topic/notify", value);
+                            logger.info("=======私人訊息已發送=======目標:"+userName+"\n"+value);
+                            break;
+                        }
+                    }
+                    Thread.sleep(3000);
+                    // more than 1 minute giveup send message
+                    if(System.currentTimeMillis() > time+(1*60*1000)) {
+                        logger.info("=======私人訊息已逾時=======目標:"+userName+"\n"+value);
+                        break;
+                    }
+
+//                    Iterator<NotifyVO> iterator = singleNotifies.iterator();
+//                    while (iterator.hasNext()){
+//                        NotifyVO next = iterator.next();
+//                        next.setDate(new Date());
+//                        simpMessagingTemplate.convertAndSendToUser(userName, "/topic/notify", next);
+//                        iterator.remove();
+//                    }
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

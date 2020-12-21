@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>
+<%--<c:import url="/WEB-INF/admin/fragment/vue_ref.jsp"/>--%>
 <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/notify/js/notify.js"></script>
 <header class="main-header " id="header">
     <nav class="navbar navbar-static-top navbar-expand-lg">
@@ -17,7 +17,7 @@
                 <li class="dropdown notifications-menu">
 
                     <%-- 廣播通知 --%>
-                    <button class="dropdown-toggle">
+                    <button class="dropdown-toggle nav-link">
                         <a href="${pageContext.servletContext.contextPath}/admin/broadcastMessage">
                         <i class="mdi mdi-cast" ></i>
                         </a>

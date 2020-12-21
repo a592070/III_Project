@@ -1,7 +1,16 @@
 <template>
   <v-app>
     <v-main>
-  <v-container>
+
+  <v-container style="height: 80%">
+    <v-btn
+        color="pink accent-1"
+        depressed
+        x-large
+        @click="importData"
+    >
+      DEMO
+    </v-btn>
     <v-row>
       <v-spacer></v-spacer>
       <v-col md="10" :align="'center'">
@@ -32,46 +41,6 @@
         {{ message }}
       </v-card-text>
     </v-card>
-<!--    <v-img-->
-<!--        height="200"-->
-<!--        src="https://cdn.vuetifyjs.com/images/cards/dark-beach.jpg"-->
-<!--    >-->
-<!--      <v-row>-->
-<!--        <v-col-->
-<!--            class="text-right"-->
-<!--            cols="12"-->
-<!--        >-->
-<!--          <v-menu-->
-<!--              bottom-->
-<!--              left-->
-<!--              transition="slide-y-transition"-->
-<!--          >-->
-<!--            <v-list>-->
-<!--              <v-list-item @click="isUpdating = true">-->
-<!--                <v-list-item-action>-->
-<!--                  <v-icon>mdi-cog</v-icon>-->
-<!--                </v-list-item-action>-->
-<!--                <v-list-item-content>-->
-<!--                  <v-list-item-title>更新</v-list-item-title>-->
-<!--                </v-list-item-content>-->
-<!--              </v-list-item>-->
-<!--            </v-list>-->
-<!--          </v-menu>-->
-<!--        </v-col>-->
-<!--        <v-row-->
-<!--            class="pa-4"-->
-<!--            align="center"-->
-<!--            justify="center"-->
-<!--        >-->
-<!--          <v-col class="text-center">-->
-<!--            <h3 class="headline">-->
-<!--              {{ title }}-->
-<!--            </h3>-->
-<!--            <span class="grey&#45;&#45;text text&#45;&#45;lighten-1">{{ message }}</span>-->
-<!--          </v-col>-->
-<!--        </v-row>-->
-<!--      </v-row>-->
-<!--    </v-img>-->
     <v-form>
       <v-container>
         <v-row>
@@ -277,6 +246,11 @@ module.exports = {
     remove (item) {
       const index = this.connectUsers.indexOf(item.name)
       if (index >= 0) this.connectUsers.splice(index, 1)
+    },
+    importData(){
+      this.title = '測試資料';
+      this.message = '這是一筆測試資料';
+      this.selectStatus = 2;
     },
   },
 };

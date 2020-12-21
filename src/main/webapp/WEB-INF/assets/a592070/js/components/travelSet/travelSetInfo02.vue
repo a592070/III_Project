@@ -363,7 +363,7 @@ module.exports = {
     },
     handleDelete(index, row) {
       this.$confirm('此操作將永久刪除資料, 是否繼續?', '提示', {
-        confirmButtonText: '去死吧',
+        confirmButtonText: '刪除',
         cancelButtonText: '手滑了...',
         type: 'warning',
         center: true

@@ -10,14 +10,14 @@
 <html>
 <head>
     <title>FUN x TAIWAN</title>
-    <script src="//vuejs.org/js/vue.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <script src="//unpkg.com/element-ui"></script>
-    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+<%--    <script src="//vuejs.org/js/vue.min.js"></script>--%>
+<%--    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>--%>
+<%--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">--%>
+<%--    <script src="//unpkg.com/element-ui"></script>--%>
+<%--    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>--%>
 
     <script>
-        ELEMENT.locale(ELEMENT.lang.en);
+        // ELEMENT.locale(ELEMENT.lang.en);
         <%--var attractionOrigin;--%>
         <%--axios.get("${pageContext.servletContext.contextPath}/admin/attraction/detail/4512")--%>
         <%--    .then(response => {--%>
@@ -29,6 +29,8 @@
         <%--        regioinOrigin =  response.data;--%>
         <%--    });--%>
     </script>
+    <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
+
 
     <style>
         .avatar-uploader .el-upload {
@@ -92,8 +94,8 @@
             z-index: 5;
         }
 
+
     </style>
-    <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
 </head>
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
 <div class="wrapper">
@@ -105,16 +107,17 @@
 
         <%--CONTENT--%>
         <div class="content-wrapper" id="app">
-            <el-page-header  @back="goBack" v-if="isInsert" content="新 增 頁 面" style="position: fixed;">
-            </el-page-header>
-            <el-page-header @back="goBack" v-else content="修 改 頁 面" style="position: fixed;">
-            </el-page-header>
+
 
 
 
             <div class="content">
                 <div class="row">
-                    <div class="col-12">
+                    <el-page-header   @back="goBack" v-if="isInsert" content="新 增 頁 面" style="position: fixed;">
+                    </el-page-header>
+                    <el-page-header @back="goBack" v-else content="修 改 頁 面" style="position: fixed;">
+                    </el-page-header>
+                    <div class="col-12" style="max-width: 85%">
                         <el-button type="info" round v-if="isInsert" v-on:click="handleInjectData">匯入資料</el-button>
 
                         <div class="gotop-index" v-show="btnFlag">

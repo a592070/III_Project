@@ -56,14 +56,15 @@ public class NotifyAspect {
 
         notifyService.sendBroadcastNotifies();
 
-        logger.info("BroadcastNotifies已發送通知: "+value.toString());
+//        logger.info("BroadcastNotifies已發送通知: "+value.toString());
     }
     @After("addSingleNotifyMethod(value, userName) && isNotifyService()")
     public void afterAdviceSingleNotifies(JoinPoint joinPoint, NotifyVO value, String userName) {
         NotifyService notifyService = (NotifyService) joinPoint.getTarget();
 
-        notifyService.sendSingleNotifies(userName);
+        notifyService.sendSingleNotifies(value, userName);
+        notifyService.getSingleNotifies().remove(value);
 
-        logger.info("SingleNotifies已發送通知: "+userName+"==>"+value.toString());
+//        logger.info("SingleNotifies已發送通知: "+userName+"==>"+value.toString());
     }
 }

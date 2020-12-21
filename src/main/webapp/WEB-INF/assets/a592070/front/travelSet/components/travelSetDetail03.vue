@@ -163,9 +163,6 @@
                         color="red lighten-2"
                         dark
                     >
-<!--                      <v-card-title class="title">-->
-<!--                        {{selectItem.name}}-->
-<!--                      </v-card-title>-->
 
                       <v-card-title class="title" v-if="selectItem.attraction">
                         {{selectItem.attraction.name}}
@@ -180,10 +177,6 @@
                         請選擇
                       </v-card-title>
 
-
-<!--                      <v-card-text class="white text&#45;&#45;primary">-->
-<!--                        <p>{{selectItem.description}}</p>-->
-<!--                      </v-card-text>-->
 
                       <v-card-text class="white text--primary" v-if="selectItem.attraction">
                         <p>{{selectItem.attraction.description}}</p>
@@ -211,15 +204,6 @@
                         </el-time-select>
                       </v-card-text>
                       <v-card-text class="white text--primary">
-<!--                        <v-btn-->
-<!--                            :disabled="selectItem.sn === 0"-->
-<!--                            color="red lighten-2"-->
-<!--                            class="mx-0"-->
-<!--                            outlined-->
-<!--                            @click="comment()"-->
-<!--                        >-->
-<!--                          加 入-->
-<!--                        </v-btn>-->
 
                         <v-btn
                             v-if="selectItem.attraction"
@@ -312,19 +296,11 @@
                           </v-btn>
                         </v-card-actions>
 
-<!--                        <v-expand-transition>-->
-<!--                          <div v-show="showItemDetail">-->
                             <v-divider></v-divider>
 
-<!--                            <v-card-text>-->
-<!--                              {{item.description}}-->
-<!--                            </v-card-text>-->
                             <v-card-text>
                               {{item.attraction.description}}
                             </v-card-text>
-<!--                          </div>-->
-<!--                        </v-expand-transition>-->
-<!--                        </template>-->
                       </v-card>
                     </v-timeline-item>
 
@@ -501,9 +477,6 @@ module.exports = {
   },
   watch: {
     steps (val) {
-      // if (this.e1 > val) {
-      //   this.e1 = val
-      // }
       console.log(this.e1);
       this.e1 = val;
     },
@@ -516,21 +489,10 @@ module.exports = {
       this.inputName = this.travelSetDetail.travelSetInfo.name;
       this.inputDescription = this.travelSetDetail.travelSetInfo.description;
     },
-    // selectItemDialog: function (){
-    //   this.selectItemDialog1 = this.selectItemDialog;
-    // }
+
   },
   computed: {
-    // timeline () {
-    //   console.log(this.travelSetDateMap);
-    //   console.log(this.e1);
-    //   // if(this.dates.length > 0){
-    //   //   let event = this.travelSetDateMap[this.e1];
-    //   //   return event.slice().reverse()
-    //   // }
-    //   let event = this.travelSetDateMap[this.e1];
-    //   return event.slice().reverse()
-    // },
+
     selectItemDialog1 (){
       return this.selectItemDialog
     },
@@ -547,9 +509,7 @@ module.exports = {
       this.steps = this.dates.length;
       return 1;
     },
-    // steps(){
-    //   return this.dateNum;
-    // },
+
     travelSetLength() {
       return this.travelSetDateMap.length;
     },
@@ -576,42 +536,40 @@ module.exports = {
       this.dialog = true
     },
     selectDate(){
-      // this.dates.sort((a,b)=>new Date(a).getTime()-new Date(b).getTime());
+      this.dates.sort((a,b)=>new Date(a).getTime()-new Date(b).getTime());
+      console.log(this.dates);
       this.$refs.dateModal.save(this.dates);
 
-      // let eventDates = Object.keys(this.travelSetDateMap);
-      // for (let i = 0; i < eventDates.length; i++) {
-      //   if(this.dates.indexOf(eventDates[i]) == -1){
-      //     delete this.travelSetDateMap[eventDates[i]]
-      //   }
-      // }
-      //
-      // // this.travelSetDateMap = {};
-      // for (let date of this.dates) {
-      //   console.log(date);
-      //   this.travelSetDateMap[date] = [];
-      // }
-      // console.log(this.travelSetDateMap);
-
-      // this.travelSetDateMap = {};
       for (let date of this.dates) {
         if(!this.travelSetDateMap[date]){
           this.travelSetDateMap[date] = [];
         }
       }
       // console.log(this.travelSetDateMap);
+
+
       let eventDates = Object.keys(this.travelSetDateMap);
-      for (let i = 0; i < eventDates.length; i++) {
-        if(this.dates.indexOf(eventDates[i]) == -1){
-          delete this.travelSetDateMap[eventDates[i]]
+
+
+      this.$nextTick(function () {
+        for (let eventDate of eventDates) {
+          if(this.dates.indexOf(eventDate) === -1){
+            console.log("del dates"+eventDate)
+            delete this.travelSetDateMap[eventDate];
+          }
         }
-      }
-      // console.log(this.travelSetDateMap);
+      })
+
       let tmp = this.travelSetDateMap;
+      // console.log(this.travelSetDateMap);
       let modify = eventDates.sort().reduce(function(Obj, key) {
         Obj[key] = tmp[key];
         return Obj;
       }, {});
+      console.log(modify);
+      this.travelSetDateMap = modify;
+      this.$store.commit('setTravelSetDetailSortDateEvents', this.travelSetDateMap);
+
 
     },
     closePicker: function(v){
@@ -624,76 +582,26 @@ module.exports = {
       console.log(time);
 
       let item = this.selectItem;
-      // if(this.selectItem.type === 0){
-      //   item = {
-      //     sn: 0,
-      //     type: this.selectItem.type,
-      //     time: null,
-      //     attraction: {
-      //       sn: this.selectItem.sn,
-      //       name: this.selectItem.name,
-      //       description: this.selectItem.description,
-      //     }
-      //   }
-      // }else if(this.selectItem.type === 1){
-      //   item = {
-      //     sn: 0,
-      //     type: this.selectItem.type,
-      //     time: null,
-      //     restaurant: {
-      //       sn: this.selectItem.sn,
-      //       name: this.selectItem.name,
-      //       description: this.selectItem.description,
-      //     }
-      //   }
-      // }else if(this.selectItem.type === 2){
-      //   item = {
-      //     sn: 0,
-      //     type: this.selectItem.type,
-      //     time: null,
-      //     hotel: {
-      //       sn: this.selectItem.sn,
-      //       name: this.selectItem.name,
-      //       description: this.selectItem.description,
-      //     }
-      //   }
-      // }
 
       item.time = new Date(this.e1);
 
       item.time.setHours(time.substring(0, 2));
-      // console.log(this.e1);
-      // console.log(item);
 
-      // this.$nextTick(function () {
-      // });
       let events = this.travelSetDateMap[this.e1];
-
-      // console.log("==============");
-      // console.log(events)
-      // console.log("==============");
-      // console.log(item);
-      // console.log("==============");
 
       if(events.length > 0){
         // let isExist = false;
         for (let i = 0; i < events.length; i++) {
           if(events[i].type == item.type && item.type == 0 && events[i].attraction.sn == item.attraction.sn) {
-            // console.log('type 0:'+i);
-            // events[i].time = item.time;
-            // isExist = true;
+
             events.splice(i, 1);
             break;
           }else if(events[i].type == item.type && item.type == 1 && events[i].restaurant.sn == item.restaurant.sn){
-            // console.log('type 1:'+i);
-            // events[i].time = item.time;
-            // isExist = true;
+
             events.splice(i, 1);
             break;
           }else if(events[i].type == item.type && item.type == 2 && events[i].hotel.sn == item.hotel.sn){
-            // console.log('type 2:'+i);
-            // events[i].time = item.time;
-            // isExist = true;
+
             events.splice(i, 1);
             break;
           }

@@ -365,6 +365,114 @@
 
 	<build>
 		<plugins>
+<!--			<plugin>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--				<configuration>-->
+<!--					<mainClass>TomcatStarter</mainClass>-->
+<!--					<layout>JAR</layout>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>package</phase>-->
+<!--						<goals>-->
+<!--							<goal>repackage</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+<!--			<plugin>-->
+<!--				<groupId>org.codehaus.mojo</groupId>-->
+<!--				<artifactId>appassembler-maven-plugin</artifactId>-->
+<!--				<version>1.1.1</version>-->
+<!--				<configuration>-->
+<!--					<assembleDirectory>target</assembleDirectory>-->
+<!--					<programs>-->
+<!--						<program>-->
+<!--							<mainClass>TomcatStarter</mainClass>-->
+<!--							<name>webapp</name>-->
+<!--						</program>-->
+<!--					</programs>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>package</phase>-->
+<!--						<goals>-->
+<!--							<goal>assemble</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-compiler-plugin</artifactId>-->
+<!--				<version>3.8.0</version>-->
+<!--				<inherited>true</inherited>-->
+<!--				<configuration>-->
+<!--					<release>11.0.8</release>-->
+<!--					&lt;!&ndash; for dummy IntelliJ &ndash;&gt;-->
+<!--					<source>11.0.8</source>-->
+<!--					<target>11.0.8</target>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<finalName>app-${project.version}</finalName>
+					<archive>
+						<manifest>
+							<mainClass>TomcatStarter</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-jar-plugin</artifactId>-->
+<!--				<version>3.2.0</version>-->
+<!--				<configuration>-->
+<!--					<archive>-->
+<!--						<manifest>-->
+<!--							<addClasspath>true</addClasspath>-->
+<!--							<classpathPrefix>lib/</classpathPrefix>-->
+<!--							<mainClass>TomcatStarter</mainClass>-->
+<!--						</manifest>-->
+<!--					</archive>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-dependency-plugin</artifactId>-->
+<!--				<version>3.1.2</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>copy-dependencies</id>-->
+<!--						<phase>prepare-package</phase>-->
+<!--						<goals>-->
+<!--							<goal>copy-dependencies</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<outputDirectory>${project.build.directory}/lib</outputDirectory>-->
+<!--							<overWriteReleases>false</overWriteReleases>-->
+<!--							<overWriteSnapshots>false</overWriteSnapshots>-->
+<!--							<overWriteIfNewer>true</overWriteIfNewer>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -381,7 +489,7 @@
 		</plugins>
 		<resources>
 			<resource>
-				<directory>resources</directory>
+				<directory>src/main/resources</directory>
 				<includes>
 					<include>*.properties</include>
 					<!-- <include>*.jpg</include> -->
@@ -389,7 +497,7 @@
 				<filtering>true</filtering>
 			</resource>
 			<resource>
-				<directory>resources</directory>
+				<directory>src/main/resources</directory>
 				<includes>
 					<include>*.properties</include>
 					<include>*.xml</include>

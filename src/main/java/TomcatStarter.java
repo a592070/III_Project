@@ -14,6 +14,7 @@ import org.springframework.web.context.request.RequestContextListener;
 
 import javax.persistence.Embedded;
 import javax.servlet.ServletException;
+import java.io.File;
 
 public class TomcatStarter {
 
@@ -23,13 +24,20 @@ public class TomcatStarter {
     public static void start() throws LifecycleException, ServletException {
         Tomcat tomcat = new Tomcat();
 
-        String basedDir = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-        System.out.println(basedDir);
-        tomcat.setBaseDir(basedDir);
+//        String basedDir = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String basedDir = TomcatStarter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+//        System.out.println(basedDir);
+        String tmp = basedDir+"/";
+        tomcat.setBaseDir(tmp);
         tomcat.setPort(port);
 
-        Context context = tomcat.addWebapp(contextPath, basedDir);
-        System.out.println(context.getPath());
+        tomcat.getServer();
+        tomcat.getService();
+        tomcat.getConnector();
+        tomcat.getEngine();
+        tomcat.getHost().setAppBase(tmp);
+
+        Context context = tomcat.addWebapp(contextPath, tmp);
         context.setResponseCharacterEncoding("UTF-8");
         context.setRequestCharacterEncoding("UTF-8");
 
@@ -51,13 +59,16 @@ public class TomcatStarter {
         Connector connector = tomcat.getConnector();
         connector.setURIEncoding("UTF-8");
 
-        tomcat.start();
+        try{
+            tomcat.start();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // 啟動線程進入等待狀態
         tomcat.getServer().await();
     }
 
     public static void main(String[] args) throws LifecycleException, ServletException, ClassNotFoundException {
-        System.out.println(Class.forName("org.apache.jasper.servlet.JspServlet").getName());
         start();
     }
 

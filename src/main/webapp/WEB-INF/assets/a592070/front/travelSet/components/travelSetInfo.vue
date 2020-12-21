@@ -55,6 +55,7 @@
                 element-loading-text="唉呦威..."
                 element-loading-spinner="el-icon-loading"
                 element-loading-background="rgba(0, 0, 0, 0.8)"
+                height="600"
             >
               <el-table-column
                   label="ID"
@@ -316,7 +317,7 @@ module.exports = {
     },
     handleDelete(index, row) {
       this.$confirm('確定要刪除?', '提示', {
-        confirmButtonText: '去死吧',
+        confirmButtonText: '刪除',
         cancelButtonText: '手滑了...',
         type: 'warning',
         center: true

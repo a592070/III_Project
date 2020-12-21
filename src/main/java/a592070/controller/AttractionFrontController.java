@@ -47,7 +47,7 @@ public class AttractionFrontController {
         pageSupport.setTotalSize(viewService.getSizeWithStatus(true));
         pageSupport.setCurrentPage(page);
 
-        List<AttractionVO> list = viewService.listWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), true);
+        List<AttractionVO> list = viewService.listWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), true, ATTRACTION_PICTURE_URL);
         Map<String, Object> map = new HashMap<>();
 
         map.put("tableData", list);
@@ -80,7 +80,7 @@ public class AttractionFrontController {
         if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
 
         pageSupport.setTotalSize(viewService.getSizeByRegionWithStatus(region, true));
-        List<AttractionVO> list = viewService.listByRegionWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, true, sortColumn, desc);
+        List<AttractionVO> list = viewService.listByRegionWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, true, ATTRACTION_PICTURE_URL);
 
         Map<String, Object> map = new HashMap<>();
         map.put("tableData", list);
@@ -117,7 +117,7 @@ public class AttractionFrontController {
         if(StringUtil.isEmpty(region) || "all".equals(region)) region = "";
 
         pageSupport.setTotalSize(viewService.getSizeBySelectWithStatus(region, keywords, true));
-        list = viewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true, sortColumn, desc);
+        list = viewService.listBySelectWithStatus(pageSupport.getCurrentPage(), pageSupport.getPageSize(), region, keywords, true, ATTRACTION_PICTURE_URL);
 
 
         Map<String, Object> map = new HashMap<>();

@@ -75,9 +75,9 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
 
     @Override
     public List<AttractionVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending){
-        String hql = "from AttractionVO order by "+orderFiled;
+        String hql = "select vo from AttractionVO vo, AttractionDO do where vo.sn = do.sn order by do."+orderFiled;
         if(descending) hql += " desc";
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", sn";
+        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
 
@@ -89,9 +89,9 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
 
     @Override
     public List<AttractionVO> listByRownum(int firstIndex, int resultSize, String orderFiled, boolean descending, boolean available) {
-        String hql = "from AttractionVO where (status=:available) order by "+orderFiled;
+        String hql = "select vo from AttractionVO vo, AttractionDO do where vo.sn = do.sn and vo.status=:available order by do."+orderFiled;
         if(descending) hql += " desc";
-        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", sn";
+        if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
         Query<AttractionVO> query = sessionFactory.getCurrentSession().createQuery(hql, AttractionVO.class);
         query.setParameter("available", available);
@@ -177,7 +177,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             String hql = "select vo from AttractionDO do , AttractionVO vo " +
                     "where (do.sn=vo.sn) and " +
                     "( do.sn like :snKeyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                    "order by vo."+orderFiled;
+                    "order by do."+orderFiled;
             if(descending) hql += " desc";
             if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -194,7 +194,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             String hql = "select vo from AttractionDO do , AttractionVO vo " +
                     "where (do.sn=vo.sn) and " +
                     "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                    "order by vo."+orderFiled;
+                    "order by do."+orderFiled;
             if(descending) hql += " desc";
             if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -219,7 +219,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             String hql = "select vo from AttractionDO do , AttractionVO vo " +
                     "where (do.status=:available) and (do.sn=vo.sn) and " +
                     "( do.sn like :keyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                    "order by vo."+orderFiled;
+                    "order by do."+orderFiled;
             if(descending) hql += " desc";
             if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -237,7 +237,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             String hql = "select vo from AttractionDO do , AttractionVO vo " +
                     "where (do.status=:available) and (do.sn=vo.sn) and " +
                     "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                    "order by vo."+orderFiled;
+                    "order by do."+orderFiled;
             if(descending) hql += " desc";
             if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -281,7 +281,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     public List<AttractionVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending){
         filedValue = "%" + filedValue + "%";
 
-        String hql = "select vo from AttractionDO do, AttractionVO vo where (do.sn=vo.sn) and (do."+filedName+" like ?1 ) order by vo."+orderFiled;
+        String hql = "select vo from AttractionDO do, AttractionVO vo where (do.sn=vo.sn) and (do."+filedName+" like ?1 ) order by do."+orderFiled;
         if(descending) hql += " desc";
         if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -299,7 +299,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
     public List<AttractionVO> listByFiled(int firstIndex, int resultSize, String filedName, String filedValue, String orderFiled, boolean descending, boolean available) {
         filedValue = "%" + filedValue + "%";
 
-        String hql = "select vo from AttractionDO do, AttractionVO vo where (do.status=:available) and (do.sn=vo.sn) and (do."+filedName+" like :filedValue ) order by vo."+orderFiled;
+        String hql = "select vo from AttractionDO do, AttractionVO vo where (do.status=:available) and (do.sn=vo.sn) and (do."+filedName+" like :filedValue ) order by do."+orderFiled;
         if(descending) hql += " desc";
         if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -403,7 +403,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             hql = "select vo from AttractionDO do , AttractionVO vo " +
                     "where (do.sn=vo.sn) and (do.region like :region) and " +
                     "( do.sn like :snKeyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                    "order by vo."+orderFiled;
+                    "order by do."+orderFiled;
             if(descending) hql += " desc";
             if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -422,7 +422,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             hql = "select vo from AttractionDO do , AttractionVO vo " +
                     "where (do.sn=vo.sn) and (do.region like :region) and " +
                     "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                    "order by vo."+orderFiled;
+                    "order by do."+orderFiled;
             if(descending) hql += " desc";
             if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -453,7 +453,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             hql = "select vo from AttractionDO do , AttractionVO vo " +
                     "where (do.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
                     "( do.sn like :snKeyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                    "order by vo."+orderFiled;
+                    "order by do."+orderFiled;
             if(descending) hql += " desc";
             if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
@@ -474,7 +474,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             hql = "select vo from AttractionDO do , AttractionVO vo " +
                     "where (do.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
                     "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
-                    "order by vo."+orderFiled;
+                    "order by do."+orderFiled;
             if(descending) hql += " desc";
             if(!AttractionFiledName.ATTRACTION_ID.equals(orderFiled)) hql += ", vo.sn";
 
