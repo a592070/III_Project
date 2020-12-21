@@ -61,9 +61,9 @@
 <!--           <li class="nav-item"> -->
 <!--             <a href="index.html" class="nav-link">首頁</a> -->
 <!--           </li> -->
-          <li class="nav-item">
-            <a href="<%=application.getContextPath()%>/FunTaiwan" class="nav-link">關於我</a>
-          </li>
+<%--          <li class="nav-item">--%>
+<%--            <a href="<%=application.getContextPath()%>/FunTaiwan" class="nav-link">關於我</a>--%>
+<%--          </li>--%>
           <li class="nav-item">
             <a href="${pageContext.servletContext.contextPath}/attraction/index" class="nav-link">找景點</a>
           </li>
