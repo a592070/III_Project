@@ -19,6 +19,10 @@
 	float: left;
 }
 
+.aaa{
+	margin-left: 380px;
+}
+
 .box {
 	display: flex;
 }
@@ -105,13 +109,13 @@ td{
 						<button type="submit" class="btn btn-primary">Search</button>
 						</form>   
 					</div> 
- 					<div class="search">
- 						<form action="<%=application.getContextPath()%>/nameSearch" method="POST"> 
- 						<span class="sp_search">車行名稱</span>  
-						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>  
- 						<button type="submit" class="btn btn-primary">Search</button>  
- 						</form>  
-					</div> 
+<!--  					<div class="search"> -->
+<%--  						<form action="<%=application.getContextPath()%>/nameSearch" method="POST">  --%>
+<!--  						<span class="sp_search">車行名稱</span>   -->
+<!-- 						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>   -->
+<!--  						<button type="submit" class="btn btn-primary">Search</button>   -->
+<%--  						</form>   --%>
+<!-- 					</div>  -->
 
  					<div class="search">
  					    <form action="<%=application.getContextPath()%>/usernameSearch" method="POST" > 
@@ -123,7 +127,7 @@ td{
 
                      <div class="search">
                         <form action="CreateCarRentalCompany.controller" method="GET" > 
-                            <button type="submit" class="btn btn-primary">增加租車行</button> 
+                            <button type="submit" class="btn btn-primary aaa">增加租車行</button> 
                         </form> 
                     </div>
 

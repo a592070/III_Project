@@ -181,7 +181,7 @@ h5{
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h3>小計</h3></td>
+							<td><h4>小計 $</h4></td>
 							<td class="text-right">
 								<h3 id="Hsum"><strong id="HPrice"></strong></h3>
 								</td>
@@ -480,7 +480,7 @@ h5{
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h4>小計</h4></td>
+							<td><h4>小計 $</h4></td>
 							<td class="text-right">
 							<h3 id="Rsum"><strong id="tPrice"></strong></h3></td>
 							<td> </td>
@@ -544,7 +544,7 @@ h5{
 								</div>
 							</td>
 							<td class="col-sm-1 col-md-1" style="text-align: center"></td>
-							<td class="col-sm-1 col-md-1 text-center" ><strong id="tNum">${T.nums_days}</strong></td>
+							<td class="col-sm-1 col-md-1 text-center" style="padding: 20px"><strong id="tNum"> ${T.nums_days} &nbsp&nbsp&nbsp</strong></td>
 							<td class="col-sm-1 col-md-1 text-center" ><strong id="tPrice2">${T.ticketPrice}</strong></td>
 							<td class="col-sm-1 col-md-1">
 								<button type="button" class="btn btn-danger">
@@ -556,11 +556,10 @@ h5{
 						<tr>
 							<td> </td>
 							<td> </td>
-							<td> </td>
-							<td><h4>小計</h4></td>
-							<td class="text-right"><h3>
-									<strong id="TT"></strong>
-								</h3></td>
+							<td><h4>小計 $ &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h4> </td>
+							<td></td>
+							<td class="text-right">
+							<h3><strong id="TT"></strong></h3></td>
 						</tr>
 					</c:forEach>
 
@@ -586,7 +585,7 @@ h5{
 							<td class="total"> </td>
 							<td><h3>總金額</h3></td>
 							<td class="text-right"><h2>
-									<strong id="sumPrice">${OTBean.totalPrice}</strong>
+									<strong id="sumPrice">$ ${OTBean.totalPrice}</strong>
 								</h2></td>
 						</tr>
 						

@@ -163,6 +163,15 @@ pre {
     border-radius: 0;
 }
 
+.div-back {
+	margin-left: 150px;
+	margin-top: 20px;
+}
+
+.btn.btn-light {
+	color:lightgray;
+}
+
 </style>
 
 </head>
@@ -177,6 +186,14 @@ pre {
 		<div class="page-wrapper">
 			<c:import url="/WEB-INF/admin/fragment/header.jsp" />
 			<div class="content-wrapper">
+
+						<FORM id="RHome" name="RHome" action="Tindex.controller" method="GET">		 
+            <div class="div-btn div-back">
+                <button type="submit" class="btn btn-primary">回租車公司首頁</button>
+                <button type="button" class="btn btn-light" id="aaa">帶入資料</button>
+            </div>
+            
+        </FORM>
 				
 				<div class="container">
 		<div class="box">
@@ -240,11 +257,6 @@ pre {
 
 		</div>
 
-		<FORM id="RHome" name="RHome" action="Tindex.controller" method="GET">		 
-            <div class="div-btn">
-                <button type="submit" class="btn btn-primary">回租車公司首頁</button>
-            </div>
-        </FORM>
 				 
 
 
@@ -323,7 +335,13 @@ pre {
 
             }
 
-
+		$("#aaa").click(function () {
+			$("#name_company").val("哈哈租車行");
+			$("#address").val("高雄市苓雅區凱旋二路889號");
+			$("#description").val("高雄最優質租車行");
+			$("#oprnHours").val("全年無休");
+			$("#tel").val("07 987 9870");
+		})
 
 
     </script>

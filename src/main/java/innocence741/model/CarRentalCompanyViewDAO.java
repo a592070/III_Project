@@ -28,7 +28,7 @@ public class CarRentalCompanyViewDAO {
 	
 	public List<CarRentalCompanyVO> getCarRentalCompanysList() throws SQLException {
 		Session session = sessionFacory.getCurrentSession();
-		Query<CarRentalCompanyVO> query = session.createQuery("From CarRentalCompanyVO", CarRentalCompanyVO.class);
+		Query<CarRentalCompanyVO> query = session.createQuery("From CarRentalCompanyVO order by sn_rentalcompany", CarRentalCompanyVO.class);
 		carRentalCompanyVOs = query.list();
 		return carRentalCompanyVOs;
 	}
