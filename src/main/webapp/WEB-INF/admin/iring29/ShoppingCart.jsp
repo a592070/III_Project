@@ -172,7 +172,7 @@ h5{
 							
 							<td class="col-sm-1 col-md-1">
 								<button type="button" class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove"></span> Remove
+									<span class="glyphicon glyphicon-remove"></span> 移除
 								</button>
 							</td>
 						</tr>
