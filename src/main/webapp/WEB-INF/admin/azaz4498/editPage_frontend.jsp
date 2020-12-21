@@ -283,8 +283,14 @@ contentType="text/html;charset=UTF-8" language="java"%>
           editor.editing.view.focus();
         }
         else{
-          setTimeout(function(){$('#f_editArticle').submit()},3000);
-          alert('文章修改成功!')
+        	Swal.fire({
+                title:'文章修改成功!',
+                icon:'success',
+                confirmButtonText:"好"
+              })
+           
+           setTimeout(function(){$('#f_editArticle').submit()},3000);
+          
           
         }
 

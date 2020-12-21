@@ -410,9 +410,9 @@ $(".comment-list").on("click", ".reply", function () {
   if (loginCheck == null || loginCheck == "") {
     Swal.fire({
       title: "請先登入",
-      text: "登入以回復他人評論",
+      text: "登入以回覆他人評論",
       html:
-        "<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以回復他人評論",
+        "<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以回覆他人評論",
       icon: "warning",
       confirmButtonText: "好",
     });

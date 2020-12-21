@@ -40,7 +40,7 @@ i{
 }
 .star_div{
 	height:40px;
-	font-size: 17px;
+	font-size: 13px;
 }
 .sidebar-wrap .heading{
 	font-size:25px;

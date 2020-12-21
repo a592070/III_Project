@@ -257,6 +257,8 @@
 		$("#table").on('change', '#checkbox', function () {
 				var SN = $(this).closest('td').siblings("#SN").text()
 				var STATUS =$(this).val();
+				var aaa =$(this);
+				console.log(STATUS)
 				$.ajax(
 					{
 						type: 'POST',
@@ -264,7 +266,11 @@
 						url: '${pageContext.servletContext.contextPath}/admin/hotelstatus',
 						dataType: 'text',
 						success: function (response) {
-							console.log(response)
+// 							console.log(response)
+                             if(STATUS=="啟用")
+                            	 aaa.val("禁用")
+                                 else
+                                	 aaa.val("啟用")    
 
 						}
 					}

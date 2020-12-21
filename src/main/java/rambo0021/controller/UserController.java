@@ -221,6 +221,9 @@ public class UserController {
 			return map;
 		}
 		
-
+		@RequestMapping(path = "checkUser",method = RequestMethod.POST)
+		public @ResponseBody boolean checkUser(@RequestParam(name = "userName")String username) {
+			return rs.checkusr(username);
+		}
 		
 }
