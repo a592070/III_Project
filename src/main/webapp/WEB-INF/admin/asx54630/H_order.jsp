@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Hotel Order List</title>
+<title>FUN x TAIWAN</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style type="text/css">

@@ -5,7 +5,7 @@
 <html>
 
 <head>
-  <title>Fun Taiwan - 註冊</title>
+  <title>FUN x TAIWAN</title>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

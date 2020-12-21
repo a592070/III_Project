@@ -10,7 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>文章頁面</title>
+    <title>FUN x TAIWAN</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
