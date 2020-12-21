@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Hotel Detail</title>
+<title>FUN x TAIWAN</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 <!--     css -->
@@ -386,13 +386,13 @@ body{
 									                         
                         function insertdata(){
        					 console.log("in data")
-       					 	$("#date_in").val("2020-12-27");
-       					 	$("#date_out").val("2020-12-29");
-       						 document.getElementById("guest").value = "3";
-       						 document.getElementById("dbroom")[0].selected = "selected";
-       						 document.getElementById("qdroom")[1].selected = "selected";
-       						 document.getElementById("client_name").value = "田小傑";
-       						 document.getElementById("client_phone").value = "0928957224"; 
+       					 	$("#date_in").val("2021-02-11");
+       					 	$("#date_out").val("2021-02-13");
+       						 document.getElementById("guest").value = "2";
+       						 document.getElementById("dbroom")[1].selected = "selected";
+       						 document.getElementById("qdroom")[0].selected = "selected";
+       						 document.getElementById("client_name").value = "陳星星";
+       						 document.getElementById("client_phone").value = "0987654321"; 
 
        					 }
                        

@@ -12,7 +12,7 @@
 <html>
 
 <head>
-<title>論壇管理</title>
+<title>FUN x TAIWAN</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style>

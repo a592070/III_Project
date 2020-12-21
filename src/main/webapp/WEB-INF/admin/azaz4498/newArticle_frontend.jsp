@@ -6,7 +6,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>撰寫文章</title>
+    <title>FUN x TAIWAN</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
@@ -178,7 +178,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
                       </div>
                     </div>
                     <h2 class="mb-3" id="p_title">文章標題</h2>
-                    <div class="ftco-animate ck-content" id="p_content" style="width: 800px;">
+                    <div class="ftco-animate ck-content" id="p_content" style="width: 600px;">
 
                     </div>
                       

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FUN TAIWAN - 訂單成立</title>
+<title>FUN x TAIWAN</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <c:import url="/WEB-INF/admin/fragment/user_ref.jsp" /> 
 
@@ -158,7 +158,7 @@ td.col-sm-1.col-md-1.text-center{
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h4>小計</h4></td>
+							<td><h4>小計 $</h4></td>
 							<td class="text-right">
 							<h3><strong id="HPrice"></strong></h3></td>
 						</tr>
@@ -241,7 +241,7 @@ td.col-sm-1.col-md-1.text-center{
 							<td> </td>
 							<td> </td>
 							<td> </td>
-							<td><h4>小計</h4></td>
+							<td><h4>小計 $</h4></td>
 							<td class="text-right">
 							<h3><strong id="tPrice"></strong></h3></td>
 						</tr>
@@ -305,7 +305,7 @@ td.col-sm-1.col-md-1.text-center{
 							<td class="col-sm-1 col-md-1" style="text-align: center">
 								<!-- <input type="email" class="form-control" id="exampleInputEmail1" value="3"> -->
 							</td>
-							<td class="col-sm-1 col-md-1 text-center"><strong id="tNum">${T.nums_days}</strong></td>
+							<td class="col-sm-1 col-md-1 text-center"><strong id="tNum">${T.nums_days} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</strong></td>
 							<td class="col-sm-1 col-md-1 text-center"><strong id="tPrice2">${T.ticketPrice}</strong></td>
 							<td class="col-sm-1 col-md-1">
 								<!-- <button type="button" class="btn btn-danger">
@@ -317,8 +317,8 @@ td.col-sm-1.col-md-1.text-center{
 						<tr>
 							<td> </td>
 							<td> </td>
-							<td> </td>
-							<td><h4>小計</h4></td>
+							<td><h4>小計 $ &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h4></td>
+							<td></td>
 							<td class="text-right"><h3>
 									<strong id="TT"></strong>
 								</h3></td>
@@ -344,7 +344,7 @@ td.col-sm-1.col-md-1.text-center{
 							<td class="total"> </td>
 							<td><h3>總金額</h3></td>
 							<td class="text-right"><h2>
-									<strong id="sumPrice">${totalPrice}</strong>
+									<strong id="sumPrice">$ ${totalPrice}</strong>
 								</h2></td>
 						</tr>
 					</tbody>

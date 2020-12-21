@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>FUN x TAIWAN</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     <c:import url="/WEB-INF/admin/fragment/vuetity_css.jsp" />
     <link rel="preconnect" href="https://fonts.gstatic.com">

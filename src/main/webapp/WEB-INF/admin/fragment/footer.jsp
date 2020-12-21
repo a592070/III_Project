@@ -59,8 +59,8 @@
             	<h2 class="ftco-heading-2">有任何問題嗎?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">320桃園市中壢區復興路46號9樓</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">03 425 1108</span></a></li>
+	                <li><span class="icon icon-map-marker"></span><span class="text">320桃園市中壢區中大路300號</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">03 425 7387</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">iiiteam124@gmail.com</span></a></li>
 	              </ul>
 	            </div>
@@ -71,7 +71,7 @@
           <div class="col-md-12 text-center">
 
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<%--  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>--%>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
           </div>
         </div>

@@ -61,7 +61,8 @@ const store = new Vuex.Store({
                 filename: '',
                 dest: ''
             }
-        ]
+        ],
+        initDetailPageStatus: false,
     },
     getters: {
         getAttractionList: (state) => state.attractionList,
@@ -123,6 +124,10 @@ const store = new Vuex.Store({
         setAttractionPic(state, data){
             state.attractionPic = data;
             console.log(state.attractionPic);
+        },
+
+        setInitDetailPageStatus(state, flag){
+            state.initDetailPageStatus = flag;
         }
 
     },
@@ -190,6 +195,9 @@ const store = new Vuex.Store({
                 .then(response => {
                     state.commit('addAttractionList', response.data.tableData);
                     state.commit('setPageData', response.data.pageData);
+                })
+                .then(() => {
+                    return true;
                 });
         },
 
@@ -198,6 +206,7 @@ const store = new Vuex.Store({
             let url = context+'/attraction/entity/'+id;
             return axios.get(url)
                 .then(response => {
+                    state.commit('setInitDetailPageStatus', true);
                     state.commit('setAttractionData', response.data.attractionData);
                     state.commit('setAttractionPic', response.data.attractionPic);
                     state.commit('toggleSelectDetailLoading', false);

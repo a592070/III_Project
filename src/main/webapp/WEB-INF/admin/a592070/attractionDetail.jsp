@@ -9,15 +9,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
-    <script src="//vuejs.org/js/vue.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <script src="//unpkg.com/element-ui"></script>
-    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+    <title>FUN x TAIWAN</title>
+<%--    <script src="//vuejs.org/js/vue.min.js"></script>--%>
+<%--    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>--%>
+<%--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">--%>
+<%--    <script src="//unpkg.com/element-ui"></script>--%>
+<%--    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>--%>
 
     <script>
-        ELEMENT.locale(ELEMENT.lang.en);
+        // ELEMENT.locale(ELEMENT.lang.en);
         <%--var attractionOrigin;--%>
         <%--axios.get("${pageContext.servletContext.contextPath}/admin/attraction/detail/4512")--%>
         <%--    .then(response => {--%>

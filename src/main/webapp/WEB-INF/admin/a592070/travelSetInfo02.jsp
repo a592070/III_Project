@@ -9,19 +9,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+    <title>FUN x TAIWAN</title>
+<%--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />--%>
     <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/vuex"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/vue-axios@3.2.0/dist/vue-axios.es5.js"></script>
-    <script src="https://unpkg.com/http-vue-loader"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
-    <script>
-        ELEMENT.locale(ELEMENT.lang.en);
-    </script>
+<%--    <script src="https://unpkg.com/vue"></script>--%>
+<%--    <script src="https://unpkg.com/vuex"></script>--%>
+<%--    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>--%>
+<%--    <script src="https://unpkg.com/vue-axios@3.2.0/dist/vue-axios.es5.js"></script>--%>
+<%--    <script src="https://unpkg.com/http-vue-loader"></script>--%>
+<%--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>--%>
+<%--    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>--%>
+<%--    <script>--%>
+<%--        ELEMENT.locale(ELEMENT.lang.en);--%>
+<%--    </script>--%>
 
     <style>
         .infinite-list-wrapper .list-item+.list-item {
@@ -41,9 +41,9 @@
         }
     </style>
 
-    <script type="text/javascript">
-        const context = "${pageContext.servletContext.contextPath}";
-    </script>
+<%--    <script type="text/javascript">--%>
+<%--        const context = "${pageContext.servletContext.contextPath}";--%>
+<%--    </script>--%>
     <script type="module" src="${pageContext.servletContext.contextPath}/assets/a592070/js/travelSetInfo.js"></script>
 
 </head>

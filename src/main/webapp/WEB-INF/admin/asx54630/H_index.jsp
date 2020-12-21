@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Hotel</title>
+<title>FUN x TAIWAN</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -91,7 +91,7 @@
         <br>
         <div class="table-responsive">
         <table class="table table-striped table-sm" id="table">
-            <thead>
+            <thead> 
             <tr>
                 <th><div>
 							<Input type='hidden' name='order' id="order" value=''>ID
@@ -257,6 +257,8 @@
 		$("#table").on('change', '#checkbox', function () {
 				var SN = $(this).closest('td').siblings("#SN").text()
 				var STATUS =$(this).val();
+				var aaa =$(this);
+				console.log(STATUS)
 				$.ajax(
 					{
 						type: 'POST',
@@ -264,7 +266,11 @@
 						url: '${pageContext.servletContext.contextPath}/admin/hotelstatus',
 						dataType: 'text',
 						success: function (response) {
-							console.log(response)
+// 							console.log(response)
+                             if(STATUS=="啟用")
+                            	 aaa.val("禁用")
+                                 else
+                                	 aaa.val("啟用")    
 
 						}
 					}

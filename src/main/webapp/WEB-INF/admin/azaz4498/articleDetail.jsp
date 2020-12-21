@@ -10,7 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>文章頁面</title>
+    <title>FUN x TAIWAN</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
@@ -410,9 +410,9 @@ $(".comment-list").on("click", ".reply", function () {
   if (loginCheck == null || loginCheck == "") {
     Swal.fire({
       title: "請先登入",
-      text: "登入以回復他人評論",
+      text: "登入以回覆他人評論",
       html:
-        "<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以回復他人評論",
+        "<a href='<%=application.getContextPath()%>/user/signinPage'><u>登入</u></a>以回覆他人評論",
       icon: "warning",
       confirmButtonText: "好",
     });

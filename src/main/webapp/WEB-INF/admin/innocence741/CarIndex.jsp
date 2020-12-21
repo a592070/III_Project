@@ -11,12 +11,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Restaurant</title>
+<title>FUN x TAIWAN</title>
 
 <c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 <style>
 .sp_search-1 {
 	float: left;
+}
+
+.aaa{
+	margin-left: 380px;
 }
 
 .box {
@@ -102,28 +106,28 @@ td{
 							<option value="金門">金門</option>
 							<option value="連江">連江</option>
 						</select>
-						<button type="submit" class="btn btn-primary">Search</button>
+						<button type="submit" class="btn btn-primary">搜尋</button>
 						</form>   
 					</div> 
- 					<div class="search">
- 						<form action="<%=application.getContextPath()%>/nameSearch" method="POST"> 
- 						<span class="sp_search">車行名稱</span>  
-						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>  
- 						<button type="submit" class="btn btn-primary">Search</button>  
- 						</form>  
-					</div> 
+<!--  					<div class="search"> -->
+<%--  						<form action="<%=application.getContextPath()%>/nameSearch" method="POST">  --%>
+<!--  						<span class="sp_search">車行名稱</span>   -->
+<!-- 						<input type="text" name="restaurant_name" placeholder="請輸入關鍵字"/>   -->
+<!--  						<button type="submit" class="btn btn-primary">Search</button>   -->
+<%--  						</form>   --%>
+<!-- 					</div>  -->
 
- 					<div class="search">
- 					    <form action="<%=application.getContextPath()%>/usernameSearch" method="POST" > 
- 						    <span class="sp_search">會員帳號</span> 
- 						    <input type="text" name="username" placeholder="請輸入會員帳號" /> 
- 						    <button type="submit" class="btn btn-primary">Search</button> 
-                        </form> 
-                    </div>
+<!--  					<div class="search"> -->
+<%--  					    <form action="<%=application.getContextPath()%>/usernameSearch" method="POST" >  --%>
+<!--  						    <span class="sp_search">會員帳號</span>  -->
+<!--  						    <input type="text" name="username" placeholder="請輸入會員帳號" />  -->
+<!--  						    <button type="submit" class="btn btn-primary">Search</button>  -->
+<%--                         </form>  --%>
+<!--                     </div> -->
 
                      <div class="search">
                         <form action="CreateCarRentalCompany.controller" method="GET" > 
-                            <button type="submit" class="btn btn-primary">增加租車行</button> 
+                            <button type="submit" class="btn btn-primary aaa">增加租車行</button> 
                         </form> 
                     </div>
 

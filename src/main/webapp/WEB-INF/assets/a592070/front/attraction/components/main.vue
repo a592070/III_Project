@@ -50,7 +50,12 @@
             </template>
 
             <template v-slot:default="props">
-
+              <v-overlay :value="selectListLoading">
+                <v-progress-circular
+                    indeterminate
+                    size="64"
+                ></v-progress-circular>
+              </v-overlay>
                 <v-container style="height: 100vh; overflow:auto">
                   <el-scrollbar style="height: 100%;" ref="scrollbar">
                     <ul class="align-center"
@@ -152,7 +157,7 @@
 
       <div class="row justify-content-center mb-5 pb-3">
         <div class="col-md-7 text-center heading-section ">
-          <attraction-detail></attraction-detail>
+          <attraction-detail v-if="initDetailPageStatus"></attraction-detail>
         </div>
       </div>
     </v-container>
@@ -233,7 +238,7 @@ module.exports = {
     disabled () {
       return this.selectListLoading || this.noMore
     },
-    ...Vuex.mapState(['attractionList', 'selectListLoading', 'pageData', 'regions'])
+    ...Vuex.mapState(['attractionList', 'selectListLoading', 'pageData', 'regions', 'initDetailPageStatus'])
   },
   created: function (){
   },
@@ -246,13 +251,22 @@ module.exports = {
   },
   methods: {
     init(){
+      this.$store.commit('toggleSelectListLoading', true);
       this.$store.dispatch("initRegionsData");
-      this.$store.dispatch("initAttractionListData");
-      this.$store.dispatch('initAttractionData', 1);
+      this.$store.dispatch("initAttractionListData").response(() => {
+        // this.$store.dispatch('initAttractionData', 1);
+        this.$store.commit('toggleSelectListLoading', false);
+      });
     },
     load () {
-      this.$store.commit("addPage");
-      this.$store.dispatch("appendAttractionListData", {region: this.selectRegion, keyword:this.search});
+      if(!this.selectListLoading && !this.noMore) {
+        this.$store.commit('toggleSelectListLoading', true);
+        this.$store.commit("addPage");
+        this.$store.dispatch("appendAttractionListData", {region: this.selectRegion, keyword: this.search})
+            .then((message) => {
+              this.$store.commit('toggleSelectListLoading', false);
+            });
+      }
     },
     handleSelectedKeyword(){
       this.selectData();

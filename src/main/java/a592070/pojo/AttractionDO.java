@@ -39,8 +39,9 @@ public class AttractionDO {
     private BigDecimal py;
     @Column(name = "OPENTIME")
     private String openTime;
-//    @Column(name = "PICTURE_URL")
-//    private String pictureUrl;
+    @JsonIgnore
+    @Column(name = "PICTURE_URL")
+    private String pictureUrl;
 //    private byte[] picture;
 
     @JsonIgnore
@@ -256,5 +257,13 @@ public class AttractionDO {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

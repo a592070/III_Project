@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<title>找餐廳</title>
+<title>FUN x TAIWAN</title>
     <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/preview_ref.jsp" />
 <style type="text/css">
 .R_info{
@@ -40,7 +40,7 @@ i{
 }
 .star_div{
 	height:40px;
-	font-size: 17px;
+	font-size: 13px;
 }
 .sidebar-wrap .heading{
 	font-size:25px;

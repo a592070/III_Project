@@ -1,16 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- Created by IntelliJ IDEA. User: Student Date: 2020/10/29 Time: 上午 10:25
-To change this template use File | Settings | File Templates. --%> <%@ page
-contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- GOOGLE FONTS -->
 <link
   href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500"
   rel="stylesheet"
 />
-<link
-  href="https://cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css"
-  rel="stylesheet"
-/>
+<%--原本--%>
+<%--<link href="https://cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css" rel="stylesheet"/>--%>
+<%--備份--%>
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@3.0.39/css/materialdesignicons.min.css" rel="stylesheet"/>
+<%--<link href="${pageContext.request.contextPath}/assets/a592070/web_modules/materialdesignicons.3.0.39.min.css" rel="stylesheet"/>--%>
 
 <!-- PLUGINS CSS STYLE -->
 <link

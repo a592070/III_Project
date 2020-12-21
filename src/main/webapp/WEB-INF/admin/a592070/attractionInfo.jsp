@@ -9,20 +9,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>FUN x TAIWAN</title>
 
 
     <%--    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>--%>
-    <script src="//vuejs.org/js/vue.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<%--    <script src="//vuejs.org/js/vue.min.js"></script>--%>
+<%--    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>--%>
+<%--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">--%>
 <%--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>--%>
-    <script src="//unpkg.com/element-ui"></script>
-    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+<%--    <script src="//unpkg.com/element-ui"></script>--%>
+<%--    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>--%>
 
-    <script>
-        ELEMENT.locale(ELEMENT.lang.en)
-    </script>
+<%--    <script>--%>
+<%--        ELEMENT.locale(ELEMENT.lang.en)--%>
+<%--    </script>--%>
     <c:import url="/WEB-INF/admin/fragment/ref.jsp"/>
 
 </head>
@@ -289,7 +289,7 @@
             handleDelete(index, row) {
                 console.log(index, row);
                 this.$confirm('此操作將永久刪除資料, 是否繼續?', '提示', {
-                    confirmButtonText: '去死吧',
+                    confirmButtonText: '刪除',
                     cancelButtonText: '手滑了...',
                     type: 'warning',
                     center: true

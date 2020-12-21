@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>用戶清單</title>
+	<title>FUN x TAIWAN</title>
 	<c:import url="/WEB-INF/admin/fragment/ref.jsp" />
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	<style>
