@@ -254,7 +254,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <!--   <script src="js/google-map.js"></script> -->
 <!--   <script src="js/main.js"></script> -->
-  <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" />
+<%--   <c:import url="/WEB-INF/admin/fragment/azaz4498_ref/bottom_js.jsp" /> --%>
 
 
         <script src='//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script>
@@ -878,7 +878,7 @@
                      dataType: "json",               //目標url處理完後回傳的值之type，此列為一個JSON Object
 
                      success : function(response){
-
+                          $("#ccc").click()
                         //  console.log(response["check"]);
                         //  console.log(response["check"] === "fail")
                         //  if(response["check"] === "fail"){

@@ -451,7 +451,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             region = "%"+region+"%";
 
             hql = "select vo from AttractionDO do , AttractionVO vo " +
-                    "where (do.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
+                    "where (vo.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
                     "( do.sn like :snKeyword or do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
                     "order by do."+orderFiled;
             if(descending) hql += " desc";
@@ -472,7 +472,7 @@ public class AttractionViewDAOImpl implements ViewDAO<AttractionVO>{
             region = "%"+region+"%";
 
             hql = "select vo from AttractionDO do , AttractionVO vo " +
-                    "where (do.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
+                    "where (vo.status=:available) and (do.sn=vo.sn) and (do.region like :region) and " +
                     "( do.name like :keyword or do.toldescribe like :keyword or do.description like :keyword or do.address like :keyword or do.keywords like :keyword ) " +
                     "order by do."+orderFiled;
             if(descending) hql += " desc";

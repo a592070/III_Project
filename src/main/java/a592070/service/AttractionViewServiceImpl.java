@@ -242,7 +242,7 @@ public class AttractionViewServiceImpl implements ViewService<AttractionVO> {
 
     @Override
     public List<AttractionVO> listBySelectWithStatus(int currentPage, int pageSize, String region, String keywords, boolean available, String orderFiled) {
-        return listBySelect(currentPage, pageSize, region, keywords, orderFiled, false);
+        return listBySelectWithStatus(currentPage, pageSize, region, keywords, available, orderFiled, false);
     }
 
     @Override
