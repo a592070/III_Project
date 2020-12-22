@@ -216,7 +216,7 @@ pre {
 <!--  								<button type="submit" class="btn btn-light">修改</button>  -->
 								</p>
 								<div class="div_img">
-									<img id="preview_Hpic" src="<%=application.getContextPath()%>/hotelPic">
+									<img id="preview_Hpic" src="<%=application.getContextPath()%>/assets/nopic.jpg" src="<%=application.getContextPath()%>/hotelPic">
 								</div>
 								
 								<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
