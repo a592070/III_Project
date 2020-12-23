@@ -189,6 +189,7 @@ button#order {
       									</div>
       									<div class="modal-footer">
 									<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        									<button type="button" class="btn btn-primary" id="insertdata" onclick="insertcomment()">帶入資料</button>
         									<button type="button" class="btn btn-primary" id="commbtn" onclick="sendcomment()">送出</button>
       									</div>
     									</div>
@@ -832,6 +833,10 @@ button#order {
 									}
 									console.log("phone = " + phone);
 							}
+
+							function insertcomment(){
+								$("#r_comment").val("真的很好吃，會再訪!")
+								}
                             </script>
                         </form>
                         
