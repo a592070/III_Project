@@ -113,9 +113,9 @@
 
             <div class="content">
                 <div class="row">
-                    <el-page-header   @back="goBack" v-if="isInsert" content="新 增 頁 面" style="position: fixed;">
+                    <el-page-header   @back="goBack" v-if="isInsert" content="新 增 頁 面" >
                     </el-page-header>
-                    <el-page-header @back="goBack" v-else content="修 改 頁 面" style="position: fixed;">
+                    <el-page-header @back="goBack" v-else content="修 改 頁 面" >
                     </el-page-header>
                     <div class="col-12" style="max-width: 85%">
                         <el-button type="info" round v-if="isInsert" v-on:click="handleInjectData">匯入資料</el-button>

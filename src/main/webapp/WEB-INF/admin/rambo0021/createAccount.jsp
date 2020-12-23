@@ -311,7 +311,7 @@
 			$("#username").val("iiiEEIT124")
 			$("#password").val("iiiEEIT124")
 			$("#identity").val("2")
-			$("#email").val("test@iii.edu.tw")
+			$("#email").val("iiiteam124@gmail.com")
 			$('#nickName').val("測試帳號")
 			$("#email,#password,#username").blur()
 		})
