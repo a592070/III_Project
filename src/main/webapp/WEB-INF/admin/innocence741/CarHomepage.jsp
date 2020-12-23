@@ -206,7 +206,7 @@ pre {
                         <input type="file" id="pic_rentalcompany" name="pic_rentalcompany" >
                     </p>
                     <div class="div_img">                               
-                        <img id="preview_pic_rentalcompany"  src="ShowCarRentalCompanyPic">
+                        <img id="preview_pic_rentalcompany" src="ShowCarRentalCompanyPic" onerror="javascript:this.src='<%=application.getContextPath()%>/assets/nopic.jpg';">
                     </div>
 				
 				

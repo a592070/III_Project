@@ -208,7 +208,7 @@ pre {
                         <input type="file" id="pic_rentalcompany" name="pic_rentalcompany" >
                     </p>
                     <div class="div_img">                               
-                        <img id="preview_pic_rentalcompany"  src="#">
+                        <img id="preview_pic_rentalcompany" src="<%=application.getContextPath()%>/assets/nopic.jpg"  src="#">
                     </div>
 				
 				
