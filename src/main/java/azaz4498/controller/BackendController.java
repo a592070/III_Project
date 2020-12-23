@@ -106,7 +106,7 @@ public class BackendController {
 	public String newArticleBackend(@RequestParam(name = "articleTitle") String title,
 			@RequestParam(name = "articleContent") String content, @RequestParam(name = "typeSelect") Integer typeId,
 			Model m) throws SQLException {
-		String userid = "Admin";
+		String userid = "管理員";
 		Article article = articleService.newArticle(title, typeId, content, userid);
 		Integer id = article.getArtId();
 		article.setArtStatus("enabled");
