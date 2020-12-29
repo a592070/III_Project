@@ -63,12 +63,12 @@ src
 
 
 ## 分支名稱對應
-- dev_a592070 詠嘉
-- dev_iring29 佳伶
-- dev_azaz4498 宇河
-- dev_innocence741 柏翔
-- dev_rambo0021 之軒
-- dev_asx54630 柏澔
+- dev_a592070
+- dev_iring29
+- dev_azaz4498
+- dev_innocence741
+- dev_rambo0021
+- dev_asx54630
 
 
 ## git指令
@@ -103,9 +103,6 @@ git config --global user.email "user@gmail.com"
 - pull merge request from dev_xxx to master
 - 解決衝突
 - merge
-
-## QA
-- a592070 https://hackmd.io/@dDJmilUhRLq-s4ljZ9qvWw/SyJPutDSP
 
 
 ## daily report 
