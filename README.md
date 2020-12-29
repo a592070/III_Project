@@ -74,8 +74,8 @@ src
 ## git指令
 ```
 # name、email 改成自己的
-git config --global user.name "a592070"
-git config --global user.email "a592070@gmail.com"
+git config --global user.name "user"
+git config --global user.email "user@gmail.com"
 ```
 
 ```
@@ -83,8 +83,8 @@ git config --global user.email "a592070@gmail.com"
 下的.gitconfig
 直接右鍵編輯加入
 [user]
-	name = a592070
-	email = a592070@gmail.com
+	name = user
+	email = user@gmail.com
 ```
 **跟上面的指令是同樣效果**
 
